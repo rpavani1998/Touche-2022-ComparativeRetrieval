@@ -1,0 +1,226 @@
+both have an average-case performance of o(nlgn) and heapsort guarantees a worst-case performace of o(nlgn) too.
+instead of examples of specific code macros (general or not) it would be nice to see common programming practices using macros.
+get every new post delivered to your inbox.
+the book was  published byno starch press and they were kind enough to provide me a copy for  review.
+if we want a simple-vector, the macro will expand to use the correct type declaration and svref.
+on a final note, i just wonder what are the algorithms used inacl and lw.
+ccl chooses the pivot with a median-of-3 method and always sorts  the smaller partition to ensure a worst-case stack depth of o(lgn).
+with 6 comments zsort is a library that i started working on as a simple hobby project.
+we can write the following macro: (defmacro mean-body (vector vector-type vector-ref key) (let ((size  (gensym)) (i (gensym)))
+if we want a  simple-vector, the macro will expand to use the correct type declaration and  svref.
+to conclude, the tangled web is a solid book, full of interesting and useful information.
+and thinking back to the redditthread, what are your favorite macros design patterns?
+while reading them, it crossed my mind that  another variant of this question would bewhat are some fun or useful macros  design patterns.
+moreover, we keep the algorithm in a single place, making it  easier to maintain.
+the next release should have stable-sort fixed.
+this can be very useful in situations where we want to optimize code since it becomes easy to add the proper type declarations to the input arguments of an algorithm.
+but i like to call it the configurable algorithm pattern.
+not surprising, we find some differences  between the implementations.
+what sorting algorithms do the major open source cl implementations actually implement?
+my favorite one is to configure an algorithm, especially when we want to  use the correct types.
+even if for most situations the standard functions are more than enough, thezsort library could be a useful complement.
+(vector (if key (mean-body vector vector aref  key) (mean-body vector vector aref nil)))
+powered by wordpress.com
+depending on the situation, we can also define a function  for each configuration.
+the links for the source code are in the implementation name (careful, in ccl and sbcl
+we can write the following macro: (defmacro mean-body (vector vector-type vector-ref key) (let ((size (gensym)) (i (gensym)))
+the links for the source  code are in the implementation name (careful, in ccl and sbcl
+a quick survey of the findings is summarized in the following table (if anythings is incorrect, please tell me).
+`(,vector-ref ,vector ,i))) ,size)))))
+zsort: portable sorting algorithms in common lisp with 6 comments zsort is a library that i started working on as a simple hobby project.
+the  only source file i could find with a sort implementation wassort.d and it looks  like it contains an implementation of tree sort with a self-balanced binary  tree, which also gives this algorithm an average and worst-case performance of  o(nlgn).
+unless you know your input data has some special properties that you can take advantage of, the provided sort should be enough for your needs and probably is more efficiently implemented.
+although the book is not very thick (around 300 pages) it addresses too many important issues to completely absorb them in a single reading.
+it’s a way to keep myself informed and learn new things and this book fits exactly into this category.
+common lisp provides thesort and  stable-sort functions but these can have different algorithms implemented
+that way one can decide if a special sort is needed or not.
+the only source file i could find with a sort implementation wassort.d and it looks like it contains an implementation of tree sort with a self-balanced binary tree, which also gives this algorithm an average and worst-case performance of o(nlgn).
+there is still a lot of work to be done, but i think the library as it is  can already be a little useful.
+in addition, we might also want the possibility of using a key to access the vector elements.
+the used grammar has the ability  to guide the learning of novel architectures, by rearranging components  regularly found on manually designed variants (for example, the elitist  ant-system, the ant colony system or the max-min ant system).
+the main goal of zsort is to be a collection of portable sorting  algorithms.
+i am  considering usinglparallel for this but i am still undecided.
+the macro contains the algorithm (in this simple case the mean) and the  arguments allow us to configure the multiple versions we need.
+`(locally (declare (type ,vector-type ,vector)) (let  ((,size (length ,vector))) (/ (loop for ,i from 0 below ,size sum ,(if key  `(funcall ,key (,vector-ref ,vector ,i))
+in the first one, the author tells us the story of the inception of the web until today and discusses all the important technologies, protocols, etc.
+what it was more unexpected to discover is that  some implementations also use different sorting algorithms according to the  sequence type.
+if a key function is needed it will also include it.
+the best answer is probablynone.
+the book is organized in three main parts.
+in addition, both functions don’t necessarily share the same algorithm.
+quicksort has a worst-case performance of o(n2) but it can be optimized in several ways so that it also gives an expected worst-case performance of o(nlgn).
+quicksort has a worst-case performance of o(n2) but it can be  optimized in several ways so that it also gives an expected worst-case  performance of o(nlgn).
+next year it will be held in wien!
+common lisp provides the functions sort and stable-sort.
+this is a problem that exists in the current1.0.1 release but i’ve sent a bug report with a quick fix to the maintainers.
+this year the conference took place in málaga, spain, as part of evo*  as usual.
+so, for a lack of a better expression name, let’s call themmacros design patterns.
+in the example we could have a mean-simple-vector and mean-vector.
+these sheets alone make the book worthwhile having.
+the plan is to  add more algorithms, for example,bucket sort and timsort.
+for example, if you have an algorithm that operates on  different types of sequences, instead of writing several duplicate functions  with the same algorithm but with the associated type declarations, just apply  this pattern.
+it is now part of quicklisp so it can be easily used (thankszack!).
+but i am not entirely sure.
+i  think there is still room for improvement in some implementations but knowing  now the strengths and weaknesses of the sorts in cl is already good enough.
+the main goal of zsort is to be a collection of portable sorting algorithms.
+according to each implementation, which can make an application unportable if  you rely on a specific type of sorting.
+more or less around the same time i decided to checkwhich algorithms the  different common lisp implementations use.
+the plan is to add more algorithms, for example,bucket sort and timsort.
+this can be very useful in situations where we want to optimize code since  it becomes easy to add the proper type declarations to the input arguments of  an algorithm.
+on reddit and it reminded me ofanother thread that appeared in the pro mailing list.
+then, we can call  the macro with the several configurations value inside the main function: (defun mean (vector &optional key) (typecase vector  (simple-vector (if key (mean-body vector simple-vector svref key) (mean-body  vector simple-vector svref nil)))
+i was curious about it and went to check the source forabcl, ccl, clisp, cmucl, ecl and sbcl.
+and of course, all kind of suggestions and improvements are welcome!
+posted in publications, research tagged with ant system, conferences, eurogp, evo*, grammatical evolution, publications leave a comment »
+however, the main  thing on the todo list is adding the possibility ofexternal sorting (to handle  large amounts of data) and parallel versions of some sorting algorithms.
+for example, if you have an algorithm that operates on different types of sequences, instead of writing several duplicate functions with the same algorithm but with the associated type declarations, just apply this pattern.
+the book is a very engaging narrative, full of details and  impressive war stories.
+a simple but contrived example: we want to compute the mean of a  vector but use its proper type.
+in addition, both functions  don’t necessarily share the same algorithm.
+the book is a very engaging narrative, full of details and impressive war stories.
+that way one can decide if a special  sort is needed or not.
+written by jorge tavares february 2, 2012 at 9:45 posted in programming tagged with common lisp, lisp, sorting algorithms, survey« older entries blog at wordpress.com.
+use the sort provided by your system/library/etc.
+which  ones do you find useful and use them regularly?
+also, the standard functions might not be the best for a certain situation and as such you might need a specialized sort.
+the choice for these algorithms is  expected.
+it is now part of quicklisp so it  can be easily used (thankszack!).
+apparently, all implementations are bottom-up  merge sorts with the exception of ccl and ecl.
+while reading them, it crossed my mind that another variant of this question would bewhat are some fun or useful macros design patterns.
+these sheets alone make the  book worthwhile having.
+since it is only used for strings and bit  vectors, it is not really an issue.
+as for clisp, i think it uses a tree
+if one knows the properties of the data, it is possible to  understand if the provided sort can or will pose a problem.
+however, it seems that the quicksort implementations are not completely optimized.
+the hyperspec describes their operation
+for web developers and security experts it should be a must  read book.
+my favorite one is to configure an algorithm, especially when we want to use the correct types.
+also, the standard functions might not  be the best for a certain situation and as such you might need a specialized  sort.
+ccl chooses the pivot with a median-of-3 method and always sorts the smaller partition to ensure a worst-case stack depth of o(lgn).
+i am very happy with this distinction since eurogp is the leading conference on genetic programming attended by the best researchers in the field.
+if they can be fast, even better.
+in the same way a programmer shouldn’t implement a sorting algorithm every time it needs to sort something, the programmer should also be aware of the limitations/advantages of the system sort.
+in terms of the implementation of sort, quicksort is the most  used algorithm, followed byheapsort.
+use the sort provided by your  system/library/etc.
+right now the implemented algorithms are: insertion sort, quicksort,  randomized quicksort, merge sort, heapsort and counting sort.
+for the past couple of months i’ve been reading the tangled web: a guide to securing modern web applications by michael zalewski.
+i’ve learned  what algorithms are actually used and enjoyed seing how they were implemented.
+for the past couple of months i’ve been reading the tangled web: a  guide to securing modern web applications by michael zalewski.
+that decision is left free to the implementations.
+written by jorge tavares april 22, 2012 at 20:15 posted in programming tagged with common lisp, library, lisp, sorting algorithms, zsort with 4 comments last week i was at eurogp where i presented my latest paper “ automatic design of ant algorithms with grammatical evolution” (pdf, slides) and it won the best paper award!
+this is still a starting point and there is a  large amount of work to be done but the indications given by these results are  encouraging!
+the book was published byno starch press and they were kind enough to provide me a copy for review.
+written by jorge tavares february 13, 2012 at 11:20 posted in programming tagged with common lisp, design patterns, lisp, macros sorting algorithms used in the cl implementations with 2 comments which sorting algorithm should one implement when developing a program?
+while reading the source code of the implementations, i realized that abcl was using quicksort in stable-sort for all non-list sequences.
+on reddit and  it reminded me ofanother thread that appeared in the pro mailing list.
+(vector (if key (mean-body vector vector aref key) (mean-body vector vector aref nil)))
+common lisp provides thesort and stable-sort functions but these can have different algorithms implemented according to each implementation, which can make an application unportable if you rely on a specific type of sorting.
+in the example we could have a mean-simple-vector and  mean-vector.
+for web developers and security experts it should be a must read book.
+i am very happy with  this distinction since eurogp is the leading conference on genetic programming  attended by the best researchers in the field.
+just spotting the issue in abcl stable-sort made this review worthwhile.
+the event was great with an excellent organization lead bycarlos cotta.
+the tangled web is mostly about web technologies and how insecure they are  by nature.
+i don't know if it has already a specific name
+essentially, we write an algorithm using a macro that takes types or configuration arguments and then we expand it to the appropriate desired configurations.
+not surprising, we find some differences between the implementations.
+depending on the situation, we can also define a function for each configuration.
+i’ve learned what algorithms are actually used and enjoyed seing how they were implemented.
+on  a final note, i just wonder what are the algorithms used inacl and lw.
+moreover, we keep the algorithm in a single place, making it easier to maintain.
+this is still a starting point and there is a large amount of work to be done but the indications given by these results are encouraging!
+it focuses on the practical issues of web technologies and not on the theory of security.
+there are two  links).
+written by jorge tavares february 16, 2012 at 17:43 posted in programming tagged with book review, security, web with 4 comments i was reading the thread what are some fun or useful macros?
+i find it very useful.
+it focuses on the practical issues of web technologies  and not on the theory of security.
+since it is only used for strings and bit vectors, it is not really an issue.
+essentially, we write an algorithm using a macro that  takes types or configuration arguments and then we expand it to the appropriate  desired configurations.
+the hyperspec  describes their operation
+sort sbcl  merge sort (lists) / heapsort merge sort
+and thinking  back to the redditthread, what are your favorite macros design patterns?
+both have an average-case performance of o(nlgn)
+unless you know your input data has some special properties  that you can take advantage of, the provided sort should be enough for your  needs and probably is more efficiently implemented.
+however, i think it is important to know what sorting algorithm is implemented.
+a simple but contrived example: we want to compute the mean of a vector but use its proper type.
+another interesting thing is  that merge sort is also used for lists in sort, in most of the implementations.
+the second part  focuses on the browser security and the third part on “the things to  come”.
+for example, at the end of each  chapter we can find a “security engineering cheat sheet”, which  presents us a summary of things to consider/do.
+in this paper, a grammatical evolution approach is used for the automatic design ofant colony optimization algorithms.
+this approach was tested with thetsp and the results show that the evolved algorithmic strategies are effective, exhibit a good generalization capability and are competitive with human designed variants.
+and of course, all kind of suggestions and  improvements are welcome!
+implementation sort stable-sort abcl merge sort (lists) /  quicksort merge sort ccl merge sort (lists) / quicksort merge sort clisp tree sort tree sort cmucl heapsort merge sort ecl merge sort  (lists) / quicksort quicksort (strings + bit vectors) / merge
+(otherwise (if key (mean-body vector sequence elt key) (mean-body vector sequence elt nil)))))
+it  addresses too many important issues to completely absorb them in a single  reading.
+instead of examples of specific code macros (general or  not) it would be nice to see common programming practices using macros.
+in addition, we might also want the possibility  of using a key to access the vector elements.
+written by jorge tavares february 13, 2012 at 11:20 posted in programming tagged with common lisp, design patterns, lisp, macros with 2 comments which sorting algorithm should one implement when developing a program?
+and heapsort guarantees a worst-case performace of o(nlgn)
+in ecl (and abcl) quicksort  implements a partition scheme which deals better with duplicate elements  (although is not the three-way partitioning) but it always picks as pivot the  first element.
+i think there is still room for improvement in some implementations but knowing now the strengths and weaknesses of the sorts in cl is already good enough.
+to conclude, the tangled web is a solid book, full of interesting and  useful information.
+in the same way a  programmer shouldn’t implement a sorting algorithm every time it needs to  sort something, the programmer should also be aware of the  limitations/advantages of the system sort.
+this year the conference took place in málaga, spain, as part of evo* as usual.
+if one knows the properties of the data, it is possible to understand if the provided sort can or will pose a problem.
+even if for most situations the standard functions are more than enough,  thezsort library could be a useful complement.
+posted in publications, research tagged with ant system, conferences, eurogp, evo*, grammatical evolution,  publications book review: the tangled web leave a comment »
+however, i found it surprising to find quicksort in the stable-sort column because it is not a stable algorithm.
+it’s a way to keep myself informed and learn new things and this book  fits exactly into this category.
+the used grammar has the ability to guide the learning of novel architectures, by rearranging components regularly found on manually designed variants (for example, the elitist ant-system, the ant colony system or the max-min ant system).
+in ecl (and abcl) quicksort implements a partition scheme which deals better with duplicate elements (although is not the three-way partitioning) but it always picks as pivot the first element.
+what it was more unexpected to discover is that some implementations also use different sorting algorithms according to the sequence type.
+however, i found it surprising to find quicksort in the stable-sort column  because it is not a stable algorithm.
+right now the implemented algorithms are: insertion sort, quicksort, randomized quicksort, merge sort, heapsort and counting sort.
+in this paper, a grammatical evolution approach is used for the automatic  design ofant colony optimization algorithms.
+another interesting thing is that merge sort is also used for lists in sort, in most of the implementations.
+although the book is not very thick (around 300 pages)
+well but it does not define the sorting algorithm.
+for the rest of us it is an enjoyable reading.
+however, i think it is important to know what sorting algorithm is  implemented.
+the event was great with an excellent organization lead bycarlos  cotta.
+this exploration of the sorting algorithms used in the open source implementations was very educational and interesting to me.
+however, the main thing on the todo list is adding the possibility ofexternal sorting (to handle large amounts of data) and parallel versions of some sorting algorithms.
+apparently, all implementations are bottom-up merge sorts with the exception of ccl and ecl.
+these  kind of threads are always enjoyable because each time you learn something new  and see really interesting things.
+the  best answer is probablynone.
+if you want to share, feel free  to drop a line.
+the difference between the  two is that the second function sorts in a way that guaranteesstability, i.e.,  two elements that are equal remain in the same position after sorting is  completed.
+the use of sort and stable-sort requires some care (see the section sort pitfalls) but lets focus on the algorithms and not on its usage.
+for example, at the end of each chapter we can find a “security engineering cheat sheet”, which presents us a summary of things to consider/do.
+in terms of the implementation of sort, quicksort is the most used algorithm, followed byheapsort.
+there are two links).implementation sort stable-sort
+in the first  one, the author tells us the story of the inception of the web until today and  discusses all the important technologies, protocols, etc.
+this is a problem that exists in the current1.0.1  release but i’ve sent a bug report with a quick fix to the maintainers.
+as expected, most of the implementations use merge sort to implement stable-sort since it is a stable sort with average and worst-case performance of o(nlgn).
+while reading the source code of the  implementations, i realized that abcl was using quicksort in stable-sort for  all non-list sequences.
+written by jorge tavares april 17, 2012 at 20:51
+if you want to share, feel free to drop a line.
+the journalist v1.9 by lucian e. marin.
+i am interested in seing and learning other patterns!
+as expected, most of the implementations use merge sort to implement  stable-sort since it is a stable sort with average and worst-case performance  of o(nlgn).
+a quick survey of the findings is summarized in the following  table (if anythings is incorrect, please tell me).
+it was a fantastic evo*!
+the tangled web is mostly about web technologies and how insecure they are by nature.
+i am considering usinglparallel for this but i am still undecided.
+these kind of threads are always enjoyable because each time you learn something new and see really interesting things.
+this exploration of the sorting algorithms used in the open source  implementations was very educational and interesting to me.
+the difference between the two is that the second function sorts in a way that guaranteesstability, i.e., two elements that are equal remain in the same position after sorting is completed.
+written by jorge tavares february 16, 2012 at 17:43 posted in programming tagged with book review, security, web macros design patterns with 4 comments i was reading the thread what are some fun or useful macros?
+the second part focuses on the browser security and the third part on “the things to come”.
+which ones do you find useful and use them regularly?
+the macro contains the algorithm (in this simple case the mean) and the arguments allow us to configure the multiple versions we need.
+(otherwise (if key (mean-body vector  sequence elt key) (mean-body vector sequence elt nil)))))
+i enjoy reading about topics outside my main field and interests.
+the book can be very useful for web  developers and those interested in security.
+this approach was  tested with thetsp and the results show that the evolved algorithmic strategies  are effective, exhibit a good generalization capability and are competitive  with human designed variants.
+what sorting algorithms do the major open source cl implementations  actually implement?
+written by jorge tavares april 22, 2012 at 20:15 posted in programming tagged with common lisp, library, lisp, sorting algorithms, zsort best paper award at eurogp 2012 with 4 comments last week i was at eurogp where i presented my latest paper “ automatic design of ant algorithms with grammatical evolution” (pdf,  slides) and it won the best paper award!
+so, for  a lack of a better expression name, let’s call themmacros design  patterns.
+however, it seems that the quicksort  implementations are not completely optimized.
+the book can be very useful for web developers and those interested in security.
+more or less around the same time i decided to checkwhich algorithms the different common lisp implementations use.
+then, we can call the macro with the several configurations value inside the main function: (defun mean (vector &optional key) (typecase vector (simple-vector (if key (mean-body vector simple-vector svref key) (mean-body vector simple-vector svref nil)))
+there is still a lot of work to be done, but i think the library as it is can already be a little useful.
+the choice for these algorithms is expected.
+`(locally (declare (type ,vector-type ,vector)) (let ((,size (length ,vector))) (/ (loop for ,i from 0 below ,size sum ,(if key `(funcall ,key (,vector-ref ,vector ,i))
+written by jorge tavares february 2, 2012 at 9:45 posted in programming tagged with common lisp, lisp, sorting algorithms, survey «

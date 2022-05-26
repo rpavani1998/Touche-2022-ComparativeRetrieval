@@ -1,0 +1,156 @@
+- return to the netbeans new web project with existing sources wizard.
+get rid of the jre, just replace it with jdk.
+home / community / wiki / sharingprojectnetbeanseclipse sharingprojectnetbeanseclipse sharing a spring-based project between netbeans and eclipse
+configure the project for eclipse - start eclipse.
+mention we  have a vi plug-in as well.
+in next section leave the countries as configured for this  server.
+install the netbeans spring module from  http://spring-netbeans.sourceforge.net gotchas come on, it's eclipse!
+there is a spring plugin for netbeans - the ides are similar, although we consider netbeans as more intuitive and less annoying prerequisities - jdk5 or jdk6 - netbeans 6.0 m10 or higher (because of the spring plugin) setup - install eclipse europa for java ee developers from eclipse.org - install aspectj development tools - help > software updates > find and install > search for new features to install > europa discovery site > finish.
+in this demo we're going to use the spring countries sample application  that ships with the spring framework to demonstrate how easy it is for eclipse  and netbeans to work side-by-side.
+these tasks were taken care of using the regular project type  but need to be defined using the free-form project type.
+- run the project to see the results.
+mention this is a community-developed project and already reached version 1.0, found athttp://spring-netbeans.sourceforge.net.
+show the eclipse keybindings settings and emacs keybindings.
+do the same demo as when the application was running from eclipse to show that pdf and xls integration works.
+- click finish - verify that eclipse detected the libraries (countries > libraries > web app libraries)
+mention you don't understand why eclipse has a "static" and  "dynamic" web project :).
+- talk about how netbeans detected that eclipse was running tomcat on port 8080 and thus started a new instance on port 8084 (yes, but is there any way to get netbeans to share the instance with eclipse?)
+click finish verify that eclipse detected the libraries (countries > libraries >  web app libraries)
+(note, netbeans automatically detects the proper content directory name.)
+no annoying messages this time :)
+- the sample project should be up & running.
+the wizard will complain that there is already a build directory in the application.
+the  migration to netbeans was painless this time, but mention that this might not  be the case if the application would have a non-standard project structure or  use custom build scripts.
+ask the audience if they have any questions about netbeans & eclipse  running together.
+join news releases & planning mailing lists bugzilla contribute teams guidelines projects shop sitemap about us contact legal
+- open configuration files | application context.
+- right-click the project and choose run
+also, trying to delete the build directory  from eclipse only deletes the classes, not the actually build directory.
+show the http monitor and explain it's usage.
+confirm stupid dialog about syncing web.xml, you'll see it more often since now.
+open messages.properties and change the  app.short name toeclipse rules!
+show the project directory in file manager.
+- show the http monitor and explain it's usage.
+delete the nb-build.xml and nbproject directory
+eclipse doesn't appear to have a pure clean option - the eclipse  clean also rebuilds the project.
+customize the project a bit.
+- delete the nb-build.xml and nbproject directory
+- show the project directory in file manager.
+mention that this is a great feature in netbeans for monitoring requests and responses.
+- this page has been accessed 7,064 times.
+- mention that there are other features available, but we don't have time to show them, so developers should check them out on the spring module project page.
+spring module features show basic features of the spring module: go to the project properties and frameworks.
+- customize the project a bit.
+the migration to netbeans was painless this time, but mention that this might not be the case if the application would have a non-standard project structure or use custom build scripts.
+then free-form project might wokr better.
+these files can coexist in one project directory.
+by use of this website, you agree to the netbeans policies and terms of use
+decide you're cool with  this new application name :-).
+all should be fine now.
+create a new dynamic web project (file > new > project > web).
+uncheck use default and set the project contents directory to:  ${spring.root}/samples/countries/ target runtime: apache tomcat v6.0 click next and next to get to the web content page set the content directory to war, which matches the sample  application's content directory.
+otherwise the spring example wouldn't work.
+configure the project for eclipse start eclipse.
+- select project > clean to rebuild the project.
+mention you don't understand why eclipse has a "static" and "dynamic" web project :).
+choose tomcat as server and click next.
+- switch to back to eclipse.
+type a new <bean and  show code completion.
+then europe discovery site > java development > aspectj development tools (ajdt) - install the spring ide by updating eclipse using the following update center (help | software updates | find and install): http://springide.org/updatesite/site.xml - configure eclipse to use the jdk instead of jre using window | preferences | java | installed jres.
+log in, register netbeans wiki navigation - main page - user faq - developer faq - community docs - development - quality - dream team - popular projects - bug dashboard - hudson - sources - nightly - wiki etiquette - formatting rules - terms of use toolbox - what links here - related changes - special pages - printable version - permanent link views - page - discussion - view source - history netbeans.org
+show how the targets need to be mapped, and that no targets currently  exist for deploy.
+type a new <bean and show code completion.
+talk about how netbeans detected that eclipse was running tomcat on port  8080 and thus started a new instance on port 8084 (yes, but is there any way to  get netbeans to share the instance with eclipse?)
+also, trying to delete the build directory from eclipse only deletes the classes, not the actually build directory.
+expand all nodes in the project to show the project structure in netbeans.
+- - point the wizard to ${spring.root}/samples/countries/. -
+(note, netbeans automatically detects the  proper content directory name.)
+tomcat will be started and application should run.
+run the project to see the results.
+if not, try to investigate the error and maybe someone from the audience can help you :)
+did you know? - show the eclipse keybindings settings and emacs keybindings.
+- navigate to the ${spring.root}/samples/countries/war/web-inf directory and create alib directory - navigate to the ${spring.root}/lib directory and copy the following jars into the {{${spring.root}/samples/countries/war/web-inf/lib directory you just created: - - dist/spring.jar - jakarta-commons/commons-logging.jar - lib/jakarta-taglibs/standard.jar - j2ee/jstl.jar - itext/*.jar - poi/*jar - install the netbeans spring module from http://spring-netbeans.sourceforge.net gotchas come on, it's eclipse!
+- run the project to see the results (note, the projects are deployed to 2 different server instances - i don't know if there's a way to get them to share the same instance -- see issue114820).
+choose tomcat as default and check the checkbox to always use tomcat as a server for this project.
+return to the netbeans new web project with existing sources wizard.
+project name: countries.
+demo cleanup - undeploy the countries project from tomcat.
+click  on pdf to generate pdf and excel to generate excel sheet.
+netbeans should be already running from your previous  demos.
+alternatively you can set reloadable="true" in context.xml (seewhy not set reloadable="true" ?) and just refresh the browser.
+in this demo we're going to use the spring countries sample application that ships with the spring framework to demonstrate how easy it is for eclipse and netbeans to work side-by-side.
+- go to main in the web application and show the list of countries.
+- choose tomcat as server and click next.
+confirm stupid dialog about syncing web.xml, you'll see  it more often since now.
+- netbeans detects the existing build.xml and offers an alternative name, nbbuild.xml.
+the sample project should be up & running.
+project sharing we're not too happy with our teammates new application name.
+eclipse doesn't appear to have a pure clean option - the eclipse clean also rebuilds the project.
+switch to the java ee perspective and add it via the servers tab.
+mention we have a vi plug-in as well.
+- on the existing sources and libraries page, note netbeans detected all of the relevant folders (in eclipse we had to replace "webcontent" with "war") - click finish.
+in next section leave the countries as configured for this server.
+on the existing sources and libraries page, note netbeans detected all of  the relevant folders (in eclipse we had to replace "webcontent" with  "war")
+- open messages.properties in netbeans and change the app.short property to netbeans rocks!
+- expand all nodes in the project to show the project structure in netbeans.
+in eclipse, right-click the countries project and select delete.
+demo cleanup undeploy the countries project from tomcat.
+open configuration files | application context.
+this demo script is part of the netbeans world tour 2008 session #2, using netbeans for your existing projects.
+- create a new dynamic web project (file > new > project > web).
+- uncheck generate deployment descriptor.
+- ask the audience if they have any questions about netbeans & eclipse running together.
+mention that this is a  great feature in netbeans for monitoring requests and responses.
+free-form project demo the point of this demo is to show the additional complexity imposed by choosing to use free-form projects.
+configure the project for netbeans - create a new web application with existing sources.
+explain that .classpath and .project files are from eclipse.
+free-form project demo the point of this demo is to show the additional complexity imposed by  choosing to use free-form projects.
+so...go to the file manager and delete the build directory.
+choose  tomcat as default and check the checkbox to always use tomcat as a server for  this project.
+in the case where the project was checked out from a source repository, the build directory would not be there to begin with.
+this is important as the sample application already has one and we dont' want to overwrite it.
+sharingprojectnetbeanseclipse - netbeans wiki search:
+point the wizard to ${spring.root}/samples/countries/.
+configure the project for netbeans create a new web application with existing sources.
+alternatively you can set  reloadable="true" in context.xml (seewhy not set  reloadable="true" ?) and just refresh the browser.
+show that spring 2.0 was added as framework.
+- download the spring framework (the stable version, with dependencies) from springframework.org and unzip it.
+it is possible to share projects between netbeans and eclipse -
+if you use netbeans' delete project option, it deletes the web-inf/lib directory, so you'll have to set that up again.
+- uncheck use default and set the project contents directory to: ${spring.root}/samples/countries/ - target runtime: apache tomcat v6.0 - click next and next to get to the web content page - set the content directory to war, which matches the sample application's content directory.
+show that spring 2.0 was  added as framework.
+decide you're cool with this new application name :-).
+main points to hit -
+if not, try to investigate  the error and maybe someone from the audience can help you :) go to main in the web application and show the list of countries.
+in the case where  the project was checked out from a source repository, the build directory would  not be there to begin with.
+spring module features show basic features of the spring module: - go to the project properties and frameworks.
+eclipse will detect that message properties  has been changed and prompt you to reload the file.
+build.xml and nbproject are from netbeans.
+attachments retrieved from "http://wiki.netbeans.org/sharingprojectnetbeanseclipse" - media:countries_sharingprojectnetbeanseclipse.zip - media:libraries_sharingprojectnetbeanseclipse.zip - this page was last modified on 5 november 2009, at 16:11.
+click back and next to refresh the page.
+uncheck generate deployment descriptor.
+run the project to see the results (note, the projects are deployed to 2  different server instances - i don't know if there's a way to get them to share  the same instance -- see issue114820).
+- in eclipse, right-click the countries project and select delete.
+explain that .classpath and  .project files are from eclipse.
+netbeans should be already running from your previous demos.
+- delete the the ${spring.root}/samples/countries/.project file, otherwise, eclipse will not let you create a project against this directory again (the delete project option only deletes the project from the workspace - not the project settings).
+eclipse will detect that message properties has been changed and prompt you to reload the file.
+- since eclipse comes with no application server, set up netbeans' tomcat in eclipse :).
+the wizard will complain that there is already a build directory in the  application.
+this is important as the sample  application already has one and we dont' want to overwrite it.
+- - project name: countries.
+these tasks were taken care of using the regular project type but need to be defined using the free-form project type.
+netbeans detects the existing build.xml and offers an alternative name,  nbbuild.xml.
+- delete the countries project, but leave the sources - create a new project using existing ant script (free-form) - show how the targets need to be mapped, and that no targets currently exist for deploy.
+right-click the project and choose run
+open messages.properties in netbeans and change the app.short property to netbeans rocks!
+switch to back to eclipse.
+click on pdf to generate pdf and excel to generate excel sheet.
+no  annoying messages this time :) do the same demo as when the application  was running from eclipse to show that pdf and xls integration works.
+if you use netbeans'  delete project option, it deletes the web-inf/lib directory, so you'll have to  set that up again.
+select project > clean to rebuild the project.
+delete the the ${spring.root}/samples/countries/.project file, otherwise,  eclipse will not let you create a project against this directory again (the  delete project option only deletes the project from the workspace - not the  project settings).
+delete the countries project, but leave the sources create a new project using existing ant script (free-form)
+mention that there are other features available, but we don't have time  to show them, so developers should check them out on the spring module project  page.
+open messages.properties and change the app.short name toeclipse rules!
+mention this is a community-developed project and already reached version  1.0, found athttp://spring-netbeans.sourceforge.net.

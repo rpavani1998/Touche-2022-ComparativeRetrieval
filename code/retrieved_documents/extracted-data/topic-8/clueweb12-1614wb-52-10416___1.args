@@ -1,0 +1,76 @@
+phonetics phonetic algorithms are also provided to determine what words sound like and compare them accordingly.
+each algorithm produces a number indicating its perception of similarity, but each is determined differently and can even move in opposite directions.
+classifier.adddocument(['unit', 'test'], 'software'); classifier.adddocument(['bug', 'program'], 'software'); classifier.adddocument(['drive', 'capacity'], 'hardware'); classifier.adddocument(['power', 'supply'], 'hardware'); classifier.train(); it's possible to persist and recall the results of a training via the save method: var natural = require('natural'),
+bayesclassifier(stemmer); with the classifier trained it can now classify documents via the classify method: console.log(classifier.classify('did the tests pass?')); console.log(classifier.classify('did you buy a new drive?')); resulting in the output: software hardware
+: ' + item.tfidf); }); yeilding: fortran: 1.7047480922384253 code: 1.6486586255873816 inflection basic inflectors are in place to convert nouns between plural and singular forms and to turn integers into string counters (i.e. '1st', '2nd', '3rd', '4th 'etc.).
+the above could could also use soundex by substituting the following in for the require.
+the following example takes care of the first step by requiring-up the classifier and training it with data.
+you can use them for tasks like spam detection and sentiment analysis.
+console.log('they sound alike!'); the raw code the phonetic algorithm produces can be retrieved with the process method: var phoneticcode = phonetic.process('phonetics'); console.log(phoneticcode); resulting in: fntks like the stemming implementations the phonetic modules have an attach method that patches string with shortcut methods, most notably soundslike for comparison: phonetic.attach(); if(worda.soundslike(wordb))
+to guarantee that a frequently-used, albeit semantically less important, word doesn't gain too much favor you'll want to ensure you have many documents in your tfidf clone.
+to guarantee that a frequently-used, albeit semantically less important, word doesn't gain too much favor you'll want to ensure you have many documents in your tfidf clone.
+[ 'i', 'stem', 'word' ] all of the code above would also work with a lancaster stemmer by requiring the lancasterstemmer module instead, like: var natural = require('natural'), stemmer = natural.
+console.log('they sound alike!'); attach also patches in a phonetics and tokenizeandphoneticize methods to retrieve the phonetic code for a single word and an entire corpus respectively.
+also, merging with rob ellis's node-nltools back in august of 2011 strengthened "natural" further by rapidly bringing new algorithms and features into the fold.
+my, node and its community were young but maturing rapidly.
+bayesclassifier.load('classifier.json', null, function(err, classifier) { console.log(classifier.classify('did the tests pass?')); }); note that substituting logisticregressionclassifier for bayesclassifier should generally work as a drop-in replacement.
+bayesclassifier.load('classifier.json', null, function(err, classifier) { console.log(classifier.classify('did the tests pass?')); }); note that substituting logisticregressionclassifier for bayesclassifier should generally work as a drop-in replacement.
+the above could could also use soundex by substituting the following in for the require.
+soundex; note that soundex and metaphone may have trouble with non-english words, but double metaphone should have some degree of success with many other languages.
+you can read more from them attheir website.
+tfidf.listterms(4 /* document index */).foreach(function(item) { console.log(item.term + ': ' + item.tfidf); }); yeilding: fortran: 1.7047480922384253 code: 1.6486586255873816 inflection basic inflectors are in place to convert nouns between plural and singular forms and to turn integers into string counters (i.e. '1st', '2nd', '3rd', '4th 'etc.).
+in this case the n-grams are composed of words but outside of "natural" or even natural language processing they could be of other countable objects.
+note that the tokenizeandstem method will omit certain words by default that are considered irrelevant (stop words) from the return array.
+thus i began work on "natural", a module of base natural languages processing algorithms for node.js.
++ i + ' is ' + measure); }); console.log('ruby --------------------------------'); tfidf.tfidfs('ruby', function(i, measure) { console.log('document #' + i + ' is ' + measure); }); the previous code will output the tf*idf weights for "node" and "ruby".
+tf*idf tf*idf weights can be used to judge how important a given word is to a given document in a broader corpus (collection of documents).
+to do any production tasks you'd want many more training documents (hundreds per class depending on their size).
+bayesclassifier(); classifier.adddocument("my unit-tests failed.", 'software'); classifier.adddocument("tried the program, but it was buggy.", 'software'); classifier.adddocument("the drive has a 2tb capacity.", 'hardware'); classifier.adddocument("i need a new power supply.", 'hardware'); classifier.train(); by default the classifier will tokenize the corpus and stem it with a porterstemmer.
+string objects will then have a stem method.
+the higher the weight the more important the word is to the document.
+the above code returns the following output: stem stem stem stem for convenience stemmers can patch string with methods to simplify the process by calling the attach method.
+this is especially useful if the corpus is not english.
+console.log(tfidf.tfidf('node', 0 /* document index */)); console.log(tfidf.tfidf('node', 1)); you can also get a list of all terms in a document ordered by their importance.
+classifier.adddocument(['unit', 'test'], 'software'); classifier.adddocument(['bug', 'program'], 'software'); classifier.adddocument(['drive', 'capacity'], 'hardware'); classifier.adddocument(['power', 'supply'], 'hardware'); classifier.train(); it's possible to persist and recall the results of a training via the save method: var natural = require('natural'),
+to instruct the stemmer to not omit stop words pass atrue in to tokenizeandstem for the keepstops parameter.
+this is especially useful if the corpus is not english.
+many of the algorithms have additional parameters that can be used to tweak their operation and a few modules weren't represented at all, but the official readme can help fill that gap.
+porterstemmer; var stem = stemmer.stem('stems'); console.log(stem); stem = stemmer.stem('stemming'); console.log(stem); stem = stemmer.stem('stemmed'); console.log(stem); stem = stemmer.stem('stem'); console.log(stem); above i simply required-up the main "natural" module and grabbed the porterstemmer sub-module from within.
+christopher is a dzone mvb and is not an employee of dzone and has posted 1 posts at dzone.
+this dzone refcard provides an in depth introduction to the cloud computing technology, google app engine.
+tags: (note: opinions expressed in this article and its replies are the opinions of their respective authors and not those of dzone, inc.)this content on search technology is part of the solr-lucene microzone, supported bylucid imagination.
+tf*idf tf*idf weights can be used to judge how important a given word is to a given document in a broader corpus (collection of documents).
+with the exception of k-means, which is near completion, i'd love community help on nearly every one!
+nouninflector.attach(); console.log('radius'.pluralizenoun()); console.log('beers'.singularizenoun()); a nouninflector instance can do custom conversion if you provide expressions via the addplural and addsingular methods.
+they can help you harness the full potential of search through their enterprise solr development platform—lucidworks enterprise—which can make your production process simpler and more cost-efficient with open source configurability.
+if you are looking for more information on cloud computing then this dzone refcard is for you.
+many of the algorithms have additional parameters that can be used to tweak their operation and a few modules weren't represented at all, but the official readme can help fill that gap.
+installing like most node modules "natural" is packaged as an npm and can be installed from the command line as such: npm install natural
+consider the following code which adds a few documents to a corpus and then determines how important the words "ruby" and "node" are to them.
+soundex; note that soundex and metaphone may have trouble with non-english words, but double metaphone should have some degree of success with many other languages.
+bayesclassifier(stemmer); with the classifier trained it can now classify documents via the classify method: console.log(classifier.classify('did the tests pass?')); console.log(classifier.classify('did you buy a new drive?')); resulting in the output: software hardware
+the following example shows each algorithm's perception of the difference between the words "execution" and "intention".
+the following example shows each algorithm's perception of the difference between the words "execution" and "intention".
+bayesclassifier(); classifier.adddocument("my unit-tests failed.", 'software'); classifier.adddocument("tried the program, but it was buggy.", 'software'); classifier.adddocument("the drive has a 2tb capacity.", 'hardware'); classifier.adddocument("i need a new power supply.", 'hardware'); classifier.train(); by default the classifier will tokenize the corpus and stem it with a porterstemmer.
+this allows the consumer to perform custom tokenization and stemming if any at all.
+to do any production tasks you'd want many more training documents (hundreds per class depending on their size).
+the lancaster stemmer tends to be a bit more agressive resulting in roots that look less like their english equivalents, but will likely perform better.
+each algorithm produces a number indicating its perception of similarity, but each is determined differently and can even move in opposite directions.
+this allows the consumer to perform custom tokenization and stemming if any at all.
+initially i didn't think "natural" could be as complete as the nltk, but as my own understanding as well as community contributions picked up i've become much more hopeful.
+you can use them for tasks like spam detection and sentiment analysis.
+similarly the classifier can be trained on arrays rather than strings, bypassing tokenization and stemming.
+var singular = nouninflector.singularize('beers'); console.log(singular); just like the stemming and phonetic modules an attach method is provided to patch string with shortcut methods.
+nouninflector.attach(); console.log('radius'.pluralizenoun()); console.log('beers'.singularizenoun()); a nouninflector instance can do custom conversion if you provide expressions via the addplural and addsingular methods.
+lancasterstemmer; of course the actual stems produced could be different depending on the algorithm chosen.
+the following example compares the string "phonetics" and the intentional misspelling "fonetix" and determines they sound alike according to the metaphone module but the same pattern could be applied to the doublemetaphone or soundex modules.
+the higher the weight the more important the word is to the document.
+the following example takes care of the first step by requiring-up the classifier and training it with data.
+similarly the classifier can be trained on arrays rather than strings, bypassing tokenization and stemming.
+that root may not end up looking exactly like the english root, but should be close enough for comparison.
+to either help out or follow along check out the github repository.
+additionally, you can measure a word against a single document.
+consider the following code which adds a few documents to a corpus and then determines how important the words "ruby" and "node" are to them.
+stemmer.attach(); stem = 'stemming'.stem(); console.log(stem); it's very possible you'd be interested in stemming a string composed of many words, perhaps an entire document.
+console.log(tfidf.tfidf('node', 0 /* document index */)); console.log(tfidf.tfidf('node', 1)); you can also get a list of all terms in a document ordered by their importance.
+in this case the n-grams are composed of words but outside of "natural" or even natural language processing they could be of other countable objects.

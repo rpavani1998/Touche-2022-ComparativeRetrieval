@@ -1,0 +1,1849 @@
+<!doctype html>
+<meta charset="utf-8">
+<title></title>
+<body>
+
+<p></p> 
+<p> </p> 
+<p></p> 
+<p></p> 
+<h1>A Quick, Painless Tutorial and Reference on the R Statistical Package</h1> 
+<p>  Professor Norm Matloff <br>
+ Dept. of Computer Science <br>
+ University 
+of California at Davis<br>
+ Davis, CA 95616</p> 
+<h2>Contents of This Site:</h2> 
+<p> </p> 
+<ul> 
+<li> Why You Should Use R </li> 
+<li> What Is Different about This Tutorial </li> 
+<li> A First R Session (5 Minutes) 
+<ul> 
+<li> Executing R </li> </ul> 
+<ul> 
+<li> The &lt;- Operator and c() Function </li> </ul> 
+<ul> 
+<li> Example--Creating a Histogram </li> </ul> 
+<ul> 
+<li> Leaving R </li> </ul> </li> 
+<li> A Second R Session (10 Minutes) 
+<ul> 
+<li> Introduction to R Data Files and Frames </li> </ul> 
+<ul> 
+<li> Introduction to Regression in R </li> </ul> </li> 
+<li> More on Graphics 
+<ul> 
+<li> The Workhorse of R Graphics, the plot() Function </li> 
+<li> Plotting Multiple Curves, Using the lines() Function </li> 
+<li> Saving Graphics (and Other) Command Sequences to Files </li> 
+<li> Graphical Devices and Saving Graphs to Files </li> 
+<li> Adding Points: the points() Function </li> 
+<li> Adding Line Segments: the lines() Function </li> 
+<li> Graphing Explicit Functions </li> 
+<li> Smoothing Points: the lowess() Function </li> 
+<li> Adding Text: the text() Function </li> 
+<li> Pinpointing Locations: the loc() Function </li> 
+<li> Changing Character Sizes: the cex() Function </li> 
+<li> Operations on Axes </li> </ul> </li> 
+<li> More on Vectors, Arrays and Matrices 
+<ul> 
+<li> Type Issues </li> 
+<li> Matrices </li> 
+<li> Solving Systems of Linear Equations </li> </ul> </li> 
+<li> More on Data Frames 
+<ul> 
+<li> Data Frames As Two-Dimensional Arrays </li> 
+<li> Creating Data Frames with the Function data.frame() </li> 
+<li> Write a Data Frame to a File </li> </ul> </li> 
+<li> Adding More Rows or Columns to a Matrix/Data Frame </li> 
+<li> Tables </li> 
+<li> More on the Functional Programming Nature of R 
+<ul> 
+<li> Elementwise Operations on Vectors </li> </ul> 
+<ul> 
+<li> Vector Slicing </li> </ul> 
+<ul> 
+<li> Filtering </li> </ul> 
+<ul> 
+<li> Combining Elementwise Operations and Filtering, with the ifelse() Function
+</li> </ul> 
+<ul> 
+<li>  Applying the Same Function to All Rows or All Columns of a Matrix/Data 
+Frame </li> </ul> 
+<ul> 
+<li> Generating Arithmetic Sequences with the seq() Function </li> </ul> 
+<ul> 
+<li> Miscellaneous Vector Operations </li> </ul> 
+<ul> 
+<li> Function Arguments Don't Change </li> </ul> 
+<ul> 
+<li> Functions Are First-Class Objects </li> </ul> </li> 
+<li> More on Regression in R 
+<ul> 
+<li> Data in Vectors Instead of a Data Frame </li> 
+<li> Using lsfit() Instead of lm() </li> 
+<li> Specifying Many Predictor Variables in lm() </li> 
+<li> Logistic Regression </li> </ul> </li> 
+<li> Session Data </li> 
+<li> More on the Object Orientation of R 
+<ul> 
+<li> Managing Your Objects </li> 
+<li> Extracting Numbers from Your Objects </li> </ul> </li> 
+<li> Functions for Stat Distributions </li> 
+<li> Math Functions </li> 
+<li> R Programming 
+<ul> 
+<li> Functions: a Short Programming Example </li> 
+<li> Use of Braces for Block Definition </li> 
+<li> Loops </li> 
+<li> Return Values </li> 
+<li> If-Else </li> 
+<li> Local and Global Variables </li> 
+<li> Arithmetic and Boolean Operators and Values </li> 
+<li> Writing Efficient R Code </li> 
+<li> Simulation Programming </li> 
+<li> Saving and Reusing Functions </li> 
+<li> Use of Lists to Package Information </li> 
+<li> Printing to the Screen </li> 
+<li> Debugging 
+<ul> 
+<li> Entering the Debugger with the debug() Function </li> 
+<li> Automating Actions with the trace() Function </li> 
+<li> Performing Checks After a Crash with the traceback() and debugger() 
+Functions </li> 
+<li> Using the debug Package </li> 
+<li> Ensuring Consistency with the set.seed() Function </li> </ul> </li> </ul> 
+</li> 
+<li> Startup Files </li> 
+<li> Packages (Libraries) 
+<ul> 
+<li> Basic Notions </li> 
+<li> Loading from Your Hard Drive </li> 
+<li> Downloading from the Web </li> 
+<li> Built-in Data Sets </li> </ul> </li> 
+<li> String Manipulation </li> 
+<li> Handy Miscellaneous Features 
+<ul> 
+<li> Scrolling through Command History </li> 
+<li> The Pager </li> 
+<li> Running R in Batch Mode </li> 
+<li> Building Up Character Strings </li> 
+<li> Calculating Run Time </li> </ul> </li> 
+<li> Sampling Subsets 
+<ul> 
+<li> The sample() Function </li> 
+<li> Bootstrap Operations </li> </ul> </li> 
+<li> Reading Spreadsheet Files </li> 
+<li> Reading dBase Files </li> 
+<li> For Further Information 
+<ul> 
+<li> Help Facilities within R </li> 
+<li> Help on the Web 
+<ul> 
+<li> General Introductions </li> 
+<li> Especially Good for Reference Purposes </li> 
+<li> R Programming </li> 
+<li> On Graphics </li> 
+<li> Searching R Issues </li> </ul> </li> </ul> </li> 
+<li> How to Obtain/Install R </li> 
+<li> Using R from Emacs </li> 
+<li> Using R from Python (and Vice Versa </li> 
+<li> Footnotes </li> </ul> 
+<p></p> 
+<h2>Why You Should Use R:</h2> 
+<p>Why use anything else? As the Cantonese say, <i>yauh peng, yauh leng</i>
+--&quot;both inexpensive and beautiful.&quot;</p> Its virtues: 
+<p> </p> 
+<ul> 
+<li> it's a public-domain implementation of the widely-regarded S statistical 
+language; R/S is the<i>de facto</i> standard among professional statisticians 
+</li> 
+<p></p> 
+<li> open-software nature means it's easy to get help from the user community, 
+and lots of new functions get contributed by users, many of which are prominent 
+statisticians</li> 
+<p></p> 
+<li> comparable, and often superior, in power to commercial products in most 
+senses</li> 
+<p></p> 
+<li> available for Windows, Macs, Unix/Linux </li> 
+<p></p> 
+<li> in addition to enabling statistical operations, it's a general 
+programming language, so that you can<i>program</i> your more complex tasks 
+</li> 
+<p></p> 
+<li> object-oriented and functional programming structure </li> 
+<p></p> 
+<li> your data sets are saved between sessions, so you don't have to reload 
+each time</li> 
+<p></p> </ul> 
+<p></p> 
+<p> I should warn you that one submits commands to R via text, rather than 
+mouse clicks in a Graphical User Interface (GUI). If you can't live without 
+GUIs, you should consider using one of the free GUIs that have been developed 
+for R, e.g. R Commander or  JGR. Note that R definitely does have 
+graphics--tons of it. But the graphics are for the output, e.g. plots, not for 
+the input.</p> 
+<p> Though the terms <i>object-oriened</i> and <i>functional programming</i> 
+may pique the interests of computer scientists, they are actually quite 
+relevant to anyone who uses R.</p> 
+<p> The term <i>object-oriented</i> can be explained by example, say 
+statistical regression. When you perform a regression analysis with other 
+statistical packages, say SAS or SPSS, you get a mountain of output. By 
+contrast, if you call the<strong>lm()</strong> regression function in R, the 
+function returns an<i>object</i> containing all the results--estimated 
+coefficients, their standard errors, residuals, etc. You then pick and choose 
+which parts of that object to extract, as you wish.</p> 
+<p> Computer scientists would say that R is <i>polymorphic</i>, which means 
+that the same function can be applied to different types of objects, with 
+results tailored to the different object types. Such a function is called a<i>
+generic function</i>. Consider for instance the <strong>plot()</strong> 
+function. If you apply it to a simple list of numbers, you get a simple plot of 
+them, but if you apply it to the output of a regression analysis, you get a set 
+of plots of various aspects of the regression output. This is nice, since it 
+means that you, as a user, have fewer commands to remember! For instance, you 
+know that you can use the<strong>plot()</strong> function on just about any 
+object produced by R.</p> 
+<p> The object orientation also allows you to combine several commands, each 
+one using the output of the last, with the resulting combination being quite 
+powerful and extremely flexible. (Unix users will recognize the similarity to 
+Unix shell pipe commands.) For example, consider this (compound) command:</p> 
+<pre> nrow(subset(x03,z==1)) </pre> 
+<p> First the <strong>subset() </strong> function would take the data frame 
+<strong>x03</strong>, and cull out all those records for which the variable 
+<strong>z</strong> has the value 1. The resulting new frame would be fed into 
+<strong>nrow()</strong>, the function that counts the number of rows in a 
+frame. The net effect would be to report a count of<strong>z = 1</strong> in 
+the original frame.</p> 
+<p> The functional programming aspect of importance to most users will be that 
+one applies an operation to an entire list of elements, one by one, making 
+things extremely convenient. This rather vague statement will be clarified as 
+things unfold here, so don't worry about it now.</p> 
+<h2> What Is Different about This Tutorial: </h2> 
+<p> There are many excellent tutorials on R on the Web, some of which I list 
+in the section titled&quot;Help on the Web below. My tutorial is designed to 
+play a role complementary to those others. It is different from them in these 
+senses:</p> 
+<p> (If you wish to learn R from the perspective of a programmer---whether 
+professional or ``amateur''---you may prefer to read my writeup<i>R for 
+Programmers</i> instead of the tutorial here.) </p> 
+<p> </p> 
+<ul> 
+<li> It offers very short and quick entry into R. The total length of this 
+document in its entirety is not short, but the 5- and 10-minute introductory 
+sessions below are designed so that you will be using R within minutes. You 
+then can pick up other features from this document (and others) as the need 
+arises.</li> 
+<p></p> 
+<li> It is indexed to allow you to quickly find how to do something. </li> 
+<p></p> 
+<li> It includes some material explaining the object-oriented and functional 
+programming nature of R. Much of this material is missing or insufficiently 
+explained in many tutorials, and understanding it will enable you to much more 
+easily learn new R features later on.</li> 
+<p></p> 
+<li> My tutorial is concerned mainly with general R operations, rather than 
+the details of the specific statistical procedures. If you want to know how to 
+read data into R from a file, or how to manipulate data frames, I may have the 
+answer here. If you want to know how to do principal components analysis in R, 
+you'll need to try one of the other tutorials that I link to below.</li> 
+<p></p> </ul> 
+<p></p> 
+<h2> A First R Session (5 Minutes): </h2> 
+<h3>Executing R: </h3> 
+<p> (If you do not already have R installed, go first to the section below 
+titledHow to Obtain/Install R.) </p> 
+<p> Start R, by typing R on the command line (Unix) or in a Windows Run 
+window. You'll get a greeting, and then the R prompt, the &gt;:</p> 
+<pre> R : Copyright 2005, The R Foundation for Statistical Computing Version 
+2.1.1 (2005-06-20), ISBN 3-900051-07-0 ... Type `q()' to quit R. &gt;</pre> 
+<h3> The &lt;- Operator and c() Function: </h3> 
+<p> Now let's make a simple data set, a <i>vector</i> in R parlance, 
+consisting of the numbers 1, 2 and 4, and name it<strong>x</strong>: </p> 
+<pre> &gt; x &lt;- c(1,2,4) </pre> 
+<p> The &quot;c&quot; stands for &quot;concatenate,&quot; i.e. string together 
+the numbers 1, 2 and 4 into one object, which we then assigned to<strong>x
+</strong>. </p> 
+<p> Since objects are just one-element vectors, we can concatenate vectors 
+too. For instance,</p> 
+<pre> &gt; q &lt;- c(x,x,8) </pre> 
+<p> would set <strong>q</strong> to (1,2,4,1,2,4,8). </p> 
+<p> Since &quot;seeing is believing,&quot; go ahead and confirm that the data 
+is really in<strong>x</strong>; to print the vector to the screen, simply type 
+its name. (Python programmers will find this feature familiar.) For example,</p>
+<pre> &gt; x [1] 1 2 4 </pre> 
+<p> Yep, sure enough, <strong>x</strong> consists of the numbers 1, 2 and 4. 
+</p> 
+<p> (The &quot;[1]&quot; helps users read voluminous output consisting of many 
+rows. No such help is needed here, but you will see the need later in oursecond 
+example.) </p> 
+<p> Vectors indices begin at 1. Remember, one can always print an object in R 
+by simply typing its name, so let's print out the third element of<strong>x
+</strong>: </p> 
+<pre> &gt; x[3] [1] 4 </pre> 
+<p> Might as well find the mean and standard deviation: </p> 
+<pre> &gt; mean(x) [1] 2.333333 &gt; sd(x) [1] 1.527525 </pre> 
+<p> If we had wanted to save the mean in a variable instead of just printing 
+it to the screen, we could do, say,</p> 
+<p> &gt; y &lt;- mean(x) </p> 
+<p> Again, since you are learning, let's confirm that <strong>y</strong> 
+really does contain the mean of<strong>x</strong>: </p> 
+<pre> &gt; y [1] 2.333333 </pre> 
+<p> By the way, we use # to write comments, e.g. </p> 
+<pre> &gt; y # print out y [1] 2.333333 </pre> 
+<p> These of course are especially useful when writing programs (see our the 
+section titled &quot;R Programming below), but they are useful for interactive 
+use too, since R does record your commands (see&quot;Session Data&quot; below). 
+The comments then help you remember what you were doing when you read the 
+record.</p> 
+<h3>Example--Creating a Histogram: </h3> 
+<p> As the last action in this quick introduction to R, let's have R draw a 
+histogram of the data:</p> 
+<pre> &gt; hist(x) </pre> 
+<p> A window pops up with the histogram in it. This one won't be very pretty, 
+but R has all kinds of bells and whistles you can use optionally. For instance, 
+you can change the number of bins by specifying the<strong>breaks</strong> 
+variable;<strong>hist(z,breaks=12)</strong> would draw a histogram of the data 
+<strong>z</strong> with 12 bins. You can make nicer labels, etc. Also, if you 
+prefer the more sophisticated kernel method for estimating a density, R offers 
+the<strong>density()</strong> function, an example of which is in our section 
+below titled&quot;Plotting Multiple Curves, Using the lines() Function &quot;.
+</p> 
+<h3>Leaving R: </h3> 
+<p> Well, that's the end of this first 5-minute introduction. We leave by 
+calling the quit function (or optionally by hitting ctrl-d in Unix):</p> 
+<pre> &gt; q() Save workspace image? [y/n/c]: n </pre> 
+<p> That last question asked whether we want to save our variables, etc., so 
+that we can resume work later on. If we answer<strong>y</strong>, then the next 
+time we run R, all those objects will automatically be loaded. This is a very 
+important feature; see more in our section&quot;Session Data&quot; below. </p> 
+<h2>A Second R Session (10 Minutes): </h2> 
+<p> Here we will do some multivariate analysis, and also introduce <i>data 
+frames</i>, which allow a richer structure than simply using individual vectors.
+</p> 
+<h3>Introduction to R Data Files and Frames: </h3> 
+<p> As my sample data set, I have created a file named <strong>exams</strong>, 
+consisting of grades for the three exams in a certain course (two midterm exams 
+and a final exam). The first few lines in the file are</p> 
+<pre> Exam1 Exam2 Exam3 62 70 60 74 34 64 50 35 40 ... </pre> 
+<p> Note that I have separated fields here by spaces. (R can also use <strong>
+.csv</strong> files, from spreadsheets. See  the material on .csv files below 
+for details.)</p> 
+<p> As you can see, other than the first record, which contains the names of 
+the columns (i.e. the variables), each line contains the three exam scores for 
+one student. This is the classical &quot;two-dimensional file&quot; notion, 
+i.e. each line in our file contains the data for one observation from our 
+sample. The idea of a data frame is to encapsulate such data, along with 
+variable names and even line names, into one object.</p> 
+<p> As mentioned, I've specified the variable names in the first record. Our 
+variable names didn't have any embedded spaces in this case, but if they had, 
+we'd need to quote any such name.</p> 
+<p> Suppose the second exam score for the third student had been missing. Then 
+we would have typed</p> 
+<pre> 50 NA 40 </pre> 
+<p> in that line of the <strong>exams</strong> file. In any subsequent 
+statistical analyses, R would do its best to cope with the missing data, in the 
+obvious manners. If for instance we had wanted to find the mean score on Exam 
+2, R would find the mean among all students except the third.</p> 
+<p> We first read in the data from the file <strong>exams</strong> into a data 
+frame which we'll name<strong>testscores</strong>: </p> 
+<pre> &gt; testscores &lt;- read.table(&quot;exams&quot;,header=TRUE) </pre> 
+<p> The parameter <strong>header=TRUE</strong> tells R that we do have a 
+header line (for the variable names), so R should not count that first line in 
+the file as data.</p> 
+<p> By the way, note the use of <i>named arguments</i> here. The function 
+<strong>read.table()</strong> has a number of arguments, some of which are 
+optional, which means that we must specify which arguments we are using, by 
+using their names, e.g.<strong>header-TRUE</strong> above. (Again, Python 
+programmers will find this familiar.) The ones you don't specify all have 
+default values. Some values can be abbreviated, e.g. T for TRUE.</p> 
+<p> In R, the components of an object are accessed via the <strong>$</strong> 
+operator. For example, the vector of all the<strong>Exam1</strong> scores is 
+<strong>testscores$Exam1</strong>, as we confirm here: </p> 
+<pre> &gt; testscores$Exam1 [1] 62 74 50 62 39 60 48 80 49 49 100 30 61 100 82 
+37 54 65 36 [20] 97 60 80 70 50 60 24 60 75 77 71 25 93 80 92 75 26 27 55 [39] 
+30 44 86 35 95 98 50 50 34 100 57 99 67 77 70 53 38</pre> 
+<p> (The [1] means that items 1-19 start here, the [20] means that items 20-38 
+start here, etc.)</p> 
+<p> So, you can see that the data frame <strong>testscores</strong> is a way 
+of packaging the vectors of values of the individual variables, plus the 
+associated variable names. For instance, instead of retrieving the means of the 
+three variables individually, by calling<strong>mean()</strong> on each vector, 
+we can get the whole group of means via one single command:</p> 
+<pre> &gt; colMeans(testscores) Exam1 Exam2 Exam3 62.14545 51.27273 50.05455 
+</pre> 
+<p> We can add columns, i.e. new variables, to the data frame. For example, in 
+<strong>testscores</strong>, we can add a variable which is the difference 
+between Exams 1 and 2:</p> 
+<pre> &gt; testscores$Diff21 &lt;- testscores$Exam2 - testscores$Exam1 </pre> 
+<p> By the way, it can get pretty tiring to type out expressions like <strong>
+testscores$Exam3</strong> all the time, so R gives us a shortcut, using the 
+<strong>attach()</strong> function: </p> 
+<pre> &gt; attach(testscores) </pre> 
+<p> This command tells R that from now on, when we refer, for example, to 
+<strong>Exam3</strong>, we mean <strong>testscores$Exam3</strong>: </p> 
+<pre> &gt; mean(Exam3) [1] 50.05455 </pre> 
+<p> If we want R to stop doing that, we use <strong>detach()</strong>, e.g. 
+</p> 
+<pre> &gt; detach() &gt; mean(Exam3) Error in mean(Exam3) : Object 
+&quot;Exam3&quot; not found</pre> 
+<h3>Introduction to Regression in R: </h3> 
+<p> Let's see how well the third exam score can be predicted from the first, 
+using a linear regression function:</p> 
+<pre> &gt; fit1 &lt;- lm(Exam3 ~ Exam1,data=testscores) </pre> 
+<p> Here we fit the model </p> 
+<pre> E(Exam3 | Exam1) = c0 + c1 Exam1 </pre> 
+<p> under which we assume that the mean Exam3 score for a given Exam1 score is 
+a linear function of the latter. (The function name &quot;lm&quot; stands for 
+&quot;linear model.&quot;)</p> 
+<p> Now the object <strong>fit1</strong> contains all the results of the 
+regression run, i.e. coefficients, residuals, etc. We can pick out that 
+information individually if we wish, e.g. obtain the estimated regression 
+coefficients:</p> 
+<pre> &gt; fit1$coefficients (Intercept) Exam1 3.7008841 0.7458898 </pre> 
+<p> Note the effect of object orientation here. The coefficients themselves 
+are accompanied within the object by their names, and when we print the 
+coefficients R knows to print the names with them. Yet at the same time we can 
+work them as numbers; R will be smart enough to leave the names out of things 
+then.</p> 
+<p> Or, if we wish, we can get a ton of information in one fell swoop, the way 
+we do in other statistical packages:</p> 
+<pre> &gt; summary(fit1) Call: lm(formula = Exam3 ~ Exam1, data = testscores) 
+Residuals: Min 1Q Median 3Q Max -42.9132 -11.0895 0.9389 12.0786 32.8163 
+Coefficients: Estimate Std. Error t value Pr(&gt;|t|) (Intercept) 3.70088 
+6.52037 0.568 0.573 Exam1 0.74589 0.09877 7.552 5.85e-10 *** --- Signif. codes: 
+0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 Residual standard error: 16.31 
+on 53 degrees of freedom Multiple R-Squared: 0.5183, Adjusted R-squared: 0.5092 
+F-statistic: 57.03 on 1 and 53 DF, p-value: 5.85e-10</pre> 
+<p> So for example, we estimate that Exam 1 scores explain about 50% of the 
+variation in Exam 3 scores.</p> 
+<p> Let's now make a scatter plot of the original Exam1-Exam3 data, together 
+with the fitted regression line. First, the scatter plot:</p> 
+<pre> &gt; plot(testscores$Exam1,testscores$Exam3) </pre> 
+<p> A scatter plot window then pops up. (Again, it won't be very fancy for the 
+time being, since we are using default values, but you can make it fancy with 
+some added commands when you learn more about R.)</p> 
+<p> Now, we superimpose the fitted regression line onto that plot: </p> 
+<pre> &gt; abline(fit1) </pre> 
+<p> The name of this function is meant to suggest, &quot;Draw a line with Y 
+intercept<strong>a</strong> and slope <strong>b</strong>.&quot; So, for 
+instance, the call<strong>abline(2,5)</strong> will draw the line y = 2 + 5x. 
+But if the argument to the call is a regression object, e.g.<strong>fit1
+</strong> above, then <strong>abline()</strong> knows to use the regression 
+coefficients as the intercept and slope of the line to be drawn. Again we see 
+polymorphism at work.</p> 
+<p> (The function <strong>abline()</strong> can take on various forms of 
+arguments. The simplest just specifies two arguments, a Y-intercept value and a 
+slope. In the case above, it takes a regression output as its argument.</p> 
+<p> We could get a number of plots related to this fit by typing </p> 
+<pre> plot(fit1) </pre> 
+<p> If we had wanted to regress Exam3 against both Exam1 and Exam2, we would 
+issue the following command:</p> 
+<pre> &gt; fit12 &lt;- lm(testscores$Exam3 ~ testscores$Exam1 + 
+testscores$Exam2)</pre> 
+<h2>More on Graphics:</h2> 
+<p> R has a very rich set of graphics facilities. The front of the R home page 
+has some colorful examples. There are many extensive Web tutorials on this 
+(some are listed below), and the entire book,<i>R Graphics</i>, by Paul Murrell 
+(Chapman and Hall, 2005), is devoted to presenting the various graphics 
+facilities of R. I cannot cover even a small part of it here, but we will give 
+you enough foundation to work and learn more.</p> 
+<h3>  The Workhorse of R Graphics, the plot() Function: </h3> 
+<p> This is the workhorse function for graphing, serving as the vehicle for 
+producing many different kinds of graphs. As mentioned earlier, it senses from 
+the type of the object sent to it what type of graph to make.</p> 
+<p> We typically first call <strong>plot()</strong> with an X vector and a Y 
+vector, which are interpreted as a set of (X,Y) points. For example,</p> 
+<pre> &gt; plot(c(1,2,3), c(1,2,4)) </pre> 
+<p> plots the points (1,1), (2,2) and (3,4). </p> 
+<h3> Plotting Multiple Curves, Using the lines() Function:</h3> 
+<p> The <strong>plot()</strong> function works in stages, i.e. you can build 
+up a graph in stages by giving more and more commands. Recall that for instance 
+in ourour section titled &quot;A Second R Session&quot; above, we first created 
+a scatter plot and then later superimposed the fitted regression line onto the 
+same graph. (You do not need to have read that section to follow the material 
+here.) Often we will just call<strong>plot()</strong> first to create the X and 
+Y axes of the graph, and their labels, and then add to it with subsequent calls 
+to various functions. A common way of doing this is to use the<strong>lines()
+</strong> function. </p> 
+<p> Though there are many options, the two basic arguments to <strong>lines()
+</strong> are a vector of X values and a vector of Y values. These are 
+interpreted as (X,Y) pairs representing points to be added to the current 
+graph, with lines connecting the points.</p> 
+<p> For instance, if <strong>x</strong> and <strong>y</strong> are the vectors 
+(1.5,2.5) and (3,), then the call</p> 
+<pre> &gt; lines(c(1.5,2.5),c(3,3)) </pre> 
+<p> would add a line from (1.5,3) to (2.5,3) to the present graph. </p> 
+<p> As another example, let's plot nonparametric density estimates (these are 
+basically smoothed histograms) for Exams 1 and 2 from our<strong>exams</strong> 
+file in our section titled &quot;A Second R Session&quot;  above in the same 
+graph. We use the function<strong>density()</strong> to generate the estimates. 
+Here are the commands we issue:</p> 
+<pre> &gt; d1 = density(testscores$Exam1,from=0,to=100) &gt; d2 = 
+density(testscores$Exam2,from=0,to=100) &gt; 
+plot(d2,main=&quot;&quot;,xlab=&quot;&quot;) &gt; lines(d1)</pre> 
+<p> Here's what we did: First, we computed nonparametric density estimates 
+from the two variables, saving them in objects<strong>d1</strong> and <strong>d2
+</strong> for later use. We then called <strong>plot()</strong> to draw the 
+curve for Exam2. The internal structure of<strong>d2</strong> contains vectors 
+of X and Y coordinates needed by<strong>plot()</strong> to draw the figure. We 
+then called<strong>lines()</strong> to add Exam1's curve to the graph. </p> 
+<p> Note that we asked R to have blank labels for the figure as a whole and 
+for the X axis; otherwise, R would have gotten such labels from<strong>d2
+</strong>, which would have been specific to Exam 2. </p> 
+<p> If you want the lines &quot;connecting the dots&quot; but don't want the 
+dots themselves, include<strong>type=&quot;l&quot;</strong> in your call to 
+<strong>lines()</strong>: </p> 
+<pre> &gt; plot(x,y,type=&quot;l&quot;) &gt; lines(x,z,type=&quot;l&quot;) 
+</pre> 
+<p> The call to <strong>plot()</strong> both initiates the plot and draws the 
+first curve. (Without specifying<strong>type=&quot;l&quot;</strong>, only the 
+points would have been plotted.) The call to<strong>lines()</strong> then adds 
+the second curve.</p> 
+<p> You can use the <strong>lty</strong> parameter in <strong>plot()</strong> 
+to specify the type of line, e.g solid, dashed, etc. Type</p> 
+<pre> &gt; help(par) </pre> 
+<p> to see the various types and their codes. </p> 
+<h3> Saving Graphics (and Other) Command Sequences to Files:</h3> 
+<p> It may be very useful to save your graphics commands to a file. For 
+example, we could put the above commands in a file,<strong>testscores.r</strong>
+, with contents</p> 
+<pre> d1 = density(testscores$Exam1,from=0,to=100) d2 = 
+density(testscores$Exam2,from=0,to=100) 
+plot(d2,main=&quot;&quot;,xlab=&quot;&quot;) lines(d1)</pre> 
+<p> To execute these commands, we would type </p> 
+<pre> &gt; source(&quot;testscores.r&quot;) </pre> 
+<p> The advantage of this is that if we ever wanted to rerun this sequence of 
+commands, say with a slightly different set of parameters, we need only edit 
+the file<strong>testscores.r</strong> to reflect the parameter changes and then 
+run as above.</p> 
+<p> When <strong>source()</strong> is executed, the code in the specified file 
+is run. In our case here, we just had a function in the file, so the effect was 
+for R to read the function in to its list of functions. But if our file had 
+contained any code not in a function, it would have been executed.</p> 
+<h3> Graphical Devices and Saving Graphs to Files:</h3> 
+<p> R has the notion of a <i>graphics device</i>. The default device is the 
+screen. If we want to have a graph saved to a file, we must set up another 
+device. For example, if we wish to save as a PDF file, we do something like 
+this:</p> 
+<pre> &gt; pdf(&quot;d12.pdf&quot;) </pre> 
+<p> This opens a file, which we have chosen here to call <strong>d12.pdf
+</strong>. We now have two devices open, as we can confirm: </p> 
+<pre> &gt; dev.list() X11 pdf 2 3 </pre> 
+<p> Our first device, the screen, is named X11 when R runs on Unix; it is 
+device number 2. Our PDF file is device number 3.</p> 
+<p> Our current device is now the PDF file (which we could confirm by calling 
+<strong>dev.cur()</strong>). All graphics output will now go to this file 
+instead of to the screen. But what if we wish to save what's already on the 
+screen? We could re-establish the screen as the current device, then copy it to 
+the PDF device:</p> 
+<pre> &gt; dev.set(2) X11 2 &gt; dev.copy(which=3) pdf 3 </pre> 
+<p> Note carefully that the PDF file is not usable until we close it, which we 
+do as follows:</p> 
+<pre> &gt; dev.set(3) pdf 3 &gt; dev.off() X11 2 </pre> 
+<p> (We could also close the device by exiting R, though it's probably better 
+to proactively close.)</p> 
+<p> The above set of operations to print a graph can become tedious if used a 
+lot, so it makes sense to put them into a file.</p> 
+<h3>Adding Points: the points() Function: </h3> 
+<p> The <strong>points()</strong> function adds a set of (x,y)-points, with 
+labels for each, to the currently displayed graph. For instance, in oursecond 
+5-minute example above: </p> 
+<pre> points(testscores$Exam1,testscores$Exam3,pch=&quot;+&quot;) </pre> 
+<p> would superimpose onto the current graph the points of the exam scores 
+from that example, using &quot;+&quot; signs to mark them.</p> 
+<p> As with most of the other graphics functions, there are lots of options, 
+e.g. point color, background color, etc.</p> 
+<p> A nice function is <strong>legend()</strong>, which is used to add a 
+legend to a multicurve graph. For instance,</p> 
+<p> </p> 
+<ul> &gt; legend(2000,31162,legend=&quot;CS&quot;,lty=1) </ul> 
+<p></p> 
+<p> would place a legend at the point (2000,31162) in the graph, with a little 
+line of type 1 and label of &quot;CS&quot;. Try it!</p> 
+<h3>Graphing Explicit Functions: </h3> 
+<p> Say you wanted to plot the function g(t) = (t2+1)0.5 for t between 0 and 
+5. You could use the following R code:</p> 
+<pre> g &lt;- function(t) { return (t^2+1)^0.5 } # define g() x &lt;- 
+seq(0,5,length=10000) # x = [0.0004, 0.0008, 0.0012,..., 5] y &lt;- g(x) # y = 
+[g(0.0004), g(0.0008), g(0.0012), ..., g(5)] plot(x,y,type=&quot;l&quot;)</pre> 
+<p> But even better, you could use the <strong>curve()</strong> function: </p> 
+<pre> &gt; curve((x^2+1)^0.5,0,5) </pre> 
+<h3>Smoothing Points: the lowess() Function: </h3> 
+<p> Just plotting a cloud of points, whether connected or not, may turn out to 
+be just an uninformative mess. In many cases, it is better to smooth out the 
+data by fitting a nonparametric regression estimator, such as<strong>lowess()
+</strong>: </p> 
+<pre> plot(lowess(x,y)) </pre> 
+<p> The call <strong>lowess(x,y)</strong> returns the pairs of points on the 
+regression curve, and then<strong>plot()</strong> plots them. Of course, we 
+could get both the cloud and the smoothed curve:</p> 
+<pre> plot(x,y) lines(lowess(x,y)) </pre> 
+<h3>Adding Text: the text() Function: </h3> 
+<p> Use the <strong>text()</strong> function to place some text anywhere in 
+the current graph. For example,</p> 
+<pre> text(2.5,4,&quot;abc&quot;) </pre> 
+<p> would write the text &quot;abc&quot; at the point (2.5,4) in the graph. 
+The center of the string, in this case &quot;b&quot;, would go at that point.
+</p> 
+<p> In order to get a certain string placed exactly where you want it, you may 
+need to engage in some trial and error. R has no &quot;undo&quot; command 
+(though theESS interface to R described below does). For that reason, you might 
+want to put all the commands you're using to build up a graph in a file, and 
+then use<strong>source()</strong> to execute them. See the section on Startup 
+Files below. </p> 
+<p> But you may find the <strong>locator()</strong> function to be a much 
+quicker way to go. See the section onit below. </p> 
+<h3>Pinpointing Locations: the locator() Function: </h3> 
+<p> Typing </p> 
+<pre> locator(1) </pre> 
+<p> will tell R that you will click in 1 place in the graph. Once you do so, R 
+will tell you the exact coordinates of the point you clicked on. Call<strong>
+locator(2)</strong> to get the locations of 2 places, etc. </p> 
+<h3>Changing Character Sizes: the cex() Function: </h3> 
+<p> The <strong>cex()</strong> (&quot;character expand&quot;) function allows 
+you to expand or shrink characters within a graph, very useful. You can use it 
+as a named parameter in various graphing functions.</p> 
+<pre> text(2.5,4,&quot;abc&quot;,cex = 1.5) </pre> 
+<p> would print the same text as in our earlier example, but with characters 
+1.5 times normal size.</p> 
+<h3>Operations on Axes: </h3> 
+<p> You may wish to have the ranges on the X- and Y-axes of your plot to be 
+broader or narrower than the default. You can do this by specifying the<strong>
+xlim</strong> and/or <strong>ylim</strong> parameters in your call to <strong>
+plot()</strong> or <strong>points()</strong>. For example, <strong>
+ylim=c(0,90000)</strong> would specify a range on the Y-axis of 0 to 90000.</p> 
+<p> This is especially useful if you will be displaying several curves in the 
+same graph. Note that if you do not specify<strong>xlim</strong> and/or <strong>
+ylim</strong>, then draw the largest curve first, so there is room for all of 
+them.</p> 
+<h2>More on Vectors, Arrays and Matrices: </h2> 
+<h3>Type Issues: </h3> 
+<p> You must warn R ahead of time that you instead a variable to be one of 
+these types. For instance, say we wish<strong>y</strong> to be a two-component 
+vector with values 5 and 12. If you try</p> 
+<pre> &gt; y[1] &lt;- 5 &gt; y[2] &lt;- 12 </pre> 
+<p> the first command (and the second) will be rejected, but </p> 
+<pre> &gt; y &lt;- vector(length=2) &gt; y[1] &lt;- 5 &gt; y[2] &lt;- 12 </pre>
+<p> works, as does </p> 
+<pre> &gt; y &lt;- c(5,12) </pre> 
+<p> (The latter is OK because the right-hand side is a vector type, so we are 
+assigning<strong>y</strong> to a vector.) </p> 
+<p> Vector elements must be scalars, i.e. numbers or character strings. </p> 
+<p> Multidimensional vectors in R are called <i>arrays</i>. A two-dimensional 
+array is also called a<i>matrix</i>, and is eligible for the usual matrix 
+mathematical operations. I will concentrate on matrices here.</p> 
+<h3>Length Issues: </h3> 
+<p> When applying an operation to two vectors which requires them to be the 
+same length, the shorter one will be<i>recycled</i>, i.e. repeated, until it is 
+long enough to match the longer one, e.g.</p> 
+<pre> &gt; c(1,2,4) + c(6,0,9,20,22) [1] 7 2 13 21 24 Warning message: longer 
+object length is not a multiple of shorter object length in: c(1, 2, 4) + c(6, 
+0, 9, 20, 22)</pre> 
+<h3>Matrices: </h3> 
+<p> Matrix subscripts begin with 1, so for instance the upper-left corner of 
+the matrix<strong>a</strong> is denoted <strong>a[1,1]</strong>. The internal 
+linear storage of a matrix is in<i>column-major order</i>, meaning that first 
+all of column 1 is stored, then all of column 2, etc.</p> 
+<p> One of the ways to create a matrix is via the <strong>matrix()</strong> 
+function, e.g.</p> 
+<pre> &gt; y &lt;- matrix(c(1,2,3,4),nrow=2,ncol=2) &gt; y [,1] [,2] [1,] 1 3 
+[2,] 2 4</pre> 
+<p> Here we concatenated what we intended as the first column, the numbers 1 
+and 2, with what we intended as the second column, 3 and 4. That was our data 
+in linear form, and then we specified the number of rows and columns. The fact 
+that R uses column-major order then determined where these four numbers were 
+put.</p> 
+<p> Since we specified the matrix entries in the above example, we would not 
+have need to specify<strong>ncol</strong>; <strong>nrow</strong> would be 
+enough. For instance:</p> 
+<pre> &gt; y &lt;- matrix(c(1,2,3,4),nrow=2) &gt; y [,1] [,2] [1,] 1 3 [2,] 2 4
+</pre> 
+<p> Note that when we then printed out <strong>y</strong>, R showed us its 
+notation for rows and columns. For instance,<strong>[,2]</strong> means column 
+2, as can be seen in this check:</p> 
+<pre> &gt; y[,2] [1] 3 4 </pre> 
+<p> As you can see, a matrix is really a vector, with extra atributes, the 
+number of rows and columns.</p> 
+<p> Another way we could have built <strong>y</strong> would have been to 
+specify elements individually:</p> 
+<pre> &gt; y &lt;- matrix(nrow=2,ncol=2) &gt; y[1,1] = 1 &gt; y[2,1] = 2 &gt; 
+y[1,2] = 3 &gt; y[2,2] = 4 &gt; y [,1] [,2] [1,] 1 3 [2,] 2 4</pre> 
+<p> We can perform various operations on matrices, e.g. matrix multiplication, 
+matrix scalar multiplication and matrix addition:</p> 
+<pre> &gt; y %*% y [,1] [,2] [1,] 7 15 [2,] 10 22 &gt; 3*y [,1] [,2] [1,] 3 9 
+[2,] 6 12 &gt; y+y [,1] [,2] [1,] 2 6 [2,] 4 8</pre> 
+<p> Note that for matrix multiplication in the mathematical sense, the 
+operator to use is<strong>%*%</strong>, not <strong>*</strong>. Note also that 
+a vector is considered a one-row matrix, not a one-column matrix, and thus is 
+suitable as the left factor in a matrix product, but not directly usable as the 
+right factor.</p> 
+<p> A quick way to create the identity matrix of dimension d is <strong>diag(d)
+</strong>. </p> 
+<p> Use <strong>t()</strong> for matrix transpose. </p> 
+<p> The same operations we discussed in our section above titled &quot;Vector 
+Slicing&quot; apply to matrices. For instance: </p> 
+<pre> &gt; z [,1] [,2] [,3] [1,] 1 1 1 [2,] 2 1 0 [3,] 3 0 1 [4,] 4 0 0 &gt; 
+z[,c(2,3)] [,1] [,2] [1,] 1 1 [2,] 1 0 [3,] 0 1 [4,] 0 0</pre> 
+<p> Here's another example: </p> 
+<pre> &gt; y &lt;- matrix(c(11,21,31,12,22,32),nrow=3,ncol=2) &gt; y [,1] [,2] 
+[1,] 11 12 [2,] 21 22 [3,] 31 32 &gt; y[2:3,] [,1] [,2] [1,] 21 22 [2,] 31 32 
+&gt; y[2:3,2] [1] 22 32</pre> 
+<p> The numbers of rows and columns in a matrix can be obtained through the 
+<strong>nrow()</strong> and <strong>ncol()</strong> functions, e.g. </p> 
+<pre> &gt; x [,1] [,2] [1,] 1 4 [2,] 2 5 [3,] 3 6 &gt; nrow(x) [1] 3 </pre> 
+<h3>Solving Systems of Linear Equations: </h3> 
+<p> The function <strong>solve()</strong> will solve systems of linear 
+equations, and even find matrix inverses. For example:</p> 
+<pre> &gt; a &lt;- matrix(c(1,1,-1,1),nrow=2,ncol=2) &gt; b &lt;- c(2,4) &gt; 
+solve(a,b) [1] 3 1 &gt; solve(a) [,1] [,2] [1,] 0.5 0.5 [2,] -0.5 0.5</pre> 
+<h3>Writing a Data Frame to a File: </h3> 
+<p> The function <strong>write.table()</strong> works very much like <strong>
+read.table()</strong>. The latter reads an ASCII data file, and the former 
+writes one. For example</p> 
+<pre> write.table(x,&quot;x.dat&quot;,row.names=F,col.names=F) </pre> 
+<p> writes the matrix <strong>x</strong> to a file <strong>x.dat</strong>, 
+with no column or row labels.</p> 
+<h2>Adding More Rows or Columns to a Matrix/Data Frame: </h2> 
+<p> The <strong>rbind()</strong> and <strong>cbind()</strong> functions enable 
+one to add rows or columns to a matrix or data frame.</p> 
+<p> Example: </p> 
+<pre> &gt; one [1] 1 1 1 1 &gt; z [,1] [,2] [,3] [1,] 1 1 1 [2,] 2 1 0 [3,] 3 
+0 1 [4,] 4 0 0 &gt; cbind(one,z) one [1,] 1 1 1 1 [2,] 1 2 1 0 [3,] 1 3 0 1 
+[4,] 1 4 0 0</pre> 
+<h2>More on Data Frames: </h2> 
+<h3>Data Frames As Two-Dimensional Arrays: </h3> 
+<p> One can refer to the rows and columns of a data frame using 
+two-dimensional array notation. For instance, in our earlier example data frame
+<strong>testscores</strong> from our second 5-minute example above: </p> 
+<p> </p> 
+<ul> 
+<li> <strong>testscores[2,3]</strong> would refer to the third score for the 
+second student
+<p></p> </li> 
+<li> <strong>testscores[2,]</strong> would refer to the set of all scores for 
+the second student
+<p></p> </li> 
+<li> <strong>testscores[c(1,2,5),]</strong> would refer to the set of all 
+scores for the first, second and fifth students
+<p></p> </li> 
+<li> <strong>testscores[10:13,]</strong> would refer to the set of all scores 
+for the tenth through thirteenth students
+<p></p> </li> 
+<li> <strong>testscores[-2,]</strong> would refer to the set of all scores for 
+all students<i>except</i> the second
+<p></p> </li> </ul> 
+<p></p> 
+<h3>Creating Data Frames with the Functions data.frame()</h3> 
+<p> We saw in our 10-minute introduction above how to create a data frame by 
+reading from a data file. We can also create a data frame directly, using the 
+function<strong>data.frame()</strong>. </p> 
+<p> For example, </p> 
+<pre> &gt; z &lt;- data.frame(cbind(c(1,2),c(3,4))) &gt; z X1 X2 1 1 3 2 2 4 
+</pre> 
+<p> Note the use of the <strong>cbind()</strong> function, described in our 
+section titled&quot;Adding More Rows or Columns&quot; above. </p> 
+<p> We can also coerce a matrix to a data frame, e.g. </p> 
+<pre> &gt; x &lt;- matrix(c(1,2,3,4),nrow=2,ncol=2) &gt; x [,1] [,2] [1,] 1 3 
+[2,] 2 4 &gt; y &lt;- data.frame(x) &gt; y X1 X2 1 1 3 2 2 4</pre> 
+<p> As you can see, the column names will be X1, X2, ... However, you can 
+change them, e.g.</p> 
+<pre> &gt; z X1 X2 1 1 3 2 2 4 &gt; names(z) &lt;- c(&quot;col 
+1&quot;,&quot;col 2&quot;) &gt; z col 1 col 2 1 1 3 2 2 4</pre> 
+<h2> Tables: </h2> 
+<p> Consider the data matrix </p> 
+<pre> 1 1 1 2 2 2 3 1 2 2 </pre> 
+<p> where in the usual statistical fashion each row represents one subject 
+under study. In this case, say we have asked five people (a) &quot;Do you plan 
+to vote for Candidate X?&quot; and (b) &quot;Did you vote in the last 
+election?&quot; Say the answers for (a), which are Yes, No and Not Sure, are 
+coded 1, 2 and 3, respectively, while for (b) the codes are 1 for Yes and 2 for 
+No. So, for instance, the above data would show that the third person in our 
+sample is not planning to vote for X, and did not vote in the last election.</p>
+<p> We can use the <strong>table()</strong> function to convert this data to 
+contingency table format:</p> 
+<pre> &gt; ct &lt;- matrix(c(1,1,2,3,2,1,2,2,1,2),nrow=5) &gt; ct [,1] [,2] 
+[1,] 1 1 [2,] 1 2 [3,] 2 2 [4,] 3 1 [5,] 2 2 &gt; table(ct[,1],ct[,2]) 1 2 1 1 
+1 2 0 2 3 1 0</pre> 
+<p> The table shows that we had, for example, one person who said Not Sure to 
+(a) and Yes to (a), and two people who answered No to both questions. Of 
+course, we can add labels to the table and do various statistical analyses on 
+it, not covered here.</p> 
+<h2> More on the Functional Programming Nature of R:</h2> 
+<h3>Elementwise Operations on Vectors: </h3> 
+<p> The key point is that R functions operate on vectors, in an elementwise 
+fashion. For instance, let's apply the function for rounding to the nearest 
+integer to an example vector<strong>y</strong>: </p> 
+<pre> &gt; y &lt;- c(1.2,3.9,0.4) &gt; z &lt;- round(y) &gt; z [1] 1 4 0 </pre>
+<p> The point is that the <strong>round()</strong> function was applied 
+individually to each element in the vector<strong>y</strong>. In fact, in </p> 
+<pre> &gt; round(1.2) [1] 1 </pre> 
+<p> the operation still works, because the number 1.2 is actually considered 
+to be a vector, that happens to consist of a single element 1.2.</p> 
+<p> Here we used the built-in function <strong>round()</strong>, but you can 
+do the same thing with functions that you write yourself. Seethe section titled 
+&quot;R Programming below. </p> 
+<p> Even operators like + are really functions. For example, the reason why 
+elementwise addition of 4 works here,</p> 
+<pre> &gt; y+4 [1] 5.2 7.9 4.4 </pre> 
+<p> is that the + is actually considered a function! Look at it here: </p> 
+<pre> &gt; '+'(y,4) [1] 5.2 7.9 4.4 </pre> 
+<h3> Vector Slicing:</h3> 
+<p> You can also do &quot;slicing&quot; of arrays, picking out elements with 
+specific indices, e.g.</p> 
+<pre> &gt; y[c(1,3)] [1] 1.2 0.4 &gt; y[2:3] [1] 3.9 0.4 </pre> 
+<p> In that second command, the notation m:n means all the integers between m 
+and n inclusive, e.g.</p> 
+<pre> &gt; 3:8 [1] 3 4 5 6 7 8 </pre> 
+<p> Note carefully that duplicates are definitely allowed, e.g. </p> 
+<pre> &gt; x &lt;- c(4,2,17,5) &gt; y &lt;- x[c(1,1,3)] &gt; y [1] 4 4 17 
+</pre> 
+<p> Negative subscripts mean that we want to exclude the given elements in our 
+output:</p> 
+<pre> &gt; z &lt;- c(5,12,13) &gt; z[-1] [1] 12 13 &gt; z[-1:-2] [1] 13 </pre> 
+<p> In such contexts, it is often useful to use the <strong>length()</strong> 
+function, which gives the length of the vector:</p> 
+<pre> &gt; z &lt;- c(5,12,13) &gt; z[1:length(z)-1] [1] 5 12 </pre> 
+<p> Here is a more involved example of this principle. Suppose we have a 
+sequence of numbers for which we want to find successive differences, i.e. the 
+difference between each number and its predecessor. Here's how we could do it:
+</p> 
+<pre> &gt; x &lt;- c(12,15,8,11,24) &gt; y &lt;- x[-1] - x[-length(x)] &gt; y 
+[1] 3 -7 3 13</pre> 
+<p> Here we want to find the numbers 15-12 = 3, 8-15 = -7, etc. The expression 
+<strong>x[-1]</strong> gave us the vector (15,8,11,24) and <strong>x[-length(x)]
+</strong> gave us (12,15,8,11). Subtracting these two vectors then gave us the 
+differences we wanted.</p> 
+<p> We can apply slicing to a matrix instead of just a vector. For example: 
+</p> 
+<pre> &gt; g &lt;- matrix(c(1,2,3,4,5,6),nrow=3,ncol=2) &gt; g [,1] [,2] [1,] 
+1 4 [2,] 2 5 [3,] 3 6 &gt; t &lt;- g[c(1,3),] &gt; t [,1] [,2] [1,] 1 4 [2,] 3 6
+</pre> 
+<h3>Filtering: </h3> 
+<p> Another idea borrowed from functional programming is filtering of vectors, 
+e.g.</p> 
+<pre> &gt; z &lt;- c(5,2,-3,8) &gt; w &lt;- z[z*z &gt; 8] &gt; w [1] 5 -3 8 
+</pre> 
+<p> Here is what happened above: We asked R to find all the elements of 
+<strong>z</strong> whose squares were greater than 8, and then form a new 
+vector from them (which we assigned to<strong>w</strong>). </p> 
+<p> In fact, what happened above actually occurred at a more fundamental 
+level. Look at this:</p> 
+<pre> &gt; z &lt;- c(5,2,-3,8) &gt; z [1] 5 2 -3 8 &gt; z*z &gt; 8 [1] TRUE 
+FALSE TRUE TRUE</pre> 
+<p> Evaluation of the expression <strong>z*z &gt; 8</strong> gave us a vector 
+of booleans! Let's go further:</p> 
+<pre> &gt; z[c(TRUE,FALSE,TRUE,TRUE)] [1] 5 -3 8 </pre> 
+<p> So you can see that the evaluation of <strong>z[z*z &gt; 8]</strong> first 
+produced a vector of booleans, which we then applied in a slicing operation in
+<strong>z</strong>. </p> 
+<p> This example will place things into even sharper focus: </p> 
+<pre> &gt; z &lt;- c(5,2,-3,8) &gt; j &lt;- z*z &gt; 8 &gt; j [1] TRUE FALSE 
+TRUE TRUE &gt; y &lt;- c(1,2,30,5) &gt; y[j] [1] 1 30 5</pre> 
+<p> We may just want to find the positions within <strong>z</strong> at which 
+the condition occurs. We can do this using<strong>which()</strong>: </p> 
+<pre> &gt; which(z*z &gt; 8) [1] 1 3 4 </pre> 
+<p> Also, in our student exam scores example above, we could use the expression
+</p> 
+<p> </p> 
+<pre> &gt; goodexam2 &lt;- testscores[testscores$Exam2 &gt;= 62] </pre> 
+<p> Yes, we need the <strong>testscores$</strong> prefix there on <strong>Exam2
+</strong>. We can get around this if we use <strong>attach()</strong>. </p> 
+<p> Be careful to do it right. Here is another example: </p> 
+<pre> &gt; w &lt;- matrix(1:9,nrow=3,ncol=3) &gt; w [,1] [,2] [,3] [1,] 1 4 7 
+[2,] 2 5 8 [3,] 3 6 9 &gt; w[w[,2] &gt; 4,] [,1] [,2] [,3] [1,] 2 5 8 [2,] 3 6 9
+</pre> 
+<p> Do you see what happened in that last action? The expression <strong>w[,2] 
+&gt; 4</strong> gave us the vector c(F,T,T). Thus the overall expression was 
+<strong>w[c(F,T,T),]</strong>, meaning to choose the second and third rows of 
+<strong>w</strong>. Without that final comman, indicating rows, R would have 
+given us an error message.</p> 
+<p> One can also use the <strong>subset()</strong> function for these kinds of 
+tasks:</p> 
+<pre> &gt; goodexam2 &lt;- subset(testscores,Exam2 &gt;= 62) </pre> 
+<p> Note that we do not need to qualify the name <strong>Exam2</strong> when 
+using<strong>subset()</strong>. </p> 
+<p> I noted in our introductory section, Why You Should Use R, that using the 
+<strong>nrow()</strong> function in conjunction with filtering provides a way 
+to obtain a count of records satisfying various conditions. If you just want 
+the count and don't want to create a new table, you should use this approach.
+</p> 
+<p> You can also use this to selectively change elements of a vector, e.g. </p>
+<pre> &gt; x &lt;- c(1,3,8,2) &gt; x[x &gt; 3] &lt;- 0 &gt; x [1] 1 3 0 2 
+</pre> 
+<h3>Combining Elementwise Operations and Filtering, with the ifelse() Function:
+</h3> 
+<p> The form is </p> 
+<p> ifelse(some_vector_filtering_expression,b,c) </p> 
+<p> where <i>some_vector_filtering_expression</i> is of the form in section 
+titled&quot;Filtering&quot; above, and <i>b</i> and <i>c</i> are constants. </p>
+<p> For example, say we have a 3x2 matrix <strong>z</strong>, whose second 
+column we wish to fill as follows: For each element in the first column, if it 
+is at least 2, set the corresponding element in the second column to 1; 
+otherwise set that element to 0. Here's how we could do it:</p> 
+<pre> &gt; z &lt;- matrix(nrow=3,ncol=2) &gt; z[,1] &lt;- c(1,2,3) &gt; z [,1] 
+[,2] [1,] 1 NA [2,] 2 NA [3,] 3 NA &gt; z[,2] &lt;- ifelse(z[,1] &gt;= 2,1,0) 
+&gt; z [,1] [,2] [1,] 1 0 [2,] 2 1 [3,] 3 1</pre> 
+<h3> Applying the Same Function to All Rows or All Columns of a Matrix/Data 
+Frame: </h3> 
+<p> This is not just for compactness of code, but for speed. If speed is an 
+issue, such as when working with large data sets or long-running simulations, 
+one must avoid explicit loops as much as possible, because R can do them a lot 
+faster than you can.</p> 
+<p> Use the <strong>apply()</strong> function. In its simpler form, arguments 
+are the matrix to be applied to, the dimension--1 for rows, 2 for columns--and 
+the function to be applied.</p> 
+<p> For example, here we apply the built-in R function <strong>mean()</strong> 
+to each column of a matrix<strong>z</strong>. </p> 
+<pre> &gt; z [,1] [,2] [1,] 1 4 [2,] 2 5 [3,] 3 6 &gt; apply(z,2,mean) [1] 2 5 
+</pre> 
+<p> Here is an example of working on rows, using our own function: </p> 
+<pre> &gt; f &lt;- function(x) x/c(2,8) &gt; y &lt;- apply(z,1,f) &gt; y [,1] 
+[,2] [,3] [1,] 0.5 1.000 1.50 [2,] 0.5 0.625 0.75</pre> 
+<p> Note that if the function to be applied returns a vector of k components, 
+the result of<strong> apply()</strong> will have k rows. You can use the matrix 
+transpose function<strong>t()</strong> to change it. </p> 
+<p> As you can see, the function to be applied needs at least one argument, 
+which will play the role of one row or column in the array. In some cases, you 
+will need additional arguments, which you can place following the function name 
+in your call to<strong>apply()</strong>. </p> 
+<h3>Generating Arithmetic Sequences with the seq() Function:</h3> 
+<p> The <strong>seq()</strong> (&quot;sequence&quot;) generates an arithmetic 
+sequence, e.g.:</p> 
+<pre> &gt; seq(5,8) [1] 5 6 7 8 &gt; seq(12,30,3) [1] 12 15 18 21 24 27 30 
+&gt; seq(1.1,2,length=10) [1] 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0</pre> 
+<p> Though it may seem innocuous, the <strong>seq()</strong> function provides 
+foundation for many R operations. See examples in the sections below titled
+Simulation Programming and &quot;Graphing Explicit Functions&quot;. </p> 
+<p> Note also the <strong>:</strong> operator: </p> 
+<pre> &gt; 5:8 [1] 5 6 7 8 &gt; 5:1 [1] 5 4 3 2 1 </pre> 
+<p> Beware of the operator precedence: </p> 
+<pre> &gt; i &lt;- 2 &gt; 1:i-1 [1] 0 1 </pre> 
+<h3>Miscellaneous Vector Operations:</h3> 
+<p> The <strong>rep()</strong> (&quot;repeat&quot;) function allows us to 
+conveniently put the same constant into long vectors. The call form is<strong>
+rep(z,k)</strong>, which creates a vector of k elements, e.g. equal to z. E.g., 
+</p> 
+<pre> &gt; x &lt;- rep(8,4) &gt; x [1] 8 8 8 8 </pre> 
+<h3>Function Arguments Don't Change:</h3> 
+<p> Yet another influence of the functional programming philosophy is that 
+functions do not change their arguments (unless the result is re-assigned to 
+the argument). Consider, for instance, this:</p> 
+<pre> &gt; x &lt;- c(4,1,3) &gt; y &lt;- sort(x) &gt; y [1] 1 3 4 &gt; x [1] 4 
+1 3</pre> 
+<p> The point is that <strong>x</strong> didn't change. </p> 
+<h3>Functions Are First-Class Objects: </h3> 
+<p> Functions can be used as arguments, assigned, etc. E.g.: </p> 
+<pre> &gt; f1 &lt;- function(a,b) return(a+b) &gt; f2 &lt;- function(a,b) 
+return(a-b) &gt; f &lt;- f1 &gt; f(3,2) [1] 5 &gt; f &lt;- f2 &gt; f(3,2) [1] 1 
+&gt; g &lt;- function(h,a,b) h(a,b) &gt; g(f1,3,2) [1] 5 &gt; g(f2,3,2) [1] 1
+</pre> 
+<p> You can view the code for a function (either one you wrote, or one in R), 
+e.g.</p> 
+<pre> &gt; f1 function(a,b) return(a+b) </pre> 
+<p> This is handy if you're using a function that you've written but have 
+forgotten what its arguments are, for instance. It's also useful if you are not 
+quite sure what an R library function does; by looking at the code you may 
+understand it better.</p> 
+<p> Also, a nice feature is that you can edit functions from within R. In the 
+case above, I could change<strong>f1()</strong> by typing </p> 
+<pre> &gt; f1 &lt;- edit(f1) </pre> 
+<p> This would open the default editor (which is changeable) to the code for 
+<strong>f1()</strong>, which I could then edit and save. Note that in this 
+example I am saving the revision back to the same function.</p> 
+<h2> More on Regression in R:</h2> 
+<h3> Data in Vectors Instead of a Data Frame:</h3> 
+<p> If your data are merely vectors, instead of columns in a data frame, then 
+do not specify the<strong>data</strong> argument in <strong>lm()</strong>. For 
+instance:</p> 
+<pre> &gt; x1 &lt;- c(1,2,3,4) &gt; x2 &lt;- c(1,5,5,6) &gt; y &lt;- 
+c(2,7,8,9) &gt; lm(y ~ x1+x2) Call: lm(formula = y ~ x1 + x2) Coefficients: 
+(Intercept) x1 x2 0.4286 0.4857 1.1429</pre> 
+<h3> Using lsfit() Instead of lm():</h3> 
+<p> Instead of <strong>lm()</strong>, we can use the &quot;old&quot; linear 
+model function,<strong>lsfit()</strong> (&quot;least squares fit&quot;). This 
+function is sometimes more convenient to use when writing R programs. In our 
+example above, we would call it this way:</p> 
+<pre> &gt; fit1 &lt;- lsfit(testscores$Exam1,testscores$Exam3) </pre> 
+<p> We might follow up with </p> 
+<pre> &gt; ls.print(fit1) </pre> 
+<p> To regress <strong>Exam3</strong> against <strong>Exam1</strong> and 
+<strong>Exam2</strong>, we would type: </p> 
+<p> &gt; fit12 &lt;- &gt; 
+lsfit(cbind(testscores$Exam1,testscores$Exam2),testscores$Exam3)</p> 
+<p> The first argument to <strong>lsfit()</strong> is a matrix of the 
+predictor variable data, with the ith row consisting of observation number i in 
+our sample. So, here the call to<strong>cbind()</strong> combines the two 
+vectors into one matrix, whose first column is the first vector and the second 
+column is the second vector. See our section titledAdding More Rows and Columns 
+for more information on this function.</p> 
+<h3> Specifying Many Predictor Variables in lm():</h3> 
+<p> The &quot;A ~ B+C+...&quot; notation for specifying a response variable A 
+and predictor variables B, C, ... is usually nice, but sometimes troublesome if 
+you have many predictors or you are writing R programs. But alternatively you 
+can specify the predictors as a matrix, e.g.</p> 
+<pre> &gt; z &lt;- matrix(c(1,2,3,8,1,2,3,4,0,3,9,1),nrow=4,ncol=3) &gt; 
+lm(z[,1] ~ z[,2]+z[,3]) Call: lm(formula = z[, 1] ~ z[, 2] + z[, 3]) 
+Coefficients: (Intercept) z[, 2] z[, 3] -1.6779 2.4899 -0.3221 &gt; lm(z[,1] ~ 
+z[,c(2,3)]) Call: lm(formula = z[, 1] ~ z[, c(2, 3)]) Coefficients: (Intercept) 
+z[, c(2, 3)]1 z[, c(2, 3)]2 -1.6779 2.4899 -0.3221</pre> 
+<p> In that second call to <strong>lm()</strong>, we just specified the matrix 
+consisting of the second and third columns of<strong>z</strong>, implicitly 
+saying that these columns are our predictors.</p> 
+<h3> Logistic Regression:</h3> 
+<p> Logistic regression is handled as a special case of the generalized linear 
+model. Say our data is in a matrix<strong>x</strong>, whose first column 
+consists of 0s and 1s and forms the response variable. Say the second column is 
+the sole predictor variable. Then we would run</p> 
+<pre> &gt; lgt &lt;- glm(xl[,1] ~ xl[,2], family=binomial) </pre> 
+<p> As with linear regression, one ironically gets more information by 
+requesting the summary (!), e.g.</p> 
+<pre> &gt; summary(lgt) </pre> 
+<h2> Session Data:</h2> 
+<p> As you proceed through an R session, R will record which commands you 
+submit. And as you long as you answer yes to the question &quot;Save workspace 
+image?&quot; put to you when you quit the session, R will save all the objects 
+you created in that session, and restore them in your next session. You thus do 
+not have to recreate the objects again from scratch if you wish to continue 
+work from before.</p> 
+<h2> More on the Object Orientation of R:</h2> 
+<h3> Managing Your Objects:</h3> 
+<p> The <strong>ls()</strong> command will list all of your current objects. 
+</p> 
+<p> To remove objects you no longer need, use <strong>rm()</strong>. For 
+instance,</p> 
+<pre> &gt; rm(a,b,x,y,z,uuu) </pre> 
+<p> would remove the objects <strong>a</strong>, <strong>b</strong>. </p> 
+<p> One of the named arguments of <strong>rm()</strong> is <strong>list
+</strong>, which makes it easier to remove multiple objects. For example, </p> 
+<pre> &gt; rm(list = ls()) </pre> 
+<p> would assign all of your objects to <strong>list</strong>, thus removing 
+everything.</p> 
+<p> An object consists of a gathering of various kinds of information, with 
+each kind being called an<i>attribute</i>. The <strong>names()</strong> 
+function will tell us the names of the attributes of the given object. For a 
+data frame, for example, these will be the names of the columns. For a 
+regression object, these will be &quot;coefficients&quot;, 
+&quot;residuals&quot; and so on. Calling the<strong>attributes()</strong> 
+function will give you all this, plus the class of the object itself.</p> 
+<h3> Extracting Numbers from Your Objects:</h3> 
+<p> Recall that when one does almost any complex operation in R, the results 
+are returned packaged as an object. Say for instance we perform a linear 
+regression analysis by calling<strong>lm()</strong>, assigning the result to 
+<strong>lmout</strong>. Then the the coefficients, residuals etc. are all 
+accessible as components of this object<strong>lmout</strong>, in <strong>
+lmout$coefficients</strong>, <strong>lmout$residuals</strong> etc. </p> 
+<p> Suppose we then want to use one of those components as numerical input 
+into another operation. Say for instance we wish to use the coefficients to 
+predict the Y values at a few points of particular interest, say 
+W[1],...,W[25]. Then we may not be able to simply take their inner products 
+with the coefficient vector, e.g.</p> 
+<pre> &gt; W[1] %*% lmout$coefficients </pre> 
+<p> may be rejected by R. The problem is that <strong>lmout$coefficients
+</strong> consists not only of the coefficients themselves, but also the names 
+of the corresponding predictor variables.</p> 
+<p> To remove the latter, we use the <strong>as.numeric()</strong> function: 
+</p> 
+<pre> &gt; W[1] %*% as.numeric(lmout$coefficients) </pre> 
+<p> And if W[1] itself had names attached to it, we'd need to use <strong>
+as.numeric()</strong> on it too. </p> 
+<h3>Objects As a Uniform Interface:</h3> 
+<p> As mentioned in my introduction, R is rather polymorphic, in the sense 
+that the same function has different operation for different classes. One can 
+apply<strong>plot()</strong>, for example, to many types of objects, getting an 
+appropriate plot for each. The same is true for<strong>print()</strong> and 
+<strong>summary()</strong>. </p> 
+<p> In this manner, we get a uniform interface to different classes. So, when 
+someone develops a new R class for others to use, we can try to apply, say,
+<strong>summary()</strong> and reasonably expect it to work. This of course 
+means that the person who wrote the class, knowing the R idiom, would have had 
+the foresight of writing such a function in the class, knowing that people 
+would expect one.</p> 
+<h2> Functions for Statistical Distributions:</h2> 
+<p> R has functions available for various aspects of most of the famous 
+statistical distributions Prefix the name by<strong>d</strong> for the density, 
+<strong>p</strong> for the c.d.f., <strong>q</strong> for quantiles and <strong>
+r</strong> for simulation. The suffix of the name indicates the distribution, 
+such as<strong>norm</strong>, <strong>unif</strong>, <strong>chisq</strong>, 
+<strong>binom</strong>, <strong>exp</strong>, etc. </p> 
+<p> E.g. for the chi-square distribution: </p> 
+<pre> &gt; mean(rchisq(1000,different=2)) find mean of 1000 chi-square(2) 
+variates [1] 1.938179 &gt; qchisq(0.95,1) find 95th percentile of chi-square(2) 
+[1] 3.841459</pre> 
+<p> There are also functions for the normal distribution, the t, the binomial. 
+For instance,<strong>dnorm()</strong> gives the normal density, <strong>pnorm()
+</strong> gives the normal cdf and <strong>rnorm()</strong> generates 
+normally-distributed random variates.</p> 
+<p> See the online help pages for details, e.g. by typing </p> 
+<pre> &gt; help(pnorm) </pre> 
+<h2>Math Functions: </h2> 
+<p> The usual <strong>exp()</strong>, <strong>log()</strong>, <strong>log10()
+</strong>, <strong>sqrt()</strong> etc. are available, as well as <strong>min()
+</strong>, <strong>max()</strong>, <strong>sum()</strong>, <strong>sort()
+</strong>, <strong>round()</strong>, <strong>floor()</strong> etc. </p> 
+<p> Also, some special math functions are described when you invoke <strong>
+help()</strong> with the argument Arithmetic. </p> 
+<h2>R Programming: </h2> 
+<p> R is a full programming language, similar to scripting languages such as 
+Perl and Python. One can define functions, use constructs such as loops and 
+conditionals, etc.</p> 
+<h3>Functions: a Short Programming Example: </h3> 
+<p> In the following example, we define a function <strong>oddcount()</strong> 
+while in R's interactive mode, and then call the function on a couple of test 
+cases. The function is supposed to count the number of odd numbers in its 
+argument vector.</p> 
+<pre> # comment: counts the number of odd integers in x &gt; oddcount &lt;- 
+function(x) { + k &lt;- 0 + for (n in x) { + if (n %% 2 == 1) k &lt;- k+1 + } + 
+return(k) + } &gt; oddcount(c(1,3,5)) [1] 3 &gt; oddcount(c(1,2,3,7,9)) [1] 4
+</pre> 
+<p> Here is what happened: We first told R that we would define a function 
+<strong>oddcount()</strong> of one argument <strong>x</strong>. The left brace 
+demarcates the start of the body of the function. We wrote one R statement per 
+line. Since we were still in the body of the function, R reminded us of that by 
+using + as its prompt instead of the usual &gt;. After we finally entered a 
+right brace to end the function body, R resumed the &gt; prompt.</p> 
+<h3>Use of Braces for Block Definition: </h3> 
+<p> The body of a <strong>for</strong>, <strong>if</strong> or similar 
+statement does not need braces if it consists of a single statement.</p> 
+<h3>Loops: </h3> 
+<p> The line </p> 
+<pre> + for (n in x) { </pre> 
+<p> will again instantly be recognized by Python programmers. It of course 
+means that there will be one iteration of the loop for each component of the 
+vector<strong>x</strong>, with <strong>n</strong> taking on the values of those 
+components. In other words, in the first iteration,<strong>n = x[1]</strong>, 
+in the second iteration<strong>n = x[2]</strong>, etc. </p> 
+<p> Looping with <strong>while</strong> and <strong>repeat</strong> are also 
+available, complete with<strong>break</strong>, e.g. </p> 
+<pre> &gt; i &lt;- 1 &gt; while(1) { + i &lt;- i+4 + if (i &gt; 10) break + } 
+&gt; i [1] 13</pre> 
+<p> (Of course, <strong>break</strong> can be used with <strong>for</strong> 
+too.)</p> 
+<h3>Return Values: </h3> 
+<p> By the way, you don't need the <strong>return()</strong>. The last value 
+computed will be returned by default. In the example above, instead of writing
+</p> 
+<pre> return(k) </pre> 
+<p> we could simply write </p> 
+<pre> k </pre> 
+<p> This is true for nonscalars too (recall that a scalar is really a 
+one-element vector anyway), e.g.:</p> 
+<pre> &gt; r &lt;- function(x,y) { + c(x+y,x-y) + } &gt; r(3,2) [1] 5 1 </pre> 
+<h3>If-Else: </h3> 
+<p> The syntax for <strong>if-else</strong> is like this: </p> 
+<pre> &gt; if (r == 4) { + x &lt;- 1 + y &lt;- 2 + } else { + x &lt;- 3 + y 
+&lt;- 4 + }</pre> 
+<p> See also the <strong>ifelse()</strong>function discussed in the section, 
+&quot;More on the Functional Programming Nature of R&quot; above.</p> 
+<h3>Local and Global Variables: </h3> 
+<p> Local vs. global variables within a function: If a variable <strong>z
+</strong>appearing within a function has the same name as a global, it will be 
+treated as local, except that its initial value will be that of the global. 
+Subsequent assignment to it within the function will not change the value of 
+the global. For example:</p> 
+<pre> &gt; u [1] 1 &gt; v [1] 2 &gt; f function(x) { y &lt;- u y &lt;- y + 3 u 
+&lt;- x return(x+y+u+v) } &gt; f(5) [1] 16 &gt; u [1] 1 &gt; v [1] 2 &gt; y 
+Error: object &quot;y&quot; not found</pre> 
+<h3>Arithmetic and Boolean Operators and Values: </h3> 
+<pre> x + y addition x - y subtraction x * y multiplication x / y division x ^ 
+y exponentiation x %% y mod arithmetic x %/% y integer division x == y test for 
+equality x &lt;= y test for less-than-or-equal x &gt;= y test for 
+greater-than-or-equal x &amp; y boolean and x | y boolean or !x boolean 
+negation x %in% y x is a member of the set y</pre> 
+<p> The boolean values are <strong>TRUE</strong> and <strong>FALSE</strong>. 
+They can be abbreviated to<strong>T</strong> and <strong>F</strong>, but must 
+be capitalized. These values change to 1 and 0 in arithmetic expressions, e.g.
+</p> 
+<pre> &gt; 1 &lt; 2 [1] TRUE &gt; (1 &lt; 2) * (3 &lt; 4) [1] 1 &gt; (1 &lt; 
+2) * (3 &lt; 4) * (5 &lt; 1) [1] 0 &gt; (1 &lt; 2) == TRUE [1] TRUE &gt; (1 
+&lt; 2) == 1 [1] TRUE &gt; 3 %in% 1:5 [1] TRUE</pre> 
+<p> There are set operations, e.g. </p> 
+<pre> &gt; x &lt;- c(1,2,5) &gt; y &lt;- c(5,1,8,9) &gt; union(x,y) [1] 1 2 5 
+8 9 &gt; intersect(x,y) [1] 1 5 &gt; setdiff(x,y) [1] 2 &gt; setdiff(y,x) [1] 8 
+9 &gt; setequal(x,y) [1] FALSE &gt; setequal(x,c(1,2,5)) [1] TRUE &gt; 2 %in% x 
+[1] TRUE &gt; 2 %in% y [1] FALSE</pre> 
+<p> You can invent your own operators! Just write a function whose name begins 
+and ends with %. Here is an operator for the symmetric difference between two 
+sets (i.e. all the elements in exactly one of the two operand sets):</p> 
+<pre> &gt; &quot;%sdf%&quot; &lt;- function(a,b) { + sdfxy &lt;- setdiff(x,y) 
++ sdfyx &lt;- setdiff(y,x) + return(union(sdfxy,sdfyx)) + } &gt; x %sdf% y [1] 
+2 8 9</pre> 
+<h3>Writing Efficient R Code: </h3> 
+<p> Try to avoid writing large loops, instead of having R's rich functionality 
+do the work for you. Not only does this save you programming time, it produces 
+faster code, since R's functions have been written for efficiency.</p> 
+<p> For instance, let's rewrite the function <strong>oddcount()</strong> that 
+we wrote above:</p> 
+<pre> &gt; oddcount &lt;- function(x) { + return(length(x[x %% 2 == 1])) + } 
+</pre> 
+<p> Let's test it: </p> 
+<pre> &gt; rr &lt;- c(4,7,8 12,16,9) &gt; oddcount(rr) [1] 2 </pre> 
+<p> There is no explicit loop in this version of our <strong>oddcount()
+</strong>. We used R's vector filtering to avoid a loop, and even though R 
+internally will loop through the array, it will do so much faster than we would 
+with an explicit loop in our R code.</p> 
+<p> Of course, R's functional programming features, described in our section 
+with that title, provide many ways to help us avoid explicit loops. </p> 
+<h3>Simulation Programming: </h3> 
+<p> Here is an example, finding P(Z &lt; 1) for a N(0,1) random variable Z: 
+</p> 
+<pre> &gt; count &lt;- 0 &gt; for (i in seq(1,1000)) + if (rnorm(1) &lt; 1.0) 
+count &lt;- count + 1 &gt; count/1000 [1] 0.832 &gt; count/1000.0 [1] 0.832
+</pre> 
+<p> But as noted in the section titled &quot;Writing Efficient R Code&quot;, 
+you should try to use R's built-in features for greater speed. The above code 
+would be better written</p> 
+<pre> &gt; x &lt;- rnorm(100000) &gt; length(x[x &lt; 1.0])/100000.0 </pre> 
+<p> We achieve an increase in speed at the expense of using more memory, by 
+keeping our random numbers in an array instead of generating and discarding 
+them one at a time. Suppose for example we wish to simulate sampling from an 
+adult human population in which height is normally distributed with mean 69 and 
+standard deviation 2.5 for men, with corresponding values 64 and 2 for women. 
+We'll create a matrix for the data, with column 1 showing gender (1 for male, 0 
+for female) and column 2 showing height. The straightforward way to do this 
+would be something like</p> 
+<pre> sim1 &lt;- function(n) { xm &lt;- matrix(nrow=n,ncol=2) for (i in 1:n) { 
+d &lt;- rnorm(1) if (runif(1) &lt; 0.5) { xm[i,1] &lt;- 1 xm[i,2] &lt;- 2.5*d + 
+69 } else { xm[i,1] &lt;- 0 xm[i,2] &lt;- 2*d + 64 } } return(xm) }</pre> 
+<p> We could avoid a loop this way: </p> 
+<pre> sim2 &lt;- function(n) { d &lt;- matrix(nrow=n,ncol=2) d[,1] &lt;- 
+runif(n) d[,2] &lt;- rnorm(n) smpl &lt;- function(rw) { # rw = one row of d if 
+(rw[1] &lt; 0.5) { y &lt;- 1 x &lt;- 2.5*rw[2] + 69 } else { y &lt;- 0 x &lt;- 
+2*rw[2] + 64 } return(c(y,x)) } z &lt;- apply(d,1,smpl) return(t(z)) }</pre> 
+<p> Here is a quick illustration of the fact that we do gain in performance: 
+</p> 
+<pre> &gt; system.time(sim1(1000)) [1] 0.028 0.000 0.027 0.000 0.000 &gt; 
+system.time(sim2(1000)) [1] 0.016 0.000 0.018 0.000 0.000</pre> 
+<p> Here is a slightly more complicated example, using a classical problem 
+from elementary probability courses. Urn 1 contains 10 blue marbles and eight 
+blue ones. In Urn 2 the mixture is six blue and six yellow. We draw a marble at 
+random from Urn 1 and transfer it to Urn 2, and then draw a marble at random 
+from Urn 2. What is the probability that that second marble is blue? This 
+quantity is easy to find analytically, but we'll use simulation. Here is the 
+straightforward way:</p> 
+<pre> sim3 &lt;- function(nreps) { nb1 = 10 # 10 blue marbles in Urn 1 n1 
+&lt;- 18 # number of marbles in Urn 1 at 1st pick n2 &lt;- 13 # number of 
+marbles in Urn 2 at 2nd pick count &lt;- 0 for (i in 1:nreps) { nb2 = 6 # 6 
+blue marbles orig. in Urn 2 # pick from Urn 1 and put in Urn 2 if (runif(1) 
+&lt; nb1/n1) nb2 &lt;- nb2 + 1 # pick from Urn 2 if (runif(1) &lt; nb2/n2) 
+count &lt;- count + 1 } return(count/nreps) # est. P(pick blue from Urn 2) }
+</pre> 
+<p> But here is how we can do it without loops: </p> 
+<pre> sim4 &lt;- function(nreps) { nb1 = 10 # 10 blue marbles in Urn 1 nb2 = 6 
+# 6 blue marbles orig. in Urn 2 n1 &lt;- 18 # number of marbles in Urn 1 at 1st 
+pick n2 &lt;- 13 # number of marbles in Urn 2 at 2nd pick u &lt;- 
+matrix(c(runif(2*nreps)),nrow=nreps,ncol=2) simfun &lt;- 
+function(rw,nb1,n1,nb2,ny2,n2) { if (rw[1] &lt; nb1/n1) nb2 &lt;- nb2 + 1 if 
+(rw[2] &lt; nb2/n2) b &lt;- 1 else b &lt;- 0 return(b) } z &lt;- 
+apply(u,1,simfun,nb1,n1,nb2,ny2,n2) return(mean(z)) # est. P(pick blue from Urn 
+2) }</pre> 
+<p> Here we have set up a matrix <strong>u</strong> with two columns of U(0,1) 
+random variates. The first column is used for our simulation of drawing from 
+Urn 1, and the second for the drawing from Urn 2. Our function<strong>simfun()
+</strong> works on one repetition of the experiment. We have set up the call to 
+<strong>apply()</strong> to go through all of the <strong>nreps</strong> 
+repetitions.</p> 
+<p> Actually, on my machine, this second approach was actually slower. So, one 
+must not assume that using<strong>apply()</strong> will necessarily speed 
+things up. Note, though, that in a parallel version of R (versions are being 
+developed),<strong>apply()</strong> would probably be made automatically 
+parallel, and we'd likely get quite a speedup.</p> 
+<h3>Saving and Reusing Functions: </h3> 
+<p> If we define a function which we wish to keep and use in future R sessions 
+(aside from it being saved in our workspace when we log out), we can put in a 
+text file and load it using<strong>source()</strong>. For example, we could put 
+our function<strong>oddcount()</strong> above into a file, say named <strong>
+oc.r</strong>: </p> 
+<pre> # counts the number of odd numbers in x oddcount &lt;- function(x) { k 
+&lt;- 0 for (n in x) { if (n %% 2 == 1) k &lt;- k+1 } return(k) }</pre> 
+<p> Then whenever we wanted to use it from an R session, we could load it by 
+typing</p> 
+<pre> &gt; source(&quot;oc.r&quot;) </pre> 
+<p> Here's another example, to automate the saving of a graph which is 
+displayed on the screen:</p> 
+<pre> # prints the currently displayed graph, on device number dvnum, to the # 
+file filename; dvnum will typically be 2; filename must be the name of # a PDF 
+file, quoted; it closes the PDF file and restores dvnum as the # current device 
+prpdf &lt;- function(dvnum, filename) { pdf(filename) dvc &lt;- dev.cur() 
+dev.set(dvnum) dev.copy(which=dvc) dev.set(dvc) dev.off() dev.set(dvnum) }</pre>
+<h3>Use of Lists to Package Information:</h3> 
+<p> Use R's <strong>list</strong> structure as you would a C <strong> struct
+</strong> or a class in an OOP language--to package information. </p> 
+<p> One common use is to package return values for functions that return more 
+than one piece of information. The $ symbol is used to designate components of 
+an object. We've seen this above, for instance, in the output of the<strong>lm()
+</strong> regression function: </p> 
+<pre> &gt; fit1 &lt;- lm(Exam3 ~ Exam1,data=testscores) &gt; fit1$coefficients 
+(Intercept) Exam1 3.7008841 0.7458898</pre> 
+<p> We can do the same thing in functions we write ourselves. Say for instance 
+the function<strong>f()</strong> returns a matrix <strong>m</strong> and a 
+vector<strong>v</strong>. Then one could write </p> 
+<pre> return(list(mat=m, vec=v)) </pre> 
+<p> at the end of the function, and then have the caller access these items 
+like this:</p> 
+<pre> l &lt;- f() m &lt;- l$mat v &lt;- l$vec </pre> 
+<h3>Printing to the Screen: </h3> 
+<p> In interactive mode, one can print the value of a variable or expression 
+by simply typing the variable name or expression. In batch mode, one can use the
+<strong>print()</strong> function, e.g. </p> 
+<pre> print(x) </pre> 
+<p> The argument may be an object. </p> 
+<p> It's a little better to use <strong>cat()</strong> instead of <strong>
+print()</strong>, as the latter's output is numbered. E.g. </p> 
+<pre> &gt; print(&quot;abc&quot;) [1] &quot;abc&quot; &gt; 
+cat(&quot;abc\n&quot;) abc</pre> 
+<h3>Debugging:</h3> 
+<p> R includes a number of debugging facilities. They are nowhere near what a 
+good debugging tool offers, but with skillful usage they can be effective.</p> 
+<p> A more functional debugging package available for R, of course called 
+<strong>debug</strong>. I will discuss this below. </p> 
+<h4>Entering the Debugger with the debug() Function: </h4> 
+<p> One of the tools R offers for debugging your R code is <strong>debug()
+</strong>. It works in a manner similar to C debuggers such as GDB. Say for 
+example we suspect that our bug is in the function<strong>f()</strong>. We 
+include code (outside of that function)</p> 
+<pre> debug(f) </pre> 
+<p> Then when <strong>f()</strong> is executed, you enter the debugger, termed 
+the<i>browser</i> in R. The command prompt will now be something like <strong>
+Browse[1]</strong> instead of just <strong>&gt;</strong>. Then you can invoke 
+various debugging operations, such as:</p> 
+<ul> 
+<li> You can single-step through the code by hitting the Enter key. </li> 
+<p></p> 
+<li> You can skip to the end of the &quot;current context&quot; (a loop or a 
+function) by typing c.</li> 
+<p></p> 
+<li> You can get a stack report by typing &quot;where&quot;. </li> 
+<p></p> 
+<li> You can return to the &gt; prompt by typing Q. </li> 
+<p></p> 
+<li> Since all normal R operations and functions are still available to you, 
+you can query the value of a variable, just type its name, as you would in 
+ordinary interactive usage of R. (If the variable's name is one of the<strong>
+debug()</strong> commands, though, say <strong>c</strong>, you'll need to do 
+something like<strong>print(c)</strong> to print it out.) </li> 
+<p></p> 
+<li> Again since all normal R operations and functions are still available to 
+you, you can set new breakpoints, etc.</li> 
+<p></p> </ul> 
+<p></p> 
+<p> To turn off debugging for that function, type </p> 
+<pre> &gt; undebug(f) </pre> 
+<p> Note that if you simultaneously have a separate window open in which you 
+are editing your source code, each time you reload it using<strong>source()
+</strong>, the debugging status is lost. </p> 
+<h4>Setting Breakpoints with the browser() Function: </h4> 
+<p> If single-stepping is too tedious, an alternative is to place breakpoints, 
+by simply inserting the call</p> 
+<pre> browser() </pre> 
+<p> at the points at which you wish execution to pause. </p> 
+<p> When <strong>browser()</strong> is called, you do indeed enter the browser 
+(if you had not already entered it via<strong>debug()</strong>), and can 
+proceed as described above. Note, though, that if you want to single-step after 
+hitting a breakpoint, you must type<strong>n</strong> for the first step, 
+though you can just hit the Enter key for subsequent steps. Otherwise, hitting 
+Enter immediately after hitting a breakpoint is equivalent to hitting<strong>c
+</strong>. </p> 
+<p> Note that as described here, the breakpoints are hard-coded into the 
+function's source code. To set them externally, see the<strong>trace()</strong> 
+function described below.</p> 
+<h4>Automating Actions with the trace() Function: </h4> 
+<p> The <strong>trace()</strong> function is quite flexible and powerful, 
+though it takes some initial effort to learn. I will discuss some of the 
+simpler usage forms here.</p> 
+<p> The call </p> 
+<pre> &gt; trace(f,t) </pre> 
+<p> would instruct R to call the function <strong>t()</strong> every time we 
+enter the function<strong>r()</strong>. For instance, say we wish to set a 
+breakpoint at the beginning of the function<strong>gy()</strong>. We could do 
+this by the command</p> 
+<pre> &gt; trace(gy,browser) </pre> 
+<p> This would have the same effect as placing the command <strong>browser() 
+</strong> in our source code for <strong>gy()</strong>, but would be quicker 
+and more convenient than inserting such a line, saving the file and rerunning
+<strong>source()</strong> to load in the new version of the file. </p> 
+<p> It would also be quicker and more convenient to undo, by simply running 
+</p> 
+<pre> &gt; untrace(gy) </pre> 
+<p> You can turn tracing on or off globally by calling <strong>tracingState()
+</strong>, with the argument TRUE to turn it on, FALSE to turn it off. Recall 
+too that these boolean constants in R can be abbreviated T and F.</p> 
+<h4>Performing Checks After a Crash with the traceback() and debugger() 
+Function: </h4> 
+<p> Say your R code crashes when you are not running the debugger. There is 
+still a debugging tool available to you after the fact: You can do a &quot;post 
+mortem&quot; by simply calling<strong>traceback()</strong>. </p> 
+<p> You can get a lot more if you set R up to dump frames on a crash: </p> 
+<pre> &gt; options(error=dump.frames) </pre> 
+<p> If you've done this, then after a crash run </p> 
+<pre> &gt; debugger() </pre> 
+<p> You will then be presented with a choice of levels of function calls to 
+look at. For each one that you choose, you can take a look at the values of the 
+variables there.</p> 
+<h4>The debug Package: </h4> 
+<p> The <strong>debug</strong> package provides a more usable debugging 
+interface than R's built-in facilities do. It features a pop-up window in which 
+you can watch your progress as you step through your source code, gives you the 
+ability to easily set breakpoints, etc.</p> 
+<p> It requires another package, <strong>mvbutils</strong>, and the <strong>
+tcl/tk</strong> scripting and graphics system. The latter is commonly included 
+in Linux distributions, and is freely downloadable for all the major platforms. 
+It suffers from a less-than-perfect display, but is definitely worthwhile.</p> 
+<h4>Installation:</h4> 
+<p> Choose an installation directory, say <strong>/MyR</strong>. Then install 
+<strong>mvbutils</strong>, then <strong>debug</strong>: </p> 
+<pre> &gt; install.packages(&quot;mvbutils&quot;,&quot;/MyR&quot;) &gt; 
+install.packages(&quot;debug&quot;,&quot;/MyR&quot;)</pre> 
+<p> R version 2.5.0, I found that a bug in R caused the <strong>debug</strong> 
+package to fail. I then installed the patched version of 2.5.0, and<strong>debug
+</strong> worked fine. On one machine, I encountered a Tcl/Tk problem when I 
+tried to load<strong>debug</strong>. I fixed that (I was on a Linux system) by 
+setting the environment variable, in my case by typing</p> 
+<pre> % setenv TCL_LIBRARY /usr/share/tcl8.4 </pre> 
+<h4>Path Issues:</h4> 
+<p> Each time you wish to use <strong>debug</strong>, load it by executing </p>
+<pre> &gt; .libPaths(&quot;/MyR&quot;) &gt; library(debug) </pre> 
+<p> Or, place these in an R startup file, say <strong>.Rprofile</strong> in 
+the directory in which you want these commands to run automatically.</p> 
+<h4>Usage:</h4> 
+<p> Now you are ready to debug. Here are the main points: </p> 
+<ul> 
+<li> Breakpoints are first set at the function level. Say you have a function 
+<strong>f</strong> at which you wish to break. Then type 
+<p></p> 
+<pre> &gt; mtrace(f) </pre> 
+<p> Do this for each function at which you want a breakpoint. </p></li> 
+<p></p> 
+<li> Then go ahead and start your program. (I'm assuming that your program 
+itself consists of a function.) Execution will pause at<strong>f()</strong>, 
+and a window will pop up, showing the source code for that function. The 
+current line will be highlighted in green. Back in the R interactive window, 
+you'll see a prompt<strong>D(1)&gt;</strong>. </li> 
+<p></p> 
+<li> At this point, you can single-step through your code by repeatedly 
+hitting the Enter key. You can print the values of variables as you usually do 
+in R's interactive mode.</li> 
+<p></p> 
+<li> You can set finer breakpoints, at the line level, using <strong>bp()
+</strong>. Once you are in <strong>f()</strong>, for instance, to set a 
+breakpoint at line 12 in that function type
+<p></p> 
+<pre> D(1)&gt; bp(12) </pre> </li> 
+<p></p> 
+<li> To set a conditional breakpoint, say at line 12 with the condition 
+<strong>k == 5</strong>, issue <strong>bp(12,k==5)</strong>. </li> 
+<p></p> 
+<li> To avoid single-stepping, issue <strong>go()</strong>. </li> 
+<p></p> 
+<li> To cancel all <strong>mtrace()</strong> breaks, issue <strong>mtrace.off()
+</strong>. To cancel one for a particular function <strong>f</strong>, issue 
+<strong>mtrace(f,tracing=F)</strong>. </li> 
+<p></p> 
+<li> To cancel a breakpoint, say at line 12, issue <strong>bp(12,F)</strong>. 
+</li> 
+<p></p> 
+<li> To quit, issue <strong>qqq()</strong>. </li> 
+<p></p> 
+<li> For more details, see the extensive online help, e.g. by typing 
+<p></p> 
+<pre> D(1)&gt; ?bp </pre> </li> 
+<p></p> </ul> 
+<h4>Ensuring Consistency with the set.seed() Function: </h4> 
+<p> If you're doing anything with random numbers, you'll need to be able to 
+reproduce the same stream of numbers each time you run your program during the 
+debugging session. To do this, type</p> 
+<pre> &gt; set.seed(8888) # or your favorite number as an argument </pre> 
+<h2>Startup Files: </h2> 
+<p> If there are R commands you would like to have executed at the beginning 
+of every R session, you can place them in a file<strong>.Rprofile</strong> 
+either in your home directory or in the directory from which you are running R. 
+The latter is searched for such a file first, which allows you to customize for 
+a particular project.</p> 
+<p> Other information on startup files, e.g. the file <strong>.RData</strong> 
+which records your workspace if you request it to be saved when you exit R, is 
+available by typing</p> 
+<pre> help(.Rprofile) </pre> 
+<p> The help is piped through the pager. </p> 
+<p> You can put any set of R commands in a file, say <strong>a.r</strong>, and 
+then have them automatically executed by typing</p> 
+<pre> source(&quot;a.r&quot;) </pre> 
+<h2>Packages (Libraries): </h2> 
+<h3>Basic Notions: </h3> 
+<p> R uses <i> packages</i> to store groups of related pieces of software. (
+See Note LIBRARY below.) The libraries are visible as subdirectories of your 
+<strong>library</strong> directory in your R installation tree, e.g. <strong>
+/usr/lib/R/library</strong>. The ones automatically loaded when you start R 
+include the<strong>base</strong> subdirectory, but in order to save memory and 
+time, R does not automatically load all the packages. You can check which 
+packages are currently loaded by typing</p> 
+<pre> &gt; .path.package() </pre> 
+<h3>Loading from Your Hard Drive: </h3> 
+<p> If you need a package which is in your R installation but not loaded into 
+memory yet, you must request it. For instance, suppose you wish to generate 
+multivariate normal random vectors. The function<strong>mvrnorm()</strong> in 
+the package<strong>MASS</strong> does this. (See &quot;For Further 
+Information&quot; below for an explanation of how you might find that this is 
+the function we want.) So, load the library:</p> 
+<pre> &gt; library(MASS) </pre> 
+<p> Then <strong>mvrnorm()</strong> will now be ready to use. (As will be its 
+documentation. Before you loaded<strong>MASS</strong>, 
+&quot;help(mvrnorm)&quot; would have given an error message).</p> 
+<h3>Downloading from the Web: </h3> 
+<p> However, the package you want may not be in your R installation. One of 
+the big advantages of open-source software is that people love to share. Thus 
+people all over the world have written their own special-purpose R packages, 
+placing them in the CRAN repository. That is accessible fromR home page, but 
+it's easier to use the<strong>install.packages()</strong> function. </p> 
+<p> As an example, suppose you wish to use the <strong>mvtnorm</strong> 
+package, which computes multivariate normal cdf's and other quantities. Choose 
+a directory in which you wish to install the package (and maybe others in the 
+future), say<strong>/a/b/c</strong>. Then at the R prompt, type </p> 
+<pre> &gt; install.packages(&quot;mvtnorm&quot;,&quot;/a/b/c/&quot;) </pre> 
+<p> This will cause R to automatically go to CRAN, download the package, 
+compile it, and load it into a new directory<strong>/a/b/c/mvtnorm</strong>. 
+</p> 
+<p> You do have to tell R where to find that package, though, which you can do 
+via the<strong>.libPaths()</strong> function: </p> 
+<pre> &gt; .libPaths(&quot;/a/b/c/&quot;) </pre> 
+<p> This will add that new directory to the ones R was already using. A call to
+<strong>.libPaths()</strong> again, without an argument, will show you a list 
+of all the places R now will look at for loading a package when requested.</p> 
+<h3>Built-in Data Sets:</h3> 
+<p> R includes a few real data sets, for use in teaching or in testing 
+software. Type the following:</p> 
+<pre> &gt; library(utils) &gt; data &gt; help(data) </pre> 
+<p> Here <strong>data</strong> is contained within the <strong>utils</strong> 
+package. We load that package, and use<strong>help()</strong> to see what's in 
+it, in this case various data sets. We can load any of them but typing its 
+name, e.g.</p> 
+<pre> &gt; LakeHuron </pre> 
+<h2>String Manipulation: </h2> 
+<p> R has a number of string manipulation utilities, such as <strong>paste()
+</strong>, <strong>sprintf()</strong>, <strong>substr()</strong> and <strong>
+strsplit</strong>. I discuss a couple of them here. </p> 
+<p> Suppose I wish to create five files, <strong>q1.pdf</strong> through 
+<strong>q5.pdf</strong>, consisting of histograms of 100 random N(0,i2) 
+variates. I could execute the code</p> 
+<pre> for (i in 1:5) { fname &lt;- paste(&quot;q&quot;,i) pdf(fname) 
+hist(rnorm(100,sd=i)) dev.off() }</pre> 
+<p> The <strong>paste()</strong> function concatenates the string 
+&quot;q&quot; with the string form of<strong>i</strong>. For example, when i = 
+2, the variable<strong>fname</strong> will be &quot;q 2&quot;. </p> 
+<p> But that wouldn't quite work, as it would give me filenames like &quot;q 
+2.pdf&quot;. On Unix systems, filenames with embedded spaces create headaches.
+</p> 
+<p> Instead, I could use <strong>sprintf()</strong>, which works like the 
+C-language function of the same name:</p> 
+<pre> for (i in 1:5) { fname &lt;- sprintf(&quot;q%d.pdf&quot;,i) pdf(fname) 
+hist(rnorm(100,sd=i)) dev.off() }</pre> 
+<p> Since even many C programmers are unaware of the <strong>sprintf()</strong>
+ function, some explanation is needed. This function works just like<strong>
+printf()</strong>, except that it &quot;prints&quot; to a string, not to the 
+screen. Here we are &quot;printing&quot; to the string<strong>fname</strong>. 
+What are we printing? The function says to first print &quot;q&quot;, then 
+print the character version of i, then print &quot;.pdf&quot;. When i = 2, for 
+instance, we print &quot;z2.pdf&quot; to<strong>fname</strong>. </p> 
+<p> For floating-point quantities, note also the difference between <strong>%f
+</strong> and <strong>%g</strong> formats: </p> 
+<pre> &gt; sprintf(&quot;abc%fdef&quot;,1.5) [1] &quot;abc1.500000def&quot; 
+&gt; sprintf(&quot;abc%gdef&quot;,1.5) [1] &quot;abc1.5def&quot;</pre> 
+<h2>Handy Miscellaneous Features: </h2> 
+<p> During a session, you can scroll back and forth in your command history by 
+typing ctrl-p and ctrl-n. You can also use the<strong>history()</strong> 
+command to list your more recent commands (which will be run through thepager). 
+Set the named argument<strong>max.show=Inf</strong> if you want to see all of 
+them.</p> 
+<h3>The Pager:</h3> 
+<p> This displays material one screen at a time. It is automatically invoked 
+by some R commends, such as<strong>help()</strong>, and you can invoke it 
+yourself on lengthy output. For instance, if you have a long vector<strong>x
+</strong> and wish to display it one screen at a time, then instead of typing 
+</p> 
+<pre> &gt; x </pre> 
+<p> type </p> 
+<pre> &gt; page(x) </pre> 
+<p> Set the Hit q to quit the pager, type &quot;/abc&quot; to search for the 
+string &quot;abc&quot; in the pager output, etc.</p> 
+<h3>Running R in Batch Mode: </h3> 
+<p> Sometimes it's preferable to automate the process of running R. For 
+example, we may wish to run an R script that generates a graph output file, and 
+not have to bother with manually running R. Here's how it could be done. 
+Consider the file<strong>z.r</strong>: </p> 
+<pre> pdf(&quot;xh.pdf&quot;) # set graphical output file hist(rnorm(100)) # 
+generate 100 N(0,1) variates and plot their histogram dev.off() # close the file
+</pre> 
+<p> We could run it automatically by simply typing </p> 
+<pre> R CMD BATCH --vanilla &lt; z.r </pre> 
+<p> The <strong>--vanilla</strong> option tells R not to load any startup file 
+information, and not to save any.</p> 
+<h3>Calculating Run Time: </h3> 
+<p> If you are not sure which of several approaches to use to get the fastest 
+R code, you can time time with the function<strong>system.time()</strong>. </p> 
+<h2>Sampling Subsets: </h2> 
+<h3>The sample() Function: </h3> 
+<p> The <strong>sample()</strong> function chooses random items from a set of 
+objects, with or without replacement. For example, here our objects are matrix 
+rows:</p> 
+<pre> &gt; x [,1] [,2] [1,] 11 12 [2,] 21 22 [3,] 31 32 &gt; 
+x[sample(c(1,2,3),2), ] [,1] [,2] [1,] 31 32 [2,] 11 12 &gt; 
+x[sample(c(1,2,3),2), ] [,1] [,2] [1,] 21 22 [2,] 11 12 &gt; 
+x[sample(c(1,2,3),2), ] [,1] [,2] [1,] 31 32 [2,] 11 12 &gt; 
+x[sample(c(1,2,3),2), ] [,1] [,2] [1,] 11 12 [2,] 21 22</pre> 
+<p> Look carefully at what is happening here. The call </p> 
+<pre> sample(c(1,2,3),2) </pre> 
+<p> tells R to take a sample of size 2 without replacement (the default) from 
+c(1,2,3). The first time we did this, the result of that call was the vector 
+(3,1). So,</p> 
+<pre> x[sample(c(1,2,3),2), ] </pre> 
+<p> was <strong>x[c(3,1), ]</strong>, i.e. the 2x2 matrix consisting of the 
+third row and then the first row of<strong>x</strong>. </p> 
+<h3>Bootstrap Operations: </h3> 
+<p> The <i>bootstrap</i> is a resampling method for performing statistical 
+inference in analytically intractable situations. If we have an estimator but 
+no standard error, we get one by resampling from our sample data many times, 
+calculating the estimator each time, and then taking the standard deviation of 
+all those generated values. You could just use<strong>sample()</strong> for 
+this, but R has a package,<strong>boot</strong>, which automates the procedure 
+for you.</p> 
+<p> To use the package, you must first load it: </p> 
+<pre> &gt; library(boot) </pre> 
+<p> Inside that package is a function, <strong>boot()</strong>, which will do 
+the work of bootstrapping.</p> 
+<p> Suppose we have a data array <strong>y</strong> of length 100, from which 
+we wish to estimate a population median, using<strong>y</strong>, and have a 
+standard error as well. We could do the following.</p> 
+<p> First we must define a function which defines the statistic we wish to 
+compute, which in this case is the median. This function will be called by
+<strong>boot()</strong> (it is named <strong>statistic()</strong> in the list of
+<strong>boot()</strong>'s formal parameters). We could define it as follows: 
+</p> 
+<pre> &gt; mdn &lt;- function(x,i) { + return(median(x[i])) + } </pre> 
+<p> It may seem to you that all this is doing is to call R's own <strong>
+median()</strong> function, and you may wonder why we need to define our own 
+new function. But it is definitely needed, with the key being that second 
+parameter,<strong>i</strong>. When we call <strong>boot()</strong>, the latter 
+will generate 100 indices, sampled randomly with replacement from {1,...,100}, 
+where recall 100 is our sample size here. R will then set<strong>i</strong> to 
+this set of random indices when it calls<strong>mdn()</strong>. For example R 
+might generate<strong>i</strong> to be a 100-element vector 
+[3,22,59,3,14,6,...] Of course, in<strong>boot()</strong>'s call to <strong>
+mdn()</strong>, the formal parameter <strong>x</strong> is our vector <strong>y
+</strong> here. So, the expression <strong>x[i]</strong> means <strong>
+y[c(3,22,59,3,14,6,...)]</strong>, in other words the vector <strong>
+[y[3],y[22],y[59],y[3],y[14],y[6],...]</strong>--exactly the kind of thing the 
+bootstrap is supposed to do.</p> 
+<p> To then call <strong>boot()</strong>, we do something like </p> 
+<pre> &gt; b &lt;- boot(y,mdn,R=200) </pre> 
+<p> This tells R to apply the bootstrap to the data <strong>y</strong>, 
+calculating the statistic<strong>mdn()</strong> on each of 200 resamplings of 
+<strong>y</strong>. The output looks like this: </p> 
+<pre> &gt; b ORDINARY NONPARAMETRIC BOOTSTRAP Call: boot(data = y, statistic = 
+mdn, R = 200) Bootstrap Statistics : original bias std. error t1* 5 0.2375 
+1.708637</pre> 
+<p> Normally, we would assign the result of <strong>boot()</strong> to an 
+object, as we did with<strong>b</strong> above. Among the components of that 
+object are<strong>b$t</strong>, which is a matrix whose i-th row gives the 
+value of the statistic as found on the i-th bootstrap resampling, and<strong>
+b$t0</strong>, which is the value of our statistic on the original data set. 
+</p> 
+<p> A somewhat more sophisticated example (they can become quite complex) 
+would be that in which our data is a data frame, say<strong>d</strong> 
+consisting of 100 rows of two columns. We might be doing regression of the 
+first column against the second. An index i here would tell<strong>boot()
+</strong> that the basic datum is a row, <strong>d[i,]</strong>. We could set 
+our<strong>statistic()</strong> function to</p> 
+<pre> dolm &lt;- function(fulldata,i) { bootdata &lt;- fulldata[i,] lmout 
+&lt;- lm(bootdata[,1]~bootdata[,2]) return(lmout$coef) }</pre> 
+<p> (I've put in some extra steps for clarity.) </p> 
+<p> Again, when <strong>dolm()</strong> is called, <strong>i</strong> will be 
+a set of indices randomly generated by<strong>boot()</strong>, and <strong>
+fulldata</strong> will be our original data set <strong>d</strong>. The 
+expression<strong>fulldata[i,]</strong> then gives us the randomly generated 
+set of rows of<strong>d</strong>, based on the randomly generated indices 
+<strong>i</strong>. </p> 
+<p> Our call to <strong>boot()</strong> could then be </p> 
+<pre> &gt; boot(d,dolm,R=500) </pre> 
+<p> Note that this example also illustrates the fact that <strong>boot()
+</strong> can indeed handle vector-valued statistics. </p> 
+<p> Further details are described in  an article by the author of boot() in 
+the December 2002 issue of<i>R News</i>. </p> 
+<h2>Reading Spreadsheet Files: </h2> 
+<p> I must confess to being a non-spreadsheet user. I use R instead! But I 
+often work with government databases, and they tend to release these as either 
+straight Excel files, or as<strong>.csv</strong> files. (In Excel, one can 
+export to this format.) R is capable of reading<strong>.csv</strong> files. 
+Here's how:</p> 
+<p> For concreteness, suppose our file is named <strong>d.csv</strong>. The 
+first record of the<strong>.csv</strong> file has the names of the variables. 
+If a name contains a blank, the name must be quoted. Again, that will already 
+be taken care of by the spreadsheet or whatever generated the file in the first 
+place, but I mention it because you will need to use the quotes in your R 
+commands. Say for instance the file has variables<strong>x</strong>, <strong>y
+</strong> and <strong>&quot;abc def&quot;</strong>. </p> 
+<p> To read your dataset into your R space, issue the command </p> 
+<pre> d &lt;- read.csv(&quot;d.csv&quot;) </pre> 
+<p> where of course my choice of <strong>d</strong> as the name for my R table 
+was arbitrary. Then work with R as usual. For example, say we want to see the 
+means of<strong>x</strong> and <strong>&quot;abc def&quot;</strong>. We type 
+</p> 
+<pre> mean(d$x) mean(d$&quot;abc def&quot;) </pre> 
+<p> Another possible issue is that the data may all be strings, so that you 
+have to convert to numeric values. Use the<strong>as.numeric()</strong> 
+function for this purpose, e.g.</p> 
+<pre> d$xn &lt;- as.numeric(d$x) </pre> 
+<p> This would create a new variable, <strong>d$xn</strong>, consisting of the 
+numbers converted from<strong>d$x</strong>. </p> 
+<h2>Reading dBase Files: </h2> 
+<p> If you have a <strong>.dbf</strong> file, the easiest thing to do is run 
+the<strong>dbf2txt</strong> program, available at  
+http://www.usf.uni-osnabrueck.de/~fkoorman/software/dbftools.en.html, to 
+convert the file to plain ASCII text.</p> 
+<h2>For Further Information: </h2> 
+<h3>Help Facilities within R: </h3> 
+<p> If you want an introductory overview of R, type </p> 
+<pre> &gt; help.start() </pre> 
+<p> R will then invoke a default Web browser. If you want another browser 
+used, say Lynx, type</p> 
+<pre> &gt; help.start(browser=&quot;lynx&quot;) </pre> 
+<p> For specific online help, invoke <strong>help()</strong>. For example, type
+</p> 
+<pre> &gt; help(sd) </pre> 
+<p> or </p> 
+<pre> ?sd </pre> 
+<p> to get information on the <strong>sd()</strong> function. </p> 
+<p> The <strong>example()</strong> function will actually run the examples 
+shown in the output of<strong>help()</strong>. This can be especially useful 
+for graphics functions.</p> 
+<p> You can use the function <strong>help.search()</strong> to do a 
+&quot;Google&quot;-style search through R's documentation in order to determine 
+which function will play a desired role. For instance, inthe section titled 
+&quot;Packages (Libraries)&quot; above, we needed a function to generate random 
+variates from multivariate normal distributions. To determine what function, if 
+any, does this, we could type</p> 
+<pre> &gt; help.search(&quot;multivariate normal&quot;) </pre> 
+<p> getting a response which contains this excerpt: </p> 
+<pre> mvrnorm(MASS) Simulate from a Multivariate Normal Distribution </pre> 
+<p> This tells us that the function <strong>mvrnorm()</strong> will do the 
+job, and it is in the package<strong>MASS</strong>. </p> 
+<p> To &quot;browse,&quot; go to the place in your R directory tree where the 
+base is stored. For Linux, for instance, that is likely<strong>
+/usr/lib/R/library/base</strong> or some similar location. The file <strong>
+CONTENTS</strong> in that directory gives brief descriptions of each entity. 
+</p> 
+<h3>Help on the Web: </h3> 
+<p> For more information on graphics, the command <strong>?par</strong> will 
+give you documentation on the various graphics parameters, but it is rather 
+overwhelming. There are entire books on R/S+ graphics. But you can learn a lot 
+from tutorials on the Web. See below for links to some of them.</p> 
+<p> There are a number of R tutorials and manuals which have been written, 
+many of which are linked to on the R Web page (click on Manuals | Contributed 
+Documentation). Here are some that I find useful:</p> 
+<h4>General Introductions: </h4> 
+<ul> 
+<li> one by Prof. Wm. Revelle of the Dept. of Psychology of Northwestern 
+University; especially good for material on multivariate statistics and 
+structural equation modeling</li> 
+<p></p> 
+<li>  a rough form of John Verzani's book, <i>simpleR</i> ; nice coverage of 
+various statistical procedures</li> 
+<p></p> 
+<li>  a large general reference by Vincent Zoonekynd; really excellent with as 
+wide a statistics coverage as I've seen anywhere</li> 
+<p></p> 
+<li>  a nice page on R OOP </li> 
+<p></p> 
+<li>  draft of John Maindonald's book; he also has scripts, data etc. in his 
+full site </li> 
+<p></p> 
+<li>  a nice short first introduction by M. Hlynka of the University of Windsor
+</li> 
+<p></p> 
+<li>  a general tutorial but with lots of graphics and good examples from real 
+data sets, very nice job, by Prof. Dong-Yun Kim of the Dept. of Math. at 
+Illinois State University</li> 
+<p></p> 
+<li>  draft of an R-simulation based textbook on statistics, by Shravan 
+Vasishth</li> 
+<p></p> </ul> 
+<h4>Especially Good for Reference Purposes: </h4> 
+<ul> 
+<li>  one at Cal Tech, complete with an index! </li> 
+<p></p> 
+<li> &quot;R by Example&quot;, a quick chart on how to do various tasks in R, 
+nicely categorized</li> 
+<p></p> 
+<li>  R reference card, 4 pages, very handy </li> 
+<p></p> </ul> 
+<h4>R Programming </h4> 
+<ul> 
+<li>  the programming section of Zoonekynd's tutorial (includes some material 
+on OOP)</li> 
+<p></p> 
+<li> some nice tutorial material by Prof. Marasinghe at Iowa State; see the 
+sections titled &quot;Programming in R,&quot; More Programming in R,&quot; 
+&quot;Writing R Functions,&quot; etc.</li> 
+<p></p> 
+<li> R FAQ, mainly aimed at programmers </li> 
+<p></p> 
+<li> reference manual, by several prominent people in the R/S community </li> 
+<p></p> 
+<li>  a nice tutorial on debugging in R, with more detailed examples than I 
+have here</li> 
+<p></p> </ul> 
+<h4>On Graphics:</h4> 
+<ul> 
+<li>  a slide-show tutorial on R graphics, very nice, easy to follow, lots of 
+color; by M. Nelson of Esperion Therapeutics</li> 
+<p></p> 
+<li>  an extensive R graphics tutorial, by Vince Carey of the Harvard 
+Biostatistics Dept.</li> 
+<p></p> 
+<li>  an extensive R graphics tutorial, by the R Core Development Team </li> 
+<p></p> 
+<li> the R Graphics Gallery, a collection of graphics examples with source code
+</li> 
+<p></p> 
+<li>  Web page for the book, <i>R Graphics</i>, by Paul Murrell; Chapters 1, 4 
+and 5 are available there, plus all the figures from the book and the R code 
+which generated them</li> 
+<p></p> </ul> 
+<h4>Searching R Issues:</h4> 
+<p> Various R search engines are listed in the the R home page; click on 
+Search. One of them,RSeek, is one I use. </p> 
+<h2> How to Obtain/Install R: </h2> 
+<p> If you have Fedora Linux, life is really simple. Just type </p> 
+<pre> $ yum install R </pre> 
+<p> You can also probably do something like this in Ubuntu Linux, etc. </p> 
+<p> There are precompiled binaries for Windows, Linux and MacOS X at the R 
+home page. Just click on Download (CRAN). </p> 
+<p> On Linux machines, you can compile the source yourself by using the usual 
+</p> 
+<pre> configure make make install </pre> 
+<p> sequence. If you want to install to a nonstandard directory, say <strong>
+/a/b/c</strong>, run <strong>configure</strong> as </p> 
+<pre> configure --prefix=/a/b/c </pre> 
+<h2> Using R from emacs: </h2> 
+<p> There is a very popular package which allows one to run R (and some other 
+statistical packages) from within emacs,ESS. I personally do not use it, but it 
+clearly has some powerful features for those who wish to put in a bit of time 
+to learn the package. As described in theR FAQ, ESS offers R users: </p> 
+<blockquote> R support contains code for editing R source code (syntactic 
+indentation and highlighting of source code, partial evaluations of code, 
+loading and error-checking of code, and source code revision maintenance) and 
+documentation (syntactic indentation and highlighting of source code, sending 
+examples to running ESS process, and previewing), interacting with an inferior 
+R process from within Emacs (command-line editing, searchable command history, 
+command-line completion of R object and file names, quick access to object and 
+search lists, transcript recording, and an interface to the help system), and 
+transcript manipulation (recording and saving transcript files, manipulating 
+and editing saved transcripts, and re-evaluating commands from transcript 
+files).</blockquote> 
+<h2> Using R from Python (and Vice Versa): </h2> 
+<p> R functions can be called from Python, and vice versa, using the RPy 
+package. It is extremely easy to set up and use. </p> 
+<h2> Footnotes: </h2> 
+<p> Note LIBRARY: This is one of the very few differences between R and S. In 
+S, packages are called<i>libraries</i>, and many of the functions which deal 
+with them are different from those in R.</p> 
+</body>

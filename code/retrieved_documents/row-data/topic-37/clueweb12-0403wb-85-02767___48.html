@@ -1,0 +1,1031 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Tim Johansson - Taking the canvas to another dimension</title>
+<body>
+<b>My Opera</b> 
+<ul> 
+<li> Community 
+<ul> 
+<li>News</li> 
+<li>Blogs</li> 
+<li>Photos</li> 
+<li>Members</li> 
+<li>Groups</li> </ul> </li> 
+<li> Opera 
+<ul> 
+<li>Opera news</li> 
+<li>Forums</li> 
+<li>Opera Link</li> 
+<li>Opera Unite</li> 
+<li>Skins &amp; buttons</li> </ul> </li> </ul> 
+<ul> 
+<li>Sign up</li> 
+<li>Log in</li> </ul> 
+<h1>Tim's blog</h1> 
+<ul> 
+<li>Blog</li> 
+<li>Photos</li> 
+<li>Unite</li> 
+<li>Friends</li> 
+<li>About</li> </ul> 
+<p></p> 
+<h2>Taking the canvas to another dimension</h2> 
+<p>Tuesday, November 13, 2007 4:38:34 PM</p> 
+<p>3d, opera, canvas </p> 
+<p> Recently Opera published an experimental build on Opera Labs, with support 
+for the video element and video in SVG. This build also includes an 
+experimental addition to the canvas element, the 3d canvas. In order to view 
+the demos presented here you will need toget the Opera Labs build. The build is 
+currently only available for Windows. Mac and Linux versions should be 
+available soon.</p> 
+<p> Since this is my first post I guess I should introduce myself. My name is 
+Tim Johansson, and I am a core technology developer at Opera Software. I am 
+responsible for, among other things, canvas (including the underlying vector 
+graphics library) and image decoding.</p> 
+<p> A new addition to HTML5 is the canvas. The canvas is more or less a bitmap 
+that you can draw on using JavaScript. The actual drawing is done by a 
+(rendering) context. The specification includes a 2d context that must be 
+implemented, but also allows browser vendors to add their own contexts. When I 
+first implemented the canvas tag in Opera I though it would be cool to have a 
+3d context, so I added one.</p> 
+<p> In this post I will describe the 3d context I added, which is available in 
+the recently released Opera Labs build. The context is called opera-3d and is 
+basically Opera's version of the 3d canvas. For those of you not familiar with 
+the canvas tag here is a crash course in using it.</p> 
+<ol> 
+<li>Add a &lt;canvas&gt;&lt;/canvas&gt; tag to your page</li> 
+<li>Get the canvas element from a JavaScript using <code>getElementById</code> 
+or something similar.</li> 
+<li>Call <code>canvas.getContext(&lt;name&gt;);</code> to get the context</li> 
+</ol> That's it. Once you have the context in your script you can just call its 
+rendering functions.
+<p></p> <br>
+
+<h2>The opera-3d context</h2> 
+<p> Opera's 3d context, unlike Mozilla's, is not a straight mapping to OpenGL. 
+We keep it on a more abstract level. The main reasons for doing this are:</p> 
+<ul> 
+<li>It makes it easier to implement on non-OpenGL platforms (such as D3D)</li> 
+<li>We wanted to have some form of collision detection available</li> </ul> 
+<p> The main concept is that you work with 3D models. You create 3D models, 
+add vertices and triangles to them and finally render them to the canvas. This 
+is what the interface looks like.</p> 
+<pre><code> interface CanvasRenderingContextOpera3D { // state void save(); // 
+push state on state stack void restore(); // pop state stack and restore state 
+// scene/frame void beginScene(); // start rendering a new frame void 
+endScene(); // finish rendering of the scene and present the result // 
+transformations void translate(in float x, in float y, in float z); void 
+scale(in float x, in float y, in float z); void rotateX(in float rotation); 
+void rotateY(in float rotation); void rotateZ(in float rotation); // rendering 
+operation void drawTriangle(in float x1, in float y1, in float z1, in float 
+tex_s1, in float tex_t1, in float x2, in float y2, in float z2, in float 
+tex_s2, in float tex_t2, in float x3, in float y3, in float z3, in float 
+tex_s3, in float tex_t3); void draw3DModel(in Canvas3DModel model); // create 
+objects CanvasTexture createTexture(in Image img); Canvas3DModel 
+create3DModel(); // collision detection string checkIntersection(in float x, in 
+float y, in float z, in float radius, in Canvas3DModel model); // rendering 
+state attribute CanvasTexture texture; // current texture or null for no 
+texture, default is null attribute string color; // current color, default is 
+transparent black attribute float fov; // field of view of the scene in 
+degrees, default is 45 attribute float nearPlane; // distance to the near 
+clipping plane, default is 0.1 attribute float farPlane; // distance to the far 
+clipping plane, default is 100 attribute string ztest; // &quot;none&quot;, 
+&quot;less&quot;, &quot;lessequal&quot;, &quot;greater&quot;, 
+&quot;greaterequal&quot;, &quot;equal&quot;, &quot;notequal&quot;. Default is 
+&quot;lessequal&quot; attribute string blend; // &quot;replace&quot;, 
+&quot;add&quot;, &quot;srcalpha&quot;, &quot;multiply&quot;. Default is 
+&quot;replace&quot; }; interface Canvas3DModel { void addVertex(in float x, in 
+float y, in float z, in float s, in float t); void addTriangle(in integer 
+vertex1, in integer vertex2, in integer vertex3); }; interface CanvasTexture{ };
+</code></pre> 
+<p> Let's go through the different functions in the order they appear above: 
+</p> 
+<ul> 
+<li>The <code>save</code> and <code>restore</code> functions save and restore 
+the current rendering state. They are very similar to<code>save</code> and 
+<code>restore</code> in the 2D context.</li> 
+<li>The <code>translate</code>, <code>scale</code> and <code>rotate</code> 
+functions modify the transformation matrix. The current transformation matrix 
+will transform all vertices rendered with the 3D canvas. This includes<code>
+Canvas3DModel</code> objects.</li> 
+<li> <code>beginScene</code> and <code>endScene</code> are used to distinguish 
+a frame. The canvas is only updated when<code>endScene</code> is called. When 
+it is, the rendered image is copied to the canvas. Only the commands issued 
+between<code>beginScene</code> and <code>endScene</code> are drawn to the 
+canvas.</li> 
+<li> <code>drawTriangle</code> draws a single triangle. This method is usually 
+slow and should not be used for rendering a lot of triangles.</li> 
+<li> <code>draw3DModel</code> renders a model previously created with <code>
+create3DModel</code> to the canvas. This function is much better suited for 
+rendering large batches of triangles.</li> 
+<li> <code>createTexture</code> creates a texture object from an image object. 
+This method will fail if the image object's dimensions are not powers of two 
+(1, 2, 4, 8, 16, 32 etc.) As with the regular canvas you can create textures 
+from images (including SVG) or other canvases.</li> 
+<li> <code>create3DModel</code> creates a <code>3DModel</code> object that can 
+be built (by adding vertices and triangles) and rendered by the script.</li> 
+<li> <code>checkIntersection</code> is a simple sphere/model collision 
+detection function. The parameters are the sphere (centre and radius) and the 
+model to check for collisions with the sphere. The function returns the 
+collision point as a string when a collision occurs (the point of deepest 
+penetration is coosen as collision point). If no collision was found the 
+function returns an empty string instead.</li> </ul> The collision detection 
+has some bugs in this build, and I would recomend that you do not use it yet. 
+We will write more about collision detection when it is fixed.
+<p></p> 
+<h2>Example - a rotating cube</h2> 
+<p>This is the first example ever written for the opera-3d context. It creates 
+a model, adds vertices and triangles for a cube and then renders it with 
+different transforms. If you are using an Opera build with 3d canvas enabled 
+you can alsosee the rotating cube in action. The files used for this example 
+are the HTML file shown below and an image to use as the texture (operalogo.png 
+in this case).</p> 
+<pre><code> &lt;canvas id=&quot;canvas&quot; width=&quot;200&quot; 
+height=&quot;200&quot;&gt; Canvas not supported! &lt;/canvas&gt; &lt;script&gt; 
+var canvas; var context3d; var rotation; var texture; var cube; function 
+render(){ context3d.beginScene(); context3d.translate(0,0,-5); 
+context3d.rotateY(rotation); context3d.rotateX(rotation); rotation += 2; 
+context3d.color = &quot;white&quot;; context3d.draw3DModel(cube); 
+context3d.endScene(); } function onTick(){ render(); } function onload(){ 
+canvas = document.getElementById(&quot;canvas&quot;); context3d = 
+canvas.getContext(&quot;opera-3d&quot;); if (!context3d) { alert(&quot;3d 
+canvas not supported&quot;); return; } logo = new Image(); logo.src = 
+&quot;operalogo.png&quot;; texture = context3d.createTexture(logo); 
+context3d.texture = texture; cube = context3d.create3DModel(); 
+cube.addVertex(-1, 1, 1, 0, 0); cube.addVertex(1, 1, 1, 1, 0); 
+cube.addVertex(-1, -1, 1, 0, 1); cube.addVertex(1, -1, 1, 1, 1); 
+cube.addVertex(-1, 1, -1, 1, 1); cube.addVertex(1, 1, -1, 0, 1); 
+cube.addVertex(-1, -1, -1, 1, 0); cube.addVertex(1, -1, -1, 0, 0); 
+cube.addTriangle(0,1,2); cube.addTriangle(2,1,3); cube.addTriangle(4,5,6); 
+cube.addTriangle(6,5,7); cube.addTriangle(0,4,2); cube.addTriangle(2,4,6); 
+cube.addTriangle(1,5,3); cube.addTriangle(3,5,7); cube.addTriangle(0,4,1); 
+cube.addTriangle(1,4,5); cube.addTriangle(2,6,3); cube.addTriangle(3,6,7); 
+setInterval(onTick, 10); } document.onload = onload(); &lt;/script&gt;</code>
+</pre> 
+<h2>More advanced techniques</h2> 
+<p> In the example above a plain textured cube, which was hard-coded in the 
+script, was rendered. It is possible to do much more than this using the 
+opera-3d context. Below I will describe some techniques that can be used to 
+make more advanced examples.</p> 
+<h3>DOM3 Load and save</h3> 
+<p> Hard-coding models is fine for small objects, but as the objects grow it 
+becomes more and more difficult to hard-code them in the script. It is possible 
+to get around this by converting the models to an XML format and then loading 
+them into the script using DOM3<code>load</code> and <code>save</code> to parse 
+the XML.Here is a modified version of the rotating cube. </p> 
+<h3>Lightmapping</h3> 
+<p> Lightmapping is one of the most famous lighting techniques. It is used in 
+many popular games, for example the quake series. The principle is that you 
+multiply each rendered pixel with the light value at that pixel. The light 
+value for each pixel is pre-calculated and stored in a texture.</p> 
+<p> The opera-3d context does not have multi-texturing yet, so it is not 
+possible to do lightmapping in one step, but you can achieve this effect by 
+doing multi pass rendering. In the first pass the scene is rendered as usual. 
+In the second pass<code>ztest</code> is set to <code>equal</code> and <code>
+blend</code> is set to <code>multiply</code>. The scene is now rendered with 
+the lightmap instead of the textures and the result is a lightmapped scene.</p> 
+<h2>Summary</h2> 
+<p> That's it! This article has given you an introduction to the fundamentals 
+of using the Opera 3d canvas. After reading all of this you should know enough 
+to create some cool 3d-canvas demos. If you want to see a more advanced example 
+you can have a look at the3d snake implementation done by Mathieu 'p01' HENRI. 
+I'm looking forward to seeing all the cool demos people will make! Get in touch 
+with us to share your creations.</p> 
+<ul> 
+<li>StumbleUpon</li> 
+<li>reddit</li> 
+<li> <br>
+</li> 
+<li> Tweet </li> 
+<li></li> </ul> 
+<p>The making of Opera 10.50</p> 
+<h3>  Comments</h3> 
+<p><b>1</b> 2 Next &raquo;</p> <br>
+<br>
+
+<p><b> Anonymous </b> # Friday, November 16, 2007 4:33:17 PM</p>  Anonymous 
+writes: Ive always thought directly mapping OpenGL into HTML/JS land so that 
+one could have the full power of the OpenGL API inside the browser and given it 
+is the most common and familiar 3D API it would be the easiest to start using 
+for the largest group of people, was a good idea. You mentioned that the 3D 
+canvas is not a direct mapping to OpenGL? What does that exactly mean? Does 
+this mean that some features of OpenGL are not available? I believe that not 
+staying API compatable with OpenGL is a mistake and not rational, especially 
+given there are open source implementations of OpenGL which can be ported to 
+most platforms. As well, if there is an OpenGL feature that I use and depend 
+on, its nice to know it will be there and available. Handicapping an 
+implementation of the 3D canvas is not a good design decision at all. Remaining 
+compatable with OpenGL makes sense since it allows the knowledge and 
+familiarity many already have with OpenGL useful in their work in Opera. OpenGL 
+APIs could be mapped onto native calls in an OS that does not support OpenGL. 
+Most nearly all OSs have some kind of OpenGL support, OpenGL has become the 
+most cross platform 3D API in use and it makes sense to support that rather 
+than create yet another incompatable 3D API like microsoft has done. As well, 
+you should provide the same non-persistant graphics mode as an option that 
+OpenGL uses, in many cases keeping a state of graphics on screen and 
+automatically refreshing them is not desired. An expose event for catching 
+window expose events to trigger redraws would also be a good idea. <br>
+
+<p><b> Anonymous </b> # Friday, November 16, 2007 4:35:43 PM</p>  Anonymous 
+writes: It should also be noted Windows does have an OpenGL implementation. <br>
+<p><b>Azamadt SmaguloffprofiT</b> # Friday, November 16, 2007 8:11:07 PM</p>  
+Opera Video build uses SDL framework for showing video and, most probably, for 
+3D-canvas too.<br>
+<br>
+SDL 3D module layer wraps around OpenGL to render 
+graphics, so using SDL, Opera gets (almost) direct access for OpenGL. <br>
+
+<p><b>grafio</b> # Saturday, November 17, 2007 12:51:51 PM</p>  I'm not a 3d 
+specialist, but I think a higher level syntax for 3D context like in the 
+experimental Opera is better than simply mapping whole OpenGL directly, because:
+<br> <br>
+ - I think there will be (or maybe there are already?) devices 
+without OpenGL but with D3D (based on Windows Mobile for example).<br>
+<br>
+ - 
+I doubt Microsoft would ever implement 3D canvas with OpenGL syntax into IE. 
+Implementing a &quot;neutral&quot; higher level solution (not OpenGL, nor D3D 
+dependent) is at least a bit possible.<br>
+<br>
+ - As long as 3D canvas won't 
+be implemented into IE, the whole 3D canvas will be dead for the Web except for 
+some limited usage (extensions/widgets etc) and MS simply won't do it if it 
+will be tied to OpenGL. I thought the point of WHATWG was to make a real world, 
+not idealistic specifications.<br>
+<br>
+ - higher level syntax for the 3d 
+context might actually work faster in JavaScript, because things which require 
+more CPU can be hard coded + we can have some nice not 3d<i>rendering</i> 
+features like collision detection. <br>
+
+<p><b>Excors</b> # Saturday, November 17, 2007 6:58:28 PM</p>  I've been 
+thinking about this vaguely for a while, so it's nice to see the work here! I'm 
+trying to come up with some more detailed suggestions about canvas-3d (I'm not 
+convinced I like either the Mozilla or Opera approaches), but in the meantime I 
+have a few random comments and was wondering if you have any related plans.<br>
+
+<br>* Lighting is essential. That means vertexes need normals. addVertex(x,y,z, 
+u,v, nx,ny,nz, ...) isn't very scalable as more vertex parameters are added - 
+GL-style vertex arrays seem more appropriate. Real people will make models in 
+3D modelling programs, and export them as e.g. COLLADA, so the model-creating 
+API should be optimised for scripts that load COLLADA-like meshes rather than 
+for programmers making cubes by hand. (I'm a cube person myself, but I'm 
+happier when I can load art from artists instead) <br>
+<br>
+* Material 
+properties are important. Everyone likes shiny things, so you need control over 
+specular properties of objects, and there are probably other useful properties. 
+GL-style lots-of-global-state-variables is a pain - maybe it'd be better to 
+have 'material' objects that hold the rendering state. (Maybe OpenGL 3 has 
+relevant ideas?)<br>
+<br>
+* I'm not sure collision detection should be mixed in 
+with the rendering API. Collision meshes are usually simplified shapes (e.g. a 
+cylinder instead of a humanoid) because that works better, and must be closed 
+(else you can't say whether a point is inside or outside) whereas rendered 
+meshes often have holes. A new non-rendering API could be optimised for 
+collision detection, improving performance and correctness (e.g. detecting 
+intersections between moving objects), based on primitive shapes rather than 
+assuming arbitrary meshes - see e.g. COLLADA Physics, which provides 
+boxes/spheres/convex-meshes/capsules/etc.<br>
+<br>
+* Double-sided triangles 
+might be annoying. When you want a textured plane, e.g. a rotating billboard, 
+you want different textures and texture coordinates on each side, and you'd 
+probably get nasty z-fighting issues if everything is double-sided.<br>
+<br>
+* 
+rotate[XYZ] don't look great. rotate(axis_x,y,z, angle) is more useful and not 
+more complex than rotate[XYZ](angle). Some people will want to use quaternions, 
+since they work much better, so the API should accept transformation matrices 
+rather than forcing everything into Euler angles.<br>
+<br>
+I don't have any 
+well-formed ideas now, but I'll try to come up with something in the near future
+<br> <br>
+
+<p><b>-SPM-Mad</b> # Sunday, November 18, 2007 5:43:22 PM</p>  No, no, no, 
+noooo x_x<br>
+<br>
+It is not even part of the (in my opinion useless) canvas 
+standard, and you add 3D support?<br>
+<br>
+<br>
+I understood the simple 
+bittorent support - can live with it. I understood the -tag support. It is good 
+to have an open alternative to flash-stuff. But a (non-standard) 3D-Rendering 
+engine? What has happened to the ideals of Opera being a really fast and 
+resource-friendly and hi-quality browser? There are people who yell for all 
+sorts of video/3D/musicplayer/instant-messenger etc. function in the browser, I 
+am sadly aware of that. But so far Opera (mostly) managed to stick to only the 
+important things. And alot of respect for your work mr Johansson. But now... 
+seriously, in all those years I used and admired Opera, this is the first time 
+I really disagree with the current development. Please choose if you want to be 
+a small, fast, high-quality and VERY usable and very standard-compliant browser 
+OR a feature-rich(overloaded?) internet-suit that does all sorts of tasks from 
+within the browser with less performance*? Sincerely Michael *A script-driven 
+(interpreted) interface to check mails (like google mail) or play music etc. 
+and now also render 3D images with ASCII-markup-data can never be as 
+resourcefriendly and fast as a compiled programm/plugin with optimized 
+datastructures. 'web 2.0'-stuff can be very usefull sometimes, but the 2.0 does 
+NOT stand for the cpu-cores I am suppoed to have to use it =( <br>
+<br>
+
+<p><b> Anonymous </b> # Sunday, November 18, 2007 11:20:06 PM</p>  Anonymous 
+writes: Oh god, not another 3D rendering engine. Why the hell couldn't you just 
+support an existing standard, like, Collada, VRML or X3D? How many times does 
+this wheel have to be re-invented? <br>
+
+<p><b>Excors</b> # Monday, November 19, 2007 12:25:13 AM</p>  This doesn't 
+overlap with COLLADA. I believe COLLADA should be encouraged as the standard 
+way of importing models into canvas-3d (since it's decent, and fairly widely 
+used, and well supported by modelling tools), but that should be done by 
+external scripts that load the XML and call the API functions like addTriangle. 
+Once you've loaded the models, you still need some way to animate them and draw 
+them all in the scene and add various effects, which isn't what COLLADA is for.
+<br> <br>
+As I understand it, there's more overlap with X3D, but it's quite 
+similar to the overlap between canvas-2d and SVG: one is retained-mode while 
+the other is immediate-mode, so they are quite different concepts and suit 
+different tasks and require different compromises. (VRML is just an older 
+version of X3D, so it's not very interesting now.)<br>
+<br>
+X3D is large and 
+complex and (I expect) it will never be implemented natively in browsers - it's 
+too much code, and it'd be a nightmare to get interoperability between 
+different browsers - so it will always rely on plugins. A thin wrapper over 
+OpenGL/DirectX is much more likely to be implemented natively in browsers, 
+given that Mozilla and Opera are already experimenting with exactly that. 
+Native support beats plugins (for ease of deployment, security, portability, 
+integration with the rest of the page, etc) - you have to give up X3D if you 
+want native support, but for many cases that's a worthwhile tradeoff. (And you 
+can always implement a subset of X3D on top of the canvas-3d API with scripts, 
+which avoids the bloat and browser-interoperability problems of implementing 
+X3D natively.)<br>
+<br>
+I'd prefer to copy concepts from existing well-known 
+immediate-mode APIs like Direct3D and OpenGL ES rather than reinvent a totally 
+new way, though. <br>
+
+<p><b>Tim Johanssontimjoh</b> # Monday, November 19, 2007 1:39:30 PM</p>  
+Regarding OpenGL:<br>
+<br>
+What I mean about this not being direct mapping to 
+OpenGL is that it is not pure OpenGL mappings for ecmascript. It is not 
+intended as being a complete 3d api where you can do everything, it's ment to 
+be a small light weight api for adding some (simple) 3d graphics or games on a 
+web page.<br>
+The 3d canvas is no more persistant than OpenGL, it uses double 
+buffering which is also very common when using OpenGL.<br>
+<br>
+Excors: <br>
+
+<br>I only added what I needed to do some simple demos. There are some things 
+not included. I think you spotted a few things that would be nice to have in 
+future versions <br>
+<br>
+You can do light mapping without vertex normals but 
+dynamic lights would require normals.<br>
+<br>
+COLLADA is an XML based format, 
+so it would be possible to load COLLADA files using DOM3 load and save, you 
+don't have to edit the XML files by hand <br>
+<br>
+Collision between dynamic 
+objects is ususally done with simplified shapes, and that makes a lot of sense. 
+Collision between objects and the static world is usually done with simplified 
+shape colliding with triangle meshes though. In the case of static world it is 
+a good idea to share the vertex/triangle array between the rendering code and 
+the collision code, which is the reason the collision detection is in the 
+canvas. (The current collision detection only supports spheres as simplified 
+shapes, and has no dynamic object / dynamic object collision).<br>
+<br>
+
+-SPM-Mad:<br>
+<br>
+This is a build with some features we are experimenting 
+with, not an official Kestrel build. Being really fast and resource friendly is 
+of course important.<br>
+I think you might be overestimating the complexity of 
+the 3d canvas. I would not call it a 3d engine, it's just bindings to the 
+platforms 3d apis. If this build did not have video support you would probably 
+not notice any increase in size at all, and it uses no resources unless you are 
+viewing a page with 3d on it.<br>
+<br>
+
+<p><b> Anonymous </b> # Monday, November 19, 2007 2:19:54 PM</p>  Cecile 
+Muller writes: Actually X3D is implemented in by several vendors (and VRML has 
+been for many years). As for it being complex, that's the reason why there are 
+several profiles (Core, Interactive, etc) so that you're able to support only a 
+subset, yet being fully compatible with the standard and the other browsers. 
+Also X3D is a higer level language than what the Canvas3D plans to be (which 
+imho, makes it easier for authors to create using X3D than Canvas3D, just like 
+HTML was easier than writing a program for sockets or TCP/IP). Things like 
+having to add triangles one by one is too much code just for describing a cube. 
+In X3D that would be: &lt;Shape&gt; &lt;Box size=&quot;1 2 1&quot;/&gt; 
+&lt;/Shape&gt; No mess with adding triangles or specifying the points one by 
+one. That makes 3D accessible to people who already know HTML, which is a large 
+userbase. <br>
+
+<p><b>grafio</b> # Monday, November 19, 2007 3:11:41 PM</p>  Anything more 
+complicated than a few cubes is hard to write by hand anyway.<br>
+IMO graphics 
+is supposed to be made in graphics applications not written by hand in 
+notepads. Then you can export it to any XML format and use in canvas (writing 
+an import function is easy if it's a mesh of triangles). <br>
+
+<p><b> Anonymous </b> # Tuesday, November 20, 2007 2:46:06 PM</p>  LionsPhil 
+writes: Oh ye Gods. Please, no. There are bugs to be fixed. Put the shiny 
+gimmicks away until you've squashed those, please. This kind of &quot;HEY GUYS 
+LOOK WHAT I HACKED UP&quot; is why Firefox is such a festering pile of bodges. 
+Also, OpenGL is the standard low-level 3D API. If you're going to provide 
+low-level 3D graphics without using OpenGL, you may as well write a browser 
+which doesn't use JavaScript, but instead this scripting language you came up 
+with on the back of an envelope. It's better, because it provides 
+ASPECT-ORIENTED PROGRAMMING, yay! Besides, a much higher-level API would make 
+more sense, given the fact that it's going to be driven by a scripting 
+language. You could lift Ogre (it's LGPL) wholesale for this... ...once you can 
+honestly say that there is nothing, _nothing_ more important to work on. (P.S.: 
+Consider me trolled rotten that BROWSER DEVELOPERS have a comment board which 
+abuses HTTP status code 400 for &quot;Bad Captcha&quot;. GAH.) <br>
+
+<p><b>Excors</b> # Tuesday, November 20, 2007 3:46:13 PM</p>  &quot;Actually 
+X3D is implemented in by several vendors (and VRML has been for many 
+years).&quot;<br>
+<br>
+As far as I'm aware, not by any web browser vendors - 
+people who download e.g. Opera or Firefox won't be able to see anything 3D, 
+without downloading plugins. That means web developers can't assume their users 
+will have that feature, and so most won't make content that relies on it. A 
+native API in browsers would be usable in more situations, since there's a 
+ready-built audience of tens of millions of users; but X3D won't be implemented 
+natively, so a different (lower level, less featureful, easier to implement) 
+API is required, which is what canvas-3d should aim for.<br>
+<br>
+&quot;As for 
+it being complex, that's the reason why there are several profiles (Core, 
+Interactive, etc) so that you're able to support only a subset, yet being fully 
+compatible with the standard and the other browsers.&quot;<br>
+<br>
+The subsets 
+are still complex, compared to the bare minimum that browsers could implement 
+while still providing equivalent power - e.g. the Interactive profile has 
+various things (I see event model, non-triangular faces, skyboxes, 
+interpolators, etc) that are not trivial and could be handled by scripting 
+instead (so then browsers wouldn't have to worry about implementation cost or 
+interoperability in those areas).<br>
+<br>
+I assume it would be possible to 
+develop a new minimal-but-still-useful profile, and to specify all the details 
+and error-handling that are currently vague (since experience suggests that 
+unspecified behaviour on the web is a major problem compared to less-open 
+environments); but it seems better if the browsers just implement a minimal 
+low-level interface and let JavaScript implement X3D viewers on top of that, 
+since that makes browser interoperability more realistic while still allowing 
+the easier-to-use high-level X3D support for those who want it.<br>
+<br>
+
+&quot;Things like having to add triangles one by one is too much code just for 
+describing a cube.&quot;<br>
+<br>
+I think integration with 3D modelling tools 
+is critical for most non-trivial use cases, and then you're never writing any 
+code to describe shapes. But some cases do just need a cube, and then you 
+really do want some higher level interface, like &quot;&lt;Box .../&gt;&quot; 
+or &quot;var model = new c3d.Box(...)&quot;. I just think that should be 
+implemented in JS, on top of a low-level API provided by the browser, because 
+otherwise it won't be feasible for browser developers to do this at all. (But I 
+could be convinced otherwise) <br>
+<br>
+
+<p><b> Anonymous </b> # Tuesday, November 20, 2007 8:33:41 PM</p>  Anonymous 
+writes: The hard dependency on DirectX 9 makes me sad. <br>
+
+<p><b>Tim Johanssontimjoh</b> # Tuesday, November 20, 2007 9:54:11 PM</p>  
+&quot;The hard dependency on DirectX 9 makes me sad.&quot;<br>
+<br>
+For the 3d 
+canvas itself there is no dependency on DirectX. There is an OpenGL 
+implementation, which is actually the original implementation and much older 
+than the D3D implementation. Linux and Mac builds will use the OpenGL 
+implementation.<br>
+The problem with the OpenGL implementation was that many 
+people did not install updated drivers from the graphics card manufacturer, 
+which meant the 3d canvas would run in software. This problem is avoided by 
+building with DirectX, since the drivers Microsoft ships with Windows supports 
+Direct3D but not OpenGL.<br>
+If you are talking about this specific build 
+requiring DirectX to run, this dependency is usually easier to resolve than the 
+dependency on updated drivers we would have with OpenGL. If there is some 
+problem with having DirectX as a dependency for the executable we will most 
+likely deal with that some way if and when we include this in official builds. 
+<br> 
+<p><b>Mathieu 'p01' HENRIp01</b> # Wednesday, November 21, 2007 2:11:36 AM</p> 
+<strong>Anonymous:</strong> 
+<blockquote> 
+<p>There are bugs to be fixed. Put the shiny gimmicks away until you've 
+squashed those, please. This kind of &quot;HEY GUYS LOOK WHAT I HACKED UP&quot; 
+is why Firefox is such a festering pile of bodges.</p> </blockquote> 
+<blockquote> 
+<p>...once you can honestly say that there is nothing, _nothing_ more 
+important to work on.</p> </blockquote>JSYK, Tim implemented 3D Canvas 2-3 
+years ago and hasn't really had time to work on the API because, surprise, 
+there was more important things to work on. Nonetheless 3D Canvas is neat and 
+worth releasing to see what people think about it and come up with it.<br>
+<br>
+
+<br> <br>
+As for the API itself, I know that OpenGL (ES) is THE multi-platform 
+standard and doing a 1 on 1 mapping is, apparently, dead simple.<br>
+However I 
+have two concerns with doing a 1 on 1 mapping of OpenGL (ES) or any other 3D 
+API:<br>
+<br>
+1. such 3D standards/APIs are still pretty big and not really 
+web-ish. Web developers might have a hard time getting their head around their 
+~hundred(s) of methods.<br>
+<br>
+2. bare in mind that Opera, and web browsers 
+in general, exist on MANY platforms, some of which do not have OpenGL ... think 
+Wii or set top boxes.<br>
+<br>
+<br>
+That's why I think a high level API is 
+perfectly OK. Of course it needs to be more advanced than it is now ( for one, 
+normal mapping is a must have ). Which 3D API ( OpenGL, DirectX, ... ) is 
+actually used internally is not important as long as it works reliably on all 
+supported platforms.<br>
+<br>
+<br>
+As for the authoring tools, JavaScript 
+libraries can be done to import different 3D scenes file formats and generate 
+various primitives ( Cube, Sphere, Torus, Cylinder, Utah Teapot, Stanford 
+Bunny, ... ) <br>
+
+<p><b> Anonymous </b> # Wednesday, November 21, 2007 3:39:27 AM</p>  Anonymous 
+writes: &quot;As I understand it, there's more overlap with X3D, but it's quite 
+similar to the overlap between canvas-2d and SVG...&quot; Yes, which is 
+precisely why X3D needs to be implemented in the browser. SVG was pretty 
+useless when it needed a plugin - might as well just use Flash - but now its 
+built in to Opera, Firefox and Safari, its getting very interesting indeed. 
+When IE implements it also it will really take off. &quot;X3D is large and 
+complex and (I expect) it will never be implemented natively in browsers&quot; 
+Just use one of the existing open-source toolkits, or license code from one of 
+the plugin makers. There's no need to re-invent the wheel here. <br>
+
+<p><b>Excors</b> # Wednesday, November 21, 2007 1:51:15 PM</p>  &quot;Just use 
+one of the existing open-source toolkits, or license code from one of the 
+plugin makers. There's no need to re-invent the wheel here.&quot;<br>
+<br>
+Is 
+there one that is recommended? I would assume the interoperability between 
+different libraries is not good enough to make web browsers sufficiently happy 
+(since when you have tens of millions of users, they will poke all the possible 
+edge cases and rely on the behaviour in those cases), so it would only work 
+decently if everyone built on the same library. It would have to be C++, 
+portable, open source, and non-(L)GPL, which seems to limit the options 
+significantly, but I don't know if there's anything left that would be suitable.
+<br> <br>
+Looking at e.g. X3DToolKit as one example (under a licence that 
+presumably Opera couldn't use), there's ~50K lines of code and the compiled 
+library is ~400KB compressed - increasing a browser's download size by 10% for 
+one feature is not acceptable. Are other X3D implementations much smaller? 
+(Mozilla has about 5K lines for its OpenGL ES 1.1 and 2.0 wrappers combined, 
+and I expect opera-3d is much smaller than that.) <br>
+
+<p><b> Anonymous </b> # Wednesday, November 21, 2007 11:23:24 PM</p>  
+Anonymous writes: I guess non-(L)GPL will be an issue for Opera. (but maybe not 
+for Mozilla?). The best bet would be to talk to the Web3D consortium. X3D is an 
+open ISO standard for interactive 3D on the web. It's not just 'one feature'. 
+You don't think that is worth 400kB? <br>
+
+<p><b>Excors</b> # Thursday, November 22, 2007 1:41:39 AM</p>  &quot;I guess 
+non-(L)GPL will be an issue for Opera. (but maybe not for Mozilla?).&quot;<br>
+
+<br>It matters to Mozilla, since they want their code to be usable under the 
+MPL licence -http://lists.freedesktop.org/archives/cairo/2004-August/001744.html
+ indicates problems with LGPL. (As far as I can tell, that was resolved by 
+dual-licensing Cairo as MPL+LGPL.)<br>
+<br>
+&quot;You don't think that is worth 
+400kB?&quot;<br>
+<br>
+400kB becomes hundreds of terabytes given the number of 
+users, so it's not a totally trivial cost. I haven't seen a strongly compelling 
+desire for 3D on the web, compared to e.g. video - I can imagine it being used 
+largely in games and product adverts (like interactive demos of shiny iPhones) 
+and maths visualisations, but I'm not convinced it would benefit a large 
+proportion of users. I still think it'd be really nice to have, but don't see 
+it as a major priority for browser developers.<br>
+<br>
+(And I still think it'd 
+be interesting to implement X3D in JS on top of a GL-like API - maybe I'll try 
+that some time...) <br>
+
+<p><b>Haavardhaavard</b> # Monday, November 26, 2007 2:41:26 PM</p> 
+<p>Originally posted by -SPM-Mad:</p> 
+<blockquote> 
+<p>It is not even part of the (in my opinion useless) canvas standard, and you 
+add 3D support?</p> </blockquote> <br>
+In an experimental build. Why are you 
+assuming that it cannot become part of a standard? <br>
+<br>
+
+<blockquote> 
+<p>What has happened to the ideals of Opera being a really fast and 
+resource-friendly and hi-quality browser?</p> </blockquote> <br>
+Did anything 
+happen? Did it stop being resource-friendly?<br>
+<br>
+I don't think support for 
+a new Web technology automatically makes Opera slower and less resourse 
+friendly, unless you are viewing a page which makes heavy use of these new 
+technologies, of course.<br>
+<br>
+Should we stop implementing CSS, HTML, SVG, 
+etc. too (or perhaps remove support for something), to keep Opera smaller than 
+it is now? <br>
+
+<p><b>threetimes</b> # Monday, November 26, 2007 5:02:03 PM</p>  where can i 
+download opera with 3d canvas support? <br>
+
+<p><b>grafio</b> # Monday, November 26, 2007 5:58:44 PM</p>  threetimes, here 
+<br> <br>
+
+<p><b> Anonymous </b> # Monday, November 26, 2007 11:17:25 PM</p>  Ben writes: 
+Can you please get the mac version released? I'm dead keen to play with it. :) 
+bnolan@gmail.com <br>
+
+<p><b>Excors</b> # Tuesday, November 27, 2007 1:14:39 AM</p> 
+http://blog.vlad1.com/2007/11/26/canvas-3d-gl-power-web-style/ is Mozilla's 
+approach to this.<br>
+<br>
+
+<p><b> Anonymous </b> # Tuesday, December 4, 2007 5:26:29 PM</p>  Peter 
+Str&oslash;mberg writes: As long as you can draw onto the canvas via 
+javascript, the underlying 3D format is really not so important, and no doubt 
+developers and vendors will quickly offer javascript based interpreters to show 
+many different formats, X3D (Excors is already thinking about it :), COLLADA, 
+3DS ASCII, whatever. Javascript libraries for animation, interaction etc. will 
+surely also follow, the same way they've done for Flash/Flex (for example 
+&quot;tweener&quot; classes). Infact most .as classes could readily be tweeked 
+to run as .js Any API that's independent of input 3D format, and independent of 
+output API (i.e. OpenGL, DirectX, mobile and software implementions) and is 
+supported by ALL browser vendors should be welcomed with open arms. Myself I'm 
+caught between X3D browsers, that are fast at rendering 3D, but useless for 
+building apps, and Flash which is great for building apps but still 
+&quot;fairly limited&quot; when it comes to 3D. A javascript interface to an 
+SDL-like canvas sounds to me like the best of all worlds, not just for 3D, but 
+all media. A great initiative Tim, bring it on I say! <br>
+
+<p><b>Excors</b> # Wednesday, December 5, 2007 2:40:25 AM</p> 
+<blockquote> X3D browsers, that are fast at rendering 3D, but useless for 
+building apps</blockquote> <br>
+What makes them useless for that? Is it just 
+the lack of users who have X3D browsers installed, or is it some other aspect 
+of the implementations, or some other aspect of X3D's design? <br>
+
+<p><b>Excors</b> # Saturday, December 15, 2007 1:46:32 AM</p> This demo has 
+some extremely primitive X3D capabilities, for loading the meshes and viewpoint 
+from the scene (originally exported from Blender).<br>
+<br>
+It can render with 
+both Opera's and Firefox's systems. The main difference is lighting: in Firefox 
+it's done per-pixel, and nicely and flexibly with fragment shaders; in Opera 
+it's per-vertex (hence uglier) and a slightly nasty hack, with a precomputed 2D 
+image of the diffuse+specular colours, and then (slow) dynamic calculation of 
+per-vertex lighting which is mapped onto the texture coordinates to get smooth 
+shading. <br>
+
+<p><b> Anonymous </b> # Tuesday, December 18, 2007 4:46:06 PM</p>  kig writes: 
+Please, don't try to think up your own simple 3D API. Implement OpenGL. It's 
+not a big task to write OpenGL bindings for JavaScript. Writing your own 
+immediate-mode 3D API is like writing your own version of Unicode. You start 
+thinking: &quot;who needs BiDi, screw that&quot;, &quot;who needs umlauts, 
+screw that&quot;, &quot;who needs hanzi, screw that&quot;, &quot;who needs 
+glyph placement, screw that&quot;, etc. If you really do want to continue on 
+this MySimple3DAPI path to destruction, here's a list of glaring omissions: no 
+matrices (the real killer), no shaders, no multitexturing, only euclidean 
+rotations, only perspective transform, only four blend modes, only 2^n * 2^n 
+textures. <br>
+
+<p><b>Excors</b> # Tuesday, December 18, 2007 7:47:11 PM</p> 
+<blockquote> It's not a big task to write OpenGL bindings for JavaScript. 
+</blockquote> <br>
+But is it a big task to write OpenGL ES bindings that are 
+implemented on top of DirectX? (I'm not at all familiar with DX, so I don't 
+know what problems would come up - I expect it has pretty much the same 
+features, and maybe there are only a few rough edges where it wouldn't fit the 
+GL API neatly, and we can try to fix those few issues instead of making a 
+totally new API; or maybe there's a fundamental problem somewhere. 
+(Programmable shaders might be a fundamental problem - translating GLSL to HLSL 
+is not trivial). Maybe the OpenGL 3 API will solve some of the difficulties, 
+too. I really don't know, though I'd like to.) <br>
+<br>
+
+<blockquote> no matrices (the real killer) </blockquote> <br>
+I'm not sure 
+exactly what you mean here. You can implement matrix maths in JavaScript 
+easily, and you won't get much better performance by making a call across an 
+API into the browser's C++ code because of the call overhead; so that's not a 
+problem. The inability to use matrix transformations is a bit painful (it's not 
+great fun decomposing matrices into scale/rotations/translation) - do you mean 
+that, or something else? <br>
+
+<p><b> Anonymous </b> # Tuesday, December 25, 2007 10:15:13 AM</p>  Anonymous 
+writes: Please, the web has suffered more then enough from projects that 
+thought they could produce something more efficient by removing everything the 
+author thought would not be needed - and than, by the time, with every content 
+author finding the need of more complex features, the efficient engine becomes 
+a monster of extensions and features not considered in the original concept. We 
+just escaped from the non-standard development wave in html-land, do not 
+re-invent the blink-tag. If you want 3d and think about uses for it for some 
+weeks, much more will have to be provided then triangles. It is not only about 
+meshed - there is behaviour, navigation, communication between objects (in one 
+scene or across scenes, maybe even servers and clients). So if you want to add 
+a whole new dimension to a browser, do not worry about 400kB - choose a x3d 
+profile and go with the standards. If you do not think that it is worth it, do 
+not create a beast by inventing one more &quot;standard&quot; - if 3d is not 
+necessary, do not implement it at all. <br>
+
+<p><b> Anonymous </b> # Wednesday, December 26, 2007 5:10:32 PM</p>  kig 
+writes: &quot;But is it a big task to write OpenGL ES bindings that are 
+implemented on top of DirectX?&quot; I haven't written any D3D code, so I don't 
+know. I guess your best bet would be to ask cross-platform games developers, as 
+they end up having to write engines that run on both APIs? &quot;The inability 
+to use matrix transformations is a bit painful (it's not great fun decomposing 
+matrices into scale/rotations/translation) - do you mean that, or something 
+else?&quot; Yes, what you would end up doing is: do all matrix math in JS, then 
+do SVD when applying the matrices for each model / scenegraph node, then split 
+the rotation matrices of the SVD into x-rot, y-rot and z-rot (does that work?), 
+and, to apply the matrix: translate, rotate, rotate, rotate, scale, rotate, 
+rotate, rotate. It will be hard, slow, and easily cause a lot of GC runs. <br>
+
+<p><b>&Oslash;yvind &Oslash;stlundNoteMe</b> # Thursday, December 27, 2007 
+8:12:53 AM</p>  I havn't read all the comments, I'm saving it for when I have 
+some time on my hands but just wanted to answer this one.<br>
+<br>
+
+<blockquote> 
+<p>&quot;But is it a big task to write OpenGL ES bindings that are implemented 
+on top of DirectX?&quot;</p> </blockquote> <br>
+<br>
+It should be easy enough 
+to do, but the biggest problem between DirectX and OpenGL would be that the 
+coordinate system is left handed vs. right handed. So you would either have to 
+turn it around in the wrapper or make sure the users are aware of it while 
+using the wrapper.<br>
+<br>
+<br>
+- &Oslash;&Oslash; - <br>
+
+<p><b>Mathieu 'p01' HENRIp01</b> # Friday, December 28, 2007 1:47:50 PM</p> 
+<strong>NoteMe:</strong> The left-handed vs right-handed is a non issue. Render 
+the scene to a texture and blit it upside down. Problem solved.<br>
+<br>
+Also 
+the problem is not just OpenGl - DirectX wrapper, that shouldn't be too huge a 
+task, but proprietary 3D Api ( say on Wii and DS ) to OpenGl or whatever 3D Api 
+a standard body agree on for 3D Canvas. <br>
+
+<p><b>&Oslash;yvind &Oslash;stlundNoteMe</b> # Friday, December 28, 2007 
+2:33:00 PM</p>  @p01: <br>
+<br>
+How would that help? It is the Z axis that is 
+turned around, not the X nor Y axis. And rendering to a back buffer before bit 
+blocking would have a huge impact on FPS compared to just add an extra 
+translation matrix to the world-&gt;view matrix. It's much better to push work 
+up the 3d pipeline, than pushing it down ending up doing an other rendering 
+pass.<br>
+<br>
+- &Oslash;&Oslash; - <br>
+<br>
+
+<p><b>Mathieu 'p01' HENRIp01</b> # Saturday, December 29, 2007 1:51:25 PM</p>  
+Agreed but a render to texture ( or a similar operation ) is most likely 
+necessary to blit the scene into a frame buffer in a format compatible with 2D 
+Canvas and the other graphic APIs present in the browser. Beside ONE render to 
+texture per frame is absolutely acceptable. <br>
+
+<p><b>Henry James Wilkinsonhenryjames</b> # Sunday, December 30, 2007 3:53:33 
+PM</p>  I never thought I'd actualy say it but I must admit that I find the 
+Opera canvas implementation so much better than the Mozilla one. <br>
+
+<p><b>Duncan Brownduncanbrown</b> # Saturday, February 2, 2008 2:37:03 AM</p>  
+Tim, 3d canvas is a briliant addition. Opera is my absolute No1 <br>
+
+<p><b>deborahwebb</b> # Tuesday, February 12, 2008 12:11:47 PM</p>  Thank you 
+very much for this article. I've been trying to find a decent tutorial on the 
+canvas element in Opera and now I'll be able to check the true possibilities 
+behind this feature. <br>
+
+<p><b>annmacgiff</b> # Tuesday, February 12, 2008 1:12:29 PM</p>  The canvas 
+feature seems to be working really great in Opera. I've been dealing with it 
+for some time and so far I'm very satisfied with its uses. I normally use more 
+Opera than Firefox so I'm glad that the canvas element is well supported. <br>
+
+<p><b>Ilgaz</b> # Sunday, February 24, 2008 7:26:50 PM</p>  Relying on DirectX 
+makes no sense. I think as a developer, not an end user, you don't update your 
+drivers or assume anyone would spare time to download latest drivers. Believe 
+me, they do.<br>
+<br>
+All Nvidia, ATI, Matrox drivers have very good opengl 
+functionality coming with them.<br>
+<br>
+This implementation (if ships with 
+direct3d) will get wasted because of thousands of &quot;directx&quot; postings 
+and they won't be trolls.<br>
+<br>
+No need to re-invent the wheel, use 
+Shockwave Plugin example. It has a convenient menu.<br>
+<br>
+1) Use Hardware 
+OpenGL renderer<br>
+2) Use Hardware Direct3D renderer <br>
+3) Use Software 
+rendering<br>
+<br>
+I didn't use windows for ages so I can't remember exact 
+sentences but, its settings are like that.<br>
+<br>
+Direct3D has no place in 
+any platform except Windows (CE). Remember how many platforms Opera has to run 
+and there is opengl functionality even on phones, java.<br>
+<br>
+<br>
+
+<p><b> Anonymous </b> # Saturday, May 10, 2008 1:55:47 AM</p>  Alessandro 
+writes: This is a Amazing feature !!!! Is possible to get the context object 
+from a Java Applet ? <br>
+
+<p><b> Anonymous </b> # Thursday, July 3, 2008 4:52:43 PM</p>  Lightning 
+writes: I think the web does need better support for doing 2D/3D stuff. 
+Probably OpenGL is the way to go, it's supported even on portable devices 
+(OpenGL ES) and on the PS3, i don't know about Wii but OpenGL was built to be 
+CrossPlatform and it is easy enough to port to most OSes that don't have it 
+already, there's always MesaGL that is OpenSource and it's better to use it 
+when the drivers are not installed. Most users install their drivers because it 
+doesn't make sense to buy a new graphical card if you don't plan to use it. 
+Vista now requires drivers to run decently, OSX uses OpenGL backend for quite 
+some time and Linux is running nicely with Compiz fusion. However i do think 3D 
+canvas requires extra support for helping with loading models, textures ... and 
+by helping with everything OpenGL does not do, it becomes a helper toolkit such 
+as SDL and still allows some parts to be done directly if one chooses to do so. 
+So i would choose to do everything OpenGL doesn't do and some extra if needed 
+but without hiding the OpenGL calls and extensions. Please join efforts with 
+Mozilla, W3C and anyone that might be interested in a full 3D web standard with 
+high performance, anyone can use. <br>
+
+<p><b>Charles McCathieNevilechaals</b> # Friday, July 18, 2008 1:59:57 PM</p>  
+@lightning,<br>
+<br>
+We will indeed work with anyone interested in a 3D 
+standard with high performance, but when it is ready for that to happen. As you 
+probably know, Opera is involved in a lot of standardisation work already in 
+all kinds of areas.<br>
+<br>
+But this stuff is really not yet ready for 
+standardisation. The 2-D canvas API is in the process of standardisation 
+because it has been implemented by several browsers, and is in real-world use.
+<br> <br>
+Releasing an experimental version is a way to give people some idea 
+of whether they have an application for it - and for us to see if people do or 
+not. Because if they don't, then releasing something that our developers are 
+playing aroudn with, so that other developers can play with it too, is better 
+than sitting on it, and better than taking resources away from more urgently 
+important work for something that is still experimental work.<br>
+<br>
+That's 
+why we have labs.opera <br>
+<br>
+And for those who are wondering, this is not 
+something designed to compete with X3D any more than our canvas implementation 
+is designed to compete with our SVG implementation. Both of those are in the 
+core of our browser, in release versions. They are complementary technologies 
+that serve different purposes. <br>
+
+<p><b>Jacques Dumasj_sk</b> # Saturday, July 19, 2008 8:46:29 AM</p>  Once 
+more, it's a never ending admiration for Opera all teams work. <br>
+<br>
+
+<p><b>Leonardo Alassialeoalassia</b> # Tuesday, July 22, 2008 6:41:24 PM</p>  
+amazing!!! but it's a little slow... <br>
+
+<p><b>Leonardo Alassialeoalassia</b> # Tuesday, July 22, 2008 8:13:42 PM</p>  
+I am trying to make an application to transform a 3dmax file to a canvas file, 
+but I need to know what are the last two parameters (s and t) in the function 
+addVertex() <br>
+
+<p><b>Mathieu 'p01' HENRIp01</b> # Tuesday, July 22, 2008 8:50:14 PM</p>  They 
+are more commonly called u and v, and refer to the texture coordinates. Of 
+course they are normalized. <br>
+
+<p><b>Leonardo Alassialeoalassia</b> # Tuesday, July 22, 2008 9:14:08 PM</p>  
+ok... I have made this teatpot.xml
+http://www.leoalassia.com.ar/aes2opera/teatpot.xml <br>
+but I can't place the 
+camera in a correct position to see the teatpot!<br>
+if you place it in <br>
+
+context3d.translate(0,0,-150);<br>
+you can see something... <br>
+<br>
+(copy the 
+canvas3d_example2.htm and replace cube.xml by my teatpot.xml)<br>
+<br>
+in 
+http://www.leoalassia.com.ar/aes2opera/index.phpt you can see my code  , it's 
+very stupid but it works...<br>
+(you have to export some 3d object to .AES file)
+<br> 
+<p><b>Leonardo Alassialeoalassia</b> # Tuesday, July 22, 2008 9:18:28 PM</p>  
+ups... I'm sorry... here is my own answer... <br>
+context3d.translate(0,0,-300);
+<br> <br>
+and add this line into onload function: <br>
+context3d.farPlane=500; 
+<br> <br>
+<br>
+
+<p><b>1</b> 2 Next &raquo;</p> 
+<p> Showing comments 1 - 50 of 70. </p> 
+<h2>Tim Johansson</h2> <br>
+Blog search <br>
+
+<h2>Friends (10)</h2> 
+<ul> 
+<li>MacDev_ed</li> 
+<li>foolip</li> 
+<li>gsnedders</li> 
+<li>fruxo</li> 
+<li>kilsmo</li> 
+<li>chaals</li> </ul> 
+<p><b>Show all friends</b></p> 
+<h2>Latest comments</h2> 
+<ul> 
+<li> <br>
+
+<p><b>Swapnil Rustagi</b></p> 
+<p>It's been almost half a year now? I am also thinking about ...</p> </li> 
+<li> <br>
+
+<p><b>anonymous</b></p> 
+<p>_ck_ writes: Any chance of an updated labs preview of webgl ...</p> </li> 
+<li> <br>
+
+<p><b>Chris</b></p> 
+<p>By the way, why do we have to wait so long for ANY hardware ...</p> </li> 
+<li> <br>
+
+<p><b>anonymous</b></p> 
+<p>Anonim writes: It would be nice to have working WebGL on Op ...</p> </li> 
+<li> <br>
+
+<p><b>Jo&atilde;o Eiras</b></p> 
+<p> CSS based fullscreen mode oh... link ? </p> </li> 
+<li> <br>
+
+<p><b>Charles McCathieNevile</b></p> 
+<p>Xavier, this stuff was a demo idea. We, in particular Tim, a ...</p> </li> 
+</ul> February 2012 <br>
+M T W T F S S <br>
+January 2012March 2012 <br>
+1 2 3 4 
+5 <br>
+6 7 8 9 10 11 12 <br>
+13 14 15 16 17 18 19 <br>
+20 21 22 23 24 25 26 <br>
+27 28 29 <br>
+<br>
+
+<h2>Tags</h2> 
+<ul> 
+<li>3d</li> 
+<li>canvas</li> 
+<li>evenes</li> 
+<li>hardware acceleration</li> 
+<li>opera</li> 
+<li>vega</li> 
+<li>webgl</li> </ul> 
+<h2>Recent visitors</h2> 
+<ul> 
+<li>alkamenos</li> 
+<li>miketaylr</li> 
+<li>Argon000s</li> 
+<li>ensof</li> 
+<li>Perochin</li> 
+<li>hartmen</li> </ul> 
+<p><b>Download Opera</b> - Surf the Web with lightning speed, using the 
+fastest browser ever.</p> <br>
+
+<h2> <b>Tim Johansson</b> is blogging on My Opera </h2> 
+<p> My Opera is a blog and photo sharing community with millions of members. 
+<b>Join now</b> to follow Tim Johansson's blog and get your own. </p> 
+<p>Help/FAQ | Terms| FOAF</p> <b>Language:</b> Deutsch English Espa&ntilde;ol 
+Fran&ccedil;ais Frysk Magyar Polski Portugu&ecirc;s Brasileiro 
+&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; Sloven&#269;ina Shqip 
+T&uuml;rk&ccedil;e 
+&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072; 
+Ti&#7871;ng Vi&#7879;t LOLCATZ &#26085;&#26412;&#35486; Norsk Bokm&aring;l 
+&#1057;&#1088;&#1087;&#1089;&#1082;&#1080; &#27491;&#39636;&#20013;&#25991; <br>
+</body>

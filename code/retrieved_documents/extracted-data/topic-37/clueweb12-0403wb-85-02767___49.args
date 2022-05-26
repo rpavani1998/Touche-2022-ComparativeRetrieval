@@ -1,0 +1,150 @@
+translate, scaleand rotatefunctions modify the transformation matrix.
+dom3 load and save hard-coding models is fine for small objects, but as the objects grow it becomes more and more difficult to hard-code them in the script.
+this is what the interface looks like.
+draw3dmodelrenders a model previously created with create3dmodelto the canvas.
+the specification includes a 2d context that must be implemented, but also allows browser vendors to add their own contexts.
+this function is much better suited for rendering large batches of triangles.
+i believe that not staying api compatable with opengl is a mistake and not rational, especially given there are open source implementations of opengl which can be ported to most platforms.
+annmacgiff # tuesday, february 12, 2008 1:12:29 pmthe canvas feature seems to be working really great in opera.
+grafio # monday, november 19, 2007 3:11:41 pmanything more complicated than a few cubes is hard to write by hand anyway.
+however i do think 3d canvas requires extra support for helping with loading models, textures ... and by helping with everything opengl does not do, it becomes a helper toolkit such as sdl and still allows some parts to be done directly if one chooses to do so.
+the context is called opera-3d and is basically opera's version of the 3d canvas.
+so if you want to add a whole new dimension to a browser, do not worry about 400kb - choose a x3d profile and go with the standards.
+after reading all of this you should know enough to create some cool 3d-canvas demos.
+get in touch with us to share your creations.
+if you are using an opera build with 3d canvas enabled you can alsosee the rotating cube in action.
+excors # tuesday, november 20, 2007 3:46:13 pm"actually x3d is implemented in by several vendors (and vrml has been for many years).
+hard-coding models is fine for small objects, but as the objects grow it becomes more and more difficult to hard-code them in the script.
+the main reasons for doing this are: the main concept is that you work with 3d models.
+i am responsible for, among other things, canvas (including the underlying vector graphics library) and image decoding.
+in order to view the demos presented here you will need toget the opera labs build.
+the canvas is more or less a bitmap that you can draw on using javascript.
+things like having to add triangles one by one is too much code just for describing a cube.
+grafio # saturday, november 17, 2007 12:51:51 pmi'm not a 3d specialist, but i think a higher level syntax for 3d context like in the experimental opera is better than simply mapping whole opengl directly, because: excors # saturday, november 17, 2007 6:58:28 pmi've been thinking about this vaguely for a while, so it's nice to see the work here!
+the function returns the collision point as a string when a collision occurs (the point of deepest penetration is coosen as collision point).
+as with the regular canvas you can create textures from images (including svg) or other canvases.
+it's better, because it provides aspect-oriented programming, yay!
+you create 3d models, add vertices and triangles to them and finally render them to the canvas.
+distance to the far clipping plane, default is 100 attribute string ztest; // "none", "less", "lessequal", "greater", "greaterequal", "equal", "notequal".
+if you really do want to continue on this mysimple3dapi path to destruction, here's a list of glaring omissions: no matrices (the real killer), no shaders, no multitexturing, only euclidean rotations, only perspective transform, only four blend modes, only 2^n * 2^n textures.
+it is not only about meshed - there is behaviour, navigation, communication between objects (in one scene or across scenes, maybe even servers and clients).
+the parameters are the sphere (centre and radius) and the model to check for collisions with the sphere.
+the scene is now rendered with the lightmap instead of the textures and the result is a lightmapped scene.
+as well, if there is an opengl feature that i use and depend on, its nice to know it will be there and available.
+anonymous # friday, november 16, 2007 4:35:43 pmanonymous writes: it should also be noted windows does have an opengl implementation.
+this method is usually slow and should not be used for rendering a lot of triangles.
+create3dmodelcreates a 3dmodelobject that can be built (by adding vertices and triangles) and rendered by the script.
+øyvind østlundnoteme # friday, december 28, 2007 2:33:00 pm@p01: mathieu 'p01' henrip01 # saturday, december 29, 2007 1:51:25 pmagreed but a render to texture ( or a similar operation ) is most likely necessary to blit the scene into a frame buffer in a format compatible with 2d canvas and the other graphic apis present in the browser.
+beside one render to texture per frame is absolutely acceptable.
+azamadt smaguloffprofit # friday, november 16, 2007 8:11:07 pmopera video build uses sdl framework for showing video and, most probably, for 3d-canvas too.
+this build also includes an experimental addition to the canvas element, the 3d canvas.
+the main concept is that you work with 3d models.
+we will write more about collision detection when it is fixed.
+once you have the context in your script you can just call its rendering functions.
+create3dmodel creates a 3dmodel object that can be built (by adding vertices and triangles) and rendered by the script.
+amanonymous writes: please, the web has suffered more then enough from projects that thought they could produce something more efficient by removing everything the author thought would not be needed - and than, by the time, with every content author finding the need of more complex features, the efficient engine becomes a monster of extensions and features not considered in the original concept.
+the canvas is only updated when endsceneis called.
+when i first implemented the canvas tag in opera i though it would be cool to have a 3d context, so i added one.
+the canvas is only updated whenendscene is called.
+the opera-3d context does not have multi-texturing yet, so it is not possible to do lightmapping in one step, but you can achieve this effect by
+the current transformation matrix will transform all vertices rendered with the 3d canvas.
+but i must admit that i find the opera canvas implementation so much better than the mozilla one.
+also, opengl is the standard low-level 3d api.
+you create 3d models, add vertices and triangles to them and finally render them to the canvas.
+when it is, the rendered image is copied to the canvas.
+if no collision was found the function returns an empty string instead.
+i think as a developer, not an end user, you don't update your drivers or assume anyone would spare time to download latest drivers.
+the context is called opera-3d and is basically opera's version of the 3d canvas.
+the actual drawing is done by a (rendering) context.
+the function returns the collision point as a string when a collision occurs (the point of deepest penetration is coosen as collision point).
+(p.s.: consider me trolled rotten that browser developers have a comment board which abuses http status code 400 for "bad captcha".
+add a tag to your page get the canvas element from a javascript using getelementbyid or something similar.
+in this post i will describe the 3d context i added, which is available in the recently released opera labs build.
+if you do not think that it is worth it, do not create a beast by inventing one more "standard" - if 3d is not necessary, do not implement it at all.
+excors # wednesday, december 5, 2007 2:40:25 am x3d browsers, that are fast at rendering 3d, but useless for building apps excors # saturday, december 15, 2007 1:46:32
+this method will fail if the image object's dimensions are not powers of two (1, 2, 4, 8, 16, 32 etc.)
+this function is much better suited for rendering large batches of triangles.
+draw3dmodel renders a model previously created with create3dmodel to the canvas.
+in this post i will describe the 3d context i added, which is available in the recently released opera labs build.
+the current transformation matrix will transform all vertices rendered with the 3d canvas.
+it will be hard, slow, and easily cause a lot of gc runs.
+the light value for each pixel is pre-calculated and stored in a texture.
+opengl apis could be mapped onto native calls in an os that does not support opengl.
+the files used for this example are the html file shown below and an image to use as the texture (operalogo.png in this case).
+if you want to see a more advanced example you can have a look at the3d snake implementation done by mathieu 'p01' henri.
+excors # wednesday, november 21, 2007 1:51:15 pm"just use one of the existing open-source toolkits, or license code from one of the plugin makers.
+the light value for each pixel is pre-calculated and stored in a texture.
+i normally use more opera than firefox so i'm glad that the canvas element is well supported.
+you could lift ogre (it's lgpl) wholesale for this... ...once you can honestly say that there is nothing, _nothing_ more important to work on.
+an expose event for catching window expose events to trigger redraws would also be a good idea.
+we just escaped from the non-standard development wave in html-land, do not re-invent the blink-tag.
+when it is, the rendered image is copied to the canvas.
+amthis demo has some extremely primitive x3d capabilities, for loading the meshes and viewpoint from the scene (originally exported from blender).
+if you want to see a more advanced example you can have a look at the3d snake implementation done by mathieu 'p01' henri.
+for those of you not familiar with the canvas tag here is a crash course in using it.
+if no collision was found the function returns an empty string instead.
+the parameters are the sphere (centre and radius) and the model to check for collisions with the sphere.
+this is the first example ever written for the opera-3d context.
+javascript libraries for animation, interaction etc. will surely also follow, the same way they've done for flash/flex (for example "tweener" classes).
+that makes 3d accessible to people who already know html, which is a large userbase.
+in the example above a plain textured cube, which was hard-coded in the script, was rendered.
+the specification includes a 2d context that must be implemented, but also allows browser vendors to add their own contexts.
+as well, you should provide the same non-persistant graphics mode as an option that opengl uses, in many cases keeping a state of graphics on screen and automatically refreshing them is not desired.
+writing your own immediate-mode 3d api is like writing your own version of unicode.
+myself i'm caught between x3d browsers, that are fast at rendering 3d, but useless for building apps, and flash which is great for building apps but still "fairly limited" when it comes to 3d. a javascript interface to an sdl-like canvas sounds to me like the best of all worlds, not just for 3d, but all media.
+if you want 3d and think about uses for it for some weeks, much more will have to be provided then triangles.
+anonymous # thursday, july 3, 2008 4:52:43 pmlightning writes: i think the web does need better support for doing 2d/3d stuff.
+nonetheless 3d canvas is neat and worth releasing to see what people think about it and come up with it.
+so i would choose to do everything opengl doesn't do and some extra if needed but without hiding the opengl calls and extensions.
+the opera-3d context opera's 3d context, unlike mozilla's, is not a straight mapping to opengl.
+as with the regular canvas you can create textures from images (including svg) or other canvases.
+get in touch with us to share your creations.
+svg was pretty useless when it needed a plugin - might as well just use flash - but now its built in to opera, firefox and safari, its getting very interesting indeed.
+this includes canvas3dmodel objects.
+after reading all of this you should know enough to create some cool 3d-canvas demos.
+this is what the interface looks like.
+only the commands issued betweenbeginscene and endscene are drawn to the canvas.
+this method is usually slow and should not be used for rendering a lot of triangles.
+besides, a much higher-level api would make more sense, given the fact that it's going to be driven by a scripting language.
+most users install their drivers because it doesn't make sense to buy a new graphical card if you don't plan to use it.
+when ie implements it also it will really take off.
+duncan brownduncanbrown # saturday, february 2, 2008 2:37:03 amtim, 3d canvas is a briliant addition.
+probably opengl is the way to go, it's supported even on portable devices (opengl es) and on the ps3, i don't know about wii but opengl was built to be crossplatform and it is easy enough to port to most oses that don't have it already, there's always mesagl that is opensource and it's better to use it when the drivers are not installed.
+ami havn't read all the comments, i'm saving it for when i have some time on my hands but just wanted to answer this one. "but is it a big task to write opengl es bindings that are implemented on top of directx?
+the scene is now rendered with the lightmap instead of the textures and the result is a lightmapped scene.
+the actual drawing is done by a (rendering) context.
+if you are using an opera build with 3d canvas enabled you can alsosee the rotating cube in action.
+remaining compatable with opengl makes sense since it allows the knowledge and familiarity many already have with opengl useful in their work in opera.
+anonymous anonim writes: it would be nice to have working webgl on op ...
+i am responsible for, among other things, canvas (including the underlying vector graphics library) and image decoding.
+this method will fail if the image object's dimensions are not powers of two (1, 2, 4, 8, 16, 32 etc.)
+i haven't written any d3d code, so i don't know.
+render the scene to a texture and blit it upside down.
+infact most .as classes could readily be tweeked to run as .js
+charles mccathienevilechaals # friday, july 18, 2008 1:59:57 pm@lightning, jacques dumasj_sk # saturday, july 19, 2008 8:46:29 amonce more, it's a never ending admiration for opera all teams work.
+this kind of "hey guys look what i hacked up" is why firefox is such a festering pile of bodges.
+i believe collada should be encouraged as the standard way of importing models into canvas-3d (since it's decent, and fairly widely used, and well supported by modelling tools), but that should be done by external scripts that load the xml and call the api functions like addtriangle.
+createtexturecreates a texture object from an image object.
+in the first pass the scene is rendered as usual.
+in order to view the demos presented here you will need toget the opera labs build.
+this build also includes an experimental addition to the canvas element, the 3d canvas.
+the making of opera 10.50 1 2 next » anonymous # friday, november 16, 2007 4:33:17 pmanonymous writes: ive always thought directly mapping opengl into html/js land so that one could have the full power of the opengl api inside the browser and given it is the most common and familiar 3d api it would be the easiest to start using for the largest group of people, was a good idea.
+taking the canvas to another dimension tuesday, november 13, 2007 4:38:34 pm 3d, opera, canvas recently opera published an experimental build on opera labs, with support for the video element and video in svg.
+if you're going to provide low-level 3d graphics without using opengl, you may as well write a browser which doesn't use javascript, but instead this scripting language you came up with on the back of an envelope.
+createtexture creates a texture object from an image object.
+anonymous # tuesday, december 4, 2007 5:26:29 pmpeter strømberg writes: as long as you can draw onto the canvas via javascript, the underlying 3d format is really not so important, and no doubt developers and vendors will quickly offer javascript based interpreters to show many different formats,
+also x3d is a higer level language than what the canvas3d plans to be (which imho, makes it easier for authors to create using x3d than canvas3d, just like html was easier than writing a program for sockets or tcp/ip).
+the files used for this example are the html file shown below and an image to use as the texture (operalogo.png in this case).
+the opera-3d context does not have multi-texturing yet, so it is not possible to do lightmapping in one step, but you can achieve this effect by doing multi pass rendering.
+jsyk, tim implemented 3d canvas 2-3 years ago and hasn't really had time to work on the api because, surprise, there was more important things to work on.
+when i first implemented the canvas tag in opera i though it would be cool to have a 3d context, so i added one.
+tuesday, november 13, 2007 4:38:34 pm 3d, opera, canvas recently opera published an experimental build on opera labs, with support for the video element and video in svg.
+we, in particular tim, a ... download opera - surf the web with lightning speed, using the fastest browser ever.
+the canvas is more or less a bitmap that you can draw on using javascript.
+once you've loaded the models, you still need some way to animate them and draw them all in the scene and add various effects, which isn't what collada is for.
+vista now requires drivers to run decently, osx uses opengl backend for quite some time and linux is running nicely with compiz fusion.
+"x3d is large and complex and (i expect) it will never be implemented natively in browsers" just use one of the existing open-source toolkits, or license code from one of the plugin makers.
+it's not a big task to write opengl bindings for javascript.
+as for it being complex, that's the reason why there are several profiles (core, interactive, etc) so that you're able to support only a subset, yet being fully compatible with the standard and the other browsers.
+for those of you not familiar with the canvas tag here is a crash course in using it.
+the collision detection has some bugs in this build, and i would recomend that you do not use it yet.

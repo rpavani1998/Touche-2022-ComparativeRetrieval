@@ -1,0 +1,778 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Reimplementing LINQ to Objects: Part 26d - Fixing the key selectors, and yielding early : CSharp Feeds</title>
+<body>
+<br>
+
+<ul> 
+<li>Home|</li> 
+<li>Archive|</li> 
+<li>Syndicate|</li> 
+<li></li> 
+<li>About|</li> 
+<li>Contact</li> </ul> CSharpFeeds - All your C# feeds in one place. <br>
+
+<h3>Sponsors</h3> <br>
+<br>
+
+<h1>Friday, January 07, 2011</h1> <br>
+<br>
+<br>
+
+<h2>  Reimplementing LINQ to Objects: Part 26d - Fixing the key selectors, and 
+yielding early </h2> 
+<p>by skeet via Jon Skeet: Coding Blog on 1/7/2011 7:15:56 PM </p> 
+<p></p>
+<p>I feel I need a voice over. &quot;Previously, on reimplementing LINQ to 
+Objects...&quot; Well, we'd got as far as a working implementation of 
+OrderedEnumerable which didn't have terrible performance -<em>unless</em> you 
+had an expensive key selector. Oh, and it didn't make use of the fact that we 
+may only want the first few results.</p> 
+<h3>Executing key selectors only once</h3> 
+<p>Our first problem is to do with the key selectors. For various reasons 
+(mentioned inpart 26b) life is better if we execute the key selector once per 
+input element. While we<em>can</em> do that with lazy evaluation, it makes more 
+sense in my opinion to do it up-front. That means we need to separate out the 
+key selector from the key comparer - in other words, we need to get rid of the 
+handy ProjectionComparer we used to simplify the arguments to 
+OrderBy/ThenBy/etc.</p> 
+<p>If we're going to keep the key selectors in a strongly typed way, that 
+means our OrderedEnumerable (or at least<em>some</em> type involved in the 
+whole business) needs to become generic in the key type. Let's bite the bullet 
+and make it OrderedEnumerable. Now we have a slight problem right away in the 
+fact that the &quot;CreateOrderedEnumerable&quot; method is generic, 
+introducing a new type parameter TKey... so we shouldn't use TKey as the name 
+of the new type parameter for OrderedEnumerable. We<em>could</em> rename the 
+type parameter in the generic method implementation, but I'm becoming a big 
+believer in leaving the signatures of methods alone when I implement an 
+interface. For type parameters it's not too bad, but for normal parameters it 
+can be awful if you mess around with the names - particularly for those using 
+named arguments.</p> 
+<p>Thinking ahead, our single &quot;key&quot; type parameter in 
+OrderedEnumerable could well end up being a composite key. After all, if we 
+have OrderBy(...).ThenBy(...).ThenBy(...) we're going to have to have some way 
+of representing the key formed by the three selectors. It makes sense to use a 
+&quot;nested&quot; key type, where the key type of OrderedEnumerable is always 
+the &quot;composite key so far&quot;. Thus I named the type parameter 
+TCompositeKey, and introduced an appropriate field. Here's the skeleton of the 
+new class:</p> internal&nbsp; class OrderedEnumerable&lt;TElement, 
+TCompositeKey&gt; : IOrderedEnumerable&lt;TElement&gt;<br>
+{ <br>
+
+&nbsp;&nbsp;&nbsp;private&nbsp; readonly IEnumerable&lt;TElement&gt; source; 
+<br>&nbsp;&nbsp;&nbsp; private&nbsp; readonly Func&lt;TElement, 
+TCompositeKey&gt; compositeSelector;<br>
+&nbsp;&nbsp;&nbsp; private&nbsp; 
+readonly IComparer&lt;TCompositeKey&gt; compositeComparer; <br>
+<br>
+
+&nbsp;&nbsp;&nbsp;internal OrderedEnumerable(IEnumerable&lt;TElement&gt; source,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Func&lt;TElement, 
+TCompositeKey&gt; compositeSelector,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IComparer&lt;TCompositeKey&gt; 
+compositeComparer)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.source = source; <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.compositeSelector = 
+compositeSelector;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this
+.compositeComparer = compositeComparer;<br>
+&nbsp;&nbsp;&nbsp; } <br>
+<br>
+
+&nbsp;&nbsp;&nbsp;// Interface implementations here <br>
+} 
+<p>(I'm aware this is very &quot;stream of consciousness&quot; - I'm assuming 
+that presenting the decisions in the order in which I addressed them is a good 
+way of explaining the necessary changes. Apologies if the style doesn't work 
+for you.)</p> 
+<p>ThenBy and ThenByDescending don't have to change at all - they were already 
+just using the interface. OrderBy and OrderByDescending become a little 
+simpler, as we don't need to build the projection comparer. Here's the new 
+version of OrderBy:</p> public&nbsp; static IOrderedEnumerable&lt;TSource&gt; 
+OrderBy&lt;TSource, TKey&gt;(<br>
+&nbsp;&nbsp;&nbsp; this 
+IEnumerable&lt;TSource&gt; source,<br>
+&nbsp;&nbsp;&nbsp; Func&lt;TSource, 
+TKey&gt; keySelector,<br>
+&nbsp;&nbsp;&nbsp; IComparer&lt;TKey&gt; comparer) 
+<br>{ <br>
+&nbsp;&nbsp;&nbsp; if (source == null) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp; new ArgumentNullException(
+&quot;source&quot;); <br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; if 
+(keySelector ==null) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp; new ArgumentNullException(
+&quot;keySelector&quot;); <br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; 
+return&nbsp; new OrderedEnumerable&lt;TSource, TKey&gt; <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (source, keySelector, comparer ?? 
+Comparer&lt;TKey&gt;.Default);<br>
+} 
+<p>Lovely - we just call a constructor, basically.</p> 
+<p>So far, so good. Now what about the implementation of IOrderedEnumerable? 
+We should expect this to get messy, because there are three types of key 
+involved:</p> 
+<ul> 
+<li>The current key type </li> 
+<li>The secondary key type </li> 
+<li>The composite key type </li> </ul> 
+<p>Currently we don't even have a type which can represent the composite key. 
+We<em>could</em> use something like KeyValuePair&lt;TKey, TValue&gt;, but that 
+doesn't really give the right impression. Instead, let's create our own simple 
+type:</p> internal&nbsp; struct CompositeKey&lt;TPrimary, TSecondary&gt; <br>
+{ 
+<br>&nbsp;&nbsp;&nbsp; private&nbsp; readonly TPrimary primary; <br>
+
+&nbsp;&nbsp;&nbsp;private&nbsp; readonly TSecondary secondary; <br>
+<br>
+
+&nbsp;&nbsp;&nbsp;internal TPrimary Primary { get { return primary; } } <br>
+
+&nbsp;&nbsp;&nbsp;internal TSecondary Secondary{ get { return secondary; } } 
+<br> <br>
+&nbsp;&nbsp;&nbsp; internal CompositeKey(TPrimary primary, TSecondary 
+secondary)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.primary = primary; <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.secondary = secondary; <br>
+
+&nbsp;&nbsp;&nbsp; }<br>
+} 
+<p>Now we can easily create a projection from two key selectors to a new one 
+which selects a composite key. However, we'll need to do the same thing for a 
+comparer. We<em>could</em> use the CompoundComparer class we created before, 
+but that will end up with quite a bit of indirection. Instead, it would be nice 
+to have a type to work directly with CompositeKey - something which<em>knew</em>
+ it was dealing with comparers of different types, one for each part of the key.
+</p> 
+<p>We could create a completely separate top-level type for that... but 
+specifying the type parameters again seems a bit daft when we can reuse them by 
+simply creating a nested class within CompositeKey:</p> internal&nbsp; struct 
+CompositeKey&lt;TPrimary, TSecondary&gt;<br>
+{ <br>
+&nbsp;&nbsp;&nbsp; // Other 
+members as shown above <br>
+<br>
+&nbsp;&nbsp;&nbsp; internal&nbsp; sealed&nbsp; 
+class Comparer : IComparer&lt;CompositeKey&lt;TPrimary, TSecondary&gt;&gt; <br>
+
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; private
+&nbsp;readonly IComparer&lt;TPrimary&gt; primaryComparer; <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp; readonly 
+IComparer&lt;TSecondary&gt; secondaryComparer;<br>
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;internal 
+Comparer(IComparer&lt;TPrimary&gt; primaryComparer,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+IComparer&lt;TSecondary&gt; secondaryComparer)<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this
+.primaryComparer = primaryComparer;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this
+.secondaryComparer = secondaryComparer;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp; int 
+Compare(CompositeKey&lt;TPrimary, TSecondary&gt; x,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+CompositeKey&lt;TPrimary, TSecondary&gt; y)<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int 
+primaryResult = primaryComparer.Compare(x.Primary, y.Primary);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if 
+(primaryResult != 0)<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+return primaryResult; <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 
+secondaryComparer.Compare(x.Secondary, y.Secondary);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; } <br>
+} 
+<p>This may look a little odd to begin with, but the two types really are 
+quite deeply connected.</p> 
+<p>Now that we can compose keys in terms of both selection and comparison, we 
+can implement CreateOrderedEnumerable:</p> public 
+IOrderedEnumerable&lt;TElement&gt; CreateOrderedEnumerable&lt;TKey&gt;(<br>
+
+&nbsp;&nbsp;&nbsp; Func&lt;TElement, TKey&gt; keySelector,<br>
+
+&nbsp;&nbsp;&nbsp; IComparer&lt;TKey&gt; comparer,<br>
+&nbsp;&nbsp;&nbsp; bool
+&nbsp;descending) <br>
+{ <br>
+&nbsp;&nbsp;&nbsp; if (keySelector == null) <br>
+
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw&nbsp; 
+new ArgumentNullException( &quot;keySelector&quot;); <br>
+&nbsp;&nbsp;&nbsp; } 
+<br>&nbsp;&nbsp;&nbsp; comparer = comparer ?? Comparer&lt;TKey&gt;.Default; <br>
+&nbsp;&nbsp;&nbsp;if ( descending) <br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; comparer =new 
+ReverseComparer&lt;TKey&gt;(comparer);<br>
+&nbsp;&nbsp;&nbsp; } <br>
+<br>
+
+&nbsp;&nbsp;&nbsp;// Copy to a local variable so we don't need to capture 
+&quot;this&quot; <br>
+&nbsp;&nbsp;&nbsp; Func&lt;TElement, TCompositeKey&gt; 
+primarySelector = compositeSelector;<br>
+&nbsp;&nbsp;&nbsp; Func&lt;TElement, 
+CompositeKey&lt;TCompositeKey, TKey&gt;&gt; newKeySelector =&nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; element =&gt;new 
+CompositeKey&lt;TCompositeKey, TKey&gt;(primarySelector(element), 
+keySelector(element));<br>
+<br>
+&nbsp;&nbsp;&nbsp; 
+IComparer&lt;CompositeKey&lt;TCompositeKey, TKey&gt;&gt; newKeyComparer =<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new CompositeKey&lt;TCompositeKey, 
+TKey&gt;.Comparer(compositeComparer, comparer);<br>
+<br>
+&nbsp;&nbsp;&nbsp; 
+return&nbsp; new OrderedEnumerable&lt;TElement, CompositeKey&lt;TCompositeKey, 
+TKey&gt;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (source, 
+newKeySelector, newKeyComparer);<br>
+} 
+<p>I'm not going to pretend that the second half of the method is anything 
+other than ghastly. I'm not sure I've ever written code which is so dense in 
+type arguments. IComparer&lt;CompositeKey&lt;TCompositeKey, TKey&gt;&gt; is a 
+particularly &quot;fine&quot; type. Ick.</p> 
+<p>However, it works - and once you've got your head round what each of the 
+type parameters actually means at any one time, it's not really<em>complicated
+</em> code - it's just verbose and clunky.</p> 
+<p>The only bit which might require a bit of explanation is the 
+primarySelector variable. I could certainly have just used compositeSelector 
+within the lambda expression used to create the new key selector - it's not 
+like it's going to change, after all. The memory benefits of not having a 
+reference to &quot;this&quot; (where the intermediate OrderedEnumerable is 
+likely to be eligible for GC collection immediately, in a typical 
+OrderBy(...).ThenBy(...) call) are almost certainly not worth it. It just<em>
+feels right</em> to have both the primary and secondary key selectors in the 
+same type, which is what will happen with the current code. They're both local 
+variables, they'll be captured together, all will be well.</p> 
+<p>I hope you can see the parallel between the old code and the new code. 
+Previously we composed a new (element-based) comparer based on the existing 
+comparer, and a projection comparer from the method parameters. Now we're 
+composing a new key selector and a new key comparer. It's all the same idea, 
+just maintaining the split between key selection and key comparison.</p> 
+<h3>Now let's sort...</h3> 
+<p>So far, we haven't implemented GetEnumerator - and that's all. As soon as 
+we've done that to our satisfaction, we're finished with ordering.</p> 
+<p>There are <em>several</em> approaches to how we could sort. Here are a few 
+of them:</p> 
+<ul> 
+<li>Project each element to its key, and create a KeyValuePair for each item. 
+Merge sort in the existing way to achieve stability. This will involve copying 
+a lot of data around - particularly if the element and key types end up being 
+large value types.</li> 
+<li>Project each element to a { key, index } pair, and create another 
+composite comparer which uses the index as a tie-breaker to achieve stability. 
+This still involves copying keys around, but it means we could easily use a 
+built-in sort (such as List&lt;T&gt;).</li> 
+<li>Project each element to a key, and separately create an array of indexes 
+(0, 1, 2, 3...). Sort the<em>indexes</em> by accessing the relevant key at any 
+point, using indexes as tie-breakers. This requires a more fiddly sort, as we 
+need to keep indexing into the indexes array.</li> 
+<li>Build up &quot;chunks&quot; of sorted data as we read it in, keeping some 
+number of chunks and merging them appropriate when we want to. We can then 
+yield the results without ever performing a full sort, by effectively 
+performing the &quot;merge&quot; operation of merge sort, just yielding values 
+instead of copying them to temporary storage. (Obviously this is trivial with 2 
+chunks, but can be extended to more.)</li> 
+<li>Do something involving a self-balancing binary tree :) </li> </ul> 
+<p>I decided to pick the middle option, using quicksort as the sorting 
+algorithm. This comes with the normal problems of<em>possibly</em> picking bad 
+pivots, but it's usually a reasonable choice. I believe there are cunning ways 
+of improving the worst-case performance, but I haven't implemented any of those.
+</p> 
+<p>Here's the non-quicksort part of the code, just to set the scene.</p> public
+ IEnumerator&lt;TElement&gt; GetEnumerator()<br>
+{ <br>
+&nbsp;&nbsp;&nbsp; // 
+First copy the elements into an array: don't bother with a list, as we <br>
+
+&nbsp;&nbsp;&nbsp;// want to use arrays for all the swapping around. <br>
+
+&nbsp;&nbsp;&nbsp;int count; <br>
+&nbsp;&nbsp;&nbsp; TElement[] data = 
+source.ToBuffer(out count); <br>
+<br>
+&nbsp;&nbsp;&nbsp; int[] indexes = new
+&nbsp;int[count]; <br>
+&nbsp;&nbsp;&nbsp; for ( int i = 0; i &lt; 
+indexes.Length; i++)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indexes[i] = i;<br>
+
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; TCompositeKey[] keys = new 
+TCompositeKey[count];<br>
+&nbsp;&nbsp;&nbsp; for ( int i = 0; i &lt; 
+keys.Length; i++)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; keys[i] = compositeSelector(data[i]);
+<br>&nbsp;&nbsp;&nbsp; } <br>
+<br>
+&nbsp;&nbsp;&nbsp; QuickSort(indexes, keys, 
+0, count - 1);<br>
+<br>
+&nbsp;&nbsp;&nbsp; for ( int i = 0; i &lt; 
+indexes.Length; i++)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yield&nbsp; return data[indexes[i]]; 
+<br>&nbsp;&nbsp;&nbsp; } <br>
+} 
+<p>I could certainly have combined the first two loops - I just liked the 
+separation provided in this code. One tiny micro-optimization point to note is 
+that for each loop I'm using the Length property of the array rather than 
+&quot;count&quot; as the upper bound, as I believe that will reduce the amount 
+of array boundary checking the JIT will generate. I very much doubt that it's 
+relevant, admittedly :) I've left the code here as it is in source control - 
+but looking at it now, I could certainly have used a foreach loop on the final 
+yield part. We wouldn't be able to later, admittedly... but I'll come to that 
+all in good time.</p> 
+<p>The actual quicksort part is reasonably standard except for the fact that I 
+pass in both the arrays for both indexes and keys - usually there's just the 
+one array which is being sorted. Here's the code for both the recursive call 
+and the partition part:</p> private&nbsp; void QuickSort( int[] indexes, 
+TCompositeKey[] keys,int left, int right) <br>
+{ <br>
+&nbsp;&nbsp;&nbsp; if 
+(right &gt; left)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int pivot = left + (right - left) / 2;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int pivotPosition = 
+Partition(indexes, keys, left, right, pivot);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; QuickSort(indexes, keys, left, 
+pivotPosition - 1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+QuickSort(indexes, keys, pivotPosition + 1, right);<br>
+&nbsp;&nbsp;&nbsp; } 
+<br>} <br>
+<br>
+private&nbsp; int Partition( int[] indexes, TCompositeKey[] 
+keys,int left, int right, int pivot) <br>
+{ <br>
+&nbsp;&nbsp;&nbsp; // Remember 
+the current index (into the keys/elements arrays) of the pivot location <br>
+
+&nbsp;&nbsp;&nbsp;int pivotIndex = indexes[pivot]; <br>
+&nbsp;&nbsp;&nbsp; 
+TCompositeKey pivotKey = keys[pivotIndex];<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Swap 
+the pivot value to the end <br>
+&nbsp;&nbsp;&nbsp; indexes[pivot] = 
+indexes[right];<br>
+&nbsp;&nbsp;&nbsp; indexes[right] = pivotIndex; <br>
+
+&nbsp;&nbsp;&nbsp;int storeIndex = left; <br>
+&nbsp;&nbsp;&nbsp; for ( int i = 
+left; i &lt; right; i++)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int candidateIndex = indexes[i]; <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TCompositeKey candidateKey = 
+keys[candidateIndex];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int 
+comparison = compositeComparer.Compare(candidateKey, pivotKey);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (comparison &lt; 0 || (comparison 
+== 0 &amp;&amp; candidateIndex &lt; pivotIndex))<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Swap 
+storeIndex with the current location <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indexes[i] = 
+indexes[storeIndex];<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+indexes[storeIndex] = candidateIndex;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; storeIndex++;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; } <br>
+
+&nbsp;&nbsp;&nbsp;// Move the pivot to its final place <br>
+&nbsp;&nbsp;&nbsp; 
+int tmp = indexes[storeIndex]; <br>
+&nbsp;&nbsp;&nbsp; indexes[storeIndex] = 
+indexes[right];<br>
+&nbsp;&nbsp;&nbsp; indexes[right] = tmp; <br>
+
+&nbsp;&nbsp;&nbsp;return storeIndex; <br>
+} 
+<p>It's interesting to observe how similar the quicksort and merge sort 
+recursive parts are - both picking a midpoint, recursing on the left of it, 
+recursing on the right of it, and performing some operation on the whole 
+sublist. Of course the &quot;some operation&quot; is very different between 
+partition and merge, and it occurs at a different time - but it's an 
+interesting parallel nonetheless.</p> 
+<p>One significant difference between merge sort and quicksort is the use of 
+the pivot. Once Partition has returned where the pivot element ended up, 
+quicksort doesn't touch that element itself (we already know it will be in the 
+right place). It recurses on the sublist entirely to the left of the pivot and 
+the sublist entirely to the right of the pivot. Compare this with merge sort 
+with recurses on two sublists which together comprise the whole list for that 
+call.</p> 
+<p>The overloading of the word &quot;index&quot; here is unfortunate, but that 
+is unfortunately life. Both sorts of &quot;index&quot; here really are 
+indexes... you just need to keep an eye on which is which.</p> 
+<p>The final point to note is how we're using the indexes in the comparison, 
+as a tie-break to keep stability. It's an ugly expression, but it does the job.
+</p> 
+<p>(As a small matter of language, I wasn't sure whether to use indexes or 
+indices. I far prefer the former, so I used it. Having just checked in the 
+dictionary, it appears both are correct. This reminds me of when I was writing 
+C# in Depth - I could never decide between appendixes and appendices. Blech.)
+</p> 
+<p>Now, do you want to hear the biggest surprise I received last night? After 
+I'd fixed up the compile-time errors to arrive at the code above,<em>it worked 
+first time</em>. I'm not kidding. I'm not quite sure how I pulled that off 
+(merge sort didn't take long either, but it did at least have a few tweaks to 
+fix up) but it shocked the heck out of me. So, are we done? Well, not quite.</p>
+<h3>Yielding early</h3> 
+<p>Just as a reminder, one of my aims was to be able to use iterator blocks to 
+return some values to anyone iterating over the result stream without having to 
+do<em>all</em> the sorting work. This means that in the case of calling 
+OrderBy(...).Take(5) on a large collection, we can end up saving a lot of 
+work... I hope!</p> 
+<p>This is currently fairly normal quicksort code, leaving the &quot;dual 
+arrays&quot; aspect aside... but it's not quite amenable to early yielding. 
+We're definitely<em>computing</em> the earliest results first, due to the order 
+of the recursion - but we can't yield from the recursive method - iterator 
+blocks just don't do that.</p> 
+<p>So, we'll have to fake the recursion. Fortunately, quicksort is only <em>
+directly</em> recursive - we don't need to worry about mutually recursive 
+routines: A calling B which might call C or it might call back to A, etc. 
+Instead, we can just keep a Stack&lt;T&gt; of &quot;calls&quot; to quicksort 
+that we want to make, and execute the appropriate code within our 
+GetEnumerator() method, so we can yield at the right point. Now in the original 
+code, quicksort has four parameters, so you might expect our Stack&lt;T&gt; to 
+have those four values within T too... but no! Two of those values are just the 
+keys and indexes... and we already have those in two local variables. We only 
+need to keep track of &quot;right&quot; and &quot;left&quot;. Again, for the 
+sake of clarity I decided to implement this using a custom struct - nested 
+within OrderedEnumerable as there's no need for it to exist anywhere else:</p> 
+private&nbsp; struct LeftRight <br>
+{ <br>
+&nbsp;&nbsp;&nbsp; internal&nbsp; int
+ left, right;<br>
+&nbsp;&nbsp;&nbsp; internal LeftRight( int left, int right) 
+<br>&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this
+.left = left;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.right = right;
+<br>&nbsp;&nbsp;&nbsp; } <br>
+} 
+<p>Purists amongst you may curse at the use of internal fields rather than 
+properties. I'm not bothered - this is a private class, and we're basically 
+using this as a tuple. Heck, I would have used anonymous types if it weren't 
+for two issues:</p> 
+<ul> 
+<li>I wanted to use Stack&lt;T&gt;, and there's no way of creating one of 
+those for an anonymous type (without introducing more generic methods to use 
+type inference)</li> 
+<li>I wanted to use a struct - we'll end up creating a lot of these values, 
+and there's simply no sense in them being individual objects on the heap. 
+Anonymous types are always classes.</li> </ul> 
+<p>So, as a first step we can transform our code to use this &quot;fake 
+recursion&quot; but still yield at the very end:</p> var stack = new 
+Stack&lt;LeftRight&gt;();<br>
+stack.Push( new LeftRight(0, count - 1)); <br>
+
+while (stack.Count &gt; 0) <br>
+{ <br>
+&nbsp;&nbsp;&nbsp; LeftRight leftRight = 
+stack.Pop();<br>
+&nbsp;&nbsp;&nbsp; int left = leftRight.left; <br>
+
+&nbsp;&nbsp;&nbsp;int right = leftRight.right; <br>
+&nbsp;&nbsp;&nbsp; if 
+(right &gt; left)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int pivot = left + (right - left) / 2;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int pivotPosition = 
+Partition(indexes, keys, left, right, pivot);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stack.Push(new 
+LeftRight(pivotPosition + 1, right));<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stack.Push(new LeftRight(left, 
+pivotPosition - 1));<br>
+&nbsp;&nbsp;&nbsp; } <br>
+} <br>
+<br>
+for ( int i = 0; 
+i &lt; indexes.Length; i++)&nbsp;<br>
+{&nbsp; <br>
+&nbsp;&nbsp;&nbsp; yield
+&nbsp;return data[indexes[i]];&nbsp; <br>
+} 
+<p>We initially push a value of (0, count - 1) to simulate the call to 
+QuickSort(0, count - 1) which started it all before. The code within the loop 
+is very similar to the original QuickSort method, with three changes:</p> 
+<ul> 
+<li>We have to grab the next value of LeftRight from the stack, and then 
+separate it into left and right values</li> 
+<li>Instead of calls to QuickSort, we have calls to stack.Push </li> 
+<li>We've reversed the order of the recursive calls: in order to sort the left 
+sublist<em>first</em>, we have to push it onto the stack <em>last</em>. </li> 
+</ul> 
+<p>Happy so far? We're getting very close now. All we need to do is work out 
+when to yield. This is the bit which caused me the most headaches, until I 
+worked out that the &quot;if (right &gt; left)&quot; condition really meant 
+&quot;if we've got work to do&quot;... and we're interested in the exact 
+opposite scenario - when we<em>don't</em> have any work to do, as that means 
+everything up to and including &quot;right&quot; is already sorted. There are 
+two situations here: either right == left, i.e. we're sorting one element, or 
+right == left - 1, which will occur if we picked a pivot which was the maximum 
+or minimum value in the list at the previous recursive step.</p> 
+<p>It's taken me a little bit of thinking (and just running the code) to 
+persuade me that we will<em>always </em>naturally reach a situation where we 
+end up seeing right == count and right &lt;= left, i.e. a place where we know 
+we're completely done. But it's okay - it does happen.</p> 
+<p>It's not just a case of yielding the values between left and right though - 
+because otherwise we'd never yield a pivot. Remember how I pointed out that 
+quick sort missed out the pivot when specifying the sublists to recurse into? 
+Well, that's relevant here. Fortunately, it's really easy to work out what to 
+do. Knowing that everything up to and including &quot;right&quot; has been 
+sorted means we just need to keep a cursor representing the next index to 
+yield, and then just move that cursor up until it's positioned beyond 
+&quot;right&quot;. The code is probably easier to understand than the 
+description:</p> int nextYield = 0; <br>
+<br>
+var stack = new 
+Stack&lt;LeftRight&gt;();<br>
+stack.Push( new LeftRight(0, count - 1)); <br>
+
+while (stack.Count &gt; 0) <br>
+{ <br>
+&nbsp;&nbsp;&nbsp; LeftRight leftRight = 
+stack.Pop();<br>
+&nbsp;&nbsp;&nbsp; int left = leftRight.left; <br>
+
+&nbsp;&nbsp;&nbsp;int right = leftRight.right; <br>
+&nbsp;&nbsp;&nbsp; if 
+(right &gt; left)<br>
+&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int pivot = left + (right - left) / 2;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int pivotPosition = 
+Partition(indexes, keys, left, right, pivot);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Push the right sublist first, so 
+that we *pop* the <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // left 
+sublist first <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stack.Push( new 
+LeftRight(pivotPosition + 1, right));<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stack.Push(new LeftRight(left, 
+pivotPosition - 1));<br>
+&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; else <br>
+
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while 
+(nextYield &lt;= right)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yield&nbsp; 
+return data[indexes[nextYield]]; <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nextYield++;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; } <br>
+
+} 
+<p>Tada! It works (at least according to my tests).</p> 
+<p>I <em>have</em> tried optimizing this a little further, to deal with the 
+case when right == left + 1, i.e. we're only sorting two elements. It feels 
+like that<em>ought</em> to be cheaper to do explicitly than via pivoting and 
+adding two pointless entries to the stack... but the code gets a<em>lot</em> 
+more complicated (to the point where I had to fiddle significantly to get it 
+working) and from what I've seen, it doesn't make much performance difference. 
+Odd. If this were a production-quality library to be used in 
+performance-critical situations I'd go further in the testing, but as it is, 
+I'm happy to declare victory at this point.</p> 
+<h3>Performance</h3> 
+<p>So, how well does it perform? I've only performed crude tests, and they 
+perplex me somewhat. I'm sure that last night, when I was running the 
+&quot;yield at the end&quot; code, my tests were running twice as slowly in 
+Edulinq as in LINQ to Objects. Fair enough - this is just a hobby, Microsoft 
+have no doubt put a lot of performance testing effort into this. (That hasn't 
+stopped them frommessing up &quot;descending&quot; comparers, admittedly, as I 
+found out last night to my amusement.) That was on my &quot;meaty&quot; laptop 
+(which is 64-bit with a quad core i7). On my netbook this morning, the same 
+Edulinq code seemed to be running slightly faster than LINQ to Objects. Odd.</p>
+<p>This evening, having pulled the &quot;early out&quot; code from the source 
+repository, the Edulinq implementation is running faster than the LINQ to 
+Objects implementation even when the &quot;early out&quot; isn't actually doing 
+much good. That's just plain weird. I blame my benchmarking methodology, which 
+is far from rigorous. I've tweaked the<em>parameters</em> of my tests quite a 
+bit, but I haven't tried all kinds of different key and element types, etc. The 
+basic results are very roughly:</p> 
+<ul> 
+<li>When evaluating the whole ordered list, Edulinq appears to run about 10% 
+faster than LINQ to Objects</li> 
+<li>When evaluating only the top 5 of a large ordered list, Edulinq can be <em>
+much</em> faster. How much faster depends on the size of the list of course, 
+and it still has to perform the initial complete partitioning step - but on 
+100,000 items it's regularly about 10x faster than LINQ to Objects.</li> </ul> 
+<p>That makes me happy :) Of course, the code is all open source, so if 
+Microsoft wish to include the Edulinq implementation in .NET 5, they're quite 
+at liberty to do so, as long as they abide by the terms of the licence. I'm not 
+holding my breath ;)</p> 
+<p>More seriously, I fully expect there are a bunch of scenarios where my 
+knocked-up-in-an-evening code performs slower than that in the framework. Maybe 
+my approach takes a lot more memory. Maybe it has worse locality of reference 
+in some scenarios. There are all kinds of possibilities here. Full performance 
+analysis was never meant to be the goal of Edulinq. I'm doing this in the 
+spirit of learning more about LINQ - but it's fun to try to optimize just a<em>
+little</em> bit. I'm going to delete the increasingly-inaccurately-named 
+MergeSortTest project now - I may institute a few more benchmarks later on 
+though. I'm also removing CompoundComparer and ProjectionComparer, which are no 
+longer used. They'll live on in part 26a though...</p> 
+<h3>Conclusions</h3> 
+<p>Well that was fun, wasn't it? I'm pretty pleased with the result. The final 
+code has some nasty generic complexity in it, but it's not too bad if you keep 
+all the types clear in your mind.</p> 
+<p>None of the remaining operators will be nearly as complex as this, unless I 
+choose to implement AsQueryable (which I wasn't planning on doing). On the 
+other hand, as I've mentioned before, Max/Sum/etc have<em>oodles</em> of 
+overloads. While I'll certainly implement all of them, I'm sure I'll only 
+present the<em>code</em> for selected interesting overloads.</p> 
+<p>As a bit of light relief, I think I'll tackle Reverse. That's about as 
+simple as it gets - although it could still present some interesting options.
+</p> 
+<h3>Addendum</h3> 
+<p>An earlier version of this post (and the merge sort implementation) had a 
+flawed piece of code for choosing the pivot. Here's both the old and the new 
+code:</p> // Old code <br>
+int pivot = (left + right) / 2; <br>
+<br>
+// New code
+<br> int pivot = left + (right - left) / 2; <br>
+
+<p>The difference is whether or not the code can overflow when left and right 
+are very large. Josh Blochwrote about it back in 2006. A colleague alerted me 
+to this problem shortly after posting, but it's taken until now to correct it. 
+(I fixed the source repository almost immediately, but deferred writing this 
+addendum.) Why was I not too worried? Because .NET restricts each object to be 
+less than 2GB in size, even in .NET 4.0, even on a 64-bit CLR. As we've created 
+an array of integers, one per entry, that means we can only have just under 
+(int.MaxValue / 4) elements. Within those limits, there's no problem in the 
+original pivot code. However, it's still worth fixing of course - one never 
+knows when the restriction will be lifted. The CLR team blogged about the issue
+back in 2005 (when the 64-bit CLR was new) - I haven't seen any mentions of 
+plans to remove the limitation, but I would imagine it's discussed periodically.
+</p> 
+<p>One oddity about this is that the Array class itself has some API support 
+for large arrays, such as theLongLength property. To be honest, I can't see 
+large arrays ever being particularly pleasant to work with - what would they 
+return for the normal Length property, for example, or their implementation of 
+IList&lt;T&gt; etc? I suspect we may see support for larger objects before we 
+see support for arrays with more than int.MaxValue elements, but that's a 
+complete guess.</p> email it! bookmark it! digg it! <br>
+<br>
+
+<p></p> 
+<p>Original Post: Reimplementing LINQ to Objects: Part 26d - Fixing the key 
+selectors, and yielding early</p> <br>
+<br>
+<br>
+
+<h6> Next Post </h6> 
+<h6> Previous Post </h6> <br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Subscribe</h2> 
+<ul> 
+<li>Recent Feeds</li> </ul> 
+<p> </p> 
+<h2> New Feed</h2> <br>
+<br>
+
+<h2> Add new feed:</h2> <br>
+<br>
+<br>
+<br>
+
+<h2>Product Spotlight</h2> <br>
+
+<h2>Recently Updated Sources</h2> 
+<ul> 
+<li> Fabulous Adventures In Coding</li> 
+<li> Blog</li> 
+<li> Rick Strahl's Web Log</li> 
+<li> Brendan Enrick</li> 
+<li> Jon Skeet: Coding Blog</li> 
+<li> ScottGu's Blog </li> 
+<li> Somasegar's WebLog</li> 
+<li> J.D. Meier's Blog</li> 
+<li> .NET Slave</li> 
+<li> Legend and truth</li> </ul> 
+<h3>Legal Note</h3> 
+<p>The content of the postings is owned by the respective author. CSharpFeeds 
+is not responsible for the contents of the postings. This site is automatically 
+generated and cannot be reviewed for abusive content. If you find abusive 
+content on CSharpFeeds, pleasecontact us. Designated trademarks and brands are 
+the property of their respective owners. All rights reserved.</p> 
+<h3>Advertise with us</h3> <br>
+<br>
+
+<p>All feed content is property of original publisher. Designated trademarks 
+and brands are the property of their respective owners.</p> <br>
+
+</body>

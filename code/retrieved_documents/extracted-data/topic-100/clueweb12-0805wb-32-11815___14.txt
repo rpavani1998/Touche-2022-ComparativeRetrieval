@@ -1,0 +1,163 @@
+i tried to explain in my previous post that r could have important advantages over stata when it came to managing weird, “non-rectangular” datasets that need to be transformed/combined/reshaped in non-trivial ways:
+blog at wordpress.com.
+i am not trying to start the first flamewar of “code and culture” — rather i’d like to argue that both languages have their own strengths and weaknesses; the important thing for me is not to come to a definitive conclusion (“stata is better than r” or vice versa) and only use one package while discarding the other, but to identify conditions under which r or stata are more or less painful to use for the type of data analysis i am working on.
+my  substantive interpretation of this animation (and a comparable event history)  is that the network doesn’t really matter and the endogenous cascade is  based on attention to aggregate peer behavior rather than that of specific  alters.
+turns out they’re almost exactly the same speed — about 26  or 27 seconds (it varies about a second or two every time i do it, sometimes  new is faster, sometimes old).
+<- c(deparse(substitute(var1)), deparse(substitute(var2)))
+# file-name: chrnetwork.
+plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=na,  edge.color="gray60", edge.arrow.size=0.3, margin=0) dev.off()
+at least i think that’s a good way to think about  the basic syntax — i suck at r
+system("mv chrnet_hc8.png  chrnet_hc08.png") system("mv chrnet_hc9.png chrnet_hc09.png")
+or if that’s too hard, just stick to piping to r.app  instead of rdaemon.
+here’s an example: tabstat y, by(group) stats(n mean p10 median p90) could be translated into r as: tapply(levels(group), levels(group), function(i) cbind(n=length(y[ group== i], mean(y[group
+and i see three ways to do it: wait for somebody to tell me in the comments how to do this kind of loop  in r. (hint, hint).
+getting the different versions of the graph to appear comparable.
+give up on using igraph from within r and learn to use it  from within python.
+i thought i tried this already, but apparently not.
+i think the trick is to realize that two of  the key differences are that: whereas handles only come up in a few stata commands (e.g., file,  postfile, log), they are very important in r, what with all the  “<-” statements in r there’s a much fuzzier line between commands and functions than  in stata.
+still, i haven’t completely stopped using stata: one of the things that bother me when i use r is the lack of nice and quick descriptive statistics functions like “tabulate” or “tabstat”.
+note that the weight argument is optional so that: col.table(x,y) is equivalent to tabulate x y, col nofreq.
+png.filenames <-  list.files("~/documents/book/images/flipbook/",  pattern="\\.png$") timestamp() ## resort properly again ind <-  order(as.numeric(gsub("[^[:digit:]]", "", png.filenames)))
+for i in range(0,52): datafile='ties_bounded%d' % i # igraph code here  that treats the python object "datafile" as a filename update so thanks to brian rubineau’s suggestion on how to  better use the “paste()” function, which is functionally equivalent  to the second line of the python code above.
+(pierre or kieran please correct me).
+anyway, i worked his suggestions into my code (see below) and it works great.
+system("convert *.png
+that’s quite ugly compared to the simple tabstat command, but i could deal with it… now suppose i am working on survey data and observations have sampling weights, and the syntax will have to get even more complicated — i’d have to think about something for a few minutes, when all stata would need is a quick [fw=weight] statement added before the comma.
+system("mv  chrnet_hc3.png chrnet_hc03.png") system("mv chrnet_hc4.png  chrnet_hc04.png") system("mv chrnet_hc5.png chrnet_hc05.png")
+and so my code is very repetitive.
+*if r exists but is not in path, change the reference to "r" in line 27 to be the specific location capture program drop importspss program define importspss set more off local spssfile `1' if "`2'"=="" { local statafile "`spssfile'.dta" } else { local statafile `2' } local sourcefile=round(runiform()*1000) capture file close rsource file open rsource using `sourcefile'.
+in fact, it only took me, a complete  python-noob, about ten minutes to figure out what’s been a real stumper  in r. i haven’t yet workedigraph into this loop but  i’m thinking it can’t be that hard.
+now the problem i can’t solve, at least with anything approaching  elegance.
+and i really could be totally wrong about  this.
+return(round(100*t,2))
+r erase `sourcefile'.
+for example, here’s how i would do this in stata.
+i like this a lot because it let’s you avoid using spss
+the “mv” commands are necessary because  imagemagick has a naive view of alphabetical order.
+r, write text replace file write rsource  "library(foreign)" _n file write rsource `"data <-  read.spss("`spssfile'", to.data.frame=true)"' _n file write  rsource `"write.dta(data, file="`statafile'")"' _n file  close rsource shell r --vanilla
+filenames <- filenames[ind] g.list <- llply(filenames, read.graph,  format="pajek")  png(file="~/documents/book/images/flipbook/chrnet_hc%d.png",  width=600, height=600, units="px")
+(the problem is that the  “paste()” function adds whitespace).
+the actual r code only takes about 7 seconds to execute in  either version.
+r, write text replace file write rsource "library(foreign)" _n file write rsource `"data  source("~/documents/book/stata/testgraph.
+return(round( 100*t,2)) } col.table(x,y,w) gives the same output as stata’s “tabulate x
+note that you may have to click on the image to see the  animation.
+this kind of thing is  trivially easy in stata since stata expands locals and then interprets them.
+as such i rewrote the script to work entirely from stata.
+yellow  vertices have missing data on airplay (true missing data, not just  right-censored).
+this follows my general philosophy of  doing a lot of code mise en place in a user-friendly language so i can spend as  little time as necessary in r. (note that you could just as easily write this  in bash, but i figured this way you can a) make it cross-platform and b) attach  it to “use” for a one-stop shop “import” command).
+it does no good to have multiple versions of a graph if they don’t  look at all similar, which is what you get if you generate the layout on the  fly as part of each plot.
+what i mean by this is both the superficial thing of all the  parentheses and also the more substantive issue that often you don’t put  them one to a line and they just do something (like stata commands) but you  usually put them many to a line and feed them into something else (like stata  functions).
+r makes it much easier to work on several datasets at the same time, and different types of objects can be used in consistent ways.
+png.filenames <- png.filenames[ind] png.filenames <-  paste("~/documents/book/images/flipbook/", png.filenames,  sep="") # add the path back png.string <-  capture.output(cat(png.filenames)) ## open a pipe to the shell to execute the  convert command ## directly.
+author: gabriel rossman # purpose: graph chr station network # data used:  ties_bounded.net # packages used: igraph library(igraph)
+give up on writing this kind of loop and just resign myself to writing  really repetitive r code.
+the table() function cannot even compare with stata’s tabulate twoway command, since: luckily, writing an r function that can achieve this is not too hard: col.table <- function(var1, var2, weights=rep(1,length(var1)),
+i have to say i don’t run very often into r estimation functions for which i can’t find an equivalent stata command.
+but sometimes egen, merge, expand, collapse and reshape won’t do the trick… and i find myself sorting, looping, using, saving and merging until i realize (too late of course!)
+or would it be better to try to feed r.app a “source” script from the command line?
+but i’d like it even better if it let  you avoid using r as well.
+i like this a lot because it  let’s
+forvalues i=0/52 { use ties_bounded`i', clear twoway scatter x y graph  export chrnet_hc`i'.png, replace } r not only doesn’t let you do this directly, but i can’t even  figure out how to do it by adding an extra step where the looped local feeds  into a new object to write the filename.
+merging the diffusion data (a vertice-level trait) onto the network.
+# file-name: testgraph.
+i want one graph per week  for a whole year.
+this is weird because r.app has no trouble finding it.
+this works, but  is ridiculous.
+i have basically zero experience using python but it has a  good reputation for usability.
+t <- cbind(t, total= rowsums(t)) names(dimnames(t))
+that stata can be a horrible, horrible tool when it comes to manipulating datasets that are not already rectangular.
+furthermore, i get the same error even if i make sure igraph is installed directly from r (terminal) in the same r session: choosecranmirror(graphics = false) install.packages("igraph") source("/users/rossman/documents/book/stata/testgraph.
+but things can get complicated when the raw dataset i need to manipulate is not already “rectangular”: this may include network data and multilevel data — even when the ultimate goal is to turn these messy-looking data, sometimes originating from multiple sources, into a nice rectangular dataset that can be analyzed with a simple linear model… sure, stata has a few powerful built-in commands (although i’d be embarrassed to say how many times i had to recheck the proper syntax for “reshape” in the stata help).
+how do i get r (terminal) to run as reliably as r.app?
+pdf("~/documents/book/images/chrnetwork.pdf")  plot.igraph(chrnet, layout=layout.fruchterman.reingold, vertex.size=4,  vertex.label=na, vertex.color="red", edge.color="gray20",  edge.arrow.size=0.3, margin=0) dev.off() #ties bounded to only top 40, includes  adoption time color-codes, but use is optional chrnetbounded <-  read.graph("ties_bounded_humpcolor.net", c("pajek"))
+r use  `statafile', clear end june 29, 2010 at 3:01 pm gabrielrossman 6 comments thanks for the aspirin guys | gabriel | in a recent post, i lamented that i couldn’t figure out how to do  loops and a few other things in r. the script at issue was intended to create a  slideshow of network graphs which i’d then use image magick to convert to  an animated gif.
+is this a naive question?
+currently my code is really long and repetitive.
+i did  this using the command line toolimagemagick, which i installed using fink, the  (buggy)
+i  think i’ve gotten the hang ofigraph itself but r itself is  still pretty opaque to me and that limits my ability to useigraph.
+mike wanted to do  this in bash but couldn’t figure out how to pass arguments from the shell  to r. frankly, i don’t know how to do this either which is why my  solution is to have stata write and execute an r source file so all the  argument passing occurs within stata.
+anyway, i wrote my first useful r file the other day.
+the vast majority of that half a minute is taken  up by image magick.
+for me, r is particularly useful when i need to manipulate certain kinds of data and turn them into a “rectangular” dataset: stata is perfect for “rectangular” data, when the dataset fits nicely inside a rectangle of observations (rows) and variables (colums) and when the conceptual difference between rows and columns is clear — this is what a dataset will have to look like just before running a regression.
+the graph layout is based on directed nominations from a  survey so vertices near each other have low path length, but i hid the actual  edges to preserve some privacy about the stations social network ties.
+for those who don’t know me, my name is pierre, i am a graduate student in sociology at princeton and i’ve been doing work on organizations, culture and economic sociology (guess who’son my committee).
+r") i guess that’s another difference with stata, stataconsole knows where the ado library is.
+the problem seems to be that r (terminal) can’t find the igraph library.
+: unable to load shared library '/library/frameworks/r.framework/resources/library/igraph/libs/x86_64/igraph.so': dlopen(/library/frameworks/r.framework/resources/library/igraph/libs/x86_64/igraph.so, 10): symbol not found: ___gmpz_clear referenced from: /library/frameworks/r.framework/resources/library/igraph/libs/x86_64/igraph.so expected in: dynamic lookup error : .onload failed in 'loadnamespace' for 'igraph' error: package/namespace load failed for 'igraph' >
+and while i agree that r-generated graphs can be amazingly cool, stata has become much better in recent years.
+system("mv chrnet_hc2.png chrnet_hc02.png")
+(and people say r isn’t intuitive!)
+the thing is that i can’t figure out how to make a loop in r where  the looping local feeds to be part of a filename.
+first the two tricks that i have solved.
+i  can actually do this, but i’m having trouble looping it
+timestamp() gifpipe <-  pipe(paste("convert", png.string,  "~/documents/book/images/flipbook/chrnet_humps.gif", sep="  "), "w") close(gifpipe) timestamp() march 16, 2010 at 4:31 am gabrielrossman 2 comments network slideshow | gabriel | now that i’ve gotten r and igraph to make a set of 53  png files (seeyesterday’s post), the next step is animating them.
+since kieran was “interested to see whether this approach was at all  faster,” i ran the old version and the new version with timestamps.
+kieran’s code has a certain elegance to it, but  it’s an r style of elegance based on objects and lists and the like so  it’s not completely intuitive to me, despite his thorough commenting.
+it reads my pajek  formatted network data on top 40 radio stations and does a graph.
+i think that’s amazingly fast to import 60 or so datasets  (albeit small datasets), generate two different fr layouts, apply the layouts  to 60 or so graphs (albeit graphs that are written directly to disk rather than  to screen), and do miscellaneous housekeeping.
+to make 52 versions of the graph, i need about two hundred  lines of code, whereas i should be able to just loop my core four lines of code  52 times — pdf(); read.graph();plot.igraph();dev.off().
+powered by wordpress.com
+anyway, the python / r method of first defining a new object then calling it is  an extra step compared to stata loops (where the looping local can expand  directly) but it’s still reasonably easy.
+this has proven really difficult to me so  instead i wrote analternate version of stata2pajek that  let’s me do this within stata.
+so instead of this: plot.igraph(chrnetbounded, layout=layout.fruchterman.reingold,  vertex.size=4, vertex.label=na, vertex.color="red",  edge.color="gray20", edge.arrow.size=0.3, margin=0) do this: la = layout.fruchterman.reingold(chrnetbounded)  plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=na,  vertex.color="red", edge.color="gray20",  edge.arrow.size=0.3, margin=0)
+#do as  flipbook setwd("~/documents/sjt/radio/survey/flipbook") for(i in  0:52) { datafile<-paste('ties_bounded_hc',i,'.net', sep="")  pngfile<-paste('~/documents/book/images/chrnet_hc',i,'.png',  sep="") chrnetbounded <- read.graph(datafile,  c("pajek")) png(pngfile) plot.igraph(chrnetbounded, layout=la,  vertex.size=4, vertex.label=na, edge.color="gray60",  edge.arrow.size=0.3, margin=0) dev.off() } february 28, 2010 at 1:23 pm gabrielrossman 9  comments r and textmate | gabriel | now that i’ve started dabbling in r, i figured i needed to get my  text editor to highlight the klingon-esque syntax.
+the catch is that you have to add  a “, sep=”" ” parameter to suppress the whitespace that  had been annoying me.
+december 1, 2009 at 4:54 am gabrielrossman 6  comments some r baby steps | gabriel | i’ve tried to learn r a few times but the syntax has always been  opaque to my stata-centric mind.
+of course, it is possible to use standard r functions to get about the same desired output, but they tend to be quite a bit more cumbersome.
+*if r exists but is not in path, change the  reference to "r" in line 27 to be the specific location capture  program drop importspss program define importspss set more off local spssfile  `1' if "`2'"=="" { local statafile  "`spssfile'.dta" } else { local statafile `2' } local  sourcefile=round(runiform()*1000) capture file close rsource file open rsource  using `sourcefile'.
+i]), quantile(y[group ==
+mike wanted to do this in bash but couldn’t figure out how to pass arguments from the shell to r. frankly, i don’t know how to do this either which is why my solution is to have stata write and execute an r source file so all the argument passing occurs within stata.
+gabriel | i’ve continued to play with the r package igraph and
+i’d like to be able to use the terminal mode for r as this would let me to reach my nirvana-like goal of having a single script that does everything without any proximate human intervention.
+so basically i’m at an  impasse
+get every new post delivered to your inbox.
+once imagemagick is  installed, i can do everything from directly within r usingsystem() .
+vertices are stations, which turn black when the  station has begun playing “my humps” by black eyed peas.
+mac version of the debian package manager.
+plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=na,  vertex.color="red", edge.color="gray20",  edge.arrow.size=0.3, margin=0) dev.off() #graph color coded diffusion  pdf("~/documents/book/images/chrnetworkboundedcolor.pdf")
+textwrangler and smultron  already support r, but getting it for textmate requires the terminal: cd "~/library/application support/textmate/bundles" svn co http://svn.textmate.org/trunk/bundles/r.tmbundle/ note that 64-bit r is buggy so if you have trouble piping scripts from  textmate to rdaemon (i.e., the command line r running in the background), you  can use the bundle editor to redirect it to “r32″ instead of just  “r” which will force it to use the slightly slower but more  reliable 32-bit r.
+la =  layout.fruchterman.reingold(chrnetbounded) #create layout for use on several  related graphs #graph structure only  pdf("~/documents/book/images/chrnetworkbounded.pdf")
+l_ply(g.list, plot, layout=la,  vertex.size=4, vertex.label=na, edge.color="gray60",  edge.arrow.size=0.3, margin=0) dev.off() timestamp() ### finally, generate the  gif without having to renumber the files ### individually.
+filenames <- list.files(getwd(), pattern="\\.net$") ind <-  order(as.numeric(gsub("[^[:digit:]]", "", filenames)))
+importspss.ado (requires r) | gabriel | mike gruszczynski has a post up pointing out that you can use r to  translate files, for instance from spss to stata.
+(i’m using  “twoway scatter” as a placeholder for “plot.igraph()”,  which of course doesn’t exist in stata).
+margins=true){ # creating table of (weighted) relative frequencies by column, and adding row variable margins as the last column crosstab <- prop.table(xtabs(weights ~ var1 + var2), margin=2) t <- cbind(crosstab, total=prop.table(xtabs(weights ~ var1)))
+# adding column sums in the last row t <- rbind(t,total = colsums(t)) # naming rows and columns of the table after var1 and var2 used, and returning result names(dimnames(t))
+the solution to this is to first generate a layout  (the object “la”) then apply it to each graph by defining the  “layout” parameter to “=la” within the  “plot.igraph()” function.
+here are the results.
+the preferred way to do this is to read in the network file to r then merge  in the vertice-level trait (or more technically, read the vertice data and  associate it with the network data).
+setwd("~/documents/sjt/radio/survey") #ties bounded to only top 40,  includes adoption time color-codes, but use is optional chrnetbounded <-  read.graph("ties_bounded_humpcolor.net", c("pajek"))
+[update, thanks to brian rubineau i've gotten it to  work]
+when gabriel asked me if i wanted to post on this stata/soc-of-culture-oriented blog, i first told him i was actually slowly moving away from stata and using r more and more frequently… which is going to be the topic of my first post.
+error in dyn.load(file, dllpath = dllpath, ...)
+also, as long as you’re playing with the textmate library, you might  as well install “getbundles,” a gui frontend for browsing the  textmate bundle server.
+here’s the same function, but for relative distributions by row: row.table <- function(var1, var2, weights=rep(1,length(var1)), margins=true){ t <- rbind(prop.table(xtabs(weights ~ var1 + var2), margin=1), total=prop.table(xtabs(weights ~ var2)))
+with some help from brian and kieran, i ultimately got it to  work and the results are inthis post (as well as a presentation at a  mini-conference i made a few days later).
+*importspss.ado *by ghr 6/29/2010 *this script uses r to translate spss to stata *it takes as arguments the spss file and stata file *adapted from http://mikegruz.tumblr.com/post/704966440/convert-spss-to-stata-without-stat-transfer *dependency: r and library(foreign)
+system("mv chrnet_hc6.png chrnet_hc06.png") system("mv  chrnet_hc7.png chrnet_hc07.png")
+much how like i can do this for stata to launch a do-file into the stata gui exec /applications/stata/statamp.app/contents/macos/statamp ~/documents/book/stata/import.do november 24, 2009 at 4:42 am gabrielrossman 11 comments | pierre | it’s amazing how r can make complicated things look simple and simple things look complicated.
+i haven’t run a  timestamped comparison, but my impression is that this is much faster than  comparable operations in pajek or nwb and appreciably faster than doing  scatterplots in stata.
+recently, i’ve become interested in diffusion processes — in quite unrelated domains: the emergence of new composers and their adoption in orchestra repertoires, the evolution of attitudes towards financial risk, the diffusion of stock-ownership and the recent stock-market booms and busts.
+this follows my general philosophy of doing a lot of code mise en place in a user-friendly language so i can spend as little time as necessary in r. (note that you could just as easily write this in bash, but i figured this way you can a) make it cross-platform and b) attach it to “use” for a one-stop shop “import” command).
+here’s my complete r  code, which i’m now very happy with.
+r on the other hand has two features that make it a great tool for data management: in my next post, i’ll try to explain why i keep using stata despite all this… april 28, 2009 at 12:57 pm pkremp 9 comments newer posts theme: blix by sebastian schmieg .
+(to  make it fair, i commented out the “pdf” version of the flipbook,  which only appears in the “old” code — this saves about one  second).
+to accomplish this, i just added these lines of code to the end of  yesterday’s script.
+| gabriel | mike gruszczynski has a post up pointing out that you can use r to translate files, for instance from spss to stata.
+but i’d like it even better if it let you avoid using r as well.
+specifically, i’m trying to merge diffusion data onto a network graph and  plot it as kind of a slideshow, where each successive image is a new period.
+march 1, 2010 at 1:35 pm gabrielrossman 1 comment more r headaches |
+i], c(.1,.5,.9))) or, for a more concise version: by(y, group, function(x) c(n=length(x),mean=mean(x),quantile(x,c( .1,.5,.9)))
+related to this is that the typical stata line has the syntax  “verb object, adverb” whereas the typical r line has the syntax  “object <- verb(object2, adverb)” the two combine in an obvious way with something as simple as opening a  dataset, which is justuse file in stata but is filehandle <-  read.table(“file”) in r, that is, there’s not a  read.table() command but a read.table() function and you feed this function to  a handle.
+true, r can deal with survey weights, but it almost never matches the simplicity of stata when all i am trying to do is get a few simple descriptive statistics on survey data: one of my latest problems with r involved trying to make a two-way table of relative frequencies by column with weighted data… yes, a simple contingency table!
+the upside is that i spend more time in  stata and less time in r, the downside to this is that i need a separate  “.net” file for every version of the graph.
+plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=na,  edge.color="gray80", edge.arrow.size=0.3, margin=0) dev.off()  #flipbook timestamp() setwd("~/documents/sjt/radio/survey/flipbook")
+r # date: 2010-03-11 # created date: 2009-11-24  # author: gabriel rossman (w a fair amount of help from br and kjh)
+kieran very generously further improved on the code at his own blog using  simulated data.
+*importspss.ado *by ghr 6/29/2010 *this script uses r to translate spss  to stata *it takes as arguments the spss file and stata file *adapted from  http://mikegruz.tumblr.com/post/704966440/convert-spss-to-stata-without-stat-transfer  *dependency: r and library(foreign)
+svn co  http://svn.textmate.org/trunk/review/bundles/getbundles.tmbundle/ note that getbundles (with “s”) supersedes the now defunct  getbundle (without “s”) that you might see mentioned if you google  things like “textmate bundle” or “textmate r syntax”.
+people usually emphasize graphics functions and the number of high-quality user-contributed packages for cutting-edge models as being r’s greatest strengths over other statistical packages.
+} may 6, 2009 at 7:41 pm pkremp 8 comments | pierre | thanks gabriel for letting me join you on this blog.
+# purpose:  graph chr station network # data used: ties_bounded.net # packages used: igraph  plyr timestamp() library(igraph) library(plyr)  setwd("~/documents/sjt/radio/survey") #ties -- including ties to  non-top40 (who can't reciprocate) chrnet <- read.graph("ties.net",  c("pajek"))
+#create animated gif in image magick  setwd("~/documents/book/images/") system("mv chrnet_hc0.png  chrnet_hc00.png") system("mv chrnet_hc1.png chrnet_hc01.png")
+r # date: 2010-02-26 # created date: 2009-11-24 #

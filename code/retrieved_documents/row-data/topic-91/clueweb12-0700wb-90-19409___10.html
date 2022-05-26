@@ -1,0 +1,253 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Machine Learning in Manufacturing - Semiconductor Technology</title>
+<body>
+Jump to page content Accessibility <br>
+<br>
+<b>News, views and contacts from 
+the global Semiconductor industry</b> Log in or Register <br>
+<br>
+
+<ul> 
+<li>Home</li> 
+<li>Products &amp; Services</li> 
+<li>Company A - Z</li> 
+<li>Projects</li> 
+<li>Features</li> 
+<li>Videos</li> 
+<li>White Papers</li> 
+<li>News</li> 
+<li>Events</li> 
+<li>Advertise With Us</li> </ul>  Latest Features | Features A - Z | GSF 
+Journal Features | Contributors <br>
+ &nbsp; 
+<h1>Machine Learning in Manufacturing</h1> 1 September 2004 <br>
+<br>
+<br>
+<br>
+<br> 
+<p>There is money to be saved from the use of even the simplest machine 
+learning routines. Gary R Bradski of Intel Research assesses the leading 
+algorithms and how they might be used to advantage.</p> <br>
+
+<p></p> 
+<p>Machine learning is the ability of a machine to improve its performance 
+based on its past performance, to then be used for prediction or classification 
+purposes. It has grown out of the disciplines of statistics, Artificial 
+Intelligence (AI) and neuroscience.</p> 
+<p>Statistics tended to focus on problems such as the limit convergence of 
+estimators until Brieman, Friedman, Olshen and Stone, and later Hastie and 
+Tibshirani.</p> 
+<p><b>CLASSIFICATION AND REGRESSION TREES (CART)</b></p>  &quot;Manufacturing 
+management must create a top-down push for end-to-end use of machine learning 
+and allow a bottom-up initiative to find specific applications.&quot; 
+<p>Beginning with Classification And Regression Trees (CART), these pioneers 
+took a more serious approach to machine learning and applied it to real data. 
+AI became stalled in rule-based expert systems until Judea Pearl helped move 
+the field into probabilistic graphical models where classification, regression, 
+dynamics, diagnostics, causal systems and decision theory can be wrapped into a 
+powerful probabilistic framework.</p> 
+<p>Neuroscience helped bring about effective non-linear classification, 
+regression and reinforcement learning in the form of neural networks and 
+adaptive filters. Under Professor Michael Jordan, it has focused on the more 
+theoretically founded kernel estimators, such as support vector machines, and 
+is beginning to merge these with probabilistic graphical models.</p> 
+<p>This has produced mature tools that will return multiples of the time and 
+money spent learning them: binary decision trees (CART, C4.5) and their 
+statistically boosted variants (AdaBoost, MART, random forests); discrete 
+graphical models in the form of diagnostic networks and influence diagrams; and 
+support vector machines for prediction and feature selection.</p> 
+<p>With the explosion in internal and external networks, which allow the 
+pooling of data, advantages such as cost savings, sophisticated 
+trouble-shooting and automatic diagnostics are available with even the simplest 
+applications. The main difficulties lie in collecting and organising the data 
+that these routines need, and diffusing knowledge of them throughout the 
+organisation.</p> 
+<p>Manufacturing management must create a top-down push for end-to-end use of 
+machine learning and allow a bottom-up initiative to find specific 
+applications. Otherwise, the organisation will be subject to untapped losses, 
+unpredicted equipment failures and slower diagnostics.</p> 
+<p><b>TECHNIQUES</b></p>  &quot;Decision trees and dependency networks have 
+the greatest range of usability, since trees handle mixed data types, as well 
+as missing and hidden variables.&quot; 
+<p>Comprehension of what follows is based on the assumption that a set of data 
+has been developed consisting of either a label (good, bad, indifferent) or a 
+regression target, and a set of feature variables. If dealing with cars, for 
+instance, the label might be 'price' with features such as colour, weight, 
+manufacturer or type. By using a classifier, the label that derives from each 
+feature can be learnt and predicted. If there is a label, it is known as 
+'supervised learning'. If there is no label, the task might be to cluster the 
+data into like groups. Alternatively, one of the features can be selected as a 
+label and the remaining features used to learn and predict that label. 
+Typically, there is a 'training set' of data that can be used to learn the 
+classifier responses or establish the categories. A 'test set' helps determine 
+how well the data can be classified.</p> 
+<p><b>IMPORTANCE VARIABLES</b></p> 
+<p>One technique, described in the context of random forests but universal to 
+any classifier, determines which features are important for prediction 
+accuracy. After training the classifier, each feature is taken in turn and 
+randomly permuted. The data is fed back in to see how bad the predictive 
+performance is. The worse the permuted feature prediction results are, the more 
+important that feature is to the classifier. In this way, important process 
+parameters relating to success or failure are found.</p> 
+<p><b>TREES AND NETWORKS</b></p>  &quot;Stochastic discrimination, random 
+forests and boosting tend to form more accurate classifiers than decision trees 
+alone.&quot; 
+<p>Learning binary decision trees is about finding a feature variable and a 
+value that best splits the data into two label groups until the data is pure, 
+or nearly so, at 'leaf' level. For example, to divide cars into a high-mileage 
+and low-mileage group, he best split variable might be weight (with two tonnes 
+and over being the cut-off point). So, the cut-off point is divided down the 
+tree, reusing feature variables as necessary, until the data in the 'leaves' is 
+pure, or within a small percentage of being so. Stopping at a split level that 
+is too high in the tree will lead to 'underfitting'. Splitting to almost 
+perfect purity at the bottom leads to 'overfitting'. To achieve a true fit, 
+CART first splits all the way down the tree, then prunes the tree back up using 
+a tree complexity cost process.</p> 
+<p>Using this technique, each feature in a data set can be predicted using all 
+the remaining features. Each feature yields a tree, and in each tree the top 
+level splits and can be used to define a dependency network that shows which 
+features predict others. Amazon.com uses a similar technique to predict from 
+items their customers have bought or looked at to buy in the future. In 
+semiconductors, manufacturers could use the method to find and visualise the 
+dependency structure for items that failed or excelled.</p> 
+<p>Decision trees and dependency networks have the greatest range of 
+usability, since trees handle mixed data types, as well as missing and hidden 
+variables. Good manufacturing applications might be: predicting machine failure 
+and which components will turn out well (and can undergo reduced testing); 
+finding multiple causes of failure; and diagnosing causes of failure.</p> 
+<p><b>STATISTICAL BOOSTING</b></p>  &quot;Bayesian networks use conditional 
+independence to factor a distribution, resulting in large memory and 
+computational savings.&quot; 
+<p>Boosting is a method of combining many weak classifiers into a strong 
+classifier. Typically, the weak classifier is a 'stump' &ndash; a tree with 
+only one split decision. Many stumps can be combined into one classifier as in 
+the following AdaBoost training pseudo-algorithm:</p> 
+<p>1. Give each data point an equal weight</p> 
+<p>2. For a given number of iterations or until an error minimum is reached:
+</p> 
+<ul> 
+<li>Train a weak classifier with regard to the weighted data set</li> 
+<li>Calculate the resulting weighted training error and use this to reweight 
+the data and calculate a weighted vote of this classifier</li> </ul> 
+<p>3. Break if iterations or global error minimum are met, or else go back to 2
+</p> 
+<p>Between 100 and 500 weak classifiers are usually formed. When presented 
+with a new test point, all classifiers will classify it and vote with their 
+given weight.</p> 
+<p><b>ALTERNATIVES TO BOOSTING</b></p> 
+<p>There are similar techniques to boosting, though motivated by a different 
+statistical root: the Law of Large Numbers. This law says that the average of 
+many samples from the same class of variables will converge to the mean of that 
+class. Stochastic discrimination uses this to build a strong classifier out of 
+many weak classifiers, where the strong classifier will eventually converge to 
+the mean of classes it attempts to predict. The weak classifiers are assigned 
+at random and checked to see if they conform to:</p> 
+<ul> 
+<li>Encouragement (they predict better than 50%)</li> 
+<li>Thickness (they generalise to new examples in the class)</li> 
+<li>Non-special (adjustments to equalise coverage of easy and hard-to-classify 
+points)</li> </ul> 
+<p>A similar technique, which is an example of stochastic discrimination but 
+was invented separately by Leo Breiman, is 'random forests'. The random forests 
+technique builds many trees, each built down to perfect purity by splitting on 
+a random subset of features at each split point. The number of features 
+considered for splitting at any given branch point is the square root of the 
+total number of features. In test mode, each tree classifies a new test data 
+point.</p> 
+<p>The trees then get an equal vote on the point's class. There are between 50 
+and 500 trees.</p> 
+<p>Stochastic discrimination, random forests and boosting tend to form more 
+accurate classifiers than decision trees alone, since they are able to better 
+capture the true structure of the data. Using the importance variable method, 
+these classifiers can be used in place of single trees and still find important 
+dependencies in the data.</p> 
+<p><b>PROBABILISTIC GRAPHICAL MODELS</b></p>  &quot;Potential applications of 
+Bayesian networks are greatest in the introduction of cost-based 
+decision-making influence diagrams.&quot; 
+<p>Probabilistic graphical models can express either grids of locally 
+correlated variables (Markov random fields) or directed causal relations 
+between variables (Bayesian networks / directed graphical models), or mixes of 
+the two (chain graphs).</p> 
+<p>This is a powerful formalism, subsuming such prior technologies as the 
+Kalman Filter for tracking, Hidden Markov Models for speech recognition, 
+independent components analysis, and turbo codes for communication error 
+correction. Directed probability models, or Bayesian networks, can be viewed as 
+either representing the causal relations between variables or expressing the 
+conditional independence of variables. Conditional independence allows a 
+probability distribution yielding large memory and computational savings to be 
+factored into the resulting model.</p> 
+<p>Bayesian networks may also be seen as circuit diagrams of probability 
+models. Statistics can only express correlation (for example, rain and wet 
+grass occur together) while Bayesian networks express the causality (rain &gt; 
+wet grass). Note that in Bayesian networks causality is directed but signals 
+flow both ways (wet grass means that it is more likely that rain occurred).</p> 
+<p>Relationships between probability models drive the network. Bayesian 
+networks use conditional independence to factor a distribution, resulting in 
+large memory and computational savings. As events are observed, one may infer 
+the new probabilities by applying Bayes' Rule as defined by Pearl's Belief 
+Propagation algorithm. The software cited offers many ways of solving, 
+approximating and learning Bayesian networks.</p> 
+<p>The potential applications of Bayesian networks in semiconductor 
+manufacturing are vast, but greatest in the introduction of cost-based 
+decision-making influence diagrams. Bayesian networks use conditional 
+independence to factor a distribution, resulting in large memory and 
+computational savings. More advanced cost-based decision algorithms are called 
+partially observable Markov decision processes. Another important area is 
+diagnostics systems for machine monitoring and rapid repair. Bayesian networks 
+use conditional independence to factor a distribution, resulting in large 
+memory and computational savings.</p> 
+<p><b>SUPPORT VECTOR MACHINES</b></p>  &quot;Often just applying a decision 
+tree and thinking clearly about the results will generate 80% of the 
+savings.&quot; 
+<p>The basic idea behind Support Vector Machines (SVMs) is that if the data is 
+projected in a sufficiently high dimensional space, the data becomes linearly 
+separable. For example, if there is a two-bit exclusive OR (XOR) where x,y = 
+[0,1] and the dataset is labelled as XOR(x,y):(x,y), this is not linearly 
+separable. If a new dimension is added, XOR(x,y):(x,y,x*y), then the data 
+becomes linearly separable. SVMs typically design a kernel function to map the 
+data to a high dimensional space and then use optimisation routines to find a 
+hyper-plane that best separates the data.</p> 
+<p>SVMs can be powerful prediction and classification machines. Intel Research 
+is obtaining good results predicting the health of lithography machines from 
+power-up test wafers. Spatial patterns map well to spatial kernels in SVMs.</p> 
+<p><b>WHITHER MACHINE LEARNING?</b></p> 
+<p>Often just applying a decision tree and thinking clearly about the results 
+will generate 80% of the savings. Applications range from predicting which 
+components are good (and need less testing) to predicting machine failure and 
+forecasting market demand.</p> 
+<p>All it takes is a commitment to making manufacturing data easily available 
+within the organisation, and a commitment to designing or buying the machine 
+learning tools needed to play with the data. The ideal is top-down management 
+harvesting of bottom-up results; after all, this is a profit centre. The 
+payoffs will easily exceed the effort put in.</p> 
+<p></p> <br>
+ Post to: Delicious Digg reddit Facebook StumbleUpon <br>
+<br>
+
+<br> <br>
+<br>
+ Related Features <br>
+<br>
+<br>
+<br>
+<br>
+Contact us <br>
+
+Advertise with us <br>
+Terms and conditions <br>
+Privacy <br>
+Links <br>
+
+Newsletter sign up <br>
+Online magazine sign up <br>
+<br>
+<br>
+
+<p> semiconductor-technology.com is a product of Global Trade Media. Copyright 
+2011 Global Trade Media, a trading division of SPG Media Limited.</p> <br>
+<br>
+
+<br> <br>
+
+</body>

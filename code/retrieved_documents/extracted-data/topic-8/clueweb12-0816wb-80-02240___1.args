@@ -1,0 +1,109 @@
+thanks shameer a well written/structured article.
+though traits have all the advantages of multiple inheritance, it’s not part of inheritance.
+the reflection api is one of the powerful features of php to analyze the internal structure of interfaces, classes, and methods and reverse engineer them.
+anyway, be cautious when using constructors in traits, though, because it may lead to unintended collisions in the composing classes.
+you might wonder which one will be available in the object of child class.
+it will have only methods that are not a part of the inheritance hierarchy and can be used in multiple classes.
+looks very useful, though i’m a little worried that exessive use of traits could could lead to maintenance problems.
+here we have chosen to use the play() method of the music trait inside the composing class so the class player will play music, not a game.
+reflection the reflection api is one of the powerful features of php to analyze the internal structure of interfaces, classes, and methods and reverse engineer them.
+though you can start planning your application with the features of php 5.4, i don’t think using it in production is a good idea, since its rc6 now.
+they allows us to horizontally reuse code across independent classes in different class hierarchies.
+more clever approaches, such as dependency injection help throw away easily singletons into the trash can, through low-level factories or builders.
+but in the output, we can see the one from the child class was invoked.
+though there are some drawbacks with traits, they certainly can help improve the design of your application removing code duplication and making it more dry.
+it’s not multiple inheritance and so still wouldn’t allow quite the logical structure that one might look for in certain scenarios, but it’s a massive benefit nonetheless.
+overusing the singleton pattern is a bad programming practice.
+there are some cases we can make use of it without any harm though.
+as traits are completely flattened into the class composed of them, any property or method of the trait will become a part of that class and we access them just like any other class properties or methods.
+singletons are old-fashioned, plagued with lots of issues, ranging from mutable global access, strong coupling, to single responsibility breakage (the list goes on), even in shared-nothing architectures like php’s.
+i have been wishing for multiple inheritance for a project i’m working on, and was not aware of traits.
+reflectionclass::gettraitaliases() will return an array of trait aliases mapped to its original name.
+we can even have abstract methods in a trait to enforce the composing class to implement these methods.
+also, we have included the trait hello in the helloworld class.
+an alias doesn’t rename the method, but offers an alternate name by which it can be invoked.
+an alias doesn’t rename the method, but offers an alternate name by which it can be invoked.
+conflict resolution and aliasing when using multiple traits there may be a situation where different traits use the same method names.
+from a basic experiment i concluded that conflict will occur if the property have different default values in traits.
+while not working, shameer spends his time coding personal projects, learning, watching screen casts, blogging, etc.
+i’m envisioning how this would improve several projects of mine (mainly in cases where i automatically generate new classes that need some common properties and methods but are otherwise unrelated).reply excellent writeup!
+traits can access the private properties or methods of the composing classes, and vice versa!
+they let programmers reuse code fragments horizontally across multiple classes which do not have to be within the same inheritance hierarchy.
+unlike traits in scala, traits in php can have a constructor but it must be declared public (an error will be thrown if is private or protected).
+we know that in classical inheritance the private properties of a class can’t be accessed by child classes.
+while not working, shameer spends his time coding personal projects, learning, watching screen casts, blogging, etc.
+it’s possible to introduce a new name for a method in a trait as an alias.
+thereflectionclass::gettraitnames() method will simply return an array of trait names in that class.
+as the application grows, it’s quite possible that we will have a set of traits which are used across different classes.
+reply shameer c february 8, 2012 at 8:13 pm though traits have all the advantages of multiple inheritance, it’s not part of inheritance.
+you still can have one thing of something, without writing a bunch of fuzzy static methods, even if they’re crowded behind a trait.
+when using multiple traits there may be a situation where different traits use the same method names.
+but in the output, we can see the one from the child class was invoked.
+you might wonder which one will be available in the object of child class.
+they allows us to horizontally reuse code across independent classes in different class hierarchies.
+aliases are created using the keyword as .
+if you’re interested in peeking at some nice “singleton-fighting” writeups, feel free to have a read at this http://sites.google.com/site/steveyegge2/singleton-considered-stupid and this http://misko.hevery.com/2008/08/17/singletons-are-pathological-liars/. not just a few more shallow rants.
+since the helloworld trait has methods from the other two traits, it’s just the same as if we had including the two traits in the class ourselves.
+unlike traits in scala, traits in php can have a constructor but it must be declared public (an error will be thrown if is private or protected).
+languages like c++ and python allow us to inherit from multiple classes which solves this problem to some extent, and mixins in ruby allows us to mix the functionality of one or more classes without using inheritance.
+since the helloworld trait has methods from the other two traits, it’s just the same as if we had including the two traits in the class ourselves.
+for example, php will give a fatal error if you try to run the following code because of conflicting method names: play(); such trait conflicts aren’t resolved automatically for you.
+but in php it can sometimes be difficult because of the limitations of the single inheritance model it uses; you might have some methods that you would like to use in multiple classes but they may not fit well into the inheritance hierarchy.
+in the myworld class we have applied hello and world so that the myworld object will have methods from both traits and be able to say “hello world”.
+but multiple inheritance has issues such as thediamond problem problem, and mixins can be a complex mechanism to work with.
+it’s possible to introduce a new name for a method in a trait as an alias.
+it will have only methods that are not a part of the inheritance hierarchy and can be used in multiple classes.
+trait hello is only able to say “hello” and trait world can say “world”.
+a problem with trait is that the concept is simple and tempting like singletons.
+as i’ve already mentioned, traits work as if their methods have been copied and pasted into the classes using them and they are totally flattened into the classes’ definition.
+reflectionclass::gettraitaliases() will return an array of trait aliases mapped to its original name.
+instead of having complex semantics, they provide us with a light weight mechanism for code reuse.
+the reflectionclass::gettraitnames() method will simply return an array of trait names in that class.
+apart from the above mentioned, there are other features that makes traits more interesting.
+otherwise, php will give an error saying there is an abstract method which has not been implemented.
+we want to keep you up to date with what's out there.
+unfortunately my server is only running php 5.2.17 … will have to drop some hints with tech support!reply hey donna, i’m glad that you liked the post.
+in the myworld class we have appliedhello and world so that the myworld object will have methods from both traits and be able to say “hello world”.
+if you’re interested in peeking at some nice “singleton-fighting” writeups, feel free to have a read at this http://sites.google.com/site/steveyegge2/singleton-considered-stupid and this http://misko.hevery.com/2008/08/17/singletons-are-pathological-liars/. not just a few more shallow rants.
+overusing the singleton pattern is a bad programming practice.
+they let programmers reuse code fragments horizontally across multiple classes which do not have to be within the same inheritance hierarchy.
+when i first tried to convert some projects to oop, i gave up because i knew what i wanted, and after googling i found it was called multiple inheritance, and php didn’t support it.
+we can even have abstract methods in a trait to enforce the composing class to implement these methods.
+anyway, be cautious when using constructors in traits, though, because it may lead to unintended collisions in the composing classes.
+if a trait can define methods, including constructor what happens if a class uses two traits who both define constructor method.
+when i first tried to convert some projects to oop, i gave up because i knew what i wanted, and after googling i found it was called multiple inheritance, and php didn’t support it.
+languages like c++ and python allow us to inherit from multiple classes which solves this problem to some extent, and mixins in ruby allows us to mix the functionality of one or more classes without using inheritance.
+a trait is similar to an abstract class which cannot be instantiated on its own (though more often it’s compared to an interface).
+reflectionclass::istrait() is helpful to check if something is a trait or not.
+precedence order as i’ve already mentioned, traits work as if their methods have been copied and pasted into the classes using them and they are totally flattened into the classes’ definition.
+excellent article thoughreply can you unit test traits?reply excellent question.
+though there are some drawbacks with traits, they certainly can help improve the design of your application removing code duplication and making it more dry.
+but multiple inheritance has issues such as thediamond problem problem, and mixins can be a complex mechanism to work with.
+there are some cases we can make use of it without any harm though.
+other features apart from the above mentioned, there are other features that makes traits more interesting.
+singletons are old-fashioned, plagued with lots of issues, ranging from mutable global access, strong coupling, to single responsibility breakage (the list goes on), even in shared-nothing architectures like php’s.
+nice article and very well structured.
+we know that in classical inheritance the private properties of a class can’t be accessed by child classes.
+aliases are created using the keywordas .
+as traits are completely flattened into the class composed of them, any property or method of the trait will become a part of that class and we access them just like any other class properties or methods.
+excellent article i’ve been waiting for this in php since i started using oop this erl make my next projects much less convoluted.
+i’m not sure why, but the ghost of large functions.php files is sitting on my shoulder now..
+otherwise when you comeback after a while you will wonder what the magic is your code doingreply makes php classes very attractive now, well written and really helpful, keep it up!reply really good article!
+in some cases you may want to keep both of them, but still avoiding conflicts.
+in php 5.4, four methods have been added toreflectionclass to get information about traits in a class.
+in some cases you may want to keep both of them, but still avoiding conflicts.
+php 5.4 allows us to have traits composed of other traits so that we can include only one instead of a number of traits in all these classes.
+for example, php will give a fatal error if you try to run the following code because of conflicting method names: play(); such trait conflicts aren’t resolved automatically for you.
+also, we have included the traithello in the helloworld class.
+php 5.4 allows us to have traits composed of other traits so that we can include only one instead of a number of traits in all these classes.
+now any object of class player will have a method gameplay(), which is the same as game::play().
+more clever approaches, such as dependency injection help throw away easily singletons into the trash can, through low-level factories or builders.
+you still can have one thing of something, without writing a bunch of fuzzy static methods, even if they’re crowded behind a trait.
+you can find his personal blog at shameerc.com and follow him on twitter as @shameerc.
+i’m not all that thrilled about traits at all, i could easily see them being overused.
+reflectionclass::istrait() is helpful to check if something is a trait or not.
+otherwise, php will give an error saying there is an abstract method which has not been implemented.
+instead of having complex semantics, they provide us with a light weight mechanism for code reuse.
+traits can access the private properties or methods of the composing classes, and vice versa!
+as the application grows, it’s quite possible that we will have a set of traits which are used across different classes.
+here we have chosen to use the play() method of the music trait inside the composing class so the class player will play music, not a game.

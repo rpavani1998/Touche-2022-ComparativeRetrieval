@@ -1,0 +1,110 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Eclipse -- more than just an IDE - AlBlue&rsquo;s Blog</title>
+<body>
+
+<h1>AlBlue&rsquo;s Blog</h1> 
+<h2>Macs, Modularity and More</h2> 
+<ul> 
+<li>RSS</li> </ul> <br>
+
+<ul> 
+<li>All</li> 
+<li>Eclipse</li> 
+<li>Git</li> 
+<li>Java</li> 
+<li>OSGi</li> 
+<li>Mac</li> 
+<li>@alblue</li> </ul> 
+<h1>Eclipse -- more than just an IDE</h1> 
+<p> Jul 3rd, 2005 </p> 2005, eclipse <br>
+
+<p>I recently had the opportunity to give a talk on the Eclipse Framework and 
+how it hangs together. I&rsquo;m also writing a book on the subject; and 
+although O&rsquo;Reilly originally expressed an idea in the book, it&rsquo;s 
+still awaiting a publisher to take the title. It will probably be released 
+under the Creative Commons license in the future.</p> 
+<p>What is amusing about the Eclipse versus NetBeans debate is that most 
+people still think of Eclipse as a Java Development Environment, and compare it 
+to NetBeans on that footing. Well, Eclipse as a framework is much larger than 
+Eclipse as a developer environment, although the latter is more well-known. 
+Just reading posts on some of theEclipse websites and plugin directories, you 
+get the feeling that there is a large community working within the platform, 
+not just the Java IDE.</p> 
+<p>I think this post sums up the point nicely: &ldquo;Eclipse is not just an 
+IDE that competes with NetBeans &hellip; Eclipse is a complete development 
+platform that makes large parts of Java irrelevant.&rdquo; Sun have never 
+really quite &lsquo;got&rsquo; Java as an application development language; 
+although it is a very powerful programming language. Frameworks are what made 
+Smalltalk popular; what makes coding in Mac OS X easy; and are the holy grail 
+of reuse and patterns books around. Java just provides a low-level layer to 
+provide simplistic access; for example, theURL class provides basic access, 
+whilst Jakarta&rsquo;sHttpClient provides a framework for building HTTP 
+applications andHttpServlet provides basic web interaction, whilst Struts 
+provides a framework for building web-based applications.</p> 
+<p>It&rsquo;s probably better that Sun don&rsquo;t control frameworks though, 
+because there&rsquo;s not a lot of evidence that up-front thought that happens. 
+Consider theDate class, which returns years since 1900, or the fact that 
+we&rsquo;ve got basically two of the same interfaces inIterator and Enumeration 
+(and the ability to remove an object whilst traversing it is a bastardisation 
+of the interface anyway; we could have equally had a sub-interface called 
+&lsquo;RemovableEnumeration&rsquo; that added that specific functionality if 
+required). Or the fact that since 1.1, Java has a buggered threading model that 
+processes theEventQueue resulting in all GUIs having to be killed with 
+System.exit(). (Interesting note; they actually have apologetic documentation 
+that describes this broken behaviour, and bug4030718 that I was vehement about 
+when 1.1 was broken; even to the extent that I wrote a patcher class that 
+patched the classes.zip to show that this behaviour could be unbroken in time 
+for the 1.2 release; in 1.4, they&rsquo;ve finally marked it as closed.) By the 
+way, another reason why SWT rocks is that they allow you to write your own 
+threading for event handling; it&rsquo;s why moststandalone SWT apps have:</p> 
+SWT Event loop <br>
+
+<pre>1 2 3 4 5 6 7 8 9 10 11 12 </pre> 
+<pre><code>public static void main (String [] args) { Display display = new 
+Display (); Shell shell = new Shell (display); shell.open (); // start the 
+event loop. We stop when the user has done // something to dispose our window. 
+while (!shell.isDisposed ()) { if (!display.readAndDispatch ()) display.sleep 
+(); } display.dispose (); } </code></pre> <br>
+<br>
+
+<p>This allows the programmer to have fine-grain control over the thread, and 
+whilst this is single-threaded, it doesn&rsquo;t have to be. They even 
+acknowledge this:</p> 
+<blockquote> <em> Note: The most common threading model for an SWT application 
+is to run a single UI thread and perform long operations in computational 
+threads. However, SWT does not restrict developers to this model. An 
+application could run multiple UI-threads with a separate event loop in each 
+thread.</em> </blockquote> 
+<p>In any case, the reason why people are excited about the Eclipse framework 
+is that they are interested in what you can do with theplatform, not just how 
+good the IDE is. You only need to see the growing list ofrich client 
+applications to see that the momentum is gaining speed. And the best news of 
+all is that the guidance of the platform and RCPs is a meritorium controlled by 
+the open Eclipse organisation, so anyone can participate and guide the future; 
+not just by JSRs.</p> 
+<p>I&rsquo;ve started  www.rcpapps.org  to provide a set of examples on how to 
+write RCP applications, and how you can design and build applications that take 
+advantage of all that the Eclipse frameworks have to offer.</p> 
+<p> Posted by Alex Blewitt Jul 3rd, 2005 2005, eclipse </p> Tweet <br>
+
+<p> &laquo; Naming and indentation conventions Good uses of XML &raquo; </p> 
+<h1>Recent Posts</h1> 
+<ul> 
+<li> My first published article </li> 
+<li> Why OSGi qualifiers aren't working </li> 
+<li> Using Humans to solve a Tooling problem </li> 
+<li> EclipseCon 2012 Day 3 </li> 
+<li> EclipseCon 2012 Day 2 </li> </ul> 
+<h1>Github Repos</h1> 
+<ul> 
+<li>Status updating...</li> </ul> @alblue on Github <br>
+
+<h1>Latest Tweets</h1> 
+<ul> 
+<li>Status updating...</li> </ul> Follow @alblue <br>
+
+<h1>On Delicious</h1> 
+<p>My Delicious Bookmarks &raquo;</p> 
+<p> Copyright &copy; 2012 - Alex Blewitt - Powered by Octopress </p> 
+</body>

@@ -1,0 +1,336 @@
+it does not provide any ml algorithms, has no gui, and it is restricted to experiments that fulfill a certain uniformity.
+- warning when people have old cache entries.
+(olivier d.) - fix crash when a broadcasted constant was used as input of an elemwise op and needed to be upcasted to match the op's output.
+- tensor.grad(cost, wrt) now always returns an object of the "same type" as wrt (list/tuple/tensorvariable).
+= int, now works (frederic) - tensor_variable.size (as numpy) computes the product of the shape elements.
+used for learning output kernels, that is kernels between the labels of a classifier.
+changes: - experiments can now be invoked from the command line - experiments can now be "scripted" - mmlf experimenter contains now basic module for statistical hypothesis testing - mmlf explorer can now visualize the model that has been learned by an agent - authors: jan hendrik metzen, mark edgington - license: gpl version 3 or later - programming language: python - operating system: agnostic - data formats:
+the current version is 0.7.8.
+(frederic) gpu crash with elemwise.
+they were accepted only by theano.function().
+the inner function (that scan receives) should return its outputs and updates following this order: [outputs], [updates], [condition].
+changes: see project page for changes.
+the reps argument must be a constant (not a tensor variable), and must have the same length as the number of dimensions in the x argument; this is now checked.
+the tile() function is now stricter in what it accepts to allow for better error-checking/avoiding nonsensical situations.
+(frederic) - theano config option "home" is not used anymore as it was redundant with "base_compiledir".
+- string summaries and representations (provided by __str__
+cheng soon ong - license: gpl version 3 or later - programming language: python, cython, fortran - operating system: agnostic - data formats: matlab, numpy - tags: kernel learning libdai 0.3.0 by jorism - july 12, 2011, 17:08:54 cet [ ] 17881 views, 3383 downloads, 2 subscriptions rating (based on 1 vote) about: libdai provides free & open source implementations of various (approximate) inference methods for graphical models with discrete variables, including bayesian networks and markov random fields.
+(frederic) - an expression of the form "1 / (exp(x) +- constant)" was systematically matched to "1 / (exp(x) + 1)" and turned into a sigmoid regardless of the value of the constant.
+this is currently used only by cuda, but if we use library that are only headers, this can be useful.
+(james) - now all tests pass with the linker=cvm flags.
+radim rehurek - license: lgpl - programming language: python - operating system: platform independent - data formats:
+fb fix on 32bits computer: make sure all shape are int64.(olivier)
+we where ignoring kwargs, now it is used as the axes.
+- loe(acc): linear order effect in acc was added to confusionmatrix to detect trends in performances across splits.
+instead, apply a subtensor to the output returned by scan to select a certain slice.
+(james) better opt that lifts transpose around dot.
+(frederic, reported by olivier chapelle) - runtime crash related to an optimization with subtensor of alloc (reported by razvan, fixed by frederic) - fix dot22scalar cast of integer scalars (justin bayer, frederic, olivier) - fix runtime crash in gemm, dot22.
+it contains a collection of algorithms we found to work best for nearest neighbor search.
+(james) - better opt that lifts transpose around dot.
+(arnaud bergeron, frederic, olivier) - review/finish/doc: allocdiag/diag.
+- the theano flag "nvcc.fastmath" is now also used for the cuda_ndarray.cu file.
+- authors: mostly lisa lab - license: bsd - programming language: python, c, cuda - operating system: linux, macosx, windows - data formats:
+- the current output dtype of sum with input dtype [u]int* is now always [u]int64.
+interface features removed (most were deprecated): - the string modes fast_run_nogc and stabilize are not accepted.
+this is used in tensor.{max,mean,prod,sum} and in the grad of  permuterowelements.
+the output dtype is the one using for the summation.
+- 0.6.0~rc2 (thu, mar 3 2011) - various fixes in the mvpa.atlas module.
+thanks max planck society for previously hosting the site.
+(frederic) - generate gemv/gemm more often.
+(razvan, reported by michael forbes) - scan.infer_shape now works correctly when working with a condition for the number of loops.
+(ian) "interactive debugger" crash fix.
+cheng soon ong | impressum | hosting graciously provided by theml group of the tu berlin | v0.1 |
+- more robust detection of mod: scikits.learn and :mod: nipy externals.
+(james) - remove scan when all computations can be moved outside the loop.
+- vm linker has a callback parameter.
+- a_cudandarray_object[*]
+agnostic - tags: latent semantic analysis, latent dirichlet allocation, svd, random projections, tfidf milk 0.3.10 by luispedro - may 11, 2011, 04:18:53 cet [ ] 10805 views, 2186 downloads , 1 subscription rating (based on 2 votes)
+- added a_tensor.transpose(axes) axes is optional (james) - theano.tensor.transpose(a_tensor, kwargs)
+ong on december 6, 2011 - what is a file?
+3 enables all warnings (python, numpy, and pymvpa) - :file: doc/examples/nested_cv.py example (adopted from 0.5) - introduced base class :class: ~mvpa.clfs.base.
+in the past, it returned n_steps as the length, which is not always true.
+(olivier) - added the element-wise operation arccos.
+it provides high-level abstraction of typical processing steps (e.g. data preparation, classification, feature selection, [...]
+the aim is to provide reusable components that can be quickly applied to machine learning problems.
+(josh bleecher snyder) - we also support the "theano_version" substitution.
+and __repr__) were made more exhaustive and more coherent.
+- :file: tools/niils -- little tool to list details (dimensionality, scaling, etc) of the files in nibabel-supported formats.
+for an overview of the most drastic changes :ref: see constantly evolving release notes for 0.6  - 0.5.0 (sometime in march 2010)
+- gnbsearchlight handling of roi_ids.
+- add some new functions: measures.curves.precision_recall, milk.unsupervised.kmeans.select_best.kmeans.
+(pascal, reported by razvan) -
+when the subtensor inputs had 0 dimensions and the outputs 0 dimensions.
+(valentin bisson) - review/finish/doc: remove0 (valentin) - review/finish/doc: squarediagonal (eric) sandbox new features (not enabled by default): - curand_randomstreams for uniform and normal (not picklable, gpu only) (james) - new sandbox.linalg.ops.pinv(pseudo-inverse) op (razvan) documentation: - many updates.
+(ian goodfellow, olivier) - a few tag.shape and join.vec_length left have been removed.
+(many people) - updates to install doc on macos.
+(razvan) - review/finish/doc: matrix_dot.
+now this is always tested.
+(frederic, some reported by chris currivan) compilation crash with amdlibm and the gpu.
+- authors: marius muja - license: lgpl - programming language: c++, python, matlab, c - operating system: linux, macosx, windows - data formats:
+about: mdp is a python library of widely used data processing algorithms that can be combined according to a pipeline analogy to build more complex data processing software.
+interface bug fix: - rop in some case should have returned a list of one theano variable, but returned the variable itself.
+(james) - on windows, the default compiledir changed to be local to the computer/user and not transferred with roaming profile.
+it support testing the full and structured gradient.
+- major: to allow easy co-existence of stable pymvpa 0.4.x, 0.6 development mvpa module was renamed into mod: mvpa2.
+(frederic) crash when the step to subtensor was not 1 in conjunction with some  optimization.
+this allows other optimizations to be applied.
+(frederic b.) - the theano flag "nvcc.flags" is now included in the hard part of the key.
+(li yao) - review/finish/doc: spectral_radius_boud.
+(frederic, james) - argmax dtype to int64 (olivier) - improved docstring and basic tests for the tile op (david).
+(james) crashes fixed: t.mean crash at graph building time.
+changes: initial announcement on mloss.org.
+(frederic) ifelse crash.
+this mean that now we recompile all modules for each value of "nvcc.flags".
+luis pedro coelho - license: mit - programming language: c++, python, c - operating system: agnostic - data formats: none, agnostic - tags: python, svm, feature selection, kmeans, decision tree learning ,random forests, supervised, libsvm, affinity propagation, nonnegative matrix factorization mldata.org svn-r1070-apr-2011 by sonne - april 8, 2011, 10:15:49 cet [ ] 1674 views, 219 downloads, 1 subscription about: the source code of the mldata.org site - a community portal for machine learning data sets.
+(olivier) - added subtensor(rebroadcast(x))
+changes: release 0.3.0 bumps the version number because the license has changed: instead of the former gpl v2+ license, libdai is now licensed under the bsd 2-clause license (also known as the freebsd license).
+(olivier, reported by sander dieleman) -
+(razvan) - fixed some import problems.
+a bugfix release a bugfix release - fixed (few bf commits): - compatibility with numpy 1.5.1 (histogram) and scipy 0.8.0 (workaround for a regression in legendre) - compatibility with libsvm 3.0 - :class: ~mvpa.clfs.plr.
+consequently, the "nosplitting" mode of splitter got removed at the same time.
+(frederic) - crash when the step to subtensor was not 1 in conjunction with some optimization.
+you probably want to call theano.shared() instead!
+when indexing into a subtensor of negative stride (for instance, x[a:b:-1][c]), an optimization replacing it with a direct indexing (x[d]) used an incorrect formula, leading to incorrect results.
+(james) allow fusion of elemwise when the scalar op needs support code.
+(valentin bisson) review/finish/doc: remove0 (valentin)
+(arnaud, frederic, guillaume) review/finish/doc: matrixinverse, matrix_inverse.
+the keys in our cache now store the hash of constants and not the constant values themselves.
+(pascal, reported by david wf) - added scalar.ndim=0 and scalarsharedvariable.ndim=0 (simplify code)
+- splitter now handles attribute value none for splitting properly.
+- new debug target stdout
+the new theano.sparse.dot() has a dense gradient for all inputs.
+- confusionmatrix can now be used as an errorfx in crossvalidation.
+it should reduce run-time impact of debug() calls in regular, non -o mode of python operation.
+fb - fix on 32bits computer: make sure all shape are int64.(olivier) - fix to deque on python 2.4 (olivier) - fix crash when not using c code (or using debugmode) (not used by default) with numpy 1.6*.
+vm linker has a callback parameter.
+(frederic bastien, olivier delalleau) (was deprecated and generated a warning since theano 0.3 released nov. 23rd, 2010)
+(frederic) execution crash fix in advancedsubtensor1 on 32 bit computers.
+additional properties to access initial constructor arguments were added to variety of classes.
+(ian) - added sparse dot with dense grad output.
+- new functionality - added a repeater node to yield a dataset multiple times and sifter node to exclude some datasets.
+(james) - allow fusion of elemwise when the scalar op needs support code.
+agnostic - tags: workflow mdp modular toolkit for data processing 3.2 by otizonaizit - october 24, 2011, 15:43:59 cet [ ] 10753 views, 3002 downloads, 1 subscription rating (based on 3 votes)
+- repeatedmeasure has a new 'concat_as' argument that allows results to be concatenated along the feature axis.
+- 'theano-cache list' lists key files bigger than 1m (frederic b.) - 'theano-cache list' prints an histogram of the number of keys per compiled module (frederic b.)
+changes: - fixed missing multiclass module.
+- intdiv c code (faster and allow this elemwise to be fused with other elemwise) (pascal) - internal filter_variable mechanism in type.
+(frederic) - ifelse crash.
+- @reseed_rng to guarantee consistent random data given initial seeding.
+by soeren  sonnenburg on march 2, 2012 nature editorial about open science  by cheng soon ong on  february 28, 2012 tagging project 'published in jmlr'  by soeren sonnenburg on february 3, 2012 improving mloss.org  by soeren sonnenburg on december 16,  2011 mendeley/plos api binary battle (winners)  by cheng soon ong on december 6, 2011 what is a file?
+(frederic) - the .value attribute of shared variables is removed, use shared.set_value() or shared.get_value() instead.
+(razvan) new deprecation (will be removed in theano 0.6, warning generated if you use them): - tensor.shared() renamed to tensor._shared().
+(xavier glorot) - review/finish/doc: sparse sum.
+on the other hand, it makes no assumptions on the type of task.
+- fixes - compatible with the new shogun 1.x series - compatible with the new h5py 2.x series - mvpa-prep-fmri -- various compatibility fixes and smoke testing - deepcopying :class: summarystatistics during add - enhancements - tutorial uses :mod: mvpa2.tutorial_suite now - better suppression of r warnings when needed - internal attributes of many classes were exposed as properties - more unification of __repr__ for many classes - 0.6.0~rc4 (wed, jun 14 2011) - fixes - finished transition to :mod: nibabel conventions in plot_lightbox - addressed :mod: matplotlib.hist api change - various adjustments in the tests batteries (:mod: nibabel 1.1.0 compatibility, etc) - new functionality - explicit new argument flatten to from_wizard -- default behavior changed if mapper was provided as well - enhancements - elaborated __str__ and __repr__ for some classifiers and measures - 0.6.0~rc3 (thu, apr 12 2011) - fixes - bugfixes regarding the interaction of flattenmapper and boxcarmapper that affected event-related analyses.
+the buidbot now raises optimization/shape errors instead of just printing a warning.
+- authors: michael hanke, yaroslav halchenko, per b. sederberg, emanuele olivetti - license: mit - programming language: python, c - operating system: agnostic - data formats:
+(frederic) - do not request to load the gpu module by default in scan module.
+andlatent semantic analysis (single pass online svd) (wikipedia experiments ) - full change set here - authors:
+(olivier, pascal) - when using a gpu, detect faulty nvidia drivers.
+(frederic b., pascal l., reported by sander dieleman) - new op tensor.sort(), wrapping numpy.sort (hani almousli)
+(arnaud bergeron, frederic, olivier) review/finish/doc: allocdiag/diag.
+sandbox: cvm interface more consistent with current linker.
+(pascal) more cases supported in advancedincsubtensor1.
+furthermore it is easily extensible and allows to automate benchmarking of different agents.
+- debug takes args parameter for delayed string comprehensions.
+a summary of fundamental changes introduced in this development version can be seen in the :ref: release notes .
+(razvan) - review/finish/doc: det (determinent) op.
+one can skip any of the three if not used, but the order has to stay unchanged.
+fix dot22scalar cast of integer scalars (justin bayer, frederic, olivier) fix runtime crash in gemm, dot22.
+defaults to "warn" (same as previous behavior): it prints a warning when an error occurs when inferring the shape of some apply node.
+- 0.4.7 (tue, mar 07 2011) (total: 12 commits)
+(david) review/finish/doc: ensure_sorted_indices.
+(james) - review/finish/doc: diag/extract_diag.
+deep learning tutorials illustrate deep learning with theano.
+- many infer_shape implemented on sparse matrices op.
+faulty drivers results in in wrong results for reduce operations.
+fixed a memory leak with shared variable (we kept a pointer to the  original value)
+others: - better error messages in many places.
+- fixed a tricky bug in sda and a few minor issues elsewhere - authors:
+- gradient with respect to outputs using multiple taps (reported by timothy, fix by razvan) before : it used to return wrong values now : do the right thing.
+a warning will be issued if your code was affected by this bug.
+changes: new features: - standard dtw added - subsequence dtw added - standard lcs added fix: - libsvm: fix error when x is a list in learn() method - fix code for vc++ - fix setup.py (cblas) - authors: davide albanese, stefano merler, giuseppe jurman, roberto visintainer, cesare furlanello - license: gpl 3 - programming language: c++, python, c - operating system: linux, macosx, windows, unix, freebsd - data formats: none - tags: svm, classification, clustering, regression, rfe, wavelet, dtw ,discriminant analysis pymvpa multivariate pattern analysis in python 2.0.0 by yarikoptic - december 22, 2011, 01:36:32 cet [ ] 21074 views, 3881 downloads, 8 subscriptions rating (based on 2 votes) about: python module to ease pattern classification analyses of large datasets.
+- collection s were provided with adequate (deep|)copy .
+(frederic, reported by sander dieleman) - theoretical bug: in some case we could have gpusum return bad value.
+- 'theano-cache list' prints the number of compiled modules per op class (frederic b.)
+(james) now all tests pass with the linker=cvm flags.
+at its [...] changes: version 1.2.4 - corrected typo in lwpr.c (wrong function name for multi-threaded helper function on unix systems)
+(james, frederic, pascal) - c implementation of alloc.
+- add the header_dirs to the hard part of the compilation key.
+(frederic) - tensorvariable.zeros_like() and sparsevariable.zeros_like() - theano.sandbox.cuda.cuda_ndarray.cuda_ndarray.device_properties() (frederic) - theano.sandbox.cuda.cuda_ndarray.cuda_ndarray.mem_info() return free and total gpu memory (frederic) - theano flags compiledir_format.
+plr robustification - enhancements - enforce suppression of numpy warnings while running unittests.
+(ian, frederic) - do not call gemm with strides 0, some blas refuse it.
+- authors: tom de smedt, walter daelemans - license: bsd - programming language: python, javascript - operating system: linux, windows, mac os x - data formats: txt, csv - tags: graph, svm, latent semantic analysis, natural language processing, information extraction, data visualization, tfidf, csv, k nearest neighbor, html theano 0.5 by jaberg - february 23, 2012, 23:14:38 cet [ ] 5248 views, 957 downloads , 9 subscriptions about: a python library that allows you to define, optimize, and evaluate mathematical expressions involving multi-dimensional arrays efficiently.
+(olivier) - more tests for join on the gpu and cpu.
+fix crash when a broadcasted constant was used as input of an elemwise op  and needed to be upcasted to match the op's output.
+(pascal, ian) - ifelse works on sparse.
+changes: update version.
+if you use it, theano will now raise an error.
+the grad is now disabled and returns an error.
+changes: this release aggregates all the changes occurred between official releases in 0.4 series and various snapshot releases (in 0.5 and 0.6 series).
+(many people) - add a warning about numpy bug when using advanced indexing on a tensor with more than 232 elements (the resulting array is not correctly filled and ends with zeros).
+by cheng soon ong on december 5, 2011 - linus's lessons on software by cheng soon ong on september 27, 2011 - software freedom day by cheng soon ong on september 17, 2011 - mendeley/plos api binary battle by cheng soon ong on august 29, 2011 recent forum posts rss feed - blog rss feed - new software showing items 1-20 of 60 on page 1 of 3: 1 2 3 next mymedialite 2.99 by zenog - march 3, 2012, 10:32:37 cet [ ] 11762 views, 2301 downloads, 15 subscriptions about: mymedialite is a lightweight, multi-purpose library of recommender system algorithms.
+to allow attaching metrics (e.g. traceback, timestamps) to regular output printed to stdout - new set of decorators to help with unittests - @nodebug to disable specific debug targets for the duration of the test.
+keep the same default as before: compiledir_%(platform)s-%(processor)s-%(python_version)s.
+- crossvalidation can now take a custom splitter instance.
+(thanks to michael schmuker) - several bug fixes and improvements we recommend all users to upgrade.
+sandbox: - cvm interface more consistent with current linker.
+- slycot sources no longer distributed, using github project instead.
+(ian) - fix catching of exception.
+- authors: soeren sonnenburg, cheng soon ong, sebastian henschel, mikio braun - license: gpl version 3 or later - programming language: python, d - operating system: platform independent - data formats: ascii, matlab, arff, octave, hdf, r, mldata - tags: data sets, django, platform, website showing items 1-20 of 60 on page 1 of 3: 1 2 3 next © 2007-2012 soeren sonnenburg, mikio braun,
+so the sum could be slower, but will be more resistent to overflow.
+(philippe hamel) review/finish/doc: cholesky determinent op.
+- improved sklearn wrappers - update sklearn, shogun, and
+this is used in tensor.{max,mean,prod,sum} and in the grad of permuterowelements.
+problems: nlp, lp, qp, nsp, milp, lsp, llsp, mmp, glp, sle, etc; automatic differentiation is available changes: http://openopt.org/changelog - authors: dmitrey kroshko - license: bsd - programming language: python - operating system: linux, macosx, windows, macos, unix, solaris - data formats: mps - tags: python, optimization graphlab v1-1908 by dannybickson - november 22, 2011, 12:50:00 cet [ ] 972 views, 140 downloads, 1 subscription about: multicore/distributed large scale machine learning framework.
+- update-* makefile rules automatically should fast-forward corresponding website-updates branch - mvpa_tests_verbosity controls also :mod: numpy warnings now.
+- save memory optimization of scan (reported by timothy and nicolas bl, fix by razvan) before : for certain corner cases used to result in a runtime shape error now : do the right thing.
+(sebastian urban) - ifelse now allows to have a list/tuple as the result of the if/else branches.
+- @with_tempfile to provide a tempfile name which would get removed upon completion (test success or failure) - dropping daily testing of maint/0.5 branch -- rip.
+changes: use float (32 bit) instead of double (64 bit) to store ratings and model parameters; incremental update api now accepts several feedback events at once; new rating predictor svd++; merge logisticregressionmatrixfactorization and multicorematrixfactorization into biasedmatrixfactorization; plenty of small enhancements, fixes, polishing - authors: zeno gantner, steffen rendle, christoph freudenthaler - license: gpl version 3 or later - programming language: python, perl, ruby, csharp, fsharp - operating system: linux, windows, solaris, mac os x - data formats: csv, tab separated, sql - tags: gradient based learning, large scale learning, algorithms, data mining, evaluation, supervised learning, collaborative filtering, matrix factorization, recommender systems, knn, library, dotnet, mono pattern 2.3 by tomdesmedt - february 26, 2012, 00:27:51 cet [ ] 323 views, 54 downloads, 7 subscriptions about: "pattern" is a web mining module for python.
+(frederic) - more internal verification on what each op.infer_shape return.
+(sebastian urban) - new theano flag "on_shape_error".
+note: the reported case of this bug was happening in conjunction with the save optimization of scan that give run time errors.
+python machine learning toolkit changes: - added a new module: milk.ext.jugparallel to interface with jug (http://luispedro.org/software/jug).
+by cheng soon ong on december 5, 2011 linus's lessons on software  by cheng soon ong on  september 27, 2011 software freedom day  by cheng soon ong on september 17,  2011 mendeley/plos api binary battle  by cheng soon ong on  august 29, 2011 recent forum posts forum website design thread enhanced statistics... [html_removed] rebroadcast(subtensor(x))
+(david w.f.) - added theano.sparse.verify_grad_sparse to easily allow testing grad of sparse op.
+the gradient has been disabled for the time being as it only implemented (incorrectly) one special case.
+changes: release of k-tree implementation in python.
+this is a special release, because it has never seen the general public.
+(razvan) - added how to wrap in theano an existing python function (in numpy, scipy, ...).
+(james) - theano.sandbox.neighbors.
+by soeren sonnenburg on march 2, 2012 - nature editorial about open science by cheng soon ong on february 28, 2012 - tagging project 'published in jmlr' by soeren sonnenburg on february 3, 2012 - improving mloss.org by soeren sonnenburg on december 16, 2011 - mendeley/plos api binary battle (winners) by cheng soon
+use mode(linker='c|py_nogc') or mode(optimizer='stabilize') instead.
+(yann dauphin) - optimized to usmm and usmmcscdense in some case (yann) - note: theano.dot and theano.sparse.structured_dot() always had a gradient with the same sparsity pattern as the inputs.
+(frederic) - refactored gpu installation of theano.
+(razvan) new features: - advancedincsubtensor grad defined and tested (justin bayer) - adding 1d advanced indexing support to inc_subtensor and set_subtensor (james bergstra) - tensor.{zeros,ones}_like now support the dtype param as numpy (frederic) - added configuration flag "exception_verbosity" to control the verbosity of exceptions (ian) - theano-cache list: list the content of the theano cache (frederic) - theano-cache unlock: remove the theano lock (olivier) - tensor.ceil_int_div to compute ceil(a / float(b)) (frederic) - maxandargmax.grad now works with any axis (the op supports only 1 axis) (frederic) - used by tensor.{max,min,max_and_argmax} - tensor.{all,any} (razvan) - tensor.roll as numpy: (matthew rocklin, david warde-farley) - theano with gpu works in some cases on windows now.
+(guillaume) made the optimization process faster.
+numpy has a bug in the reduction code that made it  crash.
+(many people) - pep8 fixes.
+- it makes use of gpu shared variable more transparent with theano.function updates and givens parameter.
+(david, olivier) - doc on the rop function (ian) - added how to use scan to loop with a condition as the number of iteration.
+- a node s postproc is now accessible as a property.
+(reported by john salvatier, fixed by pascal l.)
+further, various bugs have been fixed.
+- all attribute are now reported in sorted order when printing a dataset.
+i.e. operate on all dimensions of the tensor.
+this new behavior is the same as numpy.
+(olivier) - sparse_variable.size (as scipy) computes the number of stored values.
+- scan grad when the input of scan has sequences of different lengths.
+(james, pascal) - theano.grad() now also work with sparse variable.
+bug fixes (incorrect results): - on cpu, if the convolution had received explicit shape information, they where not checked at runtime.
+(olivier) - sparse_variable[n, n] now works (li yao, frederic) - sparse_variable[m:n, o:p] now works (li yao, frederic, pascal) m, n, o, and p can be python int or scalar tensor variables, none, or omitted (sparse_variable[:, :m] or sparse_variable[:m, n:] work).
+(pascal) - crashes of blas functions (gemv on cpu; ger, gemv and gemm on gpu)
+this caused wrong result if the input shape was not the one expected.
+(ian g.) known bugs: - careduce with nan in inputs don't return the good output ( ticket _).
+moreover, the default splitter of crossvalidation is more robust in terms of number and type of created splits for common usage patterns (i.e. together with partitioners).
+it bundles tools for data retrieval, text analysis, clustering and classification, and data visualization.
+- various improvements and increased flexibility of null distribution estimation of measures.
+(frederic and others) - filtering update.
+also adapts changes from 0.4.6 and 0.4.7 (see corresponding changelogs).
+- authors: alex rubinsteyn - license: lpgl - programming language: python - operating system: agnostic - data formats: agnostic, numpy - tags: decision trees, decision tree learning, random forests, ensemble of classifiers maja machine learning framework 1.0 by jhm - september 13, 2011, 15:13:56 cet [ ] 6883 views, 1388 downloads, 1 subscription about: the maja machine learning framework (mmlf) is a general framework for problems in the domain of reinforcement learning (rl) written in python.
+(pascal) crashes of blas functions (gemv on cpu; ger, gemv and gemm on gpu) when  matrices had non-unit stride in both dimensions (cpu and gpu), or when matrices  had negative strides (gpu only).
+changes: what's new in version 3.2?
+(razvan) - scan optimization done earlier.
+this makes it easy to parallelise things such as n-fold cross validation (each fold runs on its own processor) or multiple kmeans random starts.
+- gpuadvancedsubtensor1 supports broadcasted dimensions.
+- authors: joris mooij, martijn leisink, frederik eaton, charles vaske ,giuseppe passino, bastian wemmenhove, patrick pletscher - license: free bsd - programming language: c++, python, matlab, octave - operating system: cygwin, linux, macosx, windows - data formats: ascii - jmlr-mloss publication: jmlr page - tags: approximate inference, bayesian networks, factor graphs, generalized belief propagation, graphical models, junction tree, loop corrections, loopy belief propagation, markov random fields, mean field k tree 0.4.2 by cdevries - july 4, 2011, 06:01:59 cet [ ] 3117 views, 751 downloads, 1 subscription about: the k-tree is a scalable approach to clustering inspired by the b+-tree and k-means algorithms.
+pp wrappers to new versions - do not leave temporary files around after testing - refactoring and cleaning up of html exporting features - improve export of signature and doc-string to public methods - fixed and updated fasticanode to closely resemble the original matlab version (thanks to ben willmore) - support for new numpy version - new neuralgasnode
+this was detected when running theano tests.
+(pascal) - gpu compilation crash on macos x. (olivier) - support for osx enthought python distribution 7.x.
+)  (james) new sandbox.linalg.ops.pinv(pseudo-inverse) op (razvan)
+none - tags: clustering, nips2008, hierarchical kmeans, kdtree, nearest neighbors optwok 0.2.1 by ong - july 21, 2011, 20:39:12 cet [ ] 1872 views, 277 downloads, 1 subscription about: a collection of python code to perform research in optimization.
+to get better overview of high level changes see :ref: release notes for 0.5  and :ref: 0.6  as well as summaries of release candidates below - fixes (23 bf commits) - significance level in the right tail was fixed to include the value tested -- otherwise resulted in optimistic bias (or absurdly high significance in improbable case if all estimates having the same value) - compatible with the upcoming ipython 0.12 and renamed sklearn (fixes #57) - do not double-train slave classifiers while assessing sensitivities (fixes #53) - enhancements (30 enh + 3 nf commits) - resolving voting ties in knn based on mean distance, and randomly in smlr - :class: knn's ca.estimates now contains dictionaries with votes for each class - consistent zscoring in :class: hyperalignment - 2.0.0~rc5 (wed, oct 19 2011)
+(graham taylor, olivier) -
+- they must have the same length and corresponding type (razvan) - argmax output dtype is now int64 instead of int32.
+none - tags: shogun, python, eeg, classification, regression, support vector machines, k nearest neighbor classification, pca, rfe, neuroscience, fmri ,framework, gpr, lars, smlr, meg openopt 0.37 by dmitrey - december 15, 2011, 17:47:08 cet [ ] 18297 views, 4214 downloads, 1 subscription rating (based on 2 votes) about: universal python-written numerical optimization toolbox.
+changes: theano 0.5 (23 february 2012) highlight: - moved to github: http://github.com/theano/theano/ - old trac ticket moved to assembla ticket: http://www.assembla.com/spaces/theano/tickets - theano vision: http://deeplearning.net/software/theano/introduction.html#theano-vision (many people) - theano with gpu works in some cases on windows now.
+(frederic, reported by olivier chapelle) runtime crash related to an optimization with subtensor of alloc  (reported by razvan, fixed by frederic)
+login 20 projects found that use python as the programming language.
+the current default value of the parameter axis of theano.{max,min,argmax,argmin,max_and_argmax} is now the same as numpy:
+(frederic b.) - alloc
+fix to deque on python 2.4 (olivier) fix crash when not using c code (or using debugmode) (not used by  default) with numpy 1.6*.
+the other accepted value is "raise" to raise an error when this happens.
+(razvan) review/finish/doc: det (determinent) op.
+- many, many, many -
+most notably, this version was to first to come with a comprehensive two-day workshop/tutorial.
+- enhancements - numerous documentation fixes.
+the scikit-learn aims to provide state of the art standard machine learning algorithms in python.
+there is no warning in previous theano version about this.
+you can specify the output dtype with a new dtype parameter to sum.
+about: mlpy is a python module for machine learning built on top of numpy/scipy and of gsl.
+none - tags: reinforcement learning, optimization, evolution, toolbox, neuroevolution flann, fast library for approximate nearest neighbors 1.6.11 by mariusmuja - september 12, 2011, 22:32:29 cet [ ] 12079 views, 1697 downloads, 1 subscription about: flann is a library for performing fast approximate nearest neighbor searches in high dimensional spaces.
+a change in "nvcc.flags" used to be ignored for module that were already compiled.
+new optimizations: - advancedsubtensor1 reuses preallocated memory if available (scan, c|py_nogc linker) (frederic) - dot22, dot22scalar work with complex.
+(frederic, some reported by chris currivan) - compilation crash with amdlibm and the gpu.
+none - tags: algorithms, classifiers, developing framework, education, fda, gng, ica, pca, sfa, nips2008 treelearn 1 by iskander - september 21, 2011, 16:12:27 cet [ ] 614 views, 119 downloads, 1 subscription about: a python implementation of breiman's random forests.
+(james) review/finish/doc: diag/extract_diag.
+- about - software - forum - blog - workshop - faq search - go manage - login to submit a new project sort by - last update - publication date - project title - rating - number of views - number of downloads filter by - author - submitter -
+- fmri_dataset now also stores the input image type.
+changes: - faster document similarity queries - more optimizations to latent dirichlet allocation (online lda)
+numpy has a bug in the reduction code that made it crash.
+when matrices had non-unit stride in both dimensions (cpu and gpu), or when matrices had negative strides (gpu only).
+(frederic) - execution crash fix in advancedsubtensor1 on 32 bit computers.
+(david) - fix pydotprint with a function compiled with a profilemode (frederic) - was broken with change to the profiler.
+(frederic, guillaume, razvan) - exp(x) * sigmoid(-x) is now correctly optimized to the more stable form sigmoid(x).
+(li yao) review/finish/doc: sparse sum.
+- searchlight now has the ability to mark the center/seed of an roi in with a feature attribute in the generated datasets.
+also setting verbosity >=
+(arnaud) - macro to implement the jacobian/hessian with theano.tensor.{jacobian,hessian} (razvan) - see the interface changes.
+- rop of gradient of scan (reported by timothy and justin bayer, fix by razvan) before : compilation error when computing r-op now : do the right thing.
+and dataset was refactored to use collection s copy method.
+(james) crashes fixed: - t.mean crash at graph building time.
+so if you didn't manually disable the same memory optimization (number in the list4), you are fine if you didn't manually request multiple taps.
+(david) - review/finish/doc: ensure_sorted_indices.
+, gpualloc are not always pre-computed (constant_folding optimization) at compile time if all their inputs are constant.
+this is targeted at a research and rapid prototyping audience.
+(pascal lamblin) - optimization crash with gemm and complex.
+(pascal) - more cases supported in advancedincsubtensor1.
+dynamically generates cpu and gpu modules for good performance.
+(frederic) - better pycuda tests (frederic) - check_blas.py now accept the shape and the number of iteration as parameter (frederic) - fix opt warning when the opt shapeopt is disabled (enabled by default)
+the default behavior, stacking as multiple samples, is unchanged.
+we were not able to reproduce this problem - patterns affected ({0,1}*nb dim, 0 no reduction on this dim, 1 reduction on this dim): 01, 011, 0111, 010, 10, 001, 0011, 0101 (frederic) - div by zero in verify_grad.
+- crossvalidation takes any custom node as errorfx argument.
+- 0.6.0~rc1 (thu, feb 24 2011)
+changes: semi-uniform v-cubes - authors: lorenz weizsaecker - license: gpl version 3 - programming language: python - operating system: posix - data formats:
+(pascal) gpu compilation crash on macos x. (olivier) support for osx enthought python distribution 7.x.
+(olivier d.) - scan interface changes: (razvan pascanu) - the use of return_steps for specifying how many entries of the output to return has been removed.
+(graham taylor,  olivier) when the subtensor inputs had 0 dimensions and the outputs 0 dimensions.
+(reported by john  salvatier, fixed by pascal l.)
+in those cases, we are now making copies.
+- authors: joseph gonzalez, yucheng low, aapo kyrola, danny bickson, carlos guestrin - license: apache 2.0 - programming language: c++, python, matlab, c, java - operating system: linux, mac os x - data formats: matlab, sparse matrix market - tags: machine learning, collaborative filtering, matrix factorization, linear models peewit 0.7 by lorenz - november 4, 2011, 19:54:09 cet [ ] 7079 views, 1262 downloads , 1 subscription about: peewit provides workflow services for programming, running and result examination of machine learning experiments.
+(sometimes we used to catch interrupts) (frederic, david, ian, olivier) - better support for utf string.
+- dataset.__array__ provides original array instead of copy (unless dtype is provided)
+mdp developers - license: bsd - programming language: python - operating system: agnostic - data formats:
+do not call gemm with strides 0, some blas refuse it.
+- authors: bertrand thirion, edouard duschenay, vincent michel, gael varoquaux, olivier grisel, jacob vanderplas, alexandre granfort, fabian pedregosa - license: new bsd - programming language: python, c - operating system: linux, macosx, windows - data formats: agnostic - jmlr-mloss publication: jmlr page - tags: icml2010 mlpy machine learning py 3.4.0 by albanese - january 9, 2012, 12:10:16 cet [ ] 28220 views, 5612 downloads, 19 subscriptions rating (based on 3 votes)
+=> rebroadcast(subtensor(x))
+it provides a set of rl related algorithms and a set of benchmark domains.
+learnererror for classifiers' exceptions (adopted from 0.5) - adjusted example data to live upto nibabel's warranty of nifti standard-compliance - more robust operation of mc iterations -- skip iterations where classifier experienced difficulties and raise an exception (e.g. due to degenerate data)
+open access is very cheap  by cheng soon ong on march 8,  2012 did the mathworks infringe the competition laws?
+- tensor.tensordot can now be moved to gpu (sander dieleman, pascal, based on code from tijmen tieleman's gnumpy, http://www.cs.toronto.edu/~tijmen/gnumpy.html)
+(razvan) - scan.infer_shape crash fix.
+(ian) - "interactive debugger" crash fix.
+this hid a bug in the grad of images2neibs.
+now : do the right thing.
+rivero - authors: stefan klanke, sethu vijayakumar, stefan schaal - license: lgpl - programming language: c++, python, matlab, octave, c - operating system: linux, macosx, windows, unix - data formats: none - jmlr-mloss publication: jmlr page - tags: regression, online learning scikitlearn 0.9 by fabianp - february 3, 2012, 10:46:50 cet [ ] 3006 views, 884 downloads , 10 subscriptions rating (based on 2 votes)
+(ian g.) known bugs: careduce with nan in inputs don't return the good output (ticket  _).
+this is significantly more efficient for big constant arrays.
+(guillaume) - made the optimization process faster.
+(david) scan fixes: - computing grad of a function of grad of scan (reported by justin bayer, fix by razvan) before : most of the time crash, but could be wrong value with bad number of dimensions (so a visible bug)
+sandbox new features (not enabled by default): curand_randomstreams for uniform and normal (not picklable, gpu only
+optimization crash with gemm and complex.
+(frederic) - gpu crash with elemwise.
+(sebastian urban) - faster dot() call: new/better direct call to cpu and gpu ger, gemv, gemm and dot(vector, vector).
+interface behavior changes: -
+the consequence is that the sum is done in a dtype with more precision than before.
+tag - license - programming language - operating system - data format - published in jmlr latest thoughts - open access is very cheap by cheng soon ong on march 8, 2012 - did the mathworks infringe the competition laws?
+(arnaud, frederic, guillaume) - review/finish/doc: matrixinverse, matrix_inverse.
+(philippe hamel) - review/finish/doc: cholesky determinent op.
+(razvan) - new min_informative_str() function to print graph.
+the base of available algorithms includes signal processing methods (principal component analysis, independent component analysis, slow feature analysis), manifold learning methods ([hessian] locally linear embedding), several classifiers, probabilistic methods (factor analysis, rbm), data pre-processing methods, and many others.
+(olivier) - updates to install doc on windows.
+agnostic - tags: cuda, gpu, symbolic differentiation lwpr 1.2.4 by sklanke - february 6, 2012, 19:55:41 cet [ ] 17819 views, 2131 downloads, 8 subscriptions about: locally weighted projection regression (lwpr) is a recent algorithm that achieves nonlinear function approximation in high dimensional spaces with redundant and irrelevant input dimensions.
+images2neibs grad was returning a wrong value.
+- authors: lance de vine, chris de vries, shlomo geva, ulf grossekathofer - license: gpl, lgpl - programming language: python, c, java - operating system: agnostic - data formats: ascii, java arrays - tags: clustering, algorithm gensim 0.8.0 by radim - june 21, 2011, 01:20:53 cet [ ] 6607 views, 1353 downloads, 1 subscription about: python framework for vector space modelling that can handle unlimited datasets (streamed input, online algorithms work incrementally in constant memory).
+- fixed a memory leak with shared variable (we kept a pointer to the original value)

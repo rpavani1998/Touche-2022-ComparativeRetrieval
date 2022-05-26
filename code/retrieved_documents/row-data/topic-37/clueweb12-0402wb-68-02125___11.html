@@ -1,0 +1,277 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Java Games Development - Part 3</title>
+<body>
+<br>
+<br>
+<br>
+
+<p> </p> <br>
+
+<p> Part 1 of this series appeared in the August issue of <em>Java Developer's 
+Journal</em> (Vol. 8, issue 8), and Part 2 appeared in the September issue 
+(Vol. 8, issue 9).</p>
+<p> <strong><em>JDJ: Microsoft has received quite a lot of good press (or 
+propaganda, however you'd like to look at it) for their .NET product, and there 
+has even been discussion that it will be/is suitable for games development with 
+good DirectX bindings. Since Java is only just out of the gate (in terms of 
+commercial games development), do you see .NET providing serious competition in 
+this burgeoning market, or are there some (perhaps hidden?) advantages to Java 
+that might make the difference in this case?</em></strong> </p>
+<p> <strong>Jeff K:</strong> Don't confuse .NET the platform with CLR the VM, 
+or C# the language.</p>
+<p> .NET will <em>not</em> be suitable for games. Its XML-based communications 
+protocol is by definition slow and verbose, and that's before you get into the 
+other architectural issues. I have no fear of .NET becoming the default 
+back-end technology for networked games - it was designed with business apps in 
+mind, which need totally different properties.</p>
+<p> As for C# and CLR (which, as I understand it, are heavily based on MSVM), 
+there are a number of points. MSVM has always supported DirectX through 
+JDirect, but it hasn't taken off as a game platform. That they are continuing 
+this support doesn't seem like anything new to me. C#/CLR has none of the 
+benefits of Java (it's not cross platform, being YADC (yet another dialect of 
+C) it's not likely to appreciably improve either productivity or code 
+correctness.</p>
+<p> About all it does is muddy the waters around Java, which in my opinion is 
+maybe all it's supposed to do.</p>
+<p> Today we have cross-platform technologies emerging in Java that provide 
+all the benefits of DirectX without sacrificing portability, productivity, or 
+code correctness. Examples of this are the LWJGL open source library project, 
+and the open source bindings for Java to OpenGL (JOGL), OpenAL (JOAL), and 
+controller input (JInput).</p>
+<p> <strong><em>Doug T: As Jeff mentions, this mostly affects Java from the C# 
+side of things. One advantage Java has is time. At GDC this year, there was a 
+session on Managed DirectX, which is effectively DirectX for C#, and you could 
+have replaced every instance of C# with Java in the presentation. We've been 
+solving those problems for years, so we have a head start.</em></strong> </p>
+<p> <strong>Cas P:</strong> [Microsoft's] VM technology is currently inferior, 
+but not for long. The easy integration with a direct, ultra-capable gaming API 
+(DirectX) means that it's only a matter of time before M$ starts gaining a 
+majority unless there's some direct competition in the same space from Sun. 
+It's my belief that a three-pronged defense - for defense it is, as Java is the 
+innocent blinking rabbit in Microsoft's headlights - is needed:<br>
+ 1.&nbsp; 
+Gang together with game technologies, embrace and flourish - OpenGL and OpenAL 
+are Sun's only hope against DirectX, so they'd better start supporting it, 
+encouraging it, sponsoring it, and even helping it. If Sun is seen to be behind 
+OpenGL to the point where their own products utterly depended on it, you'd get 
+the positive feedback loop required to ensure that both support each other and 
+grow.<br>
+ 2.&nbsp; Actively put major resources into the gaming space, gain 
+the confidence of developers by being seen to do this, and start listening more 
+keenly to suggestions and being a little more open about what's being done to 
+address issues. I think we need a dedicated engineering, marketing, and support 
+team for the whole issue, yet I feel that Jeff and Chris are the only Sun 
+employees who are even trying, and they only seem to be let out of their 
+cubicles once they've said their prayers to Solaris and flayed themselves for 
+eight hours over a hot spreadsheet.<br>
+ 3.&nbsp; Hardware assault - the big, 
+big question: Is there room for a Java-based console, and if not, why not? 
+Perhaps Sun could even fund it by running it on a Sparc chip. If there's no 
+room for a Java-based console, then truly Java is failing as the games platform 
+of choice because it's the best place it could possibly be from a developer's 
+perspective.</p>
+<p> <strong><em>Erik D: I think the problem with .NET is that you are 
+specifically choosing Microsoft and Microsoft alone and, in effect, you 
+explicitly exclude a large market potential.</em></strong></p>
+<p><strong><em> There's no way .NET will become available on a PlayStation, 
+for example. Of course, we also have no Java (yet?) on PS, so currently 
+development will stick to C++.</em></strong></p>
+<p><strong><em> Java does have a longer history than .NET and has proven 
+itself in many more ways than .NET has, such as the obvious platform 
+independence. If Java did spread to PS3 and XBOX, I'd say &quot;why C# and 
+stick with PCs if we already have Java?&quot; if I were a development company.
+</em></strong> </p>
+<p> <strong>Shawn K:</strong> I do see serious competition from this because 
+MS will do whatever it can to move developers to Windows, games or otherwise. 
+It doesn't matter if C#/.NET isn't exactly Java. They listen to their 
+developers and changes get made. The fact that MS will make .NET work on the 
+XBox and future XBoxes makes it all the more compelling.</p>
+<p> Also, MS makes games. They make one C# game that's a hit and it's a done 
+deal. Developers and publishers will look at C#, and the same dynamic I stated 
+before. The only advantages for Java that I can see right now are:<br>
+ 
+1.&nbsp; Huge existing developer base and knowledge base.<br>
+ 2.&nbsp; Deep 
+desire in game developers not to use MS stuff. That is a true phenomenon. Many 
+working game developers I have talked to will try anything that is not MS tech.
+</p>
+<p> I would like to point out some major disadvantages as well.<br>
+ 1.&nbsp; 
+Licensing issues<br>
+ 2.&nbsp; Media APIs </p>
+<p> <strong><em>JDJ: I know some of you are currently developing 3D games 
+using Java. What was the reasoning behind your particular approach? Part 2 of 
+this question is: Do you have any regrets? Are there any benefits to another 
+approach that you wish you could take advantage of?</em></strong> </p>
+<p> <strong>Cas P:</strong> First a quick mention about LWJGL. LWJGL is a 
+modest library, still in development, and it aims to do very little other than 
+to do things Java can't, like draw with OpenGL. There is a frequently 
+misunderstood purpose to the library though. LWJGL is not an add-on library to 
+J2SE to allow you to write OpenGL applications in Java. It was designed from 
+the very beginning to be a portable console game library, even if it does end 
+up being only completely theoretical. There's only one window in LWJGL, and we 
+get a lot of requests for multiple windows. You can't even insist on a title 
+bar and windowed mode; it's specifically meant to provide full screen-only 
+games. We get a lot of requests to enable one to create lots of windows and 
+have them behave as they should. But then it wouldn't run on a console, would 
+it? We've deliberately created a platform based around what we know the 
+hardware and underlying O/S need to be for gaming: a display, some speakers, a 
+few input devices - nothing more.</p>
+<p> A side effect of LWJGL is it enables us to deploy games with less 
+licensing restrictions: I can natively compile my games for Windows, which 
+solves a bunch of other problems I won't go into here, and the demos come out 
+under the magic 5MB download patience threshold.</p>
+<p> I developed LWJGL in the first place because I find the OpenGL API easy 
+and, most important, fast. Java 3D is so far above my head I barely know where 
+to begin. This is the problem a lot of developers have with Java 3D. If you 
+want to learn 3D programming, Java 3D isn't the thing for you.</p>
+<p> The other reason for LWJGL was simplicity. It's a platform; there's a 
+specification to program to. It's a bit vague right now because we're only in 
+alpha, but it removes a lot of uncertainty and hassle. I discovered Alien Flux 
+ran on Linux without any trouble at all. I was more surprised than anyone. Once 
+it's up and running, it behaves in exactly the same way as the Windows one. You 
+wouldn't know you were running Linux underneath it because it's full screen. I 
+have the same hope for PlayStation 3 one day. You'd never know it was written 
+for the PC because all the developer has to use is an empty black screen, some 
+speakers, and three input devices, not all of which will even be present.</p>
+<p> Another reason for LWJGL is performance - speed and size. I can write 
+absolutely optimized code for LWJGL and it runs in hardly any memory. Alien 
+Flux would even run on a PlayStation's 32MB of RAM with a little tweaking to 
+the graphics. There are no caveats with regard to performance; all the 
+knowledge about performance is from OpenGL, so it's very widely understood. If 
+you write a slow LWJGL game, it's because you've used OpenGL incorrectly, not 
+because we've written some dicky code in the library.</p>
+<p> And no regrets. Not for one moment do I think I could have done it easier 
+or better with any other technology. GL4Java, Direct3D, Java 3D - they're all 
+deeply flawed when it comes to writing portable games in Java. My only real 
+regret is that it's unlikely that we'll ever be endorsed by Sun. Although if I 
+may make a prediction here: LWJGL is very likely to become the driving factor 
+in Java games development.</p>
+<p> <strong><em>Jeff K: In terms of using OGL incorrectly, that may be true 
+for relatively simple games, but I'm not sure it carries into the A-lines games 
+of today. OGL doesn't give you scene graph management; you're going to need to 
+write that yourself. It doesn't give you physics; again you're going to have to 
+code that. My guess is that you've covered about half of the core graphics 
+issues with OGL, or about 5% of that 10% I talked about earlier. For some folks 
+that may be the perfect bar, for others it may be too low. However, all that 
+being said, I do agree that being able to directly write to OGL is a good thing 
+regardless of what you do on the top of it.</em></strong> </p>
+<p> <strong>Erik D:</strong> I'm not married to LWJGL &quot;till death do us 
+part&quot; or anything, but I do have a love affair with it because I like the 
+low-level approach. It doesn't restrict me in any way and I believe it might 
+become a key factor for well-performing games written in Java.</p>
+<p> I've been playing a little with J3D, but I thought OpenGL was a lot easier 
+to get into, and I like keeping in full control of things. Personally, I don't 
+like the idea of J3D completely hiding details; of course, this isn't fully 
+justified because I haven't done much with J3D, but I do strongly believe you 
+should always be able to get as low level as necessary where games development 
+is concerned and I've seen people struggle with J3D issues that they don't seem 
+to be in control of.</p>
+<p> If J3D had been built on top of an OpenGL wrapper, I'd probably have used 
+that because it obviously addresses the problem of LWJGL, that there aren't any 
+scene graph implementations available for it yet.</p>
+<p> <strong><em>Shawn K: One point I'd like to bring to light is the scene 
+graph versus immediate mode argument. We have to remember that Java 3D is 
+implementing a scene graph, and Java/OGL is simply immediate mode access 
+through Java. There are pros and cons to both and they're completely 
+independent of Java and Java 3D. That argument has waged on for generations.
+</em></strong></p>
+<p><strong><em> We chose J3D for several reasons.<br>
+ 1.&nbsp; Ease of use. I 
+never want to code immediate mode graphics if I can help it. It's like assembly 
+for graphics. I use a high-level language and a high-level graphics system. I 
+have also used scene graphs (from SGI to PC) outside of Java and plan to keep 
+on doing so. Eventually the class I teach adopted RenderWare (a pseudo-scene 
+graph API) once it was an acceptable practice.</em></strong></p>
+<p><strong><em> One problem, due to the high level and ease of use, is that 
+developers think they can make great 3D graphics projects and not know anything 
+about 3D graphics. Sometimes the questions that are posted on the J3D list are 
+atrocious. OGL is so low level you have to have a bit better programming skill 
+as well as more 3D knowledge to use it. I experience this in my courses as 
+well. The point being, when you know what you're doing, a scene graph or 
+immediate mode are both great tools. When you don't know, a scene graph is a 
+lot easier.<br>
+ 2.&nbsp; Scene management. Just like some LWJGL users are 
+finding, eventually you have to build a scene graph anyway for any scene bigger 
+than a bread basket.<br>
+ 3.&nbsp; Common data structures for public as well as 
+private interchange. By this I mean, there's a thriving community of developers 
+who code to J3D and easily trade huge code packages because they all use J3D 
+classes and can be tested and integrated with very little modifications if 
+written well. I'm not saying those actual packages will end up in a final 
+production, but the integration-to-test phase is lightning fast. If all these 
+developers were using OGL wrappers, the exchange would be close to nothing.</em>
+</strong></p>
+<p><strong><em> Look at the OpenGL community as it is. There's a lot of 
+trading but it is all techniques and code &quot;snippets,&quot; not loaders and 
+behaviors or even collision systems because each OGL developer has his or her 
+own scene graph equivalent structure on top of OGL that they will have to 
+translate to for any techniques and code they get from the outside world.<br>
+ 
+4.&nbsp; Better cross-platform than OGL alone. We used Java/J3D for a long time 
+as a true cross-platform solution. Our students' laptops ran best under 
+DirectX, and our classroom workstations under OpenGL. For their work it was no 
+problem to use either install and everything worked. This is less of an issue 
+today as the laptops have better support for OGL and the workstations for 
+DirectX. The current Java/OGL world is still an OGL on Linux/Solaris/Windows 
+world so J3D has a slight edge there.<br>
+ 5.&nbsp; Legacy. It was the only way 
+to do 3D in Java at the time we started.</em></strong> </p>
+<p> <strong>SIDEBAR</strong><br>
+ The players are: </p>
+<p> <strong>Jason R Briggs:</strong> Java Developer's Journal contributing 
+editor and your host; games player when he has time, games developer...on 
+occasion.<br>
+<strong>Gerardo Dada:</strong> Metrowerks' product manager for 
+CodeWarrior Wireless Studio.<br>
+<strong>Erik Duijs:</strong> Former 
+musician/engineer/producer with a (games) programming passion, now an IT 
+consultant. Switched careers for the sake of better pay as well as maintaining 
+a passion for music instead of &quot;eating it&quot; so to speak. Author of the 
+Java Emulation Framework (JEF) and CottAGE.<br>
+<strong>Shawn Kendall:</strong> 
+Developed Java and Java 3D-based game technology demos for Full Sail, Sun 
+Microsystems, and I.M.I., and displayed at GDC and SIGGRAPH since 1999. He has 
+five years of 3D technology teaching experience, and in 2002 founded Immediate 
+Mode Interactive, LLC, a game technology company dedicated to the development 
+and application of Java technology in computer games (www.imilabs.com).<br>
+
+<strong>Jeff Kesselman:</strong> Architect for game technologies, Advanced 
+Software Technologies Group at Sun. He worked on the JDK performance tuning 
+team and co-wrote Java Platform Performance: Strategies and Tactics.<br>
+
+<strong>Chris Melissinos:</strong> Sun's chief gaming officer and responsible 
+for driving an industry-wide movement toward Java technology-based game 
+development and building infrastructure programs for massively connected game 
+play.<br>
+<strong>Caspian Rychlik-Prince:</strong> An IT consultant in the UK 
+who for the last 10 years has specialized in client/server systems with RDBMS 
+back ends. He has just released a new game, Alien Flux (www.puppygames.net).<br>
+<strong>Doug Twilleager:</strong> Chief architect of the Java Games Initiative 
+at Sun Microsystems. One of the architects of Java 3D, he has also worked in 
+the graphics research group at Sun looking at advanced rendering techniques and 
+programmable shading.<br>
+<strong>David Yazel:</strong> VP of software 
+development of trading systems and portfolio management systems at a leading 
+financial investment company (by day), and by night a games developer for (and 
+founder of) the Magicosm project (a 100% Java-based MMORPG).</p>
+<p> <strong>About The Author</strong><br>
+ Jason R. Briggs is a Java 
+programmer and development manager for a wireless technology company, based in 
+Auckland, New Zealand. He is also a contributing editor of<em>Java Developer's 
+Journal</em>. jasonbriggs@sys-con.com </p>
+<p> </p>  All Rights Reserved <br>
+ Copyright &copy;&nbsp; 2004 SYS-CON Media, 
+Inc.<br>
+ &nbsp; E-mail: info@sys-con.com <br>
+
+<p> </p>  Java and Java-based marks are trademarks or registered trademarks of 
+Sun Microsystems, Inc. in the United States and other countries. SYS-CON 
+Publications, Inc. is independent of Sun Microsystems, Inc. <br>
+<br>
+<br>
+<br>
+
+<br> 
+</body>

@@ -1,0 +1,1008 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Graphics and Data Analysis - Analysis</title>
+<body>
+graph <br>
+sys <br>
+tool <br>
+lib <br>
+analyze <br>
+format <br>
+
+<p> </p> <br>
+
+<h1> Mostly Numerical Analysis and Number Crunching </h1>  The following 
+packages or programs range from loosely organized collections of programs to 
+perform a wide range of day-to-day numerical and clerical tasks toMatlab-like 
+packages (at least one of which will actually run programs written in the 
+Matlab programming language) to other non-Matlab matrix-based numerical 
+analysis systems to environments designed to help develop portable scientific 
+programs to full-blown signal and image processing systems that will take up at 
+least 60 Mb of disk space. I'd especially recommend trying theScilab, RLaB and 
+Octave packages to start. Presently I mostly use Scilab, which is Matlab-like 
+but, in some ways, an improvement, and you can't beat the price.
+<p> Last updated and checked on Mar. 24, 2004, only 8 short years since the 
+last update on July 2, 1996.</p>
+<p></p> 
+<p> Go to a specific package or browse the lot. </p>
+<p> </p> 
+<ul> 
+<li>Algae </li> 
+<li>Basis </li> 
+<li>Cactus </li> 
+<li>CWP/SU </li> 
+<li>Euler </li> 
+<li>Fudgit </li> 
+<li>Gnans </li> 
+<li>Gnatlab </li> 
+<li>GNUDL </li> 
+<li>GSL </li> 
+<li>Guile-numerics </li> 
+<li>JNumeric </li> 
+<li>Lush </li> 
+<li>Maxima </li> 
+<li>Numarray </li> 
+<li>NumExp </li> 
+<li>Octave </li> 
+<li>Omega Project </li> 
+<li>Ox </li> 
+<li>PACT </li> 
+<li>PDL </li> 
+<li>PETSc </li> 
+<li>PsiLAB </li> 
+<li>Ptolemy </li> 
+<li>R </li> 
+<li>RLaB </li> 
+<li>ROOT </li> 
+<li>SciCraft </li> 
+<li>Scilab </li> 
+<li>SCIrun </li> 
+<li>SLATEC </li> 
+<li>Tela </li> 
+<li>VisAD </li> 
+<li>XLispStat </li> 
+<li>Yorick </li> </ul> 
+<p></p> 
+<p> </p>
+<h2> Algae</h2> A high-level interpreted language for numerical analysis that 
+borrows ideas from languages like C, MATLAB and APL. It was developed because 
+of a perceived need for a free, efficient, and versatile language capable of 
+handling large problems.
+<p> Significant/unique Algae features include: </p> 
+<ul> 
+<li>speed that is generally (and often significantly) faster than MATLAB (at 
+least until recent major improvements in that product),RLaB and Octave; </li> 
+<li>the capability of storing arrays in sparse form wherein only the nonzero 
+elements and their locations are stored;</li> 
+<li>persistent labels for each dimension of a matrix or vector (i.e. a vector 
+element can have a label such as `mojo rate' to distinguish it from the other 
+5000 elements);</li> 
+<li>scalars, vectors and arrays as distinct data types; </li> 
+<li>and a statistical profiling capability that can show, by file and line 
+number, where the code spends most of its time.</li> </ul> 
+<p> Algae is distributed as source code and also in binary form for Linux ELF 
+platforms. Other packages that aren't required but are quite helpful and will 
+be used by the package if available areGnuplot, BLAS (although the generic 
+version is supplied with the package),LAPACK (with the generic version of this 
+also supplied with the package), and the GNU Readline library. Algae will also 
+recognize the proprietary Boeing BCSLIB package. The documentation is supplied 
+in both HTML and GNU Info formats.</p>
+<p><strong> [ http://algae.sourceforge.net/ </strong> </p>
+<h2> Basis</h2> Basis is the name of the program which results from loading 
+the Basis System with no attached physics. It is a useful program for 
+interactive calculations and graphics. Authors create other programs by 
+specifying one or more packages of variables and modules to be loaded. A 
+package is specified using a Fortran source and a variable description file in 
+which the user specifies the common blocks to be used in the Fortran source and 
+the functions or subroutines that are to be callable from the interactive 
+language parser.
+<p> Basis programs are steerable applications, that is, applications whose 
+behavior can be greatly modified by their users. Basis also contains optional 
+facilities to help authors do their jobs more easily. A library of Basis 
+packages is available that can be easily added to a program. The progammable 
+nature of the application simplifies testing and debugging.</p>
+<p> The Basis Language includes variable and function declarations, graphics, 
+several looping and conditional control structures, array syntax, operators for 
+matrix multiplication, dot product, transpose, array or character 
+concatenation, and a stream I/O facility. Data types include real, double, 
+integer, complex, logical, character, chameleon, and structure. There are more 
+than 100 built-in functions, including all the Fortran intrinsics.</p>
+<p> Basis' interaction with compiled routines is particularly powerful. When 
+calling a compiled routine from the interactive language, Basis verifies the 
+number of arguments and coerces the types of the actual arguments to match 
+those expected by the function. A compiled function can also call a 
+user-defined function passing arguments through common.</p>
+<p> The Basis system includes many facilities designed to ease porting of 
+Fortran codes among the supported platforms, including a Fortran preprocessor, 
+MPPL, and a system for creating Makefiles for multi-platform, multi-directory 
+development.</p>
+<p> Basis runs on UNIX and Linux operating systems. It requires Perl 5.0 or 
+later. Basis can be built with NCAR graphics, PGS graphics or with no graphics. 
+If you build basis withPACT, then you can use the interface to PACT's PDB 
+portable self-describing data files. There's an overview article about this 
+package by the chief author, Paul Dubois, in<em>Computers in Physics</em>, Vol. 
+8, 1994, pp. 70-73.</p>
+<p><strong> [ http://basis.llnl.gov/] </strong> </p>
+<h2> Cactus</h2> Cactus is an open source problem solving environment designed 
+for scientists and engineers. Its modular structure easily enables parallel 
+computation across different architectures and collaborative code development 
+between different groups. Cactus originated in the academic research community, 
+where it was developed and used over many years by a large international 
+collaboration of physicists and computational scientists.
+<p> The name Cactus comes from the design of a central core (or 
+&quot;flesh&quot;) which connects to application modules (or 
+&quot;thorns&quot;) through an extensible interface. Thorns can implement 
+custom developed scientific or engineering applications, such as computational 
+fluid dynamics. Other thorns from a standard computational toolkit provide a 
+range of computational capabilities, such as parallel I/O, data distribution, 
+or checkpointing.</p>
+<p> Cactus runs on many architectures. Applications, developed on standard 
+workstations or laptops, can be seamlessly run on clusters or supercomputers. 
+Cactus provides easy access to many cutting edge software technologies being 
+developed in the academic research community, including the Globus 
+Metacomputing Toolkit, HDF5 parallel file I/O, the PETSc scientific library, 
+adaptive mesh refinement, web interfaces, and advanced visualization tools.</p>
+<p> <strong> [ http://www.cactuscode.org/] </strong> </p>
+<h2> CCSE Application Suite</h2> The CCSE Applications Suite consists of: 
+<ul> 
+<li>two application codes for adaptively solving time-dependent partial 
+differential equations (a solver for a Hyperbolic system of Conservation Laws 
+(HyperCLaw) and an incompressible flow solver (IAMR)),</li> 
+<li>C++ class libraries (BoxLib,AmrLib, and others), </li> 
+<li>a 2- and 3-dimensional visualization system (AmrVis), </li> 
+<li>a package for post-processing data generated by the above AMR applications 
+(AmrDerive), and</li> 
+<li>a single grid, i.e. non-adaptive, application code for solving 
+incompressible flows (VarDen in serial, pVarDen in parallel).</li> </ul> The 
+most basic components for building AMR applications are contained in BoxLib and 
+AmrLib; the most complete applications are the two solvers. The capability to 
+solve elliptic equations on an adaptive hierarchy of grids with either 
+cell-centered or node-centered data is contained in two of the multigrid 
+libraries (MGLib and HGProj). Because the applications depend on some or all of 
+the more fundamental software libraries, users must download the entire package,
+<p> AMR uses block-structured refinement, so that the solution to an AMR 
+calculation is composed of data in multiple non-intersecting rectangular grids 
+at multiple levels with different resolution. The visualization and 
+post-processing tools are specially constructed to efficiently handle this type 
+of data set.</p>
+<p> All components of the CCSE Applications Suite except VarDen are designed 
+to execute in parallel using MPI. However, the user has the option of building 
+executables without MPI to run on serial platforms.</p>
+<p> <strong> [ http://seesar.lbl.gov/ccse/Software/index.html] </strong> </p>
+<h2> CWP/SU</h2> In 1987, Jack K. Cohen and Shuki Ronen of the Center for Wave 
+Phenomena (CWP) at the Colorado School of Mines (CSM) conceived a bold plan. 
+This plan was to create a seismic processing environment for Unix-based 
+systems, written in the C language, that would extend the Unix operating system 
+to seismic processing and research tasks. Furthermore, they intended that the 
+package be freely available as full source code to anyone who would want it.
+<p> The package is not necessarily restricted to seismic processing tasks, 
+however. A broad suite of wave-related processing can be done with SU, making 
+it a somewhat more general package than the word ``seismic'' implies. SU is 
+intended as an extension of the Unix operating system, and therefore shares 
+many characteristics of the Unix, including Unix flexibility and expandibility. 
+The fundamental Unix philosophy is that all operating system commands are 
+programs run under that operating system. The idea is that individual tasks be 
+identified, and that small programs be written to do those tasks, and those 
+tasks alone.</p>
+<p> The core of the Seismic Unix program set performs a broad collection of 
+tasks, which may be viewed as being common to a large collection of research 
+and processing disciplines. Many, however, are purely seismic in nature. The 
+task categories include:</p> 
+<ul> 
+<li>input/output issues; </li> 
+<li>data format conversion; </li> 
+<li>setting, viewing and editing trace header fields; </li> 
+<li>viewing SU data; </li> 
+<li>windowing, sorting and editing data; </li> 
+<li>general operations; </li> 
+<li>transforming and filtering operations; </li> 
+<li>seismic operations on SU data. </li> </ul> 
+<p><strong> [http://www.cwp.mines.edu/cwpcodes/] </strong> </p>
+<h2> Euler</h2> A numerical math program that can handle real and complex 
+numbers, vectors and matrices, can produce 2D/3D graphics, and has a built-in 
+programming language. The features include interactive evaluation of numerical 
+expressions, matrix functions, statistical functions and random numbers, online 
+help, and more. It's written in C for generic UNIX/X Windows platforms and the 
+source code is available. An Euler tutorial is available online. It compiled 
+and installed easily on my Linux box.
+<p><strong> [ http://mathsrv.ku-eichstaett.de/MGF/homes/grothmann/euler/] 
+</strong> </p>
+<h2> Fudgit</h2> A multi-purpose fitting program where columns of numbers can 
+be manipulated in the form of vector arithmetic. It is also an expression 
+language interpreter capable of understanding most of C grammar. It is also a 
+front end for any plotting program supporting commands from stdin, e.g. 
+Gnuplot. Some features include Fourier transforms, spline interpolation, 
+smoothing, a built-in calculator, access to the C math library, and a 
+collection of fitting routines.
+<p><strong> [http://packages.debian.org/stable/math/fudgit] </strong> </p>
+<h2> Gnans</h2> A program and language for the numerical study of 
+deterministic and stochastic dynamical systems, which may evolve in continuous 
+or discrete time. It loads the definition of a dynamical system in an equation 
+oriented language, translates this into C++, compiles and links this, and 
+solves the equations numerically with the speed of a compiled (rather than 
+interpreted) program. It has a GUI that allows the program to be controlled and 
+the parameters changed easily. It has been ported to Sun and SGI platforms for 
+which binaries are available along with the source code. I'm not sure how easy 
+this is to port elsewhere.
+<p><strong> [ftp://ftp.uu.net/pub/math/gnans/] </strong> </p>
+<h2> Gnatlab</h2> The Gnatlab program is designed to be a tool for fast matrix 
+manipulation and calculation using the Matrix Template Library. It is designed 
+to be easily expandable, with a simple programming interface. It uses the 
+Matrix Template Library to do the calculations and it interfaces with the MTL 
+in such a way that updates and changes to the MTL can be quickly incorperated 
+into the program. Gnatlab aims towards the full functionality of similar 
+commercial products. This software was last updated in 1999.
+<p><strong> [ http://www.osl.iu.edu/research/gnatlab/] <br>
+ [ 
+http://sourceforge.net/projects/gnatlab/] </strong> </p>
+<h2> GNUDL</h2> The GNU Data Language is a planned high-level language and 
+environment designed to allow flexible and powerful manipulation and plotting 
+of data. It will provide some of the capabilities of high level languages for 
+data analysis and plotting (e.g.Yorick, Matlab, Octave, and IDL, from which 
+GNUDL gets it name and which the GNUDL author considers the most powerful of 
+such languages). A primary goal is to eventually provide a vast library of 
+numerical, signal processing, imaging processing, etc. routines that can be 
+interactively used within the system.
+<p> The useful features of the aforementioned languages planned for 
+replication include the immediate availability of graphing operations for data 
+viewing with well-designed and extensible defaults, the ease and optimization 
+of array operations, the publication quality of output graphics, and the 
+availability on many platforms. General limitations of such languages that the 
+author wants to circumvent include the special-purpose languages developed for 
+each package. GNUDL will useGuile, a Scheme-based utility, as its language. 
+This will allow the use of Scheme as well as a variety of other languages that 
+can be run on top of Scheme to be used for programming applications. Guile also 
+incorporates theTk toolkit, allowing GUI applications to be custom built. It is 
+planned to used the TeXinfo system for documentation, which will allows several 
+types of documentation formats to be produced from a single source file. GNUDL 
+will provide X Window and PostScript rendering of all plots (perhaps via
+Ghostview) to provide publication quality graphical output. </p>
+<p> GNUDL is in the prototype stage (with alpha version 0.3 released in 2/96). 
+The source code for the prototype version is available and is known to compile 
+on Linux, IRIS and SunOS platforms. Installing GNUDL requires the prior 
+installation of the aforementioned Guile distribution. The documentation is 
+currently available online in hypertext format, having been translated from a 
+TeXinfo source file which is presumably also available. Binaries are available 
+for Win NT/95 platforms.</p>
+<p> This project was last updated in June 1996. The author says that the GNUDL 
+prototype 4 was as far as he got before he switched to starting and maintaining 
+the GSL (GNU Scientific Library) project. </p>
+<p><strong> [ftp://nis-ftp.lanl.gov/pub/users/rosalia/] <br>
+ [ 
+http://nis-www.lanl.gov/~rosalia/gnudl-doc/gnudl_toc.html] </strong> </p>
+<h2> GSL</h2> The GNU Scientific Library (GSL) is a collection of routines for 
+numerical computing. The routines have been written from scratch in C, and 
+present a modern Applications Programming Interface (API) for C programmers, 
+allowing wrappers to be written for very high level languages.
+<p><strong> [ http://www.gnu.org/software/gsl/] </strong> </p>
+<p> </p> 
+<ul> 
+<li> pygsl 
+<p> This project provides a python interface for the GNU scientific library 
+(gsl).</p>
+<p> <strong> [ http://pygsl.sourceforge.net/] </strong> </p></li> </ul> 
+<h2> Guile-numerics</h2> Guile-numerics provides Guile bindings for the GNU 
+Scientific Library (GSL), libsndfile, FFTW and LAPACK. Most bindings are 
+automatically generated from the include files of the libraries. This ensures 
+the bindings are up-to-date.
+<p> <strong> [ http://www.nongnu.org/guile-num/] </strong> </p>
+<h2> JNumeric</h2> JNumeric provides the functionality for Jython that 
+Numerical Python does for Python (CPython). As the Numerical Python 
+documentation states, it is &quot;...a collection of extension modules to 
+provide high-performance multidimensional numeric arrays to the Python 
+programming language.&quot; JNumeric provides the same functionality as the 
+core of Numeric module and aims to provide all of the standard extensions to 
+Numeric module (FFT, LinearAlgebra, RandomArray).
+<p> In effect, Numerical Python is a free alternative to commercial solutions 
+such as Matlab with the added bonus of the Python language which can be argue 
+to be much better than what can be found in most commercial solution. You have 
+to try Python to understand!</p>
+<p> Why Java? Using Python inside a JVM has advantages because you can embed 
+Python programs inside Java software or vice versa. Whereas mixing C and Python 
+must be done with care by people wide awake, mixing Java and Jython is a no 
+brainer. As far as performances are concerned, expect Jython to be as fast or 
+faster than Python.</p>
+<p> <strong> [ http://jnumerical.sourceforge.net/] </strong> </p>
+<h2> Lush</h2> Lush is an object-oriented programming language designed for 
+researchers, experimenters, and engineers interested in large-scale numerical 
+and graphic applications. Lush is designed to be used in situations where one 
+would want to combine the flexibility of a high-level, weakly-typed interpreted 
+language, with the efficiency of a strongly-typed, natively-compiled language, 
+and with the easy integration of code written in C, C++, or other languages.
+<p> Lush can be used advantageously for projects where one would otherwise use 
+a combination of an interpreted language like Matlab, Python, Perl, S+, or even 
+(gasp!) BASIC, and a compiled language like C. Lush brings the best of both 
+worlds by wrapping three languages into one: (1) a weakly-typed, 
+garbage-collected, dynamically scoped, interpreted language with a simple 
+Lisp-like syntax, (2) a strongly-typed, lexically-scoped compiled language that 
+uses the same Lisp-like syntax, and (3) the C language, which can be freely 
+mixed with Lush code within a single program, even within a single function. It 
+sounds complicated, but it is not. In fact, Lush is designed to be very simple 
+to learn and easy to use.</p>
+<p> If you do research and development in signal processing, image processing, 
+machine learning, computer vision, bio-informatics, data mining, statistics, 
+simulation, optimization, or artificial intelligence, and feel limited by 
+Matlab and other existing tools, Lush is for you. If you want a simple 
+environment to experiment with graphics, video, and sounds, Lush is for you.</p>
+<p> The features of Lush include: </p> 
+<ul> 
+<li>An easy way to interface C functions and libraries, and a powerful dynamic 
+linker/loader for object files or libraries (.o, .a and .so files) written in 
+other compiled languages.</li> 
+<li>The ability to freely mix Lisp and C in a single function. </li> 
+<li>A powerful set of vector/matrix/tensor operations </li> 
+<li>A huge library of over 10,000 numerical routines, including full 
+interfaces to GSL, LAPACK, and BLAS</li> 
+<li>A library of image and signal processing routines. </li> 
+<li>An extensive set of graphic routines, including an object-oriented GUI 
+toolkit, an interface to OpenGL/GLU/GLUT, and the OpenInventor scene rendering 
+engine.</li> 
+<li>An interface to the Simple Directmedia Layer (SDL) multimedia library, 
+including a sprite class with pixel-accurate collision detection (perfect for 
+2D games).</li> 
+<li>Sound and video grabbing (using ALSA and Video4Linux). </li> 
+<li>Several libraries for machine learning, neural net, statistical 
+estimation, Hidden Markov Models (gblearn2, Torch, HTK).</li> 
+<li>libraries for computer vision (OpenCV, Intel's open source Vision 
+Library), and 3D scene rendering (OpenInventor).</li> 
+<li>bindings to the JavaVM API and to the Python C API. </li> </ul> <strong> [ 
+http://lush.sourceforge.net/] </strong> 
+<h2> Maxima</h2> Maxima is a full symbolic computation program. It is full 
+featured doing symbolic manipulation of polynomials, matrices, rational 
+functions, integration, Todd-coxeter, graphing, bigfloats. It has a symbolic 
+debugger source level debugger for maxima code. Maxima is based on the original 
+Macsyma developed at MIT in the 1970's. It is quite reliable, and has good 
+garbage collection, and no memory leaks. It comes with hundreds of self tests.
+<p> Maxima itself is reasonably feature complete at this stage, with abilities 
+such as symbolic integration, 3D plotting, and an ODE solver, but there is a 
+lot of work yet to be done in terms of bug fixing, cleanup, and documentation. 
+This is not to say there will be no new features, but there is much work to be 
+done before that stage will be reached, and for now new features are not likely 
+to be our focus.</p>
+<p><strong> [ http://maxima.sourceforge.net/ </strong> </p>
+<h2> NCL</h2> NCL is a programming language designed specifically for the 
+analysis and visualization of data. NCL can be run in interactive mode, where 
+each line is interpreted as it is entered at your workstation, or it can be run 
+in batch mode as an interpreter of complete scripts. It is especially powerful 
+in the areas of file input and output, data processing and graphical display.
+<p> NCL has many features common to modern programming languages, including 
+types, variables, operators, expressions, conditional statements, loops, and 
+functions and procedures. In addition to common programming features, NCL also 
+has features that are not found in other programming languages, including 
+features that handle the manipulation of metadata, the configuration of the 
+output graphics, the import of data from a variety of data formats, and an 
+algebra that supports array operations.</p>
+<p> NCL comes with many useful built-in functions and procedures for 
+processing and manipulating data. There are over 400 functions and procedures 
+that include routines for:</p> 
+<ul> 
+<li>use specifically with climate and model data </li> 
+<li>computing empirical orthogonal functions, Fourier coefficients, singular 
+value decomposition, averages, standard deviations, sin, cosine, log, min, max, 
+etc.</li> 
+<li>retrieving and converting date information </li> 
+<li>drawing primitives (lines, filled areas, and markers), wind barbs, weather 
+map symbols, isosurfaces, and graphical objects</li> 
+<li>file handling </li> 
+<li>1-dimensional, 2-dimensional, and 3-dimensional interpolation, 
+approximation, and regridding</li> 
+<li>facilitating computer analysis of scalar and vector global geophysical 
+quantities (most are based on the package known as Spherepack)</li> 
+<li>retrieving environment variables and executing system commands </li> 
+<li>calling C and Fortran external routines, which makes NCL infinitely 
+configurable</li> </ul> NCL incorporates the functionality of several other 
+freely available packages including:
+<ul> 
+<li>HDF, HDF-EOS and NetCDF, libraries and formats for storing scientific data;
+</li> 
+<li> LAPACK, a library for solving linear algebra problems; </li> 
+<li> ngmath - a collection of routines for random data interpolation; </li> 
+<li> Spherepack - a library for the computer modeling of geophysical processes 
+on spheres;</li> 
+<li>UDUNITS, a library for manipulating units of physical quantities. </li> 
+</ul> 
+<p> <strong> [ http://ngwww.ucar.edu/ncl/] </strong> </p>
+<h2> Numarray</h2> Numarray provides array manipulation and computational 
+capabilities similar to those found in IDL, Matlab, or Octave. Using numarray, 
+it is possible to write many efficient numerical data processing applications 
+directly in Python without using any C, C++ or Fortran code (as well as doing 
+such analysis interactively within Python or PyRAF). For algorithms that are 
+not well suited for efficient computation using array facilities it is possible 
+to write C functions (and eventually Fortran) that can read and write numarray 
+arrays that can be called from Python.
+<p> Numarray is a re-implementation of an older Python array module called 
+Numeric. In general its interface is very similar. It is mostly backward 
+compatible and will be becoming more so in future releases. Numarray offers 
+more capability than numeric though there are some aspects of numarray which 
+are still behind Numeric, namely:</p>
+<p> </p> 
+<ul> 
+<li>numarray is efficient for large arrays (&gt;20,000 elements) but is slower 
+than Numeric for small arrays by a factor of 2 to 4.</li> 
+<li>numarray lacks a plotting module. A scientific plotting module is under 
+development (chaco) and a basic version should be available in a few months (as 
+well as basic image display capability).</li> 
+<li>numarray currently has ports of Numeric packages for linear algebra, 
+random numbers, and fourier transforms. numarray has native packages for 
+convolution and multi-dimensional image processing.</li> </ul> 
+<p><strong> [ http://www.stsci.edu/resources/software_hardware/numarray 
+</strong> </p>
+<p> </p> 
+<ul> 
+<li> NumPy Addons 
+<p> <strong> [ http://starship.python.net/crew/jhauser/numpyadds.html] 
+</strong> </p></li> </ul> 
+<h2> NumExp</h2> NumExp is a family of open-source applications for numeric 
+computation. When it was created, the idea was to make a powerfull tool like 
+Mathematica. Now, we know this is almost impossible without more open-source 
+hackers. Meanwhile, we are trying to make, at least, an usefull tool!
+<p> It is based on a server with the NumExp core functionalities. This server 
+comunicates with potencial clients using a simple Corba interface.</p>
+<p> <strong> [ http://numexp.sourceforge.net/] </strong> </p>
+<h2> Octave</h2> Octave is a high-level interactive language, primarily 
+intended for numerical computations that is mostly compatible with MATLAB. It 
+can do arithmetic for real and complex scalars and matrices, solve sets of 
+nonlinear algebraic equations, integrate functions over finite and infinite 
+intervals, and integrate systems of ordinary differential and 
+differential-algebraic equations. It uses the GNU readline library to handle 
+reading and editing input. By default, the line editing commands are similar to 
+the cursor movement commands used by GNU Emacs, and a vi-style line editing 
+interface is also available. At the end of each session, the command history is 
+saved, so that commands entered during previous sessions are not lost.
+<p> Octave supports 2- and 3-D plotting. The underlying numerical solvers are 
+currently standard Fortran ones like Lapack, Linpack, Odepack, the Blas, etc., 
+packaged in a library of C++ classes. If possible, the Fortran subroutines are 
+compiled with the system's Fortran compiler, and called directly from the C++ 
+functions. If that's not possible, you can still compile Octave if you have the 
+free Fortran to C translator f2c.</p>
+<p> Further Octave features include: </p> 
+<ul> 
+<li>support for organizing data in structures, e.g. associative arrays with 
+indices limited to strings;</li> 
+<li>variable-length argument and return lists; </li> 
+<li>built-in ODE and DAE solvers. </li> </ul> 
+<p><strong> [ http://www.octave.org/] </strong> </p>
+<p> </p> 
+<ul> 
+<li> GNU Octave Repository 
+<p> The GNU Octave Repository is intended to be a central location for custom 
+scripts, functions and extensions for GNU Octave. There is analphabetized list 
+of the over 600 functions in the repository.</p>
+<p> <strong> [ http://octave.sourceforge.net/] </strong> </p></li> </ul> 
+<h2> Omega Project</h2> Omega is a joint project with the goal of providing a 
+variety of open-source software for statistical applications. The Omega project 
+began in July, 1998, with discussions among designers responsible for three 
+current statistical languages (S, R, and Lisp-Stat), with the idea of working 
+together on new directions with special emphasis on web-based software, Java, 
+the Java virtual machine, and distributed computing. We encourage participation 
+by anyone wanting to extend computing capabilities in one of the existing 
+languages, to those interested in distributed or web-based statistical 
+software, and to those interested in the design of new statistical languages.
+<p><strong> [ http://www.omegahat.org/] </strong> </p>
+<h2> Ox</h2> Ox is an object-oriented matrix language with a comprehensive 
+mathematical and statistical function library. Matrices can be used directly in 
+expressions, for example to multiply two matrices, or to invert a matrix. Use 
+of the object oriented features is optional, but facilitates code re-use. The 
+syntax of Ox is similar to the C, C++ and Java languages. This similarity is 
+most clear in syntax items such as loops, functions, arrays and classes.
+<p> The console versions of Ox may be used free of charge for educational and 
+research purposes.</p>
+<p><strong> [http://www.nuff.ox.ac.uk/Users/Doornik/] </strong> </p>
+<h2> PACT</h2> PACT (Portable Application Code Toolkit) is a comprehensive, 
+integrated, and portable software development environment created for 
+applications having unique requirements not met with available software. By 
+defining a single, higher level, standard programming interface, it shields 
+appplication developers from the plethora of different hardware architectures 
+and operating systems and their non-standard features. PACT is a set of 
+libraries and utilities that easily integrates into your software project.
+<p> PACT is an effort to implement a software development environment which is 
+itself portable and promotes the design and construction of portable 
+applications. PACT does not include such important tools as editors and 
+compilers. Well built tools of that kind are readily available across virtually 
+all computer platforms. The areas that PACT addresses are at a higher level 
+involving issues such as data portability, portable inter-process 
+communication, and graphics.</p>
+<p> In its current conception, PACT is a set of nine tools. Eight of these are 
+implemented as libraries, and two of them provide both libraries and executable 
+applications. PACT is entirely coded in C but was designed with a view toward 
+support of other languages, notably FORTRAN. The design of PACT was and is 
+functionally driven. The main idea is to identify generic blocks of 
+functionality independent of considerations of language and specific 
+applications. When that has been done, the application program interface (API) 
+for a particular block of functionality, e.g. inter-process communication, 
+naturally emerges. With the API specified, the implementation proceeds fairly 
+naturally. The most important concept in making this approach work is that of 
+abstraction barriers. The API defines an abstraction barrier between the 
+general purpose functionality and the applications built on top of it. The 
+underlying implementation can be changed without necessitating changes to the 
+applications using it. This goal has not always been achieved, but the fact is 
+that it remains as a goal and PACT is always evolving toward that goal.</p>
+<p> PACT includes the following software libraries and applications: </p> 
+<ul> 
+<li>SCORE, a low-level environment balancing library; </li> 
+<li>PML, a math library; </li> 
+<li>PPC, a process control library; </li> 
+<li>PDB, a portable binary database management library; </li> 
+<li>SCHEME, an interpreter for the Scheme dialect of the LISP language; </li> 
+<li>PGS, a graphics library; </li> 
+<li>PANACEA, a simulation code development system; </li> 
+<li>ULTRA, a 1-D data representation, analysis and manipulation tool; and </li>
+<li>SX, Scheme with extensions. </li> </ul> 
+<p> Here's some further detail on the particularly interesting/useful 
+components.</p>
+<p> </p> 
+<ul> 
+<li>PANACEA 
+<p> PANACEA provides a collection of services to facilitate the production of 
+numerical simulation codes and to increase the reusability and shareability of 
+simulation packages. By attempting to provide services to do everything that is 
+generic to ?all? simulation codes, PANACEA also provides some standards of data 
+exchange, management, and visualization.</p>
+<p> Although coded in C, PANACEA is coded in an object-oriented style. The 
+most important ramification of this is that abstract objects (e.g., packages, 
+variables, and mappings) have a relatively faithful concrete representation. 
+This puts PANACEA on a sound conceptual basis and helps to delineate the 
+generic from the specific in simulation code systems.</p>
+<p> As an additional benefit, the modularization that follows from this style 
+lends itself to natural coarse-grained parallelization of code systems. In 
+practice, packages can also be organized so as to make fine grained 
+parallelization possible because the controlling structures and the data 
+objects of PANACEA do not really intrude into the detailed workings of the 
+simulation algorithms. Therefore, while PANACEA helps modularize a code system 
+so that packages or large parts of packages might be run in parallel, it does 
+not interfere with parallelizing individual routines which permit it.</p>
+<p> The encapsulation of abstract objects in concrete representations 
+facilitates the process of manipulating these objects symbolically. I have used 
+PANACEA with the PACT SCHEME interpreter to give users of one PANACEA code the 
+ability to manipulate the code in very broad and general ways.</p>
+<p> This technique allows the manipulation of the packages? execution 
+sequences, the examination of the state of the running code, and the changes in 
+the state of the code. When carried to its logical conclusion, this method will 
+also permit the prototyping of algorithms at the LISP level before investing 
+the effort in writing more efficient code at a lower level.</p>
+<p> Finally, PANACEA can bind simulation packages generated by a tool, such as 
+ALPAL, into entire code systems. PANACEA complements ALPAL very neatly by 
+attending to large control and data flow issues, while ALPAL uses the PANACEA 
+services rather than getting loaded down with these issues.</p></li> </ul> 
+<p><strong> [ http://pact.llnl.gov/] </strong> </p>
+<h2> PDL</h2> PDL (``Perl Data Language'') gives standard Perl the ability to 
+compactly store and speedily manipulate the large N-dimensional data arrays 
+which are the bread and butter of scientific computing.
+<p> PDL turns perl into a free, array-oriented, numerical language similar to 
+such commerical packages as IDL and MatLab. One can write simple perl 
+expressions to manipulate entire numerical arrays all at once.</p>
+<p> The PDL distribution for Perl is free Software and provides extensive 
+numerical and semi-numerical functionality with support for two- and 
+three-dimensional visualisation as well as a variety of I/O formats. The goal 
+is to allow PDL to interact with a variety of external numerical packages, 
+graphics and visualisation systems. Easy interfacing to such systems is one of 
+the core design features of PDL.</p>
+<p><strong> [ http://pdl.perl.org/] </strong> </p>
+<h2> PETSc</h2> PETSc is a suite of data structures and routines for the 
+scalable (parallel) solution of scientific applications modeled by partial 
+differential equations. It employs the MPI standard for all message-passing 
+communication. PETSc is intended for use in large-scale application projects, 
+and several ongoing computational science projects are built around the PETSc 
+libraries. With strict attention to component interoperability, PETSc 
+facilitates the integration of independently developed application modules, 
+which often most naturally employ different coding styles and data structures.
+<p> PETSc is easy to use for beginners. Moreover, its careful design allows 
+advanced users to have detailed control over the solution process. PETSc 
+includes an expanding suite of parallel linear and nonlinear equation solvers 
+that are easily used in application codes written in C, C++, and Fortran. PETSc 
+provides many of the mechanisms needed within parallel application codes, such 
+as simple parallel matrix and vector assembly routines that allow the overlap 
+of communication and computation. In addition, PETSc includes growing support 
+for distributed arrays.</p>
+<p> The features of PETSc include: </p> 
+<ul> 
+<li>Parallel vector scatters and gathers; </li> 
+<li>Parallel matrices, including several sparse storage formats and easy, 
+efficient assembly;</li> 
+<li>Scalable parallel preconditioners; </li> 
+<li>Krylov subspace methods; </li> 
+<li>Parallel Newton-based nonlinear solvers; </li> 
+<li>Parallel timestepping (ODE) solvers; </li> 
+<li>Automatic profiling of floating point and memory usage; </li> 
+<li>Consistent interface; </li> 
+<li>Intensive error checking; </li> 
+<li>Over one hundred examples; </li> 
+<li>Complete documentation; </li> 
+<li>Portable to UNIX and Windows. </li> </ul> 
+<p><strong> [ http://www-unix.mcs.anl.gov/petsc/petsc-2/ </strong> </p>
+<h2> PsiLAB</h2> PsiLAB has been developed for scientific research and data 
+analysis. It is freely distributed in source code format under Gnu Public 
+License, version 2. PsiLAB is written mainly in the functional language O'CaML 
+developed at INRIA research laboratories. It's mainly made of three parts:
+<ul> 
+<li>An interpreter, of course O'CaML itself </li> 
+<li>Libraries written in O'CaML </li> 
+<li>External libraries written in Fortran and C </li> </ul> The features of 
+PsiLAB include:
+<ul> 
+<li>support for all O'CaML functions and data types; </li> 
+<li>an extensive matrix package; </li> 
+<li>a 2- and 3-D plot package with interactive or PostScript output; </li> 
+<li>various generic and special mathematical functions; </li> 
+<li>a linear algebra package; </li> 
+<li>linear regression; </li> 
+<li>nonlinear least squares fit routines; </li> 
+<li>FFTs; </li> 
+<li>image processing functions; and </li> 
+<li>an online help system. </li> </ul> 
+<p> <strong> [ http://psilab.sourceforge.net/] </strong> </p>
+<h2> Ptolemy</h2> The Ptolemy project studies modeling, simulation, and design 
+of concurrent, real-time, embedded systems. The focus is on assembly of 
+concurrent components. The key underlying principle in the project is the use 
+of well-defined models of computation that govern the interaction between 
+components. A major problem area being addressed is the use of heterogeneous 
+mixtures of models of computation.
+<p> Ptolemy II is a set of Java packages supporting heterogeneous, concurrent 
+modeling and design. Its kernel package supports clustered hierarchical graphs, 
+which are collections of entities and relations between those entities. Its 
+actor package extends the kernel so that entities have functionality and can 
+communicate via the relations. Its domains extend the actor package by imposing 
+models of computation on the interaction between entities. Examples of models 
+of computation include discrete-event systems, dataflow, process networks, 
+synchronous/reactive systems, and communicating sequential processes. Ptolemy 
+II includes a number of support packages, such as graph, providing 
+graph-theoretic manipulations, math, providing matrix and vector math and 
+signal processing functions, plot, providing visual display of data, data, 
+providing a type system, data encapsulation and an expression parser, etc.</p>
+<p> Ptolemy Classic is a heterogeneous simulation and design environment 
+supporting multiple models of computation. It is written in C++, and has a (now 
+rather old) graphical user interface for constructing models visually as block 
+diagrams. It supports dataflow, discrete-event, process networks, 
+synchronous/reactive, and finite-state machine models of computation. It can 
+generate implementations in C and assembly code for at least two programmable 
+DSPs from certain dataflow descriptions of systems.</p>
+<p><strong> [ http://ptolemy.eecs.berkeley.edu/] </strong> </p>
+<h2> Quantian</h2> Quantian is a remastering of Knoppix, the self-configuring 
+and directly bootable cdrom that turns any pc or laptop (provided it can boot 
+from cdrom) into a full-featured Linux workstation. The more recent versions of 
+Quantian are based on clusterKnoppix and add support for openMosix, including 
+remote booting of light clients in an openMosix terminal server context.
+<p> However, Quantian differs from Knoppix by adding a set of programs of 
+interest to applied or theoretical workers in quantitative or data-driven 
+fields. The added quantitative, numerical or scientific programs comprise:</p> 
+<ul> 
+<li>R, including several add-on packages (such as tseries, RODBC, coda, 
+mcmcpack, gtkdevice, rgtk, rquantlib, qtl, dbi, rmysql), out-of-the box support 
+for the powerful ESS modes for XEmacs as well as the Ggobi visualisation 
+program;</li> 
+<li>Octave, with add-on packages octave-forge, octave-sp, octave-epstk, 
+matwrap and Inline::Octave;</li> 
+<li>Computer-algebra systems Maxima (including the X11 front-end and emacs 
+support), Pari/GP, GAP, GiNaC and YaCaS;</li> 
+<li>GSL, the Gnu Scientific Library (GSL) including example binaries; </li> 
+<li>the QuantLib quantitative finance library including its Python interface; 
+</li> 
+<li>the Grass geographic information system; </li> 
+<li>the OpenDX and Mayavi data visualisation systems; </li> 
+<li>TeXmacs for wysiwyg scientific editing as well as LyX and kile for wysiwyg 
+(La)TeX editing;</li> 
+<li>various Python modules including Scientific and Numeric Python; </li> 
+<li>and various other programs such as apcalc, aplus, aribas, autoclass, 
+euler, evolver, freefem, gambit, geg, geomview, ghemical, glpk, gnuplot, 
+gperiodic, gri, gmt, gretl, lp-solve, mcl, mpqc, multimix, rasmol, plotutils, 
+pgapack, pspp, pdl, rcalc, yorick, XLisp-Stat and xppaut.</li> </ul> 
+<p> <strong> [ http://dirk.eddelbuettel.com/quantian.html] </strong> </p>
+<h2> R</h2> R is a language and environment for statistical computing and 
+graphics. It is a GNU project which is similar to the S language and 
+environment which was developed at Bell Laboratories (formerly AT&amp;T, now 
+Lucent Technologies) by John Chambers and colleagues. R can be considered as a 
+different implementation of S. There are some important differences, but much 
+code written for S runs unaltered under R.
+<p> R provides a wide variety of statistical (linear and nonlinear modelling, 
+classical statistical tests, time-series analysis, classification, clustering, 
+...) and graphical techniques, and is highly extensible. The S language is 
+often the vehicle of choice for research in statistical methodology, and R 
+provides an Open Source route to participation in that activity.</p>
+<p> One of R's strengths is the ease with which well-designed 
+publication-quality plots can be produced, including mathematical symbols and 
+formulae where needed. Great care has been taken over the defaults for the 
+minor design choices in graphics, but the user retains full control.</p>
+<p> R is an integrated suite of software facilities for data manipulation, 
+calculation and graphical display. It includes:</p> 
+<ul> 
+<li>an effective data handling and storage facility, </li> 
+<li>a suite of operators for calculations on arrays, in particular matrices, 
+</li> 
+<li>a large, coherent, integrated collection of intermediate tools for data 
+analysis,</li> 
+<li>graphical facilities for data analysis and display either on-screen or on 
+hardcopy, and</li> 
+<li>a well-developed, simple and effective programming language which includes 
+conditionals, loops, user-defined recursive functions and input and output 
+facilities.</li> </ul> 
+<p> R, like S, is designed around a true computer language, and it allows 
+users to add additional functionality by defining new functions. Much of the 
+system is itself written in the R dialect of S, which makes it easy for users 
+to follow the algorithmic choices made. For computationally-intensive tasks, C, 
+C++ and Fortran code can be linked and called at run time. Advanced users can 
+write C code to manipulate R objects directly.</p>
+<p><strong> [ http://www.r-project.org/] </strong> </p>
+<p> </p> 
+<ul> 
+<li> RPy 
+<p> RPy is a very simple, yet robust, Python interface to the R Programming 
+Language. It can manage all kinds of R objects and can execute arbitrary R 
+functions (including the graphic functions). All errors from the R language are 
+converted to Python exceptions. Any module installed for the R system can be 
+used from within Python.</p>
+<p> <strong> [ http://rpy.sourceforge.net/] </strong> </p></li> </ul> 
+<h2> RLaB</h2> &quot;Our&quot;-lab is an interactive, interpreted scientific 
+programming environment. This is a very high level language intended to provide 
+fast prototyping and program development along with easy data visualization and 
+processing. It is not aMatlab (i.e. it wasn't designed to run Matlab programs) 
+but possesses similar operators and concepts due to a similar purpose, i.e. 
+creating an experimental environment or laboratory for scientific programming.
+<p> RLaB is called a high level language because typing and dimensioning of 
+variables aren't performed by the user but rather are inferred by the program 
+from usage context. It is also high level due to its interactivity which allows 
+the user to set up, perform, and visualize experiments in real time in the 
+context of a single environment. The structured language in RLaB is similar to 
+C in that a program is sequence of functions acting on variables, with the 
+functions being either built-in or user defined. It also features strongly 
+typed objects in classes. The classes are numeric, string, function, and list 
+with the numeric class encompassing scalars, vectors and matrices. Functions 
+are also objects and as such can call or be called by other functions, 
+including themselves.</p>
+<p> The build-in functions generally are those that operate on either scalars, 
+vectors or matrices. Scalar functions include trig functions, rounding, 
+absolute values, square roots, etc. Vector functions include sum, products, 
+means, max/min, FFT, sort, etc. Matrix functions include Cholesky 
+decomposition, eigenvalue determination, determinants, inverses, norms, and 
+much more. Plotting is performed using either thePLplot library or Gnuplot. 
+This allows the creation, viewing and printing of the usual range of 2- and 3-D 
+and histogram plots.</p>
+<p> The source code for RLaB is available as well as binaries for Linux, DOS, 
+OS/2, Mac and Acorn platforms. Installation from source requires other packages 
+such asBLAS, LAPACK, FFTPACK, RANLIB, and either PLplot or Gnuplot as mentioned 
+above. The documentation includes a tutorial and a manual for the built-in 
+functions in both HTML and PostScript format. The June 1996 issue of theLinux 
+Journal has an article about RLaB written by its creator, Ian Searle. </p>
+<p><strong> [ http://rlab.sourceforge.net/] </strong> </p>
+<h2> ROOT</h2> The ROOT system provides a set of OO frameworks with all the 
+functionality needed to handle and analyse large amounts of data in a very 
+efficient way. Having the data defined as a set of objects, specialised storage 
+methods are used to get direct access to the separate attributes of the 
+selected objects, without having to touch the bulk of the data. Included are 
+histograming methods in 1, 2 and 3 dimensions, curve fitting, function 
+evaluation, minimisation, graphics and visualization classes to allow the easy 
+setup of an analysis system that can query and process the data interactively 
+or in batch mode.
+<p> Thanks to the builtin CINT C++ interpreter the command language, the 
+scripting, or macro, language and the programming language are all C++. The 
+interpreter allows for fast prototyping of the macros since it removes the time 
+consuming compile/link cycle. It also provides a good environment to learn C++. 
+If more performance is needed the interactively developed macros can be 
+compiled using a C++ compiler.</p>
+<p> The system has been designed in such a way that it can query its databases 
+in parallel on MPP machines or on clusters of workstations or high-end PC's. 
+ROOT is an open system that can be dynamically extended by linking external 
+libraries. This makes ROOT a premier platform on which to build data 
+acquisition, simulation and data analysis systems.</p>
+<p> The backbone of the ROOT architecture is a layered class hierarchy with, 
+currently, around 310 classes grouped in about 24 frameworks divided in 14 
+categories. This hierarchy is organized in a mostly single-rooted class 
+library, that is, most of the classes inherit from a common base class. The 
+class categories include:</p> 
+<ul> 
+<li>the basic ROOT classes containing the low-level building blocks; </li> 
+<li>container classes for general purpose data structures; </li> 
+<li>physics classes; </li> 
+<li>matrix and vector classes; </li> 
+<li>histogram and minimization classes; </li> 
+<li>tree and ntuple classes containing the tree system; </li> 
+<li>2-D graphics classes; </li> 
+<li>3-D graphics classes; </li> 
+<li>image processing classes; </li> 
+<li>detector geometry classes; </li> 
+<li>graphical user interface (GUI) classes; </li> 
+<li>interactive interface classes with a C++ interpreter; </li> 
+<li>operating system interface classes; </li> 
+<li>networking classes; </li> 
+<li>interface to MySQL classes; and </li> 
+<li>documentation classes. </li> </ul> 
+<p> <strong> [ http://root.cern.ch/] </strong> </p>
+<h2> SciCraft</h2> SciCraft is a data analysis software which allows the user 
+to access advanced methods in statistics, chemometrics and artificial 
+intelligence through an easy-to-use graphical user interface (GUI).
+<p> Many scientific fields experience an enormous increase in produced data 
+and thus need the availability of effective data analysis software.</p>
+<p> Commercial data analysis software packages exist that can be used, however 
+they are often expensive, have a limited number of methods available and are 
+very restrictive with their licenses. Combining the methods with external 
+software usually requires time-consuming data format and interface handling 
+that hinders the investigator.</p>
+<p> SciCraft is an open source data analysis software which solves these 
+problems through an intuitive and user friendly framework where existing 
+methods written in any programming language can easily be combined. It provides 
+integration of a large number of methods from multiple sources such that the 
+user does not need to be concered with problems related to data 
+imports/exports, file formats and automation. The user can concentrate on the 
+scientific aspects of data analysis without technical distractions.</p>
+<p> Even though SciCraft can communicate in principle with any type of 
+computer language, we have found it useful to concentrate on high level 
+languages that are suited for rapid development of data analysis algorithms. 
+Examples of such languages are Octave, SciLab (Matlab clones) and R (S-PLUS 
+clone). Currently, SciCraft supports Octave, R and Python.</p>
+<p> <strong> [ http://www.scicraft.org/] </strong> </p>
+<h2> Scilab</h2> Scilab is a scientific software package for numerical 
+computations providing a powerful open computing environment for engineering 
+and scientific applications. Developed since 1990 by researchers from INRIA and 
+ENPC, it is now maintained and developed by Scilab Consortium since its 
+creation in May 2003. Distributed freely and open source (see the license) via 
+the Internet since 1994, Scilab is currently being used in educational and 
+industrial environments around the world.
+<p> Scilab includes hundreds of mathematical functions with the possibility to 
+add interactively programs from various languages (C, Fortran...). It has 
+sophisticated data structures (including lists, polynomials, rational 
+functions, linear systems...), an interpreter and a high level programming 
+language.</p>
+<p> Scilab has been designed to be an open system where the user can define 
+new data types and operations on these data types by using overloading.</p>
+<p> The toolboxes available with Scilab include: </p> 
+<ul> 
+<li>2-D and 3-D graphics, animation </li> 
+<li>Linear algebra, sparse matrices </li> 
+<li>Polynomials and rational functions </li> 
+<li>Simulation: ODE solver and DAE solver </li> 
+<li>Scicos: a hybrid dynamic systems modeler and simulator </li> 
+<li>Classic and robust control, LMI optimization </li> 
+<li>Differentiable and non-differentiable optimization </li> 
+<li>Signal processing </li> 
+<li>Metanet: graphs and networks </li> 
+<li>Parallel Scilab using PVM </li> 
+<li>Statistics </li> 
+<li>Interface with Computer Algebra (Maple, MuPAD) </li> 
+<li>Interface with Tcl/Tk </li> </ul> 
+<p><strong> [ http://scilabsoft.inria.fr/] </strong> </p>
+<h2> SCIrun</h2>a SCIRun is a problem solving environment (PSE) that allows 
+the interactive construction, debugging, and steering of large-scale scientific 
+computations. The mission of the project is to release state-of-the-art 
+software, data sets, and documentation for researchers investigating 
+bioelectric field problems.
+<p> SCIrun provides a component model, based on generalized dataflow 
+programming, that allows different computational components and visualization 
+components to be connected together in a tightly integrated fashion. SCIrun 
+facilitates the interactive construction, debugging and steering of 
+large-scale, typically parallel, scientific computations. It can be envisioned 
+as a computational workbench, in which a scientist can design and modify 
+simulations interactively via a component-based visual programming model. It 
+allows scientists to modify geometric models and interactively change numerical 
+parameters and boundary conditions, as well as to modify the level of mesh 
+adaptation needed for an accurate numerical solution.</p>
+<p><strong> [ http://software.sci.utah.edu/scirun.html] </strong> </p>
+<h2> SLATEC</h2> A library of general purpose mathematical and statistical 
+routines written in Fortran 77. The latest version (4.1) was released in 1993 
+and contains 902 routines. SLATEC is the result of a project to develop 
+portable, non-proprietary mathematical software for several government research 
+sites. The library is described in greater detail in the SLATEC Guide and the 
+contents can be perused in the SLATEC Table of Contents. The entire library can 
+be snagged in one large compressed file or individual routines can be accessed 
+in a subdirectory at the Web site.
+<p><strong> [http://www.netlib.org/slatec/] </strong> </p>
+<h2> Tela</h2> The <strong>TE</strong>nsor <strong>LA</strong>nguage is a 
+scientific computing language and environment mainly targeted for prototyping 
+and performing pre- and post-processing tasks for large-scale numerical 
+simulations. As such its features are biased towards those needed to solve 
+partial differential equations. This is indeed a prototyping package so even 
+though modest-sized 2-D simulations can be done in a reasonable amount of time 
+it probably wouldn't be a good idea to attempt large 2-D or 3-D simulations.
+<p> The features of Tela include a copmlete Fortran 90 style array language, 
+fast execution in interpreted mode (with a translator to C++ in the works), a 
+full suite of linear algebra tools, a full set of fast Fourier transform 
+routines, the capability of running UNIX system commands from within Tela, the 
+capability of working with files in HDF, netCDF, ASCII, MATLAB, and PBM 
+formats, and several built-in numerical analysis routines, e.g. linear 
+interpolation, integration, root finding, nonlinear fitting, etc. The graphics 
+capabilities, accomplished via a linkage with a separate programPlotMTV, 
+included 2-D and 3-D line and curve, contour, density, vector field, and 
+surface plots as well as bar charts and histograms. Plots and be overlaid and 
+stacked and saved in PostScript or GIF format.</p>
+<p> Tela is written in C++ and has been compiled on SGI, Linux, Sun, Cray, 
+IBM, HP, Sun and DEC platforms. The available source code can be compiled 
+usingGCC/G++ and also with some native C++ compilers. Binaries are available 
+for Cray, HP, IBM, Linux, SGI and Sun machines. Documentation includes a user's 
+guide in PostScript format as well as online help files, man pages and some 
+selected PlotMTV documentation.</p>
+<p><strong> [http://sumppu.fmi.fi/prog/tela.html] </strong> </p>
+<h2> VisAD</h2> VisAD is a Java component library for interactive and 
+collaborative visualization and analysis of numerical data. The name VisAD is 
+an acronym for &quot;Visualization for Algorithm Development&quot;. The system 
+combines:
+<ul> 
+<li>The use of pure Java for platform independence and to support data sharing 
+and real-time collaboration among geographically distributed users. Support for 
+distributed computing is integrated at the lowest levels of the system using 
+Java RMI distributed objects.</li> 
+<li>A general mathematical data model that can be adapted to virtually any 
+numerical data, that supports data sharing among different users, different 
+data sources and different scientific disciplines, and that provides 
+transparent access to data independent of storage format and location (i.e., 
+memory, disk or remote). The data model has been adapted to netCDF, HDF-5, 
+FITS, HDF-EOS, McIDAS, Vis5D, GIF, JPEG, TIFF, QuickTime, ASCII and many other 
+file formats.</li> 
+<li>A general display model that supports interactive 3-D, data fusion, 
+multiple data views, direct manipulation, collaboration, and virtual reality. 
+The display model has been adapted to Java3D and Java2D and used in an 
+ImmersaDesk virtual reality display.</li> 
+<li>Data analysis and computation integrated with visualization to support 
+computational steering and other complex interaction modes.</li> 
+<li>Support for two distinct communities: developers who create domain- 
+specific systems based on VisAD, and users of those domain-specific systems. 
+VisAD is designed to support a wide variety of user interfaces, ranging from 
+simple data browser applets to complex applications that allow groups of 
+scientists to collaboratively develop data analysis algorithms.</li> 
+<li>Developer extensibility in as many ways as possible. </li> </ul> 
+<p> <strong> [ http://www.ssec.wisc.edu/~billh/visad.html] </strong> </p>
+<h2> XLispStat</h2> An extensible statistical computing environment for data 
+analysis, statistical instruction and research with an emphasis on providing a 
+framework for exploring the use of dynamic graphical methods. Extensibility was 
+achieved by building it on top of the XLisp language, a Lisp dialect that is 
+most closely related to Common Lisp although it also contains some extensions 
+to support object oriented programming. The window system interface was 
+designed to work identically in different GUI environments (e.g. Mac OS, X 
+Windows and MS Windows)
+<p> The prototype object-oriented programming system is used to implement the 
+graphics system as well as to implement statistical model representations such 
+as linear and nonlinear regression and generalized linear models. The 
+statistical modeling features were enhanced by adding extensions to standard 
+Lisp arithmetic operations to perform element-wise operations on lists and 
+vectors and also by adding a variety of basic statistical and linear algebra 
+functions. The statistical functions include functions to return the density 
+and quantiles for a number of types of distributions, to compute means and 
+medians, to perform max/min tasks, to compute lists of random numbers, and many 
+more. Plotting functions include those to create boxplots, histograms, x-y 
+plots, scatter plots, probability and contour plots, and to rotate plots in 3-D 
+space.</p>
+<p> Implementations of XLispStat are available for Macintosh, Ms Windows and 
+UNIX/X11 systems, with the first two available in binary and the latter in 
+source form. I had no problems compiling and installing it on my Linux 
+platform. The available documentation includes a somewhat dated book, a more 
+up-to-date tutorial introduction and several technical reports. All but the 
+book are available in both HTML and PostScript format. The XLisp language 
+implementation is included in the XLispStat package but is also available 
+separately.</p>
+<p><strong> [ http://www.stat.uiowa.edu/~luke/xls/xlsinfo/xlsinfo.html] 
+</strong> </p>
+<h2> Yorick</h2> An interpreted language for scientific computation. It 
+includes scientific visualization functions, text and binary input/output 
+functions for reading and writing huge amounts of numbers, and basic linear 
+algebra functions adapted from theLAPACK library. Interpreted programs can run 
+at speeds up to 20% of optimized compiled speed, which makes it fast enough to 
+do reasonably large calculations by itself or to be used as a pre- and 
+post-processor for large, complicated physics simulation codes, e.g. it can be 
+used to create complicated input files for a simulation or to compare the 
+results of several simulations.
+<p> The features of Yorick include C-like syntax for the interpreted language 
+with declarative statements, explicit array operations that don't require 
+creating explicit loops, an X Window system interactive graphics package that 
+concentrates on x-y plots and filling and contouring quadrilateral meshes, 
+hardcopy output to binary CGM or PostScript files (with a separate CGM 
+browser), a binary file package that can read or write floating point formats 
+foreign to the machine on which it is running, a growing library of functions 
+written in the native language (e.g. Bessel and gamma functions; fitting by 
+least squares, spline or rational functions; reading and writingNetCDF files, 
+etc.), and provisions for embedding compiled subroutines and functions within 
+the Yorick interpeter (for which an example package is provided).</p>
+<p> The source code (written in ANSI C) is available with a configure script 
+that recognizes Sun, HP, SGI, Cray, IBM, DEC Alpha and Linux platforms, and a 
+Mac port is available in binary form. The documentation available includes 
+PostScript and HTML versions of a user's manual as well as some flat ASCII 
+files containing descriptions of the available functions and the graphics 
+package.</p>
+<p><strong> [ http://wuarchive.wustl.edu/languages/yorick/doc/] </strong> </p>
+<p></p> 
+<p> </p> <br>
+<br>
+<br>
+
+<p> S. Baum<br>
+ Dept. of Oceanography<br>
+ Texas A&amp;M University<br>
+</p> 
+baum@stommel.tamu.edu 
+</body>

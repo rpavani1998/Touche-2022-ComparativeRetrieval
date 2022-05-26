@@ -1,0 +1,594 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Using &quot;Natural&quot;: A NLP Module for node.js | Python Zone</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>Cloud Zone</li> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Enterprise Integration</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Solr-Lucene Zone <br>
+<strong>Did you know? DZone has great portals for Python, 
+Cloud, NoSQL, and HTML5!</strong> Solr-Lucene Zone is brought to you in 
+partnership with: <br>
+<br>
+<b>Christopher Umbel</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> </ul> 
+<p> Chris Umbel is a polyglot programmer who uses JRuby, Java and C to develop 
+control systems for robotic tape libraries, automate video encoding clusters 
+and develop cloud-based backup system back-ends. Outside of the office he 
+focuses on developing open source machine learning and natural language 
+processing tools. Christopher is a DZone MVB and is not an employee of DZone 
+and has posted 1 posts at DZone. You can read more from them attheir website. 
+View Full User Profile</p> 
+<h1>Using &quot;Natural&quot;: A NLP Module for node.js</h1>  03.27.2012  Email
+<br>  Views: 3819 <br>
+
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> <em>This search technology content is part of the Solr-Lucene 
+Microzone, supported byLucid Imagination, a company of Solr/Lucene all-stars 
+that provides free distributions, training, and a search application 
+development platform calledLucidWorks Enterprise.</em> 
+<h3>Recommended Links</h3> 
+<h4>Programmers Guide_Full-Text Search Over RDBMS Data</h4> 
+<h4>Starting a Search Application</h4> 
+<h4>E-Commerce Search Strategies</h4> 
+<h4>Getting Started With LucidWorks Enterprise</h4> 
+<h4>Solr Whitepaper Package</h4> 
+<p>Like this piece? Share it with your friends:</p> | More <br>
+<br>
+Whether 
+it is for twitter sentiment analysis or for solving search problems natural 
+language processing (NLP) has become the fulcrum of much of my hobby work in 
+recent years. Initially I usually found myself relying on the&nbsp;Natural 
+Language Toolkit (NLTK)&nbsp;which is a rich library of NLP algorithms for&nbsp;
+Python. The NLTK is simply fantastic. It's a true one-stop-NLP-shop that's 
+widely adopted, well documented, and open source. Certainly I had to learn what 
+the algorithms did and how they fit together but for the most part the hard 
+work was done for me. It was a very productive situation, to be sure!
+<p>Last year, however, brought a new platform to my hobby work:&nbsp;node.js. 
+My, node and its community were young but maturing rapidly.</p> 
+<p>When the need for natural language facilities arose and I found the 
+pickings pretty slim. I have to be honest. That's *exactly* what I was hoping 
+for; an opportunity to sink my teeth into the algorithms themselves and 
+contribute them back to a young, but growing, community.</p> 
+<p>Thus I began work on&nbsp;&quot;natural&quot;, a module of base natural 
+languages processing algorithms for node.js. The idea was loosely based on the 
+Python NLTK in that all algorithms are in the same package. Initially I didn't 
+think &quot;natural&quot; could be as complete as the NLTK, but as my own 
+understanding as well as community contributions picked up I've become much 
+more hopeful. Also, merging with Rob Ellis's node-nltools back in August of 
+2011 strengthened &quot;natural&quot; further by rapidly bringing new 
+algorithms and features into the fold.</p> 
+<p>As of version 0.1.5 Rob, other contributors, and I have managed to get the 
+following feature list together:</p> 
+<ul> 
+<li>Stemming 
+<ul> 
+<li>Porter</li> 
+<li>Lancaster</li> </ul></li> 
+<li>Phonetic 
+<ul> 
+<li>SoundEx</li> 
+<li>Metaphone</li> 
+<li>Double Metaphone</li> </ul></li> 
+<li>Classification 
+<ul> 
+<li>Naive Bayes</li> 
+<li>Logistic Regression</li> </ul></li> 
+<li>String Distance 
+<ul> 
+<li>Levenshtein (thanks Sid Nallu)</li> 
+<li>Jaro-Winkler (thanks Adam Phillabaum)</li> 
+<li>Dice's Coefficient (thanks John Crepezzi)</li> </ul></li> 
+<li>Tokenization 
+<ul> 
+<li>Treebank</li> 
+<li>Word</li> 
+<li>Word-Punctuation</li> </ul></li> 
+<li>Inflection 
+<ul> 
+<li>Numeric</li> 
+<li>Nouns Singular/Pluralization</li> 
+<li>Present-tense verb Singular/Pluralization</li> </ul></li> 
+<li>tf*idf</li> 
+<li>n-grams</li> 
+<li>WordNet</li> </ul> 
+<p>I'll not cover every single module and feature in this article, but will 
+instead outline what's the most commonly used and most mature.</p> 
+<p><strong>Installing</strong></p> 
+<p>Like most node modules &quot;natural&quot; is packaged as an NPM and can be 
+installed from the command line as such:</p> 
+<pre>npm install natural</pre> 
+<p>If you want to install from source (or contribute for that matter) it can 
+be found&nbsp;here on GitHub.</p> 
+<p><strong>Stemming</strong></p> 
+<p>The first class of algorithms I'd like to outline is stemming. Stemming is 
+the processes of reducing a word to a root (not necessarily the morphological 
+root). In other words the idea is to boil all conjugations, tenses and forms 
+down to a single root word. That root may not end up looking exactly like the 
+English root, but should be close enough for comparison.</p> 
+<p>Stemming is a typical step in preparing text for use by other algorithms or 
+storage such as classification or even full-text indexing. Both the Lancaster 
+and Porter algorithms are supported as of 0.1.5. Here's a basic example of 
+stemming a word with a Porter Stemmer.</p> 
+<pre>var natural = require('natural'), stemmer = natural.PorterStemmer; var 
+stem = stemmer.stem('stems'); console.log(stem); stem = 
+stemmer.stem('stemming'); console.log(stem); stem = stemmer.stem('stemmed'); 
+console.log(stem); stem = stemmer.stem('stem'); console.log(stem);</pre> 
+<p>Above I simply required-up the main &quot;natural&quot; module and grabbed 
+the PorterStemmer sub-module from within. Calling the &quot;stem&quot; function 
+takes an arbitrary string and returns the stem. The above code returns the 
+following output:</p> 
+<pre>stem stem stem stem</pre> 
+<p>For convenience stemmers can patch String with methods to simplify the 
+process by calling the&nbsp;<em>attach</em>&nbsp;method. String objects will 
+then have a&nbsp;<em>stem</em>&nbsp;method.</p> 
+<pre>stemmer.attach(); stem = 'stemming'.stem(); console.log(stem);</pre> 
+<p>It's very possible you'd be interested in stemming a string composed of 
+many words, perhaps an entire document. The&nbsp;<em>attach</em>&nbsp;method 
+provides a&nbsp;<em>tokenizeAndStem</em>&nbsp;method to accomplish this. It 
+breaks the owning string up into an array of strings, one for each word, and 
+stems them all. For example:</p> 
+<pre>var stems = 'stems returned'.tokenizeAndStem(); console.log(stems);</pre> 
+<p>produces the output:</p> 
+<pre>[ 'stem', 'return' ]</pre> 
+<p>Note that the&nbsp;<em>tokenizeAndStem</em>&nbsp;method will omit certain 
+words by default that are considered irrelevant (stop words) from the return 
+array. To instruct the stemmer to not omit stop words pass a<em>true</em>
+&nbsp;in to&nbsp;<em>tokenizeAndStem</em>&nbsp;for the&nbsp;<em>keepStops</em>
+&nbsp;parameter. Consider:</p> 
+<pre>console.log('i stemmed words.'.tokenizeAndStem()); console.log('i stemmed 
+words.'.tokenizeAndStem(true));</pre>outputting: 
+<pre>[ 'stem', 'word' ] [ 'i', 'stem', 'word' ]</pre> 
+<p>All of the code above would also work with a Lancaster stemmer by requiring 
+the LancasterStemmer module instead, like:</p> 
+<pre>var natural = require('natural'), stemmer = natural.LancasterStemmer;
+</pre> 
+<p>Of course the actual stems produced could be different depending on the 
+algorithm chosen. The Lancaster stemmer tends to be a bit more agressive 
+resulting in roots that look less like their English equivalents, but will 
+likely perform better.</p> 
+<p><strong>Phonetics</strong></p> 
+<p>Phonetic algorithms are also provided to determine what words sound like 
+and compare them accordingly. The old (and I mean pre-electronic computers 
+old... like 1918 old) SoundEx and the more modern Metaphone/Double Metaphone 
+algorithms are supported as of 0.1.5.</p> 
+<p>The following example compares the string &quot;phonetics&quot; and the 
+intentional misspelling &quot;fonetix&quot; and determines they sound alike 
+according to the Metaphone module but the same pattern could be applied to the 
+DoubleMetaphone or SoundEx modules.</p> 
+<pre>var natural = require('natural'), phonetic = natural.Metaphone; var wordA 
+= 'phonetics'; var wordB = 'fonetix'; if(phonetic.compare(wordA, wordB)) 
+console.log('they sound alike!');</pre> 
+<p>The raw code the phonetic algorithm produces can be retrieved with the&nbsp;
+<em>process</em>&nbsp;method:</p> 
+<pre>var phoneticCode = phonetic.process('phonetics'); 
+console.log(phoneticCode);</pre> 
+<p>resulting in:</p> 
+<pre>FNTKS</pre> 
+<p>Like the stemming implementations the phonetic modules have an&nbsp;<em>
+attach</em>&nbsp;method that patches String with shortcut methods, most 
+notably&nbsp;<em>soundsLike</em>&nbsp;for comparison:</p> 
+<pre>phonetic.attach(); if(wordA.soundsLike(wordB)) console.log('they sound 
+alike!');</pre> 
+<p><em>attach</em>&nbsp;also patches in a&nbsp;<em>phonetics</em>
+&nbsp;and&nbsp;<em>tokenizeAndPhoneticize</em>&nbsp;methods to retrieve the 
+phonetic code for a single word and an entire corpus respectively.</p> 
+<pre>console.log('phonetics'.phonetics()); console.log('phonetics 
+rock'.tokenizeAndPhoneticize());</pre> 
+<p>which outputs:</p> 
+<pre>FNTKS [ 'FNTKS', 'RK' ]</pre> 
+<p>The above could could also use SoundEx by substituting the following in for 
+the require.</p> 
+<pre>var natural = require('natural'), phonetic = natural.SoundEx;</pre> 
+<p>Note that SoundEx and Metaphone may have trouble with non-English words, 
+but Double Metaphone should have some degree of success with many other 
+languages.</p> 
+<p><strong>tf*idf</strong></p> 
+<p>tf*idf weights can be used to judge how important a given word is to a 
+given document in a broader corpus (collection of documents). There are two 
+components to a tf*idf weight: the term frequency and the inverse document 
+frequency. To guarantee that a frequently-used, albeit semantically less 
+important, word doesn't gain too much favor you'll want to ensure you have many 
+documents in your TfIdf clone.</p> 
+<p>Consider the following code which adds a few documents to a corpus and then 
+determines how important the words &quot;ruby&quot; and &quot;node&quot; are to 
+them.</p> 
+<pre>var natural = require('natural'), TfIdf = natural.TfIdf, tfidf = new 
+TfIdf(); tfidf.addDocument('i code in c.'); tfidf.addDocument('i code in 
+ruby.'); tfidf.addDocument('i code in ruby and node, but node more often.'); 
+tfidf.addDocument('this document is about natural, written in node'); 
+tfidf.addDocument('i code in fortran.'); console.log('node 
+--------------------------------'); tfidf.tfidfs('node', function(i, measure) { 
+console.log('document #' + i + ' is ' + measure); }); console.log('ruby 
+--------------------------------'); tfidf.tfidfs('ruby', function(i, measure) { 
+console.log('document #' + i + ' is ' + measure); });</pre> 
+<p>The previous code will output the tf*idf weights for &quot;node&quot; and 
+&quot;ruby&quot;. The higher the weight the more important the word is to the 
+document.</p> 
+<pre>node -------------------------------- document #0 is 0 document #1 is 0 
+document #2 is 3.347952867143343 document #3 is 1.6739764335716716 document #4 
+is 0 ruby -------------------------------- document #0 is 0 document #1 is 
+1.6739764335716716 document #2 is 1.6739764335716716 document #3 is 0 document 
+#4 is 0</pre> 
+<p>Additionally, you can measure a word against a single document.</p> 
+<pre>console.log(tfidf.tfidf('node', 0 /* document index */)); 
+console.log(tfidf.tfidf('node', 1));</pre> 
+<p>You can also get a list of all terms in a document ordered by their 
+importance.</p> 
+<pre>tfidf.listTerms(4 /* document index */).forEach(function(item) { 
+console.log(item.term + ': ' + item.tfidf); });</pre> 
+<p>yeilding:</p> 
+<pre>fortran: 1.7047480922384253 code: 1.6486586255873816</pre> 
+<p><strong>Inflection</strong></p> 
+<p>Basic inflectors are in place to convert nouns between plural and singular 
+forms and to turn integers into string counters (i.e. '1st', '2nd', '3rd', '4th 
+'etc.).</p> 
+<p>The following example converts the word &quot;radius&quot; into its plural 
+form &quot;radii&quot;.</p> 
+<pre>var natural = require('natural'), nounInflector = new 
+natural.NounInflector(); var plural = nounInflector.pluralize('radius'); 
+console.log(plural);</pre> 
+<p>Singularization follows the same pattern as is illustrated in the following 
+example wich converts the word &quot;beers&quot; to its singular form, 
+&quot;beer&quot;.</p> 
+<pre>var singular = nounInflector.singularize('beers'); console.log(singular);
+</pre> 
+<p>Just like the stemming and phonetic modules an&nbsp;<em>attach</em>
+&nbsp;method is provided to patch String with shortcut methods.</p> 
+<pre>nounInflector.attach(); console.log('radius'.pluralizeNoun()); 
+console.log('beers'.singularizeNoun());</pre> 
+<p>A NounInflector instance can do custom conversion if you provide 
+expressions via the&nbsp;<em>addPlural</em>&nbsp;and&nbsp;<em>addSingular</em>
+&nbsp;methods. Because these conversion aren't always symmetric (sometimes more 
+patterns may be required to singularize forms than pluralize) there needn't be 
+a one-to-one relationship between&nbsp;<em>addPlural</em>&nbsp;and&nbsp;<em>
+addSingular</em>&nbsp;calls.</p> 
+<pre>nounInflector.addPlural(/(code|ware)/i, '$1z'); 
+nounInflector.addSingular(/(code|ware)z/i, '$1'); 
+console.log('code'.pluralizeNoun()); console.log('ware'.pluralizeNoun()); 
+console.log('codez'.singularizeNoun()); console.log('warez'.singularizeNoun());
+</pre> 
+<p>which would result in:</p> 
+<pre>codez warez code ware</pre> 
+<p>Here's an example of using the CountInflector module to produce string 
+counter for integers.</p> 
+<pre>var natural = require('natural'), countInflector = 
+natural.CountInflector; console.log(countInflector.nth(1)); 
+console.log(countInflector.nth(2)); console.log(countInflector.nth(3)); 
+console.log(countInflector.nth(4)); console.log(countInflector.nth(10)); 
+console.log(countInflector.nth(11)); console.log(countInflector.nth(12)); 
+console.log(countInflector.nth(13)); console.log(countInflector.nth(100)); 
+console.log(countInflector.nth(101)); console.log(countInflector.nth(102)); 
+console.log(countInflector.nth(103)); console.log(countInflector.nth(110)); 
+console.log(countInflector.nth(111)); console.log(countInflector.nth(112)); 
+console.log(countInflector.nth(113));</pre> 
+<p>producing:</p> 
+<pre>1st 2nd 3rd 4th 10th 11th 12th 13th 100th 101st 102nd 103rd 110th 111th 
+112th 113th</pre> 
+<p><strong>Classification</strong></p> 
+<p>Classification is currently supported by the Naive Bayes and Logistic 
+regression algorithms, although natural's Naive Bayes implementation is the 
+most mature of the two. You can use them for tasks like spam detection and 
+sentiment analysis.</p> 
+<p>There are two fundamental steps involved in using a classifier: training 
+and classification.</p> 
+<p>The following example takes care of the first step by requiring-up the 
+classifier and training it with data. Naturally, this is only a sample. To do 
+any production tasks you'd want many more training documents (hundreds per 
+class depending on their size).</p> 
+<pre>var natural = require('natural'), classifier = new 
+natural.BayesClassifier(); classifier.addDocument(&quot;my unit-tests 
+failed.&quot;, 'software'); classifier.addDocument(&quot;tried the program, but 
+it was buggy.&quot;, 'software'); classifier.addDocument(&quot;the drive has a 
+2TB capacity.&quot;, 'hardware'); classifier.addDocument(&quot;i need a new 
+power supply.&quot;, 'hardware'); classifier.train();</pre> 
+<p>By default the classifier will tokenize the corpus and stem it with a 
+PorterStemmer. You can use a LancasterStemmer by passing it in to the 
+BayesClassifier constructor as such:</p> 
+<pre>var natural = require('natural'), stemmer = natural.LancasterStemmer, 
+classifier = new natural.BayesClassifier(stemmer);</pre> 
+<p>With the classifier trained it can now classify documents via the&nbsp;<em>
+classify</em>&nbsp;method:</p> 
+<pre>console.log(classifier.classify('did the tests pass?')); 
+console.log(classifier.classify('did you buy a new drive?'));</pre> 
+<p>resulting in the output:</p> 
+<pre>software hardware</pre> 
+<p>Similarly the classifier can be trained on arrays rather than strings, 
+bypassing tokenization and stemming. This allows the consumer to perform custom 
+tokenization and stemming if any at all. This is especially useful if the 
+corpus is not English.</p> 
+<pre>classifier.addDocument(['unit', 'test'], 'software'); 
+classifier.addDocument(['bug', 'program'], 'software'); 
+classifier.addDocument(['drive', 'capacity'], 'hardware'); 
+classifier.addDocument(['power', 'supply'], 'hardware'); classifier.train();
+</pre> 
+<p>It's possible to persist and recall the results of a training via the&nbsp;
+<em>save</em>&nbsp;method:</p> 
+<pre>var natural = require('natural'), classifier = new 
+natural.BayesClassifier(); classifier.addDocument(['unit', 'test'], 
+'software'); classifier.addDocument(['bug', 'program'], 'software'); 
+classifier.addDocument(['drive', 'capacity'], 'hardware'); 
+classifier.addDocument(['power', 'supply'], 'hardware'); classifier.train(); 
+classifier.save('classifier.json', function(err, classifier) { // the 
+classifier is saved to the classifier.json file! });</pre> 
+<p>The training could then be recalled later with the&nbsp;<em>load</em>
+&nbsp;method:</p> 
+<pre>var natural = require('natural'), classifier = new 
+natural.BayesClassifier(); natural.BayesClassifier.load('classifier.json', 
+null, function(err, classifier) { console.log(classifier.classify('did the 
+tests pass?')); });</pre> 
+<p>Note that substituting&nbsp;<em>LogisticRegressionClassifier</em>
+&nbsp;for&nbsp;<em>BayesClassifier</em>&nbsp;should generally work as a drop-in 
+replacement.</p> 
+<p><strong>n-grams</strong></p> 
+<p>n-grams are essentially the destructuring of a sentence into overlapping, 
+contiguous lists of&nbsp;<em>n</em>&nbsp;size and are useful for building 
+probabilistic language models. In this case the n-grams are composed of words 
+but outside of &quot;natural&quot; or even natural language processing they 
+could be of other countable objects.</p> 
+<p>Consider the following examples which illustrate the production of trigrams 
+(n-grams of length 3), bigrams (n-grams of length 2), and arbitrary n-grams 
+using the&nbsp;<em>trigrams</em>,&nbsp;<em>bigrams</em>&nbsp;and&nbsp;<em>ngrams
+</em>functions respectively.</p> 
+<pre>var NGrams = natural.NGrams; console.log(NGrams.trigrams('some other 
+words here')); console.log(NGrams.trigrams(['some', 'other', 'words', 'here']));
+</pre> 
+<p>both of which produce:</p> 
+<pre>[ [ 'some', 'other', 'words' ], [ 'other', 'words', 'here' ] ] </pre> 
+<pre>console.log(NGrams.bigrams('some words here')); 
+console.log(NGrams.bigrams(['some', 'words', 'here']));</pre> 
+<p>both of which produce:</p> 
+<pre>[ [ 'some', 'words' ], [ 'words', 'here' ] ] </pre> 
+<pre>console.log(NGrams.ngrams('some other words here for you', 4)); </pre> 
+<p>which output:</p> 
+<pre>[ [ 'some', 'other', 'words', 'here' ], [ 'other', 'words', 'here', 'for' 
+], [ 'words', 'here', 'for', 'you' ] ]</pre> 
+<p><strong>String Distance</strong></p> 
+<p>&quot;natural&quot; supplies the Dice's coefficient, Levenshtein distance, 
+and Jaro-Winkler distance algorithms for determining string similarity. These 
+algorithms are concerned with orthographic (spelling) similarity, not 
+necessarily phonetics.</p> 
+<p>Each algorithm produces a number indicating its perception of similarity, 
+but each is determined differently and can even move in opposite directions. 
+For instance, the more dissimilar two strings are the greater the Levenshtein 
+distance, but Jaro-Winkler considers two totally dissimilar strings to have a 
+value of 0 with identical strings having a value of 1.</p> 
+<p>The following example shows each algorithm's perception of the difference 
+between the words &quot;execution&quot; and &quot;intention&quot;.</p> 
+<pre>var natural = require('natural'); 
+console.log(natural.JaroWinklerDistance('execution', 'intention')); 
+console.log(natural.LevenshteinDistance('execution', 'intention')); 
+console.log(natural.DiceCoefficient('execution', 'intention'));</pre>resulting 
+in the output:
+<pre>0.48148148148148145 8 0.375 </pre> 
+<p>Now to consider totally identical strings.</p> 
+<pre>var natural = require('natural'); 
+console.log(natural.JaroWinklerDistance('same', 'same')); 
+console.log(natural.LevenshteinDistance('same', 'same')); 
+console.log(natural.DiceCoefficient('same', 'same'));</pre> 
+<p>which yeilds:</p> 
+<pre>1 0 1 </pre> 
+<p><strong>Conclusion and Roadmap</strong></p> 
+<p>Well, that was a summary of a sizable portion of &quot;natural&quot;. Many 
+of the algorithms have additional parameters that can be used to tweak their 
+operation and a few modules weren't represented at all, but&nbsp;the official 
+README&nbsp;can help fill that gap.</p> 
+<p>There's still plenty in store for &quot;natural&quot;. While the current 
+plan is certainly not limited to the following points, these are indeed slated 
+for at least some kind of attention by fall 2012.</p> 
+<ul> 
+<li>Non-English-specific stemming algorithms</li> 
+<li>Pure javascript version</li> 
+<li>Maximum entropy classifier</li> 
+<li>Clustering algorithms (k-means in development)</li> 
+<li>Part of speech tagging</li> 
+<li>Punkt sentence segmentation</li> </ul> 
+<p>With the exception of k-means, which is near completion, I'd love community 
+help on nearly every one! To either help out or follow along check out&nbsp;the 
+GitHub repository.</p>  Tags: 
+<ul> 
+<li>Framework</li> 
+<li>NLP</li> 
+<li>Node.js</li> 
+<li>Javascript</li> </ul> Published at DZone with permission of Christopher 
+Umbel, author and DZone MVB (source). <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> 
+This content on search technology is part of the Solr-Lucene Microzone, 
+supported byLucid Imagination. They can help you harness the full potential of 
+search through their enterprise Solr development platform&mdash;LucidWorks 
+Enterprise&mdash;which can make your production process simpler and more 
+cost-efficient with open source configurability.<br>
+
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Links</h3> 
+<h4>The 7 Deadly Sins of Solr</h4> 
+<h4>Starting a Search Application</h4> 
+<h4>Getting Started With LucidWorks Enterprise</h4> 
+<h4>Programmers Guide_Full-Text Search Over RDBMS Data</h4> 
+<h4>E-Commerce Search Strategies</h4> <br>
+<br>
+
+<h2>Spotlight Features</h2> 
+<h2>BIRT 3.7 Report Design Refcard - Meet the Author: Michael Williams</h2> 
+<h2>Cretaceous COBOL Can Spawn Jurassic Java</h2> 
+<h2>How Twitter Does MySQL - Get Their Fork</h2> 
+<h2>Heterogeneous Computing Is Here, Now</h2> Around the DZone Network WEB 
+BUILDER <br>
+<br>
+Newly Hatched Python Tools for You <br>
+.NET <br>
+<br>
+How 
+Content Negotiation Works in ASP.NET Web A... <br>
+MOBILE <br>
+<br>
+EvenTiles 
+from Start to Finish: 256-MB Windows Pho... <br>
+JAVALOBBY <br>
+<br>
+
+Implementing Your Own &quot;SOA&quot; Registry: the Maven Wa... <br>
+JAVALOBBY 
+<br><br>
+Beer and Pizza with Facebook: Learning Their Secre... <br>
+WEB BUILDER 
+<br><br>
+The Developer&rsquo;s Guide to HTML5 Canvas <br>
+You Might Also Like 
+<ul> 
+<li>What Happened When We Loaded Every Music CD in Existence into RavenDB</li> 
+<li>An Introduction to NoSQL Patterns</li> 
+<li>Is This The IDE You've Been Looking For? </li> 
+<li>Algorithm of the Week: Boyer-Moore String Searching</li> 
+<li>Java Based Startups - We Want To Hear From You</li> 
+<li>Integrate Your Enterprise Apps 'Like a Boss'</li> 
+<li>Developer Productivity is Important - Reality or Myth?</li> 
+<li>Oracle v Google Trial Day 2: Ellison Testifies</li> 
+<li>The Visitor Pattern Re-visited</li> 
+<li>Beer and Pizza with Facebook: Learning Their Secrets...</li> 
+<li>Spring Integration Project Creation VS. Apache Camel Project Creation</li> 
+<li>How to Use Three.js, a Lightweight 3D Library, with Neo4j</li> 
+<li>Heterogeneous Computing Is Here, Now</li> 
+<li>Cretaceous COBOL Can Spawn Jurassic Java</li> 
+<li>TDD: Do We Really Have To Do It?</li> </ul> Popular on Python Zone 
+<ul> 
+<li>IDEA and TeamCity Updated, PyCharm Beta Released</li> 
+<li>Track your home's live electricity usage with Python </li> 
+<li>Wake Me Up Before Google's Go Goes </li> 
+<li>&quot;Strict&quot; Unit Testing -- Everything In Isolation Is Too Much Work
+</li> 
+<li>HTML5 and CSS3 Support in Komodo IDE 6</li> 
+<li>DZone's Bringing You More Python Awesomeness</li> 
+<li>PyPy Opens Up a &quot;Blackhole&quot;</li> 
+<li>Django Performance Patterns 1: Measuring Performance </li> </ul> Latest 
+Articles 
+<ul> 
+<li>World of C#-craft part 2: What Does the Audience Think?</li> 
+<li>&ldquo;World of C#-craft&rdquo;: an Achievement-Based Classroom?</li> 
+<li>PartyBand: Repertoire &amp; Gig Playlist Management on NetBeans</li> 
+<li>Improbing the RavenDB Indexing Process</li> 
+<li>A Custom Property in Spring</li> 
+<li>jDBI: A Simple Convenience Layer on Top of JDBC</li> 
+<li>Get You Some Azure, Windows Phone, and Windows 8 Sample Apps </li> 
+<li>Python Screencast: Install/Setup &quot;SST Web Test Framework&quot; on 
+Ubuntu 12.04</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>Getting Started with Cloud Computing</h3> 
+<p>If you are looking for more information on Cloud Computing then this DZone 
+Refcard is for you. Get an in depth comparison on three different Cloud...</p> 
+<br> 
+<h3>Google App Engine for Java</h3> 
+<p>This DZone Refcard provides an in depth introduction to the cloud computing 
+technology, Google App Engine. Covering everything from the basics...</p> <br>
+
+<h3>BIRT 3.7 Report Design: Eclipse-Based BI and Big Data Visualization</h3>  
+Eclipse Business Intelligence and Reporting Tools (BIRT) is an open source, 
+Eclipse-based reporting system that integrates with your Java/J2EE... <br>
+<br>
+
+<br> <br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

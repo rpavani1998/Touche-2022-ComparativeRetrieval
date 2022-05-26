@@ -1,0 +1,208 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Python for Scientific Computing and Education | CI-Train</title>
+<body>
+<br>
+
+<h1>CI-TRAIN</h1> <br>
+<br>
+
+<ul> 
+<ul> 
+<li>Home</li> 
+<li>About</li> 
+<li>Training</li> 
+<li>News</li> 
+<li>Resources</li> 
+<li>Partners</li> </ul> </ul> <br>
+Training &raquo; Lecture Series &raquo; 
+Python &raquo; Python for Scientific Computing and Education <br>
+
+<p></p> 
+<h1>Python for Scientific Computing and Education</h1> 
+<h1>Source Code</h1> 
+<ol> 
+<li>Introduction: Basic Python</li> 
+<li>Data Analysis</li> 
+<li>Easy Demo</li> 
+<li>Education</li> </ol> 
+<p>&nbsp;</p> 
+<h1>Python Tutorial</h1> 
+<p>Python for Scientific Computing and Education Tutorial Visual with Audio - 
+June 8, 2010</p> 
+<p>&nbsp;</p> 
+<h1>Useful Links</h1> 
+<p>Scipy/Numpy</p> 
+<p>Python(x,y)</p> 
+<p>Enthought</p> 
+<p>Python Bootcamp</p> 
+<p>Matplotlib</p> 
+<p>Software Carpentry: Introductory material on Python</p> 
+<p>If you need help with a Python problem, but don't know where to find the 
+answer, maybe we can be of service. Contact us at python@hpc.uark.edu.</p> 
+<p>&nbsp;</p> 
+<h3>Source Code</h3> 
+<ol> 
+<li> 
+<h3>Introduction: Basic Python</h3> 
+<p>Download Zip File 1</p> 
+<ul> 
+<li><strong>Hello World</strong></li> 
+<pre>print &quot;Hello World&quot; </pre> 
+<li><strong>3D Contour</strong></li> 
+<pre>from mpl_toolkits.mplot3d import axes3d import matplotlib.pyplot as plt 
+fig = plt.figure() ax = axes3d.Axes3D(fig) X, Y, Z = axes3d.get_test_data(0.05) 
+cset = ax.contour(X, Y, Z, 16, extend3d=True) ax.clabel(cset, fontsize=9, 
+inline=1) plt.show()</pre> 
+<li><strong>3D Radial</strong></li> 
+<pre># By Armin Moser #Courtesy of Matplotlib examples: 
+http://matplotlib.sourceforge.net/examples/index.html from mpl_toolkits.mplot3d 
+import Axes3D import matplotlib import numpy as np from matplotlib import cm 
+from matplotlib import pyplot as plt step = 0.04 maxval = 1.0 fig = 
+plt.figure() ax = Axes3D(fig) # create supporting points in polar coordinates r 
+= np.linspace(0,1.25,50) p = np.linspace(0,2*np.pi,50) R,P = np.meshgrid(r,p) # 
+transform them to cartesian system X,Y = R*np.cos(P),R*np.sin(P) Z = ((R**2 - 
+1)**2) ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.jet) 
+ax.set_zlim3d(0, 1) ax.set_xlabel(r'$\phi_\mathrm{real}$') 
+ax.set_ylabel(r'$\phi_\mathrm{im}$') ax.set_zlabel(r'$V(\phi)$') 
+ax.set_xticks([]) plt.show()</pre> 
+<li><strong>3D Surface</strong></li> 
+<pre>#Courtesy of Matplotlib examples: 
+http://matplotlib.sourceforge.net/examples/index.html from mpl_toolkits.mplot3d 
+import Axes3D from matplotlib import cm import matplotlib.pyplot as plt import 
+numpy as np fig = plt.figure() ax = Axes3D(fig) X = np.arange(-5, 5, 0.25) Y = 
+np.arange(-5, 5, 0.25) X, Y = np.meshgrid(X, Y) R = np.sqrt(X**2 + Y**2) Z = 
+np.sin(R) ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.jet) plt.show()
+</pre> 
+<li><strong>Basic Conditionals</strong></li> 
+<pre>list2=[1,2,&quot;cat&quot;,&quot;dog&quot;] if &quot;goat&quot; in list2: 
+print &quot;We have a goat!&quot; elif &quot;weasel&quot; in list2: print 
+&quot;We have a weasel!&quot; else: print &quot;We have nothing!&quot;</pre> 
+<li><strong>Basic Function</strong></li> 
+<pre>def mid(x,y): return(x+y)/2 print mid(0,10) print mid(0,11) </pre> 
+<li><strong>Basic Function 2</strong></li> 
+<pre>def mid(x,y): return(x+y)/2.0 print mid(0,10) print mid(0,11) </pre> 
+<li><strong>Basic Import</strong></li> 
+<pre>import math print math.sin(3) from math import sin print sin(3) 
+#Uncomment the &quot;help(math)&quot; below to see all the function in the math 
+module #help(math)</pre> 
+<li><strong>Basic Lists</strong></li> 
+<pre>#A simple list list1=[1,2,3,4] print list1 #A list of mismatched things 
+list2=[1,2,&quot;cat&quot;,&quot;dog&quot;,12.24356] print list2 #An empty list 
+empty=[] print empty #We can add things to lists list1.append(5) print list1 
+#Lists are indexable print list1[1] #We can &quot;slice&quot; lists to get 
+subsequences print list1[2:4] print list1[:4] #We can even index from the end 
+of the list print list1[-1] print list1[-2:] #We can see if something is in a 
+list &quot;dog&quot; in list1 &quot;dog&quot; in list2</pre> 
+<li><strong>Basic Math</strong></li> 
+<pre>#Subtraction print 5-12 print 5.0-12.0 #Divide two integers print 5/12 
+#Divide two floating point numbers print 5/12.0 print 5.0/12 print 5.0/12.0 
+#Python supports big integers print 2**65 print 2**128 #and complex numbers 
+print 3+4j print 3+4j - 1+2j print (3+4j) - (1+2j)</pre> 
+<li><strong>FizzBuzz</strong></li> 
+<pre>#this is the fizzbuzz test for i in range(16): if i % 3 == 0 and i % 5 == 
+0: print 'fizzbuzz' elif i % 3 == 0: print 'fizz' elif i % 5 == 0: print 'buzz' 
+else: print i</pre> </ul> </li> 
+<p>&nbsp;</p> 
+<li> 
+<h3>Data Analysis</h3> 
+<p>Download Zip File 2</p> 
+<ul> 
+<li>Basic Arrays</li> 
+<li>Basic Stats</li> 
+<li>Make Data</li> 
+<li>Read Data</li> </ul> 
+<ul> 
+<li>Constants</li> 
+<li>Linear Regression</li> 
+<li>LV</li> 
+<li>LV Complicated</li> 
+<li>LV Slider</li> 
+<li>ransac</li> 
+<li>Two Springs</li> 
+<li>Two Springs Solver</li> 
+<li>Normal Data Text File</li> 
+<li>Uniform Data Text File</li> </ul> 
+<ul> 
+<li>Python Basics</li> 
+<li>Python Strings, Lists and Files</li> 
+<li>Python Functions and Modules</li> </ul> </li> 
+<p>&nbsp;</p> 
+<li> 
+<h3>Easy Demo</h3> 
+<p>Download the Python demo</p> </li> 
+<p>&nbsp;</p> 
+<li> 
+<h3>Education</h3> 
+<p>Download Zip File 4</p> </li> </ol> 
+<p></p> 
+<ul> 
+<ul> 
+<li>Home</li> 
+<li>About</li> 
+<li>Training 
+<ul> 
+<li>CI Days</li> 
+<li>CI Training Day in Oak Ridge</li> 
+<li>Lecture Series 
+<ul> 
+<li>Python 
+<ul> 
+<li>Python Installation</li> 
+<li>Python: Introduction to Data Visualization</li> 
+<li>Python for Scientific Computing and Education</li> </ul></li> 
+<li>SiPE</li> 
+<li>SiPE Reporting Form</li> </ul></li> 
+<li>EVO</li> </ul></li> 
+<li>News</li> 
+<li>Resources</li> 
+<li>Partners</li> </ul> </ul> 
+<h3>LATEST ANNOUNCEMENTS</h3> <strong>WVU HPC Summer Institute</strong> <br>
+ 
+WVU HPC launches their 2012 Summer Institute May 14-18. All West Virginia 
+faculty and associated student research staff interested in computational 
+research are invited.<br>
+<br>
+<strong>OSG User School Apps Due</strong> <br>
+ 
+Qualified students should apply to attend the 2012 Open Science Grid User 
+School, where they will learn how to use high-throughput computing to harness 
+vast amounts of computing power for research. Applications due March 30.<br>
+
+<br> <strong>WVSU Gets HPC Cluster and Vizwall</strong> <br>
+ West Virginia 
+State University launches high-performance computing system; improves research 
+capacity.<br>
+<br>
+<br>
+<br>
+
+<h2>Stay In The Know</h2> 
+<p>Interested in knowing what's going on?</p> 
+<p>Send an email to ci-info@listserv.uark.edu or subscribe to the RSS Feed.</p>
+<h2>Contact Information</h2> 
+<ul> 
+<p>JBHT 504</p> 
+<p>University of Arkansas</p> 
+<p>Fayetteville, AR 72701</p> 
+<p>(479) 575-4590</p> 
+<p>ci-info@listserv.uark.edu</p> </ul> 
+<h2>Looking for Info?</h2> 
+<ul> 
+<li>Sitemap</li> 
+<li>A - Z Index</li> </ul> 
+<h2>Cyberinfrastructure</h2> 
+<ul> 
+<li>XSEDE</li> 
+<li>Campus Champions</li> 
+<li>SURAgrid</li> 
+<li>Open Science Grid</li> 
+<li>iPlant Collaborative</li> </ul> <br>
+
+<p>Copyright &copy; 2011 All Rights Reserved - CI-TRAIN | &nbsp;RSS Feed</p> 
+<p>Powered by MODx CMS</p> 
+<p>This work is licensed under a Creative Commons 
+Attribution-Noncommercial-Share Alike 3.0 Unported License</p> 
+<p>Design by OS Templates</p> <br>
+
+</body>

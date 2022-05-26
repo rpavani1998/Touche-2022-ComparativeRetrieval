@@ -1,0 +1,1443 @@
+<!doctype html>
+<meta charset="utf-8">
+<title></title>
+<body>
+
+<h1><i>Programming Python 2nd Edition</i></h1> 
+<h2>The book notes and updates page</h2> 
+<p>This page provides updates on points that arose after publication, and 
+serves as a virtual appendix to the book. It contains a list of Python and book 
+updates which I've found important enough to post, but have not had time to 
+organize more coherently yet (or post onPyErrata). More recent notes appear 
+first in these lists. Some of these represent recent Python developments. Other 
+entries are book clarifications or corrections. Although this text went through 
+rigorous testing and review, a few bugs and typos are statistically inevitable 
+in a 1250 page book and42K lines of example source code. Moreover, future 
+Python changes and coding techniques may impact parts of the book over time. 
+Contents:</p> 
+<ul> 
+<li>Book notes </li> 
+<li>Python notes </li> </ul> 
+<p></p> 
+<h3>Changes by reprints</h3> 
+<p> See also: lists below of updates applied thus far in the book reprint runs 
+that I have seen or been told about, after the initial March 2001 release. You 
+can tell which printing you have by looking near the bottom of the publishing 
+details page (near the front). If there are no details here for a printing 
+listed below, it is because I was not consulted for edits before that print 
+run; see O'Reilly's errata list for any changes made. I also stopped keeping 
+track of printings after 2001, so printing numbers after that time are unknown. 
+.</p> 
+<ol> 
+<li>Second printing: April, 2001 [4/01] </li> 
+<li>Third printing: June, 2001 [6/01] </li> 
+<li> Fourth(?) printing: July, 2002 [7/02] </li> 
+<li> Nth(?) printing: September, 2003 [9/03] </li> 
+<li> O'Reilly's errata list </li> </ol> 
+<p></p> 
+<h1>Book notes</h1> 
+<p> </p> 
+<ol> 
+<li> [06/05] More on nested scopes and GUIs: loops gotcha </li> 
+<li> [06/04] Tkinter: displaying GUI windows from a non-GUI script </li> 
+<li> [03/04] Tkinter: grid requires &quot;column=&quot; instead of 
+&quot;col=&quot; in 2.3 </li> 
+<li> [11/03] Python on the Zaurus PDA: example scripts </li> 
+<li> [11/03] Tkinter, calculator: disabled Entry greyed-out in 2.3 </li> 
+<li> [11/03] Book CD Examples directory download site </li> 
+<li> [11/03] Tkinter: changing the red Tk icon now works </li> 
+<li> [9/03] Extra example: mail prescan filter </li> 
+<li> [8/03] Top Python changes impacting this edition </li> 
+<li> [2/03] New numeric display formatting and calculator GUI </li> 
+<li> [1/03] Clarification of CD's example package structure, installation </li>
+<li> [6/02] Five random footnotes: CGI, embedding, email, joins, rexec </li> 
+<li> [3/02] C API change for embedding example </li> 
+<li> [1/02] O'Reilly's policy on example code reuse </li> 
+<li> [1/02] Three minor Launcher script updates </li> 
+<li> [11/01] Extra examples: SLOC counter scripts </li> 
+<li> [10/01] Python 2.2 nested scopes and lambda defaults </li> 
+<li> [8/01] More minor narrative typos </li> 
+<li> [5/01] Converting paths in #! lines at the top of scripts </li> 
+<li> [5/01] Using webserver.py to run CGI scripts locally </li> 
+<li> [5/01] sys.executable and python.exe interpreter searches </li> 
+<li> [5/01] ActivePython2.1 bug breaks some GUI examples on Windows </li> 
+<li> [5/01] Demo launchers clarification: Launch_* scripts, path setup </li> 
+<li> [5/01] Clarification: odd file example on page 66 </li> 
+<li> [5/01] Clarification: # not needed in HTML fragment name, p837 </li> 
+<li> [5/01] CD file names mangled to 8.3 on some UNIX platforms </li> 
+<li> [4/01] More on Python-friendly web servers </li> 
+<li> [4/01] Two chapter 18 typos </li> 
+<li> [4/01] Tkinter notes: window border icons, PMW (<i>updated 9/03</i>) </li>
+<li> [4/01] Email example: PyMailGui connection errors </li> 
+<li> [4/01] Email examples: blank line for smtplib </li> 
+<li> [3/01] Enhanced PyDemos example: source-code viewers </li> 
+<li> [3/01] Python version clarification </li> 
+<li> [3/01] Book design clarification </li> </ol> 
+<p></p> <br>
+
+<h2> [06/05] More on nested scopes and GUIs: loops gotcha </h2> 
+<p> I mentioned the new nested scopes lookup on this page previously. I should 
+also point out a common mistake that can arise if you generate callback 
+handlers within a loop, and try to use enclosing scope references to refer to 
+the loop variable within the generated functions. Because enclosing scope 
+references are evaluated when the function is called (not created), they all 
+wind up referring to the same setting of that variable--the one made by the 
+last loop iteration. Even though nested scope lookup does simplify much 
+callback code, you must still use defaults to rembember the value in this case, 
+because defaults are evaluated at function creation time instead.</p> 
+<p>For details, see the &quot;Nested scopes gotcha&quot; write-up in the 
+Learning Python 2Eupdates page, near the end of its &quot;More Python 
+Gotchas&quot; section.</p> 
+<h2> [06/04] Tkinter: displaying GUI windows from a non-GUI script </h2> 
+<p> A reader wrote to ask about displaying GUI pop-up windows from a non-GUI 
+program. This gives me as good an excuse as any to say a few more words about 
+the Tkinter mainloop call, event-driven programs, and socket connections.</p> 
+<p> The best answer to this query is probably to take the plunge and 
+restructure the program as a real GUI: initialize widgets on start-up, call 
+mainloop once to start event processing and display the main window, and move 
+all program logic into callback functions triggered in response to user 
+actions. For instance, the original non-GUI code can be started by widgets on 
+the main GUI window. That's the way that GUI programs are typically structured, 
+and makes for a more coherent user experience than pop-up GUI windows appearing 
+at seemingly random times, from an otherwise non-GUI script.</p> 
+<p> Alternatively, the GUI could be spawned by the non-GUI script as a 
+separate program; user interaction results can be communicated from the spawned 
+GUI to the script using sockets, files, or other IPC mechanisms. The advantage 
+to this approach is that it provides a separation of GUI and non-GUI code; the 
+non-GUI script would only have to be modified to spawn and wait for user 
+results to appear from the separate GUI program, but could otherwise be used as 
+is. Moreover, the non-GUI script would not be blocked while an in-process 
+mainloop call runs (only the GUI process would run a mainloop), and the GUI 
+program could persist after the point at which user inputs are required by the 
+script, leading to fewer pop-up windows.</p> 
+<p> However, if you want to add a simple GUI user interaction to an existing 
+non-GUI script (e.g., to select files to open or save), it is possible to do so 
+by configuring widgets and calling mainloop from the non-GUI main program when 
+you need to interact with the user. This essentially makes the program 
+GUI-capable, but without a persistent main window. The trick is that mainloop 
+doesn't return until the GUI main window is closed by the user (or quit method 
+calls), so you cannot retrieve user inputs from widgets after mainloop returns. 
+To work around this, all you have to do is be sure to save user inputs in a 
+Python object: the object lives on, after the GUI is destroyed. For an example 
+of this technique, see the off-page demo program:</p> 
+<ul> 
+<li>mainloopdemo.py </li> </ul> This demo makes a simple 2-button main window, 
+which launches file selection dialogs. Its output, printed as the main windows 
+are closed, looks like this:
+<pre> popup1... C:/Python23/python.exe D:/temp/new.txt popup2... 
+C:/Python23/dir1/__init__.py D:/temp/public_html/calendar.html ending...</pre> 
+<p> Notice that this program calls mainloop twice, to implement two modal user 
+interactions from an otherwise non-GUI script. It's okay to call mainloop more 
+than once, but this script takes care to recreate the GUI's widgets before each 
+call, because they are destroyed when the previous mainloop call exits (widgets 
+are destroyed internally inside Tk, even though the corresponding Python dialog 
+object still exists). Again, this can make for an odd user experience compared 
+to a traditional GUI program structure -- windows seem to pop up from nowhere 
+-- but it's a quick way to put a GUI face on a script without reworking its 
+code.</p> 
+<p> Also notice that this is different from using recursive/nested mainloop 
+calls to implement modal dialogs, as shown in the book on page 317. In that 
+mode, the nested mainloop call returns when the dialog's quit method is called, 
+but we return to the enclosing mainloop layer, and remain in the realm of 
+event-driven programming. The mainloopdemo.py example instead runs mainloop two 
+different times, stepping into and out of the event-driven model twice.</p> 
+<p> Finally, note that this scheme only works if you don't have to run any 
+non-GUI code while the GUI is open, because your script is inactive and blocked 
+while mainloop runs. You cannot, for example, apply this technique to use 
+utilities like the guiStreams.py example on page 457-459 to route user 
+interaction from non-GUI code to GUI windows. The GuiInput and GuiOutput 
+classes in that example assume that there is a mainloop call running somewhere 
+(they're GUI, after all). But once you call mainloop to popup these windows, 
+you can't return to your non-GUI code to interact with the user until the GUI 
+is closed, and the mainloop call returns. The net effect is that these classes 
+can only be used in the context of a fully GUI program.</p> 
+<p> Really, the mainloopdemo.py demo above works only because the GUI can 
+interact with the user independently, while the mainloop call runs; the script 
+is able to surrender control to the Tkinter mainloop call and wait for results. 
+That scheme won't work if you must run any non-GUI code while the GUI is open. 
+Because of such constraints, you will generally need a 
+main-window-plus-callbacks model in most GUI programs; callback code runs in 
+response to interaction, but while the GUI remains open. Simply make a main GUI 
+window with widgets that start the original non-GUI script's code in a callback 
+handler, and post new dialog windows from callback handler code as needed. That 
+way, you can run code while GUI windows are active. See the way that the 
+non-GUI pack and unpack scripts are run from a GUI so that their results appear 
+in a GUI on page 460 for an example.</p> 
+<p>Spawning the GUI as a separate program might help with the guiStreams 
+example too, as long as inputs and outputs are communicated to the GUI over IPC 
+mechanisms, and the widget after() method (or similar) is used by the GUI 
+program to detect incoming output to be displayed. The non-GUI script would not 
+be blocked by a mainloop call. For a simplistic example of this technique, see 
+the following off-page scripts:</p> 
+<ul> 
+<li>nongui.py </li> 
+<li>gui.py </li> </ul> Start the nongui script--it spawns the gui script, 
+which displays a popup window that shows the text printed in the nongui script 
+(the date and time, sent once every 2 seconds from nongui to gui over a 
+socket). The nongui script can keep running code to produce data, because only 
+gui runs a mainloop call. Of course, if you have to work that hard anyhow, you 
+might as well just make your script a traditional GUI program with a main 
+window.
+<p></p> 
+<h2> [03/04] Tkinter: grid requires &quot;column=&quot; instead of 
+&quot;col=&quot; in 2.3</h2> 
+<p> Beginning with Python release 2.3, you can no longer use the 
+&quot;col&quot; keyword argument as a short synonym for &quot;column&quot;, 
+when using the &quot;grid&quot; widget method to arrange widgets with gridding. 
+This appears to have been broken between Python 2.2 and 2.3, though at first 
+glance it seems to reflect a change in the underlying Tk toolkit used by 2.3, 
+rather than Python itself (a TclError is issued when &quot;col&quot; is used in 
+2.3). It's difficult to understand the rationale for such a trivial and 
+non-backward-compatible change, but &quot;col&quot; is clearly no longer 
+allowed today.</p> 
+<p>So far, two book examples have been identified which use the 
+&quot;col&quot; synonym, both of which appear near page 409 in Chapter 8, 
+&quot;A Tkinter Tour, Part 2&quot; (other gridding examples use the longer 
+&quot;column&quot;). The impacted examples are grid5b.py, and grid5c.py, both 
+in directory Examples\PP2E\Gui\Tour\Grid on the CD. To fix, simply change 
+&quot;col&quot; to &quot;column&quot; in the &quot;grid()&quot; calls; for 
+example, in grid5b.py, change line 19:</p> 
+<pre> from: l.grid(row=numrow, col=i, sticky=NSEW) to: l.grid(row=numrow, 
+column=i, sticky=NSEW)</pre> 
+<p></p> 
+<h2> [11/03] Python on the Zaurus PDA: example scripts </h2> 
+<p> I've been testing some of the book's examples on my new Zaurus Linux-based 
+PDA lately, and thought I'd post three of the first scripts I coded and ran on 
+that device, as supplemental examples. I worked on two of these on a plane, 
+while simultaneously listening to MP3s on the same PDA; it doesn't get much 
+better than that :-).</p> 
+<ol> 
+<li>extract.py converts a &quot;.pdb&quot; Palm Memo database to simple text 
+files, one file per memo, and demos the Python<b>struct</b> module for parsing 
+binary file data. To mimic the Palm, text from the first line of the memo, 
+appropriately massaged, is used in the filename. The layout of Palm database 
+files is describedhere, here, and here , and other places, though some of this 
+is overkill for extracting memos (they are really just null-terminated strings 
+at offsets specified in a table). This script is another example of the sorts 
+of tactical things you can do with Python; the fact that you can both code and 
+run such things directly on the PDA is a huge bonus.<br>
+<br>
+</li> 
+<li>extract-calendar.py is a takeoff of the first, which converts event 
+entries in a Palm &quot;DatebookDB.pdb&quot; database file to simple text 
+files, one file per event, with the event's date and part of its text used in 
+the filename. The datebook database is similar in structure to memos, but 
+records start with some packed binary data that gives event time/date details. 
+Date information is encoded in bitfields, which I deciphered by inspecting the 
+binary bits with another script,dumpfile.py. <br>
+<br>
+ Caveats: this works for 
+my use of the datebook, but may not be generally applicable. For example, it 
+discards event start and stop times, ignores event repeating details, may or 
+may not use the best approach for extracting dates, and does not attempt to add 
+events to the Zaurus calendar application. On the other hand, it was much 
+easier than copying my 700 old events by hand.<br>
+<br>
+</li> 
+<li>pyqt0.py is the world's simplest PyQt GUI program, but runs out of the box 
+after installing the free Python and PyQt packages fromRiverbank. An 
+alternative Python Zaurus distribution is availablehere. You can't run Tkinter 
+GUI programs easily on the Zaurus, but PyQt is a reasonable alternative for 
+this machine, is feature rich, and is fairly typical of GUI APIs in general 
+(except for its unusual slot/signal mechanism, and relative complexity).<br>
+
+<br> The Zaurus runs Qt/Qtopia directly on the video frame buffer, not on X 
+Windows; X can run on the Zaurus, but not without a bit of work (there is 
+apparently a newX11 ROM for the c7x0 series, which might enable Tkinter 
+programming, but might not run Qtopia apps; see also the update below). It is 
+also possible to build GUIs on this PDA with the Python anygui API (a 
+portability layer that maps basic GUI calls to a variety of underlying 
+toolkits, including Qt), and possibly with Jython (the Java-based 
+implementation of Python).<br>
+<br>
+</li> </ol> 
+<p> You can find more about this PDA on this page, including a couple mid-page 
+screen shots showing Python running in console mode; you can also run Python 
+programs as Qtopia apps, with a bit ofconfiguration (see also 
+www.zaurususergroup.com).</p> 
+<p> As you might expect, Python works very well on this machine, because it's 
+Linux. It is a complete, up-to-date Python, which comes with threads, sockets 
+for Internet scripting, a full os module including popen and fork, PyQt for 
+GUIs, and so on. You can also get interfaces for MySql, SQLite, numeric tools, 
+etc. You can even usegcc to compile C extensions to .so files right on the PDA, 
+and import them into your scripts.</p> 
+<p>One usage note: some standard library modules are missing in the Riverbank 
+package; as a work-around, I simply copied the 2.3 standard library directory 
+(from the source package) onto a CF card, and put that directory on my 
+PYTHONPATH, to get some extra library modules (e.g., glob). A few library 
+modules coded in C may require a compile with gcc or similar (I haven't needed 
+to yet).</p> 
+<p> [<i>Update, 12/03</i>] It appears that it is possible to run the Tk 
+library, and hence Python's Tkinter GUI toolkit, on this device. Details about 
+the Tk configuration are available onthis page. In short, X Windows and Tk need 
+to be enabled in one of a variety of ways, and the Python Tk interface module 
+must be compiled as well. This is not yet a simple process, but is an 
+alternative to using Qt, anygui, or Jython for GUIs on the Zaurus, especially 
+if you have existing Tkinter programs.</p> 
+<h2> [11/03] Tkinter, calculator: disabled Entry greyed-out in 2.3 </h2> 
+<p>[<i>Update 9/04</i>: Per a hint from Fredrik Lundh, change the code below 
+to use state='readonly' for the entry field to get a disabled but not 
+greyed-out display in the calculator. This is not exactly like disabled in 2.2 
+(the field background is a bit shaded), but is better than either the disabled 
+or normal states in 2.3.]</p> 
+<p> The Tkinter in the latest Python release, 2.3, now greys-out (stipples) 
+text in Entry widgets that are marked as disabled. This is a change from all 
+earlier Python releases, and likely reflects a change in the underlying Tk 
+library. In 2.2 and earlier, disabled Entry widgets showed their text normally, 
+but did not allow edits, and did not participate in keyboard tab focus 
+traversals. Unfortunately, the numeric display in the book's final calculator 
+GUI uses a disabled Entry field, to disallow user changes. Under 2.3, this 
+field is now difficult to read because of the new grey-out effect. To fix, 
+comment out the disable call in file PP2E\Lang\Calculator\calculator.py:</p> 
+<pre> class CalcGui(GuiMixin, Frame): ... def __init__(self, parent=None, 
+fg=Fg, bg=Bg, font=Font): ... if not parent or not isinstance(parent, Frame): 
+... # 2.3: no way to disable but show normal? # 
+self.entry.config(state='disabled') else: ...</pre> 
+<p> Note that the grey-out effect in 2.3 has only been observed on Windows; 
+this may or may not be an issue on other platforms. Also note that leaving the 
+Entry field enabled means you can change its text (but probably shouldn't; a 
+better solution may be to use a Label for the display). 2.3 also renders some 
+buttons a bit smaller on Windows, but this is less intrusive.</p> 
+<h2> [11/03] Book CD Examples directory download site </h2> 
+<p> A number of people have emailed me to say that they broke or lost their 
+CDs, and need a copy of the book's examples. I've heard of a few CDs being 
+broken on receipt as well. Luckily, O'Reilly maintains the book CD's Examples 
+directory online, at this site: http://examples.oreilly.com/python2. </p> 
+<p> Get the Examples.zip file there; it contains all the book's examples, and 
+is a simple zip file which you can download and unpack. Note that this is not 
+the entire CD, but you probably will only care about getting this part of it. 
+The CD also contains various open source packages (e.g., Python), but you can 
+find more up-to-date versions of all the CD's packages elsewhere on the web. If 
+you are unable to access the site above, please contact O'Reilly. I don't own 
+the examples, and do not keep them online anywhere myself.</p> 
+<h2> [11/03] Tkinter: changing the red Tk icon now works </h2> 
+<p> In this earlier note, I suggested that it may now be possible to change 
+the red Tk icon in Python Tkinter GUI programs. I've now verified this: as of 
+Python 2.3, you can change the icon to one of your own, with code lack that in 
+this example script:testicon.py, which makes a window that looks like this. </p>
+<p> Note that this changes the icon both for the open window itself, as well 
+as for the program's minimized entry in the launcher bar. This is new as of 
+Python 2.3; the example does not change the icon in Python 2.2 (yet another 
+reason to upgrade).</p> 
+<h2> [9/03] Extra example: mail prescan filter </h2> 
+<p> Are you as tired of waiting for your email client to download huge spam 
+messages over 50k dial-up lines as I am? A recent rash of such spam, about 150k 
+each, prompted me to tweak one of the book's POP email examples, to only fetch 
+message headers, and allow an email to be deleted from the server without 
+actually downloading the entire message. You can find the scripthere. </p> 
+<p> It's a simple script, and true spam filters such as spambayes are much 
+more powerful solutions; but running this script before my email client by 
+clicking a desktop shortcut is usually all I need. Also, many spam filters must 
+download full messages (not workable over a modem when there are 10M of them), 
+this script is immune to differences in the filtering tools of email clients, 
+and coding this was much quicker than becoming an expert in such things. It's 
+an example of the sort of tactical things you can do when you know a scripting 
+language like Python.</p> 
+<p> A few notes on this approach: </p> 
+<ul> 
+<li>First of all, if you have a webmail interface to your ISP account, that 
+may also allow you to delete without downloading to your client machine; if so, 
+the Python script is a command-line alternative to this.</li> 
+<li>Secondly, if the spams are big and frequent, this script does not prevent 
+your email box from overflowing your quota, unless it's run often enough. Alas, 
+this was probably the biggest problem that this particularly prolific email 
+worm created for dial-up users; if you cannot run scripts on the server, and 
+are not constantly connected to it, you may effectively have a service outage.
+</li> 
+<li>Finally, notice that you could modify this script to automatically delete 
+some such messages based on their sizes or header contents, but this is 
+inaccurate, and can be fairly dangerous. You never know when an important 
+message may match your deletion criteria.</li> </ul> I suppose such a script 
+could be extended to automatically run every hour or so, and dial out before 
+connecting to the mail server (assuming you're not using the phone line), but 
+that seems like an awful lot of work just to be able to read your email.
+<p></p> 
+<h2> [8/03] Top Python changes impacting this edition </h2> 
+<p> Someone wrote recently to express concern about buying this 2nd edition, 
+given that it is &quot;already two years old.&quot; For the most part, this 
+edition is still valid and perfectly compatible with the current version of 
+Python (2.3), and its examples still work as described. Python does evolve, but 
+not so fast that two years is the software eternity that some might imagine.</p>
+<p>However, in the last two and a half years, Python did indeed sprout a 
+handful of new features that do not invalid this edition's examples, but do 
+mean that some of them can be coded slightly more simply than shown. All of 
+these features will be covered in detail in the upcoming bookLearning Python 
+2nd Edition, and some are described elsewhere on this updates page. But as a 
+service to readers concerned about life on the bleeding edge, and in lieu of a 
+hypothetical 3rd Edition, here is a quick summary of the most prominent Python 
+changes that impact this edition, in roughly decreasing relevance order:</p> 
+<ul> 
+<li><i>Nested function scopes</i>: because Python's scope rules now 
+automatically search enclosing functions' scopes, you usually no longer need to 
+pass in values from the enclosing scope with default arguments. This is most 
+useful when using lambas, since they typically are nested in a function or 
+method. Defaults still work, but are no longer needed for this in most cases 
+(though they may still be when generating functions within loops). More on this
+here and here. <br>
+<br>
+</li> 
+<li><i>String methods</i>: these days, users are probably better off using 
+string methods (e.g., str.split()), instead of functions in the original string 
+module (e.g., string.split(str)). Both are described in the book (e.g., page 
+19), but the string module is used in most examples, because this was in 
+transition when the book was written. String methods require a bit less typing 
+(and no module import), and probably run quicker; the string module maps 
+function calls back to the methods, incurring an extra call along the way.<br>
+
+<br> </li> 
+<li><i>List comprehensions</i>: today, when you need to apply an operation to 
+every item in a sequence, list comprehension expressions (e.g., [x*2 for x in 
+range(5)]) are often easier to code, and quicker to run, than the equivalent 
+map/filter calls or for loops. List comprehensions can also quickly become 
+(well...) incomprehensible; but for simple operation mappings, they are a nice 
+coding option.<br>
+<br>
+</li> 
+<li><i>Augmented assignment</i>: this shorthand (e.g., X += Y, versus X = X + 
+Y) is optional, but could be used in many of the examples. It saves a few 
+keystrokes, and sometimes may run faster than the non-augmented form 
+(&quot;X&quot; runs only once, and in-place operations may be used).<br>
+<br>
+
+</li> 
+<li><i>Subclassable types, new &quot;set&quot; module</i>: today, a set or 
+stack data structure might be better implemented as a subclass of a built-in 
+type such as list or dict, instead of a wrapper class that embeds a list or 
+dictionary. Of course, in Python 2.3, the new standard library &quot;set&quot; 
+module makes implementing set types just a coding exercise.<br>
+<br>
+</li> 
+<li><i>The new &quot;email&quot; module package</i>: in the standard library, 
+provides a higher-level interface for parsing and constructing email messages. 
+You can still use the lower-level tools like the &quot;rfc822&quot; module 
+shown in the book, but &quot;email&quot; makes some email coding tasks simpler, 
+especially when it comes to things like attachments.<br>
+<br>
+</li> 
+<li><i>The &quot;rexec&quot; security module</i>: is being withdrawn from the 
+standard library, due to a (somewhat obscure) security concern. A replacement 
+should eventually appear, but this is not yet resolved.<br>
+<br>
+</li> 
+<li><i>The new &quot;xml&quot; module package</i>: together with the 
+&quot;xmlrpclib&quot; module in the standard library, provides many XML 
+processing tools not covered in the text (they were not yet available).<br>
+<br>
+</li> 
+<li><i>The C API</i>: has gone through some changes related to the blurring of 
+the type/class distinction. See the standard C API documentation for details.
+<br><br>
+</li> 
+<li><i>The &quot;os.popen&quot; shell-command call</i>: is much improved--it 
+now works fine an Windows (both GUI and non-GUI), and the os module also now 
+contains the popen2, popen3, and popen4 variants, which also return stdout and 
+stderr file object connections. Additionally, there is a new 
+&quot;os.startfile&quot;, which is like spawning a DOS &quot;start&quot; 
+command on Windows with &quot;os.system&quot;, but no DOS console window pops 
+up along the way.<br>
+<br>
+</li> 
+<li><i>User-defined exceptions</i>: will probably all have to be class 
+instances in the future, not strings. Strings still work today (in Python 2.3), 
+so this is still a non-issue.<br>
+<br>
+</li> 
+<li><i>The &quot;new style class&quot; concept</i>: this model recently 
+introduced to Python is interesting from an academic perspective, but offers no 
+significant benefit for this edition's examples (this edition focuses on 
+application-level programming, not language details). It's possible that 
+classes will have to be derived from class &quot;object&quot; in the far future 
+(not stand-alone), but this is unclear, and a non-issue today.<br>
+<br>
+</li> 
+<li><i>Generator functions and iterators</i>: similarly interesting for 
+distributing computation over time and advanced algorithmic work, but have no 
+clear application to this edition's code.<br>
+<br>
+</li> 
+<li><i>&quot;.pth&quot; path configuration files</i>: these are sometimes a 
+reasonable alternative to PYTHONPATH settings, for configuring import search 
+paths. The auto-launcher scripts might be simplified using features like this, 
+sys.executable, and similar (to be investigated).<br>
+<br>
+</li> 
+<li><i>Performance enhancements</i>: this is more of an internals thing, but 
+the Python interpreter has been sped up substantially in recent years. The 
+&quot;psyco&quot; just-in-time compiler, and frozen binary executable packaging 
+tools such as &quot;py2exe&quot; and &quot;installer&quot;, provide other 
+optimization and deployment options (see the Vaults of Parnassus site for 
+links).<br>
+<br>
+</li> 
+<li><i>New popular frameworks</i>: in the GUI domain, wxPython and PyQt are 
+now probably the 2nd and 3rd most popular options, behind Tkinter (wxPython 
+seems closer behind than before). On the Web front, WebWare, Quixote, and 
+Twisted, seem to have attracted attention as network development frameworks, 
+along with Zope. The SWIG code generator is better too, with new support for 
+C++ esoteric features such as templates. Browse the Vaults of Parnassus for 
+more on 3rd party tools and extensions.<br>
+<br>
+</li> </ul> And so on. I'll 
+update this list periodically, as time allows.
+<p></p> 
+<h2> [2/03] New numeric display formatting and calculator GUI </h2> 
+<p> Python recently started showing many more decimal digits for the repr() 
+string of certain floating point numbers. That is, for repr(N), (and backquotes 
+`N`, which is the same as repr), Python today shows more digits after the 
+decimal point than it used to. Type &quot;2 / 5.0&quot; at the Python 
+interactive prompt, and you'll see what I mean: today you get 
+0.40000000000000002, not the 0.4 of prior releases. The format of such numbers 
+returned by the str(N) call (and by proxy, the print statement) is as before, 
+without the full numeric precision: str(2 / 5.0) yields '0.4'.</p> 
+<p> This language change happened well after the book, and very recently (in 
+release 2.2?). Unfortunately, because the calculator GUIs that show up in the 
+book's Text and Language chapter convert numeric results for display with 
+backquotes (`N`), you may now sometimes see more decimal digits than before. 
+Because this can be annoying when doing simple calculations, you might want to 
+patch the calculator.py file to use str(N) instead of `N`, as follows:</p> 
+<pre> def runstring(self, code): try: 
+############################################################################### 
+## 2/03: else new full precision oddness ## result = `eval(code, self.names, 
+self.names)` # try expr: string 
+############################################################################### 
+result = str(eval(code, self.names, self.names)) # try expr: string 
+self.hist.append(code + ' =&gt; ' + result) # add to hist log except: exec code 
+in self.names, self.names # try stmt: None self.hist.append(code) result = None 
+return result</pre> 
+<p></p> 
+<h2> [1/03] Clarification of CD's example package structure, installation </h2>
+<p> As one reader wrote recently, some of the readme files on the book CD 
+might be a bit misleading about the source-code tree's structure and 
+installation. This may partly be because some of these files are legacy code 
+meant only as extra examples, and have comments that reflect a prior tree 
+structure different than the one shipped (e.g., some directory names don't 
+match reality anymore). It may also be due to misconceptions of package imports 
+in general. Although this is outside this book's scope, here are a few more 
+words of clarification.</p> 
+<h3>Source-tree structure</h3> 
+<p> In Python-speak, a directory of modules and subdirectories is called a 
+package. At the top-level of the book CD, the &quot;Examples\PP2E&quot; 
+directory contains all the examples' source-code. Really, the &quot;PP2E&quot; 
+subdirectory is the example<i>package</i> root, and directory 
+&quot;Examples&quot; represents an arbitrary container for the package root. In 
+book example code, all cross-directory imports are always relative to the PP2E 
+root directory (e.g.,import PP2E.Gui.xxx); imports of files that live in the 
+top-level script's home directory are not (e.g.,import xxx) because the home 
+directory is searched first. This scheme avoids potential name collisions.</p> 
+<p> To setup your module search path for the examples source tree, you will 
+add the directory<i>containing</i> PP2E on your machine. That is, PP2E's 
+container must be the home directory, or listed in PYTHONPATH or other 
+settings. On the CD, the top-level Examples directory is PP2E's container, and 
+so is the one to add to the module search path (unless you use the 
+self-configuring launchers). To copy the examples to your hard-drive, copy the 
+PP2E directory to some other container, and then add that container to your 
+module search path. This is all documented in the CD's 
+Examples\PP2E\README-PP2E.txt file, which is the official information source 
+for the tree.</p> 
+<h3>More on package imports</h3> 
+<p> The __init__.py files in package directories seem to be most prone to 
+confuse. These files are present to identify a directory as an importable 
+module package, and initialize the directory's namespace. Each directory listed 
+in a script's import statement must have an __init__.py file. For example, 
+given a directory structure:Root\A\B\C.py, and an import statement of the form: 
+import A.B.C: </p> 
+<ul> 
+<li>Directories A and B must each have an __init__.py file. </li> 
+<li>Directory Root does not need to have an __init__.py file. </li> 
+<li>Directory Root must be on the module search path (not Root\A). </li> </ul> 
+<p> For the book's package, this means that if you copy the PP2E package 
+directory from CD to a directory on your hard-drive, make sure to add the 
+directory containing the PP2E directory to your module search path. The 
+directory containing PP2E does<i>not</i> need an __init__.py file (though it is 
+simply ignored if present). PP2E itself, and its package subdirectories, 
+already have __init__.py files. Typically, __init__.py files are not meant to 
+be useful if executed directly; they are run automatically during imports, the 
+first time Python goes through a directory.</p> 
+<p> Part of the confusion expressed by some readers may revolve around the 
+Examples\__init__.py example file on the CD. The Examples CD directory in 
+general is only meant to stand for any PP2E container, and does not require an 
+__init__.py file in practice. In fact, Examples\__init__.py is ignored and 
+never run by imports--it if was, book examples would generate error messages 
+and abort (Examples\__init__.py contains imports of old directory names which 
+no longer exist in the examples tree!). Because of that, you should take the 
+Examples directory's __init__.py file as nothing more than an example, not a 
+required component, and view the CD's Examples root directory as simply a 
+representative stub.</p> 
+<p> Finally, remember that import basics like these are not really part of 
+this book's scope; it assumes you already understand things like __init__.py 
+files. The package import mechanism is covered in<i>Learning Python</i>--the 
+book that you should consult first for such core language topics. Package 
+imports are introduced in that book's 1st Edition, and covered in more depth in 
+that book's upcoming 2nd Edition. As stated in its preface,<i>Programming 
+Python 2nd Edition</i> is oriented more towards application-level programming 
+concepts, and so does not itself pretend to teach package import details in any 
+sort of depth. At 1250 pages, we had to draw a few lines.</p> 
+<h2> [6/02] Five random footnotes: CGI, embedding, email, joins, rexec </h2> 
+<p> I'd like to insert footnotes about five unrelated issues that came up 
+recently, by email or otherwise:</p> 
+<ol> 
+<li><b>CGI downloads--forcing the issue</b><br>
+ Chapter 12, Server-Side 
+Scripting, develops a script named<b>getfile.cgi</b>, a Python CGI program 
+designed to display any public server-side file, within a web browser (or other 
+recipient) on the requesting client machine. It uses a Content-type of 
+text/plain or text/html to make the requested file's text show up properly 
+inside a browser. Before going into CGI upload techniques, page 755 goes so far 
+as to compare the getfile.cgi script to a generalized CGI download tool, when 
+augmented with cut-and-paste or save-as interactions.<br>
+<br>
+That's true, but 
+note that getfile.cgi was intended to mostly be a file<i>display</i> tool only, 
+not a CGI download demo. If you want to truly and directly download a file by 
+CGI (instead of displaying it in a browser or opening it with an application), 
+you can usually force the browser to pop up a &quot;Save As&quot; dialog for 
+the file on the client, by supplying the appropriate Content-type line in the 
+CGI reply.<br>
+<br>
+Browsers decide what to do with a file using either the 
+file's suffix (e.g., &quot;xxxx.jpg&quot; is interpreted as an image), or the 
+Content-type line (e.g., &quot;text/html&quot; is HTML code). By using various 
+MIME header line settings, you can make the data type unknown, and effectively 
+render the browser clueless about data handling. For instance, a Content-type 
+of &quot;application/octet-stream&quot; in the CGI reply generally triggers the 
+standard Save-As dialog box in a browser.<br>
+<br>
+This is sometimes frowned 
+on, though, because it leaves the true nature of the file's data 
+ambiguous--it's usually better to let the user/client decide how to handle 
+downloaded data, rather than force the Save-as behavior. It also has absolutely 
+nothing to do with Python, hence its absence in the book (e.g., page 750 hints 
+at other content types, but does not document them, on purpose). For more 
+details, please consult a CGI-specific text, or try a google.com search on 
+&quot;CGI download&quot;.<br>
+<br>
+</li> 
+<li><b>Embedding Python and common practice</b><br>
+ Chapter 20, Embedding 
+Python, lays out a variety of techniques for invoking Python code from a C/C++ 
+program, ranging from strings to direct object calls. Such Python code is 
+typically used for testing and customization purposes; you can change embedded 
+Python code on-site, and without having to recompile the enclosing C/C++ 
+application (or ship its code).<br>
+<br>
+Although all the embedding techniques 
+shown in the chapter have been used in practice, the most common embedding 
+technique I've seen applied recently is also the simplest: the<b>
+PyRun_SimpleString</b> call, presented on page 1151. This Python API call, for 
+running strings of Python statements in a single namespace, is limited but 
+simple. Python code in this scheme is a C string, which may live on a file or 
+database, be fetched from an XML document or GUI, and so on.<br>
+<br>
+ In 
+practice, companies commonly combine this embedding call with a simple C 
+extension module used for communication--the embedded Python code strings talk 
+to the enclosing C/C++ layer by importing and calling C get/set extension 
+functions, which provide access to C data. In this architecture, the imported C 
+accessor function calls effectively provide inputs and outputs for the embedded 
+Python code. When augmented with a C extension module like this, simple strings 
+are often sufficient for embedding tasks, and much simpler to program than 
+other embedding API schemes.<br>
+<br>
+See the registration example on page 
+1162, for tips on combining embedding calls and an extension module in a single 
+program. I have also recently seen systems that run Python code as standalone 
+files, launched as processes, and which communicate with the launching C 
+program through sockets--the IPC mechanism described in Chapter 10, Network 
+Scripting. Such a scheme is certainly useful in some contexts, but is also less 
+direct, and generally slower than, the in-process techniques described as 
+embedding in the text.<br>
+<br>
+</li> 
+<li><b>More on More on Email Reply Addresses</b><br>
+ Page 652 contains a 
+sidebar, &quot;More on Reply Addresses&quot;, which describes issues related to 
+using the parsed &quot;From&quot; address returned by the rfc822 module as a 
+&quot;To&quot; address in<b>PyMailGui</b> email replies. That sidebar shows how 
+raw user names returned from rfc822 parsing calls must be explicitly quoted (or 
+often, re-quoted) if they contain a comma, to avoid confusing the mail server 
+(e.g., &quot;Doe, John &lt;jdoe@spam.org&gt;&quot; required manual insertion of 
+extra quotes around &quot;Doe, John&quot;). I recently saw another case where 
+the extra quotes are needed--at least when using the Python 1.5.2 libraries, a 
+period in the user name (e.g., &quot;John Q. Doe&quot;) might also confuse some 
+mail servers if unquoted.<br>
+<br>
+I have so far been unable to recreate this 
+behavior in Python 2.2, so it may or may not have been improved in a later 
+Python release. But perhaps a more robust and release-neutral solution might be 
+to either use the &quot;From&quot; address verbatim without any parsing (as 
+done by the PyMailCgi example later in the book, page 793), or blindly add 
+quotes around the user name always (assuming it is not already quoted, and is 
+present at all, of course). Also note that the &quot;To&quot; address for a 
+reply is only used to set an initial value of a GUI entry field here; we could 
+expect the user to add quotes manually if needed, but that wouldn't exactly be 
+polite. The relevant code appears on page 665; like the sidebar says: a 
+suggested exercise.<br>
+<br>
+</li> 
+<li><b>On seemingly superfluous joins</b><br>
+ A reader asked why, on page 
+612, the &quot;To&quot; email address is split into a string around ';' 
+delimiters, and then later joined again in the same script with &quot;;&quot; 
+separators. The<i>split</i> is required, because the smtplib's sendmail call 
+requires a list of individual addresses, not a single string; the split list 
+format is also convenient if you wish to extend it (e.g., adding &quot;Cc&quot; 
+addresses). Strictly speaking, the later<i>join</i> is not required, since the 
+result is the same as the original unsplit &quot;To&quot; string--I could have 
+instead saved the original string or used a different variable for the split 
+result (e.g., see the PyMailGui and PyMailCgi approaches on pages 663 and 774).
+<br><br>
+On the other hand, this is a pretty small coding issue in such a big 
+book. A single join call is completely harmless in a simple script like this 
+one (and personally, I wouldn't wager too much on the significance of the speed 
+difference between the two approaches). Speaking of email formats: See also the 
+new &quot;email&quot; standard library package in Python 2.2 for other ways to 
+parse and compose email messages.<br>
+<br>
+</li> 
+<li><b>Clarification of rexec security issues</b><br>
+ [<i>Added 12/02</i>] 
+Pages 914-917 describe the rexec module, which provides a restricted execution 
+mode for running Python code. It states that by default, Python code normally 
+has access to everything in the Python language and library. That's true, but 
+I'd like to make this a bit more formal. Really, code run by the Python 
+interpreter can only perform tasks that are allowed for the user id under which 
+the Python interpreter process is running. You cannot do any more than is 
+normally allowed by the underlying operating system.<br>
+<br>
+ For example, a 
+code string such as &quot;os.system('rm *')&quot; run by eval or exec will only 
+succeed if the &quot;os&quot; module is available in the namespace in which the 
+string runs, and then only if the Python process has permission to delete 
+files. The first of these constraints can be met by a string of the form 
+&quot;import os; os.system('rm *')&quot;, but the second of these is an 
+operating-system level guard outside of Python. For instance, code run on web 
+servers under user id &quot;nobody&quot; will generally have limited machine 
+access, beyond the constraints provided by the Python rexec module.<br>
+<br>
+
+</li> </ol> 
+<p></p> 
+<h2> [3/02] C API change for embedding example </h2> 
+<p> Due to a recent change in the Python C API, the <b>ppembed-callables.c</b> 
+embedding example source file needs to be changed for use with recent Python 
+releases. When compiling under 2.2, the following error is reported:</p> 
+<pre> ppembed-callables.c: In function `PP_Debug_Function': 
+ppembed-callables.c:51: too many arguments to function `_PyTuple_Resize'</pre> 
+<p>Basically, API function <b>_PyTuple_Resize</b> has been changed in Python's 
+API to accept just 2 arguments now, as documented in 2.2 Python release notes:
+</p> 
+<pre> tupleobject.h: extern DL_IMPORT(int) _PyTuple_Resize(PyObject **, int); 
+</pre> 
+<p>To make the ppembed example compile, change this line: </p> 
+<pre> oops = _PyTuple_Resize(&amp;args, (1 + PyTuple_Size(args)), 1); </pre> 
+to this:
+<pre> oops = _PyTuple_Resize(&amp;args, (1 + PyTuple_Size(args))); </pre> 
+<p>Note that this fix will make ppembed compile, but may not by itself make 
+debugged function calls work as before, though non-debugged calls should work 
+fine. (To be resolved; the resize copying order may differ now, and so may 
+require additional code to move tuple components after each resize).</p> 
+<p> The 2.2 release notes say of the original 3rd argument removal: &quot;If 
+this affects you, you were cheating.&quot; That seems a bit harsh, given that 
+this example was originally present in the 1st edition, worked fine when the 
+2nd edition was published, and had been compiling and working correctly since 
+1994--for some 8 years. Regrettably, the Python C API is more prone to change 
+than the core language.</p> 
+<h2> [1/02] O'Reilly's policy on example code reuse </h2> 
+<p> I've recently received a handful of email queries about copyright issues 
+associated with reusing the book's example source code in other systems. Here 
+is my opinion, and O'Reilly's.</p> 
+<p> As far as I'm concerned, you may freely use the book examples in your own 
+software systems, in any fashion you like. As an author, I consider this a form 
+of compliment, and I'm always glad to hear that the examples are finding 
+practical application. In fact, I encourage code reuse whenever 
+possible--Python code wants to be both reused, and free.</p> 
+<p> Technically, though, my publisher (O'Reilly) owns the copyright on the 
+book and its examples, so you'll want to consult their policy if you need a 
+legally-binding answer. The good news is that O'Reilly's policy is very 
+liberal: in short, if you reuse example code directly, they only require some 
+sort of attribution that names the original book/author. Naturally, there are 
+additional regulations regarding book citations in other publications, which 
+any good editor should be able to recite from memory.</p> 
+<p>If you want to read about O'Reilly's example code reuse policy in full, 
+please see their web pages:</p> 
+<ul> 
+<li> http://examples.oreilly.com/ (bottom of page) </li> 
+<li> http://www.oreilly.com/ask_tim/codepolicy_1101.html </li> </ul> 
+<p></p> 
+<h2> [1/02] Three minor Launcher script updates </h2> 
+<p> The following notes pertain to the auto-launcher scripts presented near 
+the end of chapters 4 and 8. They seem to be standing up to time well, but a 
+few tweaks are worth mentioning:</p> 
+<ul> 
+<li><b>Launcher.py, chapter 4, Python2.X install paths change</b>: When 
+running on Windows, function guessLocation() builds up a list of directories to 
+search for file &quot;python.exe&quot;, the Python interpreter. As is, it first 
+includes hardcoded paths relevant to the Python 2.0 and 1.5.2 installs. For 
+Python 2.2, the first item added should generally be changed from 
+r&quot;C:\Python20&quot; to r&quot;C:\Python22&quot; to avoid long startup 
+times; for 2.1, it should be r&quot;C:\Python21&quot;. If it is not changed, 
+and you haven't added Python's directory to your PATH setting, the script will 
+still find &quot;python.exe&quot; eventually, but usually only by falling back 
+on a long-running brute-force search of your hard drive(s) directory trees. 
+Unfortunately, Python's install directory name may apparently be different for 
+each new release, so there is no obvious direct way to guess where 
+&quot;python.exe&quot; may live across versions, in the absence of PATH 
+settings. Directory name pattern matching might help, but not always. The new 
+sys.executable attribute might yield a better solution as well (see note below).
+<br><br>
+</li> 
+<li><b>LaunchBrowser.py, chapter 4, query strings work too</b>: Because this 
+program works by passing a URL to a web browser in a command line, it will also 
+accept a<i>query string</i> at the end of the URL--simply include text of the 
+form &quot;?parm=value&amp;...&quot; at the end of string argument Page in 
+&quot;-live&quot; mode. This allows the script to invoke a remote server-side 
+script with parameters, and display the remote script's reply in a browser. 
+That is, LaunchBrowser is not limited to static HTML pages--it can also invoke 
+programs on a server. This mode isn't stated explicitly at this point in the 
+book, because URLs and server-side scripts are not covered until much later 
+(chapter 11 and beyond). As also stated later in the book, submitting explicit 
+URLs with appended query strings is one way to reuse and test server-side 
+programs, though module urllib is probably more useful than LaunchBrowser for 
+this role (e.g., see pages 675 and 776). Note that LaunchBrowser can only 
+perform GET style invocations (with query strings in URLs), not POSTs; see page 
+707 for details--you probably only need to care for very large parameter data, 
+and selected sites/scripts.<br>
+<br>
+</li> 
+<li><b>PyDemos.pyw, chapter 8, rmi.net URL change</b>: In function onLinks() 
+near the end, there are two hardcoded &quot;rmi.net/~lutz&quot; URLs that 
+should be changed to &quot;www.rmi.net/~lutz&quot; if you want these link 
+buttons to open the book and author web pages today. Half a year after the book 
+was published, my ISP account was aquired by Earthlink, which now requires the 
+leading &quot;www&quot; to reach my website. (But of course, you already know 
+that if you're reading this :-). Also: be sure to change InternetMode to 
+&quot;-live&quot; in this file if you want to view web examples remotely (see 
+file comments).<br>
+<br>
+</li> </ul> 
+<p></p> 
+<h2> [11/01] Extra examples: SLOC counter scripts </h2> 
+<p> Just for fun, I recently coded four simple scripts that count the number 
+of lines of source code in the examples shipped with the book. They reuse the 
+finder and visitor examples to do directory traversals. To take a look, or to 
+use these scripts for metrics of your own,click here. The verdict: the book 
+examples tree shipped on the CD includes roughly 900 source files, and 42,000 
+source lines. Given that most of this line count represents Python code, 
+multiply by 3 or 4 to derive the SLOC equivalent for C, C++, or Java.</p> 
+<h2> [10/01] Python 2.2 nested scopes and lambda defaults </h2> 
+<p> Python 2.2 was released near the end of 2001, roughly a year after this 
+book's 2nd Edition was finished. With respect to the book's examples, perhaps 
+the most significant change in 2.2 is the introduction of arbitrarily nested 
+static (a.k.a. lexical) scopes. In brief, this new nested scopes rule allows 
+code within both nested def statements and lambda expressions to automatically 
+have access to names defined in the scope of all enclosing function defs.</p> 
+<p> This is a fairly major language change. In all prior releases, code that 
+referenced a variable name only had access to names defined in the local scope 
+(def or lambda body), the enclosing global scope (module), and the built-in 
+scope--a 3-scope search known as the LGB rule. In 2.2, the names in the local 
+scopes of any and all enclosing function defs will also be visible to the 
+nested function. This new variable lookup layer has been added between the L 
+and the G in the LGB rule: on variable references, Python now searches the 
+local scope, then all enclosing defs (if any) from inner to outer, then the 
+module, and finally the built-in scope. This scope rule change was available in 
+2.1 as an optional extension, but had to be explicitly enabled with a 
+&quot;from __future__&quot; import statement.</p> 
+<p> This Python change does not break examples in the book (they will still 
+work with 2.2 and later), but it does mean that callbacks in some of the 
+examples can be coded in somewhat simpler terms after the 2.2 release. Because 
+enclosing scope names are now visible, it is usually no longer required to save 
+names from an enclosing scope by passing them into nested defs and lambdas with 
+default arguments. One noteable exception: defaults are still sometimes 
+required in loops (seethis note). </p> 
+<p> This is an especially common case in lambda expressions used to generate 
+callback handler functions in Tkinter code (lambda introduces a new local 
+scope, just like a nested def statement). For instance, code of the following 
+form:</p> 
+<pre> class MyGui: def action(self, tree): print tree def makeWidgets(self): 
+tree = 'larch' Button(text='Spam', command=(lambda: s=self, t=tree: 
+s.action(t))).pack()</pre> can now be coded in the simpler way: 
+<pre> class MyGui: def action(self, tree): print tree def makeWidgets(self): 
+tree = 'larch' Button(text='Spam', command=(lambda: self.action(tree))).pack()
+</pre> simply because the variables &quot;self&quot; and &quot;tree&quot; from 
+the enclosing def scope (the method) are automatically retained for later use 
+by code in the body of the lambda function. The lambda is still needed to defer 
+execution of the action method call (until the invocation of the generated 
+anonymous function at event time), but there is no need to also pass in data 
+from the enclosing scope. The impacted parts of the book include pages 271-274 
+and 310-311, and various examples.
+<p></p> 
+<h2> [8/01] More minor narrative typos </h2> 
+<p> We still occasionally find typos in the narrative that were missed during 
+the copyedit (it happens, no matter how many people proof a book). None of 
+these impact program examples, or the book's technical accuracy. But I will use 
+this entry to note any odd or missing word reports. Items found recently:</p> 
+<ul> 
+<li>Page 479, text line -3: change &quot;best view&quot; to &quot;best 
+viewed&quot;</li> 
+<li>Page 481, text line 4, second word: change &quot;the&quot; to 
+&quot;that&quot;</li> 
+<li>Page 528, text line -9/-10: change &quot;imported form&quot; to 
+&quot;imported from&quot;</li> 
+<li>Page 507, para -2, line -3: change &quot;at the button&quot; to &quot;at 
+the bottom&quot;</li> 
+<li>Page 57, note at bottom, line -3: change &quot;print &gt;&gt;file&quot; to 
+&quot;print &gt;&gt;file,&quot;</li> </ul> 
+<p></p> 
+<h2> [5/01] Converting paths in #! lines at the top of scripts </h2> 
+<p> A few people have asked about ways to change the #! line at the top of 
+script files (this line gives the path to the Python interpreter on UNIX-like 
+machines). It's easy to do this with the visitor_replace.py script in the 
+book's PyTools directory, and described on page 216. For example, say something 
+like this to replace all #!/usr/bin/python lines with #!\Python21\python:</p> 
+<pre> C:\...\PP2E&gt;python PyTools\visitor_replace.py #!/usr/bin/python 
+#!\Python21\python</pre> Lots of status messages scroll by unless redirected to 
+a file. visitor_replace does a simple global search-and-replace operation on 
+all non-binary files in an entire directory tree (it recursively visits all 
+subdirectories). It's also a bit naive: it won't change other #! line patterns 
+that mention python (e.g., you'll have to run it again to change 
+#!/usr/local/bin/python), and might change occurrences besides those on a first 
+line. That probably won't matter, but if it does, it's easy to write your own 
+Visitor subclass to be more accurate.
+<p> Or just use one I coded: click here to fetch script visitor_poundbang.py. 
+Copy this file into your PP2E\PyTools directory. When run, this script converts 
+all #! lines in all script files in the entire book examples tree. It changes 
+every first line that starts with #! and name &quot;python&quot;, to a line you 
+pass in on the command line or assign in the script:</p> 
+<pre> C:\...\PP2E&gt;python PyTools\visitor_poundbang.py #!\MyPython21\python 
+Are you sure?y . ... 1 =&gt; .\__init__.py 2 =&gt; .\PyDemos2.pyw 3 =&gt; 
+.\towriteable.py ... 1474 =&gt; 
+.\Integrate\Mixed\Exports\ClassAndMod\output.prog1 1475 =&gt; 
+.\Integrate\Mixed\Exports\ClassAndMod\setup-class.csh Visited 1475 files and 
+133 dirs, changed 190 files .\towriteable.py .\Launch_PyGadgets.py 
+.\Launch_PyDemos.pyw ... C:\...\PP2E&gt;type .\Launch_PyGadgets.py 
+#!\MyPython21\python ############################################### # 
+PyGadgets + environment search/config first ...</pre> This script caught and 
+changed 190 files (more than visitor_replace), so there must be other #! line 
+patterns lurking in the examples tree besides #!/usr/bin/python. The Visitor 
+class framework essentially wraps the os.path.walk call (see chapter 5).
+<p></p> 
+<h2> [5/01] Using webserver.py to run CGI scripts locally </h2> 
+<p> As implied by the socket chapter, it is possible to test server-side CGI 
+scripts without connecting to the Internet. Simply run a CGI-capable web server 
+as a background process on the local machine, and use a URL of the form 
+&quot;http://localhost/...&quot; in your web browser to contact the local 
+server. This should work on any machine with true multi-tasking and socket 
+support, and can be both a testing technique, and a way to leverage your web 
+browser as a GUI interface (CGI scripts replace in-process GUI callbacks, 
+albeit with the tradeoffs explored on page 811). This was not demonstrated 
+directly in the book due to problems with Python's HTTP server support on 
+Windows in 1.5.2 and 2.0 described below; in other contexts, this technique 
+works fine.</p> 
+<p> Some people run a full-blown server like Apache locally in such a role. As 
+of Python 2.0. the 7 line webserver.py script on page 940 can also, with a few 
+customizations, be used to run a CGI-capable web server on your local Windows 
+(or other) machine. That is, it can be used to serve up local HTML files and 
+CGI scripts with just a standard Python install on Windows, and without 
+connecting to the Internet at all. In this scheme, the Python-coded web server 
+and your web browser run on the same machine. As such, this is another way to 
+test and run CGI scripts without having an account on a web server machine that 
+supports Python.</p> 
+<p>Simply start webserver.py on your local machine, and use server name 
+&quot;localhost&quot; in your URLs (e.g., type 
+&quot;http://localhost/cgi-bin/test0.cgi&quot; at the top of your browser to 
+contact your locally-running webserver). This can work portably, because the 
+Python 2.0 CGIHTTPServer module now tries os.popen2 to spawn the CGI script if 
+no os.fork exists (and falls back on execfile() if neither exists). Prior to 
+2.0, that module only tried os.fork, and so was a UNIX-only tool; in 2.0 and 
+beyond, os.popen2 is used to start CGI scripts on Windows. To see why the 
+server name &quot;localhost&quot; works such magic, see the client-side socket 
+calls overview on page 530 and beyond (as noted in the book, your web browser 
+is a socket client). Such URLs should also allow Python scripts to contact a 
+locally-running server with the Python urllib module.</p> 
+<p>You'll probably need to subclass CGIHTTPRequestHandler to tailor directory 
+and file extension names--it only recognizes .py and .pyc files by default, 
+(not .cgi), and wants to find CGI scripts segregated in a subdirectory like 
+cgi-bin. A more Windows-friendly webserver.py may be posted here later, if I 
+get time to code one myself; till then, consider it a suggested exercise, and a 
+possible future Python extension. There are a few additional UNIX-only calls in 
+some of the book's CGI scripts (e.g., os.path.samefile in getfile.cgi) that may 
+require more customization for a server running on Windows, and you'll want to 
+run the fixsitename.py script to replace any lurking 
+&quot;starship.python.net/~lutz&quot; references in HTML files to 
+&quot;localhost&quot; (see the Server Side Scripting chapter for details). 
+Naturally, you should be able to run webserver.py locally under Linux and UNIX 
+as well.</p> 
+<p> Of course, whether or not running a server locally like this is easier 
+than using a server machine, depends on your constraints and resources. For 
+many (and perhaps most), configuring and starting a local web server may 
+actually be<i>more</i> work than simply telneting into their server. If you 
+don't have access to a remote server, though, this can be convenient (for 
+example, I started using the webserver.py script in 2003 to test CGI-based 
+programs on aLinux PDA, without a network or modem card). </p> 
+<p> <i>5/28 Note</i>: When running such a Python-coded web server locally on 
+Windows and contacting it with an Internet Explorer client on the same machine, 
+there appears to be an issue with POST style requests to scripts. POSTed forms 
+fail, but GET requests to the exact same script (a form with method=GET, or a 
+URL with an appended query string) work fine. Scripts generate identical output 
+for both POST and GET, so this is not a bug in the examples, but seems to be 
+related to the Windows socket model used by os.popen2. In fact, tracing shows 
+that scripts receive correct inputs and generate correct outputs for POST too, 
+but the output appears to be lost or munged on the way back to the web browser. 
+Oddly, this issue appears to only exist on Windows for the combination of 
+Python's CGIHTTPServer server module, and the Internet Explorer client. For 
+instance, a locally-running Apache server will handle POST correctly, and 
+Netscape 4.7 on NT reportedy handles POST requests properly as well. More 
+details will be posted here as they emerge (no pun intended). This issue was 
+reported on the Python bug list at sourceforge on 5/29; you can probably read 
+the report's statushere. </p> 
+<h2> [5/01] sys.executable and python.exe interpreter searches </h2> 
+<p> Python now has a sys.executable builtin that gives the full directory path 
+name of the Python interpreter program that is running the calling script:</p> 
+<pre> &gt;&gt;&gt; import sys &gt;&gt;&gt; sys.executable 'C:\\PROGRAM 
+FILES\\PYTHON\\PYTHON.EXE'</pre> In some cases, and on some platforms, this 
+call might be able to replace some of the Python interpreter searches that are 
+performed in a few examples early in the book (see the launcher utilities for 
+more details). This is not a replacement for those directory search tools in 
+general, though--they are also used to search for other files in various 
+examples. It also may not be as general or portable a solution; for instance, 
+the searchers fall back on brute-force disk searches if needed, and the 
+interpreter needs to do some fairly complex and platform-specific work to set 
+sys.executable including a similar PATH search (see Python source file 
+Modules/getpath.c). This call is a nice option for tools like os.spawnv, 
+though, which need a Python interpreter path passed in.
+<p></p> 
+<h2> [5/01] ActivePython2.1 bug breaks some GUI examples on Windows </h2> 
+<p><i>Update 5/22/01</i>: ActiveState will include a fix for this bug in an 
+ActivePython2.1 patch release, scheduled to be out within a month; it was 
+apparently a Windows resource build option bug. So, these examples should work 
+fine under all ActivePython distributions, except for the original 2.1 release 
+(and you may simply fetch the patch release if you have the original 2.1 
+release). For more details, please consult the ActivePython bug reports pages at
+activestate.com. This patch release, ActivePython 2.1.0 Build 211 (June 15, 
+2001), apparently also fixes a Tkinter radiobutton bug.</p> 
+<p> There is a bug in ActivePython2.1's implementation of Tkinter that makes a 
+few of the book examples fail on Windows. At the least, any example that uses 
+the guimaker.py tool will not work as is under ActivePython2.1. This includes 
+PyEdit, PyView, PyMail (its mail composition windows), and probably big_gui and 
+shellgui. However, all of these examples still work under the standard 
+Python2.1 release for Windows that is available from www.python.org (as well as 
+all older versions available on the book's CD).</p> 
+<p>The reason is that ActivePython2.1's Tkinter for Windows does not recognize 
+the<b>cursor='hand2'</b> and <b>cursor='gumby'</b> configuration options used 
+by the guimaker.py module for toolbars and help buttons. Note that these are 
+standard Tk cursor settings, and should work in all Tkinters. Much worse, 
+ActivePython's Tkinter not only does not implement these options, it raises an 
+exception for them, which makes programs that use these (and likely other) 
+cursors fail.</p> 
+<p>This is a bug in ActivePython2.1, and has been reported to ActiveState. The 
+settings do work as advertised in the standard Python 2.1 release. But if you 
+have installed ActivePython 2.1 and need a workaround for the problem, you have 
+three options:</p> 
+<ol> 
+<li>You can instead download and install the standard Python 2.1 release from 
+python.org (and install the win32all package separately if you want the extra 
+Windows tool set that comes with ActivePython).<br>
+<br>
+</li> 
+<li>You can simply edit the guimaker.py script on your machine: find and 
+delete the two &quot;cursor=&quot; configuration options in this script. The 
+examples work again after these edits, but you don't get the nice mouse cursors.
+<br><br>
+</li> 
+<li>[New] You can also fetch and install the ActivePython2.1 patch release, 
+which will include a fix for this bug (see the<i>Update</i> paragraph below). 
+</li> </ol> 
+<p>Again, this is a bug in ActivePython2.1, not in the examples or the 
+standard Python release. Because of that, I won't post a patch to fix this in 
+the examples themselves; it doesn't make sense to cripple code for a particular 
+distribution's bug. Also note that although I am happy to investigate such 
+issues, their resolution is beyond my control; please report such issues to 
+ActiveState directly (this specific bug has already been reported).</p> 
+<h2> [5/01] Demo launchers clarification: Launch_* scripts, path setup </h2> 
+<p> Be sure to click/run the Launch_PyDemos.pyw auto-configuring script in the 
+Examples\PP2E directory for a quick look, not file PyDemos.pyw itself. The 
+latter of these assumes that your Python module search path (PYTHONPATH) is set 
+to include the book's source-code package root. The Launch_PyDemos script 
+accomodates this by configuring the search path automatically, and then 
+spawning PyDemos.pyw. This works, because PyDemos, and programs it spawns, 
+inherit the module search path setting made by Launch_PyDemos. If your 
+PYTHONPATH is not set (either manually, or by the top-level Launch_PyDemos 
+script), PyDemos pograms that depend on the module search path setting will not 
+work.</p> 
+<p>I thought that this launcher structure was explained clearly enough in the 
+book's Preface and CD README files, but a few people have already been burned 
+by this (and to be fair, there is a less clear descripton of the demo launchers 
+structure in the Pragmatics appendix). While I'm on the subject: please note 
+that the launchers do work with the standard Python installs available on the 
+book's CD and at www.python.org; if you do something custom, you may need to 
+patch the launcher scripts' code. The book's demo launchers do work with the 
+ActivePython install too, but that install includes an unrelated Tkinter bug in 
+release 2.1 that makes some demos fail (see the prior note).</p> 
+<p> And finally, if you set up your module search path manually, be sure to 
+add the directory that<i>contains</i> the PP2E root to your PYTHONPATH setting. 
+This is all described in the CD README files and book, and is required because 
+cross-directory imports in the book examples are always relative to the PP2E 
+module package root; for example:</p> 
+<pre>from PP2E.Gui.Tools import guimaker</pre> In particular, be careful to 
+not add the PP2E directory itself to the module path, but instead add its 
+parent. For instance, if you copy the CD's Examples\PP2E directory to 
+&quot;C:\PP2E&quot;, then you must add &quot;C:&quot; to PYTHONPATH (not 
+&quot;C:\PP2E&quot;). This is the way that module package imports work in 
+general. (<b>Update 01/03</b>: see the newer and related note). 
+<p></p> 
+<h2> [5/01] Clarification: odd file example on page 66 </h2> 
+<p> The last code listing on page 66 almost looks like a typo, but it's not. 
+If you look closely, you'll notice that the first output line shows up second 
+in the output file. That is, the text written<i>first</i> with the file object 
+write method appears after the text written<i>second</i> with the os module 
+write call. This looked like a bug to me too when I reread it, but it does work 
+exactly as shown. Here's why: In this case, the file object's output written 
+first is<i>buffered</i> by the stdio file system, and is not actually 
+transferred to the file until the object's close method is called at the end of 
+the interaction. In contrast, the os module's write call does not do buffering 
+by default, so its text winds up first in the file, even though it is written 
+second. Strange, but true. See the close and buffering descriptions on pages 60 
+and 63 for more details. And speaking of files: be sure to see the standard<b>
+struct</b> module if you're looking for tools that unpack and pack strings 
+transferred from/to<i>binary</i> mode files; this seems to be a commonly-asked 
+question.</p> 
+<h2> [5/01] Clarification: # not needed in HTML fragment name, p837 </h2> 
+<p> In the code listing on page 837, the generateIndexed function adds 
+&quot;#&quot; characters to both href and name attributes for HTML section 
+(fragment) links, generated for the with-index display mode of PyErrata browse 
+requests. The &quot;#&quot; character is generally only required at the href 
+attribute (of course), but is completely harmless if used in the name attribute 
+as well, under Internet Explorer. That is, the code works as is and as shown so 
+this is not quite a bug; but the # at fragment name attributes is unnecessary, 
+and is usually omitted.</p> 
+<h2> [5/01] CD file names mangled to 8.3 on some UNIX platforms </h2> 
+<p> There has been a report that file names on the book CD get mangled to 8.3 
+DOS format when the High Sierra file system is mounted on the CD under Solaris 
+(Rock Ridge extensions aren't supported). Subsequent reports have suggested 
+that this also may occur on some other flavors of UNIX. Unfortunately, import 
+statements and file searches in the examples really need to see the original, 
+non-8.3, unmangled names. On at least some UNIX systems, this may mean that 
+although the examples on the CD and in the book are indeed coded to be platform 
+neutral, the initial version of the CD itself is not. However, this is only 
+known to be an issue on a handful of platforms; the CD should work fine on 
+recent Windows, Linux, and Mac machines, and on UNIX platforms with proper 
+support.</p> 
+<p>We're exploring a fix, but if you're having trouble seeing the original 
+file names on the CD, don't have access to a supported machine, and can't find 
+another way to read the CD on your machine, for now please send an email to
+lutz@rmi.net for a link to an alternative examples package on the web (a 
+tar/gzip file). Naturally, if you have a Windows or Linux box on your network, 
+you may also be able to simply copy the CD contents to one of those machines, 
+and ftp or otherwise transfer it over to your UNIX box. Also note that on 
+recent versions of Linux, the CD works fine, but be careful to read it in such 
+a way as to preserve the original unmangled file names; see your mount and 
+fstab man pages if you need help (e.g., you may need to specify iso9660 and/or 
+joliet keywords in your /etc/fstab file on some installations). In the worst 
+case, most Linux users may also copy the CD to a hard disk under Windows, and 
+then copy it over to your Linux partition.</p> 
+<p><i>Update #1, 5/27: The gory details</i>. It looks as if the issue is that 
+the book CD was formatted with the Joliet standard used by most commercial CD 
+burners available for PCs. Joliet is an extension to the ISO-9660 CD-R standard 
+that is used to support long filenames, and overcome the 8.3 file naming limit 
+of straight ISO. Long file names on Joilet CDs can be read correctly today on 
+Windows, Linux, and Macs, but not on some UNIX systems that lack Joliet 
+support. UNIX systems that don't support Joliet format generally want to find 
+the Rock Ridge long filenames extensions on the CD instead; you can still read 
+the book CD on such UNIX systems, but you'll get the straight ISO 8.3 mangled 
+filenames, not the Joliet long names. Unfortunately, Joliet won't work on some 
+UNIX systems, and Rock Ridge apparently won't work on Windows. Unless you 
+provide both formats on the same CD, one or the other gets 8.3 ISO names. And 
+just for fun, Macs define yet another incompatible format.</p> 
+<p> For more background details, see the CD-R FAQ entries here and here. A 
+workaround (e.g., a 8.3-to-long file copy and rename script) is still being 
+researched, but please contact me as requested above for the time being if this 
+is effecting you. If you feel ambitious and get to this before I do, you might 
+also be able to code a copy-and-rename script yourself (seethis gzipped text 
+file for the output of a &quot;dir /S /B&quot; CD listing run on DOS, sorted by 
+full pathname). Again, this only impacts users on UNIX systems for which a 
+Joliet-format CD reader does not exist, and who do not have access to other 
+kinds of machines; the CD should work fine today on recent versions of Windows, 
+Linux, Macs, and other UNIX boxes. If you do have trouble seeing long filenames 
+on Linux and Mac machines seethis page; the standard Linux kernal started 
+supporting Joliet as of release 2.0.34, and some Macs may require an extension 
+download.</p> 
+<h2> [4/01] More on Python-friendly web servers </h2> 
+<p> In the first server-side scripting chapter, I gave a handful of hints for 
+locating a web server with Python (you generally need one in order to install 
+and experiment with the server-side CGI scripts in the book). Another option 
+not mentioned in this section: it's also possible to install the Apache open 
+source web server on your own machine, and run the book's server scripts from 
+there. SeeApache's site for details; this is probably not for the novice, but 
+isn't too difficult in general. Alternatively, you could try coding and running 
+a web server in Python with the standard CGIHTTPServer module (see the example 
+near the end of the Advanced Internet Topics chapter), or consult a list of 
+Python-friendly web providers (one is maintainedhere, but you should also check 
+the archives at python.org; most ISPs likely have or will install Python these 
+days).</p> 
+<p><i>Update</i>: See also the note above about running webserver.py locally. 
+With a few customizations, that script can serve up HTML files and CGI scripts 
+on the local machine, and without having to connect to the net; simply use a 
+URL of the form &quot;http://localhost/...&quot; in your browser to contact the 
+local server. It can be run locally on a Linux or UNIX machine almost out of 
+the box, and should work on Windows with a few caveats mentioned in the prior 
+note (there was a bug with POST requests and Internet Explorer as I wrote this, 
+which may be fixed by the time you read this).</p> 
+<h2> [4/01] Two chapter 18 typos </h2> 
+<p> I found two typos that will be repaired in the book's next printing. On 
+page 1041, in the first indented paragraph, &quot;awg&quot; should be 
+&quot;awk&quot; (of course!). And on page 1040, in the first line of the last 
+interaction listing, it should read &quot;@= ..\bases\zoo.kb&quot; (a weird 
+upside-down apostrophe showed up where the first backslash should be). Like I 
+said, typos happen.</p> 
+<p> <i>Update</i>: these typos will be fixed in the third printing of the 
+book, scheduled to happen in early June, 2001. For a complete list of typo 
+fixes I requested for the third printing,click here. </p> 
+<h2> [4/01] Tkinter notes: window border icons, PMW </h2> 
+<p>[<i><b>Update, 09/03</b></i>]: Someone reported that the Tk icon issue may 
+have been fixed in Tk 8.4, which is part of Python 2.3. Calling the window's<b>
+iconbitmap</b> method with the name of a properly-formatted icon file as the 
+argument apparently does change the icon today (I haven't had a chance to 
+verify this yet).<b>Update:</b> now verified: see this note. </p> 
+<p>[<i><b>Update, 08/01</b></i>]: The <b>py2exe</b> packaging/distribution 
+tool now also has a way to change the icon: simply pass a .ico file name to the 
+script's --icon command-line argument. py2exe is similar to the installer tool, 
+and builds upon the distutils extension. It converts python scripts into 
+standalone executable Windows programs, that can be run without requiring a 
+Python installation (which is quite amazing, even apart from its ability to 
+change the Tk icon).Get py2exe here. </p> 
+<p>[<i><b>Update, 07/01</b></i>]: Matt Butler recently announced a small 
+extension which lets you easily change the window icon of toplevel windows in 
+Tk on Windows (you pass it a .ico icon file name to replace the default red 
+icon). You can grab it from the following URLs, or at the Vaults site-- home: 
+http://hackicon.sourceforge.net, download:  
+http://prdownloads.sourceforge.net/hackicon/hackicon00003.zip. </p> 
+<p> This isn't discussed in the book at all, but I've gotten a few questions 
+about this in classes, and it has come up on the Python newsgroup as well. 
+Apparently, there is no way in a Python script to replace the default red 
+&quot;Tk&quot; icon that shows up in the upper left hand corner of all toplevel 
+Tkinter windows. Top-level window object protocols that deal with icons only 
+deal with the icon shown when a window is iconified (minimized), and don't work 
+on Windows in any event.</p> 
+<p>There might be a way to replace the window border icon with a bitmap of 
+your own in the Tk C library: the C function<b>Tk_SetWindowBorderPixmap(<i>tkwin
+</i>, <i>pixmap</i>)</b> looks like a good bet, but it can only be used from C, 
+not Python. You can always build a small C extension module to expose this C 
+function to Python, but that requires a C compiler. (If you want to try, the Tk 
+binary library file installs with Python, and Tk source code is already 
+available on the book CD). If I find a better solution, I'll post it here. At 
+the least, I hope this functionality is exposed to Python in a future Tkinter 
+release.</p> 
+<p>Speaking of Tkinter: I also recommend the Manning book &quot;Python and 
+Tkinter Programming&quot; as a follow-up to the material in the GUI part of 
+this 2nd edition; in particular, its coverage of the supplemental widgets in 
+the PMW extension may prove valuable if you need to do any industrial strength 
+GUI development. As mentioned in the book, PMW adds additional widgets to the 
+roughly 20 widgets native to Tkinter. When you install PMW, you also get a 
+tabbed notebook, paned windows, spin (combo) boxes, and so on. The combination 
+of Tkinter and PMW is at least as rich as wxPython, and does not suffer from 
+wxPython's initial framework complexity and documentation shortage (he says, 
+trying very hard to be objective :-). You may also find the PMW package and 
+documentation on the book's CD.</p> 
+<h2> [4/01] Email example: PyMailGui connection errors </h2> 
+<p> PyMailGui, the Tkinter client-side email tool in Part III, seems to run 
+into &quot;Bad File Descriptor&quot; type errors after running awhile on 
+Windows, especially after downloading lots of email. When it does, it produces 
+an error popup, and needs to reload all email from scratch. I have no idea why 
+this occurs, and it seems to have gotten worse in Python 2.0. It is not a bug 
+in PyMailGui itself, but appears to be in the Python libraries or lower. Since 
+poplib is careful to close and delete the socket used to fetch email, this is 
+probably related to the underlying socket library on Windows. If anyone has a 
+better clue, I'd love to hear it; for now, you should simply ignore this socket 
+error message pop-up if you ever see it and press &quot;Load&quot; again, 
+unless and until a workaround surfaces.</p> 
+<h2> [4/01] Email examples: blank line for smtplib </h2> 
+<p> Subtle thing: When sending email with the smtplib module, you should 
+generally insert a blank line between the mail header lines and the text of the 
+message, to be robust. The book doesn't described this format, and you don't 
+actually need the blank line in most cases. In fact, a few email examples in 
+Part III of the book omit the blank line (smtpmail, PyMailGui, and PyMailCGI), 
+yet all the email examples in the book work correctly as shown. However, some 
+servers and systems detect the end of the headers by simply noticing a blank 
+line, or a line that does not contain a colon (&quot;:&quot;). They do not 
+perform a deeper structural analysis to detect valid header lines (Python 
+doesn't either--see method readheaders in the source code of Python's rfc822 
+module for an example). Therefore, without the blank line separator, if the 
+first line of the message text happens to contain a &quot;:&quot;, it might be 
+classified as a header, and dropped from the message body.</p> 
+<p> I've never been burned by this in the two years that I've been using these 
+examples, so it's a very obscure thing, and not quite a bug. But to be general, 
+either concatenate an extra &quot;\n&quot; after the header lines, or be sure 
+to type a blank first line in the message if the first real line contains a 
+&quot;:&quot;. For more details on mail message formats, please see 
+http://www.faqs.org/rfcs/rfc822.html. And as it states repeatedly, please also 
+keep in mind that this book is about Python coding; it is not intended as a 
+formal guide to all the jots and tittles of Internet protocol standards (many 
+of which are not enforced by commonly-used Internet systems). You should 
+consult other sources for protocol details.</p> 
+<p> <i>Update</i>: these examples will be made more robust as described above, 
+in the second printing of the book. The second printing is scheduled to happen 
+in April 2001 (about a month after the first printing), so this issue is 
+unlikely to exist in most copies of the book. But for details on the changes 
+made,click here. (Update 6/02: see also the new &quot;email&quot; standard 
+library package in Python2.2, for other ways to format and parse email 
+messages.)</p> 
+<h2> [3/01] Enhanced PyDemos example: source-code viewers </h2> 
+<p> You can fetch a slightly enhanced version of the book's PyDemos top-level 
+demo launcher script, byclicking here. Use your browser's save-as option to 
+store locally, if needed, and place this file in your PP2E root directory. This 
+version's new main windowlooks like this. It adds buttons on the right that 
+automatically pop-up each demo's source code files in PyEdit windows. This is a 
+minor mutation, but makes it easy to consult example code quickly--something 
+I've done often enough to warrant the change. This version also demonstrates 
+PyEdit being used in pop-up (Toplevel) mode, rather than as an attached 
+component or spawned stand-alone program.</p> 
+<h2> [3/01] Python version clarification </h2> 
+<p> I want to clarify two points related to the Preface, about which I've 
+already gotten email. First of all, if you have an existing Python 1.5.2 
+installation, you do<i>not</i> need to install Python 2.0 to run most examples 
+in this book; they should work fine under 1.5.2, even though the Preface states 
+that this edition covers 2.0. This backwards compatibility was one reason that 
+examples use things like string module calls, not 2.0 string methods (string 
+methods are discussed in the text itself). In fact, I still have Python 1.5.2 
+installed on one of the development machines used to write this book--for 
+which, of course, I am deeply ashamed :-).</p> 
+<h2> [3/01] Book design clarification </h2> 
+<p> Secondly, I want to reiterate that this edition has been redesigned to be 
+an advanced follow-up to Learning Python. It is now mostly about<i>applications
+</i> of Python, not core language fundamentals. That is, it focuses on ways to 
+use Python syntax for real tasks, rather than the syntax itself. If you are 
+hunting for a detailed description of the class statement, for example, you 
+won't find it here--core language details have now been delegated to the book 
+Learning Python. This is a break from both the 1st Edition and O'Reilly Perl 
+books, but was made deliberately for at least three reasons. First of all, 
+using the language for real tasks represents the second, and much larger half 
+of the Python learning experience. Secondly, many people learn best by example, 
+especially after mastering language basics. And thirdly, the scope of this new 
+edition's examples makes it possible to illustrate larger design concepts such 
+as OOP and component reuse in a more meaningful and satisfying way. If this 
+design shift is still not clear, please see the Preface for more about this 
+edition's structure.</p> 
+<h1>Python notes</h1> 
+<p><b><i>See also</i>:</b> New recent Python changes summary earlier on this 
+page. </p> 
+<p> </p> 
+<ol> 
+<li> [1/02] Python 2.2 released </li> 
+<li> [4/01] Python 2.1 released </li> 
+<li> [4/01] PyGame, SOAP </li> 
+<li> [3/01] Python comes to the Palm </li> 
+<li> [3/01] PyDoc, PyUnit, and more </li> 
+<li> [3/01] XML-RPC </li> 
+<li> [3/01] Komodo </li> 
+<li> [3/01] Wing IDE </li> 
+<li> [3/01] PythonWorks and refactoring </li> 
+<li> [3/01] uiToolkit, Tkinter 3K </li> 
+<li> [3/01] Statically nested scopes: postponed </li> 
+<li> [3/01] New Python Journal </li> </ol> 
+<p></p> <br>
+
+<h2> [1/02] Python 2.2 released </h2> 
+<p> Python 2.2 was released late in December, 2001. It includes new language 
+features such as:</p> 
+<ul> 
+<li>Statically (lexically) nested function scopes are now standard </li> 
+<li>Generator functions (that &quot;yield&quot;, not &quot;return&quot;), and 
+iterator protocols (__iter__, next())</li> 
+<li>New-style classes as an option (via the &quot;object&quot; root class) 
+</li> 
+<li>Class/type unification (built-in types are now subclassable classes) </li> 
+<li>Automatic promotions from integer to long integer (no more overflows) </li>
+<li>A floor division operator was added: // </li> 
+<li>Library additions: standard xmlrpc support, new &quot;email&quot; module 
+package</li> </ul> and more. Book examples work under 2.2, but some new 
+features can simplify coding styles. For instance, statically-nested scopes 
+obviate the need to pass enclosing scope values in to nested defs and lambdas 
+with default arguments (see thebook note above for more on the scopes change). 
+I will try to post more details here as time allows, but seepython.org for 
+release notes and related documents. See also the 2nd Edition of the book <i>
+Python Pocket Reference</i>, which was updated to cover 2.2 features. 
+<p></p> 
+<h2> [4/01] Python 2.1 released </h2> 
+<p> The latest and greatest Python release, version 2.1, may now be fetched 
+frompython.org. There are not as many features in this release as there were in 
+2.0, but it's worth a peek. In short, 2.1 introduces rich comparison 
+overloading methods, a warning framework, &quot;weak&quot; references, function 
+attributes, the PyDoc and PyUnit tools, a new xreadlines method for files, a 
+new C build system, and a bit more. As mentioned elsewhere on this page, 
+arbitrarily nested scopes were retracted from 2.1, but can be turned on as an 
+option, and will likely appear in 2.2 late this year. You can play with nested 
+scopes in 2.1 by saying &quot;from __future__ import nested_scopes&quot;.</p> 
+<h2> [4/01] PyGame, SOAP </h2> 
+<p> Two new packages were recently announced that merit a blurb here: check 
+out thePyGame 1.0 package, a set of extension modules for writing games with 
+Python and the cross-platform SDL DirectMedia library. Also see theSOAP.py 
+release for a Python interface to the XML-based SOAP protocol.</p> 
+<h2> [3/01] Python comes to the Palm </h2> 
+<p> A beta release of Pippy--a port of Python to the Palm platform--is now 
+available. Once installed, Pippy actually provides a Python command-line on the 
+Palm; you can import modules installed, and type and run Python code 
+interactively on a Palm device. For instance, with Pippy, you can use the 
+Python socket and Internet support modules to implement things like web servers 
+and mail readers on your Palm (no, really!). More generally, Pippy promises to 
+bring Python's productivity and maintainability benefits to the embedded 
+systems domain. See thePippy home page or python.org for downloads and more 
+details; to go straight to some Pippy screen-shots,click here. </p> 
+<h2> [3/01] PyDoc, PyUnit, and more </h2> 
+<p> Python 2.1 will include the PyDoc system--a tool that extracts 
+documentation strings from Python programs, and nicely formats them into a HTML 
+(and other) formats for viewing. There is also a dedicated website,www.pydoc.org
+, which includes PyDoc pages for the Python standard library. Release 2.1 will 
+also include the PyUnit automated testing system--see 2.1 release notes for 
+more details. Speaking of tools, also see PyChecker--a new program that does 
+simple lint-like program analysis, and pyprof--a simplified interface to the 
+Python profiler. You can find all these on python.org, or the vaults of 
+parnassus.</p> 
+<h2> [3/01] XML-RPC </h2> 
+<p> Fredrik Lundh has implemented some nice tools for doing XML-RPC from 
+Python--a protocol that lets scripts invoke methods on a remote machine, and 
+passes data between caller and callee as XML-formatted text streams over 
+sockets. Consult python.org, or read about xmlrpclib on its pagePythonWare. 
+Fredrik also has a soaplib module in the works to support the somewhat similar 
+SOAP protocol.</p> 
+<h2> [3/01] Komodo </h2> 
+<p> ActiveState's Komodo system is a Python development IDE that is free, 
+portable, and based on the Mozilla application framework. Among other things, 
+Komodo allows GUIs to be specified in XUL--an XML based description language. 
+SeeActiveState for more details. Technically speaking, Komodo takes something 
+of an<i>agnostic</i> approach to language choice: it will serve as an IDE for a 
+variety of programming languages. ActiveState will also sell VisualPython, a 
+Microsoft-based IDE that lets you develop scripts under Visual Studio (which 
+must be purchased separately).</p> 
+<h2> [3/01] Wing IDE </h2> 
+<p> A newly-emerged IDE for Python development, demoed at the IPC9 conference. 
+See the Wing IDEhome page, or python.org for links. </p> 
+<h2> [3/01] PythonWorks and refactoring </h2> 
+<p> The PythonWorks IDE has sprouted a very nice refactoring feature, which 
+automatically changes and rearranges code for clarity and maintainability. See
+PythonWare for details. </p> 
+<h2> [3/01] uiToolkit, Tkinter 3K </h2> 
+<p> PythonWare is also at work on an optimized replacement for the current 
+Tkinter system; it will be a drop-in, compatible replacement for the current 
+Tkinter, and will ship with future Python releases. PythonWare is also 
+polishing uiToolkit--a framework built on top of Tkinter, which allows widgets 
+to be easily constructed in efficient Python code.</p> 
+<h2> [3/01] Statically nested scopes: postponed </h2> 
+<p> Python 2.1 alpha introduced, and then retracted, a change which will allow 
+scopes to nest arbitrarily, when scope constructs (class, def, and lambda) are 
+nested syntactically. Because this feature breaks some existing code, it is 
+disabled by default in the upcoming 2.1 release, but may be enabled as a 
+standard feature in 2.2. When it is turned on, this feature eliminates the need 
+to use default arguments in lambdas and nested defs to save values from the 
+enclosing scope. Such code will still work under the new scheme, but names from 
+an enclosing scope will be naturally visible without the use of default 
+arguments. This change will also obviate the familiar LGB scope rule 
+(local-global-builtin 3-scope name lookup); or if you prefer, it generalizes 
+&quot;L&quot; to be an arbitrary number of scopes. This change also breaks uses 
+of both &quot;from *&quot;, and &quot;eval&quot; and &quot;exec&quot; without 
+explicit namespace dictionaries, whenever they appear within a function (the 
+compiler cannot resolve names it doesn't know about). In other words, this is a 
+use-at-your-own-risk feature, and is thus not enabled in the upcoming 2.1 
+release. See more about the 2.2 release earlier on this page, and see thebook 
+note on this page that describes this language change in more detail. </p> 
+<h2> [3/01] New Python Journal </h2> 
+<p> Check out the new online Python Journal. It has been resurrected, and is 
+being refashioned into an interactive site. (Update, 6/02: see also the new 
+&quot;Py&quot; print magazine; search python.org for more details.)</p> 
+<h2><i>More to come...</i></h2> 
+<p>Back to the PP2E home page </p> 
+</body>

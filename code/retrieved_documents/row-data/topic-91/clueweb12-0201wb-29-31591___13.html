@@ -1,0 +1,603 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Conditional Random Fields</title>
+<body>
+ conditional random fields <br>
+ hanna m. wallach 
+<p></p> 
+<ul> 
+<li>introduction</li> 
+<li>tutorial</li> 
+<li>papers by year 
+<ul> 
+<li>2001 2002 2003 2004 2005</li> </ul> </li> 
+<li>software</li> 
+<li>RSS feed</li> </ul> 
+<p>This page contains material on, or relating to, conditional random fields. 
+I shall continue to update this page as research on conditional random fields 
+advances, so do check back periodically. If you feel there is something that 
+should be on here but isn't, then please email me (hmw26 -at- srcf.ucam.org) 
+and let me know.</p> 
+<h1>introduction</h1> 
+<p>Conditional random fields (CRFs) are a probabilistic framework for labeling 
+and segmenting structured data, such as sequences, trees and lattices. The 
+underlying idea is that of defining a conditional probability distribution over 
+label sequences given a particular observation sequence, rather than a joint 
+distribution over both label and observation sequences. The primary advantage 
+of CRFs over hidden Markov models is their conditional nature, resulting in the 
+relaxation of the independence assumptions required by HMMs in order to ensure 
+tractable inference. Additionally, CRFs avoid the label bias problem, a 
+weakness exhibited by maximum entropy Markov models (MEMMs) and other 
+conditional Markov models based on directed graphical models. CRFs outperform 
+both MEMMs and HMMs on a number of real-world tasks in many fields, including 
+bioinformatics, computational linguistics and speech recognition.</p> 
+<h1>tutorial</h1> 
+<p>Hanna M. Wallach. Conditional Random Fields: An Introduction. Technical 
+Report MS-CIS-04-21. Department of Computer and Information Science, University 
+of Pennsylvania, 2004.</p> 
+<h1>papers by year</h1> 
+<h2>2001</h2> 
+<p>John Lafferty, Andrew McCallum, Fernando Pereira. Conditional Random 
+Fields: Probabilistic Models for Segmenting and Labeling Sequence Data. In <i>
+Proceedings of the Eighteenth International Conference on Machine Learning</i> 
+(ICML-2001), 2001.</p> 
+<blockquote> We present conditional random fields, a framework for building 
+probabilistic models to segment and label sequence data. Conditional random 
+fields offer several advantages over hidden Markov models and stochastic 
+grammars for such tasks, including the ability to relax strong independence 
+assumptions made in those models. Conditional random fields also avoid a 
+fundamental limitation of maximum entropy Markov models (MEMMs) and other 
+discriminative Markov models based on directed graphical models, which can be 
+biased towards states with few successor states. We present iterative parameter 
+estimation algorithms for conditional random fields and compare the performance 
+of the resulting models to HMMs and MEMMs on synthetic and natural-language 
+data.</blockquote> 
+<h2>2002</h2> 
+<p>Hanna Wallach. Efficient Training of Conditional Random Fields. M.Sc. 
+thesis, Division of Informatics, University of Edinburgh, 2002.</p> 
+<blockquote> This thesis explores a number of parameter estimation techniques 
+for conditional random fields, a recently introduced probabilistic model for 
+labelling and segmenting sequential data. Theoretical and practical 
+disadvantages of the training techniques reported in current literature on CRFs 
+are discussed. We hypothesise that general numerical optimisation techniques 
+result in improved performance over iterative scaling algorithms for training 
+CRFs. Experiments run on a subset of a well-known text chunking data set 
+confirm that this is indeed the case. This is a highly promising result, 
+indicating that such parameter estimation techniques make CRFs a practical and 
+efficient choice for labelling sequential data, as well as a theoretically 
+sound and principled probabilistic framework.</blockquote> 
+<p>Thomas G. Dietterich. Machine Learning for Sequential Data: A Review. In <i>
+Structural, Syntactic, and Statistical Pattern Recognition; Lecture Notes in 
+Computer Science, Vol. 2396</i>, T. Caelli (Ed.), pp. 15&ndash;30, 
+Springer-Verlag, 2002.</p> 
+<blockquote> Statistical learning problems in many fields involve sequential 
+data. This paper formalizes the principal learning tasks and describes the 
+methods that have been developed within the machine learning research community 
+for addressing these problems. These methods include sliding window methods, 
+recurrent sliding windows, hidden Markov models, conditional random fields, and 
+graph transformer networks. The paper also discusses some open research issues.
+</blockquote> 
+<h2>2003</h2> 
+<p>Fei Sha and Fernando Pereira. Shallow Parsing with Conditional Random 
+Fields. In <i>Proceedings of the 2003 Human Language Technology Conference and 
+North American Chapter of the Association for Computational Linguistics</i> 
+(HLT/NAACL-03), 2003.</p> 
+<blockquote> Conditional random fields for sequence labeling offer advantages 
+over both generative models like HMMs and classifers applied at each sequence 
+position. Among sequence labeling tasks in language processing, shallow parsing 
+has received much attention, with the development of standard evaluation 
+datasets and extensive comparison among methods. We show here how to train a 
+conditional random field to achieve performance as good as any reported base 
+noun-phrase chunking method on the CoNLL task, and better than any reported 
+single model. Improved training methods based on modern optimization algorithms 
+were critical in achieving these results. We present extensive comparisons 
+between models and training methods that confirm and strengthen previous 
+results on shallow parsing and training methods for maximum-entropy models.
+</blockquote> 
+<p>Andrew McCallum. Efficiently Inducing Features of Conditional Random Fields.
+ In<i>Proceedings of the 19th Conference in Uncertainty in Articifical 
+Intelligence</i> (UAI-2003), 2003.</p> 
+<blockquote> Conditional Random Fields (CRFs) are undirected graphical models, 
+a special case of which correspond to conditionally-trained finite state 
+machines. A key advantage of CRFs is their great flexibility to include a wide 
+variety of arbitrary, non-independent features of the input. Faced with this 
+freedom, however, an important question remains: what features should be used? 
+This paper presents an efficient feature induction method for CRFs. The method 
+is founded on the principle of iteratively constructing feature conjunctions 
+that would significantly increase conditional log-likelihood if added to the 
+model. Automated feature induction enables not only improved accuracy and 
+dramatic reduction in parameter count, but also the use of larger cliques, and 
+more freedom to liberally hypothesize atomic input variables that may be 
+relevant to a task. The method applies to linear-chain CRFs, as well as to more 
+arbitrary CRF structures, such as Relational Markov Networks, where it 
+corresponds to learning clique templates, and can also be understood as 
+supervised structure learning. Experimental results on named entity extraction 
+and noun phrase segmentation tasks are presented.</blockquote> 
+<p>David Pinto, Andrew McCallum, Xing Wei and W. Bruce Croft. Table Extraction 
+Using Conditional Random Fields. In <i>Proceedings of the 26th Annual 
+International ACM SIGIR Conference on Research and Development in Information 
+Retrieval</i> (SIGIR 2003), 2003.</p> 
+<blockquote> The ability to find tables and extract information from them is a 
+necessary component of data mining, question answering, and other information 
+retrieval tasks. Documents often contain tables in order to communicate densely 
+packed, multi-dimensional information. Tables do this by employing layout 
+patterns to e ciently indicate fields and records in two-dimensional form. 
+Their rich combination of formatting and content present di culties for 
+traditional language modeling techniques, however. This paper presents the use 
+of conditional random fields (CRFs) for table extraction, and compares them 
+with hidden Markov models (HMMs). Unlike HMMs, CRFs support the use of many 
+rich and overlapping layout and language features, and as a result, they 
+perform significantly better. We show experimental results on plain-text 
+government statistical reports in which tables are located with 92% F1, and 
+their constituent lines are classified into 12 table-related categories with 
+94% accuracy. We also discuss future work on undirected graphical models for 
+segmenting columns, finding cells, and classifying them as data cells or label 
+cells.</blockquote> 
+<p>Andrew McCallum and Wei Li. Early Results for Named Entity Recognition with 
+Conditional Random Fields, Feature Induction and Web-Enhanced Lexicons. In <i>
+Proceedings of the Seventh Conference on Natural Language Learning</i> (CoNLL), 
+2003.</p> 
+<p>Wei Li and Andrew McCallum. Rapid Development of Hindi Named Entity 
+Recognition Using Conditional Random Fields and Feature Induction. In <i>ACM 
+Transactions on Asian Language Information Processing</i> (TALIP), 2003.</p> 
+<blockquote> This paper describes our application of conditional random fields 
+with feature induction to a Hindi named entity recognition task. With only five 
+days development time and little knowledge of this language, we automatically 
+discover relevant features by providing a large array of lexical tests and 
+using feature induction to automatically construct the features that most 
+increase conditional likelihood. In an effort to reduce overfitting, we use a 
+combination of a Gaussian prior and early stopping based on the results of 
+10-fold cross validation.</blockquote> 
+<p>Yasemin Altun and Thomas Hofmann. Large Margin Methods for Label Sequence 
+Learning. In <i>Proceedings of 8th European Conference on Speech Communication 
+and Technology</i> (EuroSpeech), 2003.</p> 
+<blockquote> Label sequence learning is the problem of inferring a state 
+sequence from an observation sequence, where the state sequence may encode a 
+labeling, annotation or segmentation of the sequence. In this paper we give an 
+overview of discriminative methods developed for this problem. Special emphasis 
+is put on large margin methods by generalizing multiclass Support Vector 
+Machines and AdaBoost to the case of label sequences.An experimental evaluation 
+demonstrates the advantages over classical approaches like Hidden Markov Models 
+and the competitiveness with methods like Conditional Random Fields.
+</blockquote> 
+<p>Simon Lacoste-Julien. Combining SVM with graphical models for supervised 
+classification: an introduction to Max-Margin Markov Networks. CS281A Project 
+Report, UC Berkeley, 2003.</p> 
+<blockquote> The goal of this paper is to present a survey of the concepts 
+needed to understand the novel Max-Margin Markov Networks (M3-net) framework, a 
+new formalism invented by Taskar, Guestrin and Koller which combines both the 
+advantages of the graphical models and the Support Vector Machines (SVMs) to 
+solve the problem of multi-label multi-class supervised classification. We will 
+compare generative models, discriminative graphical models and SVMs for this 
+task, introducing the basic concepts at the same time, leading at the end to a 
+presentation of the M3-net paper. </blockquote> 
+<h2>2004</h2> 
+<p>Andrew McCallum, Khashayar Rohanimanesh and Charles Sutton. Dynamic 
+Conditional Random Fields for Jointly Labeling Multiple Sequences. Workshop on 
+Syntax, Semantics, Statistics; 16th Annual Conference on Neural Information 
+Processing Systems (NIPS 2003), 2004.</p> 
+<blockquote> Conditional random fields (CRFs) for sequence modeling have 
+several advantages over joint models such as HMMs, including the ability to 
+relax strong independence assumptions made in those models, and the ability to 
+incorporate arbitrary overlapping features. Previous work has focused on 
+linear-chain CRFs, which correspond to finite-state machines, and have 
+efficient exact inference algorithms. Often, however, we wish to label sequence 
+data in multiple interacting ways&mdash;for example, performing part-of-speech 
+tagging and noun phrase segmentation simultaneously, increasing joint accuracy 
+by sharing information between them. We present dynamic conditional random 
+fields (DCRFs), which are CRFs in which each time slice has a set of state 
+variables and edges&mdash;a distributed state representation as in dynamic 
+Bayesian networks&mdash;and parameters are tied across slices. (They could also 
+be called conditionally-trained Dynamic Markov Networks.) Since exact inference 
+can be intractable in these models, we perform approximate inference using the 
+tree-based reparameterization framework (TRP). We also present empirical 
+results comparing DCRFs with linear-chain CRFs on natural-language data.
+</blockquote> 
+<p>Kevin Murphy, Antonio Torralba and William T.F. Freeman. Using the forest 
+to see the trees: a graphical model relating features, objects and scenes. In 
+<i>Advances in Neural Information Processing Systems 16</i> (NIPS 2003), 2004.
+</p> 
+<blockquote> Standard approaches to object detection focus on local patches of 
+the image, and try to classify them as background or not. We propose to use the
+<em>scene context</em> (image as a whole) as an extra source of (global) 
+information, to help resolve local ambiguities. We present a conditional random 
+field for jointly solving the tasks of object detection and scene 
+classification.</blockquote> 
+<p>Sanjiv Kumar and Martial Hebert. Discriminative Fields for Modeling Spatial 
+Dependencies in Natural Images. In <i>Advances in Neural Information Processing 
+Systems 16</i> (NIPS 2003), 2004.</p> 
+<blockquote> In this paper we present Discriminative Random Fields (DRF), a 
+discriminative framework for the classification of natural image regions by 
+incorporating neighborhood spatial dependencies in the labels as well as the 
+observed data. The proposed model exploits local discriminative models and 
+allows to relax the assumption of conditional independence of the observed data 
+given the labels, commonly used in the Markov Random Field (MRF) framework. The 
+parameters of the DRF model are learned using penalized maximum 
+pseudo-likelihood method. Furthermore, the form of the DRF model allows the MAP 
+inference for binary classification problems using the graph min-cut 
+algorithms. The performance of the model was verified on the synthetic as well 
+as the real-world images. The DRF model outperforms the MRF model in the 
+experiments.</blockquote> 
+<p>Ben Taskar, Carlos Guestrin and Daphne Koller. Max-Margin Markov Networks. 
+In<i>Advances in Neural Information Processing Systems 16</i> (NIPS 2003), 2004.
+</p> 
+<blockquote> In typical classification tasks, we seek a function which assigns 
+a label to a single object. Kernel-based approaches, such as support vector 
+machines (SVMs), which maximize the margin of confidence of the classifier, are 
+the method of choice for many such tasks. Their popularity stems both from the 
+ability to use high-dimensional feature spaces, and from their strong 
+theoretical guarantees. However, many real-world tasks involve sequential, 
+spatial, or structured data, where multiple labels must be assigned. Existing 
+kernel-based methods ignore structure in the problem, assigning labels 
+independently to each object, losing much useful information. Conversely, 
+probabilistic graphical models, such as Markov networks, can represent 
+correlations between labels, by exploiting problem structure, but cannot handle 
+high-dimensional feature spaces, and lack strong theoretical generalization 
+guarantees. In this paper, we present a new framework that combines the 
+advantages of both approaches: Maximum margin Markov (M3) networks incorporate 
+both kernels, which efficiently deal with high-dimensional features, and the 
+ability to capture correlations in structured data. We present an efficient 
+algorithm for learning M3 networks based on a compact quadratic program 
+formulation. We provide a new theoretical bound for generalization in 
+structured domains. Experiments on the task of handwritten character 
+recognition and collective hypertext classification demonstrate very 
+significant gains over previous approaches.</blockquote> 
+<p>Burr Settles. Biomedical Named Entity Recognition Using Conditional Random 
+Fields and Rich Feature Sets. To appear in <i>Proceedings of the International 
+Joint Workshop on Natural Language Processing in Biomedicine and its 
+Applications</i> (NLPBA), 2004.</p> 
+<p>A demo of the system can be downloaded here.</p> 
+<blockquote> As the wealth of biomedical knowledge in the form of literature 
+increases, there is a rising need for effective natural language processing 
+tools to assist in organizing, curating, and retrieving this information. To 
+that end, named entity recognition (the task of identifying words and phrases 
+in free text that belong to certain classes of interest) is an important first 
+step for many of these larger information management goals. In recent years, 
+much attention has been focused on the problem of recognizing gene and protein 
+mentions in biomedical abstracts. This paper presents a framework for 
+simultaneously recognizing occurrences of PROTEIN, DNA, RNA, CELL-LINE, and 
+CELL-TYPE entity classes using Conditional Random Fields with a variety of 
+traditional and novel features. I show that this approach can achieve an 
+overall F measure around 70, which seems to be the current state of the art.
+</blockquote> 
+<p>Charles Sutton, Khashayar Rohanimanesh and Andrew McCallum. Dynamic 
+Conditional Random Fields: Factorized Probabilistic Models for Labeling and 
+Segmenting Sequence Data. In <i>Proceedings of the Twenty-First International 
+Conference on Machine Learning</i> (ICML 2004), 2004.</p> 
+<blockquote> In sequence modeling, we often wish to represent complex 
+interaction between labels, such as when performing multiple, cascaded labeling 
+tasks on the same sequence, or when long-range dependencies exist. We present 
+dynamic conditional random fields (DCRFs), a generalization of linear-chain 
+conditional random fields (CRFs) in which each time slice contains a set of 
+state variables and edges&mdash;a distributed state representation as in 
+dynamic Bayesian networks (DBNs)&mdash;and parameters are tied across slices. 
+Since exact inference can be intractable in such models, we perform approximate 
+inference using several schedules for belief propagation, including tree-based 
+reparameterization (TRP). On a natural-language chunking task, we show that a 
+DCRF performs better than a series of linear-chain CRFs, achieving comparable 
+performance using only half the training data.</blockquote> 
+<p>John Lafferty, Xiaojin Zhu and Yan Liu. Kernel conditional random fields: 
+representation and clique selection. In <i>Proceedings of the Twenty-First 
+International Conference on Machine Learning</i> (ICML 2004), 2004.</p> 
+<blockquote> Kernel conditional random fields (KCRFs) are introduced as a 
+framework for discriminative modeling of graph-structured data. A representer 
+theorem for conditional graphical models is given which shows how kernel 
+conditional random fields arise from risk minimization procedures defined using 
+Mercer kernels on labeled graphs. A procedure for greedily selecting cliques in 
+the dual representation is then proposed, which allows sparse representations. 
+By incorporating kernels and implicit feature spaces into conditional graphical 
+models, the framework enables semi-supervised learning algorithms for 
+structured data through the use of graph kernels. The framework and clique 
+selection methods are demonstrated in synthetic data experiments, and are also 
+applied to the problem of protein secondary structure prediction.</blockquote> 
+<p>Xuming He, Richard Zemel, and Miguel &Aacute;. 
+Carreira-Perpi&ntilde;&aacute;n.Multiscale conditional random fields for image 
+labelling. In <i>Proceedings of the 2004 IEEE Computer Society Conference on 
+Computer Vision and Pattern Recognition</i> (CVPR 2004), 2004.</p> 
+<blockquote> We propose an approach to include contextual features for 
+labeling images, in which each pixel is assigned to one of a finite set of 
+labels. The features are incorporated into a probabilistic framework which 
+combines the outputs of several components. Components differ in the 
+information they encode. Some focus on the image-label mapping, while others 
+focus solely on patterns within the label field. Components also differ in 
+their scale, as some focus on fine-resolution patterns while others on coarser, 
+more global structure. A supervised version of the contrastive divergence 
+algorithm is applied to learn these features from labeled image data. We 
+demonstrate performance on two real-world image databases and compare it to a 
+classifier and a Markov random field.</blockquote> 
+<p>Yasemin Altun, Alex J. Smola, Thomas Hofmann. Exponential Families for 
+Conditional Random Fields. In <i>Proceedings of the 20th Conference on 
+Uncertainty in Artificial Intelligence</i> (UAI-2004), 2004.</p> 
+<blockquote> In this paper we define conditional random fields in reproducing 
+kernel Hilbert spaces and show connections to Gaussian Process classification. 
+More specifically, we prove decomposition results for undirected graphical 
+models and we give constructions for kernels. Finally we present efficient 
+means of solving the optimization problem using reduced rank decompositions and 
+we show how stationarity can be exploited efficiently in the optimization 
+process.</blockquote> 
+<p>Michelle L. Gregory and Yasemin Altun. Using Conditional Random Fields to 
+Predict Pitch Accents in Conversational Speech. In <i>Proceedings of the 42nd 
+Annual Meeting of the Association for Computational Linguistics</i> (ACL 2004), 
+2004.</p> 
+<blockquote> The detection of prosodic characteristics is an important aspect 
+of both speech synthesis and speech recognition. Correct placement of pitch 
+accents aids in more natural sounding speech, while automatic detection of 
+accents can contribute to better word-level recognition and better textual 
+understanding. In this paper we investigate probabilistic, contextual, and 
+phonological factors that influence pitch accent placement in natural, 
+conversational speech in a sequence labeling setting. We introduce Conditional 
+Random Fields (CRFs) to pitch accent prediction task in order to incorporate 
+these factors efficiently in a sequence model. We demonstrate the usefulness 
+and the incremental effect of these factors in a sequence model by performing 
+experiments on hand labeled data from the Switchboard Corpus. Our model 
+outperforms the baseline and previous models of pitch accent prediction on the 
+Switchboard Corpus.</blockquote> 
+<p>Brian Roark, Murat Saraclar, Michael Collins and Mark Johnson. 
+Discriminative Language Modeling with Conditional Random Fields and the 
+Perceptron Algorithm. In <i>Proceedings of the 42nd Annual Meeting of the 
+Association for Computational Linguistics</i> (ACL 2004), 2004.</p> 
+<blockquote> This paper describes discriminative language modeling for a large 
+vocabulary speech recognition task. We contrast two parameter estimation 
+methods: the perceptron algorithm, and a method based on conditional random 
+fields (CRFs). The models are encoded as deterministic weighted finite state 
+automata, and are applied by intersecting the automata with word-lattices that 
+are the output from a baseline recognizer. The perceptron algorithm has the 
+benefit of automatically selecting a relatively small feature set in just a 
+couple of passes over the training data. However, using the feature set output 
+from the perceptron algorithm (initialized with their weights), CRF training 
+provides an additional 0.5% reduction in word error rate, for a total 1.8% 
+absolute reduction from the baseline of 39.2%.</blockquote> 
+<p>Ryan McDonald and Fernando Pereira. Identifying Gene and Protein Mentions 
+in Text Using Conditional Random Fields. BioCreative, 2004.</p> 
+<p>Trausti T. Kristjansson, Aron Culotta, Paul Viola and Andrew McCallum. 
+Interactive Information Extraction with Constrained Conditional Random Fields. 
+In<i>Proceedings of the Nineteenth National Conference on Artificial 
+Intelligence</i> (AAAI 2004), 2004.</p> 
+<blockquote> Information Extraction methods can be used to automatically 
+&quot;fill-in&quot; database forms from unstructured data such as Web documents 
+or email. State-of-the-art methods have achieved low error rates but invariably 
+make a number of errors. The goal of an interactive information extraction 
+system is to assist the user in filling in database fields while giving the 
+user confidence in the integrity of the data. The user is presented with an 
+interactive interface that allows both the rapid verification of automatic 
+field assignments and the correction of errors. In cases where there are 
+multiple errors, our system takes into account user corrections, and 
+immediately propagates these constraints such that other fields are often 
+corrected automatically. Linear-chain conditional random fields (CRFs) have 
+been shown to perform well for information extraction and other language 
+modelling tasks due to their ability to capture arbitrary, overlapping features 
+of the input in a Markov model. We apply this framework with two extensions: a 
+constrained Viterbi decoding which finds the optimal field assignments 
+consistent with the fields explicitly specified or corrected by the user; and a 
+mechanism for estimating the confidence of each extracted field, so that 
+low-confidence extractions can be highlighted. Both of these mechanisms are 
+incorporated in a novel user interface for form filling that is intuitive and 
+speeds the entry of data&mdash;providing a 23% reduction in error due to 
+automated corrections.</blockquote> 
+<p>Thomas G. Dietterich, Adam Ashenfelter and Yaroslav Bulatov. Training 
+Conditional Random Fields via Gradient Tree Boosting. In <i>Proceedings of the 
+Twenty-First International Conference on Machine Learning</i> (ICML 2004), 2004.
+</p> 
+<blockquote> Conditional Random Fields (CRFs; Lafferty, McCallum, &amp; 
+Pereira, 2001) provide a flexible and powerful model for learning to assign 
+labels to elements of sequences in such applications as part-of-speech tagging, 
+text-to-speech mapping, protein and DNA sequence analysis, and information 
+extraction from web pages. However, existing learning algorithms are slow, 
+particularly in problems with large numbers of potential input features. This 
+paper describes a new method for training CRFs by applying Friedman's (1999) 
+gradient tree boosting method. In tree boosting, the CRF potential functions 
+are represented as weighted sums of regression trees. Regression trees are 
+learned by stage-wise optimizations similar to Adaboost, but with the objective 
+of maximizing the conditional likelihood<i>P(Y|X)</i> of the CRF model. By 
+growing regression trees, interactions among features are introduced only as 
+needed, so although the parameter space is potentially immense, the search 
+algorithm does not explicitly consider the large space. As a result, gradient 
+tree boosting scales linearly in the order of the Markov model and in the order 
+of the feature interactions, rather than exponentially like previous algorithms 
+based on iterative scaling and gradient descent.</blockquote> 
+<p>John Lafferty, Yan Liu and Xiaojin Zhu. Kernel Conditional Random Fields: 
+Representation, Clique Selection, and Semi-Supervised Learning. Technical 
+Report CMU-CS-04-115, Carnegie Mellon University, 2004.</p> 
+<blockquote> Kernel conditional random fields are introduced as a framework 
+for discriminative modeling of graph-structured data. A representer theorem for 
+conditional graphical models is given which shows how kernel conditional random 
+fields arise from risk minimization procedures defined using Mercer kernels on 
+labeled graphs. A procedure for greedily selecting cliques in the dual 
+representation is then proposed, which allows sparse representations. By 
+incorporating kernels and implicit feature spaces into conditional graphical 
+models, the framework enables semi-supervised learning algorithms for 
+structured data through the use of graph kernels. The clique selection and 
+semi-supervised methods are demonstrated in synthetic data experiments, and are 
+also applied to the problem of protein secondary structure prediction.
+</blockquote> 
+<p>Fuchun Peng and Andrew McCallum (2004). Accurate Information Extraction 
+from Research Papers using Conditional Random Fields. In <i>Proceedings of 
+Human Language Technology Conference and North American Chapter of the 
+Association for Computational Linguistics</i> (HLT/NAACL-04), 2004.</p> 
+<blockquote> With the increasing use of research paper search engines, such as 
+CiteSeer, for both literature search and hiring decisions, the accuracy of such 
+systems is of paramount importance. This paper employs Conditional Random 
+Fields (CRFs) for the task of extracting various common fields from the headers 
+and citation of research papers. The basic theory of CRFs is becoming 
+well-understood, but best-practices for applying them to real-world data 
+requires additional exploration. This paper makes an empirical exploration of 
+several factors, including variations on Gaussian, exponential and hyperbolic 
+priors for improved regularization, and several classes of features and Markov 
+order. On a standard benchmark data set, we achieve new state-of-the-art 
+performance, reducing error in average F1 by 36%, and word error rate by 78% in 
+comparison with the previous best SVM results. Accuracy compares even more 
+favorably against HMMs.</blockquote> 
+<p>Yasemin Altun, Thomas Hofmann and Alexander J. Smola. Gaussian process 
+classification for segmenting and annotating sequences. In <i>Proceedings of 
+the Twenty-First International Conference on Machine Learning</i> (ICML 2004), 
+2004.</p> 
+<blockquote> Many real-world classification tasks involve the prediction of 
+multiple, inter-dependent class labels. A prototypical case of this sort deals 
+with prediction of a sequence of labels for a sequence of observations. Such 
+problems arise naturally in the context of annotating and segmenting 
+observation sequences. This paper generalizes Gaussian Process classification 
+to predict multiple labels by taking dependencies between neighboring labels 
+into account. Our approach is motivated by the desire to retain rigorous 
+probabilistic semantics, while overcoming limitations of parametric methods 
+like Conditional Random Fields, which exhibit conceptual and computational 
+difficulties in high-dimensional input spaces. Experiments on named entity 
+recognition and pitch accent prediction tasks demonstrate the competitiveness 
+of our approach.</blockquote> 
+<p>Yasemin Altun and Thomas Hofmann. Gaussian Process Classification for 
+Segmenting and Annotating Sequences. Technical Report CS-04-12, Department of 
+Computer Science, Brown University, 2004.</p> 
+<blockquote> Multiclass classification refers to the problem of assigning 
+labels to instances where labels belong to some finite set of elements. Often, 
+however, the instances to be labeled do not occur in isolation, but rather in 
+observation sequences. One is then interested in predicting the joint label 
+configuration, i.e. the sequence of labels, using models that take possible 
+interdependencies between label variables into account. This scenario subsumes 
+problems of sequence segmentation and annotation. In this paper, we investigate 
+the use of Gaussian Process (GP) classification for label sequences.
+</blockquote> 
+<h2>2005</h2> 
+<p>Cristian Smimchisescu, Atul Kanaujia, Zhiguo Li and Dimitris Metaxus. 
+Conditional Models for Contextual Human Motion Recognition. In <i>Proceedings 
+of the International Conference on Computer Vision</i>, (ICCV 2005), Beijing, 
+China, 2005.</p> 
+<blockquote> We present algorithms for recognizing human motion in monocular 
+video sequences, based on discriminative Conditional Random Field (CRF) and 
+Maximum Entropy Markov Models (MEMM). Existing approaches to this problem 
+typically use generative (joint) structures like the Hidden Markov Model (HMM). 
+Therefore they have to make simplifying, often unrealistic assumptions on the 
+conditional independence of observations given the motion class labels and 
+cannot accommodate overlapping features or long term contextual dependencies in 
+the observation sequence. In contrast, conditional models like the CRFs 
+seamlessly represent contextual dependencies, support efficient, exact 
+inference using dynamic programming, and their parameters can be trained using 
+convex optimization. We introduce conditional graphical models as complementary 
+tools for human motion recognition and present an extensive set of experiments 
+that show how these typically outperform HMMs in classifying not only diverse 
+human activities like walking, jumping, running, picking or dancing, but also 
+for discriminating among subtle motion styles like normal walk and wander walk.
+</blockquote> 
+<p>Ariadna Quattoni, Michael Collins and Trevor Darrel.  Conditional Random 
+Fields for Object Recognition. In <i>Advances in Neural Information Processing 
+Systems 17</i> (NIPS 2004), 2005.</p> 
+<blockquote> We present a discriminative part-based approach for the 
+recognition of object classes from unsegmented cluttered scenes. Objects are 
+modeled as flexible constellations of parts conditioned on local observations 
+found by an interest operator. For each object class the probability of a given 
+assignment of parts to local features is modeled by a Conditional Random Field 
+(CRF). We propose an extension of the CRF framework that incorporates hidden 
+variables and combines class conditional CRFs into a unified framework for 
+part-based object recognition. The parameters of the CRF are estimated in a 
+maximum likelihood framework and recognition proceeds by finding the most 
+likely class under our model. The main advantage of the proposed CRF framework 
+is that it allows us to relax the assumption of conditional independence of the 
+observed data (i.e. local features) often used in generative approaches, an 
+assumption that might be too restrictive for a considerable number of object 
+classes. We illustrate the potential of the model in the task of recognizing 
+cars from rear and side views.</blockquote> 
+<p>Jospeh Bockhorst and Mark Craven.  Markov Networks for Detecting 
+Overlapping Elements in Sequence Data. In <i>Advances in Neural Information 
+Processing Systems 17</i> (NIPS 2004), 2005.</p> 
+<blockquote> Many sequential prediction tasks involve locating instances of 
+pat- terns in sequences. Generative probabilistic language models, such as 
+hidden Markov models (HMMs), have been successfully applied to many of these 
+tasks. A limitation of these models however, is that they cannot naturally 
+handle cases in which pattern instances overlap in arbitrary ways. We present 
+an alternative approach, based on conditional Markov networks, that can 
+naturally represent arbitrarily overlapping elements. We show how to 
+efficiently train and perform inference with these models. Experimental results 
+from a genomics domain show that our models are more accurate at locating 
+instances of overlapping patterns than are baseline models based on HMMs.
+</blockquote> 
+<p>Antonio Torralba, Kevin P. Murphy, William T. Freeman. Contextual models 
+for object detection using boosted random fields. In <i>Advances in Neural 
+Information Processing Systems 17</i> (NIPS 2004), 2005.</p> 
+<blockquote> We seek to both detect and segment objects in images. To exploit 
+both local image data as well as contextual information, we introduce Boosted 
+Random Fields (BRFs), which uses Boosting to learn the graph structure and 
+local evidence of a conditional random field (CRF). The graph structure is 
+learned by assembling graph fragments in an additive model. The connections 
+between individual pixels are not very informative, but by using dense graphs, 
+we can pool information from large regions of the image; dense models also 
+support efficient inference. We show how contextual information from other 
+objects can improve detection performance, both in terms of accuracy and speed, 
+by using a computational cascade. We apply our system to detect stuff and 
+things in office and street scenes.</blockquote> 
+<p>Sunita Sarawagi and William W. Cohen. Semi-Markov Conditional Random Fields 
+for Information Extraction. In <i>Advances in Neural Information Processing 
+Systems 17</i> (NIPS 2004), 2005.</p> 
+<blockquote> We describe semi-Markov conditional random fields (semi-CRFs), a 
+conditionally trained version of semi-Markov chains. Intuitively, a semi-CRF on 
+an input sequence x outputs a &quot;segmentation&quot; of x, in which labels 
+are assigned to segments (i.e., subsequences) of x rather than to individual 
+elements<i>xi</i> of <i>x</i>. Importantly, features for semi-CRFs can measure 
+properties of segments, and transitions within a segment can be non-Markovian. 
+In spite of this additional power, exact learning and inference algorithms for 
+semi-CRFs are polynomial-time&mdash;often only a small constant factor slower 
+than conventional CRFs. In experiments on five named entity recognition 
+problems, semi-CRFs generally outperform conventional CRFs.</blockquote> 
+<p>Yuan Qi, Martin Szummer and Thomas P. Minka. Bayesian Conditional Random 
+Fields. To appear in Proceedings of the Tenth International W\orkshop on 
+Artificial Intelligence and Statistics (AISTATS 2005), 2005.</p> 
+<blockquote> We propose Bayesian Conditional Random Fields (BCRFs) for 
+classifying interdependent and structured data, such as sequences, images or 
+webs. BCRFs are a Bayesian approach to training and inference with conditional 
+random fields, which were previously trained by maximizing likelihood (ML) 
+(Lafferty et al., 2001). Our framework eliminates the problem of overfitting, 
+and offers the full advantages of a Bayesian treatment. Unlike the ML approach, 
+we estimate the posterior distribution of the model parameters during training, 
+and average over this posterior during inference. We apply an extension of EP 
+method, the power EP method, to incorporate the partition function. For 
+algorithmic stability and accuracy, we flatten the approximation structures to 
+avoid two-level approximations. We demonstrate the superior prediction accuracy 
+of BCRFs over conditional random fields trained with ML or MAP on synthetic and 
+real datasets.</blockquote> 
+<p>Aron Culotta, David Kulp and Andrew McCallum. Gene Prediction with 
+Conditional Random Fields. Technical Report UM-CS-2005-028. University of 
+Massachusetts, Amherst, 2005.</p> 
+<blockquote> Given a sequence of DNA nucleotide bases, the task of gene 
+prediction is to find subsequences of bases that encode proteins. Reasonable 
+performance on this task has been achieved using generatively trained sequence 
+models, such as hidden Markov models. We propose instead the use of a 
+discriminitively trained sequence model, the conditional random field (CRF). 
+CRFs can naturally incorporate arbitrary, non-independent features of the input 
+without making conditional independence assumptions among the features. This 
+can be particularly important for gene finding, where including evidence from 
+protein databases, EST data, or tiling arrays may improve accuracy. We eval- 
+uate our model on human genomic data, and show that CRFs perform better than 
+HMM-based models at incorporating homology evidence from protein databases, 
+achieving a 10% reduction in base-level errors.</blockquote> 
+<p>Yang Wang and Qiang Ji. A Dynamic Conditional Random Field Model for Object 
+Segmentation in Image Sequences. In IEEE Computer Society Conference on 
+Computer Vision and Pattern Recognition (CVPR 2005), Volume 1, 2005.</p> 
+<blockquote> This paper presents a dynamic conditional random field (DCRF) 
+model to integrate contextual constraints for object segmentation in image 
+sequences. Spatial and temporal dependencies within the segmentation process 
+are unified by a dynamic probabilistic framework based on the conditional 
+random field (CRF). An efficient approximate filtering algorithm is derived for 
+the DCRF model to recursively estimate the segmentation field from the history 
+of video frames. The segmentation method employs both intensity and motion 
+cues, and it combines dynamic information and spatial interaction of the 
+observed data. Experimental results show that the proposed approach effectively 
+fuses contextual constraints in video sequences and improves the accuracy of 
+object segmentation.</blockquote> 
+<h1>software</h1> 
+<p>MALLET: A Machine Learning for Language Toolkit.</p> 
+<blockquote> MALLET is an integrated collection of Java code useful for 
+statistical natural language processing, document classification, clustering, 
+information extraction, and other machine learning applications to text.
+</blockquote> 
+<p>ABNER: A Biomedical Named Entity Recognizer.</p> 
+<blockquote> ABNER is a text analysis tool for molecular biology. It is 
+essentially an interactive, user-friendly interface to a system designed as 
+part of the NLPBA/BioNLP 2004 Shared Task challenge.</blockquote> 
+<p>MinorThird.</p> 
+<blockquote> MinorThird is a collection of Java classes for storing text, 
+annotating text, and learning to extract entities and categorize text.
+</blockquote> 
+<p>Kevin Murphy's MATLAB CRF code.</p> 
+<blockquote> Conditional random fields (chains, trees and general graphs; 
+includes BP code).</blockquote> 
+<p>Sunita Sarawagi's CRF package.</p> 
+<blockquote> The CRF package is a Java implementation of conditional random 
+fields for sequential labeling.</blockquote>  &mdash;hmw, 2005-05-12 
+</body>

@@ -1,0 +1,329 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>PaulBarry.com - Django</title>
+<body>
+
+<h1>PaulBarry.com</h1> 
+<h2>The Web Application Framework Candidates</h2> 
+<p>February 14, 2008</p> 
+<p></p> 
+<p>The web application framework race is heating up, so let's take a moment to 
+meet some of the candidates.</p> 
+<h3>Java</h3> 
+<p></p> 
+<p>The current leader in the web application framework space, has a declining 
+approval rating from the general public, but still maintains support from 
+members of the static typing party.</p> 
+<h3>Rails</h3> 
+<p></p> 
+<p>One of the leading candidates from the dynamic typing party. This candidate 
+has experience that proves she can bring change.</p> 
+<h3>Merb</h3> 
+<p></p> 
+<p>A candidate from the dynamic party who is quickly gaining support, running 
+on his campaign of hope. Has a stance similar to that of Rails on many of the 
+campaign issues.</p> 
+<h3>Django</h3> 
+<p></p> 
+<p>Another strong dynamic party candidate, but having a hard time stealing the 
+spotlight from the two dynamic party candidates, despite running on a strong 
+platform.</p> 
+<h3>Grails</h3> 
+<p></p> 
+<p>The leading candidate for the static typing party, particularly among 
+moderate static typers, but having a hard time gaining support from 
+conservative members of the static party who claim that he is too dynamic on 
+some issues.</p> 
+<h3>Scala</h3> 
+<p></p> 
+<p>A candidate that appeals to some members of both the dynamic and static 
+typing parties, quickly gaining notoriety on the web for his support of once 
+unconventional ideas like functional programming.</p> 
+<p></p> 
+<p> Posted in Technology <strong>|</strong> Tags Rails, Python, Django, Ruby, 
+Scala, Java, Merb <strong>|</strong> 2 Comments </p> 
+<h2>Evolutions - Migrations for Model-Centric Apps</h2> 
+<p>November 24, 2007</p> 
+<p></p> 
+<p>There is a project for Django called Evolution, which is conceptually 
+similar to Rails' Migrations. There are some differences between Evolutions and 
+Migrations, mainly due to the fact that Django is model-centric, meaning that 
+you define the attributes of your models in the code and generate the database 
+from that. Rails, or I guess ActiveRecord more specifically, as you probably 
+know, is the opposite, where you define your database tables and an object 
+model is generated at runtime from the database metadata. So I guess you would 
+call that a database-centric ORM. Here's their take on the differences:<br>
+</p>
+<pre><code>Isn't this just ActiveRecord::Migration in Python? Superficially, 
+yes, but not really. There is a degree of similarity - the Django Evolution 
+syntax is a DSL for describing the changes that have been made to a model. 
+However, there are also some significant differences. In addition to 
+ActiveRecord::Migration, Django Evolution provides: 1. An audit trail - a 
+permanent archive in the database of the changes that have been applied, and 
+when. 2. An automated hinting scheme. If you don't want to write the migrations 
+yourself, you don't have to. 3. Validation that an evolution script will leave 
+the database in a state consistent with the current model definition. These 
+differences are largely afforded by the model-centric design of Django itself. 
+Whereas a Ruby on Rails model is a description of a database that has been 
+created by hand, Django uses the Python model to creates the database. As a 
+result, the model definition is canonical - not the database. This means that 
+audit, hinting, and verification schemes can use the Django model as a point of 
+reference. A Django Evolution script is much more than just an alternate syntax 
+for SQL ALTER statements - it is an evolution scheme that is bound to the 
+canonical model definition.</code></pre> 
+<p>The DataMapper project is a model-centric ORM for Ruby apps and as that 
+project continues to grow, their could be some ideas borrowed from Django 
+Evolution, although they do already have their own thing going on with
+Auto-Migration.</p> 
+<p>But I'm a Ruby guy, so I've got to take one shot at them here :). They say 
+&quot;the Django Evolution syntax is a DSL&quot;. Really?</p> 
+<pre><code>MUTATIONS = [ AddField('Author', 'location', models.CharField, 
+max_length=100, null=True) ]</code></pre> 
+<p>I'm sorry, but if that's a DSL, then what isn't a DSL? In my opinion, there 
+is too much Python syntax to call that a DSL. It's a subtle difference but this 
+is a DSL:</p> 
+<pre><code>add_column :authors, :location, :limit =&gt; 100 </code></pre> 
+<p>The question when is it a language specific library and when it is a DSL? 
+Would you call this a DSL?</p> 
+<pre><code>Mutation m = new AddField(&quot;Author&quot;, &quot;location&quot;, 
+CharField.class); m.setMaxLength(100); m.setAllowNulls(false); Mutations.add(m);
+</code></pre> 
+<p></p> 
+<p> Posted in Technology <strong>|</strong> Tags Rails, Python, Django, 
+DataMapper, Ruby <strong>|</strong> 0 Comments </p> 
+<h2>Typo problems, new site coming soon (hopefully)</h2> 
+<p>December 13, 2006</p> 
+<p></p> 
+<p>This site is currently using Typo, which is blog software written using 
+Ruby on Rails(RoR). It uses Mongrel to run RoR. Apache is the actual web 
+server, it passes requests intended for RoR to mongrel, which then serves the 
+request.</p> 
+<p>I originally started this site with WordPress, which is PHP-based blog 
+software. I'm not a big fan of developing with PHP, and I was hoping to start 
+doing some custom things with my site, so I switched to Typo, so that my site 
+would be running RoR, and I could make my own extensions using RoR.</p> 
+<p>Since then, I've discovered a few major design flaws with RoR, so I'm not 
+writing any code in RoR now. First of all, and this isn't really a design flaw, 
+but more of a bug, is that some combination of Typo, Mongrel and Rails is 
+causing a serious memory leak. Typo has caused my entire VPS instance hosted at
+VPSLand to become unreachable. This has caused this site to be down over the 
+past few days. I've never had that kind of problem with a Java app.</p> 
+<p>Aside form the memory leak issues, and general difficult of setting up a 
+stable rails site, the biggest thing I don't like about RoR is that your 
+application model is inferred from the database at runtime. I'd much prefer it 
+the other way around, where I write a domain model in code, and then the 
+framework generates the database for me.<br>
+</p> 
+<p>The reason why it isn't like this in RoR is because Ruby isn't a statically 
+typed language. There has been a lot of hype around dynamically typed 
+languages, but I think they have disadvantages as well. Since I can't create a 
+class in Ruby and declare what type each property is, there is no way to 
+automatically generate a database based on the model.</p> 
+<p>This is what got me interested in Django. Django is another web framework, 
+but based on Python instead of Ruby. Python and Ruby are both dynamically typed 
+languages, similar in a lot of ways, but they also have their differences. With 
+the Django project, they chose to create pseudo-typing within Python, where you 
+define the type of property of an object in a way that the framework 
+understands it, but not the Python language itself.</p> 
+<p>I like Python and Django, but I always thought to myself, wouldn't it be 
+nice if the language was optionally typed, to that you could declare the type 
+if you want to, so that the type could be used as metadata by a framework?</p> 
+<p>I do most of my programming in Java, so I came to the realization that 
+there are great things about Python, Django, Ruby and Rails, but Java, Stripes, 
+Hibernate and friends have advantages too. I decided that although 
+Python/Django and RoR (less so RoR, in my opinion) certainly seem like great 
+ways to build web apps, I don't think there's an order of magnitude increase in 
+productivity over Java, assome have claimed.</p> 
+<p>But when turning back to Java, one thing I realized I missed was the true 
+object oriented-ness that dynamic langauges allow. For example, in dynamic 
+languages, to store a user object in the database, you use<code>user.save</code>
+, whereas in Java, you do something like<code>userDao.save(user)</code>. Also, 
+the succinctness of the dynamic languages are great, whereas Java verbosity can 
+be almost ridiculous at times. Try this one on for size:</p> 
+<pre><code>private static final List&lt;Map&lt;String, Date&gt;&gt; DAYS = new 
+ArrayList&lt;Map&lt;String,Date&gt;&gt;(); static { try { 
+Map&lt;String,Date&gt; map = new HashMap&lt;String,Date&gt;(); 
+map.put(&quot;Pearl Harbor&quot;, new 
+SimpleDateFormat(&quot;MM/dd/yyyy&quot;).parse(&quot;12/07/1941&quot;)); 
+DAYS.add(map); map = new HashMap&lt;String,Date&gt;(); map.put(&quot;Iwo 
+Jima&quot;, new 
+SimpleDateFormat(&quot;MM/dd/yyyy&quot;).parse(&quot;02/19/1945&quot;)); 
+DAYS.add(map); } catch(ParseException ex) { ex.printStackTrace(); } } public 
+static void main(String[] args) { for(Map&lt;String,Date&gt; day: DAYS) { 
+for(Map.Entry&lt;String,Date&gt; e: day.entrySet()) { 
+System.out.println(e.getKey()+&quot;, &quot;+e.getValue()); } } }</code></pre> 
+<p>And then in a yet-to-be-discussed dynamic language:</p> 
+<pre><code>def days = [ 'Pearl Harbor' : new java.util.Date('12/7/1941'), 'Iwo 
+Jima' : new java.util.Date('2/19/1945') ] days.each { key, value -&gt; println 
+&quot;$key, $value&quot; }</code></pre> 
+<p>So, wouldn't it be nice if there was a dynamic, optionally typed language 
+that would allow us to build a really great, object-oriented web application 
+framework with a syntax as succinct as the syntax of fully dynamically typed 
+languages? Well, there is, and it isGrails.</p> 
+<p>Grails is a web-framework based on Groovy. Groovy is a scripting language 
+that runs in the Java VM. It complies to Java bytecode. This is nice because 
+you can build web apps using Groovy on Grails (GoG?), and then deploy to a 
+regular Java application server, such as my personal favorite,Resin.<br>
+</p> 
+<p>The other nice thing about Grails is that it leverages all the existing 
+Java frameworks, such asSpring and Hibernate. It puts a nice domain specific 
+language on top of hibernate to make using Hibernate even easier.<br>
+</p> 
+<p>I'm just getting my feet wet learning Grails, and the best move I've made 
+so far is to purchase the e-book version ofThe Definitive Guide to Grails. I've 
+found the documentation on the grails site to be ok, but the book is great. 
+It's a must read for anyone looking into Grails. My only criticism of the book 
+so far is that they may have published it a little to early, because for 
+example if states that Grails doesn't support many-to-many relationships, when 
+in fact it does as of version 0.3.</p> 
+<p>So the point of this long technical discussion is that from what I've read 
+about Grails so far, it looks interesting. I'm going to try to get a new 
+version of this site developed with Grails, and I'll try to make posts here of 
+my progress, assuming Typo doesn't bring down my site again.</p> 
+<p></p> 
+<p> Posted in Technology <strong>|</strong> Tags Ruby, Rails, Python, Django, 
+Java, Grails <strong>|</strong> 1 Comment </p> 
+<h2>Back from the Beyond</h2> 
+<p>October 20, 2006</p> 
+<p></p> 
+<p>So as I said I would, I've taken a look at Python and Django. In my brief 
+look at it, I've learned a few things. One is that Python isn't that weird, 
+it's just different. Handling blocks based on indentation is cool. Django is 
+cool in a lot of ways. The thing I was most impressed with is the admin 
+interface. The thing I was least impressed with is that the admin interface 
+isn't very customizable. You get you what you get, which is a lot, but you 
+don't have much control over it.</p> 
+<p>But this blog post isn't really about Python or Django specifically, it's 
+about languages and web frameworks. Here's what I've decided. Choosing a web 
+framework and programming language is like choosing a guitar. There are die 
+hard fans of different types. There are obscure niche types. There are widely 
+used types. There are even variations among the different types. But the bottom 
+line is that if you are a shitty guitar player, it's going to sound like shit, 
+not matter which one you pick. And if you are a great guitar player, anything 
+is going to sound pretty good. Choosing between them is really a matter a 
+preference. The part where this analogy falls apart is that once you learn to 
+play guitar, you can pick up any guitar and play, but just because you are a 
+Ruby on Rails expert doesn't mean you can build a web site with Java, and vice 
+versa. So it's not perfect, but you get the idea.</p> 
+<p>I think up until recently, you couldn't argue with a straight face that 
+building a Java application is not more complicated than building a Ruby on 
+Rails app. Anyone who has tried to maintain a web app built with Struts 1.x, 
+Spring, Hibernate 2.0, JSP 1.0 and an overly complex set of ant build scripts 
+can attest to that. But I'm a believer in the latest innovations in Java. 
+Annotations and Generics are making life easier. Stripes and Hibernate 3.2 with 
+Annotations are much better than Struts (or webwork or Spring MVC for that 
+matter) and Hibernate 2.0 respectively. JSP 1.2 is better than JSP 1.0, Maven 
+is better than Ant, the list goes on.</p> 
+<p>My theory is that we are at a point with Java where we can build 
+applications with the same level of productivity as any other framework. I 
+think we're beyondBeyond Java.<br>
+</p> 
+<p>So what I'm planning on doing in attempt to prove Bruce Tate wrong is to 
+build a new version of my own blog in Java. I'm hoping this little side project 
+will give me a chance to provide the world with an example of how Java 
+applications can be built without endless XML sit-ups. I also feel the need to 
+blog about it because it will motivate me into actually doing it. I have had 
+lots of big ideas in the past and I rarely follow through with any of them, but 
+this is one that I intend to. And so it begins.</p> 
+<p></p> 
+<p> Posted in Technology <strong>|</strong> Tags Java, Stripes, Ruby, Rails, 
+Python, Django <strong>|</strong> 8 Comments </p> 
+<h2>Python is Weird</h2> 
+<p>September 20, 2006</p> 
+<p></p> 
+<p>I've heard some good things about the Django framework. One thing that as 
+me interested in Django is that the way it works in general is you define your 
+domain model in code, in Python objects, and Django figures out how to build a 
+database for you. Conceptually, I like this idea better thanRuby on Rails, 
+where you define your domain model in the database, and then rails generates 
+objects for you at runtime based on the database metadata. Also, you run it my 
+installing mod_python in apache. Again, compared to rails with apache, 
+FCGI/SCGI, lighttpd, mongrel, etc..., I don't know, let's just say I have found 
+the process of setting up a rails production web/app server challenging. I 
+haven't done it for Django yet, we'll see. Should be a small memory footprint 
+too, making it easy to run multiple apps in my 192MB virtual server webhost.</p>
+<p>But one thing I want to comment on now is that I find Python to be weird. 
+Maybe this is because I have done most of my programming in Java, but when I 
+started to learn Ruby, everything in Ruby just made sense, without Java's 
+stupidity, such as NullPointerExceptions and primatives. I've soured on rails 
+recently, but I miss Ruby. The language is succinct and powerful, it almost 
+feels like writing psuedo code, except that it actually works.</p> 
+<p>Anyway, let me just give a few examples of python weirdness. But before I 
+do, let me say this. I don't know python well at all. Consider these statements 
+to be my first impressions of Python. I'm in no way stating that python is poor 
+language due to these oddities, they just strike me as odd and I feel the need 
+to express it. So, on with the weirdness:</p> 
+<p>So to get started, I started reading the Django install guide. I noticed I 
+needed python 2.3 or higher. Fair enough, so python 2.5 is the latest, so I 
+installed that.</p> 
+<p>The next requirement is for MySQLdb. It says it works with python 2.3-2.4, 
+doesn't say anything about 2.5. I decide to install python 2.4 to be safe. So 
+just deciding which version of python to use is a little bit of a struggle.</p> 
+<p>So now I have python 2.4 and MySQLdb. I want to try and do something simple 
+to verify it is working. I find an example in the docs:</p> 
+<pre>import MySQLdb 
+db=MySQLdb.connect(passwd=&quot;moonpie&quot;,db=&quot;thangs&quot;) 
+c=db.cursor() max_price=5 c.execute(&quot;&quot;&quot;SELECT spam, eggs, 
+sausage FROM breakfast WHERE price &lt; %s&quot;&quot;&quot;, (max_price,))
+</pre> 
+<p>What's with the 3 quotes? Anyway, let's give it a try. First, I add 
+c:python24in to my path, fire up a command prompt, and enter &quot;python&quot; 
+in hopes of getting an interactive shell. Python isn't found. Why not, because 
+the python executables aren't in c:python24in, they are in c:python24. Ok fine, 
+I fix my path, but I decide to use the IDLE GUI instead. I try to enter a 
+query, but I make a typo. I press the up arrow, but it doesn't bring up my 
+previous command. I re-type it and get it right this time. The query is:</p> 
+<p><code>select count(*) from users</code></p> 
+<p>This returns 9 when I execute the query in mysql. What does Python return?
+</p> 
+<p><code>1L</code></p> 
+<p>1L? What is that? Again, I am naive when it comes to python, this is not a 
+fair criticism of Python, I have done very little to learn the language at this 
+point, I just trying to illustrate a point. I know Java well. When I started 
+learning Ruby, from the start, everything just worked as you expected it would. 
+As I look into Python, I find one oddity after another. I'm sure if you know 
+Python well you will consider many of the things in Java odd, so I'm just going 
+to consider all of these things first impressions and move on to learn more 
+about the language and give it a fair chance. But Python is still Weird.</p> 
+<p></p> 
+<p> Posted in Technology <strong>|</strong> Tags Java, Ruby, Rails, Python, 
+Django <strong>|</strong> 13 Comments </p> 
+<p> &nbsp;&nbsp;&nbsp; </p> <br>
+
+<h3>About Me</h3> My Profile <br>
+
+<h3>Subscribe</h3> Subscribe to PaulBarry.com by Email <br>
+
+<h3>Tags</h3> 
+<ul> 
+<li> Apple </li> 
+<li> AprilFools </li> 
+<li> Clojure </li> 
+<li> Django </li> 
+<li> FunctionalProgramming </li> 
+<li> Git </li> 
+<li> Haskell </li> 
+<li> Hibernate </li> 
+<li> Java </li> 
+<li> Javascript </li> 
+<li> Linux </li> 
+<li> Lisp </li> 
+<li> Merb </li> 
+<li> MySQL </li> 
+<li> PHP </li> 
+<li> Perl </li> 
+<li> Python </li> 
+<li> REST </li> 
+<li> RSpec </li> 
+<li> Rails </li> 
+<li> Ruby </li> 
+<li> Scala </li> 
+<li> Spring </li> 
+<li> Stripes </li> 
+<li> Ubuntu </li> </ul> 
+<h3>Bling</h3> 
+<p> </p> 
+<p> </p> 
+<p> </p>  Powered by Ruby on Rails and Hosted by Slicehost <br>
+
+</body>

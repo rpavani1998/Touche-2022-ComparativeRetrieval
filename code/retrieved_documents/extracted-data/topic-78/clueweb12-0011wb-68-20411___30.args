@@ -1,0 +1,199 @@
+create table test_trgm ( text_data text); create index test_trgm_idx on test_trgm using gist (text_data extensions.gist_trgm_ops); until 9.0, if we wanted the 2 closest text_data to hello from the table, here was the query: select text_data, similarity(text_data, 'hello') from test_trgm where text_data % 'hello' order by similarity(text_data, 'hello')
+if you had to store french data too, and had to sort, some french users could have been disappointed: select * from (values ('élève'),('élevé'),('élever'),('élève')) as tmp order by column1; column1 ---------
+you can now know when stats have been reset last.
+one can get the list of extensions under psql: \dx list of installed extensions name | version | schema | description ----------+---------+------------+------------------------------------------------------------------- pg_trgm | 1.0 | extensions | text similarity measurement and index searching based on trigrams plpgsql | 1.0 | pg_catalog | pl/pgsql procedural language (2 rows) gist indexes can now be used to return sorted rows, if a 'distance' has a meaning and can be defined for the data type.
+this feature is very useful if you need all your transactions to behave as if they are running serially, without sacrificing too much throughput, as is currently the case with other 'serializable' isolation implementations (this is usually done by locking every record accessed).
+as we're going to now demo streaming replication with synchronous commit, we'll setup a recovery.conf to connect to the master database and stream changes.
+the parametersynchronous_commit can be turned off (it is on by default) in a session, if it does not require this synchronous guarantee.
+the default value of standard_conforming_strings changed to on traditionally, postgresql didn't treat ordinary string literals ('..') as the sql standard specifies: backslashes ('\') were considered an escape character, so what was behind it was interpreted.
+=#create view emp_entity as select employee_name, entity_name, address from entities join employees using (entity_name); to make this view updatable in 9.0, one had to write rules.
+the 9.1 plan means: i'll take records from every table sorted, using their indexes if available, merge them as they come and return the 50 first ones.
+it was a very common trap, this type of queries became dramatically slower when one was partitioning his/her data.
+the table contains 5 million text records, for 750mb.
+use order by to get more of a feel for semantic version ordering rules: select... to build them and install in the system: $ pgxn install pair info: best version: pair 0.1.3 info:
+create table test_trgm ( text_data text); create index test_trgm_idx on test_trgm using gist (text_data extensions.gist_trgm_ops); until 9.0, if we wanted the 2 closest text_data to hello from the table, here was the query: select text_data, similarity(text_data, 'hello') from test_trgm where text_data % 'hello' order by similarity(text_data, 'hello')
+it's now much easier to know which table get a lot of autovacuum attention: select relname, last_vacuum, vacuum_count, last_autovacuum, autovacuum_count, last_analyze, analyze_count, last_autoanalyze, autoanalyze_count from pg_stat_user_tables where relname in ('test1','test2'); relname | last_vacuum | vacuum_count | last_autovacuum | autovacuum_count | last_analyze | analyze_count | last_autoanalyze | autoanalyze_count ---------+-------------+--------------+-----------------+------------------+--------------+---------------+-------------------------------+------------------- test1 | | 0 | | 0 | | 0 | 2011-05-22
+of course, this means that the standby can prevent vacuum from doing a correct maintenance on the master, if there are very long running queries on the slave.
+this one is on the standby database, and shows how many queries have been cancelled, and for what reasons: =# select * from pg_stat_database_conflicts ; datid | datname | confl_tablespace | confl_lock | confl_snapshot | confl_bufferpin | confl_deadlock -------+-----------+------------------+------------+----------------+-----------------+---------------- 1 | template1 | 0 | 0 | 0 | 0 | 0 11979 | template0 | 0 | 0 | 0 | 0 | 0 11987 | postgres | 0 | 0 | 0 | 0 | 0 16384 | marc | 0 | 0 | 1 | 0 | 0 just call pg_xlog_replay_pause() to pause, pg_xlog_replay_resume() to resume.
+saving /tmp/tmpezwyeo/pair-0.1.3.zip info: unpacking: /tmp/tmpezwyeo/pair-0.1.3.zip info: building extension ...
+installed pgxnclient-0.2.1-py2.6.egg among the other commands, it allows to search for extensions in the website: $ pgxn search pair pair 0.1.3 ...
+let's say we want to archive all records matching %hello% from our test_trgm table: create table old_text_data (text_data text); with deleted as (delete from test_trgm where text_data like '%hello%' returning text_data) insert into
+pg_basebackup can also create tar backups, or include all required xlog files (to get a standalone backup).
+new values can be added to an existing enum type via alter type.
+by bid ) update pgbench_branches set bbalance = bbalance - branchdiff from branch_adjustment where branch_adjustment.bid = pgbench_branches.bid returning branch_adjustment.bid,branchdiff,bbalance; se-postgres postgresql is the only database which offers full integration with selinux secure data frameworks.
+log replay can also now be paused at the end of a database recovery without putting the database into production, to give the administrator the opportunity to query the database.
+it means that single quotes are to be protected with a second single quote instead of a backslash, and that backslashes aren't an escape character anymore.
+input has too few columns.
+they don't have the wal maintenance overhead, so they are much faster to write to.
+another very interesting property is that the new plan has a much smaller startup cost: the first row is returned after 2 milliseconds, where it takes 330ms to return the first one using the old plan.
+now that we have a cluster and created our replication user, we can set the database up for streaming replication.
+values ('élève'),('élevé'),('élever'),('élève'); select * from french_messages order by message; message --------- élève élève élevé élever and of course you can create an index on the message column, that can be used for fast french sorting.
+now, data modification queries can be put in the with part of the query, and the returned data used later.
+that was a major reason blocking adoption of the enum type.
+among the other commands, it allows to search for extensions in the website: $ pgxn search pair pair 0.1.3 ...
+then we'll start the new cluster: pg_ctl -d /tmp/newcluster start log: database system was interrupted; last known up at 2011-05-22 17:15:45 cest log: entering standby mode log: restored log file "00000001000000010000002f" from archive log: redo starts at 1/2f000020 log: consistent recovery state reached at 1/30000000 log: database system is ready to accept read only connections cp: cannot stat « /tmp/000000010000000100000030 »: no such file or directory log: streaming replication successfully connected to primary
+but now postgresql can define foreign tables, which is the main purpose of sql/med: accessing external data.
+17601,201 ms =# insert into testu select generate_series(1,1000000); insert 0 1000000 time: 3439,982 ms these table are very efficient for caching data, or for anything that can be rebuilt in case of a crash.
+it means that single quotes are to be protected with a second single quote instead of a backslash, and that backslashes aren't an escape character anymore.
+there is another benefit: we can slice the array when it is multidimensional.
+traditionally, postgresql didn't treat ordinary string literals ('..') as the sql standard specifies: backslashes ('\') were considered an escape character, so what was behind it was interpreted.
+that was a major reason blocking adoption of the enum type.
+this new feature is enabled with the parameterhot_standby_feedback, on the standby databases.
+and to load them as database extensions: $ pgxn load -d mydb pair info: best version: pair 0.1.3 create extension support for sql/med (management of external data) was started with 8.4.
+it's automatically set at 1/32 of shared_buffers, with a maximum at 16mb.
+still using the same table: select text_data from test_trgm where text_data like '%hello%'; uses the test_trgm_idx index (instead of scanning the whole table).
+create role replication_role replication login password 'pwd_replication' this role can then be added to the pg_hba.conf to be used for streaming replication.
+17601,201 ms =# insert into testu select generate_series(1,1000000); insert 0 1000000 time: 3439,982 ms these table are very efficient for caching data, or for anything that can be rebuilt in case of a crash.
+by bid ) update pgbench_branches set bbalance = bbalance - branchdiff from branch_adjustment where branch_adjustment.bid = pgbench_branches.bid returning branch_adjustment.bid,branchdiff,bbalance; postgresql is the only database which offers full integration with selinux secure data frameworks.
+in 9.1, the raise continues in the block where it occurs, so the inner begin block isn't left when the raise is triggered.
+ok, now we have a slave, streaming from the master, but we're still asynchronous.
+it was a major setup problem with 9.0: a vacuum could destroy records that were still necessary to running queries on the slave, triggering replication conflicts.
+the wal_buffers setting is now auto-tuned when set at -1, its new default value.
+it will be included in database dumps correctly, with the create extension syntax.
+it's a matter of adding the permission to connect to the virtual replication database inpg_hba.conf, setting up wal_level, archiving (archive_mode, archive_command) and max_wal_senders, and has been covered in the 9.0 documentation.
+the difference is that raise without parameters, in 9.0, puts the code flow back to where the exception occurred.
+one less parameter to take care of… record last reset in database and background writer-level statistics views.
+it's much easier to read, and it's faster to run.
+as we're only retrieving data from a file, it seems to be overkill, but sql/med is also capable of coping with remote databases.
+function-style and attribute-style data type casts for composite types is disallowed since 8.4, it has been possible to cast almost anything to a text format.
+one of the really great features of synchronous replication is that it is controllable per session.
+and to load them as database extensions: $ pgxn load -d mydb pair info: best version: pair 0.1.3 create extension sql/med support for sql/med (management of external data) was started with 8.4.
+it displays, on the master, the status of all slaves: how much wal they received, if they are connected, synchronous, what they did replay: =# select * from pg_stat_replication ; procpid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | state | sent_location | write_location | flush_location | replay_location | sync_priority | sync_state ---------+----------+-------------+------------------+-------------+-----------------+-------------+------------------------------+-----------+---------------+----------------+----------------+-----------------+---------------+------------ 17135 | 16671 | replication | newcluster | 127.0.0.1 | | 43745 | 2011-05-22 18:13:04.19283+02 | streaming | 1/30008750 | 1/30008750 | 1/30008750 | 1/30008750 | 1 | sync there is no need to query the slaves anymore to know their status relative to the master.
+let's say you were using a 9.0 database, with an utf8 encoding and a de_de.utf8 collation (alphabetical sort) order, because most of your users speak german.
+there is no need to call pg_start_backup(), then copy the database manually and call pg_stop_backup().
+pg_is_xlog_replay_paused() can be used to know the current status.
+this new feature is enabled with the parameterhot_standby_feedback, on the standby databases.
+this will freeze the database, making it a very good tool to do consistent backups.
+they don't have the wal maintenance overhead, so they are much faster to write to.
+let's say we want to archive all records matching %hello% from our test_trgm table: create table old_text_data (text_data text); with deleted as (delete from test_trgm where text_data like '%hello%' returning text_data) insert into old_text_data select * from deleted; all in one query.
+this still is synchronous replication because no data will be lost if the master crashes.
+password: notice: pg_stop_backup complete, all required wal segments have been archived pg_basebackup: base backup completed this new database is ready to start: just add a recovery.conf file with arestore_command to retrieve archived wal files, and start the new cluster.
+but performance and responsiveness (latency) has been greatly improved on write intensive loads.
+copy test1 to stdout encoding 'latin9' will now convert the encoding directly.
+it displays, on the master, the status of all slaves: how much wal they received, if they are connected, synchronous, what they did replay: =# select * from pg_stat_replication ; procpid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | state | sent_location | write_location | flush_location | replay_location | sync_priority | sync_state ---------+----------+-------------+------------------+-------------+-----------------+-------------+------------------------------+-----------+---------------+----------------+----------------+-----------------+---------------+------------ 17135 | 16671 | replication | newcluster | 127.0.0.1 | | 43745 | 2011-05-22 18:13:04.19283+02 | streaming | 1/30008750 | 1/30008750 | 1/30008750 | 1/30008750 | 1 | sync there is no need to query the slaves anymore to know their status relative to the master.
+the system can be used via web interface or using command line clients thanks to asimple api.
+it makes it much easier to understand what went wrong.
+it means there will still be a delay between the moment a transaction is committed on the master, and the moment it is visible on the slave.
+no such file or directory log: streaming replication successfully connected to primary
+pg_trgm uses trigrams to compare strings.
+it's automatically set at 1/32 of shared_buffers, with a maximum at 16mb.
+now, data modification queries can be put in the with part of the query, and the returned data used later.
+this new tool is used to create a clone of a database, or a backup, using only the streaming replication features.
+this can also be used to rebuild primary key indices without locking the table during the whole rebuild: =# create unique index concurrently idx_pk2 on test_pk (a); =# begin ; =# alter table test_pk drop constraint idx_pk; =# alter table test_pk add primary key using index idx_pk2; =# commit ; for example, converting a varchar column to text no longer requires a rewrite of the table.
+élevé élève élève élever it's not that bad, but it's not the french collation order: accentuated (diactric) characters are considered equal on first pass to the unaccentuated characters.
+the collation order is not unique in a database anymore.
+there are quite a lot of new features around replication in 9.1: create role replication_role replication login password 'pwd_replication' this role can then be added to the pg_hba.conf to be used for streaming replication.
+an unlogged table is much faster to write, but won't survive a crash (it will be truncated at database restart in case of a crash).
+this is a rare case, but one that caught people used to the oracle way of doing it.
+select statistical_data::text from statistical_data; select statistical_data.text from statistical_data; select text(statistical_data) from statistical_data; the two latter syntaxes aren't allowed anymore for composite types (such as a table record): they were too easy to accidentally use.
+the difference is that raise without parameters, in 9.0, puts the code flow back to where the exception occurred.
+until 9.0, one had to drop the type and create a new one.
+it runs in 20ms, using the index to directly retrieve the 2 best records.
+while we're talking about pg_trgm, another new feature is that the like and ilike operators can now automatically make use of a trgm index.
+index scan backward using test_1 on children_1 parent (cost=0.00..303940.35 rows=10000000 width=4) -> index scan backward using test_2 on children_2 parent (cost=0.00..303940.35 rows=10000000 width=4)
+index scan using idx_french_ctype on french_messages2 (cost=0.00..17139.15 rows=400000 width=8) these can be used for ephemeral data.
+except that on that second pass, the letters are considered from the end to the beginning of the word.
+pg_basebackup can also create tar backups, or include all required xlog files (to get a standalone backup).
+this feature can be used to implement fully updatable views.
+if you don't need it in your transaction, just do a set synchronous_commit to off and you wont pay the penalty.
+it runs in 20ms, using the index to directly retrieve the 2 best records.
+pg_stop_backup complete, all required wal segments have been archived pg_basebackup: base backup completed this new database is ready to start: just add a recovery.conf file with arestore_command to retrieve archived wal files, and start the new cluster.
+the administrator can then check if the recovery point reached is correct, before ending recovery.
+the ssi documentation always concludes with a commit.
+extensions author cansubmit their work together with metadata describing them: the packages and their documentation areindexed and distributed across several servers.
+it will be included in database dumps correctly, with the create extension syntax.
+in 9.1, the raise continues in the block where it occurs, so the inner begin block isn't left when the raise is triggered.
+new.address then raise exception 'there already is a record for % in entities.
+just put an e in front of the starting quote: e'i can\'t' standard_conforming_strings can still be set to off many programming languages already do what's correct, as long as you ask them to escape the strings for you.
+performance improvements synchronous writes have been optimized to less stress the filesystem.
+this will freeze the database, making it a very good tool to do consistent backups.
+the system can be used via web interface or using command line clients thanks to asimple api.
+replication can now be easily paused on a slave.
+as we're going to now demo streaming replication with synchronous commit, we'll setup a recovery.conf to connect to the master database and stream changes.
+while we're talking about pg_trgm, another new feature is that the like and ilike operators can now automatically make use of a trgm index.
+it could be because of... error: serialization_failure with 9.1: =# select raise_demo(); notice:
+the 9.0 plan means: i'll take every record from every table, sort them, and then return the 50 biggest.
+until 9.0, we had to run a script manually, the command looked like this: \i /usr/local/pgsql/share/contrib/pg_trgm.sql this was a real maintenance problem: the created functions defaulted to the public schema, were dumped "as is" in pg_dump files, often didn't restore correctly as they depended on external binary objects, or could change definitions between releases.
+inheritance table in queries can now return meaningfully-sorted results, allow optimizations of min/max for inheritance
+ok, now we have a slave, streaming from the master, but we're still asynchronous.
+but now postgresql can define foreign tables, which is the main purpose of sql/med: accessing external data.
+the query planner got much smarter on the following case.
+it's better, from a security point of view, than having a superuser role doing this job.
+of course, this means that the standby can prevent vacuum from doing a correct maintenance on the master, if there are very long running queries on the slave.
+except that on that second pass, the letters are considered from the end to the beginning of the word.
+when our database cluster is ready for streaming, we can demo the second new feature.
+with 9.1, one can use the create extension command: create extension [ if not exists ] extension_name [ with ] [ schema schema ] [ version version ] [ from old_version ] most important options are extension_name, of course, and schema : extensions can be stored in a schema.
+the 9.0 plan means: i'll take every record from every table, sort them, and then return the 50 biggest.
+it was a very common trap, this type of queries became dramatically slower when one was partitioning his/her data.
+now any commit on the master will only be reported as committed on the master when the slave has written it on its on journal, and acknowledged it to the master.
+maybe we had a serialization error -- won't happen here of course raise debug 'there was probably a serialization failure.
+another very interesting property is that the new plan has a much smaller startup cost: the first row is returned after 2 milliseconds, where it takes 330ms to return the first one using the old plan.
+it's better, from a security point of view, than having a superuser role doing this job.
+the administrator can then check if the recovery point reached is correct, before ending recovery.
+with 9.1, one can use the create extension command: create extension [ if not exists ] extension_name [ with ] [ schema schema ] [ version version ] [ from old_version ] most important options are extension_name, of course, and schema : extensions can be stored in a schema.
+with 9.1, standard_conforming_strings now defaults to on, meaning that ordinary string literals are now treated as the sql standard specifies.
+élevé élève élève élever it's not that bad, but it's not the french collation order: accentuated (diactric) characters are considered equal on first pass to the unaccentuated characters.
+we'll map a csv file to a table.
+élève élève élevé élever you can specify collation at table definition time: create table french_messages (message text collate "fr_fr.utf8"); insert into french_messages
+the rest of the work will be done without disrupting users' work.
+there are other new replication features for postgresql 9.1: the slaves can now ask the master not to vacuum records they still need.
+with the trigger, we added some logic, we could send more useful error messages.
+we also could trap exceptions.
+unpacking: /tmp/tmpezwyeo/pair-0.1.3.zip info: building extension ...
+you won't get an error if the table already exists, only a notice.
+the extension already creates a foreign data wrapper called file_fdw.
+the parametersynchronous_commit can be turned off (it is on by default) in a session, if it does not require this synchronous guarantee.
+it's a matter of adding the permission to connect to the virtual replication database inpg_hba.conf, setting up wal_level, archiving (archive_mode, archive_command) and max_wal_senders, and has been covered in the 9.0 documentation.
+but performance and responsiveness (latency) has been greatly improved on write intensive loads.
+it's now much easier to know which table get a lot of autovacuum attention: select relname, last_vacuum, vacuum_count, last_autovacuum, autovacuum_count, last_analyze, analyze_count, last_autoanalyze, autoanalyze_count from pg_stat_user_tables where relname in ('test1','test2'); relname | last_vacuum | vacuum_count | last_autovacuum | autovacuum_count | last_analyze | analyze_count | last_autoanalyze | autoanalyze_count ---------+-------------+--------------+-----------------+------------------+--------------+---------------+-------------------------------+------------------- test1 | | 0 | | 0 | | 0 | 2011-05-22 15:51:50.48562+02 | 1 test2 | | 0 | | 0 | | 0 | 2011-05-22 15:52:50.325494+02 | 2 create table entities (entity_name text primary key, entity_address text); create table employees (employee_name text primary key, entity_name text references entities (entity_name)); insert into entities values ('hr', 'address1'); insert into entities values ('sales', 'address2');
+let's say you were using a 9.0 database, with an utf8 encoding and a de_de.utf8 collation (alphabetical sort) order, because most of your users speak german.
+still using the same table: select text_data from test_trgm where text_data like '%hello%'; uses the test_trgm_idx index (instead of scanning the whole table).
+one less parameter to take care of… you can now know when stats have been reset last.
+when our database cluster is ready for streaming, we can demo the second new feature.
+contents 1.1 synchronous replication and other replication features 1.2 per-column collations 1.7 writeable common table expressions 1.8 se-postgres 5 sql and pl/pgsql features major new features synchronous replication and other replication features there are quite a lot of new features around replication in 9.1: in 9.0, the user used for replication had to be a superuser.
+use order by to get more of a feel for semantic version ordering rules: select... to build them and install in the system: $ pgxn install pair info: best version: pair 0.1.3 info:
+a word of warning: transactions are considered committed when they are applied to the slave's journal, not when they are visible on the slave.
+this is not possible anymore in 9.1, the check is performed correctly.
+with 9.1 and knn, one can write: select text_data, text_data 'hello' from test_trgm order by text_data 'hello' limit 2; the operator is the distance operator.
+this still is synchronous replication because no data will be lost if the master crashes.
+one can get the list of extensions under psql: \dx list of installed extensions name | version | schema | description ----------+---------+------------+------------------------------------------------------------------- pg_trgm | 1.0 | extensions | text similarity measurement and index searching based on trigrams plpgsql | 1.0 | pg_catalog | pl/pgsql procedural language (2 rows) k-nearest-neighbor indexing gist indexes can now be used to return sorted rows, if a 'distance' has a meaning and can be defined for the data type.
+this one is on the standby database, and shows how many queries have been cancelled, and for what reasons: =# select * from pg_stat_database_conflicts ; datid | datname | confl_tablespace | confl_lock | confl_snapshot | confl_bufferpin | confl_deadlock -------+-----------+------------------+------------+----------------+-----------------+---------------- 1 | template1 | 0 | 0 | 0 | 0 | 0 11979 | template0 | 0 | 0 | 0 | 0 | 0 11987 | postgres | 0 | 0 | 0 | 0 | 0 16384 | marc | 0 | 0 | 1 | 0 | 0
+for instance, libpq's pqescapeliteral detects automatically standard_conforming_strings' value.
+as we're only retrieving data from a file, it seems to be overkill, but sql/med is also capable of coping with remote databases.
+this could rapidly turn into a nightmare, as rules are quite complex to write, and even harder to debug.
+as entity_name is the primary key of entities, address is functionally dependant on entity_name, so it's obvious postgresql must group on it too.
+15:51:50.48562+02 | 1 test2 | | 0 | | 0 | | 0 | 2011-05-22 15:52:50.325494+02 | 2 sql and pl/pgsql features group by can guess some missing columns create table entities (entity_name text primary key, entity_address text); create table employees (employee_name text primary key, entity_name text references entities (entity_name));
+a word of warning: transactions are considered committed when they are applied to the slave's journal, not when they are visible on the slave.
+then we'll start the new cluster: pg_ctl -d /tmp/newcluster start log: database system was interrupted; last known up at 2011-05-22 17:15:45 cest log: entering standby mode log: restored log file "00000001000000010000002f" from archive log: redo starts at 1/2f000020 log: consistent recovery state reached at 1/30000000 log: database system is ready to accept read only connections cp: cannot stat « /tmp/000000010000000100000030
+this is not possible anymore in 9.1, the check is performed correctly.
+if you had to store french data too, and had to sort, some french users could have been disappointed: select * from (values ('élève'),('élevé'),('élever'),('élève'))
+as entity_name is the primary key of entities, address is functionally dependant on entity_name, so it's obvious postgresql must group on it too.
+as a more ambitious example, the following query updates a pgbench database, deleting a bunch of erroneous transactions and updating all related teller, branch, and account totals in a single statement: with deleted_xtns as ( delete from pgbench_history where bid = 4 and tid = 9 returning * ), deleted_per_account as ( select aid, sum(delta) as baldiff from deleted_xtns group
+this feature is very useful if you need all your transactions to behave as if they are running serially, without sacrificing too much throughput, as is currently the case with other 'serializable' isolation implementations (this is usually done by locking every record accessed).
+writeable common table expressions this extends the with syntax introduced in 8.4.
+show_trgm --------------------------------- {" h"," he",ell,hel,llo,"lo "} trigrams are used to evaluate similarity (between 0 and 1) between strings.
+index scan using idx_french_ctype on french_messages2 (cost=0.00..17139.15 rows=400000 width=8) unlogged tables these can be used for ephemeral data.
+we'll get a write lock on test_pk only for the duration of the alter table.
+server file options (filename '/tmp/statistical_data.csv', format 'csv', delimiter ';') ; create foreign table marc=# select * from statistical_data ; field1 | field2 --------+-------- 0.1 | 0.2 0.2 | 0.4 0.3 | 0.9 0.4 | 1.6 for now, foreign tables are select-only.
+log replay can also now be paused at the end of a database recovery without putting the database into production, to give the administrator the opportunity to query the database.
+this is a rare case, but one that caught people used to the oracle way of doing it.
+until now, the for construct only worked to loop in recordsets (query results).
+the 9.1 plan means: i'll take records from every table sorted, using their indexes if available, merge them as they come and return the 50 first ones.
+composite types can be modified through alter type ...
+this new tool is used to create a clone of a database, or a backup, using only the streaming replication features.
+backward compatibility issues the next items are to be checked when migrating to 9.1.
+pg_trgm uses trigrams to compare strings.
+the wal_buffers setting is now auto-tuned when set at -1, its new default value.
+until 9.0, we had to run a script manually, the command looked like this: \i /usr/local/pgsql/share/contrib/pg_trgm.sql this was a real maintenance problem: the created functions defaulted to the public schema, were dumped "as is" in pg_dump files, often didn't restore correctly as they depended on external binary objects, or could change definitions between releases.
+the table contains 5 million text records, for 750mb.
+extensions author cansubmit their work together with metadata describing them: the packages and their documentation areindexed and distributed across several servers.
+it means there will still be a delay between the moment a transaction is committed on the master, and the moment it is visible on the slave.
+with 9.1 and knn, one can write: select text_data, text_data 'hello' from test_trgm order by text_data 'hello' limit 2; the operator is the distance operator.
+an unlogged table is much faster to write, but won't survive a crash (it will be truncated at database restart in case of a crash).
+in 9.0, grouping on address would have been required too.
+now any commit on the master will only be reported as committed on the master when the slave has written it on its on journal, and acknowledged it to the master.
+there are other new replication features for postgresql 9.1: it was a major setup problem with 9.0: a vacuum could destroy records that were still necessary to running queries on the slave, triggering replication conflicts.
+one of the really great features of synchronous replication is that it is controllable per session.
+as a more ambitious example, the following query updates a pgbench database, deleting a bunch of erroneous transactions and updating all related teller, branch, and account totals in a single statement: with deleted_xtns as ( delete from pgbench_history where bid = 4 and tid = 9 returning * ), deleted_per_account as ( select aid, sum(delta) as baldiff from deleted_xtns group by 1 ), accounts_rebalanced as ( update pgbench_accounts set abalance =
+now that we have a cluster and created our replication user, we can set the database up for streaming replication.
+no need to set client_encoding before the copy anymore.

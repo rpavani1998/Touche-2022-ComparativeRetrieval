@@ -1,0 +1,141 @@
+we can think of this process as search through a binary search tree  where each node is a permutation (a particular order) of the array.
+what we're searching for is the node where the permutation of elements is  sorted.
+for an array of pointers to character strings, thestrcmp function  works fine.qsort is a randomized version of quicksort with very good  performance.
+it turns out we can use astable version of counting sort as the basis for another sort calledradix sort that can sort a much wider range of data, like character strings and numbers with small decimal representations.
+ln (n!) which works out to simply ln ( n!)
+we expect to see (i.e.,k =
+comparison sorts and general purpose sorts
+// c is an array from [0..k]; c[i] will tell how many times i occurs in a counting-sort (a, k) for i in 0 to k do c[i] = 0
+in the worst case, the sorted permutation may be a leaf node, requiring a number of comparisons proportional to the height of the tree.
+o( n)), then this sort takes ( n ) time.
+so  the height of the decision tree has a lower bound of( n ln n ).
+it should return a positive integer if the first element is  greater than the second, a negative integer of it is less than, and 0 if they  are equal.
+the right and left children of a node are the two resulting  permutations when the comparison is "less than" and "greater  than," respectively.
+but if we're  sorting, say, the ages (in years) of people at utsa, wherek is around  100 andn is in the several thousands, counting sort would be much  faster than any of the( n ln n) sorts.
+compar is a pointer to a function that compares any two items from the  array through pointers to the elements.
+i is the index in a[1..length(a)] j = 0
+since the number of comparisons  is at least the number of array accesses or other operations, this is the lower  bound on the worst case time-complexity of any comparison sort.
+but there are sorts that work on specialized data that work even faster.
+counting the 0's takes ( n) time, and filling the array takes another( n), so the whole time to sort is simply ( n ).
+the standard c functionqsort is a good example of a general sort: #include  void qsort(void *base, size_t nel, size_t width, int (*compar) (const void *, const void *)); so sorting is like a search from the initial permutation (root) to the sorted permutation (some node in the tree).
+all of the sorts we have  seen so far are comparison sorts: in selection sort, the minimum element is found by comparing the current  known minimum to every other element in the array, one at a time.
+the array elements may be in the set of integers [0..k].
+maybe two  elements may be swapped, or maybe nothing will happen at any one step.
+but if we're sorting, say, the ages (in years) of people at utsa, wherek is around 100 andn is in the several thousands, counting sort would be much faster than any of the( n ln n) sorts.
+you provide the comparison sort with a way to compare two items of data and the  algorithms sorts them for you.
+maybe two elements may be swapped, or maybe nothing will happen at any one step.
+nel is the number of elements in the array.
+this  makes the analysis easier and is often not too far an assumption from the  truth.
+we could use quicksort or merge sort, but these are really overkill.
+the array elements may be in the set of  integers [0..k].
+in the worst case, the sorting algorithm will have to "search" all  the way down to a leaf node, so( n ln n) comparisons is the  best a comparison sort can be expected to do.
+the root of this tree is the order of the array as the algorithm initially encounters it.
+we can think of this process as search through a binary search tree where each node is a permutation (a particular order) of the array.
+lecture 9 the limits of sorting algorithms so far, we have seen two classes of sorting algorithms: those that takeo( n 2) time and those that takeo( n ln n) time.
+without loss of generality, let's assume that each array element is different.
+all counts are initially 0 end for for j = 1 to length(a) do c[a[j]]++ // count each element end for // c[i] is now the # of times //
+the height of  a decision tree withm nodes is (ln m).
+those that are left, e.g., merge sort, heap sort, quicksort, and some othero( n ln n) algorithms seem to all run up against the same lower bound, i.e.( n ln n).
+this is the idea behindcounting sort (note that this is different than the version in the book).
+in quicksort, the partition procedure compares each item of the subarray,  one by one, to the pivot element to determine whether or not to swap it with  another element.
+we can generalize this notion to sort an array where the elements come  from a set of small integers.
+are there any sorts that realize this optimistic time complexity?
+you have to write this comparison function yourself.
+// c is an array from [0..k]; c[i] will tell how many times i  occurs in a counting-sort (a, k) for i in 0 to k do c[i] = 0
+one less j else j++ // next  item in order end if end while this sort takes  ( k+ n)
+can we do any better than this?
+the right and left children of a node are the two resulting permutations when the comparison is "less than" and "greater than," respectively.
+a very easy method is to just count the numberm of 0's, then filla[1..
+without  loss of generality, let's assume that each array element is different.
+- base is a pointer to the first element of the array to sort.
+while we have more elements...
+since the number of comparisons is at least the number of array accesses or other operations, this is the lower bound on the worst case time-complexity of any comparison sort.
+- compar is a pointer to a function that compares any two items from the array through pointers to the elements.
+all of the sorts we have seen so far are comparison sorts: if we ignore the procedural aspects of these algorithms and look only at the data being sorted, we see that each comparison results in at most one change in the order of the array, e.g.,
+i is the index  in a[1..length(a)] j = 0
+nodes (i.e., n-factorial, n * (n-1) * (n -2)
+the standard c functionqsort is a good example  of a general sort: #include  void qsort(void *base, size_t nel, size_t  width, int (*compar) (const void *, const void *)); base is a pointer to the first element of the array to sort.
+since there is a node for every permutation of the array, there are n ! nodes (i.e., n-factorial, n * (n-1)
+so the height of the decision tree  is(ln (n!)).
+how many nodes are there in the decision tree for an array of size n ?
+the root of  this tree is the order of the array as the algorithm initially encounters it.
+we can generalize this notion to sort an array where the elements come from a set of small integers.
+lecture 9 the limits of sorting algorithms so far, we have seen two classes of  sorting algorithms: those that takeo( n 2) time and those  that takeo( n ln n) time.
+any sorting algorithm at all, comparison or not, has a trivial( n) lower bound time complexity; it has to at least examine alln elements of the array before it can guarantee they are sorted.
+if we take logarithms on both sides  and use the properties that logab = log a + log b and loga/ b = log a - log b, and some  asymptotic notation to hide constants, we get: (1) + ln n + n ln n - ( n)
+it is up to the algorithm which two elements to compare.
+in merge sort, the merge procedure chooses an item from one of two arrays  after comparing the next item from both arrays.
+those  that are left, e.g., merge sort, heap sort, quicksort, and some othero( n ln n) algorithms seem to all run up against the same lower  bound, i.e.( n ln n).
+is it  just a weird coincidence that all of these "efficient" sorts have the  same lower bound asymptotic performance?
+what we're searching for is the node where the permutation of elements is sorted.
+so this is definitely "the best we can  do."
+for example, the followingdecision tree shows the movement of  data in the bubble sort algorithm performed on three items (the tree is not  complete; it is large): { a b c } / \ / \ / \ a  b / \ { a b c } { b a c } b   c a  c / \ / \ { a b c } { a c b } { b a c }  { b c a } / \ / \ / \ a general purpose sort is a sorting  algorithm that works on any kind of ordered data.
+all counts are  initially 0 end for for j = 1 to length(a) do c[a[j]]++ // count each element  end for // c[i] is now the # of times //
+it should return a positive integer if the first element is greater than the second, a negative integer of it is less than, and 0 if they are equal.
+for example, the followingdecision tree shows the movement of data in the bubble sort algorithm performed on three items (the tree is not complete; it is large): - in selection sort, the minimum element is found by comparing the current known minimum to every other element in the array, one at a time.
+linear-time sorting algorithms any sorting algorithm at all,  comparison or not, has a trivial( n) lower bound time complexity; it  has to at least examine alln elements of the array before it can  guarantee they are sorted.
+the height of a decision tree withm nodes is (ln m).
+- width is the size of an individual element of the array, for example, in an array ofdoubles, you would write sizeof (double) for width.
+sorting even moderate sized integers, like 32-bit integers in the range -2e9..2e9, is just impossible because the array c would have to contain four billion elements.
+in the  worst case, the sorted permutation may be a leaf node, requiring a number of  comparisons proportional to the height of the tree.
+since there is a node for every permutation of the array, there are n !
+counting sort let's first consider a very simple problem: given an arraya [1.. n] of bits (0's and 1's), sort them according to the order 0 < 1.
+which works out to simply ln ( n!)
+we require only "constant" storage and time to store and  process the arrayc. this sort is very sensitive to the kinds of data  to be stored; they must be integral (like integers and characters) and they  must be in a very small range.
+comparison sorts and general purpose sorts a comparison sort is a sorting algorithm where the final order the items end up in is determined  only by comparisons between individual items of input.
+we discard the o( n 2) algorithms as inefficient in all but the simplest cases.
+for an array of pointers to character strings, thestrcmp function works fine.qsort is a randomized version of quicksort with very good performance.
+a comparison sort is a sorting algorithm where the final order the items end up in is determined only by comparisons between individual items of input.
+// j is the index in c[0..k] while j <=
+but there are sorts that work on specialized data that work even  faster.
+so a worst case lower bound  on comparison sorting is the height of this decision tree.
+of course, we can forget about sortingfloats altogether; what is c[3.14159]?
+[1.. n] of bits (0's and 1's), sort them according to  the order 0 < 1.
+so the height of the decision tree has a lower bound of( n ln n ).
+as we have just seen, comparison sorts, which correspond to the notion of a general purpose sort, must take at least( n ln n) time in the worst case.
+a is the array to sort.
+of course, we can forget  about sortingfloats altogether; what is c[3.14159]?
+next item in order end if end while this sort takes ( k+ n)
+one less j else j++ //
+for all n. if we take logarithms on both sides and use the properties that logab = log a + log b and loga/ b = log a - log b, and some asymptotic notation to hide constants, we get: (1) + ln n + n ln n - ( n)
+sorting even moderate sized integers, like  32-bit integers in the range -2e9..2e9, is just impossible because the array c would have to contain four billion elements.
+we require only "constant" storage and time to store and process the arrayc. this sort is very sensitive to the kinds of data to be stored; they must be integral (like integers and characters) and they must be in a very small range.
+so sorting is like a search from the initial  permutation (root) to the sorted permutation (some node in the tree).
+you have to write this comparison  function yourself.
+- nel is the number of elements in the array.
+so a worst case lower bound on comparison sorting is the height of this decision tree.
+{ a b c } / \ / \ / \ a  b / \ { a b c } { b a c } b  c a  c / \ / \ { a b c } { a c b } { b a c } { b c a } / \ / \ / \
+width is the size of an individual element of the array, for example, in  an array ofdoubles, you would write sizeof (double) for width.
+as  we have just seen, comparison sorts, which correspond to the notion of a  general purpose sort, must take at least( n ln n) time in the  worst case.
+so the height of the decision tree is(ln (n!)).
+, the partition procedure compares each item of the subarray, one by one, to the pivot element to determine whether or not to swap it with another element.
+it is up to the algorithm which two elements to  compare.
+if we ignore the procedural aspects of these  algorithms and look only at the data being sorted, we see that each comparison  results in at most one change in the order of the array, e.g.,
+you provide the algorithm  with an ordering on the data, and the algorithm sorts them for you.
+counting sort let's first consider a very simple problem: given an  arraya
+time: the times to processc and a. if k is a small  constant, particularly small compared to the values ofn we expect to  see (i.e.,k =
+- in heap sort, the heapify procedure determines where to place items based on their comparisons with adjacent elements of the tree.
+a very easy method is to just count the numberm of 0's, then  filla[1..
+m] with 0's and a[ m+1.. n ] with 1's.
+counting the 0's takes ( n) time, and filling the  array takes another( n), so the whole time to sort is simply ( n ).
+in the worst case, the sorting algorithm will have to "search" all the way down to a leaf node, so( n ln n) comparisons is the best a comparison sort can be expected to do.
+it is thought that a general purpose sort and a comparison sort are the same thing.
+time: the times to processc and a. if k is a small constant, particularly small compared to the values ofn
+linear-time sorting algorithms
+a general purpose sort is a sorting algorithm that works on any kind of ordered data.
+this makes the analysis easier and is often not too far an assumption from the truth.
+you provide the algorithm with an ordering on the data, and the algorithm sorts them for you.
+it turns out we can  use astable version of counting sort as the basis for another sort  calledradix sort that can sort a much wider range of data, like  character strings and numbers with small decimal representations.
+then // if there are more j's in a  a[i++] = j // place a copy of j into a c[j]-- //
+so this is definitely "the best we can do."
+then // if there are more j's in a a[i++] = j // place a copy of j into a c[j]-- //
+in heap sort, the heapify procedure determines where to place items based  on their comparisons with adjacent elements of the tree.
+you provide the comparison sort with a way to compare two items of data and the algorithms sorts them for you.
+if our algorithm is clever, its decision tree will be an almost-complete binary tree.
+in chapter 2.12, we see that a lower bound on the  factorial function is: (2 n) 1/2 ( n/ e)
+is it just a weird coincidence that all of these "efficient" sorts have the same lower bound asymptotic performance?
+it is  thought that a general purpose sort and a comparison sort are the same thing.
+we could use quicksort or merge sort, but these are really  overkill.
+in chapter 2.12, we see that a lower bound on the factorial function is: (2 n) 1/2 ( n/ e) n <= n!
+- in merge sort, the merge procedure chooses an item from one of two arrays after comparing the next item from both arrays.
+if our algorithm is  clever, its decision tree will be an almost-complete binary tree.

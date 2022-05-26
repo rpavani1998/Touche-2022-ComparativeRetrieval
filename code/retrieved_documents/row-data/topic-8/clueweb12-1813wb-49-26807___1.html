@@ -1,0 +1,336 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Why MyGet uses Windows Azure | Cloud Zone</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>Cloud Zone</li> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Enterprise Integration</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> 
+<li>Ruby Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Cloud Zone
+<br> <strong>Did you know? DZone has great portals for Python, Cloud, NoSQL, and
+HTML5!</strong> Cloud Zone is brought to you in partnership with: <br>
+<br>
+<b>
+Maarten Balliauw</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> 
+<li>@maartenballiauw</li> 
+<li> </li> </ul> 
+<p> Maarten Balliauw is a technical consultant in web technologies at 
+RealDolmen, one of Belgium's biggest ICT companies. His interests are ASP.NET 
+(MVC), PHP and Windows Azure. He's a Microsoft Most Valuable Professional (MVP) 
+ASP.NET and has published many articles in both PHP and .NET literature such as 
+MSDN magazine Belgium and PHP architect. Maarten is a frequent speaker at 
+various national and international events. His blog can be found at 
+http://blog.maartenballiauw.be. Maarten is a DZone MVB and is not an employee 
+of DZone and has posted 34 posts at DZone. You can read more from them attheir 
+website. View Full User Profile</p> 
+<h1>Why MyGet uses Windows Azure</h1>  10.29.2011  Email <br>
+ Views: 1533 <br>
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> <em>The Cloud Zone is presented by DZone and Microsoft. Let 
+our tutorials, design patterns, and news guide you through the maze of 
+constantly increasing cloud solutions.&nbsp; Microsoft has a host of tools to 
+let you deployNode.js, PHP, and Java apps on their Windows Azure platform. </em>
+<h3>Related MicroZone Resources</h3> 
+<h4>PHP for Azure: CL Tools &amp; Client Library</h4> 
+<h4>Windows Azure PHP Dev Center</h4> 
+<h4>FREE 3 Month Azure Trial</h4> 
+<h4>Node.js Cloud Development SDK</h4> 
+<h4>Java on the Cloud: Azure JDK</h4> 
+<p>Like this piece? Share it with your friends:</p> | More <br>
+<br>
+Recently 
+one of the Tweeps following me started fooling around and hit one of my sweet 
+spots: Windows Azure. Basically, he mocked me for using Windows Azure forMyGet, 
+a website with enough users but not enough to justify the 
+&ldquo;scalability&rdquo; aspect he thought Windows Azure was offering. Since 
+Windows Azure is much, much more than scalability alone, I decided to do a 
+quick writeup about the various reasons on why we useWindows Azure for MyGet. 
+And those are not scalability.
+<p>First of all, here&rsquo;s a high-level overview of our deployment, which 
+may illustrate some of the aspects below:</p> 
+<p></p> 
+<h2>Costs</h2> 
+<p>Windows Azure is <em>cheap</em>. Cheap as in cost-effective, not as in, 
+well, sleezy. Many will disagree with me but the cost perspective of Windows 
+Azure can be real cheap in some cases as well as very expensive in other cases. 
+For example, if someone asks me if they should move to Windows Azure and they 
+now have one server running 300 small sites, I&rsquo;d probably tell them not 
+to move as it will be a tough price comparison.</p> 
+<p>With MyGet we run 2 Windows Azure instances in 2 datacenters across the 
+globe (one in the US and one in the EU). For $180.00 per month this means 2 
+great machines at two very distant regions of the globe. You can probably find 
+those with other hosters as well, but will they manage your machines? Patch and 
+update them? Probably not, for that amount. In our scenario, Windows Azure is 
+cheap.</p> 
+<p>Feel free to look at the cost calculator tool to estimate usage costs.</p> 
+<h2>Traffic Manager</h2> 
+<p>Traffic Manager, a great (beta) product in the Windows Azure offering 
+allows us to do geographically distributed applications. For example, US users 
+of MyGet will end up in the US datacenter, European users will end up in the EU 
+datacenter. This is great, and we can easily add extra locations to this policy 
+and have, for example, a third location in Asia.</p> 
+<p>Next to geographically distributing MyGet, Traffic Manager also ensures 
+that if one datacenter goes down, the DNS pool will consist of only 
+&ldquo;live&rdquo; datacenters and thus provide datacenter fail-over. Not ideal 
+as the web application will be served faster from a server that&rsquo;s closer 
+to the end user, but the application will not go down.</p> 
+<p>One problem we have with this is storage. We use Windows Azure storage 
+(blobs, tables and queues) as those only cost $0.12 per GB. Distributing the 
+application does mean that our US datacenter server has to access storage in 
+the EU datacenter which of course adds some latency. We try to reduce this 
+using extensive caching on all sides, but it&rsquo;d be nicer if Traffic 
+Manager allowed us to setup georeplication for storage as well. This only 
+affects storing package metadata and packages. Reading packages is not affected 
+by this because we&rsquo;re using the Windows Azure CDN for that.</p> 
+<h2>CDN</h2> 
+<p>The Windows Azure Content Delivery Network allows us to serve users fast. 
+The main use case for MyGet is accessing and downloading packages. Ok, the 
+updating has some latency due to the restrictions mentioned above, but if you 
+download a package from MyGet it will always come from a CDN node near the end 
+user to ensure low latency and fast access. Given the CDN is just a checkbox on 
+the management pages means integrating with CDN is a breeze. The only thing 
+we&rsquo;ve struggled with is finding an acceptable caching policy to ensure 
+stale data is limited.</p> 
+<h2>Windows Azure AppFabric Access Control</h2> 
+<p>MyGet is not one application. MyGet is three applications: our development 
+environment, staging and production. In fact, we even plan for tenants so every 
+tenant in fact is its own application. To streamline, manage and maintain a 
+clear overview of which user can authenticate to which application via which 
+identity provider, we use ACS to facilitate MyGet authentication.</p> 
+<p>To give you an example: our dev environment allows logging in via OpenID on 
+a development machine. Production allows for OpenID on a live environment. In 
+staging, we only use Windows Live ID and Facebook whereas our production 
+website uses different identity providers. Tenants will, in the future, be 
+given the option to authenticate to their own ADFS server, we&rsquo;re pretty 
+sure ACS will allow us to simply configure that and instrument only tenant X 
+can use that ADFS server.</p> 
+<p>ACs has been a great time saver and is definitely something we want to use 
+in future project. It really eases common authentication pains and acts as a 
+service bus between users, identity providers and our applications.</p> 
+<h2>Windows Azure AppFabric Caching</h2> 
+<p>Currently we don&rsquo;t use Windows Azure AppFabric Caching in our 
+application. We currently use the ASP.NET in-memory cache on all machines but 
+do feel the need for having a distributed caching solution. While appealing, we 
+think about deploying Memcached in our application because of the cost 
+structure involved. But we might as well end up with Wndows Azure AppFabric 
+Caching anyway as it integrates nicely with our current codebase.</p> 
+<h2>Conclusion</h2> 
+<p>In short, Windows Azure is much more than hosting and scalability. 
+It&rsquo;s the building blocks available such as Traffic Manager, CDN and 
+Access Control Service that make our lives easier. The pricing structure is not 
+always that transparent but if you dig a little into it you&rsquo;ll find 
+affordable solutions that are really easy to use because you don&rsquo;t have 
+to roll your own.</p> <br>
+<br>
+<em>Source: 
+http://blog.maartenballiauw.be/post/2011/09/06/Why-MyGet-uses-Windows-Azure.aspx
+</em>  Tags: 
+<ul> 
+<li>Azure</li> 
+<li>cloud</li> 
+<li>MyGet</li> 
+<li>.NET &amp; Windows</li> </ul> Published at DZone with permission of 
+Maarten Balliauw, author and DZone MVB. <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> 
+Whether it's IaaS or PaaS, there are many options and features for developers 
+to consider when deploying applications to cloud environments.&nbsp;Cloud Zone 
+is your trusted guide through the jungle of diverse cloud solutions. Get clear 
+cut information on solutions like Windows Azure,open and flexible cloud 
+platform to develop, deploy and manage applications on Microsoft's 
+datacenters.&nbsp; You can see how wellyour apps run on Azure with their free 3 
+month trial. <br>
+
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Related MicroZone Resources</h3> 
+<h4>Windows Azure PHP Dev Center</h4> 
+<h4>FREE 3 Month Azure Trial</h4> 
+<h4>PHP for Azure: CL Tools &amp; Client Library</h4> 
+<h4>Java on the Cloud: Azure JDK</h4> 
+<h4>Node.js Cloud Development SDK</h4> <br>
+<br>
+
+<h2>Spotlight Features</h2> 
+<h2>Cloud Services Just Got Easier With Titanium 2.0</h2> 
+<h2>Heterogeneous Computing Is Here, Now</h2> 
+<h2>Deploying a Django App on the Cloud Using dotCloud</h2> 
+<h2>Basho's Riak Cloud Storage Release is AWS S3-Compatible</h2> Around the 
+DZone Network ARCHITECTS <br>
+<br>
+MapReduce Star Trek Fan Fiction <br>
+WEB 
+BUILDER <br>
+<br>
+3 Breakthrough Ways to Visualize HTML5 <br>
+JAVALOBBY <br>
+
+<br>Challenging the Next Wave of System Engineers <br>
+JAVALOBBY <br>
+<br>
+
+Spring Integration - Payload Storage via Header En... <br>
+MOBILE <br>
+<br>
+
+EvenTiles from Start to Finish: Push Notifications <br>
+.NET <br>
+<br>
+Want To 
+Improve WCF? Vote. <br>
+You Might Also Like 
+<ul> 
+<li>Why Developers Keep Making Bad Technology Choices</li> 
+<li>All Java Architects: Read This</li> 
+<li>Quotes Every Software Engineer Should Know</li> 
+<li>When to use JavaFX 2 instead of HTML5 for a Rich Internet Application 
+(RIA)?</li> 
+<li>6 Command Line Tools for Linux Performance Monitoring </li> 
+<li>10 Tips to Avoid Mental Burnout</li> 
+<li>Algorithm of the Week: How to Determine the Day of the Week</li> 
+<li>Apache TomEE: A Tomcat for the Cloud</li> 
+<li>10 Best Eclipse Shortcuts</li> 
+<li>Node.js and MongoDB, A Beginner&rsquo;s Approach</li> 
+<li>GoogleDrive, Dropbox, Skydrive, etc.: Counting the Cost of Cloud Backup
+</li> 
+<li>100x better approach to software?</li> 
+<li>Where Have all the Good Databases Gone?</li> 
+<li>Must-have Eclipse plugin: AnyEdit Tools</li> 
+<li>Guava Splitter vs StringUtils </li> </ul> Popular on Cloud Zone 
+<ul> 
+<li>Using API keys effectively</li> 
+<li> Java EE: The Perfect Platform For Cloud Computing </li> 
+<li>SQL vs NoSQL in the Cloud: Which Database Should You Choose?</li> 
+<li>5 Key Events in the history of Cloud Computing</li> 
+<li>NOSQL Patterns </li> 
+<li>101 Thoughts about the &quot;Cloud Foundry&quot; Announcement</li> 
+<li>Live at Cloud Connect 2011 - DZone Shares the Experience</li> 
+<li>Developing and Testing in the Cloud </li> </ul> Latest Articles 
+<ul> 
+<li>Video: SQL and NoSQL at Craigslist</li> 
+<li>5 Signs You Should Hire a Programmer on the Spot</li> 
+<li>Video: Real-Time Analytics in Hadoop</li> 
+<li>5 Best Eclipse Plugins: System and Desktop Search</li> 
+<li>Effective Testing Strategies for MapReduce Applications</li> 
+<li>Monitoring Stats From Memcached or Membase (Python, RRDTool) </li> 
+<li>Some Little Tweaks in Cassandra 1.1</li> 
+<li>Use Mongosniff to Clarify what your MongoDB is Hearing and Saying</li> 
+</ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>BIRT 3.7 Report Design: Eclipse-Based BI and Big Data Visualization</h3>  
+Eclipse Business Intelligence and Reporting Tools (BIRT) is an open source, 
+Eclipse-based reporting system that integrates with your Java/J2EE... <br>
+
+<h3>Getting Started with Cloud Computing</h3> 
+<p>If you are looking for more information on Cloud Computing then this DZone 
+Refcard is for you. Get an in depth comparison on three different Cloud...</p> 
+<br> 
+<h3>Google App Engine for Java</h3> 
+<p>This DZone Refcard provides an in depth introduction to the cloud computing 
+technology, Google App Engine. Covering everything from the basics...</p> <br>
+
+<br> <br>
+<br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

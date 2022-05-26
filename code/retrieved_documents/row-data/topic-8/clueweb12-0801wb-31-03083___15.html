@@ -1,0 +1,1704 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Holy Shmoly, Ruby 1.9 smokes Python away!</title>
+<body>
+
+<ul> 
+<li>Home</li> 
+<li>About</li> 
+<li>Privacy</li> 
+<li>Rails Books</li> 
+<li>Ruby Books</li> 
+<li>Table of Contents</li> 
+<li>Rails Hosting</li> </ul> <br>
+Zen and the Art of  Programming <br>
+ 
+Meditations on programming, startups, and technology 
+<ul> 
+<li>Android </li> 
+<li>Apple </li> 
+<li>Databases </li> 
+<li>Industry News </li> 
+<li>IT Business </li> 
+<li>Programming Languages </li> 
+<li>Reviews </li> 
+<li>Web Development </li> </ul> <br>
+
+<h1> Holy Shmoly, Ruby 1.9 smokes Python away! </h1>  Posted on Nov 28th, 2007 
+inDjango, Python, Ruby, Ruby on Rails | 102 comments <br>
+<br>
+
+<p>Alright the title of this post is a tad sensational sounding, I know, and 
+it&rsquo;s in part aimed at messing with my many Pythonista friends. We 
+Rubyists have been teased for a long time, due to the slowness of the main Ruby 
+interpreter. Well, it looks like with Ruby 1.9, it&rsquo;ll be payback time. 
+Just out of curiosity I decided to run a single benchmark (you can hardly call 
+it that) to see how Ruby 1.9 had improved over the current stable version 
+(1.8.6). I wasn&rsquo;t planning to make a post about it. It was one of those 
+tests that you do at 3 AM in an irb session when you feel you&rsquo;ve made 
+your daily peace with your actual workload for the night. When I saw the 
+results though, my jaw dropped. I had to blog about this one.</p> 
+<p>I ran a recursive Fibonacci function, just to stress test a bit of 
+recursion and method calling, and while I was at it, I decided to compare it 
+with Python too. The test was run on Mac OS X 10.5 with my MacBook Pro (Core 2 
+Duo 2.2 GHz and 2 GB of memory). It&rsquo;s a single test (which is obviously 
+not a real world example, as you would use an iterative version of the function 
+if it were), and unlike with real programs, it doesn&rsquo;t stress many 
+features of the language. At least for now, there is no reasonable evidence to 
+conclude that Ruby 1.9 &ndash; which will be released for this coming Christmas 
+&ndash; will actually be faster than Python 2.5.1 in the majority of 
+situations, but hear me out and check out these very surprising results.</p> 
+<p>The Ruby code:</p> 
+<pre><code>def fib(n) if n == 0 || n == 1 n else fib(n-1) + fib(n-2) end end 
+36.times do |i| puts &quot;n=#{i} =&gt; #{fib(i)}&quot; end</code> </pre> 
+<p></p> 
+<p> And the Python equivalent:</p> 
+<pre>def fib(n): if n == 0 or n == 1: return n else: return fib(n-1) + 
+fib(n-2) for i in range(36): print &quot;n=%d =&gt; %d&quot; % (i, fib(i))</pre>
+<p></p> 
+<p> Running the snippets above, I got the following results:</p> 
+<pre><code><strong>Ruby 1.8.6</strong>: 158.869s <strong>Python 2.5.1</strong>
+: 31.507s<strong>Ruby 1.9.0</strong>: 11.934s</code> </pre> 
+<p> </p> 
+<p>Ehm, hold on a second! Did Ruby just go from 159 seconds down to 12? Koichi 
+Sasada, do you have an Amazon Wishlist? I was expecting a decent improvement, 
+as I&rsquo;ve been playing with 1.9 every now and then for a long time &ndash; 
+so I knew it was faster &ndash; but I was blown away when I timed the latest 
+version from trunk (even if it&rsquo;s a really silly example that&rsquo;s 
+being tested). Granted Python is not the fastest language out there, but Ruby 
+1.9 was still able to execute the script almost 3 times as fast. It&rsquo;s 
+unbelievable.</p> 
+<p>Now it&rsquo;ll be very interesting to run a series of algorithmically 
+equivalent tests for Ruby and Python, and to see just when exactly Ruby 1.9 
+manages to knock Python out of the water &ndash; and where Python has still the 
+edge. If I manage to find some time, I will report the results in this blog. 
+But for now, I&rsquo;ll say just&hellip; wow!</p> <br>
+
+<p>No related posts.</p> <br>
+
+<p>If you enjoyed this post, then make sure you subscribe to my Newsletter 
+and/orFeed.</p> <br>
+receive my posts by email <br>
+<br>
+Close <br>
+<br>
+
+<h3>102 Responses to &ldquo;Holy Shmoly, Ruby 1.9 smokes Python away!&rdquo;
+</h3> 
+<ol> 
+<li> Bruno says: <br>
+ November 28, 2007 at 6:13 am <br>
+
+<p>I guess the difference between Ruby 1.9 and Python 2.5 mostly may comes 
+from Python not optimizing tail-recursive calls (which btw is a design choice 
+wrt/ ease of debugging, not a technical flaw).</p> 
+<p>But indeed, the speed-up between Ruby 1.8 and 1.9 is, well&hellip; wow !-)
+</p> Reply <br>
+</li> 
+<li> karim says: <br>
+ November 28, 2007 at 6:37 am <br>
+
+<p>What about psyco? have you tried it?<br>
+http://psyco.sourceforge.net/</p> 
+Reply <br>
+</li> 
+<li> vuk says: <br>
+ November 28, 2007 at 6:39 am <br>
+
+<p>There are lies, damn lies and Benchmarks&hellip; </p> Reply <br>
+</li> 
+<li> Christian says: <br>
+ November 28, 2007 at 7:03 am <br>
+
+<p>Does Ruby 1.9 optimize tail recursive calls? That&rsquo;s great. Can you 
+post a link where this is documented?</p> Reply <br>
+</li> 
+<li> xtian says: <br>
+ November 28, 2007 at 7:03 am <br>
+
+<p>Bruno, I thought it might have been that at first, but the recursive calls 
+aren&rsquo;t tail calls.</p> 
+<p>Looks like Ruby&rsquo;s function call overhead might be less than 
+Python&rsquo;s?</p> Reply <br>
+</li> 
+<li> gnufied says: <br>
+ November 28, 2007 at 7:03 am <br>
+
+<p>Bruno:</p> 
+<p>That function can&rsquo;t be optimized by tail-recursive calls. 
+Tail-recursion kicks in, only when your procedure is recursive, but process is 
+iterative. Also, ruby never had any tail recursion.</p> 
+<p>The performance is mainly because of special handling of fixed point maths 
+by new VM that Ruby 1.9 provides&hellip;.</p> Reply <br>
+</li> 
+<li> Oliver says: <br>
+ November 28, 2007 at 7:10 am <br>
+
+<p>Oh yeah. The next sensational headline supported by an artificial benchmark.
+ But I&rsquo;m more then happy, that ruby is getting faster, even though I 
+turned away from it and back to my beloved Python.</p> Reply <br>
+</li> 
+<li> Ruby1.9 vs Python 2.5.1 &laquo; Andrei Maxim says: <br>
+ November 28, 
+2007 at 7:12 am <br>
+
+<p>[...] 28, 2007 in nout??iTags: python, ruby19 Antonio Cangiano a f?cut un 
+mic test cu Python 2.5.1 ?i Ruby 1.9, rul&acirc;nd o func?ie care calculeaz? 
+?irul lui Fibonacci [...]</p> Reply <br>
+</li> 
+<li> Greg Graham says: <br>
+ November 28, 2007 at 7:26 am <br>
+
+<p>As a Python user that has enjoyed doing some Ruby in the past, I&rsquo;m 
+glad to see that Ruby performance is improving. Congratulations! (I don&rsquo;t 
+get into the language wars. Python is the best solution for my current 
+situation, but I admire Ruby.)</p> Reply <br>
+</li> 
+<li> Andrew Ingram says: <br>
+ November 28, 2007 at 7:46 am <br>
+
+<p>I imagine that like many I&rsquo;m skeptical about the true level of 
+improvement, I&rsquo;m eager to see some more thorough benchmarks </p> 
+<p>But still, assuming it&rsquo;s not a one off thing, that&rsquo;s a pretty 
+impressive speedup and could end up making Ruby much more competitive as an 
+enterprise-level language.</p> Reply <br>
+</li> 
+<li> she says: <br>
+ November 28, 2007 at 7:56 am <br>
+
+<p>Well of course I am biased since I use ruby and not python (but I never can 
+understand a conflict between ruby and python, i am always saying to join up to 
+beat on common enemies&hellip; perl and php and of course legacy shell scripts 
+or solutions ESPECIALLY if they use perl )</p> 
+<p>But what can be roughly said is that it seems ruby-1.9 will be faster than 
+1.8, and this alone is the most important difference anyway!</p> Reply <br>
+
+</li> 
+<li> Antonio Cangiano says: <br>
+ November 28, 2007 at 7:57 am <br>
+
+<p>I wholeheartedly agree with you Andrew.</p> Reply <br>
+</li> 
+<li> Chris Khoo says: <br>
+ November 28, 2007 at 8:26 am <br>
+
+<p>&ldquo;Mmmm.. yes fascinating,&rdquo; he mumbles as he switches back to his 
+vim window editing C source.</p> Reply <br>
+</li> 
+<li> Leonardo says: <br>
+ November 28, 2007 at 8:39 am <br>
+
+<p>It is really goo to hear that as one of my main concerns today is 
+ruby&rsquo;s speed!</p> 
+<p>Thanks man!</p> Reply <br>
+</li> 
+<li> foo says: <br>
+ November 28, 2007 at 8:46 am <br>
+
+<p>Wow. I&rsquo;m impressed by how much Ruby manages to uglify simple code 
+snippets.</p> Reply <br>
+</li> 
+<li> arman says: <br>
+ November 28, 2007 at 9:19 am <br>
+
+<p>wow&hellip;Ruby is getting faster compared to python. But it doesnt mean, 
+ruby is more powerful than python. anyway, i still love php. </p> Reply <br>
+
+</li> 
+<li> Twisted Electricity says: <br>
+ November 28, 2007 at 9:46 am <br>
+
+<p><strong>Python has very slow recursion performance</strong></p> 
+<p>Just today I read a post from Antonio showing how big of an improvement 
+Ruby &hellip;</p> Reply <br>
+</li> 
+<li> dyork says: <br>
+ November 28, 2007 at 10:04 am <br>
+
+<p>Reality check: C# 1.4 secs.</p> Reply <br>
+</li> 
+<li> Del Ben Oscar says: <br>
+ November 28, 2007 at 10:12 am <br>
+
+<p>That&rsquo;s cool thanks for sharing, i hope to do some benchamarks between 
+1.8 and 1.9</p> Reply <br>
+</li> 
+<li> Ola Bini says: <br>
+ November 28, 2007 at 10:24 am <br>
+
+<p>First, Ruby 1.9 has tail call analysis, but doesn&rsquo;t use it for 
+anything right now. They might include optimization later, but that&rsquo;s not 
+there yet.<br>
+ General performance improvement for 1.9 is looking to be about 
+150% to 200% for most applications, based on more real world test cases.</p> 
+<p>Note that JRuby trunk now actually performs even better on recursive fib 
+than Ruby 1.9.</p> Reply <br>
+</li> 
+<li> Dima Dogadaylo says: <br>
+ November 28, 2007 at 10:26 am <br>
+
+<p>Antonio, Python can calculate first 35 Fibo numbers in hundreds of times 
+faster than Ruby. You just need to use right tools for right tasks. For example 
+try to execute on your workstation:</p> 
+<p>def fib():<br>
+ a, b = 0, 1<br>
+ while True:<br>
+ yield a<br>
+ a, b = b, a 
++ b</p> 
+<p>f = fib()<br>
+ for i in range(36):<br>
+ print &ldquo;n=%d =&gt; %d&rdquo; % 
+(i, f.next())</p> 
+<p>on my workstation it takes less than 0.1 second:<br>
+ $ time python2.5 
+fibo.py<br>
+ real 0m0.075s<br>
+ user 0m0.020s<br>
+ sys 0m0.028s</p> Reply <br>
+
+</li> 
+<li> pp says: <br>
+ November 28, 2007 at 11:00 am <br>
+
+<p>Yay, now you just need to take it to the next level. </p> 
+<p>$ cat /proc/cpuinfo | grep name<br>
+ model name : Intel(R) Pentium(R) III 
+Mobile CPU 1133MHz<br>
+<code><br>
+ CL-USER&gt; (defun fibo (n)<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (if (&lt;= (1- n) 
+0) n<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(+ 
+(fibo (- n 1)) (fibo (- n 2)))))<br>
+ STYLE-WARNING: redefining FIBO in DEFUN
+<br> CL-USER&gt; (defun test ()<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(dotimes (i 
+36)<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(format 
+t &quot;n=~a =&gt; ~a~%&quot; i (fibo i))))<br>
+ STYLE-WARNING: redefining TEST 
+in DEFUN<br>
+ CL-USER&gt; (time (test))<br>
+ [...]<br>
+ Evaluation took:<br>
+ 
+&nbsp;&nbsp;7.734 seconds of real time<br>
+ &nbsp;&nbsp;7.176449 seconds of 
+user run time<br>
+ &nbsp;&nbsp;0.004 seconds of system run time<br>
+ 
+&nbsp;&nbsp;0 calls to %EVAL<br>
+ &nbsp;&nbsp;0 page faults and<br>
+ 
+&nbsp;&nbsp;212,424 bytes consed.</code></p> <code> </code> 
+<p><code>But, hey. We can do better.<br>
+ CL-USER&gt; (defun fibo (n)<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(declare 
+(optimize speed (safety 0) (debug 0))<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fixnum 
+n))<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if 
+(&lt;= (1- n) 0) n<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(the 
+fixnum (+ (fibo (- n 1)) (fibo (- n 2))))))<br>
+ STYLE-WARNING: redefining FIBO 
+in DEFUN<br>
+ CL-USER&gt; (time (test))<br>
+ [...]<br>
+ Evaluation took:<br>
+ 
+&nbsp;&nbsp;2.129 seconds of real time<br>
+ &nbsp;&nbsp;1.948121 seconds of 
+user run time<br>
+ &nbsp;&nbsp;0.0 seconds of system run time<br>
+ 
+&nbsp;&nbsp;0 calls to %EVAL<br>
+ &nbsp;&nbsp;0 page faults and<br>
+ 
+&nbsp;&nbsp;179,528 bytes consed.<br>
+</code></p> Reply <br>
+</li> 
+<li> Thomas G&uuml;ttler says: <br>
+ November 28, 2007 at 11:12 am <br>
+
+<p>A language is fast, if the development progress is fast. This means C is 
+slow, python and ruby are fast.</p> 
+<p>If the ruby interpreter can execute faster than python, the python folks 
+will try to improve python.</p> 
+<p>I like python because the standard library is great and it has built in 
+unicode support.</p> 
+<p>Does ruby1.9 give you built in unicode support?</p> Reply <br>
+</li> 
+<li> Anurag says: <br>
+ November 28, 2007 at 11:13 am <br>
+
+<p>Heh, day by day, python vs. ruby is becoming more like vi/emacs wars!</p> 
+Reply <br>
+</li> 
+<li> Bob Holness says: <br>
+ November 28, 2007 at 11:20 am <br>
+
+<p>This just goes to prove how crap Python is. </p> 
+<p>(BTW, what is Python?)</p> Reply <br>
+</li> 
+<li> Jaroslaw Zabiello says: <br>
+ November 28, 2007 at 11:21 am <br>
+
+<p>Ech, Python 2.4.4 + psyco gives: 2.5 sek </p> Reply <br>
+</li> 
+<li> tim says: <br>
+ November 28, 2007 at 11:23 am <br>
+
+<p>On my PC, python takes 20 secs without psyco. With psyco, only 1.5 secs!</p>
+Reply <br>
+</li> 
+<li> Jan Rychter says: <br>
+ November 28, 2007 at 11:57 am <br>
+
+<p>Well, since you&rsquo;re comparing high-level languages&hellip; I quickly 
+coded a silly implementation in Common Lisp.</p> 
+<p>(in-package #:cl-user)</p> 
+<p>(defun fib (n)<br>
+ (declare (optimize (speed 3) (space 0) (safety 0) 
+(debug 0)))<br>
+ (if (or (eql n 0) (eql n 1))<br>
+ n<br>
+ (+ (fib (- n 1)) (fib 
+(- n 2)))))</p> 
+<p>(time (loop for i from 0 to 35<br>
+ do (format t &ldquo;~A =&gt; 
+~A~&amp;&rdquo; i (fib i))))</p> 
+<p>; cpu time (total) 920 msec user, 10 msec system<br>
+ ; real time 924 msec
+</p> 
+<p>This is on the same type Macbook Pro that you&rsquo;ve used, where the 
+python version takes 31s.</p> 
+<p>I guess having a compiler (which can compile things entered interactively!) 
+is a bit of an advantage. So I&rsquo;m curious as to why people would still 
+prefer languages without one.</p> 
+<p>&ndash;J.</p> Reply <br>
+</li> 
+<li> mkaatman says: <br>
+ November 28, 2007 at 12:04 pm <br>
+
+<p>And how about PHP 5 for good measure?</p> 
+<p>&lt;?php<br>
+ function fib($n)<br>
+ {<br>
+ if( $n == 0 || $n == 1 )<br>
+ 
+return $n;<br>
+ else<br>
+ return fib($n-1) + fib($n-2);<br>
+ }</p> 
+<p>for( $i=0; $i #&rsquo;.fib($i).&rdquo;\n&rdquo;;<br>
+ }</p> 
+<p>Took about 74 seconds on my box using:<br>
+ PHP 5.2.3-1ubuntu6 (cli) 
+(built: Oct 4 2007 23:35:54)</p> 
+<p>Irrelevant to compare to his numbers but looks like it&rsquo;s slow 
+compared to the new ruby or python.</p> Reply <br>
+</li> 
+<li> Martin Vilcans says: <br>
+ November 28, 2007 at 12:16 pm <br>
+
+<p>That&rsquo;s an impressive speedup, but of course it just tests one little 
+special case (a.k.a. a microbenchmark). Why don&rsquo;t you go to the computer 
+language shootout (http://shootout.alioth.debian.org/) and test all of their 
+microbenchmarks. It would still be anecdotal evidence, but at least it would be 
+more than just one microbenchmark.</p> Reply <br>
+</li> 
+<li> sapphirecat says: <br>
+ November 28, 2007 at 12:30 pm <br>
+
+<p>Instead of doing all that benchmarking yourself, you should borrow someone 
+else&rsquo;s. Have a look on the Pentium-4 sandbox of the famous Computer 
+Language Shootout:http://shootout.alioth.debian.org/</p> Reply <br>
+</li> 
+<li> Larry McVoy says: <br>
+ November 28, 2007 at 12:36 pm <br>
+
+<p>We&rsquo;ve got a little set of test cases for various languages (including 
+a new one we&rsquo;ve built for internal use but are releasing as open source 
+in case anyone else wants to play with it) and the results are improved but 
+nowhere near as impressive as this thread implies.</p> 
+<p>lang cat grep hash loop proc sort wc<br>
+ pl 0.35 0.36 0.63 0.11 0.30 2.03 
+1.03<br>
+ py 0.37 1.08 0.46 0.18 0.17 1.83 0.48<br>
+ rb 0.83 0.86 1.98 0.31 
+0.52 3.32 2.29<br>
+ rb-snap 0.74 0.79 1.39 0.04 0.06 3.04 1.44<br>
+ tcl 0.97 
+0.78 1.24 0.07 0.24 3.76 0.97<br>
+ l 1.01 0.78 1.32 0.07 0.24 4.15 1.60</p> 
+<p>Here&rsquo;s the langbench README:</p> 
+<p>langbench is a simplistic set of microbenchmarks designed to see how well
+<br> a scripting language performs at basic operations.</p> 
+<p>We (BitMover) are using it to benchmark our scripting language, you can<br>
+
+ use it for whatever you like.</p> 
+<p>Copyright (c) 2007 by BitMover, Inc.<br>
+ You may use for any purpose 
+provided that if you use the &ldquo;langbench&rdquo; name<br>
+ you report all 
+results for all languages like so:</p> 
+<p>langbench version 0.5 results:<br>
+ lang cat grep hash loop proc sort split
+<br> pl 0.85 0.85 1.38 0.24 0.68 4.72 5.13<br>
+ py 0.81 2.97 1.03 0.34 0.40 
+4.37 1.56<br>
+ rb 1.81 1.68 4.18 0.53 1.04 8.00 3.66<br>
+ tcl 2.02 1.45 2.44 
+0.13 0.72 7.48 3.93<br>
+ l 2.02 1.48 2.43 0.12 0.73 8.11 3.94 </p> 
+<p>with the exception that you may leave off the L language until it is<br>
+ 
+widely distributed (defined as apt-get install l).</p> 
+<p>Test descriptions:<br>
+ cat copy stdin to stdout<br>
+ grep match a regular 
+expression against stdin, print each match<br>
+ hash use each line of stdin as 
+a hash key, value is 1.<br>
+ loop measure the cost of a loop<br>
+ proc measure 
+procedure call cost<br>
+ sort sorts stdin to stdout<br>
+ wc implements wc in a 
+hand coded way</p> 
+<p>Input data is a million lines of code generated like this:</p> 
+<p> for i in 1 2 3 4 5 6 7 8 9 0<br>
+ do cat tcl/generic/*.[ch]<br>
+ done | 
+head -1000000 &gt; DATA</p> 
+<p>This file and tests are at http://www.bitmover.com/lm/langbench.shar</p> 
+Reply <br>
+</li> 
+<li> Global Nerdy &raquo; Blog Archive &raquo; Take the New Ruby for a Spin 
+says: <br>
+ November 28, 2007 at 1:28 pm <br>
+
+<p>[...] real point to take from Antonio Cangiano&rsquo;s article, Holy 
+Shmoly, Ruby 1.9 smokes Python away!, is not that Ruby 1.9 runs circles around 
+Python, but that Ruby 1.9&rsquo;s performance appears to [...]</p> Reply <br>
+
+</li> 
+<li> Dima Dogadaylo says: <br>
+ November 28, 2007 at 1:29 pm <br>
+
+<p>Ruby 1.9 doesn&rsquo;t smoke Python away!</p> 
+<p>Antonio Cangiano compared execution time of recursive Fibonacci function 
+written in Python and Ruby 1.9 and found that Ruby variant was almost 3 times 
+as fast. It allowed him to write blog entry titled &ldquo;Holy Shmoly, Ruby 1.9 
+smokes Python away!&rdquo;. It&rsquo;s time to show secret Python weapon 
+&ndash; calculation of same Fibonacci numbers but in 1000 times faster than 
+Antonio&rsquo;s Ruby implementation.</p> 
+<p>http://www.mysoftparade.com/blog/ruby-19-doesnt-smoke-python-away/</p> Reply
+<br> </li> 
+<li> dataangel says: <br>
+ November 28, 2007 at 1:45 pm <br>
+
+<p>@gnufied: Why isn&rsquo;t it tail recursive? Looks like it to me. Just to 
+make sure I wasn&rsquo;t crazy I checked wikipedia and it says a tail recursive 
+is when the last instruction is a recursive call, which those defs of fib fit.
+</p> Reply <br>
+</li> 
+<li> Sobe says: <br>
+ November 28, 2007 at 1:47 pm <br>
+
+<p>Wowowow !!!</p> 
+<p>Really a beautiful Christmas present it seems !</p> 
+<p>By the way, I don&rsquo;t really understand how you can improve a language 
+to make it 15 times speeder on so simple script&hellip; 8|</p> 
+<p>Let&rsquo;s take good news without too many questions </p> Reply <br>
+</li> 
+<li> Andrew says: <br>
+ November 28, 2007 at 1:57 pm <br>
+
+<p>Nevermind that 1.9 comes with a VM&hellip; </p> 
+<p>Isn&rsquo;t it possible the code is compiled to bytecode and then run 
+through the VM?</p> Reply <br>
+</li> 
+<li> toreau says: <br>
+ November 28, 2007 at 2:05 pm <br>
+
+<p>Bad choice of a benchmark, as the Fibonacci function can be cached. Using 
+the Memoize module in Perl, I can perform the same calculation in 0.024 seconds 
+on my Athlon64 3700+;</p> 
+<p>#!/usr/bin/perl<br>
+ #<br>
+ use strict;<br>
+ use warnings;</p> 
+<p>use Memoize;<br>
+ memoize( &lsquo;fib&rsquo; );</p> 
+<p>for ( 0..36 ) {<br>
+ print $_ . &lsquo; =&gt; &lsquo; . fib($_) . 
+&ldquo;\n&rdquo;;<br>
+ }</p> 
+<p>sub fib {<br>
+ my $n = shift || 0;<br>
+ return $n if ( $n &lt; 2 );<br>
+ 
+return fib( $n-1 ) + fib( $n-2 );<br>
+ }</p> Reply <br>
+</li> 
+<li> Logan says: <br>
+ November 28, 2007 at 2:09 pm <br>
+
+<p>@dataangel: +. The last call is +. fib(n &ndash; 1) + fib(n &ndash; 2) 
+&mdash;&gt; a = fib(n &ndash; 1); b = fib(n &ndash; 2); a + b</p> Reply <br>
+
+</li> 
+<li> mfp says: <br>
+ November 28, 2007 at 2:27 pm <br>
+
+<p>dataangel: it&rsquo;s not tail-recursive, there&rsquo;s an addition after 
+the fib(n-1) and fib(n-2) calls.<br>
+ Andrew: yes, the above code *is* run 
+through the VM (ruby 1.9 doesn&rsquo;t have an AST walker anymore).</p> 
+<p>I am not impressed by the results of this micro-benchmark (probably because 
+I&rsquo;m well-informed regarding Ruby 1.9); it&rsquo;s always been well-known 
+that 1.9 can be over 5 times faster than ruby 1.8 in such simplistic tests (in 
+this case, the gains come mainly from the integer op optimizations introduced 
+in YARV). The speedup is much more modest for more realistic tasks, and a few 
+things are slower in 1.9.</p> 
+<p>IMO titles like &ldquo;Ruby 1.9 smokes Python away!&rdquo; inspire the 
+wrong kind of reactions. (As tempting as they are, catchy headlines are best 
+avoided if you care about the quality of the discussion more than about the 
+number of visits.)</p> Reply <br>
+</li> 
+<li> pp says: <br>
+ November 28, 2007 at 2:35 pm <br>
+
+<p>Hey friends. Here the benchmark is on *FUNCTION CALLS*, not on generating 
+fibonacci numbers. *Of course* iterative or memoized algorithms are WAY faster. 
+But in this version, to call fib() on every number from 0 to 35 means that we 
+are measuring 78,176,300 function calls.</p> Reply <br>
+</li> 
+<li> Isaac Gouy says: <br>
+ November 28, 2007 at 3:12 pm <br>
+
+<p>Nice that a couple of people mentioned the benchmarks game, looking at the 
+recursive benchmark we&rsquo;d see Ruby 1.9.0 doing 1.7x better than Python.</p>
+<p>
+http://shootout.alioth.debian.org/gp4sandbox/benchmark.php?test=all&amp;lang=yarv&amp;lang2=python
+</p> 
+<p>Does anyone know how to increase the stack size in Ruby 1.9.0 &ndash; 
+there&rsquo;s an unhappy program -</p> 
+<p>
+http://shootout.alioth.debian.org/gp4sandbox/benchmark.php?test=recursive&amp;lang=yarv&amp;id=2#log
+</p> Reply <br>
+</li> 
+<li> Matthew says: <br>
+ November 28, 2007 at 3:23 pm <br>
+
+<p>And for cold reality itself:</p> 
+<p>#include<br>
+ unsigned long fib(int i) {<br>
+ if (i == 0 || i == 1)<br>
+ 
+return 1;<br>
+ return fib(i &ndash; 1) + fib(i &ndash; 2);<br>
+ }<br>
+ int 
+main() {<br>
+ int i = 0;<br>
+ for (i = 0; i %ld\n&rdquo;, i, fib(i));<br>
+ 
+return 0;<br>
+ }</p> 
+<p>gcc -O6 -o fib fib.c</p> 
+<p>0.339 seconds.</p> Reply <br>
+</li> 
+<li> raggi says: <br>
+ November 28, 2007 at 3:46 pm <br>
+
+<p>It&rsquo;s probably worth pointing out that this is the test that YARV 
+(1.9) is really optimised for, and is not a fair representation of YARVs speed 
+at processing general ruby apps.</p> 
+<p>Also, if you haven&rsquo;t seen it already, check Charles&rsquo; post about 
+JRuby and this particular benchmark:<br>
+
+http://headius.blogspot.com/2007/11/java-6-port-for-os-x-tiger-and-leopard.html
+</p> 
+<p>$0.02,</p> 
+<p>Enjoy.</p> Reply <br>
+</li> 
+<li> bascule says: <br>
+ November 28, 2007 at 4:06 pm <br>
+
+<p>That function can most certainly be made tail recursive. Here&rsquo;s an 
+Erlang version:</p> 
+<p>fib(N) -&gt; fib(N, 1, 0).<br>
+ fib(0, _, Result) -&gt; Result;<br>
+ fib(N, 
+Next, Result) -&gt; fib(N &ndash; 1, Next + Result, Next).</p> Reply <br>
+</li> 
+<li> Dan says: <br>
+ November 28, 2007 at 4:20 pm <br>
+
+<p>@she: I don&rsquo;t think there&rsquo;s that much conflict between the Ruby 
+and Python communities. During this year&rsquo;s RubyConf Keynote, Matz 
+unbuttoned his shirt to show he was wearing a Python shirt underneath so there 
+can&rsquo;t be that much conflict:</p> 
+<p> http://www.flickr.com/photos/john_lam/1910968816/</p> 
+<p>Maybe there&rsquo;s some friendly rivalry, but that only helps everyone 
+improve. I&rsquo;m a Ruby guy, but I think Python is a beautiful language.. 
+most Ruby people I talk to think the same way.</p> Reply <br>
+</li> 
+<li> Charles Oliver Nutter says: <br>
+ November 28, 2007 at 6:20 pm <br>
+
+<p>On my system, JRuby finishes in about 23 seconds to Ruby 1.9&prime;s 13 
+seconds. Not bad considering JRuby doesn&rsquo;t have any integer math 
+optimizations like Ruby 1.9 does. I think we can close the gap.</p> Reply <br>
+
+</li> 
+<li> Ruby 1.9 &laquo; .dscape says: <br>
+ November 28, 2007 at 7:51 pm <br>
+
+<p>[...] t&ecirc;m acontecido na minha universidade (mais uma vez), achei 
+relevante o post que ele fez sobre a performance do Ruby 1.9. Aconselho a 
+leitura. Fica, como resumo, os resultados obtido comparando a 
+fun&ccedil;&atilde;o de fibbonacci [...]</p> Reply <br>
+</li> 
+<li> &raquo; The Links &raquo; roarin&rsquo; reporter says: <br>
+ November 28, 
+2007 at 10:16 pm <br>
+
+<p>[...] Holy Shmoly, Ruby 1.9 smokes Python away! [...]</p> Reply <br>
+</li> 
+<li> Paolo Bonzini says: <br>
+ November 29, 2007 at 7:01 am <br>
+
+<p>Ahem, your ruby program does *not* compute f(36) it only goes up to f(35). 
+So I&rsquo;m not sure Ruby 1.9 is much faster than Python; however it is 
+impressive compared to Ruby 1.8.</p> 
+<p>Here are my results for another pair of languages:</p> 
+<p>Python 2.5 0m15.657s<br>
+ GNU Smalltalk 2.95f 0m4.594s</p> Reply <br>
+</li> 
+<li> Paw Prints &raquo; Blog Archive &raquo; Parallelism says: <br>
+ November 
+29, 2007 at 10:16 am <br>
+
+<p>[...] following a series of posts that started with this one, moved to this 
+one and, so far, has reached this one. To save you the bother of reading these 
+the [...]</p> Reply <br>
+</li> 
+<li> Jaroslaw Zabiello says: <br>
+ November 29, 2007 at 10:54 am <br>
+
+<p>For MacBook Pro, 2.2GHz, Leopard 10.5.1:</p> 
+<p>Ruby 1.8.6: 50s<br>
+ Ruby1.9 edge: 12s<br>
+ JRuby edge: 45s<br>
+ JRuby edge 
+-J-server: 20s<br>
+ JRuby edge -J-server -J-Djruby.compile.frameless=true: 18s
+</p> 
+<p>Python 2.4.4: 30s<br>
+ Python 2.4.4 + psyco: 1.8s (sic!)<br>
+ Python 2.5.1: 
+54s</p> Reply <br>
+</li> 
+<li> ARJ says: <br>
+ November 29, 2007 at 11:44 am <br>
+
+<p>I like toreau pointing out that algorithmic consideration can have a huge 
+effect, especially when folks are in the &lsquo;yeah, well my obscure language 
+of choice does it in N secs&rsquo; mode.</p> 
+<p>Ruby memoize version looks like the Perl version, minus some line noise and 
+shifting and such cool things (although both have been my obscure language of 
+choice at various times):</p> 
+<p>require &ldquo;memoize&rdquo;</p> 
+<p>def fib(n)<br>
+ return n if(n &lt; 2)<br>
+ fib(n-1) + fib(n-2)<br>
+ end</p> 
+<p>memoize(:fib)</p> 
+<p># TODO: use fib, make benchmark claims</p> 
+<p>Nice to see the improvements in the Ruby interpreter and JRuby as a viable 
+alternative. Yay, those guys.</p> Reply <br>
+</li> 
+<li> Grab Code by the 00&rsquo;s &raquo; Blog Archive &raquo; Ruby 1.9 Speedup 
+Jupiter ITS says: <br>
+ November 29, 2007 at 3:10 pm <br>
+
+<p>[...] 
+http://antoniocangiano.com/2007/11/28/holy-shmoly-ruby-19-smokes-python-away/ 
+[...]</p> Reply <br>
+</li> 
+<li> Links on a more serene thursday says: <br>
+ November 29, 2007 at 3:27 pm 
+<br> 
+<p>[...] the expression &lsquo;Holy Schmoly&rsquo; before. Now in two days 
+i&rsquo;ve read it twice, and both times in the context of computing languages 
+performance. Two times too often, if you ask me. But [...]</p> Reply <br>
+</li> 
+<li> Antonio Cangiano says: <br>
+ November 29, 2007 at 3:29 pm <br>
+
+<p>Paolo wrote:<br>
+ &gt; Ahem, your ruby program does *not* compute f(36) it 
+only goes up to f(35). So I&rsquo;m not sure Ruby 1.9 is much faster than 
+Python; however it is impressive compared to Ruby 1.8.</p> 
+<p>Paolo, both programs compute up to f(35). </p> Reply <br>
+</li> 
+<li> SwitchBL8 says: <br>
+ November 29, 2007 at 6:37 pm <br>
+
+<p>I&rsquo;m not sure how much slower a Core2Duo 2.2GHz is than a AMD X2 
+6000+, but on my system the Python version finishes in well under a second. So 
+how can yours run for 31 seconds? That&rsquo;s almost 1 second for every 
+fib-number.</p> 
+<p>Done with Python 2.5.1 on 64bits Ubuntu.</p> 
+<p>I don&rsquo;t have Ruby 1.9, but 1.8.6 runs about two minutes, that&rsquo;s 
+approx. 120 seconds. So Python (in this case) on my system is about 120 times 
+faster than Ruby, how can yours only be 6 times faster? There&rsquo;s something 
+wrong with your system or your Python for sure.</p> Reply <br>
+</li> 
+<li> Antonio Cangiano says: <br>
+ November 29, 2007 at 7:25 pm <br>
+
+<p>SwitchBL8, my Python results were confirmed by people with similar hardware 
+to mine. No one reported a significantly lower number than what I got. You have 
+an excellent CPU there, but running the Python script in under a second seems 
+like an unrealistic result. Are you sure you have just cut and pasted my 
+snippet without altering anything? Iterative versions of the same script run in 
+well under a second, this is true for both Ruby and Python, but the recursive 
+one (without psyco or memoization) shouldn&rsquo;t.</p> Reply <br>
+</li> 
+<li> ictboy says: <br>
+ November 30, 2007 at 4:35 am <br>
+
+<p>a faster algorithm,using python,0.6 sec.<br>
+ &gt;&gt;&gt; d={}<br>
+ 
+&gt;&gt;&gt; def fib(n):<br>
+ &hellip; if n==0 or n==1:<br>
+ &hellip; return n
+<br> &hellip; if d.has_key(n):<br>
+ &hellip; return d[n]<br>
+ &hellip; else:<br>
+ &hellip; temp = fib(n-1) + fib(n-2)<br>
+ &hellip; d[n] = temp<br>
+ &hellip; 
+return temp<br>
+ &hellip;<br>
+ &gt;&gt;&gt; for i in range(36):<br>
+ &hellip; 
+print &ldquo;n=%d =&gt; %d&rdquo; % (i, fib(i))</p> Reply <br>
+</li> 
+<li> Python, Haskell, Ruby Smackdown &laquo; Feeding The Snake says: <br>
+ 
+November 30, 2007 at 8:05 am <br>
+
+<p>[...] Haskell, Ruby&nbsp;Smackdown November 30, 2007 Antonio Cangiano 
+writes about how the new and improved Ruby 1.9 is actually faster than Python 
+for a fibonacci [...]</p> Reply <br>
+</li> 
+<li> vicalloy says: <br>
+ November 30, 2007 at 10:09 am <br>
+
+<p>in my computer:<br>
+ jdk1.6 52594/100= 0.52594s<br>
+ delphi7 1m05s/100= 
+0.65s<br>
+ VC6 1m11s/100= 0.71s<br>
+ C#(.net2.0) 14s121/10= 1.4121s<br>
+ 
+python2.5 52s<br>
+ ruby1.86 2m24s</p> Reply <br>
+</li> 
+<li> Brain Feed: Publicity: A New Programming Language says: <br>
+ November 
+30, 2007 at 12:50 pm <br>
+
+<p>[...] Announcing Publicity &ndash; A brand new language designed to smoke 
+any other language out there. Some examples: [...]</p> Reply <br>
+</li> 
+<li> More on Fibonacci. Oops, Sorry Lisp&hellip; Haskell runs it 5 times 
+faster | Zen and the Art of Ruby Programming says: <br>
+ November 30, 2007 at 
+4:59 pm <br>
+
+<p>[...] My post about Ruby 1.9&rsquo;s impressive improvement over Ruby 1.8.6 
+created quite an echo within the developer community. Sure, the headline was an 
+attention grabber, just like this one is , but in a matter of a few hours, 
+there were all sorts of blog entries with variants in many languages, more than 
+200 comments on Reddit, and fifty comments on my own blog. There were however, 
+also a few misconceptions. It was great though because such a simple post 
+generated a lot of discussion amongst developers, with some insightful 
+arguments taking place &ndash; and besides it almost created a new meme with 
+the whole &ldquo;holy shomly&rdquo; thing. Fun as that certainly was, 
+let&rsquo;s try to summarize and clarify a few points. [...]</p> Reply <br>
+
+</li> 
+<li> niko says: <br>
+ December 1, 2007 at 8:01 am <br>
+
+<p>A very fast fib snippet in Ruby:</p> 
+<p>Fibonacci numbers in Ruby</p> 
+<p>http://snippets.dzone.com/posts/show/3562</p> Reply <br>
+</li> 
+<li> Dinomite.net &raquo; Perl, Python and Ruby says: <br>
+ December 1, 2007 
+at 11:34 am <br>
+
+<p>[...] reading this article comparing the new Ruby 1.9 to it&rsquo;s older 
+version and Python, I though it would be interesting [...]</p> Reply <br>
+</li> 
+<li> clorophilla.blog says: <br>
+ December 1, 2007 at 12:05 pm <br>
+
+<p><strong>Microbenchmark: Ruby 1.9.0 contro tutti (&hellip; non 
+proprio&hellip;)</strong></p> 
+<p>Il rilascio di Ruby 1.9 &egrave; previsto intorno a Natale e con il passare 
+dei giorni la curiosit&agrave; dei rubyisti si fa sempre pi&ugrave; intensa. 
+Stuzzicato da un microbenchmark pubblicato da Antonio Cangiano sul suo blog in 
+cui ha messo a confronto l&hellip;</p> Reply <br>
+</li> 
+<li> SwitchBL8 says: <br>
+ December 2, 2007 at 6:34 am <br>
+
+<p>@Antonio: I stand corrected. I used:<br>
+</p> 
+<pre><code>#!/usr/bin/env python def fib(n): return fib_r(0, 1, n) def 
+fib_r(cur, next, rem): if rem == 0: return cur else: return fib_r(next, cur + 
+next, rem - 1) for i in range(36): print &quot;n=%d =&gt; %d&quot; % (i, fib(i))
+</code></pre> 
+<p> instead of yours. Results:<br>
+<br>
+ real 0m0.048s<br>
+ user 0m0.012s<br>
+ 
+sys 0m0.016s<br>
+<br>
+ Using your script the results are about as slow as 
+everybody elses:<br>
+<br>
+ real 0m24.502s<br>
+ user 0m23.837s<br>
+ sys 0m0.496s
+<br> <br>
+ So I guess you can create slow programs with Python too, 
+didn&rsquo;t know that..<br>
+ See Coderspiel</p> Reply <br>
+</li> 
+<li> luke says: <br>
+ December 3, 2007 at 10:08 am <br>
+
+<p>my results (core2duo @ 2.4 ghz)</p> 
+<p>antonio&rsquo;s fibonacci test<br>
+ ruby 1.8.6 =&gt; 82.8s<br>
+ jruby 1.1b1 
+=&gt; 13.9s<br>
+ ruby 1.9 =&gt; 8.7s</p> 
+<p>numerical test from 
+http://numericalruby.com/2007/11/28/quick-numerical-benchmark-of-ruby-19/<br>
+ 
+ruby 1.8.6 =&gt; 111.8s<br>
+ jruby 1.1b1 =&gt; 48.8s<br>
+ ruby 1.9 =&gt; 44.5s
+</p> 
+<p>so ruby1.9 is about 2 &ndash; 10 times faster than ruby1.8</p> Reply <br>
+
+</li> 
+<li> Antonio Cangiano says: <br>
+ December 3, 2007 at 11:07 am <br>
+
+<p>@luke: Later today I&rsquo;ll publish &ldquo;The Great Ruby 
+Shootout&rdquo;. It&rsquo;s going to be fun. </p> Reply <br>
+</li> 
+<li> ??????? &raquo; Blog Archive &raquo; Ruby 1.9 says: <br>
+ December 3, 
+2007 at 12:32 pm <br>
+
+<p>[...] Update Holy Shmoly, Ruby 1.9 smokes Python away! Ruby 1.9 
+doesn&rsquo;t smoke Python away!&nbsp; Quick numerical benchmark of Ruby 1.9 
+[...]</p> Reply <br>
+</li> 
+<li> lvcha says: <br>
+ December 5, 2007 at 5:48 am <br>
+
+<p> <br>
+ in Java:<br>
+ 0=&gt;0<br>
+ 1=&gt;1<br>
+ 2=&gt;1<br>
+ 3=&gt;2<br>
+ 
+4=&gt;3<br>
+ 5=&gt;5<br>
+ 6=&gt;8<br>
+ 7=&gt;13<br>
+ 8=&gt;21<br>
+ 9=&gt;34<br>
+
+ 10=&gt;55<br>
+ 11=&gt;89<br>
+ 12=&gt;144<br>
+ 13=&gt;233<br>
+ 14=&gt;377<br>
+ 
+15=&gt;610<br>
+ 16=&gt;987<br>
+ 17=&gt;1597<br>
+ 18=&gt;2584<br>
+ 19=&gt;4181
+<br> 20=&gt;6765<br>
+ 21=&gt;10946<br>
+ 22=&gt;17711<br>
+ 23=&gt;28657<br>
+ 
+24=&gt;46368<br>
+ 25=&gt;75025<br>
+ 26=&gt;121393<br>
+ 27=&gt;196418<br>
+ 
+28=&gt;317811<br>
+ 29=&gt;514229<br>
+ 30=&gt;832040<br>
+ 31=&gt;1346269<br>
+ 
+32=&gt;2178309<br>
+ 33=&gt;3524578<br>
+ 34=&gt;5702887<br>
+ 35=&gt;9227465<br>
+ 
+time=484ms</p> Reply <br>
+</li> 
+<li> I wanna spend all your money... says: <br>
+ December 5, 2007 at 11:09 am 
+<br> 
+<p>[...] are being generated to make &ldquo;your religion language&rdquo; look 
+good against others (usually by misusing the language you want to bash). There 
+is a semantic difference between discussing a language itself, it&rsquo;s 
+syntax, it&rsquo;s standard [...]</p> Reply <br>
+</li> 
+<li> Adam says: <br>
+ December 5, 2007 at 4:43 pm <br>
+
+<p>Psyco is an impressive piece of software, but it isn&rsquo;t that useful 
+for web applications. Why? Because you don&rsquo;t care so much about speed 
+increases as you do memory usage when it comes to web applications. In fact, 
+the leading Python framework (Django) says in their documentation that 
+it&rsquo;s memory and not processing power that makes the difference. As soon 
+as you start swapping, you&rsquo;re toast.</p> 
+<p>As the Psyco webiste says, it uses a lot of memory. That means fewer server 
+processes listening to requests. So, you might be cutting down some 
+milliseconds off each request once that request gets heard, but you might also 
+be dramatically increasing the time before an Apache process actually deals 
+with a specific request.</p> 
+<p>In a world where memory is more the constraint than CPU, Psyco does more 
+harm than good.</p> Reply <br>
+</li> 
+<li> Ruby o Phyton? says: <br>
+ December 7, 2007 at 10:49 am <br>
+
+<p>[...] Ruby 1.8.6: 158.869s Python 2.5.1: 31.507s Ruby 1.9.0: 11.934s [...]
+</p> Reply <br>
+</li> 
+<li> aaa says: <br>
+ December 10, 2007 at 1:22 pm <br>
+
+<p>a trivial translation to ocaml</p> 
+<p>let rec fib n =<br>
+ if n=0 || n=1 then n<br>
+ else fib (n-1) + fib (n-2);;
+</p> 
+<p>for n = 0 to 35 do<br>
+ Printf.printf &ldquo;n=%d =&gt; %d\n&rdquo; n (fib 
+n);<br>
+ done;;</p> 
+<p>runs 100 times faster than python<br>
+ python 0m41.993s<br>
+ ocaml 0m0.455s
+</p> Reply <br>
+</li> 
+<li> Sturla Molden says: <br>
+ December 11, 2007 at 12:24 pm <br>
+
+<p>So you have proven it takes 31.5 seconds to calculate 36 Fibonacci numbers 
+in Python 2.5.1 if you use the dumbest possible algorithm (exponential 
+complexity).</p> 
+<p>For calculating the first 36 Fibonacci numbers, I found this to be 6 orders 
+of magnitude faster, i.e. giving a speedup by a factor of a million:</p> 
+<p>def fibo(n):<br>
+ while 1:<br>
+ try:<br>
+ return fibo.seq[n]<br>
+ except 
+AttributeError:<br>
+ fibo.seq = [0, 1, 1]<br>
+ except IndexError:<br>
+ 
+fibo.seq.append( fibo.seq[-2] + fibo.seq[-1] )</p> 
+<p>A good choice of algorithm is far more important than language 
+implementation.</p> Reply <br>
+</li> 
+<li> Antonio Cangiano says: <br>
+ December 11, 2007 at 12:32 pm <br>
+
+<p>Sturla, no one is disputing that. You can read my follow up here.</p> Reply 
+<br> </li> 
+<li> Sturla Molden says: <br>
+ December 11, 2007 at 2:26 pm <br>
+
+<p>The point I am trying to make, is that real-world performance has very 
+little to do with the speed of the Python or Ruby interpreter measured in 
+micro-benchmarks. Where you could make your program run tree times faster by 
+changing the VM from Python to Ruby, you could have made it a million times 
+faster by changing the algorithm. Claims that &ldquo;Python or Ruby is so 
+slow&rdquo;, and that &ldquo;C++ or Java is so much faster&rdquo;, have in 99% 
+of the cases more to do with bad programming than the platform.</p> 
+<p>The thing that really matter is how Python or Ruby performs in the real 
+world. And that depends mostly on the programmer. Google uses Python to run 
+YouTube. NASA uses Python to process image data from Hubble. How slow can it be?
+</p> 
+<p>If you want to make Python look really bad, you can do as Peter Norvig and 
+use Python lists for matrix multiplication (http://norvig.com/python-lisp.html
+). On the other hand, I could make Python with NumPy do wavelet transforms a 
+lot faster than Matlab. Benchmarks just tend to tell lies.</p> Reply <br>
+</li> 
+<li> ShiningRay says: <br>
+ December 17, 2007 at 9:36 am <br>
+
+<p>I&rsquo;m wondering about the memory usage. Currently i&rsquo;m working 
+with rails and found its serious memory leak problem, but django a kind of 
+python&rsquo;s framework doesn&rsquo;t have such problem.</p> Reply <br>
+</li> 
+<li> BLeAm says: <br>
+ December 25, 2007 at 7:33 pm <br>
+
+<p>Not so sure whether your point of view is specific for recursive function 
+or not?<br>
+ If not that so, but just only fibonacci calculation,<br>
+ 
+I&rsquo;ll wonder why you have to make things complicated?<br>
+ I just simply 
+code it as below:</p> 
+<p>def fn(n):<br>
+ a = 0<br>
+ b = 0<br>
+ for i in range(1,n):<br>
+ c = a + b
+<br> b = a<br>
+ a = c<br>
+ if a &lt; 1: a += 1<br>
+ print &ldquo;n=%s %s&rdquo; 
+% (i,a)<br>
+ return a</p> 
+<p>if __name__ == &lsquo;__main__&rsquo;: fn(36)</p> 
+<p>and the performance not so bad:<br>
+ real 0m0.043s<br>
+ user 0m0.024s<br>
+ 
+sys 0m0.012s</p> 
+<p>BTW, if you really really want to do it by recursive concept and strict 
+with your code,<br>
+ just apply psyco to your code and the result is supposed 
+to be nearly 2.4s , and that&rsquo;s mean, it&rsquo;s even better than your 
+ruby code which run on ruby 1.9.<br>
+ I don&rsquo;t know if there any JIT 
+compilers in ruby?<br>
+ But in real world task, don&rsquo;t avoid to use any 
+tools which offers you with better and easier way to done job.</p> Reply <br>
+
+</li> 
+<li> jeremyweiland.com &raquo; Blog Archive &raquo; Ruby 1.9 released! says: 
+<br>  December 29, 2007 at 10:01 am <br>
+
+<p>[...] have been guiding the implementation of 1.9, which above all should 
+be much faster than 1.8 (and more competitive with other languages). More 
+detailed changes here.Also, in case you didn&rsquo;t hear, Rails 2.0 was 
+released last month. [...]</p> Reply <br>
+</li> 
+<li> HYPER says: <br>
+ January 4, 2008 at 7:33 am <br>
+
+<p>And here&rsquo;s hand-coded IBM Cell assembly:</p> 
+<p> fib: ENTRY<br>
+ MOV A,0<br>
+ MOV B,1<br>
+ MOV C,0<br>
+ MOV D,36 ;<br>
+ 
+fib2: SWP A,B<br>
+ ADDR B,A,B<br>
+ INC C<br>
+ CMP C,D<br>
+ JL fib2<br>
+ end: 
+RET B</p> 
+<p>Runs in 182 instructions if I&rsquo;m counting correctly, which is exactly 
+0.00000001895833333333333269601445004656770088047323952196165919303894 seconds 
+on a single CellEB 2 core.</p> Reply <br>
+</li> 
+<li> adit says: <br>
+ January 20, 2008 at 9:28 am <br>
+
+<p>wow that was cool, i hope this will make great influence to RoR too</p> 
+Reply <br>
+</li> 
+<li> Satish says: <br>
+ February 8, 2008 at 11:22 am <br>
+
+<p>Anything that gets a job done and done well requires to be complimented.</p>
+<p> We have a long way to go. I have come a long way with python, I will try 
+and go any distance with ruby too if it is simple enough, but go I will and 
+fast.</p> 
+<p> If this rivalry does good great!!, if it is to stifle the other in the 
+race for the ultimate good, we may fail to reach the ultimate destination.</p> 
+<p> Let us remember this.</p> 
+<p> You guys are great, and manking will always be thankful for the wonderful 
+job you are doing, all of you EACH ONE of you.</p> 
+<p> I for one am thankful to be living in this world with all of you.</p> 
+<p> Spread Love Everywhere.</p> Reply <br>
+</li> 
+<li> &ldquo;when in doubt, do it&rdquo; &raquo; Blog Archive &raquo; Code is 
+Poetry - Ruby vs Python says: <br>
+ February 28, 2008 at 1:03 am <br>
+
+<p>[...] with the new Parser Ruby is 3 times as fast as Python. [...]</p> Reply
+<br> </li> 
+<li> JMC says: <br>
+ February 28, 2008 at 12:09 pm <br>
+
+<p>@Jan Rychter</p> 
+<p>that&rsquo;s the whole point of using a language like python or 
+ruby&hellip; there IS NO COMPILING NEEDED. no one is suggesting they are faster 
+than compiled languages.</p> Reply <br>
+</li> 
+<li> Prime Factorisation | self.collect(&amp;:code) says: <br>
+ April 6, 2008 
+at 10:34 am <br>
+
+<p>[...] There&rsquo;s hope though. Apparently, function calling should be a 
+lot faster in Ruby 1.9 [...]</p> Reply <br>
+</li> 
+<li> Diego Viola says: <br>
+ April 6, 2008 at 11:06 pm <br>
+
+<p>Ruby rocks.</p> 
+<p>can&rsquo;t wait for 2.0 </p> Reply <br>
+</li> 
+<li> Hodak says: <br>
+ April 8, 2008 at 6:27 am <br>
+
+<p>Very glad to see so much valuable comments.</p> Reply <br>
+</li> 
+<li> bogdan says: <br>
+ May 5, 2008 at 1:10 pm <br>
+
+<p>Unfortunately I do not see the huge improvement.<br>
+ I have compiled ruby 
+1.8.6 and the ruby 1.9 (from
+ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.0-0.tar.gz), ran the same piece 
+of code.<br>
+ 1.8.6 took 83 seconds, while 1.9 took 75 or so.<br>
+ While it may 
+have improved a little, I do not see any spectacular improvement.</p> Reply <br>
+</li> 
+<li> bogdan says: <br>
+ May 5, 2008 at 1:24 pm <br>
+
+<p>Umm, ignore the above post <br>
+ Apparently the link created to the new 
+ruby did not work as intended and I was testing the same version of ruby<br>
+ 
+No wonder the results were rather similar</p> Reply <br>
+</li> 
+<li> Vincent Geddes &raquo; Blog Archive &raquo; Fibonacci Redux says: <br>
+ 
+July 14, 2008 at 9:56 pm <br>
+
+<p>[...] for more microbenchmarks! Someone just pointed me out to this post 
+which describes another fibonacci shootout. This one gives the brand new Ruby 
+1.9 VM a test drive. [...]</p> Reply <br>
+</li> 
+<li> Jorge says: <br>
+ August 16, 2008 at 6:37 am <br>
+
+<p>I didi some test about this python code in a Xeon running SuSE 10:</p> 
+<p>Python with no psyco:<br>
+ 48 seconds</p> 
+<p>Python with psyco:<br>
+ 1,6 seconds</p> Reply <br>
+</li> 
+<li> Chad Perrin: SOB &raquo; Ruby and Tail Call Optimization says: <br>
+ 
+August 21, 2008 at 1:06 am <br>
+
+<p>[...] planned support for tail call optimization tonight, and found a 
+Weblog post talking about how bare recursion is much faster in Ruby 1.9 than 
+Python 2.5. This is not even tail recursive code in the example. Discussion in 
+comments there suggests that [...]</p> Reply <br>
+</li> 
+<li> Linan says: <br>
+ September 7, 2008 at 4:02 pm <br>
+
+<p>Macruby: 0m11.020s</p> Reply <br>
+</li> 
+<li> Twey says: <br>
+ November 10, 2008 at 9:53 pm <br>
+
+<p>===== QUOTE =====<br>
+ Reality check: C# 1.4 secs.<br>
+ === END QUOTE ===
+<br> <br>
+ I&rsquo;m sorry, I can never resist these. Haskell translation (with 
+whitespace-mangle-safe formatting):<br>
+<br>
+ main = mapM_ (putStrLn . join 
+&rdquo; =&gt; &ldquo;) . take 35 $ zip [1..] fibs where<br>
+ join c (a, b) = 
+show a ++ c ++ show b;<br>
+ fibs = 0 : 1 : zipWith (+) fibs (tail fibs)<br>
+<br>
+ ./fibs 0.00s user 0.00s system 84% cpu 0.004 total<br>
+<br>
+ Faster, simpler, 
+shorter.</p> Reply <br>
+</li> 
+<li> peke says: <br>
+ November 28, 2008 at 1:06 pm <br>
+
+<p>It&rsquo;s funny that this post was written a year ago but there still 
+isn&rsquo;t any stable version of Ruby 1.9.</p> Reply <br>
+</li> 
+<li> Cmcc says: <br>
+ November 28, 2008 at 6:53 pm <br>
+
+<p>
+http://shootout.alioth.debian.org/u32q/benchmark.php?test=all&amp;lang=ruby&amp;lang2=python
+</p> Reply <br>
+</li> 
+<li> attrappe says: <br>
+ December 22, 2008 at 9:02 am <br>
+
+<p>Psyco vs YARV<br>
+<br>
+
+http://shootout.alioth.debian.org/gp4/benchmark.php?test=all&amp;lang=psyco&amp;lang2=yarv
+</p> 
+<pre> memory usage Psyco = YARV Faster Psyco &gt; YARV </pre> Reply <br>
+</li> 
+<li> Roger says: <br>
+ December 24, 2008 at 11:10 am <br>
+
+<p>Interesting.<br>
+ At least in this one instance, Jruby was faster than 
+python [not psyco, mind you, which no one has yet written an equivalent for Ruby
+ ]</p> 
+<p>
+http://shootout.alioth.debian.org/u32q/benchmark.php?test=fannkuch&amp;lang=all
+</p> 
+<p>So that&rsquo;s good. In fact I think jruby is &ldquo;almost as fast&rdquo; 
+as 1.9</p> 
+<p>@peke a &ldquo;stable&rdquo; 1.9 version is slated for February, I believe.
+</p> 
+<p>Cheers!<br>
+ -=r</p> Reply <br>
+</li> 
+<li> Implementation of recursion in different languages: what happens inthe 
+background ? | keyongtech says: <br>
+ January 18, 2009 at 12:28 pm <br>
+
+<p>[...] I suppose -?- that the interpreters I talk about below are coded in 
+C)&hellip; I&rsquo;ve found on the page
+http://antoniocangiano.com/2007/11/2&hellip;s-python-away/ a discussion about 
+the performance differences between several languages (Ruby, Perl, 
+Python&hellip;) to [...]</p> Reply <br>
+</li> 
+<li> Holy Shmoly, GHC Haskell 6.8 smokes Python and Ruby away! And you can 
+parallelise it for free &laquo; Control.Monad.Writer says: <br>
+ January 20, 
+2009 at 11:48 pm <br>
+
+<p>[...] 6.8 smokes Python and Ruby away! And you can parallelise it 
+for&nbsp;free November 29, 2007 Antonio Cangiano writes about how Ruby 1.9 has 
+improved in various ways, so that the naive fibonacci algorithm is [...]</p> 
+Reply <br>
+</li> 
+<li> Tom&aacute;&scaron; Holas says: <br>
+ January 23, 2009 at 6:22 pm <br>
+
+<p>I&rsquo;ve also done some comparison with similar results:<br>
+
+http://railstooge.blogspot.com/2009/01/ruby-vs-python-lame-benchmark.html</p> 
+Reply <br>
+</li> 
+<li> Justin says: <br>
+ January 30, 2009 at 9:50 pm <br>
+
+<p>dataangel:</p> 
+<p>It&rsquo;s not tail recursive, the last operation is the addition of the 
+two calls to fib. A common enough mistake.</p> Reply <br>
+</li> 
+<li> Ruby on Rails lietuvi&scaron;kai &raquo; Pasirod? ruby 1.9 says: <br>
+ 
+February 1, 2009 at 5:47 am <br>
+
+<p>[...] nauja, stabili ruby versija. Pakeitim? yra labai daug, i&scaron; j? 
+i&scaron;skir?iau greitaveik?, bei [...]</p> Reply <br>
+</li> 
+<li> Disponibile Ruby 1.9.1 | Edit - Il blog di HTML.it says: <br>
+ February 
+2, 2009 at 4:24 am <br>
+
+<p>[...] Ruby &egrave; infatti notevolmente pi&ugrave; veloce rispetto alla 
+precedente come dimostr&ograve; uno tra i primi test pubblicati da Antonio [...]
+</p> Reply <br>
+</li> 
+<li> obnoxiousguy says: <br>
+ February 2, 2009 at 6:43 pm <br>
+
+<p>For the record, java 1.6 u10 does it in&hellip;.<br>
+ real 0m0.271s</p> 
+Reply <br>
+</li> 
+<li> Salem says: <br>
+ February 5, 2009 at 3:24 pm <br>
+
+<p>Why all performance tests are all about recursive Fibonacci ..<br>
+ 
+building websites unfortunately include other processing operations and even 
+more complicated not to mention file access, networking and string 
+manipulations &hellip;<br>
+<br>
+ I would LOVE to see more about such benchmarks 
+tests performed for realistic operations ..</p> Reply <br>
+</li> 
+<li> Antonio Cangiano says: <br>
+ February 5, 2009 at 4:40 pm <br>
+
+<p>Salem,<br>
+<br>
+ this is not a realistic benchmark; I program in, and love, 
+both Ruby and Python. This post mostly pokes fun at Python programmers 
+regarding the Ruby 1.9 improvements.<br>
+<br>
+ Realistic comparisons are very 
+hard to do, and that&rsquo;s why you&rsquo;ll see very few of them floating 
+around. For comparisons amongst Ruby implementations, I&rsquo;ve started a Ruby 
+Benchmark Suite that&rsquo;s aimed at being somewhat realistic. Doing the same 
+thing when it comes to comparing two different languages however, leaves much 
+more room for error.</p> Reply <br>
+</li> 
+<li> Salem says: <br>
+ February 5, 2009 at 5:02 pm <br>
+
+<p>One of the technologies I&rsquo;ve been examining lately which groovy / 
+grails ..<br>
+<br>
+ Groovy as a scripting language is slower than ruby, 
+However, taking in the whole stack (grails) it&rsquo;s considered more scalable 
+than Rails by all means, and this is what I really care about ..<br>
+<br>
+ In 
+the company I&rsquo;m working with now, we invested more than 2 years 
+developing a social network service using rubyonrails, and the overall 
+performance is killing us &hellip;<br>
+<br>
+ Yes I can create a blog in 20 
+minutes, but I spend more than 20 days just tweaking and struggling for little 
+performance gain ..<br>
+<br>
+ Yet, no body even mentioned why it&rsquo;s normal 
+to have memory leak in our rails-based service so we have to restart the 
+process every hour !!!</p> Reply <br>
+</li> 
+<li> Salem says: <br>
+ February 5, 2009 at 5:20 pm <br>
+
+<p>In Java:</p> 
+<pre> import java.util.Date; public class test3 { public static void 
+main(String[] args) { System.out.println (&quot;hello&quot;); long s = new 
+Date().getTime(); for(int i=1; i println &quot;n=${i} =&gt; ${fib(i)}&quot; } e 
+= new Date() println e.getTime() - s.getTime()</pre> 
+<p>Took: 22 sec</p> Reply <br>
+</li> 
+<li> Salem says: <br>
+ February 5, 2009 at 5:21 pm <br>
+
+<p>In Java it took around 0.4 sec while in groovy it took 22 seconds ..</p> 
+Reply <br>
+</li> 
+<li> hoppinjohns says: <br>
+ February 19, 2009 at 2:15 pm <br>
+
+<p>I ran the fib test program. The result shows Ruby 1.9.1 on Windows took 50s 
+instead of 12s:<br>
+<br>
+ ruby 1.8.6 (2007-03-13 patchlevel 0) [i386-mswin32]: 
+120.469s<br>
+ ruby 1.9.1p0 (2009-01-30 revision 21907) [i386-mswin32]: 49.218s
+<br> <br>
+ How to explain this?</p> Reply <br>
+</li> 
+<li> glen worstell says: <br>
+ March 25, 2009 at 6:51 pm <br>
+
+<p>For those who misunderstood the purpose of the benchmark and suggested 
+iterative, tail-recursive, or memoizing algorithms, I respectfully suggest that 
+this is a better algorithm. It is extremely fast, is unlikely to have bugs, and 
+did not take long to code:</p> 
+<p># Glen&rsquo;s benchmark algorithm:</p> 
+<p>ans = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 
+1597, 2584, 4181,<br>
+ 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 
+317811, 514229, 832040,<br>
+ 1346269, 2178309, 3524578, 5702887, 9227465]</p> 
+<p>for x in ans:<br>
+ print x</p> Reply <br>
+</li> 
+<li> Donnie says: <br>
+ March 28, 2009 at 11:19 am <br>
+
+<p>hoppinjohns: computers have different processor speeds and capabilities </p>
+Reply <br>
+</li> 
+<li> Dinomite.net &raquo; Perl, Python and Ruby says: <br>
+ April 17, 2009 at 
+3:35 am <br>
+
+<p>[...] reading this article comparing the new Ruby 1.9 to it&rsquo;s older 
+version and Python, I thought it would be [...]</p> Reply <br>
+</li> 
+<li> Vadim Fint says: <br>
+ May 14, 2009 at 12:43 pm <br>
+
+<p>ruby test_fib.rb<br>
+ 62.25s user 8.15s system 99% cpu 1:10.85 total</p> 
+<p>python test_fib.py<br>
+ 23.90s user 0.00s system 99% cpu 23.912 total</p> 
+<p>booi test_fib.boo<br>
+ 1.12s user 0.02s system 99% cpu 1.141 total</p> 
+<p>(now prepare to be shocked)<br>
+ booc test_fib.boo; time mono test_fib.exe
+<br> 0.76s user 0.00s system 99% cpu 0.768 total</p> 
+<p>test_fib.boo:</p> 
+<pre>def fib(n as int) as int: if n == 0 or n == 1: return n else: return 
+fib(n-1) + fib(n-2) for i in range(36): res = fib(i) print &quot;n=${i} =&gt; 
+${res}&quot;</pre> 
+<p>What I want to say? NEVER try to compare interpreting languages in 
+many-function-call-tasks. Compiled strong typed languages are much better in 
+that case, coz no runtime-detection of types needed. And compiled languages 
+does not need to be complex and heavy to learn. In example above I took 
+&ldquo;boo&rdquo; &ndash; compileable (you can use booi &ndash; iterpreter-like 
+version as well) strong-typed (but you can use non-strong-typed constructs 
+&ndash; slower) language with python-like syntax.</p> 
+<p>As you can see in this traditional fibonacci task boo is 40 times faster 
+than python. And difference will be much more in big apps.</p> 
+<p>So. Right language for right job.</p> Reply <br>
+</li> 
+<li> Vadim Fint says: <br>
+ May 14, 2009 at 12:56 pm <br>
+
+<p>Also. In this task boo+mono is faster than dump C app  :</p> 
+<pre> int fib(int n) { if (n == 0 || n == 1) { return n; } else { return 
+fib(n-1) + fib(n-2); } } int main(char* argv, int argc) { int i; for (i = 0; i 
+%d\n&quot;, i, fib(i)); } } ./test_fib 0.95s user 0.00s system 99% cpu 0.957 
+total</pre> Reply <br>
+</li> 
+<li> Mark says: <br>
+ May 16, 2009 at 3:28 pm <br>
+
+<p>@Vadim,</p> 
+<p>Multi-processor is the key, but there are many many implementations of 
+stuff that will just lead you down an ultimately blind alley.</p> 
+<p>For one, I wouldn&rsquo;t touch anything that furthers Microsoft&rsquo;s 
+interests.</p> 
+<p>I develop for my clients, not for sick greed.</p> Reply <br>
+</li> 
+<li> Eric says: <br>
+ May 28, 2009 at 9:48 am <br>
+
+<p>Python 2.6.2 is faster and really faster with psyco:</p> 
+<p>On a Intel Core i7 940 (2.9 Ghz) :</p> 
+<p>16s for python 2.6.2 without psyco<br>
+ 0.9s with psyco !!!!!</p> Reply <br>
+</li> 
+<li> Diego Viola says: <br>
+ June 1, 2009 at 3:42 am <br>
+
+<p>lol ruby 1.9 kicks python ass.</p> 
+<p>[root@diego ~]# time ruby test.rb<br>
+ n=0 =&gt; 0<br>
+ n=1 =&gt; 1<br>
+ 
+n=2 =&gt; 1<br>
+ &hellip;<br>
+ n=34 =&gt; 5702887<br>
+ n=35 =&gt; 9227465 </p> 
+<p>real 0m15.056s<br>
+ user 0m14.868s<br>
+ sys 0m0.086s<br>
+ [root@diego ~]# 
+time python test.py<br>
+ n=0 =&gt; 0<br>
+ n=1 =&gt; 1<br>
+ n=2 =&gt; 1<br>
+ 
+&hellip;<br>
+ n=34 =&gt; 5702887<br>
+ n=35 =&gt; 9227465</p> 
+<p>real 0m42.697s<br>
+ user 0m42.107s<br>
+ sys 0m0.165s<br>
+ [root@diego ~]#
+</p> Reply <br>
+</li> 
+<li> Real World says: <br>
+ June 21, 2009 at 10:33 pm <br>
+
+<p>I develop to get paid.</p> Reply <br>
+</li> 
+<li> Jorrit Posthuma says: <br>
+ July 11, 2009 at 7:29 am <br>
+
+<p>A honest Haskel comparison (same algoritm), but it can be a lot faster (as 
+shown by Twey).</p> 
+<p>fib :: Int -&gt; Int<br>
+ fib i | (i == 0) || (i == 1) = i<br>
+ | otherwise 
+= fib (i-1) + fib (i-2)</p> 
+<p>fibSeq :: [(Int, Int)]<br>
+ fibSeq = [ (i, fib i) | i &lt;- [0..36]]</p> 
+<p>Slim:Desktop jorrit$ ./fib<br>
+ 
+[(0,0),(1,1),(2,1),(3,2),(4,3),(5,5),(6,8),(7,13),(8,21),(9,34),(10,55),(11,89),(12,144),(13,233),(14,377),(15,610),(16,987),(17,1597),(18,2584),(19,4181),(20,6765),(21,10946),(22,17711),(23,28657),(24,46368),(25,75025),(26,121393),(27,196418),(28,317811),(29,514229),(30,832040),(31,1346269),(32,2178309),(33,3524578),(34,5702887),(35,9227465),(36,14930352)]
+<br> 0.586306</p> Reply <br>
+</li> 
+<li> Jorrit Posthuma says: <br>
+ July 11, 2009 at 7:32 am <br>
+
+<p>Btw, that means 0.586306 seconds, what is more than 20 times faster than 
+Ruby 1.9!</p> Reply <br>
+</li> 
+<li> roger says: <br>
+ November 20, 2009 at 11:26 pm <br>
+
+<p>for me (windows)<br>
+ ruby 1.9.1</p> 
+<p>16.2s</p> 
+<p>python 2.6<br>
+ 25s</p> 
+<p>ruby crystalized [1]<br>
+ 4.8s<br>
+ Enjoy.<br>
+ -r<br>
+ [1] 
+http://github.com/rdp/crystalizer</p> Reply <br>
+</li> 
+<li> peddro vallle says: <br>
+ December 20, 2011 at 12:08 pm <br>
+
+<p>With jruby experiencing a speed up of about 200% thanks to invokedynamic in 
+java 7.02 is time to rewrite the comparison.</p> 
+<p>http://blog.jruby.org/2011/12getting_started_with_jruby_and_java_7/</p> 
+<p>also in Hacker News:<br>
+http://news.ycombinator.com/item?id=3372816</p> 
+Reply <br>
+</li> 
+<li> michael says: <br>
+ December 28, 2011 at 1:32 am <br>
+
+<p>Python on PyPy did this in 4.074s and in 17 secs on the same machine. Ruby 
+did it in 10.5.</p> 
+<p>I&rsquo;m happy to see Ruby getting some much needed optimization.</p> Reply
+<br> </li> </ol> 
+<h3> Leave a Reply </h3> 
+<p>I sincerely welcome and appreciate your comments, whether in agreement or 
+dissenting with my article. However, trolling will not be tolerated. Comments 
+are automatically closed 15 days after the publication of each article.</p> 
+Click here to cancel reply. <br>
+
+<p> Name (required) </p> 
+<p> Mail (will not be published) (required) </p> 
+<p> Website </p> 
+<p> </p> 
+<p> </p> 
+<p></p> 
+<p> Notify me of follow-up comments by email.</p> 
+<p> Notify me of new posts by email.</p> 
+<p></p> 
+<p> </p> 
+<p></p> 
+<p> </p> Follow @acangiano <br>
+get my book <br>
+
+<p>Now shipping</p> <br>
+Recommend Rails Books <br>
+
+<p></p> Disclaimer <br>
+
+<p>Some of the links contained within this site have my referral id (e.g., 
+Amazon), which provides me with a small commission for each sale. Thank you for 
+your support.</p> Recent Posts <br>
+
+<ul> 
+<li>On the Usability of Codecademy</li> 
+<li>The Strange Case of John Dillinger and the Fraudulent Apple ID</li> 
+<li>A Big List of Interesting Programming Books Released in 2011</li> 
+<li>Download DB2 Express-C 9.7.5</li> 
+<li>The Real Reason Italy Sucks at the Startup Game</li> 
+<li>Requiem for a Dreamer</li> 
+<li>The Hadoop Programming Challenge Has Been Extended</li> 
+<li>My Technical Blogging Book Is Now Available in Beta</li> 
+<li>Mobile Development Marketshare Among Hacker News&rsquo; Participants</li> 
+<li>Learn Hadoop and Get a Chance to Go to Vegas</li> </ul> Recent Comments 
+<br> 
+<ul> 
+<li>Mark McConachie on On the Usability of Codecademy</li> 
+<li>bala on Install DB2 on Mac OS X and give us feedback</li> 
+<li>Robert jones on Sony Vaio FW Series: A Developer&rsquo;s Review</li> 
+<li>Lauren Corporal on A great combo of lenses for Canon Digital SLRs that 
+won&rsquo;t break the bank</li> 
+<li>Codecamy: Website Interaktif untuk Belajar Coding | Twisted Pair on On the 
+Usability of Codecademy</li> </ul> Categories <br>
+Select Category 
+.NET&nbsp;&nbsp;(17) Android&nbsp;&nbsp;(2) Apple&nbsp;&nbsp;(5) Big 
+Data&nbsp;&nbsp;(3) Books&nbsp;&nbsp;(46) Canada&nbsp;&nbsp;(4) 
+Clojure&nbsp;&nbsp;(3) Cocoa and Objective-C&nbsp;&nbsp;(8) 
+Databases&nbsp;&nbsp;(6) DB2&nbsp;&nbsp;(73) Django&nbsp;&nbsp;(28) 
+Erlang&nbsp;&nbsp;(4) FAQs&nbsp;&nbsp;(1) Featured Article&nbsp;&nbsp;(11) 
+General&nbsp;&nbsp;(86) Hardware&nbsp;&nbsp;(4) Haskell&nbsp;&nbsp;(6) In-Depth 
+Book Reviews&nbsp;&nbsp;(3) Industry News&nbsp;&nbsp;(17) Information 
+Marketing&nbsp;&nbsp;(3) iPhone OS Development&nbsp;&nbsp;(4) IT 
+Business&nbsp;&nbsp;(10) Italy&nbsp;&nbsp;(1) JavaScript&nbsp;&nbsp;(2) 
+jQuery&nbsp;&nbsp;(1) Mac&nbsp;&nbsp;(33) Mathematics&nbsp;&nbsp;(4) 
+Merb&nbsp;&nbsp;(11) Photography&nbsp;&nbsp;(1) Programming 
+Languages&nbsp;&nbsp;(6) Python&nbsp;&nbsp;(39) Quick Tips&nbsp;&nbsp;(23) 
+Reviews&nbsp;&nbsp;(11) Ruby&nbsp;&nbsp;(110) Ruby Benchmark 
+Suite&nbsp;&nbsp;(16) Ruby on Rails&nbsp;&nbsp;(100) Scala&nbsp;&nbsp;(2) 
+Screencasts&nbsp;&nbsp;(9) Security&nbsp;&nbsp;(1) Startup&nbsp;&nbsp;(15) This 
+Week in Ruby&nbsp;&nbsp;(15) Usability&nbsp;&nbsp;(2) Web 
+Development&nbsp;&nbsp;(7) Zenbits&nbsp;&nbsp;(3) <br>
+My sites <br>
+
+<ul> 
+<li>Math Blog</li> 
+<li>Math Books</li> 
+<li>My homepage</li> 
+<li>My personal blog</li> 
+<li>New Books</li> 
+<li>Technical Blogging</li> </ul> <br>
+ Copyright &copy; 2005-2011 Antonio 
+Cangiano. All rights reserved. <br>
+<br>
+<br>
+
+<p></p> 
+</body>

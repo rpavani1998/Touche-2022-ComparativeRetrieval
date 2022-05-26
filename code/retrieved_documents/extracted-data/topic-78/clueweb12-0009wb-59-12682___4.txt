@@ -1,0 +1,56 @@
+contact details site maintained by jon allen (jj) see the project page for more details documentation maintained by the perl 5 porters
+if stability is important, be sure to say so with a use sort 'stable'; the no sort pragma doesn't forbid what follows, it just  leaves the choice open.
+a stable sort means that for records that compare equal, the original input  ordering is preserved.
+mergesort also takes advantage of pre-existing order, so it  would be favored for usingsort() to merge several sorted arrays.
+a stable sort means that for records that compare equal, the original input ordering is preserved.
+mergesort also takes advantage of pre-existing order, so it would be favored for using sort() to merge several sorted arrays.
+"\n"; - @a = sort @b; - } - { use sort "stable"; - print sort::current .
+you can force the choice of  algorithm with this pragma, but this feels heavy-handed, so the subpragmas  beginning with a_ may not persist beyond perl 5.8.
+behaviour synopsis use sort 'stable'; # guarantee stability use sort '_quicksort'; # use a quicksort algorithm use sort '_mergesort'; # use a mergesort algorithm use sort 'defaults'; # revert to default behavior no sort 'stable'; # stability not important use sort '_qsort'; # alias for quicksort my $current = sort::current(); # identify prevailing algorithm description
+in perl versions 5.6 and earlier the quicksort algorithm was used to implement sort(), but in perl 5.8 a mergesort algorithm was also made available, mainly to guarantee worst case o(n log n) behaviour: the worst case of quicksort is o(n**2).
+note that no sort "_quicksort"; have exactly the same effect, leaving the choice of sort algorithm open.
+on average, mergesort does fewer  comparisons than quicksort, so it may be better when complicated comparison  routines are used.
+sort - perl pragma to control sort()
+stability will matter only if elements that compare equal can be distinguished in some other way.
+in perl 5.8 and later, quicksort defends against quadratic behaviour by shuffling large arrays before sorting.
+this pragma is not lexically scoped: its effect is global to the program
+that means that simple numerical and lexical sorts do not profit from  stability, since equal elements are indistinguishable.
+however, with a  comparison such as { substr($a, 0, 3) cmp substr($b, 0, 3) } stability might matter because elements that compare equal on the first 3  characters may be distinguished based on subsequent characters.
+the best algorithm depends on many things.
+to get the best experience, please enable javascript or download a modern web browser such asinternet explorer 8, firefox, safari, or google chrome.
+mergesort is stable, quicksort is not.
+however, with a comparison such as - { substr($a, 0, 3) cmp substr($b, 0, 3) } stability might matter because elements that compare equal on the first 3 characters may be distinguished based on subsequent characters.
+you can force the choice of algorithm with this pragma, but this feels heavy-handed, so the subpragmas beginning with a _ may not persist beyond perl 5.8.
+that means the following will probably not do what you expect, becauseboth pragmas take effect at compile time, before either sort() happens.
+reset to default options before selecting other subpragmas (in case somebody carelessly left them on) and after sorting, as a courtesy to others.
+in perl 5.8 and  later, quicksort can be stabilized, but doing so will add overhead, so it  should only be done if it matters.
+- { use sort "_quicksort"; - print sort::current .
+"\n"; - @a = sort @b; - eval 'use sort "defaults"'; # clean up, for others - } - { eval 'use sort qw(defaults stable)'; # force stability - print sort::current .
+the default  algorithm is mergesort, which will be stable even if you do not explicitly  demand it.
+sort - perl pragma to control sort() behaviour - use sort 'stable'; # guarantee stability - use sort '_quicksort'; # use a quicksort algorithm - use sort '_mergesort'; # use a mergesort algorithm - use sort 'defaults'; # revert to default behavior - no sort 'stable'; # stability not important - use sort '_qsort'; # alias for quicksort - my $current = sort::current(); # identify prevailing algorithm
+that means the following will probably not do what you expect,  becauseboth pragmas take effect at compile time, before either sort() happens.
+stability will  matter only if elements that compare equal can be distinguished in some other  way.
+in perl 5.8 and later, quicksort defends against  quadratic behaviour by shuffling large arrays before sorting.
+on the other hand, quicksort is often faster for small arrays, and on arrays of  a few distinct values, repeated many times.
+that means that simple numerical and lexical sorts do not profit from stability, since equal elements are indistinguishable.
+use the quoted argument form of eval() , not the block form, as in - eval { use sort "_quicksort" }; # wrong or the effect will still be at compile time.
+you appear to have javascript disabled, or are running a non-javascript capable web browser.
+"\n"; - @c = sort @d; - } - # prints: - # quicksort stable - # quicksort stable you can achieve the effect you probably wanted by using eval() to defer the pragmas until run time.
+with the sort pragma you can control the behaviour of the  builtinsort() function.
+if stability is important, be sure to say so with a - use sort 'stable'; the no sort pragma doesn't forbid what follows, it just leaves the choice open.
+but the stability of the default sort is a side-effect that could  change in later versions.
+note that - no sort "_quicksort"; - no sort "_mergesort"; have exactly the same effect, leaving the choice of sort algorithm open.
+perl version manual reference modules please note: many features of this site require javascript.
+this pragma is not lexically scoped: its effect is global to the program it appears in.
+on the other hand, quicksort is often faster for small arrays, and on arrays of a few distinct values, repeated many times.
+in perl 5.8 and later, quicksort can be stabilized, but doing so will add overhead, so it should only be done if it matters.
+but the stability of the default sort is a side-effect that could change in later versions.
+"\n"; - @c = sort @d; - eval 'use sort "defaults"'; # clean up, for others - } - # prints: - # quicksort - # stable scoping for this pragma may change in future versions.
+thus, after no sort qw(_mergesort stable); a mergesort, which happens to be stable, will be employed anyway.
+the default algorithm is mergesort, which will be stable even if you do not explicitly demand it.
+- { eval 'use sort qw(defaults _quicksort)'; # force quicksort - eval 'no sort "stable"'; # stability not wanted - print sort::current .
+with the sort pragma you can control the behaviour of the builtin sort() function.
+thus, after - no sort qw(_mergesort stable); a mergesort, which happens to be stable, will be employed anyway.
+in perl versions 5.6 and earlier the quicksort algorithm was used to  implementsort(), but in perl 5.8 a mergesort algorithm was also  made available, mainly to guarantee worst case o(n log n) behaviour: the worst  case of quicksort is o(n**2).
+{ use sort "_quicksort";
+on average, mergesort does fewer comparisons than quicksort, so it may be better when complicated comparison routines are used.

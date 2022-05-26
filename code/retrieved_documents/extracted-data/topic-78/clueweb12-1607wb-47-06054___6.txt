@@ -1,0 +1,95 @@
+recall the difference between insertion and selection sorts.
+to design such an algorithm, let's take another look at what merge sort  does.
+(think about that very carefully; it's the core and most difficult part of this project.)
+write a program or programs to automate experiments to compare the running  time andnumber of comparisons for quicksort, mergesort, shell sort, and  one of the other sorts (selection, insertion, or one of the bubbles)
+(in a way, the pivot itself constitutes a fourth portion.)
+all that's left is to move the pivot in between the two portions, using a  swap.
+turn in your code, results, and write-up by copying them to a turnin directory i have prepared for you.
+in other words,  could there be a recursive, divide-and-conquer, sorting algorithm for which the splitting is the hard part, but leaves an easy or trivial reuniting at the end?
+by  calling this function before and after sorting and taking the difference, we  can compute how long it takes to sort.
+this time, instead of counting comparisons, we'll take actual time measurements.
+both functions return an int to be consistent with the other functions, all of which return the number of comparisons.
+the second function corresponds to the prototype for quick sort found in sorts.h and used in the driver sdriver.c it is finished.
+in many formulations of array-based quicksort, the last element is used as the pivot (though it doesn't need to be the last).
+write a program or programs to automate experiments to compare the running time andnumber of comparisons for quicksort, mergesort, shell sort, and one of the other sorts (selection, insertion, or one of the bubbles)
+project 1: quicksort the goal of this project is reinforce the work on sorting arrays by  implementing the quicksort algorithm and to conduct a careful emperical study  of the relative performace of sorting algorithms.
+it  starts the recursive process by callingquicksortr(), which is the  one you need to finish.
+the reuniting sorts the subarrayswith respect to each other, that is, it moves elements between subarrays, so the entire range is sorted.
+last modified: thu jan 19 09:27:30 cst 2012
+the algorithm is called  "quicksort," and as its name suggests, it is a very good sorting  algorithm.
+during each step in the partitioning, the element at position j is examined.
+as we have been talking about in class, merge sort and quick sort are in different "complexity classes" in terms of the their worst case performance.
+notice there are two functions with quicksort in their name.
+since the splitting is trivial, the interesting parts are the recursive  sorting and the reuniting.
+present your data using a table and one or more graphs.
+during each step in the partitioning, the element at position j is  examined.
+notice that quicksortr() takes not only an array but also a starting point and a stopping point in the array.
+both functions return an int to be consistent with the  other functions, all of which return the number of comparisons.
+initially, the "less  than" and "greater than" portions are empty.
+suppose we have an array, as pictured below.
+to rephrase our earlier question, the analogue to mergesort would be an algorithm that sorts the subarrays with respect to each otherbefore sorting each subarray.
+to design such an algorithm, let's take another look at what merge sort does.
+it is only sorting a given  range in the array.
+the indicesi and j mark the boundaries between portions: i is the last position of the portion less than the pivot and j is the first position in the unprocessed portion.
+introduction recall the difference between insertion and selection sorts.
+arrayutil has a function gettimemillis() .
+setup make a directory for this class (if you haven't already).
+then copy into it some starter code, which will be  similar to the code you started with in lab.
+since the splitting is trivial, the interesting parts are the recursive sorting and the reuniting.
+the goal of this project is reinforce the work on sorting arrays by implementing the quicksort algorithm and to conduct a careful emperical study of the relative performace of sorting algorithms.
+it starts the recursive process by calling quicksortr(), which is the one you need to finish.
+(in a way, the pivot itself constitutes a fourth  portion.)
+however,  these are worst cases; we might find that experimentally one of the algorithms  may behave better on average.
+to turn in write a few paragraphs explaining how you did your experiment and what your  findings are.
+what if there were a sorting algorithm that had the same basic pattern as merge sort, but stood in analogy to merge sort as selection stands towards insertion?
+write a few paragraphs explaining how you did your experiment and what your findings are.
+cd 245 mkdir proj1 cd proj1 cp /homes/tvandrun/public/cs245/proj1/* .
+the algorithm is called "quicksort," and as its name suggests, it is a very good sorting algorithm.
+then reuniting them is trivial.
+we're then set to do the recursive calls on each portion.
+make a new  directory for this project.
+in a closer look, while we do this partitioning of the array, we maintain three portions of the array: the (processed) elements that are less than the pivot, the (processed) elements that are greater than the pivot, and the unprocessed elements.
+for example, if you make a directory called proj1-turnin containing all the files you want to turn in, then copy this using cp -r proj1-turnin /cslab.all/ubuntu/cs245/turnin/(your user id) due: monday, jan 30, 5:00 pm.
+although they  share the same basic pattern (repeatedly move an element from the unsorted  section to the sorted section), we have insertion
+please turn in an entire directory.
+although they share the same basic pattern (repeatedly move an element from the unsorted section to the sorted section), we have insertion selection now, consider the basic pattern of merge sort: more specifically, merge sort splits the array simplistically (it's the "easy" part).
+this time, instead of counting comparisons, we'll take actual time  measurements.arrayutil has a function gettimemillis() .
+(o(n lg n) is faster).
+by calling this function before and after sorting and taking the difference, we can compute how long it takes to sort.
+use several different arrays of several sizes, and compare the results for  the different algorithms.
+here's a big picture view of it.
+it is either brought into the "greater than" portion (simply by incrementingj) or brought into the "less than" portion (by doing a swap and incrementing bothi and j).
+take the next unsorted item (easy) put it in the right place (hard) selection take the smallest unsorted item (hard) put it in the next place (easy)
+in many formulations of array-based quicksort, the last element is used as the  pivot (though it doesn't need to be the last).
+turn in your code, results, and write-up by copying them to a turnin  directory i have prepared for you.
+in a closer look, while we do this partitioning of the array, we maintain  three portions of the array: the (processed) elements that are less than the  pivot, the (processed) elements that are greater than the pivot, and the  unprocessed elements.
+then we separate the other elements based on whether they are greater than  or less than the pivot, placing the pivot in the middle.
+implementing quicksort notice there are two functions with quicksort in their name.
+initially, the "less than" and "greater than" portions are empty.
+use several different arrays of several sizes, and compare the results for the different algorithms.
+in other words, could there be a recursive, divide-and-conquer, sorting algorithm for which the splitting is the hard part, but leaves an easy or trivial reuniting at the end?
+it is only sorting a given range in the array.
+at the end, the unprocessed portion is empty.
+then copy into it some starter code, which will be similar to the code you started with in lab.
+it returns the number of milliseconds that have elapsed since midnight, jan 1, 1970---the standard way to do time keeping on many computer platforms.
+thomas vandrunen  last modified:  thu jan 19 09:27:30 cst 2012
+what if there were a  sorting algorithm that had the same basic pattern as merge sort, but stood in  analogy to merge sort as selection stands towards insertion?
+the recursive call sorts the subarraysinternally , that is, each subarray is turned into a sorted subarray.
+however, these are worst cases; we might find that experimentally one of the algorithms may behave better on average.
+all that's left is to move the pivot in between the two portions, using a swap.
+notice that quicksortr() takes not only an array but also a  starting point and a stopping point in the array.
+make a directory for this class (if you haven't already).
+it returns the number of milliseconds that have elapsed since midnight, jan  1, 1970---the standard way to do time keeping on many computer platforms.
+the reuniting is complicated.
+now, consider the basic pattern of merge sort: split sort the pieces recursively reunite more specifically, merge sort splits the array simplistically (it's the  "easy" part).
+suppose we have an array, as pictured  below.
+experiments as we have been talking about in class, merge sort and quick sort are in  different "complexity classes" in terms of the their worst case  performance.
+then we separate the other elements based on whether they are greater than or less than the pivot, placing the pivot in the middle.
+the reuniting  sorts the subarrayswith respect to each other, that is, it moves  elements between subarrays, so the entire range is sorted.
+make a new directory for this project.
+(think about that very carefully; it's the core and most difficult part of  this project.)
+we pick one element,x, and delegate it as the "pivot."
+to rephrase our earlier question, the analogue to mergesort would be an  algorithm that sorts the subarrays with respect to each otherbefore sorting each subarray.
+merge sort iso(n lg n), whereas quicksort is o(n^2).
+it is either brought into the "greater than" portion  (simply by incrementingj) or brought into the "less than"  portion (by doing a swap and incrementing bothi and j).
+for  example, if you make a directory calledproj1-turnin containing all  the files you want to turn in, then copy this using cp -r proj1-turnin /cslab.all/ubuntu/cs245/turnin/(your user id) due: monday, jan 30, 5:00 pm.

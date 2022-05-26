@@ -1,0 +1,284 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Asp4Hs: HomeSite/ASP/PHP Top Priority Enhancement Requests</title>
+<body>
+
+<h2>Asp4Hs: HomeSite/ASP/PHP Top Priority Enhancement Requests</h2>  [ Asp4Hs |
+Php4Hs | Add-On's&nbsp;List | Articles | WishList | Links | Tips/FAQs | 
+Submissions ] <br>
+
+<p>Here are some of the improvements that have been frequently requested for 
+HomeSite's ASP, ASP.Net and PHP support. To submit your own ideas,email me if 
+you like, though the best way to be heard by Macromedia is to start an ASP 
+thread in theHomeSite support forum &nbsp;<strong>-AND-</strong>&nbsp; to 
+submit a note via theMacromedia Software Feature Request and Bug Report Form. 
+These messages go directly to the development teams.</p> 
+<h4>Short List of High-Priority Feature Requests for HomeSite</h4> 
+<p><strong>Please remember</strong>, for this discussion of things we'd like 
+Macromedia to do, we need to<strong>prioritize</strong>. They have limited 
+developer resources to assign right now. Please keep minor things that users 
+can do (VTML, scripts, etc) somewhat separate.</p> 
+<blockquote> 
+<p><em>&quot;I realize that there are always lots of improvements that we 
+could make to HomeSite to make your life easier, but realistically we can only 
+focus on a certain number of features.</em></p> 
+<p><em>You can be incredibly helpful on two fronts. First of all, if you can 
+<strong>identify a short list of features that would be the highest priority 
+fixes for H.S 5.0.</strong> I realize that your wishlist identifies many 
+issues, but I am interested in your personal feeling on perhaps a dozen or so 
+features. As you know, many of these issues can be resolved through HomeSite 
+extensions such as VTML. I will get back to you with my/our feelings on these 
+issues. We will try and work-in those features that are the easiest for us to 
+put together and that blend into the architecture of HomeSite.&quot;</em> --Dan 
+Noel</p> </blockquote> 
+<p>From my reading of forum posts and email, I'd guess that these are the 
+major requests in this area. Please comment, expand, disagree or suggest 
+additions.</p> 
+<ol> 
+<p></p> 
+<li><strong>Code-Sense/Intelli-sense Feature</strong><br>
+ This seems to be 
+the most requested feature from Interdev. This is similar to the HTML tag 
+insight, but covers functions and objects in ASP. Also requested to cover 
+Javascript and Javascript DOM. (thread) 
+<blockquote> Patrik Muzila of allaire has said on this: &quot; <em><strong>
+Object Insight</strong> - Many of you requested an ASP aware code insight 
+feature. This is not a simple feature as object instance recognition was to be 
+implemented. At the present Homesite does little interpretation of its document 
+contents especially when script is involved. We are dealing with the same issue 
+with JRUN Studio. The new feature is going to take some time to develop (5.0 
+timeframe), but once completed, it should not be difficult to apply it to ASP.
+</em>&quot; </blockquote> 
+<p></p></li> 
+<li><strong>Database interfacing features</strong><br>
+ This is discussed a 
+bit inthis thread and it seems that CF Studio already has some functionality in 
+this area. Perhaps it could be extended to help with ASP DB use in HomeSite. We 
+could use more details of what functionality would be useful though.
+<blockquote> <em>&quot;Well the only (ADO) tool I'd find of use is a DSNless 
+connection string that could be built browsing to the object in question, 
+determine the type of ODBC connection, and fill in the required parameters. 
+Other then that, a reference would be enough. Though intellisense for filling 
+in any vbs/ado constants would be very very helpful too. Actually one other 
+tool that would be nice would be a<strong>test pad</strong> for checking to see 
+if an ADO connection works correctly and view the results, sort of like some 
+tools available for building a query and testing the results.&quot;</em> -- 
+Scott St. Jean</blockquote> 
+<blockquote> <em>SQL Server support: I would like to be able to right click a 
+line such as this:<br>
+ &nbsp;&nbsp;&nbsp;Set objRS = objConn.Execute(&quot;sql 
+statement&quot;)<br>
+ and to be able to see the resultant recordset in a table 
+view. I would also like to have the option of validating the statement.</em> -- 
+John Carpenter</blockquote> 
+<blockquote> <em>If &quot;sql statement&quot; is the name of a stored 
+procedure I would like to be able to edit it, grant permissions to it and so 
+on. If the stored procedure does not yet exist, I would like to be given the 
+option to create it. This could probably be done by integrating HS and MS SQL 
+Server Query Analyser.</em> -- John Carpenter </blockquote> 
+<p></p></li> 
+<li><strong>Fix the tag selection/editing when within ASP tags</strong><br>
+ 
+HS V4.5x broke what previously worked. That is, you could call up Edit Tag on 
+an HTML tag within ASP &lt;% %&gt; tags. Example) In this code, put your curser 
+in the table tag and try to call up edit tag:<br>
+
+<blockquote> &lt;% response.write &quot;&lt;table&gt;&quot; %&gt; </blockquote>
+<p>Of course, this will have other issues if you don't also fix the use of 
+single quotes issue. If the editor replaces single quotes or escaped double 
+quotes with a single set of double quotes on attributes, it may break the code.
+</p> 
+<blockquote> Looks like this is fixed for some cases in HSv5. It calls up the 
+tag editors just fine. Have to test with single-quotes yet... Some users are 
+reporting code cases where it is still broken though. (thread) ~jw 11/26/01 
+</blockquote> 
+<p></p></li> 
+<li><strong>Improved ASP Color Coding</strong><br>
+ This was frequently 
+requested, but seems to have been addressed pretty satisfactorily in HS 4.5.1 
+and later.
+<blockquote> <em><strong>This is still an issue for ASP.Net.</strong> Parser 
+support for various ASP.Net languages is one of the most requested ASP.Net 
+enhancements. You can find a few parsers atASPdotNet4Hs.</em> </blockquote> 
+<p></p></li> 
+<li><strong>Single point option to force HomeSite to use single-quote chars 
+for HTML tag attributes</strong><br>
+ In ASP and PHP coding, where code is 
+generating HTML tags, it's often easier to use single quote chars (') rather 
+than double quote chars (&quot;). For instance, the code:<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>response.write &quot;&lt;font 
+size=&quot;-1&quot;&gt;this is a string&lt;/font&gt;&quot;</strong><br>
+ will 
+not work as intended since the response.write sees the end of the string at the 
+&quot; just before the -1. Many developers prefer to use single quotes as so:
+<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>response.write &quot;&lt;font 
+size='-1'&gt;this is a string&lt;/font&gt;&quot;</strong><br>
+ rather than 
+extra escaped double quotes<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>
+response.write &quot;&lt;font size=&quot;&quot;-1&quot;&quot;&gt;this is a 
+string&lt;/font&gt;&quot;</strong><br>
+ which are easy to miscount. 
+<p>A user can go through tag editor files and try to fix this throughout or 
+can enter all tags by hand, but that has problems (especially when you work in 
+both HTML-only and ASP/PHP pages. A single point option to use single quotes 
+would be a big help.</p>
+<p>FYI, the particular VTML line to look for in your Extensions\TagDefs\*.vtm 
+files is:<br>
+<strong>&lt;CONTROL TYPE=&quot;CheckBox&quot; 
+NAME=&quot;checkSingleQuotes&quot; ANCHOR=&quot;checkQuotes&quot; ... 
+CAPTION=&quot;Single quotes on attributes&quot;/&gt;</strong><br>
+ You would 
+add a CHECKED attribute to that line.</p> 
+<p><strong>Note:</strong> Using the AddRespWrite2 script to convert HTML code 
+to response.write's will correctly convert the quotes.</p>
+<p>Here is Marjolein's one reply to me on this on 4/18/00:<br>
+</p> 
+<blockquote> <em>No, there is no overall option; however all (VTML versions 
+of) HTML Tag Editors have this as an option (off by default). You could do an 
+Extended S&amp;R to turn it on by default for all of them (just add a CHECKED 
+attribute to the checkbox). Not all built-in editors have this option though.
+</em> 
+<p><em>I've found that some browsers have (sometimes?) trouble with single 
+quotes though, but I cannot remember exact details.</em> </p> 
+<p><em>Is there a reason why one would want to have it set for all attributes 
+instead of for a single (occasional) tag? If so, I can propose adding that to 
+the Settings instead of having it on the Tag Editors only.</em> </p> 
+<p><em>Having an option for &quot;quote all attributes&quot; (or not!) in the 
+settings is currently being discussed, but there are a lot of issues involved 
+to implement this consistently across all tools and still prevent illegal code 
+being generated... We're analyzing this (if it does get implemented you won't 
+see it before 5.0).</em> </p> 
+<p><em>Cheers,<br>
+Marjolein Katsma</em></p> </blockquote> 
+<p></p></li> 
+<li><strong>Better handling of server side includes.</strong><br>
+
+<blockquote> <em>I want to right click an include and select &quot;Edit&quot;. 
+Or I would like to be able to &quot;expand&quot; the include similar to the new 
+collapsing text feature. (IE so an include is essentially a collapsed bit of 
+text). If ASP Validation is going to be included, HomeSite will need to 
+recognise includes properly.</em> -- John Carpenter </blockquote> 
+<p>See also the useful functionality of the IncludeBrowse3 and EditLinkedFile 
+scripts. See if EditLinkedFile2 can be enhanced to support file includes. See 
+if Macromedia can build-in this functionality.-- jw</p> 
+<blockquote> HSv5 introduces &quot;<strong>Edit Include File</strong>&quot; on 
+the right mouse button. This basically reproduces some of the functionality of 
+theEditLinkedFile script in letting you easily click and open a linked include 
+file (only file includes, not virtual). See also the article:Editing Referenced 
+Files in HomeSite and ColdFusion Studio. 
+<p>It supports at least the following:<br>
+ &lt;!--#include&gt; 
+&lt;cfinclude&gt; &lt;cfmodule&gt; &lt;jsp:include&gt; &lt;%@ include&gt; 
+&lt;jsp:forward&gt; &lt;VTINCLUDE&gt; &lt;WIZINCLUDE&gt; &lt;SCRIPT&gt;</p> 
+</blockquote> 
+<p></p></li> 
+<li><strong>ASP Validation</strong><br>
+ Probably not easy, but it would 
+probably be a killer feature for ASP coders. I'm not sure if InterDev has it or 
+not? Might look for third party validators that could be interfaced to HS.
+<blockquote> <em>&quot;Validation of some code, even if we're just talking 
+conditional statements and loops, it would help.&quot;</em> -- Scott St. Jean 
+</blockquote> 
+<blockquote> <em>Have had some discussions with Zack Jones of adding ASP 
+validation features toASP-Beautify's next version. Discussed possible 
+integration with HS in the same way as CSE Validator.</em> -- jw </blockquote> 
+<p></p></li> 
+<li><strong>Script Debugging</strong><br>
+ This might be possible with good 
+integration with the MS Script Debugger. (detail discussion) 
+<p></p></li> 
+<li><strong>Version Control Improvements</strong><br>
+Version/Source Control 
+seems to be a bit buggy at the moment.
+<p></p></li> 
+<li><strong>Built in language search/reference for vbscript, jscript, ADO and 
+perlscript.</strong> 
+<blockquote> <em>&quot;Some user made modifications exist, but they aren't as 
+good as the integrated support.&quot;</em> -- Scott St. Jean... (I'll discuss 
+what the shortcomings are with him and work to improve what's available. Could 
+include getting ASP help working with Tag help? -jw)</blockquote> 
+<p></p></li> 
+<li><strong>Integrate the String Conversion to Response.Write's</strong><br>
+ 
+Integrate the functionality inAddRespWrite2 to convert strings to code output 
+statements (in various languages). Lower priority as it's available as a script 
+now.
+<p></p></li> 
+<li><strong>ASP.Net support</strong><br>
+ See section below for specifics. 
+<p></p></li> 
+<li><strong>ASP, PHP &amp; ASP.Net documentation support</strong><br>
+ The 
+documentation that comes installed with HomeSite should have some information 
+about using HS with ASP, PHP and ASP.Net, including the fact that you need to 
+set up a server to process the pages and that you should use server mapping. (
+FAQ) There is very little if any mention of PHP, ASP or ASP.Net in the current 
+documentation. Each should have a page. This is not critical for users who have 
+already figured these things out, but it would be useful to help new HS users. 
+It could link to asp4hs or php4hs if desired to connect them to the available 
+resources.</li> </ol> 
+<h4>ASP.Net-specific Requests</h4> 
+<p>This is an upcoming thing since ASP.Net is still in beta testing itself. See
+this thread for some ASP.Net request details. Parsers and custom dialogs would 
+probably be most helpful. Users can write many of these things using the 
+existing extension capabilities of HomeSite but that shouldn't release 
+Macromedia from the responsibility for doing so. SeeASPdotNet4Hs for currently 
+available add-ons.</p> 
+<ol> 
+<li><strong>Syntax coloring parsers for ASP.Net languages</strong>, generally 
+in combination with HTML</li> 
+<li><strong>Custom dialogs for ASP.Net code generation</strong> </li> 
+<li>Help / document sets </li> 
+<li>Useful scripts </li> 
+<li>Useful snippets </li> </ol> 
+<h4>PHP-specific Requests</h4> 
+<p>See PHP4Hs for currently available add-ons.</p> 
+<ol> 
+<li> <strong>Improved and Updated PHP Color Coding</strong> <br>
+ This was 
+frequently requested, and was addressed in HS v5. The PHP3 was updated and a 
+new PHP4 parser was added.
+<p></p></li> 
+<li><strong>Add DBG PHP Debugging support to Homesite</strong><br>
+DBG seems 
+to be an open source PHP debugger. It might be possible to integrate it with HS 
+to improve PHP development. Requested by a number of people inthis thread. 
+<p></p></li> 
+<li><strong>Single point option to force HomeSite to use single-quote chars 
+for HTML tag attributes</strong><br>
+ Mentioned above for ASP. Also applies to 
+PHP.</li> </ol> 
+<h4>Top InterDev-Feature Requests for HomeSite</h4> 
+<blockquote> <em>&quot;On the second front, we do not have a great deal of 
+time to develop pages outside of HomeSite. Most of our time is actually spent 
+in the Delphi development environment. Therefore, we are most<strong>interested 
+in identifying the killer features of InterDev which we could support in 
+HomeSite.</strong> Your guidance on these issues would be most helpful. We are 
+most interested in those features that contribute greatly to developer 
+productivity in ASP, but also other parts of web development.&quot;</em> -Dan 
+Noel</blockquote> 
+<p>Since I (jeff) use HomeSite exclusively for ASP, and haven't tried the last 
+couple of InterDev versions, I'll need feedback from others on this one... Some 
+of these are obviously also mentioned in the first list above.</p> 
+<ol> 
+<li>Code-Sense/Intelli-sense/Code Completion Feature </li> 
+<li>Script Debugging </li> 
+<li>Database interfacing features 
+<blockquote> <em>&quot;The features from Interdev that I cannot live without 
+are Intellisense (greatest development tool ever!) and the database 
+environment. The ability to<strong>manage a SQL Server</strong> without being 
+at the server is a Godsend especially since there is no real interface like 
+access is/has.<br>
+<br>
+ These may not be very easy to develop but don't 
+necessarily have to be ASP dependant. The<strong>ability to access objects and 
+their properties</strong> could be developed for any language that supports the 
+creation of objects. The database integration is a must these days in web 
+development and should not be excluded for any reason.&quot;</em> -- Clinton 
+Gallagher inthis thread. </blockquote> </li> </ol> 
+<p></p>  [ Asp4Hs | Php4Hs | Add-On's&nbsp;List | Articles | WishList | Links |
+Tips/FAQs | Submissions ] <br>
+<em>Last Updated: October 26, 2004</em> 
+</body>

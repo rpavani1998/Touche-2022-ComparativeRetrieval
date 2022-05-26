@@ -1,0 +1,206 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>zsort: portable sorting algorithms in Common Lisp &laquo;  Jorge Tavares weblog</title>
+<body>
+
+<h1>Jorge Tavares weblog</h1> 
+<h2>zsort: portable sorting algorithms in Common&nbsp;Lisp</h2> 
+<p>with 6 comments</p> 
+<p>zsort is a library that I started working on as a simple hobby project. 
+More or less around the same time I decided to checkwhich algorithms the 
+different Common Lisp implementations use. It is now part of Quicklisp so it 
+can be easily used (thanksZack!). </p> 
+<p>The main goal of zsort is to be a collection of portable sorting 
+algorithms. If they can be fast, even better. Common lisp provides thesort and 
+stable-sort functions but these can have different algorithms implemented 
+according to each implementation, which can make an application unportable if 
+you rely on a specific type of sorting. Also, the standard functions might not 
+be the best for a certain situation and as such you might need a specialized 
+sort. Even if for most situations the standard functions are more than enough, 
+thezsort library could be a useful complement.</p> 
+<p>Right now the implemented algorithms are: insertion sort, quicksort, 
+randomized quicksort, merge sort, heapsort and counting sort. The plan is to 
+add more algorithms, for example,bucket sort and timsort. However, the main 
+thing on the todo list is adding the possibility ofexternal sorting (to handle 
+large amounts of data) and parallel versions of some sorting algorithms. I am 
+considering usinglparallel for this but I am still undecided.</p> 
+<p>There is still a lot of work to be done, but I think the library as it is 
+can already be a little useful. And of course, all kind of suggestions and 
+improvements are welcome!</p> 
+<h3>Like this:</h3> Like <br>
+ Be the first to like this post. 
+<p>Written by Jorge Tavares </p> 
+<p>April 22, 2012 at 20:15</p> 
+<p>Posted in Programming</p> 
+<p>Tagged with Common Lisp, library, Lisp, Sorting Algorithms, zsort</p>  
+&laquo;Best Paper Award at EuroGP&nbsp;2012 <br>
+
+<h3>6 Responses</h3> 
+<p>Subscribe to comments with RSS.</p> 
+<ol> 
+<li> 
+<p>FYI the next release of lparallel will add support for fine-grained 
+parallelism, which may simplify some algorithms.</p> 
+<p> (defun fib (n)<br>
+ (declare (optimize (speed 3)))<br>
+ (if (&lt; n 2)<br>
+
+ n<br>
+ (let ((a (fib (- n 1))) (b (fib (- n 2))))<br>
+ (+ a b))))</p> 
+<p> (defpar pfib (n)<br>
+ (declare (optimize (speed 3)))<br>
+ (if (&lt; n 2)
+<br> n<br>
+ (plet ((a (pfib (- n 1))) (b (pfib (- n 2))))<br>
+ (+ a b))))</p> 
+<p>On my two-core machine (pfib 35) is 2x faster than (fib 35). `defpar' does 
+not do any code-walking; it uses a macrolet and an alternate scheduler.</p> 
+<p>If `pfib' had been defined using `defun' instead of a `defpar', the `plet' 
+would cause massive slowdown due to task overhead.</p> 
+<p>(I am not settled on the name `defpar' because it's too close to 
+`defparameter', however I lack something better.)</p> 
+<p><strong>James M. Lawrence</strong></p> 
+<p> April 23, 2012 at 10:26 </p> Reply <br>
+
+<ul> 
+<li> 
+<p>Hi James,</p> 
+<p>Thanks for your update. From your example it really looks quite easy to 
+code certain algorithms. I will definitely take a closer look at lparalell. It 
+is a very nice piece of work!</p> 
+<p>Regarding the name, what about &ldquo;pdefun&rdquo; ? It would be more 
+coherent with other names, like pmap, preduce, plet, etc.</p> 
+<p><strong>Jorge Tavares</strong></p> 
+<p> April 23, 2012 at 14:53 </p> Reply <br>
+
+<ul> 
+<li> 
+<p>Yes, the original name was `pdefun&rsquo; for the reasons you mention. 
+However I found the expectation of seeing the `def&rsquo; prefix for toplevel 
+definitions too great.</p> 
+<p>But `defpar&rsquo; isn&rsquo;t a winner either. `defpfun&rsquo; might have 
+worked if it wasn&rsquo;t so awkward.</p> 
+<p><strong>James M. Lawrence</strong></p> 
+<p> April 23, 2012 at 22:14 </p> </li> 
+<li> 
+<p>Oh, I see! What about `defparallel&rsquo;? IMHO, it&rsquo;s nicer than 
+`defpar&rsquo; and it&rsquo;s not that longer.</p> 
+<p><strong>Jorge Tavares</strong></p> 
+<p> April 24, 2012 at 12:14 </p> </li> 
+<li> 
+<p>The disadvantage of `defparallel&rsquo; is that it is notoriously easy to 
+fumble typing `parallel&rsquo;, as you did in your first comment. I also wanted 
+to keep the length short in order to preserve indentation when switching 
+to/from `defun&rsquo;.</p> 
+<p>But I don&rsquo;t have strong opinions on it; pdefun, defpar, defparallel 
+seem about equally good and equally bad.</p> 
+<p><strong>James M. Lawrence</strong></p> 
+<p> April 26, 2012 at 2:02 </p> </li> 
+<li> 
+<p>Yes, you&rsquo;re right. Anyway, I look forward for the new release!</p> 
+<p><strong>Jorge Tavares</strong></p> 
+<p> April 26, 2012 at 8:42 </p> </li> </ul> </li> </ul> </li> </ol> <br>
+
+<h3>Leave a Reply Cancel reply</h3> Enter your comment here... <br>
+
+<p>Fill in your details below or click an icon to log in:</p> 
+<ul> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> </ul> <br>
+Email (required) (Address never made public) <br>
+Name 
+(required) <br>
+Website <br>
+<br>
+
+<p><strong></strong> You are commenting using your WordPress.com account. 
+(&nbsp;Log&nbsp;Out&nbsp;/&nbsp;Change&nbsp;)</p> <br>
+
+<p><strong></strong> You are commenting using your Twitter account. (&nbsp;
+Log&nbsp;Out&nbsp;/&nbsp;Change&nbsp;)</p> <br>
+
+<p><strong></strong> You are commenting using your Facebook account. (&nbsp;
+Log&nbsp;Out&nbsp;/&nbsp;Change&nbsp;)</p> Cancel <br>
+
+<p>Connecting to %s</p> 
+<p> Notify me of follow-up comments via email.</p> 
+<p> </p> 
+<p></p> 
+<p></p> <br>
+
+<p></p> 
+<h3>Pages</h3> 
+<ul> 
+<li>About</li> 
+<li>Publications</li> 
+<li>Contacts</li> </ul> Search for: <br>
+
+<h3>Recent Posts</h3> 
+<ul> 
+<li>zsort: portable sorting algorithms in Common&nbsp;Lisp</li> 
+<li>Best Paper Award at EuroGP&nbsp;2012</li> 
+<li>Book review: The Tangled&nbsp;Web</li> 
+<li>Macros Design&nbsp;Patterns</li> 
+<li>Sorting algorithms used in the CL&nbsp;implementations</li> 
+<li>Packages organization and exporting&nbsp;symbols</li> </ul> 
+<h3>Categories</h3> 
+<ul> 
+<li>Blog (4) </li> 
+<li>Programming (19) </li> 
+<li>Publications (2) </li> 
+<li>Research (13) </li> 
+<li>Science (2) </li> </ul> 
+<h3>Tags</h3> Ant System Bio-Inspired Algorithms Book Book review 
+Collaborations Common Lisp Complex Systems Conferences Curiosity Dublin Essay 
+EuroGP Evo* EvoBio Evolutionary Computation Genetic Programming GSL GSLL Haskell
+HIS Human Evolution Javascript libraries Lisp Macros Meetings Michael O'Neill 
+Molecular Docking Mozilla NCRA News Optimization Power Laws PPSN pseudo-random 
+numbers Publications Quicklisp SBCL Self Services Social Networks Sorting 
+Algorithms Talks Vehicle Routing Problem VRP <br>
+
+<h3>Archives</h3> Select Month  April 2012 &nbsp;(2)  February 2012 &nbsp;(3)  
+November 2011 &nbsp;(1)  October 2011 &nbsp;(1)  September 2011 &nbsp;(1)  July 
+2011 &nbsp;(1)  June 2011 &nbsp;(2)  May 2011 &nbsp;(1)  March 2011 &nbsp;(2)  
+December 2010 &nbsp;(1)  November 2010 &nbsp;(1)  October 2010 &nbsp;(1)  
+September 2010 &nbsp;(3)  May 2010 &nbsp;(1)  February 2010 &nbsp;(1)  December 
+2009 &nbsp;(1)  October 2009 &nbsp;(1)  September 2009 &nbsp;(2)  August 2009 
+&nbsp;(2)  June 2009 &nbsp;(1)  October 2008 &nbsp;(1)  September 2008 &nbsp;(1)
+ August 2008 &nbsp;(1)  July 2008 &nbsp;(2)  June 2008 &nbsp;(2)  May 2008 
+&nbsp;(1)  April 2008 &nbsp;(1) 
+<h3>Recent Tweets</h3> 
+<ul> 
+<li>Just made a short post about zsort, a simple lib that aims to collect 
+several sorting algorithms in CL:http://t.co/0wJMlJK1 #lisp 1&nbsp;week&nbsp;ago
+</li> 
+<li>Just returned from my best #evostar2012 ever! And with a Best Paper Award 
+:-)http://t.co/XkDcD9HU 1&nbsp;week&nbsp;ago</li> 
+<li>... and having a cold is really not fun at all :( 1&nbsp;month&nbsp;ago
+</li> 
+<li>Cleaning and organizing your twitter following and lists is hard work... 
+1&nbsp;month&nbsp;ago</li> 
+<li>Cool! My last patch for #abcl sort functions was accepted :) #lisp 
+1&nbsp;month&nbsp;ago</li> </ul> 
+<h3>Meta</h3> 
+<ul> 
+<li>Register</li> 
+<li>Log in</li> 
+<li>Entries RSS</li> 
+<li>Comments RSS</li> 
+<li>WordPress.com</li> </ul> <br>
+
+<p> </p> 
+<p>Blog at WordPress.com. Theme: The Journalist v1.9 by Lucian E. Marin.</p> 
+<br> <br>
+Follow 
+<h3>Follow &ldquo;Jorge Tavares weblog&rdquo;</h3> 
+<p>Get every new post delivered to your Inbox.</p> 
+<p></p> 
+<p></p> 
+<p></p> Powered by WordPress.com <br>
+<br>
+
+<p></p> 
+</body>

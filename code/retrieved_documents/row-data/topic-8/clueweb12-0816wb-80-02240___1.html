@@ -1,0 +1,617 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Using Traits in PHP 5.4 &raquo; phpmaster</title>
+<body>
+
+<ul> 
+<li>Home</li> 
+<li>PHP Tutorials</li> 
+<li>News &amp; Opinion</li> 
+<li>Write for Us</li> 
+<li>Advertise with Us</li> </ul> 
+<p> </p> 
+<h1>PHPMaster.com</h1> 
+<ul> 
+<li>Facebook</li> 
+<li>Twitter</li> 
+<li>RSS</li> </ul> 
+<h1>Using Traits in PHP 5.4</h1> 32  | By: Shameer C | Posted: February 8, 2012
+ |PHP Tutorials <br>
+
+<p>Minimizing code duplication through better organization and code reuse is 
+an important goal of Object Oriented Programming. But in PHP it can sometimes 
+be difficult because of the limitations of the single inheritance model it 
+uses; you might have some methods that you would like to use in multiple 
+classes but they may not fit well into the inheritance hierarchy.</p> 
+<p>Languages like C++ and Python allow us to inherit from multiple classes 
+which solves this problem to some extent, and mixins in Ruby allows us to mix 
+the functionality of one or more classes without using inheritance. But 
+multiple inheritance has issues such as theDiamond Problem problem, and mixins 
+can be a complex mechanism to work with.</p> 
+<p>In this article I will discuss traits, a new feature introduced in PHP 5.4 
+to overcome such issues. The concept of traits itself is nothing new to 
+programming and is used in other languages like Scala and Perl. They allows us 
+to horizontally reuse code across independent classes in different class 
+hierarchies.</p> 
+<h2>What a Trait Looks Like</h2> 
+<p>A trait is similar to an abstract class which cannot be instantiated on its 
+own (though more often it&rsquo;s compared to an interface). The PHP 
+documentation defines traits as follows:</p> 
+<blockquote> 
+<p>Traits is a mechanism for code reuse in single inheritance languages such 
+as PHP. A Trait is intended to reduce some limitations of single inheritance by 
+enabling a developer to reuse sets of methods freely in several independent 
+classes living in different class hierarchies.</p> </blockquote> 
+<p>Let&rsquo;s consider this example:</p> 
+<pre>&lt;?php class DbReader extends Mysqli { } class FileReader extends 
+SplFileObject { }</pre> 
+<p>It&rsquo;d be a problem if both classes needed some common functionality, 
+for example making both of them singletons. Since PHP doesn&rsquo;t support 
+multiple inheritance, either each class will have to implement the necessary 
+code to support the Singleton pattern or there will be an inheritance hierarchy 
+that doesn&rsquo;t make sense. Traits offer a solution to exactly this type of 
+problem.</p> 
+<pre>&lt;?php trait Singleton { private static $instance; public static 
+function getInstance() { if (!(self::$instance instanceof self)) { 
+self::$instance = new self; } return self::$instance; } } class DbReader 
+extends ArrayObject { use Singleton; } class FileReader { use Singleton; }</pre>
+<p>The trait <code>Singleton</code> has a straight forward implementation of 
+the Singleton pattern with a static method<code>getInstance()</code> which 
+creates an object of the class using this trait (if it&rsquo;s not already 
+created) and returns it.</p> 
+<p>Let&rsquo;s try to create the objects of these classes using the method 
+<code>getInstance()</code>.</p> 
+<pre>&lt;?php $a = DbReader::getInstance(); $b = FileReader::getInstance(); 
+var_dump($a); //object(DbReader) var_dump($b); //object(FileReader)</pre> 
+<p>We can see that <code>$a</code> is an object of <code>DbReader</code> and 
+<code>$b</code> is an object of <code>FileReader</code>, but both are now 
+behaving as singletons. The method from<code>Singleton</code> has been 
+horizontally injected to the classes using it.</p> 
+<p>Traits do not impose any additional semantics on the class. In a way, you 
+can think of it as a compiler-assisted copy and paste mechanism where the 
+methods of the trait is copied into the composing class.</p> 
+<p>If we were simply subclassing <code>DbReader</code> from a parent with a 
+private<code>$instance</code> property, the property wouldn&rsquo;t be shown in 
+the dump of<code>ReflectionClass::export()</code>. And yet with traits, there 
+it is!</p> 
+<pre>Class [ class FileReader ] { @@ /home/shameer/workplace/php54/index.php 
+19-22 - Constants [0] { } - Static properties [1] { Property [ private static 
+$_instance ] } - Static methods [1] { Method [ static public method instance ] 
+{ @@ /home/shameer/workplace/php54/index.php 6 - 11 } } - Properties [0] { } - 
+Methods [0] { } }</pre> 
+<h2>Multiple Traits</h2> 
+<p>So far we have used only one trait with a class, but in some cases we may 
+need to incorporate the functionality of more than one trait.</p> 
+<pre>&lt;?php trait Hello { function sayHello() { echo &quot;Hello&quot;; } } 
+trait World { function sayWorld() { echo &quot;World&quot;; } } class MyWorld { 
+use Hello, World; } $world = new MyWorld(); echo $world-&gt;sayHello() . &quot; 
+&quot; . $world-&gt;sayWorld(); //Hello World</pre> 
+<p>Here we have two traits, <code>Hello</code> and <code>World</code>. Trait 
+<code>Hello</code> is only able to say &ldquo;Hello&rdquo; and trait <code>World
+</code> can say &ldquo;World&rdquo;. In the <code>MyWorld</code> class we have 
+applied<code>Hello</code> and <code>World</code> so that the <code>MyWorld
+</code> object will have methods from both traits and be able to say 
+&ldquo;Hello World&rdquo;.</p> 
+<h2>Traits Composed of Traits</h2> 
+<p>As the application grows, it&rsquo;s quite possible that we will have a set 
+of traits which are used across different classes. PHP 5.4 allows us to have 
+traits composed of other traits so that we can include only one instead of a 
+number of traits in all these classes. This lets us rewrite the previous 
+example as follows:</p> 
+<pre>&lt;?php trait HelloWorld { use Hello, World; } class MyWorld { use 
+HelloWorld; } $world = new MyWorld(); echo $world-&gt;sayHello() . &quot; 
+&quot; . $world-&gt;sayWorld(); //Hello World</pre> 
+<p>Here we have created the trait <code>HelloWorld</code>, using traits Hello 
+and World, and included it in<code>MyWorld</code>. Since the <code>HelloWorld
+</code> trait has methods from the other two traits, it&rsquo;s just the same 
+as if we had including the two traits in the class ourselves.</p> 
+<h2>Precedence Order</h2> 
+<p>As I&rsquo;ve already mentioned, traits work as if their methods have been 
+copied and pasted into the classes using them and they are totally flattened 
+into the classes&rsquo; definition. There may be methods with the same name in 
+different traits or in the class itself. You might wonder which one will be 
+available in the object of child class.</p> 
+<p>The precedence order is:</p> 
+<ol> 
+<li>the methods of a trait override inherited methods from the parent class
+</li> 
+<li>the methods defined in the current class override methods from a trait</li>
+</ol> 
+<p>This is made clear in the following example:</p> 
+<pre>&lt;?php trait Hello { function sayHello() { return &quot;Hello&quot;; } 
+function sayWorld() { return &quot;Trait World&quot;; } function 
+sayHelloWorld() { echo $this-&gt;sayHello() . &quot; &quot; . 
+$this-&gt;sayWorld(); } function sayBaseWorld() { echo $this-&gt;sayHello() . 
+&quot; &quot; . parent::sayWorld(); } } class Base { function sayWorld(){ 
+return &quot;Base World&quot;; } } class HelloWorld extends Base { use Hello; 
+function sayWorld() { return &quot;World&quot;; } } $h = new HelloWorld(); 
+$h-&gt;sayHelloWorld(); // Hello World $h-&gt;sayBaseWorld(); // Hello Base 
+World</pre> 
+<p>We have a <code>HelloWorld</code> class derived from <code>Base</code>, and 
+both classes have a method named<code>sayWorld()</code> but with different 
+implementations. Also, we have included the trait<code>Hello</code> in the 
+<code>HelloWorld</code> class.</p> 
+<p>We have two methods, <code>sayHelloWorld()</code> and <code>sayBaseWorld()
+</code>, the former of which calls <code>sayWorld()</code> which exists in both 
+classes as well as in the trait. But in the output, we can see the one from the 
+child class was invoked. If we need to reference the method from the parent 
+class, we can do so by using the parent keyword as shown in the<code>
+sayBaseWorld()</code> method.</p> 
+<h2>Conflict Resolution and Aliasing</h2> 
+<p>When using multiple traits there may be a situation where different traits 
+use the same method names. For example, PHP will give a fatal error if you try 
+to run the following code because of conflicting method names:</p> 
+<pre>&lt;?php trait Game { function play() { echo &quot;Playing a game&quot;; 
+} } trait Music { function play() { echo &quot;Playing music&quot;; } } class 
+Player { use Game, Music; } $player = new Player(); $player-&gt;play();</pre> 
+<p>Such trait conflicts aren&rsquo;t resolved automatically for you. Instead, 
+you must choose which method should be used inside the composing class using 
+the keyword<code>insteadof</code>.</p> 
+<pre>&lt;?php class Player { use Game, Music { Music::play insteadof Game; } } 
+$player = new Player(); $player-&gt;play(); //Playing music</pre> 
+<p>Here we have chosen to use the <code>play()</code> method of the <code>Music
+</code> trait inside the composing class so the class <code>Player</code> will 
+play music, not a game.</p> 
+<p>In the above example, one method has been chosen over the other from two 
+traits. In some cases you may want to keep both of them, but still avoiding 
+conflicts. It&rsquo;s possible to introduce a new name for a method in a trait 
+as an alias. An alias doesn&rsquo;t rename the method, but offers an alternate 
+name by which it can be invoked. Aliases are created using the keyword<code>as
+</code>.</p> 
+<pre>&lt;?php class Player { use Game, Music { Game::play as gamePlay; 
+Music::play insteadof Game; } } $player = new Player(); $player-&gt;play(); 
+//Playing music $player-&gt;gamePlay(); //Playing a game</pre> 
+<p>Now any object of class <code>Player</code> will have a method <code>
+gamePlay()</code>, which is the same as <code>Game::play()</code>. Here it 
+should be noted that we have resolved any conflicts explicitly, even after 
+aliasing.</p> 
+<h2>Reflection</h2> 
+<p>The Reflection API is one of the powerful features of PHP to analyze the 
+internal structure of interfaces, classes, and methods and reverse engineer 
+them. And since we&rsquo;re talking about traits, you might be interested to 
+know about the Reflection API&rsquo;s support for traits. In PHP 5.4, four 
+methods have been added to<code>ReflectionClass</code> to get information about 
+traits in a class.</p> 
+<p>We can use <code>ReflectionClass::getTraits()</code> to get an array of all 
+traits used in a class. The<code>ReflectionClass::getTraitNames()</code> method 
+will simply return an array of trait names in that class.<code>
+ReflectionClass::isTrait()</code> is helpful to check if something is a trait 
+or not.</p> 
+<p>In the previous section we discussed having aliases for traits to avoid 
+collisions due to traits with the same name.<code>
+ReflectionClass::getTraitAliases()</code> will return an array of trait aliases 
+mapped to its original name.</p> 
+<h2>Other Features</h2> 
+<p>Apart from the above mentioned, there are other features that makes traits 
+more interesting. We know that in classical inheritance the private properties 
+of a class can&rsquo;t be accessed by child classes. Traits can access the 
+private properties or methods of the composing classes, and vice versa! Here is 
+an example:</p> 
+<pre>&lt;?php trait Message { function alert() { echo $this-&gt;message; } } 
+class Messenger { use Message; private $message = &quot;This is a 
+message&quot;; } $messenger = new Messenger; $messenger-&gt;alert(); //This is 
+a message</pre> 
+<p>As traits are completely flattened into the class composed of them, any 
+property or method of the trait will become a part of that class and we access 
+them just like any other class properties or methods.</p> 
+<p>We can even have abstract methods in a trait to enforce the composing class 
+to implement these methods. For example:</p> 
+<pre>&lt;?php trait Message { private $message; function alert() { 
+$this-&gt;define(); echo $this-&gt;message; } abstract function define(); } 
+class Messenger { use Message; function define() { $this-&gt;message = 
+&quot;Custom Message&quot;; } } $messenger = new Messenger; 
+$messenger-&gt;alert(); //Custom Message</pre> 
+<p>Here we have a trait <code>Message</code> with an abstract method <code>
+define()</code>. It requires all classes which use this trait to implement the 
+method. Otherwise, PHP will give an error saying there is an abstract method 
+which has not been implemented.</p> 
+<p>Unlike traits in Scala, traits in PHP can have a constructor but it must be 
+declared public (an error will be thrown if is private or protected). Anyway, 
+be cautious when using constructors in traits, though, because it may lead to 
+unintended collisions in the composing classes.</p> 
+<h2>Summary</h2> 
+<p>Traits are one of the most powerful features introduced in PHP 5.4, and 
+I&rsquo;ve discussed almost all their features in this article. They let 
+programmers reuse code fragments horizontally across multiple classes which do 
+not have to be within the same inheritance hierarchy. Instead of having complex 
+semantics, they provide us with a light weight mechanism for code reuse. Though 
+there are some drawbacks with traits, they certainly can help improve the 
+design of your application removing code duplication and making it more DRY.</p>
+<p>Image via Vlue / Shutterstock</p> <br>
+<br>
+
+<h3>Shameer C</h3> 
+<p>Shameer is a passionate programmer and open-source enthusiast currently 
+working for QBurst Technologies at Kerala, India. He has experience in web 
+development using PHP, Ruby, MySQL, and JavaScript. While not working, Shameer 
+spends his time coding personal projects, learning, watching screen casts, 
+blogging, etc. His specific areas of interest include cloud computing, and 
+system and database administration. You can find his personal blog at
+shameerc.com and follow him on Twitter as @shameerc. </p> Visit Site <br>
+
+<h3>32 Responses to &ldquo;Using Traits in PHP 5.4&rdquo;</h3> 
+<ol> 
+<li> <br>
+<strong>Matt</strong> <em>February 8, 2012 at 12:08 pm</em> 
+<p>Finally! This is almost as good as multiple inheritance (I guess). When I 
+first tried to convert some projects to OOP, I gave up because I knew what I 
+wanted, and after googling I found it was called Multiple Inheritance, and PHP 
+didn&rsquo;t support it. This looks like &ldquo;trait&rdquo; is basically a 
+super-class that any class using it inherits.</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 8, 2012 at 8:13 pm</em> 
+<p>Though traits have all the advantages of multiple inheritance, it&rsquo;s 
+not part of inheritance. It will have only methods that are not a part of the 
+inheritance hierarchy and can be used in multiple classes.</p> 
+<p></p> Reply <br>
+</li> </ul> </li> 
+<li> <br>
+<strong>Ian</strong> <em>February 8, 2012 at 7:18 pm</em> 
+<p>insteadof? Ugh, that&rsquo;s a dumb keyword&hellip;</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>jon</strong> <em>February 9, 2012 at 2:52 am</em> 
+<p>what would you prefer it to be? it seems to be in keeping with keywords 
+like &lsquo;instanceof&rsquo;.</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Matthew</strong> <em>February 15, 2012 at 3:04 am</em> 
+<p>I agree. I don&rsquo;t see anything wrong with insteadof and it&rsquo;s 
+very much in keeping with instanceof.</p> 
+<p></p> Reply <br>
+</li> </ul> </li> </ul> </li> 
+<li> <br>
+<strong>Peter Prins</strong> <em>February 9, 2012 at 1:28 am</em> 
+<p>At the other features example you use &ldquo;use Sample;&rdquo; That should 
+be: &ldquo;use Message;&rdquo;</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 9, 2012 at 8:14 pm</em> 
+<p>Hi Peter<br>
+ Thanks for the mention. I&rsquo;ve corrected it. </p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Peter Prins</strong> <em>February 10, 2012 at 1:26 am</em> 
+<p>Excellent article though </p> 
+<p></p> Reply <br>
+</li> </ul> </li> </ul> </li> 
+<li> <br>
+<strong>Jeune</strong> <em>February 9, 2012 at 1:08 pm</em> 
+<p>Can you unit test traits?</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 9, 2012 at 8:23 pm</em> 
+<p>Excellent question. PHPUnit 3.6 supports testing traits through 
+getObjectForTrait(). I didn&rsquo;t try it though.</p> 
+<p></p> Reply <br>
+</li> </ul> </li> 
+<li> <br>
+<strong>SMoya</strong> <em>February 9, 2012 at 1:26 pm</em> 
+<p>Thanks for this amazing introduction text!</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 9, 2012 at 8:25 pm</em> 
+<p>Hey SMoya, thanks for the comment </p> 
+<p></p> Reply <br>
+</li> </ul> </li> 
+<li> <br>
+<strong>Alex Gervasio</strong> <em>February 10, 2012 at 1:53 pm</em> 
+<p>Good and informative post Shameer, except for the introductory Singleton 
+example (just look at the couple of &ldquo;getInstance()&rdquo; calls and 
+you&rsquo;ll see why it&rsquo;s not just a whimsy opinion). Singletons are 
+old-fashioned, plagued with lots of issues, ranging from mutable global access, 
+strong coupling, to single responsibility breakage (the list goes on), even in 
+shared-nothing architectures like PHP&rsquo;s. More clever approaches, such as 
+Dependency Injection help throw away easily Singletons into the trash can, 
+through low-level factories or builders. You still can have one thing of 
+something, without writing a bunch of fuzzy static methods, even if 
+they&rsquo;re crowded behind a trait.</p> 
+<p>If you&rsquo;re interested in peeking at some nice 
+&ldquo;Singleton-fighting&rdquo; writeups, feel free to have a read at this
+http://sites.google.com/site/steveyegge2/singleton-considered-stupid and this 
+http://misko.hevery.com/2008/08/17/singletons-are-pathological-liars/. Not just 
+a few more shallow rants.<br>
+ Keep up the good work.</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 11, 2012 at 9:57 pm</em> 
+<p>Hi Alex,<br>
+ Thanks for the comment. I agree with your opinion. Overusing 
+the Singleton pattern is a bad programming practice. There are some cases we 
+can make use of it without any harm though. I used it in this article just to 
+show an example of using traits still I strongly discourage its usage I will go 
+through those links.</p> 
+<p></p> Reply <br>
+</li> </ul> </li> 
+<li> <br>
+<strong>Amel</strong> <em>February 10, 2012 at 7:40 pm</em> 
+<p>Thanks Shameer<br>
+ A well written/structured article.</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 11, 2012 at 9:59 pm</em> 
+<p>Hi Amel, Thanks for the comment.</p> 
+<p></p> Reply <br>
+</li> </ul> </li> 
+<li> <br>
+<strong>Khayrattee Wasseem</strong> <em>February 13, 2012 at 7:12 am
+</em> 
+<p>Nicely explained! It&rsquo;s a GOOD article! I like it!<br>
+ As far as this 
+new feature is concerned, I hate the idea of the &ldquo;insteadof&rdquo;. 
+It&rsquo;s kinda lame!</p> 
+<p>//Wasseem</p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Ryan Pallas</strong> <em>February 14, 2012 at 12:32 pm</em> 
+<p>Excellent article I&rsquo;ve been waiting for this in php since I started 
+using oop this erl make my next projects much less convoluted. Great 
+explanation!</p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Donna McMaster</strong> <em>February 14, 2012 at 12:37 pm
+</em> 
+<p>Shameer, thanks for the clear explanation! I have been wishing for multiple 
+inheritance for a project I&rsquo;m working on, and was not aware of traits. 
+Unfortunately my server is only running PHP 5.2.17 &hellip; will have to drop 
+some hints with tech support!</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 15, 2012 at 7:27 am</em> 
+<p>Hey Donna, I&rsquo;m glad that you liked the post. Though you can start 
+planning your application with the features of PHP 5.4, I don&rsquo;t think 
+using it in production is a good idea, since its RC6 now.</p> 
+<p></p> Reply <br>
+</li> </ul> </li> 
+<li> <br>
+<strong>jalal</strong> <em>February 14, 2012 at 4:22 pm</em> 
+<p>nice article! i&rsquo;ll have to look around for where I can use 
+traits&hellip; when 5.4 becomes common place. most of my servers are just up to 
+5.3 </p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Mukke</strong> <em>February 14, 2012 at 4:40 pm</em> 
+<p>Will this work ?<br>
+ traitMethod()<br>
+ }<br>
+ }</p> 
+<p>$a = new SubBase();<br>
+ $a-&gt;printMessage(); //will this show the message
+<br> // i mean can you inherit traits and can you even have protected methods 
+in them ?</p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Muhammad Jehanzeb</strong> <em>February 15, 2012 at 9:12 pm
+</em> 
+<p>Nice article and very well structured. Good work Shameer!</p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 16, 2012 at 11:01 pm</em> 
+<p>Thanks Jehanzeb </p> 
+<p></p> Reply <br>
+</li> </ul> </li> 
+<li> <br>
+<strong>Aric Caley</strong> <em>February 16, 2012 at 12:18 pm</em> 
+<p>I can&rsquo;t seem to find an answer to the question of what happens when 
+trait properties conflict? Can you use the &lsquo;insteadof&rsquo; and 
+&lsquo;as&rsquo; constructs to resolve a property conflict or are you just 
+stuck?</p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 16, 2012 at 11:21 pm</em> 
+<p>Hey Aric,<br>
+ Me too tried to find an answer but failed. From a basic 
+experiment I concluded that conflict will occur if the property have different 
+default values in traits. However you can assign a different value from a 
+method.</p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Jason</strong> <em>February 17, 2012 at 9:17 am</em> 
+<p>Awesome. It&rsquo;s not multiple inheritance and so still wouldn&rsquo;t 
+allow quite the logical structure that one might look for in certain scenarios, 
+but it&rsquo;s a massive benefit nonetheless. I&rsquo;m envisioning how this 
+would improve several projects of mine (mainly in cases where I automatically 
+generate new classes that need some common properties and methods but are 
+otherwise unrelated).</p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Niels Krijger</strong> <em>February 17, 2012 at 1:12 pm</em> 
+<p>Excellent writeup!<br>
+ I&rsquo;m not all that thrilled about traits at 
+all, I could easily see them being overused.<br>
+ Nevertheless, I&rsquo;m 
+looking forward to fixing some ugly duplicates in my projects with these!</p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Arne K. Haaje</strong> <em>February 19, 2012 at 1:59 pm</em> 
+<p>Excellent introduction! Looks very useful, though I&rsquo;m a little 
+worried that exessive use of traits could could lead to maintenance problems. 
+I&rsquo;m not sure why, but the ghost of large functions.php files is sitting 
+on my shoulder now.. </p> 
+<p></p> Reply <br>
+
+<ul> 
+<li> <br>
+<strong>Shameer C</strong> <em>February 20, 2012 at 11:01 pm</em> 
+<p>Glad you liked it. A problem with trait is that the concept is simple and 
+tempting like singletons. It should be used carefully. Otherwise when you 
+comeback after a while you will wonder what the magic is your code doing </p> 
+<p></p> Reply <br>
+</li> </ul> </li> 
+<li> <br>
+<strong>Paul A. Norman</strong> <em>February 21, 2012 at 5:37 pm</em>
+<p>Makes php classes very attractive now, well written and really helpful, 
+keep it up!</p> 
+<p></p> Reply <br>
+</li> 
+<li> <br>
+<strong>Niko Kivel&auml;</strong> <em>March 8, 2012 at 9:07 am</em> 
+<p>Really good article!<br>
+ One thing that bothers me. If a trait can define 
+methods, including constructor what happens if a class uses two traits who both 
+define constructor method. Well, you get from that by explicitly defining which 
+one to use by the keyword &lsquo;insteadof&rsquo;. And second needs to be 
+aliased and I guess, that won&rsquo;t be a constructor method anymore.<br>
+ 
+What&rsquo;s even more interesting though is that if use define 
+&lsquo;SomeTrait::someMethod as __construct;&rsquo;, can you define your own 
+constructor method by aliasing some another method from inside a trait what was 
+not intended to be used as a constructor method?</p> 
+<p></p> Reply <br>
+</li> </ol> Click here to cancel reply. <br>
+
+<h3>Leave a comment</h3> 
+<p></p> 
+<p> </p> 
+<p> </p> 
+<p></p> 
+<p> </p> 
+<p></p> <br>
+<br>
+
+<p>&nbsp;</p> 
+<h3>Newsletter Signup</h3> Enter your name: <br>
+Enter your email address: <br>
+<p> PHPMaster Newsletter </p> 
+<p> Cool SitePoint and 3rd party deals </p> <br>
+
+<h3>Interested in the web-dev job market?</h3> 
+<p>Hey ! We want to keep you up to date with what's out there. Select your 
+interests below, and we'll email you a selection of relevant jobs in your city.
+</p> All Design Front End Sys Admin PHP Ruby Python Perl Mobile WordPress Java 
+.net <br>
+
+<p></p> --- Please Select ---AfghanistanAland IslandsAlbaniaAlgeriaAmerican 
+SamoaAndorraAngolaAnguillaAntarcticaAntigua and BarbudaArgentinaArmeniaAruba
+Asia/Pacific RegionAustraliaAustriaAzerbaijanBahamasBahrainBangladeshBarbados
+BelarusBelgiumBelizeBeninBermudaBhutanBoliviaBonaire, Saint Eustatius and Saba
+Bosnia and HerzegovinaBotswanaBouvet IslandBrazilBritish Indian Ocean Territory
+Brunei DarussalamBulgariaBurkina FasoBurundiCambodiaCameroonCanadaCape Verde
+Cayman IslandsCentral African RepublicChadChileChinaChristmas IslandCocos 
+(Keeling) IslandsColombiaComorosCongoCongo, The Democratic Republic of theCook 
+IslandsCosta RicaCote d&rsquo;IvoireCroatiaCubaCuracaoCyprusCzech Republic
+DenmarkDjiboutiDominicaDominican RepublicEcuadorEgyptEl SalvadorEquatorial 
+GuineaEritreaEstoniaEthiopiaEuropeFalkland Islands (Malvinas)Faroe IslandsFiji
+FinlandFranceFrench GuianaFrench PolynesiaFrench Southern TerritoriesGabonGambia
+GeorgiaGermanyGhanaGibraltarGreeceGreenlandGrenadaGuadeloupeGuamGuatemala
+GuernseyGuineaGuinea-BissauGuyanaHaitiHeard Island and McDonald IslandsHoly See 
+(Vatican City State)HondurasHong KongHungaryIcelandIndiaIndonesiaIran, Islamic 
+Republic ofIraqIrelandIsle of ManIsraelItalyJamaicaJapanJerseyJordanKazakhstan
+KenyaKiribatiKorea, Democratic People&rsquo;s Republic ofKorea, Republic of
+KuwaitKyrgyzstanLao People&rsquo;s Democratic RepublicLatviaLebanonLesotho
+LiberiaLibyan Arab JamahiriyaLiechtensteinLithuaniaLuxembourgMacaoMacedonia
+MadagascarMalawiMalaysiaMaldivesMaliMaltaMarshall IslandsMartiniqueMauritania
+MauritiusMayotteMexicoMicronesia, Federated States ofMoldova, Republic ofMonaco
+MongoliaMontenegroMontserratMoroccoMozambiqueMyanmarNamibiaNauruNepalNetherlands
+New CaledoniaNew ZealandNicaraguaNigerNigeriaNiueNorfolk IslandNorthern Mariana 
+IslandsNorwayOmanPakistanPalauPalestinian TerritoryPanamaPapua New Guinea
+ParaguayPeruPhilippinesPitcairnPolandPortugalPuerto RicoQatarReunionRomania
+Russian FederationRwandaSaint BartelemeySaint HelenaSaint Kitts and NevisSaint 
+LuciaSaint MartinSaint Pierre and MiquelonSaint Vincent and the GrenadinesSamoa
+San MarinoSao Tome and PrincipeSaudi ArabiaSenegalSerbiaSeychellesSierra Leone
+SingaporeSint MaartenSlovakiaSloveniaSolomon IslandsSomaliaSouth AfricaSouth 
+Georgia and the South Sandwich IslandsSpainSri LankaSudanSurinameSvalbard and 
+Jan MayenSwazilandSwedenSwitzerlandSyrian Arab RepublicTaiwanTajikistan
+Tanzania, United Republic ofThailandTimor-LesteTogoTokelauTongaTrinidad and 
+TobagoTunisiaTurkeyTurkmenistanTurks and Caicos IslandsTuvaluUgandaUkraine
+United Arab EmiratesUnited KingdomUnited StatesUnited States Minor Outlying 
+IslandsUruguayUzbekistanVanuatuVenezuelaVietnamVirgin Islands, BritishVirgin 
+Islands, U.S.Wallis and FutunaWestern SaharaYemenZambiaZimbabweOther Country 
+<p></p> <br>
+
+<p>&nbsp;</p> <br>
+<br>
+
+<p>&nbsp;</p> <br>
+
+<p>&nbsp;</p> <br>
+
+<h3>Updates from @PHPMasterdotcom</h3> 
+<ul> 
+<li>RT @fraying: Incredible how fragile all this web stuff is. One PHP exploit 
+and half the web will disappear. ^hawk2 hrs ago</li> 
+<li>See who's tracking you on the web (if you use Firefox). Collusion 
+http://t.co/gYAaIVZu ^hawk 7 hrs ago</li> 
+<li>Form Validation with PHP http://t.co/tvriG6IN 2 days ago</li> 
+<li>More updates...</li> </ul> 
+<p>Powered by Twitter Tools</p> 
+<h3>Sitepoint Network</h3> 
+<ul> 
+<li>SitePoint</li> 
+<li>RubySource</li> 
+<li>BuildMobile</li> 
+<li>DesignFestival</li> 
+<li>CloudSpring</li> 
+<li>PHPMaster</li> 
+<li>SitePoint Market</li> </ul> <br>
+<br>
+
+<h4>Popular Posts</h4> 
+<ul> 
+<li>How I Chose My Programming Editor 90 comment(s) </li> 
+<li>Tracking Upload Progress with PHP a... 37 comment(s) </li> 
+<li>Using Traits in PHP 5.4 32 comment(s) </li> 
+<li>Introduction to PHP Arrays 27 comment(s) </li> 
+<li>Untangling MVC with CodeIgniter 26 comment(s) </li> </ul> <br>
+
+<h4>Recent Comments</h4> 
+<ul> 
+<li> 
+<h5>Good article. Thanks it helped me sort &hellip;</h5> 
+<p> By: Mark D<br>
+ On: Error Handling in PHP </p> </li> 
+<li> 
+<h5>Form validation is serious business, and&hellip;</h5> 
+<p> By: Okeowo Aderemi<br>
+ On: Form Validation with PHP </p> </li> 
+<li> 
+<h5>The Beauty of Wordpress simplicity and q&hellip;</h5> 
+<p> By: Okeowo Aderemi<br>
+ On: WordPress Plugin Development </p> </li> 
+<li> 
+<h5>I like to use my own personal validation&hellip;</h5> 
+<p> By: Martin Psinas<br>
+ On: Form Validation with PHP </p> </li> </ul> 
+<h6>Join us on Facebook</h6> <br>
+<br>
+
+<ul> 
+<li>Home</li> 
+<li>PHP Tutorials</li> 
+<li>News &amp; Opinion</li> 
+<li>Write for Us</li> 
+<li>Advertise with Us</li> </ul> 
+<p>&copy; 1998-2012 SitePoint Pty. Ltd. All Rights Reserved</p> <br>
+
+</body>

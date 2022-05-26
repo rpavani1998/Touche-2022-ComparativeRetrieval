@@ -1,0 +1,475 @@
+we expect that over time, as the attacks evolve, new sets of features will have to be identified combining information from both internal or external sources.
+in both of these  examples, either by the inclusion of a url into an open redirect script or by  the use of a number of subdomains, there are a large number of dots in the url.
+5 html emails most emails are sent as either plain text, html, or a  combination of the two in what is known as a multipart/alternative format.
+the authors  would also like to thank lorrie cranor, jason hong, alessandro acquisti, julie  downs, sven dietrich, serge egelman, mandy holbrook, ponnurangam kumaraguru,  and steve sheng.
+without the challenges outlined below, which are mostly  artifacts of testing after the fact as opposed to live in a real system, even  better accuracy should be possible.
+this context is not currently  available in the browser with given toolbar implementations.
+a site never previously visited (not in the history) is  more likely to be a phishing website than a site already visited for the  following simple reason: a user would have no reason to have previously visited  that particular spoof of the legitimate site during its short lifetime.
+we make this decision based on information  from within the email or attack vector itself (an internal source), combined  with information from external sources.
+section4.6 introduces some terminology, and section 4.7 shows our results in classifying the dataset.
+aaai technical report ws-98-05.
+to the user  (or a naïve filter), this may appear to be a site hosted at google.com,  but in reality will redirect the browser to badsite.com.
+it is important to note that misclassifying a phishing email may have a different impact than misclassifying a good email, so we report separately the rate of false positives and false negatives.
+the approach used is flexible, and new external information sources can be added as they become available.
+10 0.0024 0.0019 0.0408 0.0225 ripper 0.0025  0.0019 0.0383 0.0204 decision table 0.0022 0.0018 0.0555 0.0242 nearest neighbor w/ generalization 0.0017 0.0022 0.0414 0.0265 1r 0.0012  0.0012 0.1295 0.0333 alternating decision tree 0.0020 0.0018 0.0405 0.0229 decision stump 0.0012 0.0012 0.1295 0.0333 pruned c4.5 tree 0.0019  0.0017 0.0414 0.0235 hybrid tree w/ naïve bayes leaves 0.0022 0.0017  0.0412 0.0209 random tree (1 random attribute/node) 0.0016 0.0015 0.0398  0.0200 adaboosted c4.5 tree 0.0019 0.0017 0.0414 0.0235 adaboosted  decision stump 0.0016 0.0016 0.0748 0.0355 voted perceptron 0.0122 0.0053  0.0942 0.0311 bayes net 0.0384 0.0082 0.0689 0.0244 naïve bayes  0.0107 0.0030 0.0608 0.0248
+this  feature is binary.
+as the phishing websites and phishing emails are often nearly  identical to legitimate websites and emails, current filters have limited  success in detecting these attacks, leaving users vulnerable to a growing  threat.
+for instance, many phishing attacks include copies of corporate logos, and if one could map a logo back to its legitimate owner's website, that would be valuable information in determining the authenticity of a website or email displaying that logo.
+http://www.microsoft.com/senderid .
+looking at class-specific features is not a new approach in email  filtering.
+one might be inclined to think that phishing emails should be harder to detect than general spam emails.
+7 number of domains for all urls that start with either http:// or  https://, we extract the domain name for the purpose of determining whether the  email contains a link to a ``fresh'' domain.
+for our reference implementation of pilfer, we use a  random forest [6] as a classifier.
+not they  represent phishing attacks.
+many people have proposed ways in which to eliminate spam emails in general, which would include phishing emails (see, for example, [17,9,16,27,26, 18]).
+all of the binary features are matched more frequently by phishing emails than by nonphishing emails.
+an introduction to  support vector machines: and other kernel-based learning methods.
+as such, it is our belief  that to stop phishing emails, we need to look at features selected specifically  to detect this class of emails.
+(microsoft, for instance, watches for  domain name registrations involving any of their trademarks.)
+journal of web semantics,  1(3):241-260, 2004.
+as phishing attacks are becoming more sophisticated, ip-based  links are becoming less prevalent, with attackers purchasing domain names to  point to the attack website instead.
+of course, legitimate urls also can contain a number of dots, and this does not  make it a phishing url, however there is still information conveyed by this  feature, as its inclusion increases the accuracy in our empirical evaluations.
+[15] gilby productions.
+for  instance, in one of our features, we are interested in the age of domains  linked to.
+while these approaches looking at the text of the email appear to do well for spam, in practice these approaches often fail to stop phishing emails.
+we therefore include as a feature  the class assigned to the email by spamassassin - either ``ham'' or ``spam''.
+semantic web technologies to  reconcile privacy and context awareness.
+we therefore perform a whois query on each domain name that is linked to, and  store the date on which the registrar reports the domain was registered.
+in proceedings of the first conference on email and anti-spam (ceas), 2004.
+we present a method for detecting these attacks, which in its most  general form is an application of machine learning on a feature set designed to  highlight user-targeted deception in electronic communication.
+if a filter like spamassassin is already deployed, then adding pilfer has the advantage of significantly reducing the number of phishing emails making it to the user, while having no significant effect on the number of emails erroneously caught by the filtering system.
+the features currently used are presented in section3.2, with section 3.3 discussing how these can be adapted for use in detecting phishing web pages.
+[8] n. chou, r. ledesma, y. teraguchi, and j. c. mitchell.
+journal of web semantics, 1(3):241-260, 2004.
+for instance, sender id  framework (sidf) [19] and domainkeys [28], along with other such  sender authentication technologies, should help to both reduce false positives  and make detection of spoofed senders much simpler in the time to come.
+this feature is simply the maximum number of dots (`.') contained in any of the  links present in the email, and is a continuous feature.
+in proceedings of the first conference on email and  anti-spam (ceas), 2004.
+for comparison against pilfer, we classify the exact same dataset using  spamassassin version 3.1.0, using the default thresholds and rules.
+spamato - an  extendable spam filter system.
+the disappearance of domain names, combined with  difficulty in parsing results from a large number of whois servers returning  results in non-standardized formats resulted in only being able to  programmatically extract registration dates for 505 of a total of 870 distinct  domain names referenced in the dataset at the time of writing.
+this attack method, commonly known as ``phishing,'' is most commonly  initiated by sending out emails with links to spoofed websites that harvest  information.
+as discussed later in this paper, there are some pieces of information available in the web browser and website itself that could help to make a more informed decision, especially if this information could be combined with the context from the initial attack vector, such as the email prompting a user to visit a given website.
+in new york state cyber security conference, 2006.
+in this paper we present a collection of features that has been identified as being particularly successful at detecting phishing, given the current state of attacks.
+in new  york state cyber security conference, 2006.
+in l. de raedt, editor, advances in inductive logic programming, pages 124-143.
+4 datasets two publicly available datasets were used to test  our implementation: the ham corpora from the spamassassin project [5] (both the  2002 and 2003 ham collections, easy and hard, for a total of approximately 6950  non-phishing non-spam emails), and the publicly available phishingcorpus [22]  (approximately 860 email messages).
+section4.6 introduces some terminology, and section 4.7 shows our results in  classifying the dataset.
+looking farther into the future, deeper knowledge-based models of the user and the types of prior relationships she may or may not have with different sites or organizations could also help fend off more sophisticated phishing attacks.
+if a filter like spamassassin is already  deployed, then adding pilfer has the advantage of significantly reducing the  number of phishing emails making it to the user, while having no significant  effect on the number of emails erroneously caught by the filtering system.
+these domains often  have a limited life, however.
+for instance, we consider the ``main'' part of www.cs.university.edu to be university.edu, but the ``main'' part of  www.company.co.jp would be company.co.jp, as this is what is actually  registered with a registrar, even though technically the top-level domain is.jp  and the second-level domain is.co.
+8 number of dots there are a number of ways for attackers to  construct legitimate-looking urls.
+additionally, one might be able to make use of  additional context available in the browser and its history in features such as  the following.
+as discussed later in  this paper, there are some pieces of information available in the web browser  and website itself that could help to make a more informed decision, especially  if this information could be combined with the context from the initial attack  vector, such as the email prompting a user to visit a given website.
+phishing activity trends report, jan. 2005.
+the  email states that the user needs to provide information, such as credit card  numbers, identity information, or login credentials, often to correct some  alleged problem supposedly found with an account.
+although phishing is a subset of spam  (after all, who asks to receive emails from a person pretending to be their  bank for the purpose of fraud and identity theft?), it is characterized by  certain unique properties that we have identified.
+an email filter can see what  words are used to entice the user to take action, which is currently not  knowable to a filter operating in a browser separate from the user's e-mail  client.
+acm special interest group on computer-human  interaction, january 2006.
+[18] t. meyer and b. whateley.
+1 site in browser history
+for the three  non-binary features, their averages and standard deviations per-class are shown  in table 3.
+another method is to use a redirection  script, such ashttp://www.google.com/url?q=http://www.badsite.com.
+this is discussed in greater detail in section 3.3.
+[4] apache software foundation.
+if there is a link with the text  ``link", ``click", or ``here" that links to a domain other than  this ``modal domain", the email is flagged with a ``here" link to a  non-modal domain feature.
+(to be sure that spamassassin was  untrained, we deleted the .spamassassin directory where learned data is stored  before testing the emails).
+pilfer achieves an overall accuracy of  99.5%.
+other links are maintained in the email to  keep the authentic feel, such as the link to a privacy policy, a link to the  user agreement, and others.
+this feature is simply the number of such  ``main'' domains linked to in the email, and is a continuous feature.
+in europki, pages 227-239, 2005.
+5 concluding remarks
+in summary, pilfer can be either deployed in a stand-alone configuration without a spam filter to catch a large percentage of phishing emails with very few false positives, or in conjunction with an existing spam filter such as spamassassin for even higher accuracy.
+in 2nd conference on email and anti-spam (ceas), stanford university, palo alto, california, usa, july 2005.
+a large number of visits  would establish some existing relationship with the site, which likely  indicates some level of legitimacy.
+this method is applicable, with slight modification, to detection of phishing websites, or the emails used to direct victims to these sites.
+[8] n. chou, r. ledesma, y. teraguchi, and j. c.  mitchell.
+there are a number of emerging technologies that could greatly assist phishing classification that we have not considered.
+as the phishing websites and phishing emails are often nearly identical to legitimate websites and emails, current filters have limited success in detecting these attacks, leaving users vulnerable to a growing threat.
+1 ip-based urls some phishing attacks are hosted off of compromised  pcs.
+http://www.flickr.com/. [30] y. zhang, j. hong, and l. cranor.
+http://monkey.org/ [23] netcraft ltd. netcraft toolbar, 2006.
+client-side defense against web-based identity theft.
+in learning for text categorization: papers from the 1998 workshop, madison, wisconsin, 1998.
+toolbars usually prompt users with a  dialog box, which many users will simply dismiss or misinterpret, or worse yet  these warning dialogs can be intercepted by user-space malware [2].
+in many cases of phishing attacks,  however, these domains are no longer live at the time of our testing, resulting  in missing information.
+all of the binary features are matched more  frequently by phishing emails than by nonphishing emails.
+6 false positives vs. false negatives it is important to note that misclassifying a phishing email may have a  different impact than misclassifying a good email, so we report separately the  rate of false positives and false negatives.
+3 testing spamassassin spamassassin is a widely-deployed  freely-available spam filter that is highly accurate in classifying spam  emails.
+in proceedings of the first conference on email and anti-spam  (ceas), 2004.
+while pilfer without the spam filter's input has comparable accuracy to the spam filter, the accuracy obtained by providing the spam filter's decision as an input to pilfer, i.e. the combination of the two, improves the accuracy to be much better than either one alone.
+it is this mis-representation of sender identity that is key to the identification of phishing emails, and further work in the area should concentrate on features to identify this deceptive behavior.
+models based on ``naïve'' assumptions, such as certain words like ``viagra" being indicative of a class of un-desirable emails, no longer hold when the attackers are using the same words and the same overall ``feel'' to lure the user into a false sense of security.
+our approach, pilfer, is a machine-learning based approach to classification [20].
+learning to detect phishing emails ian fette pittsburgh, pa, usa tomasic@cs.cmu.edu copyright is held by the world wide web conference committee (iw3c2).
+we present a method for detecting these attacks, which in its most general form is an application of machine learning on a feature set designed to highlight user-targeted deception in electronic communication.
+this technique may enable the use of additional context, and would be  especially useful if the user is coming to the attack site from a message in  their web-based email interface.
+an email is flagged  with the ``contains javascript" feature if the string ``javascript"  appears in the email, regardless of whether it is actually in a or  tag.
+[3] anti-phishing working group.
+in this paper we  present a collection of features that has been identified as being particularly  successful at detecting phishing, given the current state of attacks.
+while html email is not necessarily indicative  of a phishing email, it does make many of the deceptions seen in phishing  attacks possible.
+[14] f. l. gandon and n. m. sadeh.
+previous work [25] indicates that the ability to  create good-looking copies, as well as users' unfamiliarity with browser  security indicators, leads to a significant percentage of users being unable to  recognize a phishing attack.
+[14] f. l. gandon and n. m. sadeh.
+chung-kwei: a pattern-discovery-based system for the automatic identification of unsolicited e-mail messages (spam).
+as the phishing attacks evolve over time to employ alternate deceptive behaviors, so does the information available to combat these attacks.
+[20] t. m. mitchell.
+section 2  discusses previous approaches to filtering phishing attacks, while section 3  gives an overview of machine learning and how we apply it to the task of  classifying phishing emails, and how it could be used in a browser toolbar.
+by filtering out phishing emails before they are ever seen by users, we avoid the risk of these warnings being dismissed by or hidden from the user.
+in many  cases, this is the most predominantly displayed link, and is the link the  phisher intends the user to click.
+[2] a. alsaid and c. j. mitchell.
+this makes sense, as phishing  emails are designed to look as close as possible to a real, non-spam email that  a legitimate company would (or already has) sent out.
+we call the domain most frequently linked to the  ``modal domain" of the email.
+let us denote the number of ham emails classified as ham (correctly classified) as, the number of ham emails classified as phishing as , the number of phishing emails classified as ham as, and the number of phishing emails classified as phishing as.
+phishers may register these domains with  fraudulently obtained credit cards (in which case the registrar may cancel the  registration), or the domain may be caught by a company hired to monitor  registrations that seem suspicious.
+[pattern recognition]:  design methodologyâ€”feature evaluation and selection general terms phishing, email, filtering, spam, semantic attacks, learning 1 introduction phishers launched a record number of attacks in  january 2006, as reported by the anti-phishing working group [3].
+our solution can easily be used in conjunction with existing spam filters.
+[1] is another extensible filtering platform that ships with a number of advanced filters, such as vipul's razor
+the thunderbird built-in filter still only presents a warning to the  user, and does not avoid the costs of storage and the user's time.
+this is  part of a very clear trend in which the number of attacks are increasing  without showing any signs of slowing.
+[24] (a collaborative algorithm using both urls and message hashes), that work in tandem to detect spam emails.
+mcgraw-hill higher education,  1997.
+section 5 presents some concluding remarks.
+http://antispam.yahoo.com/domainkeys.
+phishing websites are short-lived, often  lasting only on the order of 48 hours [12].
+3 tf-idf ``tf-idf'', or term frequency-inverse document frequency, is  a measure of importance of a term.
+this result suggests that the features present in  the two are catching different subsets of the phishing emails, and shows that a  phishing filter and a spam filter can work well as complementary parts of an  overall solution.
+semantic web technologies to reconcile privacy and context awareness.
+spamato [1] is another extensible filtering  platform that ships with a number of advanced filters, such as vipul's  razor [24] (a collaborative algorithm using both urls and message hashes),  that work in tandem to detect spam emails.
+the most closely related prior attempt is [7], in which the  authors use structural features of emails to determine whether or
+[19] and domainkeys [28], along with other such sender authentication technologies, should help to both reduce false positives and make detection of spoofed senders much simpler in the time to come.
+pilfer's false  negative rate on the dataset is approximately 0.035, which is almost one fourth  the false negative rate of the spam filter by itself.
+4 ``here" links to non-modal domain phishing emails, often  contain text like ``click here to restore your account access".
+2 redirected site a site can be reached in a number of different  ways, including redirection from another site.
+this is  discussed in greater detail in section 3.3.
+[10] l. cranor, s. egelman, j. hong, and y. zhang.
+these results are compared in detail with those of spamassassin in table 1.
+better bayesian filtering.
+for this feature, we simply take  the domain names previously extracted from all of the links, and simply count  the number of distinct domains.
+this result suggests that the features present in the two are catching different subsets of the phishing emails, and shows that a phishing filter and a spam filter can work well as complementary parts of an overall solution.
+as seen in the table, the inclusion of the result of a spam filter as a feature to pilfer makes for a significant reduction in phishing emails that get by.
+http://reports-archive.adm.cs.cmu.edu/anon/isri2006/abstracts/06-112.html.
+(this includes many  multipart/alternative emails).
+the number of links is the number of links in the html part(s) of an  email, where a link is defined as being an tag with a href attribute.
+this represents  an out-of-the-box install of spamassassin.
+[26] i. rigoutsos and t. huynh.
+table 2: percentage of emails matching the binary features feature  non-phishing matched phishing matched has ip link 0.06% 45.04% has  ``fresh" link 0.98% 12.49% has ``nonmatching" url 0.14% 50.64% has non-modal here link 0.82% 18.20% is html email 5.55% 93.47% contains javascript 2.30% 10.15% table 3: mean, standard deviation of the continuous features, per-class feature number of links 3.87 4.97 2.36 12.00 number of domains 1.49  1.42 0.43 3.32 number of dots 3.78 1.94 0.19 0.87
+we evaluate this method on a set  of approximately 860 such phishing emails, and 6950 non-phishing emails, and  correctly identify over 96% of the phishing emails while only mis-classifying  on the order of 0.1% of the legitimate emails.
+as  such, anytime we see a link in an email whose host is an ip-address (such as http://192.168.0.1/paypal.cgi?fix_account), we flag the email as having an  ip-based url.
+this might not be optimal, but it makes parsing much simpler,  especially when dealing with attacks that contain malformed html.
+at the same time, phishing emails present unique opportunities for detection that are not present in general spam emails.
+in general spam emails, the sender does not need to misrepresent their  identity.
+other examples include the filter built into thunderbird 1.5 [21].
+a number of early attempts at combating spam emails were based on  so-called ``naïve'' approaches, ranging from ``bag-of-words'', in which  the features of an email are the presence or absence of highly frequent and  rare words, to analysis of the entropy of the messages.
+most  difficulties stem from the fact that it is very easy for an attacker to create  an exact replica of a good site, such as that of a bank, that looks very  convincing to users.
+such tests include things like the ratio of pixels occupied by text to  those occupied by images in a rendered version of the mail, presence of certain  faked headers, and the like.
+our  solution can easily be used in conjunction with existing spam filters.
+this method is  applicable, with slight modification, to detection of phishing websites, or the  emails used to direct victims to these sites.
+mcgraw-hill higher education, 1997.
+copyright is held by the world wide web conference committee (iw3c2).
+this is a continuous feature.
+the  browser is explicitly instructed to redirect to a new page, and as such it  would be possible to create a feature out of whether or not the browser was  redirected to the present page, or whether the user went to the current page  explicitly.
+[27] m. sahami, s. dumais, d. heckerman, and e. horvitz.
+to get realistic  results from spamassassin, we disable online tests (blacklist lookups, mostly).
+we explain these features  in detail below.
+in proceedings of the first  conference on email and anti-spam (ceas), 2004.
+towards phishing e-mail detection based on their structural properties.
+this is a binary feature, using the trained version of spamassassin with the  default rule weights and threshold.
+models based on  ``naïve'' assumptions, such as certain words like ``viagra" being  indicative of a class of un-desirable emails, no longer hold when the attackers  are using the same words and the same overall ``feel'' to lure the user into a  false sense of security.
+we try to only look at the ``main" part of  a domain, e.g. what a person actually would pay to register through a domain  registrar.
+some of our features can therefore not be extracted from older emails, making our tests difficult.
+for these experiments we used the entire dataset and did not  re-label any of its contents.
+this combination of information is then used as the input to a classifier, the result of which is a decision on whether the input contained data designed to deceive the user.
+let us denote the number of ham emails classified as ham (correctly  classified) as, the number of ham emails classified as phishing as , the number  of phishing emails classified as ham as, and the number of phishing emails  classified as phishing as.
+instead, a spammer can actually set up a (quasi-)legitimate company called pharmacy1283, and identify themselves as such, with no need to try to convince users that they are receiving a communication from their bank, or some other entity with which they have an established relationship.
+we  evaluated a number of other classifiers as well, including svms [11],  rule-based approaches, normal decision trees, and bayesian approaches, but the  overall accuracies of most of the classifiers were not different with  statistical significance.
+the work reported herein has been supported in  part under the nsf cyber trust initiative (grant #0524189) and in part under  aro research grant daad19-02-1-0389 (``perpetually available and secure  information systems") to carnegie mellon university's cylab.
+each part is  then tested using the other nine parts of the data as the training data.
+some of our features can  therefore not be extracted from older emails, making our tests difficult.
+we conclude with thoughts on the future for such techniques to specifically identify deception, specifically with respect to the evolutionary nature of the attacks and information available.
+the false positive rate corresponds to the proportion of ham emails classified as phishing emails, and false negative rate corresponds to the proportion of phishing emails classified as ham.
+the solution significantly reduces the amount of phishing emails with minimal cost in terms of false positives (legitimate emails marked as phishing).
+our approach is generalizable beyond email filtering, however, and we  do note how it could be used and what changes would be required in the context  of filtering web pages as opposed to emails.
+this process involves extracting data directly present in the email, as well as collecting information from external sources.
+attackers can use javascript to hide information from  the user, and potentially launch sophisticated attacks.
+in many cases of phishing attacks, however, these domains are no longer live at the time of our testing, resulting in missing information.
+one  could likewise split the presence of deceptive links into two features -  deceptive links on the current page, and deceptive links on the previous page.
+in proceedings of the 2003  spam conference, jan 2003. [17] b. leiba and n. borenstein.
+although we have  focused primarily on detecting attacks at the email level, most of the features  discussed in section3.2 also can be applied towards classifiying a webpage in a  browser environment.
+future work to more closely integrate a user's email environment with their  browser could alleviate these problems, and would actually provide a  potentially richer context in which to make a decision.
+learn., 45(1):5-32, 2001.
+accuracy aside, there are both advantages disadvantages to toolbars when  compared to email filtering.
+most difficulties stem from the fact that it is very easy for an attacker to create an exact replica of a good site, such as that of a bank, that looks very convincing to users.
+a. accuracies of other classifiers table  4 shows the  accuracies in terms of false positive and false negative rates when different  classifiers are used instead of the random forest used in pilfer.
+we label emails as being non-phishing if they  come from the spamassassin ham corpora, and as phishing if they come from the  phishingcorpus.
+there are a number of challenges posed  by doing post-hoc classification of phishing emails.
+such a  link looks like paypal.com.
+as phishing sites are short-lived and  located at a number of different urls, the presence or absence of the current  website in the browser's history would provide information for the  classification process.
+using features that are more directly applicable to phishing emails than those  employed by general purpose spam filters.
+it can appear directly in the body of an email, or it can be embedded  in something like a link.
+[computers and society]: electronic commerceâ€”  security; h.4.3 [information systems]: communications  applicationsâ€”electronic mail ; i.5.2
+in general, this involves searching for the key  terms on a page and checking whether the current page is present in the result.
+in this section, we present the details of our implementation used in evaluation of pilfer (section4.2) and in evaluating spamassassin (section 4.3).
+we have tested a number of  different features, and present in this paper a list of the ten features that  are used in pilfer, which are either binary or continuous numeric features.
+[27] m. sahami, s. dumais, d. heckerman, and  e. horvitz.
+> http://spamassassin.apache.org/publiccorpus/. [6] l. breiman.
+although there are clear advantages to filtering  phishing attacks at the email level, there are at present not many methods  specifically designed to target phishing emails, as opposed to spam emails in  general.
+a company offering to sell ``viagra'' over the internet does not need  to convince potential buyers that they are a pharmacy that the user already has  a relationship with, such as cvs or riteaid.
+the remainder of this paper is organized in the following manner.
+[13] i. fette, n. sadeh, and a. tomasic.
+table 2 shows the exact percentages of emails (by class) matching each  of the seven binary features.
+such techniques would likely build on ongoing research on federated identities  and semantic web technologies [14].
+our contribution is a new approach focused on learning to detect phishing, or semantic attacks in general.
+these machines may not have dns entries, and the simplest way to refer to  them is by ip address.
+the age of the dataset poses the most problems, which is particularly  relevant with the phishing corpus.
+[25] m. h. rachna dhamija, doug tygar.
+technical report cmu-isri-06-112, institute for software  research, carnegie mellon university, june 2006.
+[11] n. cristianini and j. shawe-taylor.
+distribution of these papers is limited to classroom use, and personal use by  others.
+one such method uses subdomains, like http://www.my-bank.update.data.com.
+in general spam emails, the sender does not need to misrepresent their identity.
+for this feature, all links are checked, and if the text of a  link is a url, and the href of the link is to a different host than the link in  the text, the email is flagged with a ``nonmatching url" feature.
+cambridge  university press, new york, ny, usa, 2000.
+unfortunately, the ease with which copies can be  made in the digital world also makes it difficult for computers to recognize  phishing attacks.
+once the features are extracted, we train and test a classifier using 10-fold  cross validation.
+previous work [25] indicates that the ability to create good-looking copies, as well as users' unfamiliarity with browser security indicators, leads to a significant percentage of users being unable to recognize a phishing attack.
+http://www.flickr.com/. [30] y. zhang, j. hong, and l. cranor.
+these attacks often take the form of an  email that purports to be from a trusted entity, such as ebay or paypal.
+it is not clear whether this dataset is representative of normal people's  email inboxes or not, but to date it is the best data we have been able to  find.
+companies rarely link to pages by an ip-address, and so  such a link in an email is a potential indication of a phishing attack.
+the phishing problem is a hard problem for a number of reasons.
+with respect to email classification, we have two classes, namely the class of phishing emails, and the class of good (``ham'') emails.
+[7] m. chandrasekaran, k. karayanan, and s. upadhyaya.
+an email filter can see what words are used to entice the user to take action, which is currently not knowable to a filter operating in a browser separate from the user's e-mail client.
+we perform a whois query to determine the date a domain was registered, and subtract this date from the date the email was sent according to its headers to determine its age.
+[26] i. rigoutsos and t. huynh.
+accuracies for some of these other classifiers are  shown in appendix a. for a complete discussion of classifiers and text  classification in general, the reader is directed to a machine learning text  such as [20] or [ 11].
+http://www.tinyurl.com/. [16] p. graham.
+in summary, pilfer can be either deployed in a stand-alone configuration  without a spam filter to catch a large percentage of phishing emails with very  few false positives, or in conjunction with an existing spam filter such as  spamassassin for even higher accuracy.
+[10] l. cranor, s. egelman, j. hong, and y. zhang.
+in the meantime, however, we believe that using features such as those presented here can significantly help with detecting this class of phishing emails.
+[13] i. fette, n. sadeh, and a. tomasic.
+table 2 shows the exact percentages of emails (by class) matching each of the seven binary features.
+a number of early attempts at combating spam emails were based on so-called ``naïve'' approaches, ranging from ``bag-of-words'', in which the features of an email are the presence or absence of highly frequent and rare words, to analysis of the entropy of the messages.
+http://www.antiphishing.org/reports/apwg_report_jan_2006.pdf.
+we then define , the false positive rate, as and , the false negatives rate, as given this definition,   would correspond to one of every ten good emails being classified as phishing,  and would correspond to two of every ten phishing emails being classified as  good.
+[11] n. cristianini and j. shawe-taylor.
+we are currently in the process of  building a live filtering solution based around pilfer, which we will start  making available to users for testing for further validation.
+it is not a perfect approximation, but it is the closest we can come.
+the same  extension could be applied to the evaluation of the domain age feature.
+random forests create a number of  decision trees (in our case, 10), and each decision tree is made by randomly  choosing an attribute to split on at each level, and then pruning the tree.
+the email provides the context under which the attack is delivered to the user.
+9 contains javascript javascript is used for many things, from  creating popup windows to changing the status bar of a web browser or email  client.
+section 4 covers the results of empirical evaluation, as well as some challenges presented therein.
+http://razor.sourceforge.net.
+learning to classify english text with ilp methods.
+this is a binary  feature.
+if  this date is within 60 days of the date the email was sent, the email is  flagged with the feature of linking to a ``fresh" domain.
+http://spamassassin.apache.org/. [5] apache software foundation.
+this makes sense, as phishing emails are designed to look as close as possible to a real, non-spam email that a legitimate company would (or already has) sent out.
+phishingcorpus homepage, apr. 2006.
+as image sharing and tagging services such as  flickr [29] are increasing in use, it is not unreasonable to think that  some day in the near future, one might actually be able to search with an image  and get back a description as a result.
+we evaluate this method on a set of approximately 860 such phishing emails, and 6950 non-phishing emails, and correctly identify over 96% of the phishing emails while only mis-classifying on the order of 0.1% of the legitimate emails.
+in this paper, we have shown that it is possible  to detect phishing emails with high accuracy by using a specialized filter,
+(the dataset is divided into ten distinct parts.
+section 4 covers the results of empirical evaluation, as well as some  challenges presented therein.
+phinding phish: an evaluation of anti-phishing toolbars.
+any opinions, findings, and conclusions or recommendations  expressed in this material are those of the author(s) and do not necessarily  reflect the views of the national science foundation.
+our overall approach, first described in [13], centers on extracting information that can be used to detect deception targeted at web users, which is accomplished by looking at features from each incoming email or potential attack vector.
+we then define , the false positive rate, as table 1: accuracy of classifier compared with baseline spam filterclassifier false positive rate false negative rate
+this is a  binary feature.
+[7] m. chandrasekaran, k. karayanan, and s. upadhyaya.
+these results are  compared in detail with those of spamassassin in table 1.
+the results  reported for ``untrained'' spamassassin are obtained by simply treating the  entire dataset as a test set, and not training on any emails.
+in a general sense, we are deciding whether some  communication is deceptive, i.e. whether it is designed to trick the user into  believing they are communicating with a trusted source, when in reality the  communication is from an attacker.
+this information would be available in the context of a browser,  but might not be available if only analyzing the source email.
+3 features as used in webpage classification
+in our  implementation and evaluation, we seek to fill this gap in email-based phishing  filters.
+this method and its accuracy are discussed in more detail in [30].
+based on a given feature vector and the trained model, a decision is  made as to whether the instance represents a phishing attack or not.
+we also  prevent the loss of productivity suffered by a user who has to take time to  read, process, and delete these attack emails.
+an introduction to support vector machines: and other kernel-based learning methods.
+looking at class-specific features is not a new approach in email filtering.
+we make this decision based on information from within the email or attack vector itself (an internal source), combined with information from external sources.
+acm special interest group on computer-human interaction, january 2006.
+a  content-based approach to detecting phishing web sites.
+for a phisher to launch an attack without using html is  difficult, because in a plain text email there is virtually no way to disguise  the url to which the user is taken.
+after all, phishing emails are designed to  sound like an email from a legitimate company, often a company with which the  attacker hopes the user has a pre-existing relationship.
+our overall approach, first described in [13], centers on extracting  information that can be used to detect deception targeted at web users, which  is accomplished by looking at features from each incoming email or potential  attack vector.
+the first disadvantage toolbars face when compared to email filtering is a  decreased amount of contextual information.
+mozilla thunderbird, 2006.
+sender id framework, 2006.
+a multifaceted approach to spam  reduction.
+http://www.mozilla.com/thunderbird/ .
+a bayesian approach to filtering junk e-mail.
+certain challenges are present when trying to do post-hoc analysis of  phishing attacks, the specifics and impact of which are discussed in section4.5 .
+this combination of information is then  used as the input to a classifier, the result of which is a decision on whether  the input contained data designed to deceive the user.
+3 nonmatching urls phishers often exploit html emails, in  which it is possible to display a link that says paypal.com but actually links  to badsite.com.
+installing fake root keys in a pc.
+5 additional challenges
+we expect  that over time, as the attacks evolve, new sets of features will have to be  identified combining information from both internal or external sources.
+this future work will provide us with a dataset more representative of real users' inboxes.
+we present a detailed description of our approach, which filters approximately 96% of phishing emails before they ever reach the user.
+a spam filter cannot generally be run on a webpage, so the  last feature is not applicable, but the other features can still be evaluated  with slight modification.
+while pilfer  without the spam filter's input has comparable accuracy to the spam filter, the  accuracy obtained by providing the spam filter's decision as an input to  pilfer, i.e. the combination of the two, improves the accuracy to be much  better than either one alone.
+an email filter also has access to header information, which contains not only information about who sent the message, but also information about the route the message took to reach the user.
+certain challenges are present when trying to do post-hoc analysis of phishing attacks, the specifics and impact of which are discussed in section4.5 .
+0.0012 0.130 on our dataset, we are able to more accurately classify emails using pilfer  than by using a spam filter alone.
+abstract each month, more attacks are launched with the aim of making web users  believe that they are communicating with a trusted entity for the purpose of  stealing account information, logon credentials, and identity information in  general.
+the features are mostly linguistic, and include  things such as the number of words in the email, the ``richness'' of the  vocabulary, the structure of the subject line, and the presence of 18 keywords.
+this  feature could be used in a binary fashion (present in history or not) if that's  all that were available, but if the history included the number of times the  page was visited, that would be even more valuable.
+we are currently in the process of building a live filtering solution based around pilfer, which we will start making available to users for testing for further validation.
+one can use tf-idf to attempt to identify  key terms of a page, and subsequently determine whether the current page is a  copy of a more popular page.
+spamassassin public corpus, 2006.
+when a user goes to a web page,  either by clicking a link or typing in a url, that web page can redirect the  browser to a different page.
+effective open-source, bayesian based, email classification system.
+2 background 1 toolbars
+we conclude with thoughts on the  future for such techniques to specifically identify deception, specifically  with respect to the evolutionary nature of the attacks and information  available.
+our contribution is a new approach  focused on learning to detect phishing, or semantic attacks in general.
+we also prevent the loss of productivity suffered by a user who has to take time to read, process, and delete these attack emails.
+however, this filter is extremely simple, looking for only the presence of any  one of three features, namely the presence of ip-based urls, nonmatching urls  (discussed in section 3.2.3), and the presence of an html ``form''  element.
+in this section, we present the details of our implementation used in  evaluation of pilfer (section4.2) and in evaluating spamassassin (section 4.3).
+we are currently planning a follow-up study where we will be having users  label every email coming into their inbox as either legitimate, spam, or  phishing.
+10 spam-filter output many mail clients already have a spam filter in  place, and as such it seems natural to leverage the ability of existing  solutions in combating the phishing problem.
+chung-kwei: a  pattern-discovery-based system for the automatic identification of unsolicited  e-mail messages (spam).
+pilfer's false negative rate on the dataset is approximately 0.035, which is almost one fourth the false negative rate of the spam filter by itself.
+[1] k. albrecht, n. burri, and r. wattenhofer.
+in a general sense, we are deciding whether some communication is deceptive, i.e. whether it is designed to trick the user into believing they are communicating with a trusted source, when in reality the communication is from an attacker.
+the false positive rate  corresponds to the proportion of ham emails classified as phishing emails, and  false negative rate corresponds to the proportion of phishing emails classified  as ham.
+[20] t. m. mitchell.
+for instance, many phishing attacks include copies of corporate  logos, and if one could map a logo back to its legitimate owner's website, that  would be valuable information in determining the authenticity of a website or  email displaying that logo.
+an email filter also has access to header information, which contains  not only information about who sent the message, but also information about the  route the message took to reach the user.
+3 method 1 overall approach our approach, pilfer, is a machine-learning based approach to  classification [20].
+as  the nature of phishing attacks changes, additional features may become more  powerful, and pilfer can easily be adapted by providing such new features to  the classifier.
+in proceedings of the 2003 spam conference, jan 2003. [17] b. leiba and n. borenstein.
+for almost  all of the high-performing classifiers, the difference in accuracy is not  statistically significant, and none are statistically significantly better.
+2 machine-learning implementation
+as seen in the  table, the inclusion of the result of a spam filter as a feature to pilfer  makes for a significant reduction in phishing emails that get by.
+technical report cmu-isri-06-112, institute for software research, carnegie mellon university, june 2006.
+the  exact workings of the classifier are beyond the scope of this paper.
+we then train on all the emails in the train part of  the fold and test on those in the test part of the fold.
+cantina: a content-based approach to detecting phishing web sites.
+[25] m. h. rachna dhamija, doug tygar.
+by disabling these online tests, we hope to more closely  approximate the information available at the time the attacks are first sent  out.
+this  ensures that the training data is separate from the test data, and is called  ``cross-validation''.)
+http://toolbar.netcraft.com/. [24] v. v. prakash.
+[computers and society]: electronic commerceâ security; h.4.3 [information systems]: communications applicationsâelectronic mail ; i.5.2
+this attack method, commonly known as ``phishing,'' is most commonly initiated by sending out emails with links to spoofed websites that harvest information.
+toolbars usually prompt users with a dialog box, which many users will simply dismiss or misinterpret, or worse yet these warning dialogs can be intercepted by user-space malware [2].
+some number of users fall for  these attacks by providing the requested information, which can lead to  fraudulent charges against credit cards, withdrawals from bank accounts, or  other undesirable effects.
+technical report,  carnegie mellon university, nov. 2006.
+http://www.tinyurl.com/. [16] p. graham.
+we do this by extracting a plurality of features designed to highlight deception, utilizing both sources of information internal to the attack itself, as well as external sources to gain more information about the context of the attack.
+for instance, in one of our features, we are interested in the age of domains linked to.
+the dataset of emails used to perform the evaluation is described in section4.4 .
+these sources could take the form of web services, or other tagged resources, to provide additional information to the decision making process.
+in www, 2007. table 4: average accuracy of different classifiers on same features over 10 runs, with standard deviationsclassifier
+effective open-source,  bayesian based, email classification system.
+the disappearance of domain names, combined with difficulty in parsing results from a large number of whois servers returning results in non-standardized formats resulted in only being able to programmatically extract registration dates for 505 of a total of 870 distinct domain names referenced in the dataset at the time of writing.
+name-based attacks, in which a phisher  will register a similar or otherwise legitimate-sounding domain name (such as  playpal.com or paypal-update.com) are increasingly common.
+learning to detect phishing emails.
+with a false positive rate of approximately 0.0013.
+thus, the user still can be deceived by  legitimate-sounding domain names, but many of the technical, deceptive attacks  are not possible.
+the email provides the context  under which the attack is delivered to the user.
+learning to detect  phishing emails.
+the combination  of internal and external information is then used to create a compact  representation called a feature vector, a collection of which are used to train  a model.
+[18] t. meyer and b. whateley.
+it should be noted that this is not necessarily the combination of  the top- and second-level domain.
+as the phishing attacks evolve over time to employ alternate deceptive  behaviors, so does the information available to combat these attacks.
+6 number of links the number of links present in an email is a  feature.
+these sources could take the form of web services, or  other tagged resources, to provide additional information to the decision  making process.
+such tests include things like the ratio of pixels occupied by text to those occupied by images in a rendered version of the mail, presence of certain faked headers, and the like.
+spamassassin are from the same version, except that we now use 10-fold cross  validation, where before each fold we clear spamassassin's learned data (by  deleting ~/.spamassassin).
+with respect to email classification, we have two classes, namely the class  of phishing emails, and the class of good (``ham'') emails.
+unfortunately, the ease with which copies can be made in the digital world also makes it difficult for computers to recognize phishing attacks.
+> http://spamassassin.apache.org/publiccorpus/. [6] l. breiman.
+based on a given feature vector and the trained model, a decision is made as to whether the instance represents a phishing attack or not.
+this process involves extracting data directly present in the  email, as well as collecting information from external sources.
+table 2: percentage of emails matching the binary featuresfeature non-phishing matched phishing matched table 3: mean, standard deviation of the continuous features, per-classfeature
+in section4 we present a method for evaluating the effectiveness of these features, as well as the results of such an evaluation.
+www 2007, may 8-12, 2007, banff, alberta, canada.
+these features have higher mean values for phishing emails.
+in the meantime, however, we believe  that using features such as those presented here can significantly help with  detecting this class of phishing emails.
+we present  a detailed description of our approach, which filters approximately 96% of  phishing emails before they ever reach the user.
+the  features currently used are presented in section3.2, with section 3.3  discussing how these can be adapted for use in detecting phishing web pages.
+for the three non-binary features, their averages and standard deviations per-class are shown in table 3.
+4 empirical evaluation 1
+putting an end to account-hijacking identity theft, dec. 2004.
+2 features as used in email classification some spam filters  use hundreds of features to detect unwanted emails.
+for instance, the number of dots could be turned into  two features - the number of dots in the url of the current page, and the  maximum number of dots in all urls linked to in the current page.
+on our dataset, we are able to more accurately classify emails using pilfer than by using a spam filter alone.
+as such, the  phisher has an incentive to use these domain names shortly after registration.
+the age of the dataset poses the most problems, which is particularly relevant with the phishing corpus.
+table 4: average accuracy of different classifiers on same features over 10  runs, with standard deviations classifier random forest 0.0012 0.0013  0.0380 0.0205 svm, c =
+at this point, however, we are able to obtain high accuracy  with only ten features, which makes the decision boundaries less complex, and  therefore both more intuitive and faster to evaluate.
+[2] a. alsaid and c. j. mitchell.
+spamassassin homepage, 2006.
+[4], for instance, has a number of rules that try to detect features common in spam email that go beyond just the text of the email.
+as such, it is our belief that to stop phishing emails, we need to look at features selected specifically to detect this class of emails.
+technical report, carnegie mellon university, nov. 2006.
+in chi '06: proceedings of the sigchi conference on human factors in computing  systems, pages 581-590.
+by  filtering out phishing emails before they are ever seen by users, we avoid the  risk of these warnings being dismissed by or hidden from the user.
+in  section4 we present a method for evaluating the effectiveness of these  features, as well as the results of such an evaluation.
+spamassassin [4], for instance, has a number of rules that try  to detect features common in spam email that go beyond just the text of the  email.
+after all, phishing emails are designed to sound like an email from a legitimate company, often a company with which the attacker hopes the user has a pre-existing relationship.
+instead, a spammer can actually  set up a (quasi-)legitimate company called pharmacy1283, and identify  themselves as such, with no need to try to convince users that they are  receiving a communication from their bank, or some other entity with which they  have an established relationship.
+http://www.fdic.gov/consumers/consumer/idtheftstudy/identity_theft.pdf.
+references [1] k. albrecht, n. burri, and r. wattenhofer.
+most of these challenges  apply mainly to the phishing emails in the dataset and materialize in the form  of missing information, which has the net effect of increasing the false  negative rate.
+there are a number of emerging technologies that could greatly assist  phishing classification that we have not considered.
+while some of these features are already implemented in spam  filters (such as the presence of ip-based urls), these features are also a  useful component of a phishing filter.
+looking  farther into the future, deeper knowledge-based models of the user and the  types of prior relationships she may or may not have with different sites or  organizations could also help fend off more sophisticated phishing attacks.
+however, there are still a significant  number of ip-based attacks, and therefore this is still a useful feature.
+installing fake root keys in a  pc.
+we use a series of short scripts to  programmatically extract the features from section3.2, and store these in a  database for quick reference.
+the  email is flagged with the html email feature if it contains a section that is  denoted with a mime type of text/html.
+the combination of internal and external information is then used to create a compact representation called a feature vector, a collection of which are used to train a model.
+a multifaceted approach to spam reduction.
+the first attempts specifically designed to filter  phishing attacks have taken the form of browser toolbars, such as the  spoofguard [8] and netcraft [ 23] toolbars.
+the second disadvantage of toolbars is the inability to completely shield the user from the decision making process.
+this context is not currently available in the browser with given toolbar implementations.
+such techniques would likely build on ongoing research on federated identities and semantic web technologies [14].
+flickr homepage, 2006.
+the  solution significantly reduces the amount of phishing emails with minimal cost  in terms of false positives (legitimate emails marked as phishing).
+section 2 discusses previous approaches to filtering phishing attacks, while section 3 gives an overview of machine learning and how we apply it to the task of classifying phishing emails, and how it could be used in a browser toolbar.
+categories & subject descriptors k.4.4
+redirection has many legitimate uses, but one  could imagine an attacker using a redirection service such as tinyurl [15]  to hide the phishing site's url in the email (or other attack vector).
+one might be inclined to think that phishing emails should be harder to  detect than general spam emails.
+as image sharing and tagging services such as flickr [29] are increasing in use, it is not unreasonable to think that some day in the near future, one might actually be able to search with an image and get back a description as a result.
+in learning for  text categorization: papers from the 1998 workshop, madison, wisconsin, 1998.
+age of linked-to domain names phishers are learning not to give  themselves away by using ip-based urls.
+http://toolbar.netcraft.com/. [24] v. v. prakash.
+this includes mailto: links.
+the  approach used is flexible, and new external information sources can be added as  they become available.
+pilfer achieves an overall accuracy of 99.5%.
+spamato - an extendable spam filter system.
+in 2nd conference on email and anti-spam (ceas),  stanford university, palo alto, california, usa, july 2005.
+many people have proposed ways in which to eliminate spam emails in  general, which would include phishing emails (see, for example, [17,9,16,27,26, 18]).
+it is this mis-representation of sender  identity that is key to the identification of phishing emails, and further work  in the area should concentrate on features to identify this deceptive behavior.
+the results reported for the ``trained''
+since the dataset we are using is slightly older and publically available, it  is probable that the blacklists have much more information about the senders of  the emails in the dataset at the time of testing than was available at the time  the emails were sent, and so including these tests would artifically inflate  the accuracy.
+future work to more closely integrate a user's email environment with their browser could alleviate these problems, and would actually provide a potentially richer context in which to make a decision.
+7 results table 1: accuracy of classifier compared with baseline spam filter classifier false positive rate false negative rate pilfer, with s.a.  feature 0.0013 0.036 pilfer, without s.a. feature 0.0022 0.085 spamassassin (untrained) 0.0014 0.376 spamassassin (trained)
+the first disadvantage toolbars face when compared to email filtering is a decreased amount of contextual information.
+we will use the terms and  in this manner in the evaluations presented in  the rest of the paper.
+we perform a whois query to determine the date a domain was  registered, and subtract this date from the date the email was sent according  to its headers to determine its age.
+[pattern recognition]: design methodologyâfeature evaluation and selection security phishing, email, filtering, spam, semantic attacks, learning
+as reported in [ 10 ], most toolbars are lucky to get 85% accuracy identifying phishing websites.
+this future work will provide us with a dataset more representative  of real users' inboxes.
+it is not clear whether this dataset is representative of normal people's email inboxes or not, but to date it is the best data we have been able to find.
+in order to test our model,  we first run a set of scripts to extract all the features listed in section3.2.
+distribution of these papers is limited to classroom use, and personal use by others.
+for instance, sender id framework (sidf)
+this is a binary feature.
+in  l. de raedt, editor, advances in inductive logic programming, pages  124-143.
+the second disadvantage of toolbars is the inability to completely shield  the user from the decision making process.
+while these approaches  looking at the text of the email appear to do well for spam, in practice these  approaches often fail to stop phishing emails.
+we do  this by extracting a plurality of features designed to highlight deception,  utilizing both sources of information internal to the attack itself, as well as  external sources to gain more information about the context of the attack.
+each month, more attacks are launched with the aim of making web users believe that they are communicating with a trusted entity for the purpose of stealing account information, logon credentials, and identity information in general.
+cambridge university press, new york, ny, usa, 2000.
+phishing websites are short-lived, often lasting only on the order of 48 hours [12].
+in chi '06: proceedings of the sigchi conference on human factors in computing systems, pages 581-590.
+a company offering to sell ``viagra'' over the internet does not need to convince potential buyers that they are a pharmacy that the user already has a relationship with, such as cvs or riteaid.
+at the same time, phishing emails present unique  opportunities for detection that are not present in general spam emails.
+we are currently planning a follow-up study where we will be having users label every email coming into their inbox as either legitimate, spam, or phishing.

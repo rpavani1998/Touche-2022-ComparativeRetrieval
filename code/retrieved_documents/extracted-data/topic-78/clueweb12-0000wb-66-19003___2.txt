@@ -1,0 +1,126 @@
+performance would probably be better with larger buffers.
+a simple mergesort that didnot build initial  sorted runs took 451 seconds.
+this buffer is then sorted in main memory by  using quicksort.
+according to shaffer, a multiway merge using half a  megabyte of ram and a disk block size of 4 kb could hold 128 disk blocks in ram  at once.
+the handlemerges function has the job of merging all of these sorted runs, two at a time, until all of the data is merged back under the original file name.
+note that the header file has a symbol debug that can be defined if you want to see debugging output.
+(quicksort is one sort  algorithm that is generally very fast and has good locality of reference.)
+other than the special cases, the typical pattern used is  to merge extsorttemp.0 and extsorttemp.1 into extsorttempa.0, then the next 2  sorted runs are merged into extsorttempa.1, etc.
+general cis information  curriculum   ap exam  scholarships  request more information   apply online software design using c++ external sorting introduction external sorting refers to the sorting of a file  that is on disk (or tape).
+the above output shows that the promised pattern of merges was indeed used  by the external sort program.
+also, since the words were already in order, the  file was sorted, with the linux sort command, starting at the third character  of each line.
+the buffers were kept  small so that the merge portion of the algorithm could be observed without  needing a huge test file.
+merging extsorttempa.5 and extsorttempa.4 to extsorttemp.3 merging extsorttempa.3 and extsorttempa.2 to extsorttemp.4
+merging  extsorttempa.7 and extsorttempa.6 to extsorttemp.2
+those who are interested might want to try modifying the example program to use a multiway merge and possibly the "replacement selection" algorithm discussed in shaffer's text.
+note that when the number of sorted runs is odd, the remaining file is simply renamed.
+see pages 712 and following.
+the final merge shows that when only 2 sorted runs remain, they are merged back into the original file.
+those who are interested might want to try modifying the example program  to use a multiway merge and possibly the "replacement selection"
+also, the performance may not be too great due to the large amount of time it takes to access data on disk.
+perhaps the simplest form of external sorting is to use a fast internal  sort with goodlocality of reference (which means that it tends  to reference nearby items, not widely scattered items) and hope that your  operating system's virtual memory can handle it.
+note that the test data file contained  45429 words, one per line.
+if the file is too huge, however, even virtual memory might be unable to fit it.
+note that when the program is creating a sorted run,  it uses a single 64 kb buffer, but when it is merging a couple of sorted runs,  it uses three 64 kb buffers.
+this would allow 128 runs to be merged together in one pass.
+a key place where this is true is that the  example program merges only 2 sorted files at a time; it does not attempt to do  a multiway merge (such as the 128-way merge mentioned above).
+a 2-way mergesort that used initial runs of 128  kb took only 160 seconds.
+renaming extsorttempa.0 as extsorttemp.1 merging extsorttemp.0 and  extsorttemp.1 to linux.txt press enter:
+note that you do not want to jump back and forth between 2 or more files in trying to merge them (while writing to a third file).
+the  temporary files for these sorted runs are placed in the current directory in  files named extsorttemp.0, extsorttemp.1, etc.
+the reason to take the higher-numbered files first  this time is that the highest numbered sorted run may be a short remnant that  was left over because we had an odd number of runs.
+next we merge the files with the a in their names into extsorttemp files.
+see pages 830 and following.
+the  average initial run size would be 1 mb.
+after the sorted runs have been generated, a merge algorithm is  used to combine sorted files into longer sorted files.
+the final merge shows that when only 2  sorted runs remain, they are merged back into the original file.
+the reason to take the higher-numbered files first this time is that the highest numbered sorted run may be a short remnant that was left over because we had an odd number of runs.
+we also merge the top-numbered pair of extsorttempa files first, placing the merged data into a file named extsorttemp.0, then we merge the next pair of extsorttempa files into a file named extsorttemp.1, etc.
+prentice-hall  (1996).
+william ford, william topp.
+the simplest scheme is  to use a 2-way merge: merge 2 sorted files into one sorted file, then merge 2  more, and so on until there is just one large sorted file.
+a practical introduction to data structures and algorithm analysis.
+data structures: form and function.
+this would likely produce a lot of time-consuming disk seeks.
+perhaps the simplest form of external sorting is to use a fast internal sort with goodlocality of reference (which means that it tends to reference nearby items, not widely scattered items) and hope that your operating system's virtual memory can handle it.
+comment this line off if you do not want this  information to appear on the screen.
+note that the header file has a symbol debug that can be defined if you  want to see debugging output.
+the main concern with external sorting is to minimize  disk access since reading a disk block takes about a million times longer than  accessing an item in ram (according to shaffer -- see the reference at the end  of this document).
+the following  example attempts to show the main features used in most any external sort:  producing sorted initial runs, the merging of sorted runs, and the buffering of  data.
+this is called buffering.
+merging extsorttempa.1 and extsorttempa.0 to extsorttemp.5  merging extsorttemp.0 and extsorttemp.1 to extsorttempa.0 merging extsorttemp.2  and extsorttemp.3 to extsorttempa.1 merging extsorttemp.4 and extsorttemp.5 to  extsorttempa.2 merging extsorttempa.2 and extsorttempa.1 to extsorttemp.0
+see the references below for more information.
+note that you do not want to jump back and forth between 2 or more files  in trying to merge them (while writing to a third file).
+(quicksort is one sort algorithm that is generally very fast and has good locality of reference.)
+internal sorting refers to the sorting of an array  of data that is in ram.
+the program also  uses buffers of size 64 kb, which is no doubt smaller than necessary.
+shown below are the debugging messages  produced when sorting a modified copy of the linux.words file.
+however, the design used is simpler than that which is most likely used  in a real-world external sort.
+br. david carlson  dr. stephen jodis   dr. cynthia martincic  dr. anthony serapiglia general cis information  curriculum  events  cis lab   department policies  grants & projects tutorials   curriculum  cis lab  events  careers & internships  scholarships why choose computing?
+merging extsorttempa.5 and  extsorttempa.4 to extsorttemp.3 merging extsorttempa.3 and extsorttempa.2 to  extsorttemp.4
+instead, on a single-user pc, it is better to read a block of each of the 2 (or more) files into ram and carry out the merge algorithm there, with the output also kept in a buffer in ram until the buffer is filled (or we are out of data) and only then writing it out to disk.
+this would likely  produce a lot of time-consuming disk seeks.
+in this experiment a 4 mb file was sorted on a  particular computer.
+when the merge algorithm exhausts one of the blocks of data, refill it by reading from disk another block of the associated file.
+then try writing your own external sort!
+we also merge the top-numbered  pair of extsorttempa files first, placing the merged data into a file named  extsorttemp.0, then we merge the next pair of extsorttempa files into a file  named extsorttemp.1, etc.
+on a larger machine where the disk drive is being shared among many users, it may not make sense to worry about this as the read/write head is going to be seeking all over the place anyway.
+that remnant was simply  renamed instead of being merged with another file.
+also, since the words were already in order, the file was sorted, with the linux sort command, starting at the third character of each line.
+they typically break a large data file into a number of shorter, sorted runs.
+when the merge algorithm exhausts one of the blocks of data, refill it by  reading from disk another block of the associated file.
+enter the name of the text file to be sorted: linux.txt merging extsorttemp.0 and extsorttemp.1 to extsorttempa.0 merging extsorttemp.2 and extsorttemp.3 to extsorttempa.1 merging extsorttemp.4 and extsorttemp.5 to extsorttempa.2 merging extsorttemp.6 and extsorttemp.7 to extsorttempa.3 merging extsorttemp.8 and extsorttemp.9 to extsorttempa.4 merging extsorttemp.10 and extsorttemp.11 to extsorttempa.5 merging extsorttemp.12 and extsorttemp.13 to extsorttempa.6 merging extsorttemp.14 and extsorttemp.15 to extsorttempa.7 merging extsorttemp.16 and extsorttemp.17 to extsorttempa.8 merging extsorttemp.18 and extsorttemp.19 to extsorttempa.9 merging extsorttemp.20 and extsorttemp.21 to extsorttempa.10
+algorithm discussed in shaffer's text.
+note that when the number of sorted runs is odd,  the remaining file is simply renamed.
+by now taking the  highest-numbered run first, we merge that short remnant with another run.
+practical data shaffer presents the following practical data  concerning external sorting.
+a file of size 16  gigabytes could be sorted in just 3 passes.
+methods most external sort routines are based on mergesort.
+this scrambled the order of the words, giving appropriate test data for the external sort program.)
+references see the references below for more complete  information and more advanced methods.
+these can be produced by repeatedly reading a section of the  data file into ram, sorting it with ordinary quicksort, and writing the sorted  data to disk.
+(this file had a  couple of extra words added.
+a more likely scenario in a good external sort is  that the same amount of memory is used in both cases, no matter how many  buffers exist in each case.
+the makesortedruns function copies into a buffer a chunk of data from the file being sorted.
+see the references below for more  information.
+by now taking the highest-numbered run first, we merge that short remnant with another run.
+on a larger machine where the disk drive is being shared  among many users, it may not make sense to worry about this as the read/write  head is going to be seeking all over the place anyway.
+harcourt brace  jovanovich (1987).
+no attempt is made to order in any way words  that are identical except for capitalization.
+other than the special cases, the typical pattern used is to merge extsorttemp.0 and extsorttemp.1 into extsorttempa.0, then the next 2 sorted runs are merged into extsorttempa.1, etc.
+(see shaffer on how that can be  obtained with only 1/2 mb of ram.)
+comment this line off if you do not want this information to appear on the screen.
+note that the test data file contained 45429 words, one per line.
+the output data is placed back under the original file name.
+a file of size 128 mb could be sorted in 2  passes (one to build the initial runs and one to merge them).
+prentice-hall (1997).
+a better scheme is a  multiway merge algorithm: it might merge perhaps 128 shorter runs together.
+this scrambled the order of the words, giving appropriate test  data for the external sort program.)
+buffers all of the same size were used to keep the  example simpler.
+(this file had a couple of extra words added.
+the makesortedruns function copies into a buffer a chunk of  data from the file being sorted.
+data structures with c++.
+(for example, there is no  guarantee what order the sort will place the words macintosh and macintosh  since they are seen as identical.
+it is assumed that each line of the file contains a word and is no  more than 31 characters in length.
+next we merge the files with  the a in their names into extsorttemp files.
+this buffer is then sorted in main memory by using quicksort.
+the temporary files for these sorted runs are placed in the current directory in files named extsorttemp.0, extsorttemp.1, etc.
+example program the ideas behind an external sort seem simple  enough, but implementing a working program is fairly complex.
+merging extsorttempa.1 and extsorttempa.0 to extsorttemp.5 merging extsorttemp.0 and extsorttemp.1 to extsorttempa.0 merging extsorttemp.2 and extsorttemp.3 to extsorttempa.1 merging extsorttemp.4 and extsorttemp.5 to extsorttempa.2 merging extsorttempa.2 and extsorttempa.1 to extsorttemp.0
+enter the name of the text file to be sorted: linux.txt merging  extsorttemp.0 and extsorttemp.1 to extsorttempa.0 merging extsorttemp.2 and  extsorttemp.3 to extsorttempa.1 merging extsorttemp.4 and extsorttemp.5 to  extsorttempa.2 merging extsorttemp.6 and extsorttemp.7 to extsorttempa.3  merging extsorttemp.8 and extsorttemp.9 to extsorttempa.4 merging  extsorttemp.10 and extsorttemp.11 to extsorttempa.5 merging extsorttemp.12 and  extsorttemp.13 to extsorttempa.6 merging extsorttemp.14 and extsorttemp.15 to  extsorttempa.7 merging extsorttemp.16 and extsorttemp.17 to extsorttempa.8  merging extsorttemp.18 and extsorttemp.19 to extsorttempa.9 merging  extsorttemp.20 and extsorttemp.21 to extsorttempa.10
+shown below are the debugging messages produced when sorting a modified copy of the linux.words file.
+the handlemerges function has the job of merging all of these  sorted runs, two at a time, until all of the data is merged back under the  original file name.
+also, the performance may not be too great due to the large amount of time it  takes to access data on disk.
+clifford a. shaffer.
+a multiway mergesort that used the same initial runs  took only 103 seconds.
+renaming extsorttemp.22 as extsorttempa.11 merging extsorttempa.11 and extsorttempa.10 to extsorttemp.0 merging extsorttempa.9 and extsorttempa.8 to extsorttemp.1 merging extsorttempa.7 and extsorttempa.6 to extsorttemp.2
+renaming extsorttempa.0 as extsorttemp.1 merging extsorttemp.0 and extsorttemp.1 to linux.txt press enter:
+that remnant was simply renamed instead of being merged with another file.
+if  the file is too huge, however, even virtual memory might be unable to fit it.
+extsort.h extsort.cpp the example program does a  case-insensitive sort of the text file that the user supplies when prompted by  the program.
+renaming extsorttemp.22 as  extsorttempa.11 merging extsorttempa.11 and extsorttempa.10 to extsorttemp.0  merging extsorttempa.9 and extsorttempa.8 to extsorttemp.1
+duplicate words such as these are kept in the  file.)
+clearly, using initial sorted runs dramatically speeds  up the sorting.
+instead, on a single-user pc, it is  better to read a block of each of the 2 (or more) files into ram and carry out  the merge algorithm there, with the output also kept in a buffer in ram until  the buffer is filled (or we are out of data) and only then writing it out to  disk.
+the sorted data is written out to a temporary file.
+the above output shows that the promised pattern of merges was indeed used by the external sort program.

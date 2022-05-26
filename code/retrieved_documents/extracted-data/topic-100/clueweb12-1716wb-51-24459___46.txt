@@ -1,0 +1,576 @@
+but what  if some of the complexity goes away, or at least is considerably diminished, by  the programming language we're using? python's forte is simplicity.
+but i come neither to praise design patterns, nor, most particularly, to  bury them: just to offer a small alternate perspective of their use, andnon -use, when one is developing python programs.
+like any other python class  meant to be inherited,borg does of course require from subclasses  the elementary collaboration of calling the superclass's__init__.
+for uniformity, we then obviously choose to use the explicit form throughout.
+however, not all design issues are so hard as  to really need the power of these semi-formal approaches.
+note that delegation is not a design pattern, as the gof4 explain well in their book: it is just too fundamental, too basilar to good object-oriented design.
+think, for example, of  opening files, or other urls: we may well want to ensure that state is shared,  no matter how many times an url is opened.
+they are clear at first sight to any pythonista worth his or her salt.
+one aspect of  python's simplicity is, indeed, that you only do oo when youwant to.
+indeed,  they're so simple they have no doubt been independently reinvented over and  over, as is often the case in python.
+borg is a simple idea: it does not conflate different  and unrelated concerns, nor does it attempt to solve other possible problems,  not directly related to "state sharing" (or "limiting number of  instances").
+this means thatborg carries no  creational constraints.
+we just have to ensure that all instances, whatever number  thereof might be in existence,share state.
+borgize any given application level class, but there's no easy  third way: it's all or nothing — either per instance state is shared, or  it's kept by each instance on its own.
+the work should be undertaken only when there is enough "substance" in the prospective dp to pay back the effort expended, with interest.
+for completeness, and to reach the number of five non-patterns and justify  the neat title, let's see howborg interacts with the  "non-classic" (a.k.a.
+some might object to naming software artifacts by inspiration from popular television shows, but surely no such objection will come from a programming community which centers on a language whose name honors monty python.
+indeed, we might prefer to renamesingleton to highlander, since "there can be only one"...
+note that delegation is not a design pattern, as the gof4 explain well in  their book: it is just too fundamental, too basilar to good object-oriented  design.
+once you do  this, your class is aborg: all instances of your class share  state.
+consider,  for example: class deleborg: _delegate =
+writing down the  dp implies a substantial investment of effort, so you need the "known  uses" to provide some assurance that the whole conceptual edifice is  indeed worthy of that effort, having proven itself in the field.
+so, what makes borg and polyborg
+such a "category mismatch" should rightfully makes us a little bit uneasy.
+the gof4 list delegation among the fundamental principles, right after polymorphism, mixin classes, "program to an interface, not an implementation" (python translation: don't type-test!-), and "favor object composition over class inheritance"; and just before generics and the principles of "designing for change".
+special methods__getattr__ and friends  are strategic choke-points, from which we can easily control and divert (e.g.,  delegate) any attribute and method access (and binding, re-binding, unbinding).
+l. von wittgenstein, another contemporary engineer of notice, had similarly observed in[wi22] that "to say of two things that they are identical is nonsense, and to say of one thing that it is identical with itself is to say nothing at all".
+python makes it easy to unveil the simplicity that, without it,  masquerades as complexity.
+no "category mismatch", then, and surely, no cleverness, no deviousness.
+on the other hand, regisfact, as coded, is not all that useful.
+you could look at these alternatives as structural patterns, or even, by a bit of a stretch, behavioral ones, while singleton is a creational pattern.
+however, automatic delegation is anything but obsolete.
+we can arrange for deviations from this rule, by binding freshly created bound methods as part of per instance state, but it's quite a moot point whether we ever should.
+deleborgis a classic class, but it might equally well be made into a new-style class, by having it inherit from object, since the triad of methods __getattr__, __delattr__, __setattr__would still work.
+lighthouses help us  find our way in the fog.
+so you can apply them to everyday problems...?
+but aren't these patterns...?
+after all, the several instances, despite their distinct identities,  are really all one, because they have no distinct state.
+these are disturbances at the margin, rather than crucial defects, but  still they show thatdeleborg isn't quite as seamless, nor quite as  big a win, asborg used to be, pre-2.2.
+abstract, semi-philosophical guidelines such as "no  category mismatch" are often useful as rules of thumb.
+don't let the amount of discussion fool you into believing there's anything deep or difficult about them.
+however, the issue of choosing which of  thesingleton's subclasses is actually instantiated looms large.
+self.__class__._next = 0
+normally, all instances of a class share behavior.
+controlled access is clearly an orthogonal consideration,  independent from "limiting number of instances", or "state  sharing".
+but it's even better when there is no fog around, and we can just find our way by carefully examining our surroundings.
+i happen to agree very closely with this opinion.
+therefore, we explicitly express this design intent by ensuring that the __dict__ is the same dictionary object for each and every instance, as elementarily done by our assignment.
+all in chapter 1, of course,before they start their  design patterns catalog.
+regisfact could be extended to hold a registry of classes.
+we couldn't actually inherit, but we almost didn't notice, except where some uncouth piece of framework or client code type-tested, and thus broke the wonderful, smooth polymorphism.
+these are disturbances at the margin, rather than crucial defects, but still they show that deleborg isn't quite as seamless, nor quite as big a win, as borg used to be, pre-2.2.
+not very, in any language or  object model i know of: at worst, one has to explicitly code some delegation  boilerplate, but often it's not even as bad as that.
+a. korzybski, engineer extraordinaire, had choice words on the subject of "theis of identity" (a catchy yet precise phrase he credits to mathematician w. s. jevons) in[ko33].
+indeed, we might prefer to rename singleton to highlander, since "there can be only one"...
+instances of the two separate subclasses can't both exist, or else two separate "instances of singleton" would exist, each as a sub-object (base object) of one of the subclasses.
+however, such readers are shortchanging themselves, by not acquiring the meta-tools needed for critical analysis of specific design needs in term of dps, and vice versa.
+fortunately, python helps a lot in the quest for simplicity and clarity.
+pity that non-classic classes, in python 2.2, lose this  ability; we'll see later that this is not fatal, but it does make us work  harder.
+this is surely understandable, as the catalog is so  rapidly useful to help with real-life problems.
+this, in turn, sometimes lets you use simpler tools, e.g. an idiom in lieu of a design pattern.
+design patterns, and pattern languages, are very useful conceptual tools: they can help you think effectively about design, as well as providing immediately useful ways to frame specific design problems and their solutions.
+when one is  addressing simple issues, using very powerful approaches may be overkill, a bit  like the "big design up front" fallacy[bd00] so prevalent in software  development.
+i think it's also a good idea to read some wider-view, "philosophical reflection" works in the pattern field.
+overnight, and deservedly, this book made dps popular in the software  development community.
+further, instances of subclasses ofdeleborg do not  satisfyisinstance with the type or class of the _delegate attribute, while instances of subclasses of borg, thanks  to multiple inheritance, did.
+are we abandoning the straight and narrow, but fruitful, path of simplicity, for a seductive but ultimately fraught one of cleverness and deviousness...?
+it is taken for granted, i surmise, that instance identity must, or  at least should, be in direct correspondence with an "entity in the real  world": more precisely, with a conceptual entity in the world view that  our software system is modeling.
+like any other python class meant to be inherited, borg does of course require from subclasses the elementary collaboration of calling the superclass's __init__.
+we just have to ensure that all instances, whatever number thereof might be in existence,share state.
+i  shamefully confess it took me a while of fiddling with__getattr__, __setattr__ and __delattr__, before the obvious  solution at last jumped out at me.
+on the other hand, aseparate polyborg class isn't any harder to envisage, than the polysingleton class the gof4 may have had in mind when writing about  this consequence.
+borg is not a creational pattern: as already  mentioned, it verges more on the structural, although you could make a case  about it having behavioral aspects.
+borg, and its variation polyborg, are the first  two of our five easy non-patterns.
+your class may in turn overrideborg's _shared_state class attribute.
+again and again, problems that are difficult in other languages scale down to "pretty easy" in the light of python's bright sun.
+coming to the motivation, in fact, we find that  "it's important for some classes to have exactly one instance.
+suppose, for example, that, in a given use-case of polysingleton, exactly 4 instances may exist, and each call to polysingleton::instance chooses which of the 4 instances to yield in  round robin fashion, something like: polysingleton* polysingleton::_instances[4]; int polysingleton::_next=-1;  polysingleton* polysingleton::instance() { ++_next; if(_next>=4) _next=0;  if(_instances[_next]==0) { _instances[_next] = new polysingleton; } return  _instances[_next]; } i'm not too sure this variation  makes much sense, but perhaps there are cases in which it does, e.g. for load  balancing.
+i  first wrote upborg in [ma01a] as a recipe, and that may be as good  a name as any for this category of simple pythonic ideas.
+who'd ever want to use  staticmethods?
+re-binding, to express an important  design intent in a direct, elementary way, validates guido's then-controversial  choice, back in the pre-historical times when he was designing python 1.5.2, to  allow this re-binding.
+in this paper, i single out one design pattern, the popular singleton , for critical examination.
+delegation is not a dp for much the same reason such things as integer  addition, while loops, or subroutines aren't dps: they are, rather, some of the  fundamental building blocks out of which all designs, and their inherent  patterns (or patterns), are built.
+so, what makes borg and polyborg non -patterns?
+still, regisfact is far from being fully satisfactory, because of these limitations.
+identity is  irrelevant, resistance is futile, prepare to be assimilated...!
+sure, python's readability and clarity reduce the cost of such a literature-search effort, but they cannot reduce it to the point of making it lower than the effort of writing four short lines of code, or thereabouts.
+abstractions that emerge during design are key to making a design flexible".
+prepend keyword static to all data members, leave the methods per-instance, virtual if you need or want them that way, and bingo, instant c++ borg.
+in python, we're blessed with a particularly flexible and easy to code form of automatic delegation.
+just as you would for any other class for which you deem controlled access  desirable, whatever the number of its instances and the kind of state these  instances hold.
+thus, we have over twice the boilerplate code (albeit still in a  modest amount), and a small but non-null overhead, an extra call for any  operation.
+"new-style") classes introduced in python 2.2.
+this is even more important for deleborgthan it was for borg, since the "data override" plays such a central role here, while previously it was just a nice option we wanted to preserve.
+parsing the ident string, for example, and selecting accordingly.
+that's it  — that's all an instance has: identity, state, behavior.
+rather, with new-style classes, we are back to the  "status quo" as in most other languages: to share state, we must rely  on delegation.
+so, naah, we don't really care about identity, not deeply at all.
+i focus on contrast (or, actually, just nuance!) from the gof4's dp book.
+if it's for the purpose of testing equality with is, why not define __eq__ instead?
+if it's for the purpose of using the instance as a  dictionary key, without forcing the instance to be immutable, we can get there  just as well by defining__hash__: the "immutability"  only needs to refer to equality comparison results being unchangeable, and hash(instance) being similarly fixed.
+some might object to naming software artifacts  by inspiration from popular television shows, but surely no such objection will  come from a programming community which centers on a language whose name honors  monty python.
+still,regisfact is far  from being fully satisfactory, because of these limitations.
+for example, it's easy to envision the connection, almost  antisymmetric, between shared-state multiple instances and the design pattern flyweight.
+abstract, semi-philosophical guidelines such as "no category mismatch" are often useful as rules of thumb.
+however, as we're discussing singleton, we need not dwell on all of these potential depots of state, as they're obviously held in common by all instances of a class, and possibly by other entities yet.
+well, yes, it's not all that different from polyborg after all, and of course python's dictionaries make "the registry" a snap: class regisborg: _shared_states = {} def __init__(self, ident): try:
+more often, i suspect a class with a limited number of instances  would require some kind of selector argument for instance selection.
+however, it appears that many readers of that excellent work skim its beginning lightly, eager to jump into the "meat" of the dp catalog that makes up most of the book.
+let's say borg and polyborg are idioms, then, or, at best, lowercase-p patterns.
+abstractions that emerge  during design are key to making a design flexible".
+factory functions do not let client-code easily use inheritance.
+indeed, by its superb quality and for being in the right place at the right  time, the gof4's book is the best known work on design patterns among the  software community.
+[{} for i in range(4)] _next = -1
+deleborg is not quite as neat as borg itself: it's not such a direct expression of design intent.
+a more traditional approach,  centered on implementing gof4's dps rather than looking for alternatives, is  competently explored in[sa98].
+in python  2.2, we don't need automatic delegation to pseudo-subclass built-in types, as  we can subclass them in earnest.
+we can subclass at will, to tweak behavior or add per-subclass state, while keeping the essential defining characteristic: all instances (here, all instances corresponding to a given ident) share state.
+as coded, class deleborg is a classic class, but it might equally well be made  into a new-style class, by having it inherit fromobject, since the  triad of methods__getattr__, __delattr__, __setattr__ would still work.
+the "instant user appeal" of the new-style classes is, first and foremost, that such classes let you subclass built-in types.
+the alternative ideas are quite simple, which is most often a very good thing.
+lighthouses help us find our way in the fog.
+self._shared_states[ident] = {} it is a snap, but one must nevertheless question if it's the appropriate snap, or if we couldn't have snapped even more simply and fruitfully.
+however, such an extra argument would makei'm not too sure this variation makes much sense, but perhaps there are cases in which it does, e.g. for load balancing.
+however, regisfact does not really achieve all that extra simplicity over regisborg, and it does have substantially limited functionality.
+these theses aren't all that controversial: indeed, they are asserted and argued in the very first chapter of the "design patterns" book!
+let's not  forget that python gains much of its ease and simplicity by substituting clear,  sensibleconventions in place of the hard, strictly-enforced rules which many other languages try to impose on programmers.
+let's sayborg andpolyborg are idioms, then, or, at best, lowercase-p patterns.
+these are all very practical, highly  usable books, directly oriented to software development.
+from the point of view of most software practitioners, however, dps  burst suddenly upon the scene when e. gamma, r. helm, r. johnson and j.  vlissides (henceforth the "gang of four", or gof4 — other works  also call them the gof, or gof) published their book "design patterns" [go95].
+the dp's statedintent is to  "ensure a class only has one instance" (and provide a global point of  access to it).
+some of the applicability issues are very close: state is made extrinsic, the application must not depend on object identity.
+so, borg and polyborg are not patterns (with the uppercase-p:-) because they're too simple and elementary to justify a pattern's necessary "infrastructure" investment, particularly the research effort needed to find known uses.
+the gof4 do make the point, right in the first chapter,  that "the choice of programming language is important because it  influences one's point of view".
+five easy pieces: simple python non-patterns alex martelli, ab strakt abstract design patterns, and full fledged pattern languages, were originally  introduced by c. alexander as ways to reason about the architecture of building  and cities,[al79].
+the discussion is mostly addressing the  complexity and hidden depths ofsingleton (and polysingleton ).
+my personal "dark horse" suggestion for the latter category is n. salingaros' paper "the structure of pattern languages"[sa99], which focuses on alexander's original work on pattern languages for building and city architecture,[al77].
+could borg be stretched to accommodate this need — an extensible registry of hive-minds, tagged by identifiers, with the right one available on demand...?
+yes, there can be such a thing as an artifact that is too simple, not rich and complex enough, for the goals it aims to accomplish.
+however, i also show one case in which excessive (misplaced) simplicity makes a design idea not very useful for our purposes: we do want to make our designs as simple as possible...
+=  self._shared_state that's it: just derive your  application class fromborg, mixin-like.
+after all, the "intuitive" solution to the stated requirements, the one that comes to mind at once, would be an application of a pattern (or pattern, or idiom, or recipe...)
+all substantial behavior, as well as all state, comes from the self._delegateobject, since methods are accessed through __getattr__, just like any other attribute.
+therefore, that's the behavior (or lack thereof) that  actually obtains from the point of view ofregisfact's clients.
+a complete collection  of all fundamental books and articles on these themes would overflow the  average developer's available shelf space.
+regisfact really wants to be quite a bit richer and more complex  than it is, to deploy its full potential.
+that's right, folks, these are scary, dangerous, field-unproven, experimental  ideas!
+we can be so conditioned to complexity and cleverness, that it becomes hard to find the simplicity and obviousness "hiding" right in front of our nose!
+if you want to have "controlled access to instances", for example, which is listed as benefit number 1 for the gof4's singleton pattern, you have to deal with it in some other way.
+many of the book's patterns are of course c++ specific, at least to the extent of making most sense in a c++-like context (access specifiers, compile-time type checking, etc).
+(why do we, collectively, keep forgetting the key insights of our grandparents' generation?
+nowthis is concrete and juicy enough to sink our teeth into.
+look at the python code again: it's so much terser, clearer, and simpler than the discussion!
+to quote the gof4 again, "delegation ... shows ...
+factories' specialty is their  potential ability to return objects ofdifferent classes, according to  specifics that the factory can encapsulate.
+better than nothing: we can still use the
+but what if some of the complexity goes away, or at least is considerably diminished, by the programming language we're using?
+one can't  help but wonder why: besides the catchy name, what doessingleton offer that makes it so appealing?
+this data-member overriding, or lack thereof, determines whether your class also shares state with other subclasses of borg: you can easily arrange this in different ways, but, of course, resistance is futile, so don't even bother trying to arrangethat.
+aren't we entering  in the middle of the action, where a specific approach has already been chosen  to solve someother actual underlying problem, just as in bentley's  classic "how do i use the system sort from within my program"  question (in the very first essay of his outstanding "programming  pearls"[be00])?
+it is exactly in order to allow this "data override" that borg.__init__accesses the attribute through self, not directly by qualifying borg, and the attribute's name has one leading underscore, not two.
+the discussion is mostly addressing the complexity and hidden depths of singleton (and polysingleton ).
+=  self._shared_states[ident] = {} it is a snap, but one must nevertheless question if it's the appropriate snap, or if we couldn't have snapped even more simply and  fruitfully.
+you could say the non-pattern is factored as follows: class regisborg handles the registry and state-sharing behavior, while subclasses provide application-specific parts of behavior and state.
+most particularly, you must research, find, and document known  uses.
+could it be that people who do not know history are doomed to repeat it?
+no "category mismatch", then, and surely, no cleverness,  no deviousness.
+does this scare you off from the effort of studying and understanding them
+l. von wittgenstein, another contemporary  engineer of notice, had similarly observed in[wi22] that "to say of two  things that they are identical is nonsense, and to say of one thing that it is  identical with itself is to say nothing at all".
+in python, an instance has an identity: we know because we can print id(instance) and see that identity displayed as an integer  right in front of our eyes.
+maybe you can get away with an idiom (language specific usage), or even just "good common practice", where another language would require you to unearth and apply a full-fledged design pattern.
+what if two separate subsystems each need to refine singleton by subclassing?
+the alternative ideas are quite simple, which is  most often a very good thing.
+four lines of code for borg, seven for polyborg, all clear and open and understandable at an elementary level.
+for example, it's easy to envision the connection, almost antisymmetric, between shared-state multiple instances and the design pattern flyweight.
+indeed, by its superb quality and for being in the right place at the right time, the gof4's book is the best known work on design patterns among the software community.
+naming is important, and the patterns community recognizes this in earnest.
+it just sort of sits there!
+more recently, design patterns have become deservedly  popular in software development.
+but even just to write down a dp requires a semi-formal  approach.
+one plus of making problems simpler is that, the simpler a problem, the more simplicity you can deploy in solving it.
+regisborg still has the same key useful aspect as the other borg variations.
+also, requirements akin to these are what the "registry of singletons" in the gof4's singleton dp implementation section strongly suggests (at least, to me).
+this is mandatory when we rebind it: otherwise, it would uselessly become per instance, while it's crucial that it stay per-class.
+who'd ever want to use staticmethods?
+deleborg is not quite as neat as borg itself:  it's not such a direct expression of design intent.
+we can arrange for deviations from this rule, by binding freshly  created bound methods as part of per instance state, but it's quite a moot  point whether we ever should.
+this is  getting pretty far away from the "just one instance" idea, and yet it is a reasonably frequent application need.
+but why would wewant to ensure that?
+suppose, for example, that, in a given use-case of polysingleton, exactly 4 instances may exist, and each call to polysingleton::instance chooses which of the 4 instances to yield in round robin fashion, something like: i'm not too sure this variation makes much sense, but perhaps there are cases in which it does, e.g. for load balancing.
+but i come neither to praise design patterns, nor, most particularly, to bury them: just to offer a small alternate perspective of their use, andnon -use, when one is developing python programs.
+borg is not a creational pattern: as already mentioned, it verges more on the structural, although you could make a case about it having behavioral aspects.
+object_to_be_wrapped deleborg's methods access self._delegate, not deleborg._delegate, so as to enable the "data override" by subclasses.
+however, such readers are shortchanging  themselves, by not acquiring the meta-tools needed for critical analysis of  specific design needs in term of dps, and vice versa.
+lest i be accused of escaping into philosophy, although i am quoting mostly engineers, let's look more closely at that "instance"  thing, of whichsingleton wants to ensure a certain class has only  one.
+my personal "dark horse" suggestion for the  latter category is n. salingaros' paper "the structure of pattern  languages"[sa99], which focuses on alexander's original work on pattern  languages for building and city architecture,[al77].
+again, therefore, behavior-wise it cannot matter  much whether we constrain a class to have just one instance: even if the class  has several instances, they share behavior, as long as we conventionally agree  to eschew the dubious practice of creating and binding new per instance bound  methods, at least regarding instances of that particular class.
+not in any language, or object model, actually.
+it's so simple tojust do it, that  the effort of combing the literature and published sources looking for patterns  to extract is sometimes hard to cost-justify.
+again and again, problems that are  difficult in other languages scale down to "pretty easy" in the light  of python's bright sun.
+self._shared_state borg, mixin-like.
+after all, the amended specs sound more and more like a creational  request, and yet we're still using a solution that's rather structural.
+we don't need to get metaphysical about this, but, should we want to, it's easy to argue that "immutability" is defined by the context: if we ensure that the code of built-in type dict, the only relevant "observer", can never notice any mutation, then who's to say any mutationhas in fact occurred...?
+delegation is not a dp for much the same reason such things as integer addition, while loops, or subroutines aren't dps: they are, rather, some of the fundamental building blocks out of which all designs, and their inherent patterns (or patterns), are built.
+why would we want to ensure uniqueness of identity?
+maybe we've even found the one case where adding per-instance behavior is justifiable!-).
+four lines of code forborg, seven for polyborg, all clear and open and understandable at an elementary  level.
+it could further hold a set of rules  (the strategy design pattern might be very appropriate here!) to select the  right class to instantiate for any given requestedident —  parsing theident string, for example, and selecting accordingly.
+this issue takes up two thirds of the implementation section, leading to a  rich, complex solution, a registry of singletons.
+besides the bother of type-tests, this means, for example, that client code becomes constrained with respect to extracting and applying unbound methods from this class, or type.
+"new-style") classes introduced in  python 2.2.
+what name would well represent some sort-of-flyweight objects, numerous as to identity, but deeper down all the same, indistinguishable, because they all share state?
+however, not all is perfectly rosy here, alas.
+don't we need to ensure there is only one instance of the class, so that there  will only be one "occurrence" of the relevantstate?
+many of the book's patterns are  of course c++ specific, at least to the extent of making most sense in a  c++-like context (access specifiers, compile-time type checking, etc).
+a popular, often implemented gof4 dp is singleton.
+then, you must single out and articulate intent, motivation, applicability, structure, participants, collaboration, consequences, implementation.
+if it's for the purpose of using the instance as a dictionary key, without forcing the instance to be immutable, we can get there just as well by defining __hash__: the "immutability" only needs to refer to equality comparison results being unchangeable, and hash(instance) being similarly fixed.
+what's in an instance
+also, requirements akin to these are  what the "registry of singletons" in the gof4'ssingleton dp implementation section strongly suggests (at least, to me).
+couldborg be stretched to accommodate this need — an extensible registry of  hive-minds, tagged by identifiers, with the right one available on demand...?
+if there is any  motivation for ensuring that a class is only ever instantiated once, the  motivation cannot lie in aspects in which other instances of the same class, if  they existed, would be identical and indistinguishable.
+it  typicallydoes matter which one of the separate instances you get.
+however, regisfact does not really achieve all that extra  simplicity overregisborg, and it does have substantially limited  functionality.
+when we say there's only one printer spooler, all we  really care about is that there be only one "printer spoolerstate ": just one set of queues, jobs in the queues, currently set options, and  so forth.
+in the  alternatives, we allow client code to instantiate the target class freely, but  we must arrange for all instances thus created to delegate their state to a  single agent.
+these works deal with every conceivable area of software development, including organizational structure, analysis, and development processes, as well as design.
+instances of the two  separate subclasses can't both exist, or else two separate "instances of singleton" would exist, each as a sub-object (base object) of  one of the subclasses.
+well, what about borg?
+indeed, i think this obvious,  elementary use ofself.__dict__
+the gof4 consider this influence strong enough that language choice shapes what is or isn't "worthy" of being framed as a dp, or even feasible to so frame.
+borg still  lives, therefore, even in python 2.2: if the class we want toborg ize is a classic one, usingborg itself still has advantages over  usingdeleborg.
+one  plus of making problems simpler is that, the simpler a problem, the more  simplicity you can deploy in solving it.
+going back to the requisite of "multiple instances, but in limited number", we might typically want each instance-request to have as an argument a desired-instance identifier, say a string.
+[fo99], and vlissides'  "hatching patterns"[vl98].
+remember, of course, to  invokeborg.__init__(self), right at the start of your own __init__
+whatever instances, that factory function regisfact yields, as passive containers of arbitrary attributes.
+design is not an abstract, in-a-vacuum activity: rather, it is a  concrete bridge between analysis and intended implementation, with a lot of  "feedback" between the various phases.
+at times, it's a substantial simplicity gain to avoid forcing an  aspect of the solution into the object oriented mold, so pervasive, and indeed  so often appropriate, in software development design patterns.
+python's forte is simplicity.
+the start of the book, in  contrast, may look like abstract, generic introductory and philosophical  material, not immediately usable.
+that gives us at least as much control.
+translation from  fancy metaphors back down to earth again: writing down some actual python code,  rather than reasoning in the abstract, we can more easily examine concrete  perspectives of different possible solutions.
+overnight, and deservedly, this book made dps popular in the software development community.
+are we abandoning the  straight and narrow, but fruitful, path of simplicity, for a seductive but  ultimately fraught one of cleverness and deviousness...?
+after all, the amended specs sound more and more like a creational request, and yet we're still using a solution that's rather structural.
+i propose and examine alternative design ideas (not full fledged patterns) addressing forces very similar to the ones singleton deals with, in very different ways (structural, or even behavioral, as opposed to creational ones).
+one claimed advantage of singleton, that borg may not appear to match, is consequence n.4, "permits a variable number of instances".
+others are too simple, elementary,  intuitive, to be worth classifying as dps.
+consider, for example: as coded, classas coded, class class deleborg: _delegate =
+for the same reason, we name the overridable attribute with one leading underscore, not two.
+ensuring  that the "number of instances" is identically equal to1 is one approach, but it's far from being the only viable one.
+from the perspective of sharing state, in particular, the key difference from a classic class is that a new-style class doesn't keep all per instance data in a single dictionary.
+this can be accomplished in  any language, typically by delegation in some form.
+although there can be many printers in a system, there should be only one printer spooler".
+"factory with a registry", orregisfact for  short: class whatever: pass _instances = {} def regisfact(ident): try: return  _instances[ident] except keyerror: _instances[ident] =
+the class may inherit from a built-in type, which may keep some per-instance state wherever it pleases; also, a class may define or inherit a __slots__
+could it be  that people who do not know history are doomed to repeat it?
+it is taken for granted, i surmise, that instance identity must, or at least should, be in direct correspondence with an "entity in the real world": more precisely, with a conceptual entity in the world view that our software system is modeling.
+even this rich solution still doesn't meet many typical application needs.
+so, it boils down to identity, and per-instance state.
+yep, it works  (and i am indebted to d. ascher for suggesting this name in discussion on the  python cookbook site,[ma01a]).
+moreover, which design ideas it's feasible to classify as dps, and which ideas are worth thus classifying, does depend on the programming language meant to be used to implement the design.
+however, automatic delegation is anything but  obsolete.
+whatever() return  _instances[ident] regisfact uses a  creational idea to implement something that feels very much like a creational  requirement.
+a good name makes something easier to recall, recognize, discuss.
+rather, with new-style classes, we are back to the "status quo" as in most other languages: to share state, we must rely on delegation.
+= self._shared_states[self.__class__._next] self.__class__._next, rather than self._next.
+singleton thrives, "out there" in the real world of software  development, in partbecause its name is so catchy.
+while the "data override" (of attribute _shared_state ) was optional for subclasses ofborg, we do need an analogous  "data override" (of the_delegate attribute) to make  subclasses ofdeleborg useful: class borg22(deleborg): _delegate = object_to_be_wrapped again, therefore, deleborg's methods access self._delegate, not deleborg._delegate, so as to  enable the "data override" by subclasses.
+design is not an abstract, in-a-vacuum activity: rather, it is a concrete bridge between analysis and intended implementation, with a lot of "feedback" between the various phases.
+def __init__(self): self.__class__._next += 1 if self.__class__._next>=4:
+i think it's also a  good idea to read some wider-view, "philosophical reflection" works  in the pattern field.
+this issue takes up two thirds of the implementation section, leading to a rich, complex solution, a registry of singletons.
+some schools of oo design take this as an  axiom, but the gof4 argue directly against this earlier in the book.
+regisborg and regisfact
+does this scare you off from the effort of studying and understanding  them
+moreover, even for new-style classes whose instances do keep state in __dict__ , the __dict__ attribute itself may not be assigned (re-bound).
+i shamefully confess it took me a while of fiddling with __getattr__, __setattr__
+the patterns community has produced a lot of other fascinating publications connected with software development, particularly on pattern languages (integrated, coordinated systems of patterns).
+critical analysis of dps  and design needs is not an optional issue: without it, you cannot spot what  patterns areanti-patterns, in terms of your actual design needs  — including what programming languages you intend to target with your  design.
+and friends are strategic choke-points, from which we can easily control and divert (e.g., delegate) any attribute and method access (and binding, re-binding, unbinding).
+look at the python code again: it's so much terser, clearer, and  simpler than the discussion!
+and the answer is, no, of course we don't.
+you could say the non-pattern is factored as follows: class regisborg handles the registry and state-sharing behavior, while  subclasses provide application-specific parts of behavior and state.
+we can be so conditioned to complexity and  cleverness, that it becomes hard to find the simplicity and obviousness  "hiding" right in front of our nose!
+this paper argues for this perspective, and exemplifies it with five simple python "solution elements" that are not design patterns but may, to some extent, be satisfactorily used instead of design patterns in various contexts.
+for a simpler problem, an informal approach may make more sense, while a  harder problem might profit from more structured and formalized procedures.
+in section 1.6 in the gof4 book, we read: "object oriented designs often end up with classes that have no counterpart in the real world ...
+simplicity is an important ingredient of quality.
+that gives us at  least as much control.
+while the "data override" (of attribute _shared_state ) was optional for subclasses of borg, we do need an analogous "data override" (of the _delegate attribute) to make subclasses of deleborg useful: again, therefore,again, therefore, class borg22(deleborg): _delegate =
+borg: just share state!
+translation from fancy metaphors back down to earth again: writing down some actual python code, rather than reasoning in the abstract, we can more easily examine concrete perspectives of different possible solutions.
+python's  already-mentioned sun is one good way to help fog disperse.
+often, the independent subclasses are each providing different behavior tweaks or additions with different mixins.
+it typicallydoes matter which one of the separate instances you get.
+some design ideas and approaches are too fundamental, basilar, pervasive, to be classified as design patterns.
+if an instance  corresponding to the given identifier already exists, that instance must be  returned; otherwise, a new instance must be created and returned.
+for completeness, and to reach the number of five non-patterns and justify the neat title, let's see how borg interacts with the "non-classic" (a.k.a.
+more recently, design patterns have become deservedly popular in software development.
+(why do we, collectively,  keep forgetting the key insights of our grandparents' generation?
+then, you must single out and articulate intent, motivation,  applicability, structure, participants, collaboration, consequences,  implementation.
+some design ideas and approaches are too fundamental, basilar, pervasive,  to be classified as design patterns.
+in section  1.6 in the gof4 book, we read: "object oriented designs often end up with  classes that have no counterpart in the real world ...
+this, in turn, sometimes  lets you use simpler tools, e.g. an idiom in lieu of a design pattern.
+the patterns community has produced a lot of other fascinating publications  connected with software development, particularly on pattern languages  (integrated, coordinated systems of patterns).
+it is exactly in order to allow this "data  override" thatborg.__init__ accesses the attribute through self, not directly by qualifying borg, and the  attribute's name has one leading underscore, not two.
+this is totally consequential, direct, even trivially obvious.
+if you want to have "controlled access to  instances", for example, which is listed as benefit number 1 for the gof4's singleton pattern, you have to deal with it in some other way.
+borg has no problem with this, of course: as many instances as needed exist, all sharing state, and therefore, in particular, any subclass of borg may be independently further subclassed as needed.
+this is surely understandable, as the catalog is so rapidly useful to help with real-life problems.
+just as you would for any other class for which you deem controlled access desirable, whatever the number of its instances and the kind of state these instances hold.
+theyare as easy as pie, mind you.
+such a classification is at least a  semi-formal endeavor, requiring a definite amount of work (particularly to  research and document known uses, an indispensable step).
+the work should be  undertaken only when there is enough "substance" in the prospective  dp to pay back the effort expended, with interest.
+however, i also show one case in which excessive  (misplaced) simplicity makes a design idea not very useful for our purposes: we  do want to make our designs as simple as possible...
+indeed, they're so simple they have no doubt been independently reinvented over and over, as is often the case in python.
+some of the applicability issues are very close: state  is made extrinsic, the application must not depend on object identity.
+yet, in identifying singleton 's intent and motivation, the need for "counterparts", which section 1.6 in the book denies, seems to be an unspoken assumption.
+these are all very practical, highly usable books, directly oriented to software development.
+def  __init__(self): self.__class__._next += 1 if self.__class__._next>=4:  self.__class__._next = 0
+controlled access is clearly an orthogonal consideration, independent from "limiting number of instances", or "state sharing".
+korzybski's best  known quote seems to be directly on the issue of "counterparts in the real  world" for objects in an oo design: "the map isnot the  territory"!)
+the dp's statedintent is to "ensure a class only has one instance" (and provide a global point of access to it).
+whatever is thus hard-coded with a certain behavior: as we wrote  it, no behavior at all.
+an instance has behavior, coded in its methods,  which, in most cases, come (some have argued, should always come) as the  methods ofinstance.__class__ — some of them, of course,  could in turn be inherited, but that doesn't affect the point.
+fortunately, python helps a lot  in the quest for simplicity and clarity.
+again, therefore, behavior-wise it cannot matter much whether we constrain a class to have just one instance: even if the class has several instances, they share behavior, as long as we conventionally agree to eschew the dubious practice of creating and binding new per instance bound methods, at least regarding instances of that particular class.
+we don't need no stinkin' singleton: the borg design non-pattern", in "python cookbook", http://aspn.activestate.com/aspn/cookbook/python/recipe/66531 [ma01b]a. martelli, "automatic delegation as an alternative to inheritance", in "python cookbook", http://aspn.activestate.com/aspn/cookbook/python/recipe/52295 [sa23]g. santayana, "skepticism and animal faith: introduction to a system of philosophy", first published 1923; reprint [dover] 1955 [sa98]v. savikko, "design patterns in python", in "proceedings of the 6th international python conference", http://www.python.org/workshops/1997-10/proceedings/savikko.html [sa99]n. salingaros, "the structure of pattern languages", in "arq -- architectural research quarterly" volume 4 (2000), http://www.math.utsa.edu/sphere/salingar/structurepattern.html [vl98]j. vlissides, "pattern hatching: design patterns applied", addison-wesley 1998 [wh96]r. g. white, "advantages and disadvantages of unique representation patterns", c++ report 8-8 pp 28-25, sep 1996
+besides the bother of type-tests, this means, for  example, that client code becomes constrained with respect to extracting and  applying unbound methods from this class, or type.
+python makes it easy to unveil the simplicity that, without it, masquerades as complexity.
+[wi22]l. von wittgenstein, "logische-philosophische abhandlung",  annalen der naturphilosophie 1922; bilingual edition (german/english) as  "tractatus logico-philosophicus" [routledge] 1924
+once we do that, we satisfy the real application need that may indeed arise: uniqueness of state.
+then, there are global variables, in the dictionary of  the class's module, and, potentially, even more indirect repositories of state.
+this means that borg carries no creational constraints.
+yet, in identifyingsingleton 's intent and motivation, the need for "counterparts", which section  1.6 in the book denies, seems to be an unspoken assumption.
+one aspect of python's simplicity is, indeed, that you only do oo when youwant to.
+these works deal with every  conceivable area of software development, including organizational structure,  analysis, and development processes, as well as design.
+let's take a small step back to look at this tiny snippet of code with "beginners' eyes".
+the hypothetical  motivation we're seeking has to rest, if anywhere, then in those aspects that  might distinguish, i.e., differentiate, a multiplicity of instances, were such  multiplicity allowed.
+rather than being able to share state directly, we share it indirectly, by taking control of the behavioral aspects of accessing, binding, re-binding, and unbinding elements of the state.
+however, the issue of choosing which of the singleton's subclasses is actually instantiated looms large.
+what if two separate subsystems  each need to refinesingleton by subclassing?
+whatever is thus hard-coded with a certain behavior: as we wrote it, no behavior at all.
+our design intent is for all instances to share  state.
+at times, it's a substantial simplicity gain to avoid forcing an aspect of the solution into the object oriented mold, so pervasive, and indeed so often appropriate, in software development design patterns.
+but it's even better when there is no fog around, and  we can just find our way by carefully examining our surroundings.
+moreover,  even for new-style classes whose instances do keep state in__dict__ , the__dict__ attribute itself may not be assigned (re-bound).
+simplicity sometimescan, for a short while (until we examine it  more closely, in bright light, and check if it sparkles, or starts getting  soggy and melting) be somewhat illusory in its intuitive appeal!
+our python knowledge tells us that each instance's state lives in the  instance's__dict__, ignoring, without loss of generality, other  state that is already shared "by nature", and delaying for the moment  the issue of python 2.2's non-classic classes.
+yep, it works (and i am indebted to d. ascher for suggesting this name in discussion on the python cookbook site,[ma01a]).
+such a classification is at least a semi-formal endeavor, requiring a definite amount of work (particularly to research and document known uses, an indispensable step).
+less catchily, but just as precisely, g. santayana had remarked in[sa23] that "whenever i use the word 'is', except in sheer tautology, i deeply misuse it".
+why would we want to  ensure uniqueness of identity?
+we can subclass at will, to tweak behavior or add  per-subclass state, while keeping the essential defining characteristic: all  instances (here, all instances corresponding to a givenident)  share state.
+an instance has behavior, coded in its methods, which, in most cases, come (some have argued, should always come) as the methods of instance.__class__ — some of them, of course, could in turn be inherited, but that doesn't affect the point.
+your class may in turn override borg's _shared_stateclass attribute.
+you can always replace inheritance with object composition" — unless, of course, somebody's busy coding deuced type-tests.
+not in any language, or object  model, actually.
+yes, there can be such a thing as an artifact that is too  simple, not rich and complex enough, for the goals it aims to accomplish.
+borg still lives, therefore, even in python 2.2: if the class we want to borg ize is a classic one, using borg itself still has advantages over using deleborg.
+because of this, regisborg, exactly as above coded, is already useful, although class regisborg itself does just about nothing.
+but this still doesn't tell us why that "one printer  spooler" in the system we're modeling should necessarily, or optimally,  correspond to "exactly one instance" of some specific class in the  software we write to model that system.
+these theses aren't all that controversial: indeed, they are asserted and  argued in the very first chapter of the "design patterns" book!
+if there is any motivation for ensuring that a class is only ever instantiated once, the motivation cannot lie in aspects in which other instances of the same class, if they existed, would be identical and indistinguishable.
+regisfact could be  extended to hold a registry of classes.
+from the point of view of most software practitioners, however, dps burst suddenly upon the scene when e. gamma, r. helm, r. johnson and j. vlissides (henceforth the "gang of four", or gof4 — other works also call them the gof, or gof) published their book "design patterns"
+the hypothetical motivation we're seeking has to rest, if anywhere, then in those aspects that might distinguish, i.e., differentiate, a multiplicity of instances, were such multiplicity allowed.
+don't we need to ensure there is only one instance of the class, so that there will only be one "occurrence" of the relevantstate?
+this is just  fine and dandy when this considerable investment of time and energy pays back  by helping us control and conquer complexity, which is often the case.
+so, we need to weigh the actual advantages and disadvantages of the singleton approach versus delegation based alternatives.
+a good name makes  something easier to recall, recognize, discuss.
+in pre-2.2 python, we used such automatic delegation, for example, to "inherit" (so to speak) from built-in types, as shown in[ma01b].
+do not forget that real design patternsdo really need that infrastructure, and most particularly that research into known uses.
+when one is addressing simple issues, using very powerful approaches may be overkill, a bit like the "big design up front" fallacy[bd00] so prevalent in software development.
+for example, in consequences n. 5 of singleton, the gof4 claim singleton is "more flexible than class operations", i.e., use of "static" member functions in c++, for example because those can't be overridable (virtual, in c++ terms).
+let's not forget that python gains much of its ease and simplicity by substituting clear, sensibleconventions in place of the hard, strictly-enforced rules which many other languages try to impose on programmers.
+the gof4 do make the point, right in the first chapter, that "the choice of programming language is important because it influences one's point of view".
+from the perspective of sharing state, in particular, the key  difference from a classic class is that a new-style class doesn't keep all per  instance data in a single dictionary.
+others are too simple, elementary, intuitive, to be worth classifying as dps.
+this data-member  overriding, or lack thereof, determines whether your class also shares state  with other subclasses ofborg: you can easily arrange this in  different ways, but, of course, resistance is futile, so don't even bother  trying to arrangethat.
+all substantial behavior, as well as all  state, comes from theself._delegate object, since methods are  accessed through__getattr__, just like any other attribute.
+in python, an instance has an identity: we know because we can print id(instance) and see that identity displayed as an integer right in front of our eyes.
+an instance has state: assuming the instance belongs to a "classic class" (an assumption that we'll have to critically revisit later, of course), the instance's state, sticking for a moment to its "direct", per-instance part, is entirely held in instance.__dict__.
+you must identify relevant object and classes, at the right levels of  abstraction.
+on the other hand, aseparate polyborg class isn't any harder to envisage, than the polysingleton class the gof4 may have had in mind when writing about this consequence.
+therefore, we explicitly express  this design intent by ensuring that the__dict__ is the same  dictionary object for each and every instance, as elementarily done by our  assignment.
+[wi22]l. von wittgenstein, "logische-philosophische abhandlung", annalen der naturphilosophie 1922; bilingual edition (german/english) as "tractatus logico-philosophicus" [routledge] 1924
+sure, python's readability and  clarity reduce the cost of such a literature-search effort, but they cannot  reduce it to the point of making it lower than the effort of writing four short  lines of code, or thereabouts.
+of course, an instance's "state" in a wider sense may partly come  from elsewhere.instance.__class__.__dict__
+state is still  shared, but of course each independent subclass may easily avoid accidental  interference with another, in the usual python way, i.e. by naming with two  leading underscores those attributes and methods that are only needed for a  given class's internal operation.
+references [al77]c. alexander, et al, "a pattern language: towns, buildings,  construction", oxford university press 1977 [al79]c. alexander, "the timeless way of building", oxford  university press 1979 [bd00]"big design up front", multi-author wikiwiki,  http://xp.c2.com/bigdesignupfront.html [be00]j. bentley, "programming pearls", second edition,  addison-wesley 2000 [fo97]m. fowler, "analysis patterns: reusable object models",  addison-wesley 1997 [fo99]m. fowler, "refactoring: improving the design of existing  code", addison-wesley longman 1999 [go95]e. gamma, r. helm, r. johnson, j. vlissides, "design patterns,  elements of reusable object-oriented software", addison-wesley 1995 [ko33]a. korzybski, "science and sanity: an introduction to  non-aristotelian systems and general semantics", first published 1933;  reprint [science press] 1961 [ma01a]a. martelli, "singleton?
+ensuring that the "number of instances" is identically equal to 1 is one approach, but it's far from being the only viable one.
+none def __getattr__(self,name): return getattr(self._delegate,name) def __delattr__(self,name): return delattr(self._delegate,name) def __setattr__(self,name,value): return setattr(self._delegate,name,value)
+attribute, in which case  per-instance state lives in the slots rather than in a dictionary.
+self._shared_states[ident] except keyerror: self.__dict__
+i survey its applicability, both in general  terms, and, more specifically, with regards to two subtly different languages,  python 2.1 and 2.2.
+the "instant user appeal" of the new-style classes is,  first and foremost, that such classes let you subclass built-in types.
+client code can just  instantiate yourborg derived class, just as it might instantiate  any other class.
+the start of the book, in contrast, may look like abstract, generic introductory and philosophical material, not immediately usable.
+identity is irrelevant, resistance is futile, prepare to be assimilated...!
+design patterns, and full fledged pattern languages, were originally introduced by c. alexander as ways to reason about the architecture of building and cities,[al79].
+what name would well represent  some sort-of-flyweight objects, numerous as to identity, but deeper down all  the same, indistinguishable, because they all share state?
+but, of course, it is even easier in python (isn't it always?-): class borg: _shared_state = {} def __init__(self): self.__dict__
+further, instances of subclasses of deleborg do not satisfy isinstance with the type or class of the _delegate attribute, while instances of subclasses of borg, thanks to multiple inheritance, did.
+back to what borg is giving us...
+more to the point, however, a dp is, conceptually, a somewhat  "heavy" construct.
+let's note, in passing, that the creational idea is a factory,  but a trivially simple one — just a function, how un-oo! — not one  of the powerful creational patterns, such as abstract factory and factory  method.
+this is another non-pattern, deliberately choosing simplicity over  power.
+but, of course, it is even easier in python (isn't it always?-): that's it: just derive your application class fromthat's it: just derive your application class from class borg: _shared_state = {} def __init__(self): self.__dict__ =
+that's right, folks, these are scary, dangerous, field-unproven, experimental ideas!
+this is just fine and dandy when this considerable investment of time and energy pays back by helping us control and conquer complexity, which is often the case.
+although  there can be many printers in a system, there should be only one printer  spooler".
+because of this,regisborg, exactly as above coded, is  already useful, although classregisborg itself does just about  nothing.
+singleton thrives, "out there" in the real world of software development, in partbecause its name is so catchy.
+pity that non-classic classes, in python 2.2, lose this ability; we'll see later that this is not fatal, but it does make us work harder.
+borg versus singleton a popular, often implemented gof4 dp is singleton.
+rather than being able to  share state directly, we share it indirectly, by taking control of the  behavioral aspects of accessing, binding, re-binding, and unbinding elements of  the state.
+coming to the motivation, in fact, we find that "it's important for some classes to have exactly one instance.
+we don't need to get metaphysical  about this, but, should we want to, it's easy to argue that  "immutability" is defined by the context: if we ensure that the code  of built-in typedict, the only relevant "observer", can  never notice any mutation, then who's to say any mutationhas in fact  occurred...?
+in the alternatives, we allow client code to instantiate the target class freely, but we must arrange for all instances thus created to delegate their state to a single agent.
+after all, the  "intuitive" solution to the stated requirements, the one that comes  to mind at once, would be an application of a pattern (or pattern, or idiom, or  recipe...)
+do not  forget that real design patternsdo really need that infrastructure,  and most particularly that research into known uses.
+this was discussed as the monostate pattern in [wh96].
+but even just to write down a dp requires a semi-formal approach.
+python's already-mentioned sun is one good way to help fog disperse.
+so, is it all about per instance state...?
+once we do that, we satisfy  the real application need that may indeed arise: uniqueness of state.
+but this still doesn't tell us why that "one printer spooler" in the system we're modeling should necessarily, or optimally, correspond to "exactly one instance" of some specific class in the software we write to model that system.
+this paper argues for this  perspective, and exemplifies it with five simple python "solution  elements" that are not design patterns but may, to some extent, be  satisfactorily used instead of design patterns in various contexts.
+therefore, that's the behavior (or lack thereof) that actually obtains from the point of view of regisfact's clients.
+factories' specialty is their potential ability to return objects ofdifferent classes, according to specifics that the factory can encapsulate.
+maybe we've even found the one case where adding  per-instance behavior is justifiable!-).
+the amount and caliber of intellectual weaponry that it  makes sense to bring to bear on a problem depends on the problem's difficulty  level.
+for the same reason, we  name the overridable attribute with one leading underscore, not two.
+when you're refactoring your code, you can of course easily de-
+to quote the gof4 again, "delegation ...
+the gof4 consider this influence strong  enough that language choice shapes what is or isn't "worthy" of being  framed as a dp, or even feasible to so frame.
+old non-patterns don't really ever die, they just fade away into  somewhat more obscure corners of language use.
+and __delattr__, before the obvious solution at last jumped out at me.
+so, regisfact as written is "easy", yes, but... too easy — neither fish nor fowl, neither as intrinsically simple as regisborg, nor as rich and sophisticated as the full-fledged design  pattern thatregisfact might one day become, regisfact as it stands basically serves the purpose of convincing us that a thorough  study of design patterns and pattern languages is anything but a waste of  effort.
+a new-style class, therefore, cannot just inherit a mix-in like borg and have all per instance state become automatically shared, as a  classic class can.
+none def __getattr__(self,name): return  getattr(self._delegate,name) def __delattr__(self,name): return  delattr(self._delegate,name) def __setattr__(self,name,value): return  setattr(self._delegate,name,value)
+one can't help but wonder why: besides the catchy name, what does singleton offer that makes it so appealing?
+but, no simpler than that!
+patterns and non-patterns "design patterns" (henceforth dps) have been brewing for quite a  while.
+by the same token, the hypothetical advantage of singleton cannot be about behavior, i.e., code.
+i happen to  agree very closely with this opinion.
+all in chapter 1, of course,before they start their design patterns catalog.
+whatever() return _instances[ident] regisfactuses a creational idea to implement something that feels very much like a creational requirement.
+a more traditional approach, centered on implementing gof4's dps rather than looking for alternatives, is competently explored in[sa98].
+old non-patterns don't really ever die, they just fade away into somewhat more obscure corners of language use.
+this was discussed as the monostate pattern in  [wh96].
+critical analysis of dps and design needs is not an optional issue: without it, you cannot spot what patterns areanti-patterns, in terms of your actual design needs — including what programming languages you intend to target with your design.
+so, how hard is it to implement borg?
+for most potential uses, regisfact as written is too simple .
+more to the point, however, a dp is, conceptually, a somewhat "heavy" construct.
+think, for example, of opening files, or other urls: we may well want to ensure that state is shared, no matter how many times an url is opened.
+going back to the requisite of "multiple instances, but in limited  number", we might typically want each instance-request to have as an  argument a desired-instance identifier, say a string.
+this, of course, applies in spades to a complete  pattern language.
+of course, an instance's "state" in a wider sense may partly come from elsewhere.
+indeed, i think this obvious, elementary use of self.__dict__ re-binding, to express an important design intent in a direct, elementary way, validates guido's then-controversial choice, back in the pre-historical times when he was designing python 1.5.2, to allow this re-binding.
+you can always replace inheritance with object composition"  — unless, of course, somebody's busy coding deuced type-tests.
+don't let the amount of discussion fool you into believing there's anything  deep or difficult about them.
+our python knowledge tells us that each instance's state lives in the instance's __dict__, ignoring, without loss of generality, other state that is already shared "by nature", and delaying for the moment the issue of python 2.2's non-classic classes.
+for example, in  consequences n. 5 ofsingleton, the gof4 claim singleton is "more flexible than class operations", i.e., use of  "static" member functions in c++, for example because those can't be  overridable (virtual, in c++ terms).
+it's so simple tojust do it, that the effort of combing the literature and published sources looking for patterns to extract is sometimes hard to cost-justify.
+"design patterns" (henceforth dps) have been brewing for quite a while.
+=  self._shared_states[self.__class__._next] we do of  course have to be explicit and useself.__class__._next, rather than self._next.
+borgize any given application level class, but there's no easy third way: it's all or nothing — either per instance state is shared, or it's kept by each instance on its own.
+however, it appears that many readers of that excellent work skim its beginning  lightly, eager to jump into the "meat" of the dp catalog that makes  up most of the book.
+if an instance corresponding to the given identifier already exists, that instance must be returned; otherwise, a new instance must be created and returned.
+conclusion design patterns, and pattern languages, are very useful conceptual tools:  they can help you think effectively about design, as well as providing  immediately useful ways to frame specific design problems and their solutions.
+if any, like for any other python inheritance.
+before we proceed further, we really need a catchy name.
+prepend  keywordstatic to all data members, leave the methods  per-instance, virtual if you need or want them that way, and bingo, instant c++ borg.
+writing down the dp implies a substantial investment of effort, so you need the "known uses" to provide some assurance that the whole conceptual edifice is indeed worthy of that effort, having proven itself in the field.
+in python, we're blessed with a particularly flexible and easy to code form  of automatic delegation.
+that's it — that's all an instance has: identity, state, behavior.
+however,  new-style classes come with a whole panoplia of new possibilities and  constraints.
+and so, maybe, there should be, depending on the system that we're modeling.
+and so, maybe, there should be, depending on the system that  we're modeling.
+this, of course, applies in spades to a complete pattern language.
+most particularly, you must research, find, and document known uses.
+there appears to be a lot of unspoken subtext in this intent and motivation.
+however, such an extra argument would make polysingleton* polysingleton::_instances[4]; int polysingleton::_next=-1; polysingleton* polysingleton::instance() { ++_next; if(_next>=4) _next=0; if(_instances[_next]==0) { _instances[_next] = new polysingleton; } return _instances[_next]; } polysingletonnot interface compatible with singletonany more.
+let's note, in passing, that the creational idea is a factory, but a trivially simple one — just a function, how un-oo! — not one of the powerful creational patterns, such as abstract factory and factory method.
+[al77]c. alexander, et al, "a pattern language: towns, buildings, construction", oxford university press 1977 [al79]c. alexander, "the timeless way of building", oxford university press 1979 [bd00]"big design up front", multi-author wikiwiki, http://xp.c2.com/bigdesignupfront.html [be00]j. bentley, "programming pearls", second edition, addison-wesley 2000 [fo97]m. fowler, "analysis patterns: reusable object models", addison-wesley 1997 [fo99]m. fowler, "refactoring: improving the design of existing code", addison-wesley longman 1999 [go95]e. gamma, r. helm, r. johnson, j. vlissides, "design patterns, elements of reusable object-oriented software", addison-wesley 1995 [ko33]a. korzybski, "science and sanity: an introduction to non-aristotelian systems and general semantics", first published 1933; reprint [science press] 1961 [ma01a]a. martelli, "singleton?
+often, the independent subclasses are each providing  different behavior tweaks or additions with different mixins.
+some schools of oo design take this as an axiom, but the gof4 argue directly against this earlier in the book.
+attribute, in which case per-instance state lives in the slots rather than in a dictionary.
+borg is a simple idea: it does not conflate different and unrelated concerns, nor does it attempt to solve other possible problems, not directly related to "state sharing" (or "limiting number of instances").
+lest i be accused of escaping into philosophy, although i am quoting mostly engineers, let's look more closely at that "instance" thing, of which singleton wants to ensure a certain class has only one.
+client code can just instantiate your borg derived class, just as it might instantiate any other class.
+we  couldn't actually inherit, but we almost didn't notice, except where some  uncouth piece of framework or client code type-tested, and thus broke the  wonderful, smooth polymorphism.
+a complete collection of all fundamental books and articles on these themes would overflow the average developer's available shelf space.
+such a  "category mismatch" should rightfully makes us a little bit uneasy.
+python tends to make many issues simpler.
+but it doesn't do any of that, as written...
+however, not all design issues are so hard as to really need the power of these semi-formal approaches.
+in python 2.2, we don't need automatic delegation to pseudo-subclass built-in types, as we can subclass them in earnest.
+so,borg and polyborg are not patterns (with the uppercase-p:-) because they're too simple and  elementary to justify a pattern's necessary "infrastructure"  investment, particularly the research effort needed to find known uses.
+to put it another way,borg does not  require creational collaborations from client code.
+this is mandatory when we rebind it: otherwise, it  would uselessly become per instance, while it's crucial that it stay per-class.
+all we need is for the instance methods, which can perfectly well be virtual ones in c++, to only use "static" — i.e., per-class, rather than per-instance —member data.
+to put it another way, borg does not require creational collaborations from client code.
+still, any developer should at least be familiar with the original gof4's dp book, m. fowler's "analysis patterns"[fo97] and "refactoring" [fo99], and vlissides' "hatching patterns"[vl98].
+the gof4 list delegation among the  fundamental principles, right after polymorphism, mixin classes, "program  to an interface, not an implementation" (python translation: don't  type-test!-), and "favor object composition over class inheritance";  and just before generics and the principles of "designing for  change".
+once you do this, your class is a borg: all instances of your class share state.
+known uses arenot an optional element of a dp: at the very least,  by the gof4's relatively benign criterion, it's not a pattern unless you can  identify at least two usage examples from different domains.
+well, yes, it's not all that different from polyborg after  all, and of course python's dictionaries make "the registry" a snap: class regisborg: _shared_states = {} def __init__(self, ident): try:  self.__dict__
+i first wrote up borg in [ma01a] as a recipe, and that may be as good a name as any for this category of simple pythonic ideas.
+however, as we're discussingsingleton, we need not dwell on all of  these potential depots of state, as they're obviously held in common by all  instances of a class, and possibly by other entities yet.
+known uses arenot an optional element of a dp: at the very least, by the gof4's relatively benign criterion, it's not a pattern unless you can identify at least two usage examples from different domains.
+regisfact really wants to be quite a bit richer and more complex than it is, to deploy its full potential.
+is a popular place in  which to keep some state, specifically that part which is shared by all  instances of the class.
+but anyway, if this  version ofpolysingleton meets requirements, so does the following  version ofpolyborg: class polyborg: _shared_states =
+after all, the several instances, despite their distinct identities, are really all one, because they have no distinct state.
+too easy — neither fish nor fowl, neither as intrinsically simple as regisborg, nor as rich and sophisticated as the full-fledged design pattern that regisfact might one day become, regisfact as it stands basically serves the purpose of convincing us that a thorough study of design patterns and pattern languages is anything but a waste of effort.
+thus, we have over twice the boilerplate code (albeit still in a modest amount), and a small but non-null overhead, an extra call for any operation.
+polysingleton and polyborg one claimed advantage of singleton, that borg may  not appear to match, is consequence n.4, "permits a variable number of  instances".
+more often, i suspect a class with a limited number of instances would require some kind of selector argument for instance selection.
+less catchily, but just as precisely, g. santayana had  remarked in[sa23] that "whenever i use the word 'is', except in sheer  tautology, i deeply misuse it".
+there appears to be a lot of unspoken subtext in this intent and
+the class may inherit from a built-in  type, which may keep some per-instance state wherever it pleases; also, a class  may define or inherit a__slots__
+aren't weover-stretching borg?
+"factory with a registry", or regisfact for short: class whatever: pass _instances = {} def regisfact(ident): try: return _instances[ident] except keyerror: _instances[ident] =
+ability to subclass class singleton is very important in the singleton dp: it's the second condition in applicability, and the  key issue in consequences n.3 and n.5.
+better than nothing: we can still use thewhatever instances, that  factory functionregisfact yields, as passive containers of  arbitrary attributes.
+i propose and examine alternative design ideas (not full  fledged patterns) addressing forces very similar to the onessingleton deals with, in very different ways (structural, or even behavioral, as  opposed to creational ones).
+this is getting pretty far away from the "just one instance" idea, and yet it is a reasonably frequent application need.
+let's take a small step back to look at this tiny snippet of code with  "beginners' eyes".
+for a simpler problem, an informal approach may make more sense, while a harder problem might profit from more structured and formalized procedures.
+the amount and caliber of intellectual weaponry that it makes sense to bring to bear on a problem depends on the problem's difficulty level.
+borg, and its variation polyborg, are the first two of our five easy non-patterns.
+borg has no problem with this, of course: as  many instances as needed exist, all sharing state, and therefore, in  particular, any subclass ofborg may be independently further  subclassed as needed.
+this can be accomplished in any language, typically by delegation in some form.
+state is still shared, but of course each independent subclass may easily avoid accidental interference with another, in the usual python way, i.e. by naming with two leading underscores those attributes and methods that are only needed for a given class's internal operation.
+object identity is a frail reed on which to rely.
+it could further hold a set of rules (the strategy design pattern might be very appropriate here!) to select the right class to instantiate for any given requested ident —
+why, if nothing else, they miss the prime requisite:known uses !
+special methods __getattr__
+i survey its applicability, both in general terms, and, more specifically, with regards to two subtly different languages, python 2.1 and 2.2.
+on the other hand, regisfact, as coded, is not all that  useful.
+remember, of course, to invoke borg.__init__(self), right at the start of your own __init__if any, like for any other python inheritance.
+however, not all design ideas are design patterns, nor should they all be.
+this is another non-pattern, deliberately choosing simplicity over power.
+our design intent is for all instances to share state.
+still, any developer should at least  be familiar with the original gof4's dp book, m. fowler's "analysis  patterns"[fo97] and "refactoring"
+then, there are global variables, in the dictionary of the class's module, and, potentially, even more indirect repositories of state.
+but anyway, if this version of polysingletonmeets requirements, so does the following version of polyborg: we do of course have to be explicit and usewe do of course have to be explicit and use class polyborg: _shared_states =
+even this rich solution still  doesn't meet many typical application needs.
+not very, in any language or object model i know of: at worst, one has to explicitly code some delegation boilerplate, but often it's not even as bad as that.
+automatic delegation still plays a precious role in python 2.2.
+a new-style class, therefore, cannot just inherit a mix-in like borg and have all per instance state become automatically shared, as a classic class can.
+aren't we entering in the middle of the action, where a specific approach has already been chosen to solve someother actual underlying problem, just as in bentley's classic "how do i use the system sort from within my program" question (in the very first essay of his outstanding "programming pearls"[be00])?
+however, such an extra argument would makepolysingleton not  interface compatible withsingleton any more.
+in pre-2.2 python, we used such automatic delegation, for example, to  "inherit" (so to speak) from built-in types, as shown in[ma01b].
+so, regisfact as written is "easy", yes, but...
+moreover, which design ideas  it's feasible to classify as dps, and which ideas are worth thus classifying,  does depend on the programming language meant to be used to implement the  design.
+however, new-style classes come with a whole panoplia of new possibilities and constraints.
+instance.__class__.__dict__ is a popular place in which to keep some state, specifically that part which is shared by all instances of the class.
+a. korzybski, engineer  extraordinaire, had choice words on the subject of "theis of  identity" (a catchy yet precise phrase he credits to mathematician w. s.  jevons) in[ko33].
+all we need is for the instance methods, which can  perfectly well be virtual ones in c++, to only use "static" —  i.e., per-class, rather than per-instance —member data.
+you could look at these alternatives as structural patterns, or  even, by a bit of a stretch, behavioral ones, whilesingleton is a  creational pattern.
+this is  even more important fordeleborg than it was for borg,  since the "data override" plays such a central role here, while  previously it was just a nice option we wanted to preserve.
+ability to subclass class singleton is very important in the singleton dp: it's the second condition in applicability, and the key issue in consequences n.3 and n.5.
+you must identify relevant object and classes, at the right levels of abstraction.
+maybe you can get away with an idiom  (language specific usage), or even just "good common practice", where  another language would require you to unearth and apply a full-fledged design  pattern.
+we don't need no stinkin' singleton:  the borg design non-pattern", in "python cookbook", http://aspn.activestate.com/aspn/cookbook/python/recipe/66531 [ma01b]a. martelli, "automatic delegation as an alternative to  inheritance", in "python cookbook", http://aspn.activestate.com/aspn/cookbook/python/recipe/52295 [sa23]g. santayana, "skepticism and animal faith: introduction to a  system of philosophy", first published 1923; reprint [dover] 1955 [sa98]v. savikko, "design patterns in python", in  "proceedings of the 6th international python conference", http://www.python.org/workshops/1997-10/proceedings/savikko.html [sa99]n. salingaros, "the structure of pattern languages", in  "arq -- architectural research quarterly" volume 4 (2000), http://www.math.utsa.edu/sphere/salingar/structurepattern.html [vl98]j. vlissides, "pattern hatching: design patterns applied",  addison-wesley 1998 [wh96]r. g. white, "advantages and disadvantages of unique  representation patterns", c++ report 8-8 pp 28-25, sep 1996
+simplicity sometimescan, for a short while (until we examine it more closely, in bright light, and check if it sparkles, or starts getting soggy and melting) be somewhat illusory in its intuitive appeal!
+korzybski's best known quote seems to be directly on the issue of "counterparts in the real world" for objects in an oo design: "the map isnot the territory"!)
+when we say there's only one printer spooler, all we really care about is that there be only one "printer spoolerstate ": just one set of queues, jobs in the queues, currently set options, and so forth.
+an instance has state: assuming the instance  belongs to a "classic class" (an assumption that we'll have to  critically revisit later, of course), the instance's state, sticking for a  moment to its "direct", per-instance part, is entirely held in instance.__dict__.
+normally, all instances of a class share  behavior.

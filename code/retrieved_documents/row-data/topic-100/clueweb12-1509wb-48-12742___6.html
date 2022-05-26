@@ -1,0 +1,316 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>R, SAGA, other minor things</title>
+<body>
+GISVM Forum <br>
+<br>
+April 17, 2012, 04:11:15 AM <br>
+Welcome, <b>Guest</b>. 
+Pleaselogin or register. 1 Hour 1 Day 1 Week 1 Month Forever <br>
+Login with 
+username, password and session length <br>
+<br>
+<br>
+<br>
+<br>
+<b>News</b>: Due 
+to SPAM this forum registration has been DISABLED! &nbsp; <br>
+<br>
+<br>
+&nbsp; 
+&nbsp; Home &nbsp; Help Search Login Register &nbsp; <br>
+<br>
+<b>GISVM Forum
+</b>&nbsp;&gt;&nbsp; <b>International</b>&nbsp;&gt;&nbsp; <b>Wish List</b>
+&nbsp;&gt;&nbsp;<b>R, SAGA, other minor things</b> Pages: [<b>1</b>] &laquo; 
+previous next &raquo; <br>
+&nbsp; Print &nbsp; <br>
+<br>
+<br>
+<br>
+ Author  
+Topic: R, SAGA, other minor things &nbsp;(Read 3587 times) <br>
+<br>
+<b>jnylen
+</b>  Newbie <br>
+<br>
+ Posts: 2 <br>
+<br>
+<br>
+R, SAGA, other minor things <br>
+ &laquo;<b> on:</b> October 18, 2008, 09:56:36 PM &raquo; <br>
+<br>
+ First of 
+all, thanks for providing this service.&nbsp; It will be advantageous to my 
+career to learn how to do some basic GIS stuff.&nbsp; And doing this in a VM is 
+great as it seems like something you could easily specialize your whole OS for.
+<br> <br>
+A couple of things that (I think) could improve your VM.&nbsp; First 
+a minor gripe: the monthly cron jobs (especially scrollkeeper-update) ran on 
+the first startup.&nbsp; I am not sure how you might prevent this (release on 
+the 2nd of the month) but it made the system very sluggish for about 20-30 
+minutes.&nbsp; Not a big deal but this might turn some people away if they 
+don't know why this is happening.<br>
+<br>
+Second, some software that I think 
+would be really useful to have on there:<br>
+<br>
+
+<ul> 
+<li>R for statistical analysis (http://www.r-project.org/)<br>
+Here's a nice 
+repository for R and several of its core packages:<br>
+<b>deb 
+http://cran.cnr.berkeley.edu/bin/linux/ubuntu hardy/</b><br>
+<br>
+Adding the 
+public key:<br>
+<b>gpg --keyserver wwwkeys.eu.pgp.net --recv E2A11821<br>
+gpg 
+--export --armor E2A11821 | sudo apt-key add -</b><br>
+<br>
+</li> 
+<li>SAGA (http://www.saga-gis.org/en/index.html)<br>
+(I don't know much about 
+this but it is apparently pretty popular for analysis - also has good 
+integration with R).<br>
+<br>
+</li> 
+<li>QGIS plugin for R (http://www.ftools.ca/manageR.html) - pretty easy to 
+install.</li> </ul> <br>
+In case you couldn't tell, I really like R <br>
+<br>
+
+Also, can you recommend any tutorials for getting started with some of this 
+software?&nbsp; And what about a standalone version of GRASS for use with 
+people who have more advanced skills?&nbsp; I know it is installed with QGIS 
+but I am not exactly sure what that entails, or if GRASS can be used on its own 
+in its current form. <br>
+<br>
+ &laquo; <i>Last Edit: October 18, 2008, 
+10:05:03 PM by jnylen</i> &raquo;  Logged <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<b>
+admin</b>  Administrator <br>
+ Jr. Member <br>
+<br>
+ Posts: 72 <br>
+<br>
+<br>
+
+Re: R, SAGA, other minor things <br>
+ &laquo; <b>Reply #1 on:</b> October 22, 
+2008, 03:46:32 AM &raquo; <br>
+<br>
+ Thanks jnylen for your feedback. <br>
+I 
+will try to prevent that stuff from the first startup. I could release a 
+suspended VM. That would speed-up the first run for sure, but... I appreciate 
+all suggestions about this...<br>
+<br>
+And Yes, R is a must!!! I already 
+received a GISVM-R version from a user that installed R and several other tools 
+over the current GISVM. I am considering it, &#133;<br>
+What do you think about 
+a GISVM Geostatistical special edition?<br>
+There is a problem, R turns GISVM 
+bigger and needs several other stuff, including MySQL&#133;<br>
+<br>
+Yes, 
+GRASS, OpenJUMP, etc, are very needed!!!<br>
+<br>
+Thanks, <br>
+Ricardo Pinho 
+<br> <br>
+<br>
+<br>
+ &laquo; <i>Last Edit: October 22, 2008, 10:55:43 AM by 
+admin</i> &raquo;  Logged <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<b>jnylen</b>  
+Newbie<br>
+<br>
+ Posts: 2 <br>
+<br>
+<br>
+Re: R, SAGA, other minor things <br>
+ 
+&laquo;<b>Reply #2 on:</b> October 23, 2008, 08:59:57 AM &raquo; <br>
+<br>
+ I 
+was not aware that R required MySQL?&nbsp; There are packages to work with the 
+existing PostgreSQL database system, and I have found that any ODBC data source 
+is very easy to work with on Windows.&nbsp; I have set PostgreSQL up to work 
+with ODBC before on Linux, so the same is probably true there.<br>
+<br>
+I would 
+definitely be most interested in a Geostatistical edition.&nbsp; I found your 
+VM through the &quot;R-sig-Geo -- R Special Interest Group on using 
+Geographical data and Mapping&quot; mailing list:
+https://stat.ethz.ch/mailman/listinfo/r-sig-geo . <br>
+<br>
+As far as the cron 
+jobs go, I am not sure that releasing a suspended VM would help - the monthly 
+cron jobs are executed when you release the product one month and a user runs 
+it for the first time the next month.&nbsp; As soon as the system would 
+&quot;wake up&quot; and realize that a month has gone by without running those 
+jobs, it should start them.<br>
+<br>
+It may be safe to disable 
+scrollkeeper-update entirely (delete the symlink from /etc/cron.monthly) but I 
+am not sure.&nbsp; It does seem like that job is the main culprit of the 
+slowdown.&nbsp; This program could still be run manually prior to each 
+release.&nbsp; Or if it turns out to be a bad idea to remove it, /etc/crontab 
+would be easily modified to run it every 3 months or something similar. <br>
+
+<br>  Logged <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<b>jorge.de.jesus</b>  Newbie 
+<br> <br>
+ Posts: 2 <br>
+<br>
+<br>
+Re: R, SAGA, other minor things <br>
+ &laquo;
+<b>Reply #3 on:</b> October 24, 2008, 12:51:57 AM &raquo; <br>
+<br>
+ Hi to all 
+<br> <br>
+The GISVM-R is just the standard GIVSM with R, basically it has 95% 
+of the packages necessary to run all the geospatial/geostatistical analysis 
+from the book &quot;Applied Spatial Data Analysis with R&quot;. This means 
+that&nbsp; is capable of raster, vector, table data analysis, interpolation, 
+linear regressions,modelling etc&nbsp; etc<br>
+<br>
+The GISVM-R has python 
+installed (and the ERIC IDE) with Rpy 1.0.1, so python can access the R 
+libraries and run calculations.<br>
+<br>
+The QGIS doesnt have the R connection 
+plugin, I will update the VM with this plugin in the following days.<br>
+<br>
+R 
+doesnt need MySQL to run !!!!! I just installed MySQL because it is my 
+favourite database and it is commonly used for &quot;light&quot; projects, so R 
+has the RMySQL package but also the RODBC&nbsp; for any DB access.<br>
+<br>
+<br>
+Here is the bad news !!!!! RSAGA doesnt work in Linux !!!!!&nbsp; Probably the 
+only way to access R should be thru the Python prompt of SAGA and then using 
+Rpy. RSAGA will be installed in the next release<br>
+<br>
+I will keep the forum 
+updated<br>
+<br>
+Jorge <br>
+<br>
+<br>
+<br>
+ Logged <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br> <b>pvb</b>  Newbie <br>
+<br>
+ Posts: 1 <br>
+<br>
+<br>
+Re: R, SAGA, other 
+minor things <br>
+ &laquo; <b>Reply #4 on:</b> November 17, 2008, 04:50:37 AM 
+&raquo; <br>
+<br>
+ Hi, just a short reply on the question on the use of GRASS; 
+that should be possible (at least when using Linux as guest), just open a 
+terminal and type 'grass' (without the quotes obviously).<br>
+<br>
+I would like 
+to second the idea of an GISVM Geostatistical special edition. Is there 
+anywhere I can download the GISVM-R edition?<br>
+<br>
+Paulo <br>
+<br>
+ Logged 
+<br> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<b>admin</b>  Administrator <br>
+ Jr. Member 
+<br> <br>
+ Posts: 72 <br>
+<br>
+<br>
+Re: R, SAGA, other minor things <br>
+ 
+&laquo;<b>Reply #5 on:</b> November 18, 2008, 01:25:46 PM &raquo; <br>
+<br>
+ Hi 
+Paulo,<br>
+<br>
+Quote from: pvb on November 17, 2008, 04:50:37 AM <br>
+ just 
+open a terminal and type 'grass' (without the quotes obviously).<br>
+Exactly! 
+GRASS is installed and can be used inside QGIS or outside with grass command 
+line. Thanks for remind this!<br>
+&nbsp; <br>
+Quote from: pvb on November 17, 
+2008, 04:50:37 AM <br>
+ Is there anywhere I can download the GISVM-R edition? 
+<br> Please, just go to the GISVM download page: <br>
+
+www.gisvm.com/download.html <br>
+<br>
+Enjoy, <br>
+Ricardo Pinho <br>
+<br>
+ 
+Logged <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Pages: [<b>1</b>] &nbsp; 
+Print &nbsp; <br>
+<br>
+<br>
+<br>
+&laquo; previous next &raquo; <br>
+<br>
+&nbsp; 
+<br> <br>
+Jump to: Please select a destination: ----------------------------- 
+International -----------------------------  =&gt; General Support  =&gt; Wish 
+List  =&gt; GISVM Server ----------------------------- Portuguese 
+-----------------------------  =&gt; Apoio Geral  =&gt; Pedidos e 
+sugest&otilde;es &nbsp; <br>
+<br>
+Powered by SMF 1.1.14 | SMF &copy; 2006-2011, 
+Simple Machines LLC <br>
+<br>
+ Loading... 
+</body>

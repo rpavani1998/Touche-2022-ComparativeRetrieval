@@ -1,0 +1,919 @@
+the only even digit, 4, will come first.
+[561] perlivp is a new installation verification procedure utility for running any time after installing perl.
+the following tests fail on 5.8.0 perl in beos personal 5.03: t/op/lfs............................failed at test 17 t/op/magic..........................failed at test 24 ext/fcntl/t/syslfs..................failed at test 17 ext/file/glob/t/basic...............failed at test 3 ext/posix/t/sigaction...............failed at test 13 ext/posix/t/waitpid.................failed at test 1
+[561] lexicals i: lexicals outside an eval "" weren't resolved correctly inside a subroutine definition inside the eval "" if they were not already referenced in the top level of the eval""ed code.
+[561] lexicals i: lexicals outside an eval "" weren't resolved correctly inside a subroutine definition inside the eval "" if they were not already referenced in the top level of the eval""ed code.
+eventually, the problem gets whittled down to one that fits in the cache, from which point it benefits from the increased memory speed.
+this file is supposed to be used by hints file writers for architecture-wide changes (as opposed to config.over which is for site-wide changes).
+the "plugins" are named as usual, for exampleperlio::via::quotedprint.
+it does not taint the result of floating point formats anymore, making the behaviour consistent with that of string interpolation.
+the utf8:: name space (as in the pragma) provides various perl-callable functions to provide low level access to perl's internal unicode representation.
+[561] the regular expression captured submatches ($1, $2, ...) are now more consistently unset if the match fails, instead of leaving false data lying around in them.
+eastern asian perl users are now welcomed in their own languages: readme.jp (japanese), readme.ko (korean), readme.cn (simplified chinese) and readme.tw (traditional chinese), which are written in normal pod but encoded in euc-jp, euc-kr, euc-cn and big5.
+as a stop-gap measure to avoid people from getting frustrated at the mysterious results (core dumps, most often), it is forbidden for now (you will get a fatal error even from an attempt).
+see the perlmod manpage modules and pragmata new modules and pragmata attribute::handlers, originally by damian conway and now maintained by arthur bergman, allows a class to define attribute handlers.
+perl used to be fragile in that signals arriving at inopportune moments could corrupt perl's internal state.
+seen in perl 5.7 but gone now time::piece (previously known as time::object) was removed because it was felt that it didn't have enough value in it to be a core module.
+because of the large number of tests, running the regression suite will take considerably longer time than it used to: expect the suite to take up to 4-5 times longer to run than in perl 5.6.
+one reason of this unfinishedness is its (currently) inherent unportability: since both package names and subroutine names may need to be mapped to file and directory names, the unicode capability of the filesystem becomes important-- and there unfortunately aren't portable answers.
+perl has been tested with the gnu pth userlevel thread package ( http://www.gnu.org/software/pth/pth.html ).
+use of v-strings in use/require causes a (backward) portability warning.
+in any case, the change will break existing code that relies on the current (ill-defined) semantics, so just avoid doing this in general.
+this means that for example instead of do format() you must write do &format().
+fix password routines which in some shadow password platforms (e.g. hp-ux) caused getpwent() to return every other entry.
+this didn't do anything useful, as the sort was not performed.
+several debugger fixes: exit code now reflects the script exit code, condition "0" now treated correctly, the d command now checks line number, $.no longer gets corrupted, and all debugger output now goes correctly to the socket if remoteport is set.
+the byteorder was only sizeof(long) bytes long (1234 or 4321), but now it is correctly sizeof(iv) bytes long, (12345678 or 87654321).
+the new interpreter threads ("ithreads" for short) implementation of multithreading, by arthur bergman, replaces the old "5.005 threads" implementation.
+just by saying use switch; you have switch and case available in perl.
+unicos fixed various alignment problems that lead into core dumps either during build or later; no longer dies on math errors at runtime; now using full quad integers (64 bits), previously was using only 46 bit integers for speed.
+each unquoted argument will be automatically quoted to protect whitespace, and any existing whitespace in the arguments will be preserved.
+[561] the regular expression captured submatches ($1, $2, ...) are now more consistently unset if the match fails, instead of leaving false data lying around in them.
+the undocumented pack/unpack template letters d/f have been recycled for better use: now they stand for long double (if supported by the platform) and nv (perl internal floating point type).
+[561] file access tests now use current process privileges rather than the user's default privileges, which could sometimes result in a mismatch between reported access and actual access.
+[561] "our" variables of the same name declared in two sibling blocks resulted in bogus warnings about "redeclaration" of the variables.
+the obsolete method of making a special (e.g., debugging) flavor of perl by saying make libperl=libperld.a has been removed.
+this may cause new warnings when modules are being installed.
+failed tests 128-130 op/pack...............................failed tests 25-5625 op/pow................................ op/taint..............................
+[561] lvalue subroutines can now return undef in list context.
+in sys::syslog there is now a failover mechanism that will go through alternative connection mechanisms until the message is successfully logged.
+64-bit platforms and malloc if your pointers are 64 bits wide, the perl malloc is no longer being used because it does not work well with 8-byte pointers.
+amigaos perl 5.8.0 doesn't build in amigaos.
+z/os (os/390) z/os has rather many test failures but the situation is actually much better than it was in 5.6.0; it's just that so many new modules and tests have been added.
+and, for sufficiently large slices of pi, the quicksort algorithm in perl 5.8 won't return the same results even if reinvoked with the same input.
+digest, frontend module for calculating digests (checksums), from gisle aas, has been added.
+$autoload, sort(), lock(), and spawning subprocesses in multiple threads simultaneously are now thread-safe.
+ambiguous range in the transliteration operator (like a-z-9) now gives a warning.
+vac 5.0.0.0 may produce buggy code for perl the aix c compiler vac version 5.0.0.0 may produce buggy code, resulting in a few random tests failing when run as part of "make test", but when the failing tests are run by hand, they succeed.
+it can be used for example for vendor add-ons without disturbing perl's own library directories.
+it does not taint the result of floating point formats anymore, making the behaviour consistent with that of string interpolation.
+more appropriate mechanisms for selecting the implementation exist, but they wouldn't have arrived in time to save quicksort.
+but quicksort was rescued at the last moment because it is faster than mergesort on certain inputs and platforms.
+(for space considerations, the largest chinese encodings have been separated into their own cpan module, encode::hanextra, which encode will use if available).
+this was caused by perl's using the operating system libraries in a situation where the result of the string to number conversion is undefined: now perl consistently handles such strings as zero in numeric contexts.
+in particular, caller() now returns a subroutine name of (unknown) for subroutines that have been removed from the symbol table.
+it can be used for example for vendor add-ons without disturbing perl's own library directories.
+this was found to be an inconvenient interface, and in perl 5.8 the unicode model has completely changed: now the "unicodeness" is bound to the data itself, and for most of the time "use utf8" is not needed at all.
+use utf8, almost) previously in perl 5.6 to use unicode one would say "use utf8" and then the operations (like string concatenation) were unicode-aware in that lexical scope.
+since perlio is a drop-in replacement for stdio at the source code level, this shouldn't be that drastic a change.
+made possible to propagate customised exceptions via croak()ing.
+for very small lists this may result in slightly slower sorting times, but in general the speedup should be at least 20%.
+sort() arguments are now compiled in the right wantarray context (they were accidentally using the context of thesort() itself).
+this may cause new warnings when modules are being installed.
+perl installation leaves libnet unconfigured; use libnetcfg to configure it.
+your bug report, along with the output of perl -v, will be sent off to perlbug@perl.org to be analysed by the perl porting team.
+they provide the codes for various locale standards, such as "fr" for france, "usd" for us dollar, and "ja" for japanese.
+the c code has been made much more gcc -wall clean.
+it is the little brother of -t: instead of dying on taint violations, lexical warnings are given.
+[561] prototype(\[$@%&]) is now available to implicitly create references (useful for example if you want to emulate the tie() interface).
+malformed unicode encodings (utf-8 and utf-16) cause a lot of warnings, as does trying to use utf-16 surrogates (which are unimplemented).
+better unc path handling under ithreads.
+if building threaded perl, you may get compilation warning from pp_sys.c: "pp_sys.c", line 4651.39: 1506-280 (w) function argument assignment between types "unsigned char*" and "const void*" is not allowed.
+perl now tries internally to use integer values in numeric conversions and basic arithmetics (+ - * /) if the arguments are integers, and tries also to keep the results stored internally as integers.
+in future releases of perl the forms will become fatal errors so consider starting laundering now.
+with the quicksort algorithm used to implement perl 5.6 and earlier, the order of ties is left up to the sort.
+it broke at some point during the ithreads work and we could not find amiga experts to unbreak the problems.
+perlio is the default configuration because without it many new features of perl 5.8 cannot be used.
+io is now by default done via perlio rather than system's "stdio".
+h2xs now uses devel::ppport for better portability between different versions of perl.
+the difference between scripts and blocks is that scripts are the glyphs used by a language or a group of languages, while the blocks are more artificial groupings of (mostly) 256 characters based on the unicode numbering.
+the readme file for general stuff.
+if you are on irix or tru64 platforms, new profiling/debugging options have been added; seethe perlhack manpage for more information about pixie and third degree.
+this shouldn't be too difficult for module authors, however: perlio has been designed as a drop-in replacement (at the source code level) for the stdio interface.
+it is now implemented using a windows message loop, and is therefore less prone to random crashes.
+tie::refhash::nestable, by edward avis, allows storing hash references (unlike the standard tie::refhash)
+for example: open kid_ps, "-|", "ps", "aux" or die $!; forks the ps(1) command (without spawning a shell, as there are more than three arguments to open()), and reads its standard output via the kid_ps filehandle.
+building perl with -duseithreads or -duse5005threads now works under hp-ux 10.20 (previously it only worked under 10.30 or later).
+net::ping has been considerably enhanced by rob brown: multihoming is now supported, win32 functionality is better, there is now time measuring functionality (optionally high-resolution using time::hires), and there is now "external" protocol which uses net::ping::external module which runs your external ping utility and parses the output.
+so the 5.8 quicksort scrambles large arrays before sorting them, as a statistical defence against quadratic behaviour.
+it is the little brother of-t: instead of dying on taint violations, lexical warnings are given.
+the output is highly customisable.
+[561+] the new bignum, bigint, and bigrat pragmas, by tels, implement transparent bignum support (using the math::bigint, math::bigfloat, and math::bigrat backends).
+callbacks (naughtily) exiting with "next;" instead of "return;" now work.
+pod2html now understands pod written using different line endings (pc-like crlf versus unix-like lf versus macclassic-like cr).
+after configure has finished, you can just say make all test and perl will be built and tested, all in perl/build/directory.
+these are not new failures--perl 5.005_0x has the same bugs, but didn't have these tests.
+mkdir() now ignores trailing slashes in the directory name, as mandated by posix.
+data::dumper now has an option to dump code references using b::deparse.
+[561] use of $& could trigger a core dump under some situations.
+in many platforms, the vendor-supplied 'cc' is too stripped-down to build perl (basically, 'cc' doesn't do ansi c).
+pack/unpack d/f recycled the undocumented pack/unpack template letters d/f have been recycled for better use: now they stand for long double (if supported by the platform) and nv (perl internal floating point type).
+documentation on how to use the perl source repository has been added to porting/repository.pod.
+unicode in general should be now much more usable than in perl 5.6.0 (or even in 5.6.1).
+turning off "clrfness" is no longer enough to make a stream truly binary.
+support for unicode, iso-8859-1, and ascii are compiled in to the module.
+[561] io::socket::inet has support for the reuseport option (if your platform supports it).
+this is caused by darwin's ufs not supporting inode change time.
+inclone you can do whatever you need to do, like for example handle the cloning of non-perl data, if necessary.
+one can have unicode in identifier names, but not in package/class or subroutine names.
+extutils::makemaker now uses file::spec internally, which hopefully leads to better portability.
+on the other hand, perl will now execute code such assystem("c:/program files/myapp/foo.exe", @args) correctly.
+time::hires, by douglas e. wegscheid, provides high resolution timing (ualarm, usleep, and gettimeofday).
+[561] utime now supports utime undef, undef, @files to change the file timestamps to the current time.
+mime::base64, by gisle aas, allows you to encode data in base64, as defined inrfc 2045 - mime (multipurpose internet mail extensions) .
+[561] mac os x (or darwin) should now be able to build perl even on hfs+ filesystems.
+so, as you add more and more digits of pi, the order in which the sorted even and odd digits appear will change.
+[561] current directory entries in %env are now correctly propagated to child processes.
+previously dynix/ptx had problems in its configure probe for non-blocking i/o. epoc epoc now better supported.
+for example when building the tk extension for cygwin, you may get an error message saying "unable to remap".
+hp-ux readme.hpux updated; configure -duse64bitall now works; now uses hp-ux malloc instead of perl malloc.
+if you configure with ithreads, ext/threads/t/libc.t will fail.
+if your platform supports fork(), you can use the list form of open for pipes.
+the iso 8859-15 locales may fail the locale test 117 in freebsd.
+unicode::ucd offers a querying interface to the unicode character database.
+the main rationale was to have thread modules to obey normal naming,thread:: (the threads and threads::shared themselves are more pragma-like, they affect compile-time, so they stay lowercase).
+since perlio is a drop-in replacement for stdio at the source code level, this shouldn't be that drastic a change.
+threads::shared, by arthur bergman, allows data sharing for interpreter threads.
+[561] multi-line matches like "a\nxb\n" =~ /(?!\a)x/m were flawed.
+some memory-hungry perl applications like the pdl don't work well with perl's malloc.
+[561] configure no longer includes the dbm libraries (dbm, gdbm, db, ndbm) when building the perl binary.
+if you have cpan access (either network or a local copy such as a cd-rom) you can during specify extra modules to configure to build and install with perl using the -dextras=... option.
+because perlio is now the default on most platforms, "-perlio" doesn't get appended to the $config{archname} (also known as $^o) anymore.
+[561] the perl parser has been stress tested using both random input and markov chain input and the few found crashes and lockups have been fixed.
+the main rationale was to have all core perlio layers to have all lowercase names.
+the return value of cwd::fastcwd() is now tainted.
+carp now has better interface documentation, and the @carp_not interface has been added to get optional control over where errors are reported independently of @isa, by ben tilly.
+so the extensions that are having problems can try configuring themselves without the largefileness.
+building extensions can fail because of largefiles some extensions like mod_perl are known to have issues with `largefiles', a change brought by perl 5.6.0 in which file offsets default to 64 bits wide, where supported.
+package mypack; use attribute::handlers; sub wolf :attr(scalar) { print "howl!\n" } # later, in some package using or inheriting from mypack... my mypack $fluffy : wolf; # the attribute handler wolf will be called both variables and routines can have attribute handlers.
+encode, originally by nick ing-simmons and now maintained by dan kogai, provides a mechanism to translate between different character encodings.
+unicode support on ebcdic still spotty though mostly working, unicode support still has problem spots on ebcdic platforms.
+it also serves as an example of a loadable perlio layer.
+glob()now returns filenames in alphabetical order the list of filenames from glob() (or ) is now by default sorted alphabetically to be csh-compliant (which is what happened before in most unix platforms).
+perlio is now the default io is now by default done via perlio rather than system's "stdio".
+warnings relating to the use interpreter threads and their shared data have been added.
+hp-ux readme.hpux updated; configure -duse64bitall now works; now uses hp-ux malloc instead of perl malloc.
+a mmap layer may be available if platform supports it (mostly unixes).
+also, usually the system mallocs on such platforms are much better optimized for such large memory models than the perl malloc.
+a mmap layer may be available if platform supports it (mostly unixes).
+so the 5.8 quicksort scrambles large arrays before sorting them, as a statistical defence against quadratic behaviour.
+io::socket now has an atmark() method, which returns true if the socket is positioned at the out-of-band mark.
+[561] pos() did not return the correct value within s///ge in earlier versions.
+if you don't have /bin/mail, or if you have 'safe setuid scripts', or if suidperl is not installed, you are safe.
+lib/ftmp-security tests warn 'system possibly insecure' don't panic.
+use of /c in substitutions, even with /g, elicits use of /c modifier is meaningless in s///.
+this affects builds with -duselongdouble.
+[561] io::socket::inet has support for the reuseport option (if your platform supports it).
+this implementation also allows later systems to call kill from within a signal handler.
+print "exists!\n" if exists $tied_hash{foo}; as a side effect of this fix, tied hash interfaces must define the exists and delete methods.
+they are now magnitudes faster, and they support various bignum libraries such as gmp and pari as their backends.
+we suggest upgrading to at least vac version 5.0.1.0, that has been known to compile perl correctly.
+modules may fail to compile at all, or they may compile and work incorrectly.
+the unicode character database coming with perl has been upgraded to unicode 3.2.0.
+[561] the perl parser has been stress tested using both random input and markov chain input and the few found crashes and lockups have been fixed.
+according to perlbench, this change has not affected the overall speed of perl.
+perl5db.t was also added to test the changes, and as a placeholder for further tests.
+test::simple, by michael schwern, has basic utilities for writing tests.
+this is known problem with cygwin, and a workaround is detailed in here: http://sources.redhat.com/ml/cygwin/2001-12/msg00894.html one can build but not install (or test the build of) the ndbm_file on fat filesystems.
+you may get errors like 'undefined symbol "perl_get_sv"' or "can't resolve symbol 'perl_get_sv'", or the symbol may be "perl_sv_2pv".
+this seems to be a compiler error since if compiled with gcc no core dump ensues, and no failures have been seen on the said test on any other platform.
+(this happens because the test scripts from under t/lib have been moved to be closer to the library/extension they are testing.)
+perlio::via::quotedprint, by elizabeth mattijsen, is an example of a perlio::via class: use perlio::via::quotedprint; open($fh,">:via(quotedprint)", $path); this will automatically convert everything output to $fh to quoted-printable.
+for very small lists this may result in slightly slower sorting times, but in general the speedup should be at least 20%.
+core enhancements unicode overhaul unicode in general should be now much more usable than in perl 5.6.0 (or even in 5.6.1).
+[561] some "not a number" warnings introduced in 5.6.0 eliminated to be more compatible with 5.005.
+spurious syntax errors generated in certain situations, when glob() caused file::glob to be loaded for the first time, have been fixed.
+linux long doubles should now work (see install).
+if your environment variables (lc_all, lc_ctype, lang) look like you want to use utf-8 (any of the variables match/utf-?8/i), your stdin, stdout, stderr handles and the default open layer (seethe open manpage) are marked as utf-8.
+the enhanced version has also been backported to earlier releases of perl and submitted to cpan so that the earlier releases can enjoy the fixes.
+gccs prior to 2.95.3 are definitely not good enough, and gcc 3.1 may be even better.
+this probably means that you are trying to use an older shared perl library (or extensions linked with such) with perl 5.8.0 executable.
+z/os has rather many test failures but the situation is actually much better than it was in 5.6.0; it's just that so many new modules and tests have been added.
+note that some of the net::ping tests are disabled when running under the perl distribution since one cannot assume one or more of the following: enabled echo port at localhost, full internet connectivity, or sympathetic firewalls.
+self-ties of arrays and hashes are not supported and fatal errors will happen even at an attempt to do so.
+perl_get_sv you may get errors like 'undefined symbol "perl_get_sv"' or "can't resolve symbol 'perl_get_sv'", or the symbol may be "perl_sv_2pv".
+currently, there is no good solution for the problem, but configure now provides appropriate non-largefile ccflags, ldflags, libswanted, and libs in the %config hash (e.g., $config{ccflags_nolargefiles}) so the extensions that are having problems can try configuring themselves without the largefileness.
+scripts are similar to (and superior to) unicodeblocks.
+the main rationale was to have thread modules to obey normal naming, thread:: (the threads and threads::shared themselves are more pragma-like, they affect compile-time, so they stay lowercase).
+many test suite tests still fail and the co-existence of unicode and ebcdic isn't quite settled, but the situation is much better than with perl 5.6.
+this change will probably break backward compatibility with compiled modules.
+regular expression debug output (whether through use re 'debug' or via -dr) now looks better.
+the (bogus) escape sequences \8 and \9 now give an optional warning ("unrecognized escape passed through").
+print "exists!\n" if exists $tied_hash{foo}; as a side effect of this fix, tied hash interfaces must define the exists and delete methods.
+the previous behaviour of ignoring them by default and warning if requested was unacceptable since it, in a way, falsely promised that the features could be used.
+for example, while the script latin includes all the latin characters and their various diacritic-adorned versions, it does not include the various punctuation or digits (since they are not solely latin).
+building perl with -duseithreads or -duse5005threads now works under hp-ux 10.20 (previously it only worked under 10.30 or later).
+the win32::setchildshowwindow() builtin can be used to control the visibility of windows created by child processes.
+[561] pos() did not return the correct value within s///ge in earlier versions.
+/tie/file/t/31_autodefer.t 255 65280 65 32 49.23% 34-65 ../lib/autouse.t 10 1 10.00% 4 op/flip.t 15 1 6.67% 15 these failures are unlikely to get fixed as 5.005-style threads are considered fundamentally broken.
+what this means is that in list context the functions will return only three values, not four.
+for tests 129 and 130, the failing platforms do not comply with the ansi c
+[561] the makefiles now default to the features enabled in activestate activeperl (a popular win32 binary distribution).
+[561] perl5opt with embedded spaces didn't work.
+many of the new tests are of course introduced by the new modules, but still in general perl is now more thoroughly tested.
+perlio::scalar, by nick ing-simmons, provides the implementation of io to "in memory" perl scalars as discussed above.
+because of the above error, parts of the converted headers will be invisible.
+our can now have an experimental optional attribute unique that affects how global variables are shared among multiple interpreters, seeour in the perlfunc manpage.
+in search::dict one can now have a pre-processing hook for the lines being searched.
+this is only meant as a temporary debugging aid while securing the code of old legacy applications.
+a failure (think chdir(some_function()) can lead into unintendedchdir() to the home directory, therefore this behaviour is deprecated.
+universal::isa no longer caches methods incorrectly.
+one such known spot are the \p{} and \p{} regular expression constructs for code points less than 256: the pp are testing for unicode code points, not knowing about ebcdic.
+[561] current directory entries in %env are now correctly propagated to child processes.
+the fields pragma interface will remain available.
+therestricted hashes interface is expected to be the replacement interface (seethe hash::util manpage).
+text::balanced, by damian conway, has been added, for extracting delimited text sequences from strings.
+emacs/e2ctags.pl is now much faster.
+time::local::timelocal() does not handle fractional seconds anymore.
+storable gives persistence to perl data structures by allowing the storage and retrieval of perl data to and from files in a fast and compact binary format.
+lexicals ii: lexicals leaked at file scope into subroutines that were declared before the lexicals.
+if building perl with interpreter threads (ithreads), the getgrent() , getgrnam(), and getgrgid() functions cannot return the list of the group members due to a bug in the multithreaded support of unicos/mk.
+(utf-8 has not been made the default since there are many perl scripts out there that are using various national eight-bit character sets, which would be illegal in utf-8.)
+the behavior in earlier versions of perl 5 was that arrays would interpolate into strings if the array had been mentioned before the string was compiled, and otherwise perl would raise a fatal compile-time error.
+hash::util is the interface to the new restricted hashes feature.
+self-ties of arrays and hashes are not supported and fatal errors will happen even at an attempt to do so.
+also the long doubles support in aix should be better now.
+a change to self-tying of globs has caused them to be recursively referenced (see:two-phased garbage collection in the perlobj manpage).
+gccs prior to 2.95.3 are definitely not good enough, and gcc 3.1 may be even better.
+storable gives persistence to perl data structures by allowing the storage and retrieval of perl data to and from files in a fast and compact binary format.
+xsubpp now understands pod documentation embedded in the *.xs
+if you have gcc 3, there is a make target called "perl.gcov" for creating a gcoved perl executable for coverage analysis.
+z/os (formerly known as os/390, formerly known as mvs oe) now has support for dynamic loading.
+removing directories with 'no lib' now works.
+chdir("") and chdir(undef) now give a deprecation warning because they cause a possible unintentional chdir to the home directory.
+freebsd built with ithreads coredumps reading large directories this is a known bug in freebsd 4.5's readdir_r(), it has been fixed in freebsd 4.6 (seethe perlfreebsd manpage (readme.freebsd)).
+there is a new kill implementation based on sys$sigprc that allows older vms systems (pre-7.0) to use kill to send signals rather than simply force exit.
+also the long doubles support in aix should be better now.
+(interesting only for extension writers and perl core hackers.)
+if stderr is tied, warnings caused by warn and die now correctly pass to it.
+the enhanced version has also been backported to earlier releases of perl and submitted to cpan so that the earlier releases can enjoy the fixes.
+currently, there is no good solution for the problem, but configure now provides appropriate non-largefile ccflags, ldflags, libswanted, and libs in the %config hash (e.g., $config{ccflags_nolargefiles})
+perlcc has been rewritten and its user interface (that is, command line) is much more like that of the unix c compiler, cc.
+z/os (formerly known as os/390, formerly known as mvs oe) now has support for dynamic loading.
+non-blocking waits for child processes (or pseudo-processes) are supported viawaitpid($pid, &posix::wnohang).
+this is caused by a bug in the awk utility of unicos/mk.
+lexical warnings now propagating correctly between scopes and into eval "...".
+multithreaded code should be migrated to the new ithreads model (seethe threads manpage, the threads::shared manpage and the perlthrtut manpage).
+extutils::constant, by nicholas clark, is a new tool for extension writers for generating xs code to import c header constants.
+unicode::ucd offers a querying interface to the unicode character database.
+if you are building on a ufs partition, you will also probably see t/op/stat.t subtest #9 fail.
+the exploit attempt reporting feature has been completely removed from perl 5.8.0 (and the maintenance release 5.6.1, and it was removed also from all the perl 5.7 releases), so that particular vulnerability isn't there anymore.
+performance enhancements map() could get pathologically slow when the result list it generates is larger than the source list.
+[561+] filter::util::call, by paul marquess, provides you with the framework to writesource filters in perl.
+the regex compiler now maintains a structure that identifies nodes in the compiled bytecode with the corresponding syntactic features of the original regex expression.
+(this was a problem for example if you were mixing data from i/o and unicode data: your output might have got magically encoded as utf-8.)
+some platforms that used to use gcvt may now resort to the slower sprintf.
+in future releases of perl the forms will become fatal errors so consider starting laundering now.
+self-tying of scalars and io thingies works.
+if you are building on a ufs partition, you will also probably see t/op/stat.t subtest #9 fail.
+in versions 5.004_01 through 5.6.0, the error was in string, @example now must be written as \@example the idea here was to get people into the habit of writing "fred\@example.com" when they wanted a literal "give me back my \$5" when they wanted a literal @sign, just as they have always written $sign.
+io::socket now has an atmark() method, which returns true if the socket is positioned at the out-of-band mark.
+pl are now checked for sanity much more carefully than before.
+irix numerous compilation flag and hint enhancements; accidental mixing of 32-bit and 64-bit libraries (a doomed attempt) made much harder.
+mergesort has worst case o(n log n) behaviour, the best value attainable.
+ithreads the new interpreter threads ("ithreads" for short) implementation of multithreading, by arthur bergman, replaces the old "5.005 threads" implementation.
+gcc needs to closely track the operating system release to avoid build problems.
+(y with diaeresis) and \xbe (y with diaeresis) not behaving correctly when being matched case-insensitively.
+if configure finds that gcc was built for a different operating system release than is running, it now gives a clearly visible warning that there may be trouble ahead.
+unicode::collate, by sadahiro tomoyuki, implements the uca (unicode collation algorithm) for sorting unicode strings.
+quicksort was rescued by implementing a sort pragma to control aspects of the sort.
+all other marks are property of their respective owners.
+unicos/mk guessing which symbols your c compiler and preprocessor define... will probably fail with error messages like cc-20 cc:
+in case you are still using solaris 2.5 (aka sunos 5.5), you may experience failures (the test core dumping) in lib/locale.t.
+the exec list and system list operations now produce warnings on tainted data and in some future release they will produce fatal errors.
+thefields pragma interface will remain available.
+i18n::langinfo can be used to query locale information.
+support for unicode, iso-8859-1, and ascii are compiled in to the module.
+(for space considerations, the largest chinese encodings have been separated into their own cpan module, encode::hanextra, which encode will use if available).
+a new optional location for perl libraries, otherlibdirs, is available.
+the obsolete chat2 library that should never have been allowed to escape the laboratory has been decommissioned.
+perlnewmod tells about writing and submitting a new module.
+fix password routines which in some shadow password platforms (e.g. hp-ux) causedgetpwent() to return every other entry.
+this is admittedly not a clean solution, and the solution may not even work at all.
+miscellaneous changes autoload is now lvaluable, meaning that you can add the :lvalue attribute to autoload subroutines and you can assign to the autoload return value.
+chdir() now works better despite a crt bug; now works with multiplicity (see install); now works with perl's malloc.
+not only is the current interface rather ugly, but the current implementation slows down normal array and hash use quite noticeably.
+i18n::langtags, by sean burke, has functions for dealing with rfc3066-style language tags.
+extutils::makemaker now uses file::spec internally, which hopefully leads to better portability.
+this change will probably break backward compatibility with compiled modules.
+there is a new kill implementation based on sys$sigprc that allows older vms systems (pre-7.0) to use kill to send signals rather than simply force exit.
+on a really fast machine you can hope to finish the suite in about 6-8 minutes (wallclock time).
+interpreter threads (ithreads) is the new thread model introduced in perl 5.6 but only available as an internal interface for extension writers (and for win32 perl for fork() emulation).
+io::socket::inet failed to open the specified port if the service name was not known.
+perlio is the default configuration because without it many new features of perl 5.8 cannot be used.
+the method is also exportable as a sockatmark() function.
+you can now install coderef handlers, 'default', and 'ignore' handlers, installing new handlers was not atomic.
+the original files are left unaffected.
+because of the above error, parts of the converted headers will be invisible.
+perlio::scalar, by nick ing-simmons, provides the implementation of io to "in memory" perl scalars as discussed above.
+ambiguous range in the transliteration operator (like a-z-9) now gives a warning.
+the quicksort divide and conquer strategy works well on platforms with relatively small, very fast, caches.
+with ithreads, when a new thread is created, all perl data is cloned, however non-perl data cannot be cloned automatically.
+sort() arguments are now compiled in the right wantarray context (they were accidentally using the context of the sort() itself).
+an optional warning is generated ("illegal character in prototype...") but this may be upgraded to a fatal error in a future release.
+you can set the environment variable perl_test_net_ping to "1" (one) before running the perl test suite to enable all the net::ping tests.
+if after installing perl 5.8.0 you are getting warnings about missing symbols, for example dyld: perl undefined symbols _perl_sv_2pv _perl_get_sv you probably have an old pre-perl-5.8.0 installation (or parts of one) in /library/perl (the undefined symbols used to exist in pre-5.8.0 perls).
+perlio allows "layers" to be "pushed" onto a file handle to alter the handle's behaviour.
+safe signals perl used to be fragile in that signals arriving at inopportune moments could corrupt perl's internal state.
+if you have cpan access (either network or a local copy such as a cd-rom) you can during specify extra modules to configure to build and install with perl using the -dextras=... option.
+(this was a problem for example if you were mixing data from i/o and unicode data: your output might have got magically encoded as utf-8.)
+the win32::setchildshowwindow() builtin can be used to control the visibility of windows created by child processes.
+all regular expression compilation error messages are now hopefully easier to understand both because the error message now comes before the failed regex and because the point of failure is now clearly marked by a {bar} has been deprecated for a while.
+as of november 2001 the only known vulnerable platform is linux, most likely all linux distributions.
+for example, system("nmake /nologo", @args) will now attempt to run the file nmake /nologo and will fail when such a file isn't found.
+[561+] filter::util::call, by paul marquess, provides you with the framework to writesource filters in perl.
+the documentation for the wince platform is called perlce (readme.ce in the source code kit), to avoid confusion with the perlwin32 documentation on 8.3-restricted filesystems.
+most importantly, anonymous subs used to leak quite a bit.
+stable means that ties are broken to preserve the original order of appearance in the input array.
+in other words: you just have to recompile your modules containing xs code, sorry about that.
+the artistic and copying files for copyright information.
+threads::shared, by arthur bergman, allows data sharing for interpreter threads.
+in newer aix releases, this has been solved by linking perl with the libc_r library, but unfortunately in aix 4.2 the said library has an obscure bug where the various functions related to time (such as time() and gettimeofday()) return broken values, and therefore in aix 4.2 perl is not linked against libc_r.
+for example, while the scriptlatin includes all the latin characters and their various diacritic-adorned versions, it does not include the various punctuation or digits (since they are not solelylatin).
+the warnings issued by file::find now belong to their own category.
+because perlio is now the default on most platforms, "-perlio" doesn't get appended to the $config{archname} (also known as $^o) anymore.
+in case you are still using solaris 2.5 (aka sunos 5.5), you may experience failures (the test core dumping) in lib/locale.t.
+for (1..5) { $_++ } works without complaint.
+self-tying of arrays and hashes is broken in rather deep and hard-to-fix ways.
+this shouldn't be too difficult for module authors, however: perlio has been designed as a drop-in replacement (at the source code level) for the stdio interface.
+the comparison block is now run in scalar context, and the arguments to be sorted are always provided list context.
+the perl header files no longer suppress common warnings from the microsoft visual c++ compiler.
+also individual keys can be restricted so that the key cannot be deleted and the value cannot be changed.
+with ithreads, when a new thread is created, all perl data is cloned, however non-perl data cannot be cloned automatically.
+the magic constants (e.g. 'p') have been macrofied (e.g. perl_magic_tied) for better source code readability and maintainability.
+the prototypes are now checked better at compile-time for invalid syntax.
+currently only printf() is tested: how to output various basic data types from xs.
+localised tied variables no longer leak memory use tie::hash; tie my %tied_hash => 'tie::stdhash'; ... # used to leak memory every time local() was called; # in a loop, this added up.
+file::glob::glob() has been renamed to file::glob::bsd_glob() because the name clashes with the builtinglob().
+you can now install coderef handlers, 'default', and 'ignore' handlers, installing new handlers was not atomic.
+the exec list and system list operations now produce warnings on tainted data and in some future release they will produce fatal errors.
+all thread tests of perl now work, but not without adding some yield()s to the tests, so while pth (and other userlevel thread implementations) can be considered to be "working" with perl ithreads, keep in mind the possible non-preemptability of the underlying thread implementation.
+if your pointers are 64 bits wide, the perl malloc is no longer being used because it does not work well with 8-byte pointers.
+generating illegal unicode code points such as u+fffe, or the utf-16 surrogates, now also generates an optional warning.
+glob() now returns filenames in alphabetical order the list of filenames from glob() (or ) is now by default sorted alphabetically to be csh-compliant (which is what happened before in most unix platforms).
+note that the 5.005 threads are unsupported and deprecated: if you have code written for the old threads you should migrate it to the new ithreads model.
+building microperl does not require even running configure; make -f makefile.micro should be enough.
+devel::peek now has an interface for the perl memory statistics (this works only if you are using perl's malloc, and if you have compiled with debugging).
+if you see op/pack, op/pat, op/regexp, or ext/storable tests failing in a linux/alpha or *bsd/alpha, it's probably time to upgrade your gcc.
+localising tied arrays and hashes is broken local %tied_array; doesn't work as one would expect: the old value is restored incorrectly.
+note that the above of course is extremely disruptive for anything using the /usr/local/bin/perl.
+[561] warnings::enabled() now reports the state of $^w correctly if the caller isn't using lexical warnings.
+perl now uses ieee format (t_float) as the default internal floating point format on openvms alpha, potentially breaking binary compatibility with external libraries or existing data.
+perl 5.6.0 parsed m/\x{ab}/ incorrectly, leading to spurious warnings.
+if perl is configured with -duse64bitall, the successful result of the subtest 10 of lib/posix may arrive before the successful result of the subtest 9, which confuses the test harness so much that it thinks the subtest 9 failed.
+the quicksort divide and conquer strategy works well on platforms with relatively small, very fast, caches.
+it can be used to prepend site-specific directories to perl's default search path (@inc); see install for information.
+cert and various vendors and distributors have been alerted about the vulnerability.
+the waitpid emulation has been improved.
+this results hopefully in more accurate numbers.
+the constant and embed are probably problems in the tests (since they test perl's ability to build extensions, and that seems to be working reasonably well.)
+memoize can make your functions faster by trading space for time, from mark-jason dominus.
+scripts are similar to (and superior to) unicodeblocks.
+the constant and embed are probably problems in the tests (since they test perl's ability to build extensions, and that seems to be working reasonably well.)
+[561] linux previously had problems related to sockaddrlen when using accept(), recvfrom() (in perl: recv()), getpeername() , and getsockname().
+local %tied_array; doesn't work as one would expect: the old value is restored incorrectly.
+your bug report, along with the output of perl -v, will be sent off to perlbug@perl.org to be analysed by the perl porting team.
+its semantics were never that clear and its implementation even less so.
+in aix 4.2, perl extensions that use c++ functions that use statics may have problems in that the statics are not getting initialized.
+the install file for how to build perl.
+additional bonuses are that the worst case behaviour of sort() is now better (in computer science terms it now runs in time o(n log n), as opposed to quicksort's theta(n**2) worst-case run time behaviour), and that sort() is now stable (meaning that elements with identical keys will stay ordered as they were before the sort).
+the pat, tr, and fold failures are genuine perl problems caused by ebcdic (and in the pat and fold cases, combining that with unicode).
+in search::dict one can now have a pre-processing hook for the lines being searched.
+autoloader can now be disabled with no autoloader;.
+updated and improved modules and pragmata the following independently supported modules have been updated to the newest versions from cpan: cgi, cpan, db_file, file::spec, file::temp, getopt::long, math::bigfloat, math::bigint, the podlators bundle (pod::man, pod::text), pod::latex
+eventually, the problem gets whittled down to one that fits in the cache, from which point it benefits from the increased memory speed.
+better chdir() return value for a non-existent directory.
+the very dusty examples in the eg/ directory have been removed.
+you can move the old perl shared library out of the way like this: cd /library/perl/darwin/core mv libperl.dylib libperlold.dylib and then reissue "make install".
+( http://www.freebsd.org/cgi/query-pr.cgi?pr=34308 ) irix fails ext/list/util/t/shuffle.t or digest::md5 irix with mipspro 7.3.1.2m or 7.3.1.3m compiler may fail the list::util test ext/list/util/t/shuffle.t by dumping core.
+configure -s can now run non-interactively.
+this is only meant as a temporary debugging aid while securing the code of old legacy applications.
+h2xs now uses devel::ppport for better portability between different versions of perl.
+building microperl does not require even running configure;make -f makefile.micro should be enough.
+utf-16 and ucs-2 encoded perl files should now be read correctly.
+perlio allows "layers" to be "pushed" onto a file handle to alter the handle's behaviour.
+[561] can now send() from all threads, not just the first one.
+chop(@list) in list context returned the characters chopped in reverse order.
+for example, if you reallydon't care about the order of even and odd digits, quicksort will run in o(n) time; it's very good at sorting many repetitions of a small number of distinct elements.
+suggestions for new shiny examples welcome but the main issue is that the examples need to be documented, tested and (most importantly) maintained.
+it also sends the bug report to perl.org, not perl.com.
+in general, scripts are more inclusive, but not universally so.
+perl5db.t was also added to test the changes, and as a placeholder for further tests.
+time::hires, by douglas e. wegscheid, provides high resolution timing (ualarm, usleep, and gettimeofday).
+the cure is to drop optimization level (configure -doptimize=-o2).
+with these, you can implement rather advanced parsing algorithms.
+on the other hand, perl will now execute code such as system("c:/program files/myapp/foo.exe", @args) correctly.
+it seems that for some reason "make install" doesn't always completely overwrite the files in /library/perl.
+these are not new failures--perl 5.005_0x has the same bugs, but didn't have these tests.
+this did not work reliably in previous releases.
+you won't notice this for small arrays, but you will notice it with larger arrays, and you may not live long enough for the sort to complete on arrays of a million elements.
+$autoload, sort(), lock(), and spawning subprocesses in multiple threads simultaneously are now thread-safe.
+in particular,caller() now returns a subroutine name of(unknown) for subroutines that have been removed from the symbol table.
+some platforms that used to use gcvt may now resort to the slower sprintf.
+non-blocking waits for child processes (or pseudo-processes) are supported via waitpid($pid, &posix::wnohang).
+not only is the current interface rather ugly, but the current implementation slows down normal array and hash use quite noticeably.
+mergesort has worst case o(n log n) behaviour, the best value attainable.
+so, as you add more and more digits of pi, the order in which the sorted even and odd digits appear will change.
+win32 in multi-cpu boxes, there are some problems with the i/o buffering: some output may appear twice.
+when perl is built using the native build process on vos release 14.5.0 and gnu c++/gnu tools 2.0.1, all attempted tests either pass or result in todo (ignored) failures.
+previously dynix/ptx had problems in its configure probe for non-blocking i/o. epoc epoc now better supported.
+therestricted hashes interface is expected to be the replacement interface (seethe hash::util manpage).
+because in effect storable does serialisation of perl data structures, with it you can also clone deep, hierarchical datastructures.
+the previous behaviour of ignoring them by default and warning if requested was unacceptable since it, in a way, falsely promised that the features could be used.
+[561] html files will now be installed in c:\perl\html instead of c:\perl\lib\pod\html reg_expand_sz keys are now allowed in registry settings used by perl.
+the information is attached to the new offsets member of the struct regexp.
+extutils::constant, by nicholas clark, is a new tool for extension writers for generating xs code to import c header constants.
+[561] new %env entries now propagate to subprocesses.
+for developers interested in enhancing perl's unicode capabilities: almost all the ucd files are included with the perl distribution in thelib/unicore subdirectory.
+also, usually the system mallocs on such platforms are much better optimized for such large memory models than the perl malloc.
+chop(@list) in list context returned the characters chopped in reverse order.
+install now explains how you can configure perl to use 64-bit integers even on non-64-bit platforms.
+during configure, the test guessing which symbols your c compiler and preprocessor define... will probably fail with error messages like cc-20 cc:
+the following tests may fail intermittently because of timing problems, for example if the system is heavily loaded.
+caller() could cause core dumps in certain situations.
+windows signal handling now works better than it used to.
+perl will now first finish whatever it was doing, like finishing an internal operation (like sort()) or an external operation (like an i/o operation), and only then look at any arrived signals (and before starting the next operation).
+[561] sort() is also fully reentrant, in the sense that the sort function can itself callsort().
+perlpodspec is a more formal specification of the pod format, mainly of interest for writers of pod applications, not to people writing in pod.
+(it is in fact a full implementation of sed in perl: you can use the sed functionality by using the psed utility.)
+if after installing perl 5.8.0 you are getting warnings about missing symbols, for example dyld: perl undefined symbols _perl_sv_2pv _perl_get_sv you probably have an old pre-perl-5.8.0 installation (or parts of one) in /library/
+[561] utime now supports utime undef, undef, @files to change the file timestamps to the current time.
+on linux platforms the /bin/mail program had an undocumented feature which when combined with suidperl gave access to a root shell, resulting in a serious compromise instead of reporting the exploit attempt.
+note that the above of course is extremely disruptive for anything using the /usr/local/bin/perl.
+pod2html now allows specifying a cache directory.
+some memory-hungry perl applications like the pdl don't work well with perl's malloc.
+so you really might prefer native builds and long filenames.
+this means that additional warnings may now show up when compiling xs code.
+the difference between scripts and blocks is that scripts are the glyphs used by a language or a group of languages, while the blocks are more artificial groupings of (mostly) 256 characters based on the unicode numbering.
+handlers can be specific to type (scalar, array, hash, or code), or specific to the exact compilation phase (begin, check, init, or end).
+[561] file::find now has pre- and post-processing callbacks.
+this change may have surprising side effects because signals no longer interrupt perl instantly.
+[561+] right-hand side magic (gmagic) could in many cases such as string concatenation be invoked too many times.
+it also correctly changes directories when chasing symbolic links.
+(basically what happens is that competing threads can corrupt shared global state, one good example being regular expression engine's state.)
+no more corrupt internal state since the current operation is always finished first, but the signal may take more time to get heard.
+this probably means that you are trying to use an older shared perl library (or extensions linked with such) with perl 5.8.0 executable.
+solaris x86 fails tests with -duse64bitint the following tests are known to fail in solaris x86 with perl configured to use 64 bit integers: ext/data/dumper/t/dumper.............failed at test 268 ext/devel/peek/peek..................failed at test 7 super-ux (nec sx)
+perl -d:module=arg,arg,arg now works (previously one couldn't pass in multiple arguments.)
+boms (byte order marks) at the beginning of perl files (scripts, modules) should now be transparently skipped.
+the worst bug (now fixed) was that a pid of -1 would cause a wildcard search of all processes on the system.
+perlmodstyle is a style guide for writing modules.
+similarly, building the digest::md5 extension has been known to fail with "*** termination code 139 (bu21)".
+tie::memoize, by ilya zakharevich, provides on-demand loaded hashes.
+perl has been tested with the gnu pth userlevel thread package ( http://www.gnu.org/software/pth/pth.html ).
+the re engine found in perl 5.6.0 accidentally pessimised certain kinds of simple pattern matches.
+mac os classic compilation of the standard perl distribution in mac os classic should now work if you have the metrowerks development environment and the missing mac-specific toolkit bits.
+file::glob::glob() has been renamed to file::glob::bsd_glob() because the name clashes with the builtin glob().
+a version of net::ping::external is available in cpan.
+the only exception is that ain prefix is required to signify a unicode block when a block name conflicts with a script name.
+you will need a thread library package installed.
+[561] file::glob now supports glob_limit constant to limit the size of the returned list of filenames.
+it can now deparse almost all of the standard test suite (so that the tests still succeed).
+myvariables now handled at run-time the my expr : attrs syntax now applies variable attributes at run-time.
+this may or may not be a problem with ancient tcp/ip stacks of vms: we do not know since we weren't able to test perl in such configurations.
+perl -d:module=arg,arg,arg now works (previously one couldn't pass in multiple arguments.)
+the worst bug (now fixed) was that a pid of -1 would cause a wildcard search of all processes on the system.
+its semantics were never that clear and its implementation even less so.
+this means that they will be more robust and hopefully faster.
+one can have unicode in identifier names, but not in package/class or subroutine names.
+the (bogus) escape sequences \8 and \9 now give an optional warning ("unrecognized escape passed through").
+it can now deparse almost all of the standard test suite (so that the tests still succeed).
+if you intend to run only on fat (or if using anydbm_file on fat), run configure with the -ui_ndbm and -ui_dbm options to prevent ndbm_file and odbm_file being built.
+if tr/// is just counting characters, it doesn't attempt to modify its target.
+the existing behaviour when localising tied arrays and hashes is wrong, and will be changed in a future release, so do not rely on the existing behaviour.
+the system function and backticks operator have improved functionality and better error handling.
+it also sends the bug report to perl.org, not perl.com.
+this improves the portability of system(@args) by avoiding the need for windows cmd shell specific quoting in perl programs.
+[561] file access tests now use current process privileges rather than the user's default privileges, which could sometimes result in a mismatch between reported access and actual access.
+if you see op/pack, op/pat, op/regexp, or ext/storable tests failing in a linux/alpha or *bsd/alpha, it's probably time to upgrade your gcc.
+test 91 is known to fail on qnx6 (nto), because sprintf '%e',0 incorrectly produces 0.000000e+0 instead of 0.000000e+00 .
+now perl postpones handling of signals until it's safe (between opcodes).
+it points at some problems with the signedness handling of the c compiler, as do the 64bitint, arith, and pow failures.
+encode, originally by nick ing-simmons and now maintained by dan kogai, provides a mechanism to translate between different character encodings.
+in sys::syslog there is now a failover mechanism that will go through alternative connection mechanisms until the message is successfully logged.
+if this test fails, it indicates that your libc (c library) is not threadsafe.
+when there is no name conflict, you can omit the in from the block name (e.g. \p{braillepatterns}), but to be safe, it's probably best to always use the in).
+removing directories with 'no lib' now works.
+utf-16 and ucs-2 encoded perl files should now be read correctly.
+\$bar[1] will assign undef to $bar[1] (assuming that it didn't exist before), but for tied/magical arrays and hashes such autovivification does not happen because there is currently no way to catch the reference creation.
+since there are not that many amiga developers available, we could not get this fixed and tested in time for 5.8.0.
+perlclib documents the internal replacements for standard c library functions.
+irix numerous compilation flag and hint enhancements; accidental mixing of 32-bit and 64-bit libraries (a doomed attempt) made much harder.
+the unicode character database coming with perl has been upgraded to unicode 3.2.0.
+the utf8:: name space (as in the pragma) provides various perl-callable functions to provide low level access to perl's internal unicode representation.
+also, $config{byteorder} is now computed dynamically--this is more robust with "fat binaries" where an executable image contains binaries for more than one binary platform, and when cross-compiling.
+[561] pack() / unpack() can now group template letters with () and then apply repetition/count modifiers on the groups.
+file handles can be opened to "in memory" files held in perl scalars via: open($fh,'>', \$variable) ||
+it will be called in the context of the new thread, so all modifications are made in the new area.
+in sdbm_file on dosish platforms, some keys went missing because of lack of support for files with "holes".
+failed tests 128-130 op/pack...............................failed tests 25-5625 op/pow................................ op/taint..............................# msgsnd failed ../ext/io/lib/io/t/io_poll............failed tests 3-4 ../ext/ipc/sysv/ipcsysv...............failed tests 2, 5-6 ../ext/ipc/sysv/t/msg.................failed tests 2, 4-6 ../ext/
+this is admittedly not a clean solution, and the solution may not even work at all.
+the english module can now be used without the infamous performance hit by saying use english '-no_match_vars'; (assuming, of course, that you don't need the troublesome variables @last_match_start and @last_match_end english aliases for $`, $&, or $'.)
+the socketpair tests are known to be unhappy in sco 3.2v5.0.4: ext/socket/socketpair.t...............failed tests 15-45 solaris 2.5
+lexicals ii: lexicals leaked at file scope into subroutines that were declared before the lexicals.
+also individual keys can be restricted so that the key cannot be deleted and the value cannot be changed.
+installperl now outputs everything to stderr.
+10 1 10.00% 4 op/flip.t 15 1 6.67% 15 these failures are unlikely to get fixed as 5.005-style threads are considered fundamentally broken.
+this change may have surprising side effects because signals no longer interrupt perl instantly.
+pl are now checked for sanity much more carefully than before.
+if perl is configured with -duse64bitall, the successful result of the subtest 10 of lib/posix may arrive before the successful result of the subtest 9, which confuses the test harness so much that it thinks the subtest 9 failed.
+the obsolete chat2 library that should never have been allowed to escape the laboratory has been decommissioned.
+for tests 129 and 130, the failing platforms do not comply with the ansi c standard: lines 19ff on page 134 of ansi x3.159 1989, to be exact.
+the same problem affects slicing over non-existent indices/keys of a tied/magical array/hash.
+this improvement is only available on vms v6.0 and later.
+the obsolete method of making a special (e.g., debugging) flavor of perl by saying make libperl=libperld.a has been removed.
+[561] wait(), waitpid(), and backticks now return the correct exit status under windows 9x.
+(bsd_glob() does still sort platform natively, ascii or ebcdic, unless glob_alphasort is specified.)
+the perl5opt environment variable (for passing command line arguments to perl) didn't work for more than a single group of options.
+the following tests fail on 5.8.0 perl in beos personal 5.03: t/op/lfs............................failed at test 17 t/op/magic..........................failed at test 24 ext/fcntl/t/syslfs..................failed at test 17 ext/file/glob/t/basic...............failed at test 3 ext/posix/t/sigaction...............failed at test 13 ext/posix/t/waitpid.................failed at test 1
+(y with diaeresis) and \xbe (y with diaeresis) not behaving correctly when being matched case-insensitively.
+gcc needs to closely track the operating system release to avoid build problems.
+carp was sometimes affected by this problem.
+perlio::via, by nick ing-simmons, acts as a perlio layer and wraps perlio layer functionality provided by a class (typically implemented in perl code).
+(utf-8 has not been made the default since there are many perl scripts out there that are using various national eight-bit character sets, which would be illegal in utf-8.)
+[561] "our" variables of the same name declared in two sibling blocks resulted in bogus warnings about "redeclaration" of the variables.
+the exploit attempt reporting feature has been completely removed from perl 5.8.0 (and the maintenance release 5.6.1, and it was removed also from all the perl 5.7 releases), so that particular vulnerability isn't there anymore.
+note that this means that some scripts that may have relied on earlier buggy behavior may no longer work correctly.
+xml::parser not working use xml::parser 2.31 or later.
+[561] file::spec->tmpdir() now prefers c:/temp over /tmp (works better when perl is running as service).
+the documentation for the wince platform is called perlce (readme.ce in the source code kit), to avoid confusion with the perlwin32 documentation on 8.3-restricted filesystems.
+in other words: you just have to recompile your modules containing xs code, sorry about that.
+clone will be executed once for every package that has it defined or inherited.
+note, however, that their prototype (as given by prototype("core::chomp") is undefined, because it cannot be expressed and therefore one cannot really write replacements to override these builtins.
+unicode can be used in hash keys, unicode in regular expressions should work now, unicode in tr/// should work now, unicode in i/o should work now.
+the pat, tr, and fold failures are genuine perl problems caused by ebcdic (and in the pat and fold cases, combining that with unicode).
+iterative logical name translations are now limited to 10 iterations in imitation of show logical and other openvms facilities.
+[561] readline() on files opened in "slurp" mode could return an extra "" (blank line) at the end in certain situations.
+data::dumper now has an option to sort hashes.
+this feature helps in writing internationalised software, and in general when the order of the parameters can vary.
+in other taint news, the exec list and system list have now been considered too risky (think exec @argv: it can start any program with any arguments), and now the said forms cause a warning under lexical warnings.
+vos (stratus) when perl is built using the native build process on vos release 14.5.0 and gnu c++/gnu tools 2.0.1, all attempted tests either pass or result in todo (ignored) failures.
+now xsubs can have attributes just like subs.
+the core-dumping functionality will remain in future available as an explicit call tocore::dump(), but in future releases the behaviour of an unqualifieddump() call may change.
+using the /g modifier in split() is meaningless and will cause a warning.
+the major reason for the discontinuity is the new io architecture called perlio.
+highlights in 5.8.0 perl 5.8 is not binary compatible with earlier releases of perl.
+perl will now first finish whatever it was doing, like finishing an internal operation (like sort()) or an external operation (like an i/o operation), and only then look at any arrived signals (and before starting the next operation).
+note that some of the net::ping tests are disabled when running under the perl distribution since one cannot assume one or more of the following: enabled echo port at localhost, full internet connectivity, or sympathetic firewalls.
+\$bar[1] will assign undef to $bar[1] (assuming that it didn't exist before), but for tied/magical arrays and hashes such autovivification does not happen because there is currently no way to catch the reference creation.
+... anonymous temporary files are available without need to 'use filehandle' or other module via open($fh,"+>", undef) ||
+[561] numeric conversions did not recognize changes in the string value properly in certain circumstances.
+note that the new semantics doesn't work with the attribute::handlers module (as of version 0.76).
+[561] printing quads (64-bit integers) with printf/sprintf now works without the q l ll prefixes (assuming you are on a quad-capable platform).
+a failure (think chdir(some_function()) can lead into unintended chdir() to the home directory, therefore this behaviour is deprecated.
+if that doesn't help, you may have to try removing all the .bundle files from beneath /library/perl, and again "make install"-ing.
+be sure to trim your bug down to a tiny but sufficient test case.
+[561] warnings::enabled() now reports the state of $^w correctly if the caller isn't using lexical warnings.
+the shell module now has an oo interface.
+[561] numeric conversions did not recognize changes in the string value properly in certain circumstances.
+the my expr : attrs syntax now applies variable attributes at run-time.
+because in effect storable does serialisation of perl data structures, with it you can also clone deep, hierarchical datastructures.
+lstat(filehandle) now gives a warning because the operation makes no sense.
+quicksort has a worst case run time that can grow like n**2, so-calledquadratic behaviour, and it can happen on patterns that may well arise in normal use.
+as a part of the ithreads implementation perl will also use any necessary and detectable reentrant libc interfaces.
+chdir() now works better despite a crt bug; now works with multiplicity (see install); now works with perl's malloc.
+failure of thread (5.005-style) tests note that support for 5.005-style threading is deprecated, experimental and practically unsupported.
+the debugger can now show lexical variables if you have the cpan module padwalker installed.
+this enables the new behaviour for perl embedders.
+using splice() past the end of an array now causes a warning.
+[561] html files will now be installed in c:\perl\html instead of c:\perl\lib\pod\html
+tie::memoize, by ilya zakharevich, provides on-demand loaded hashes.
+the debugger can now show lexical variables if you have the cpan module padwalker installed.
+[561] zero entries were missing from the unicode classes such as isdigit .
+for example, if you reallydon't care about the order of even and odd digits, quicksort will run in o(n) time; it's very good at sorting many repetitions of a small number of distinct elements.
+malformed unicode encodings (utf-8 and utf-16) cause a lot of warnings, as does trying to use utf-16 surrogates (which are unimplemented).
+more appropriate mechanisms for selecting the implementation exist, but they wouldn't have arrived in time to save quicksort.
+the output is highly customisable.
+these will get installed as perljp perlko perlcn perltw
+this is caused by darwin's ufs not supporting inode change time.
+mkdir() now ignores trailing slashes in the directory name, as mandated by posix.
+quicksort was rescued by implementing a sort pragma to control aspects of the sort.
+[561] autovivification of symbolic references of special variables described in the perlvar manpage (as in ${$num}) was accidentally disabled.
+mac os x please remember to set your environment variable lc_all to "c" (setenv lc_all c) before running "make test" to avoid a lot of warnings about the broken locales of mac os x.
+[561] the autouse pragma didn't work for multi::part::function::names.
+in versions 5.004_01 through 5.6.0, the error was in string, @example now must be written as \@example the idea here was to get people into the habit of writing "fred\@example.com" when they wanted a literal @ sign, just as they have always written"give me back my \$5" when they wanted a literal $ sign.
+nothing gets installed, but the code is worth studying for extension writers.
+attributes::reftype() now works on tied arguments.
+it broke at some point during the ithreads work and we could not find amiga experts to unbreak the problems.
+[561] perlivp is a new installation verification procedure utility for running any time after installing perl.
+on a really fast machine you can hope to finish the suite in about 6-8 minutes (wallclock time).
+the debugger has a new dumpdepth option to control the maximum depth to which nested structures are dumped.
+now perl postpones handling of signals until it's safe (between opcodes).
+although "you shouldn't do that", it was possible to write code that depends on perl's hashed key order (data::dumper does this).
+the same problem affects slicing over non-existent indices/keys of a tied/magical array/hash.
+note, however, that their prototype (as given by prototype("core::chomp") is undefined, because it cannot be expressed and therefore one cannot really write replacements to override these builtins.
+our() variables will not cause bogus "variable will not stay shared" warnings.
+the performance has been improved for common scenarios.
+trying to use unicode characters on an i/o stream without marking the stream's encoding (using open() or binmode()) will cause "wide character" warnings.
+also, $config{byteorder} is now computed dynamically--this is more robust with "fat binaries" where an executable image contains binaries for more than one binary platform, and when cross-compiling.
+the leading _ is a reminder that these subpragmas may not survive beyond 5.8.
+the test module has been significantly enhanced.
+perl 5.8 unfortunately does not build anymore on amigaos; this broke accidentally at some point.
+perl now tries internally to use integer values in numeric conversions and basic arithmetics (+ - * /) if the arguments are integers, and tries also to keep the results stored internally as integers.
+{ s/ $from/$to/g; } }; 1; # in user's code: use myfilter qr/red/ => 'green'; print "red\n"; # this code is filtered, will print "green\n" print "bored\n"; # this code is filtered, will print "bogreen\n" no myfilter; print "red\n"; # this code is not filtered, will print "red\n" file::temp, by tim jenness, allows one to create temporary files and directories in an easy, portable, and secure way.
+this was found to be an inconvenient interface, and in perl 5.8 the unicode model has completely changed: now the "unicodeness" is bound to the data itself, and for most of the time "use utf8" is not needed at all.
+hash values output from the algorithm on a hash of all 3-char printable ascii keys comes much closer to passing the diehard random number generation tests.
+many of the new tests are of course introduced by the new modules, but still in general perl is now more thoroughly tested.
+the tr///c and tr///u features have been removed and will not return; the interface was a mistake.
+the system function and backticks operator have improved functionality and better error handling.
+in any case, suidperl should only be used by security experts who know exactly what they are doing and why they are using suidperl instead of some other solution such as sudo ( seehttp://www.courtesan.com/sudo/ ).
+the prototypes are now checked better at compile-time for invalid syntax.
+we suggest upgrading to at least vac version 5.0.1.0, that has been known to compile perl correctly.
+(subroutine and our variables still get attributes applied at compile-time.)
+turning off "clrfness" is no longer enough to make a stream truly binary.
+[561] configure.gnu now works with options with whitespace in them.
+the thread extension is now not built at all under ithreads ( configure -duseithreads) because it wouldn't work anyway (the thread extension requires being configured with -duse5005threads).
+as a stop-gap measure to avoid people from getting frustrated at the mysterious results (core dumps, most often), it is forbidden for now (you will get a fatal error even from an attempt).
+extutils::makemaker has been significantly cleaned up and fixed.
+perlutil explains the command line utilities packaged with the perl distribution.
+you will now need an explicit untie to destroy a self-tied glob.
+it seems that for some reason "make install" doesn't always completely overwrite the files in /library/perl.
+the builtin dump() function has probably outlived most of its usefulness.
+if you find what you think is a bug, you might check the articles recently posted to the comp.lang.perl.misc newsgroup and the perl bug database at http://bugs.perl.org/ .
+see the perlmod manpage attribute::handlers, originally by damian conway and now maintained by arthur bergman, allows a class to define attribute handlers.
+modules may fail to compile at all, or they may compile and work incorrectly.
+internally, the execution of end blocks is now controlled by pl_exit_flags & perl_exit_destruct_end.
+[561] configure support for pdp11-style memory models has been removed due to obsolescence.
+file handles can translate character encodings from/to perl's internal unicode form on read/write via the ":encoding()" layer.
+mime::quotedprint, by gisle aas, allows you to encode data in quoted-printable encoding, as defined inrfc 2045 - mime (multipurpose internet mail extensions).
+834 845 op/sprintf.t 224 3 1.34% 98 100 136 op/tr.t 97 5 5.15% 63 71-74 uni/fold.t 780 6 0.77% 61 169 196 661 710-711 the failures in dumper.t and downgrade.t are problems in the tests, those in io_unix and sprintf are problems in the uss (udp sockets and printf formats).
+this results hopefully in more accurate numbers.
+using the /g modifier in split() is meaningless and will cause a warning.
+this affects builds with-duselongdouble.
+perlutil explains the command line utilities packaged with the perl distribution.
+the tr///c and tr///u features have been removed and will not return; the interface was a mistake.
+... anonymous temporary files are available without need to 'use filehandle' or other module via open($fh,"+>", undef) ||
+if you have gcc 3, there is a make target called "perl.gcov" for creating a gcoved perl executable for coverage analysis.
+perl 5.8 unfortunately does not build anymore on amigaos; this broke accidentally at some point.
+[561+] the new bignum, bigint, and bigrat pragmas, by tels, implement transparent bignum support (using the math::bigint, math::bigfloat, and math::bigrat backends).
+if your file system supports symbolic links, you can build perl outside of the source directory by mkdir perl/build/directory cd perl/build/directory sh /path/to/perl/source/configure -dmksymlinks ...
+on linux platforms the /bin/mail program had an undocumented feature which when combined with suidperl gave access to a root shell, resulting in a serious compromise instead of reporting the exploit attempt.
+(basically what happens is that competing threads can corrupt shared global state, one good example being regular expression engine's state.)
+perlpodspec is a more formal specification of the pod format, mainly of interest for writers of pod applications, not to people writing in pod.
+map() could get pathologically slow when the result list it generates is larger than the source list.
+the x command has been extended so that x n expr dumps out the value of expr to a depth of at mostn levels.
+[561] configure no longer includes the dbm libraries (dbm, gdbm, db, ndbm) when building the perl binary.
+also, introduced @last_match_start and @last_match_end english aliases for @- and @+.
+with these, you can implement rather advanced parsing algorithms.
+file handles can be marked as accepting perl's internal encoding of unicode (utf-8 or utf-ebcdic depending on platform) by a pseudo layer ":utf8" : open($fh,">:utf8","uni.txt"); note for ebcdic users: the pseudo layer ":utf8" is erroneously named for you since it's not utf-8 what you will be getting but instead utf-ebcdic.
+use of the /c match modifier without an accompanying /g modifier elicits a new warning: use of /c modifier is meaningless without /g.
+any encoding supported by encode module is also available to the ":encoding()" layer if perlio is used.
+no more corrupt internal state since the current operation is always finished first, but the signal may take more time to get heard.
+memoize can make your functions faster by trading space for time, from mark-jason dominus.
+vac 5.0.0.0 may produce buggy code for perl the aix c compiler vac version 5.0.0.0 may produce buggy code, resulting in a few random tests failing when run as part of "make test", but when the failing tests are run by hand, they succeed.
+you can enable/disable them with use/no warnings 'file::find';.
+[561+] right-hand side magic (gmagic) could in many cases such as string concatenation be invoked too many times.
+end blocks are now run even if you exit/die in a begin block.
+this feature helps in writing internationalised software, and in general when the order of the parameters can vary.
+in clone you can do whatever you need to do, like for example handle the cloning of non-perl data, if necessary.
+you can ignore the error, but it does cause a slight problem: you cannot fully benefit from the h2ph utility (seeh2ph) that can be used to convert c headers to perl libraries, mainly used to be able to access from perl the constants defined using c preprocessor, cpp.
+for developers interested in enhancing perl's unicode capabilities: almost all the ucd files are included with the perl distribution in thelib/unicore subdirectory.
+if building threaded perl, you may get compilation warning from pp_sys.c: "pp_sys.c", line 4651.39: 1506-280 (w) function argument assignment between types "unsigned char*" and "const void*" is not allowed.
+this will create in perl/build/directory a tree of symbolic links pointing to files in /path/to/perl/source.
+since the new code is more correct (if you have two constants where the first one is a prefix of the second one, the first constantnever got defined), less lossy (it uses integers for integer constant, as opposed to the old code that used floating point numbers even for integer constants), and slightly faster, you might want to consider regenerating your extension code (the new scheme makes regenerating easy).h2xs now also supports c trigraphs.
+failed at test 3 t/op/inccode.........................(crash) and a few lib/extutils tests, and several hundred encode/t/aliases.t failures that work fine with long filenames.
+if tr/// is just counting characters, it doesn't attempt to modify its target.
+unshift() should now be noticeably faster.
+[561] duping socket handles with open(f, ">&mysock") now works under windows 9x.
+the existing behaviour when localising tied arrays and hashes is wrong, and will be changed in a future release, so do not rely on the existing behaviour.
+math::complex handles inf, nan etc., better.
+in particular binmode(fh) - and hence:raw - will now turn off both crlf and utf-8 translation and remove other layers (e.g. :encoding()) which would modify byte stream.
+they are now magnitudes faster, and they support various bignum libraries such as gmp and pari as their backends.
+perl 5.6.0 could emit spurious warnings about redefinition of dl_error() when statically building extensions into perl.
+failing locale test 117 for iso 8859-15 locales the iso 8859-15 locales may fail the locale test 117 in freebsd.
+generating illegal unicode code points such as u+fffe, or the utf-16 surrogates, now also generates an optional warning.
+if this test fails, it indicates that your libc (c library) is not threadsafe.
+unadorned dump() will now give a warning suggesting to use explicit core::dump() if that's what really is meant.
+in particular, however, this allows variable attributes to be useful fortie interfaces, which was a deficiency of earlier releases.
+our can now have an experimental optional attribute unique that affects how global variables are shared among multiple interpreters, seeour in the perlfunc manpage.
+warnings relating to the use interpreter threads and their shared data have been added.
+[561] pack() / unpack() can now group template letters with ()and then apply repetition/count modifiers on the groups.
+the perl5opt environment variable (for passing command line arguments to perl) didn't work for more than a single group of options.
+note that breaking out from potentially blocking operations should still work, though.
+in some setups the former has been known to spuriously also try to run "make install".
+the major reason for the discontinuity is the new io architecture called perlio.
+carp now has better interface documentation, and the @carp_not interface has been added to get optional control over where errors are reported independently of @isa, by ben tilly.
+use warnings qw(fatal all) did not work as intended.
+[561] some "not a number" warnings introduced in 5.6.0 eliminated to be more compatible with 5.005.
+the "plugins" are named as usual, for example perlio::via::quotedprint.
+[561] readline() on files opened in "slurp" mode could return an extra "" (blank line) at the end in certain situations.
+localised tied variables no longer leak memory use tie::hash; tie my %tied_hash => 'tie::stdhash'; ... # used to leak memory every time local() was called; # in a loop, this added up.
+it converts pod data to formatted overstrike text.
+large unsigned numbers (those above 2**31) could sometimes lose their unsignedness, causing bogus results in arithmetic operations.
+one such known spot are the\p{} and \p{} regular expression constructs for code points less than 256: thepp are testing for unicode code points, not knowing about ebcdic.
+if you intend to run only on fat (or if using anydbm_file on fat), run configure with the -ui_ndbm and -ui_dbm options to prevent ndbm_file and odbm_file being built.
+what this means is that in list context the functions will return only three values, not four.
+interpreter threads (ithreads) is the new thread model introduced in perl 5.6 but only available as an internal interface for extension writers (and for win32 perl forfork() emulation).
+do followed by a bareword now ensures that this bareword isn't a keyword (to avoid a bug wheredo q(foo.pl) tried to call a subroutine calledq).
+the leading_ is a reminder that these subpragmas may not survive beyond 5.8.
+( http://www.freebsd.org/cgi/query-pr.cgi?pr=34308 ) irix with mipspro 7.3.1.2m or 7.3.1.3m compiler may fail the list::util test ext/list/util/t/shuffle.t by dumping core.
+the re engine found in perl 5.6.0 accidentally pessimised certain kinds of simple pattern matches.
+return broken values, and therefore in aix 4.2 perl is not linked against libc_r.
+unicode can be used in hash keys, unicode in regular expressions should work now, unicode in tr/// should work now, unicode in i/o should work now.
+compiling with gcc still not recommended because buggy code results, even with gcc 2.95.2.
+the builtin dump() function has probably outlived most of its usefulness.
+this was caused by perl's using the operating system libraries in a situation where the result of the string to number conversion is undefined: now perl consistently handles such strings as zero in numeric contexts.
+note that breaking out from potentially blocking operations should still work, though.
+and, for sufficiently large slices of pi, the quicksort algorithm in perl 5.8 won't return the same results even if reinvoked with the same input.
+memoize/t/tie_ndbm.t 13 3328 4 4 100.00% 1-4 run/fresh_perl.t 97 1 1.03% 91 ndbm_file fails and odbm_file just coredumps.
+time::piece (previously known as time::object) was removed because it was felt that it didn't have enough value in it to be a core module.
+so you really might prefer native builds and long filenames.
+it will be called in the context of the new thread, so all modifications are made in the new area.
+beware: microperl makes many assumptions, some of which may be too bold; the resulting executable may crash or otherwise misbehave in wondrous ways.
+unadorned dump() will now give a warning suggesting to use explicit core::dump() if that's what really is meant.
+[561] configure support for pdp11-style memory models has been removed due to obsolescence.
+this did not work reliably in previous releases.
+net::ping has been considerably enhanced by rob brown: multihoming is now supported, win32 functionality is better, there is now time measuring functionality (optionally high-resolution using time::hires), and there is now "external" protocol which uses net::ping::external module which runs your external ping utility and parses the output.
+test::simple, by michael schwern, has basic utilities for writing tests.
+this algorithm is reasonably fast while producing a much better spread of values than the old hashing algorithm (originally by chris torek, later tweaked by ilya zakharevich).
+in addition to config.over, a new override file, config.arch, is available.
+[561] the makefiles now default to the features enabled in activestate activeperl (a popular win32 binary distribution).
+an optional warning is generated ("illegal character in prototype...") but this may be upgraded to a fatal error in a future release.
+but it is skipped for now because the failure is apple's fault, not perl's (blocked signals are lost).
+be sure to trim your bug down to a tiny but sufficient test case.
+in afs installations, one can configure the root of the afs to be somewhere else than the default/afs by using the configure parameter -dafsroot=/some/where/else.
+better unicode support new io implementation new thread implementation better numeric accuracy safe signals many new modules more extensive regression testing perl 5.8 is not binary compatible with earlier releases of perl.
+if your environment variables (lc_all, lc_ctype, lang) look like you want to use utf-8 (any of the variables match /utf-?8/i), your stdin, stdout, stderr handles and the default open layer (seethe open manpage) are marked as utf-8.
+tie::file, by mark-jason dominus, associates a perl array with the lines of a file.
+perlio::via, by nick ing-simmons, acts as a perlio layer and wraps perlio layer functionality provided by a class (typically implemented in perl code).
+this means that additional warnings may now show up when compiling xs code.
+failed at test 3 t/op/inccode.........................(crash) and a few lib/extutils tests, and several hundred encode/t/aliases.t failures that work fine with long filenames.
+( 3,1,4,1,5,9 ); a numerical sort of the digits will yield (1,1,3,4,5,9), as expected.
+our() variables will not cause bogus "variable will not stay shared" warnings.
+they provide the codes for various locale standards, such as "fr" for france, "usd" for us dollar, and "ja" for japanese.
+in sdbm_file on dosish platforms, some keys went missing because of lack of support for files with "holes".
+if your file system supports symbolic links, you can build perl outside of the source directory by mkdir perl/build/directory cd perl/build/directory sh /path/to/perl/source/configure -dmksymlinks ...
+pack() / unpack() can now process the perl internal numeric types: ivs, uvs, nvs-- and also long doubles, if supported by the platform.
+each unquoted argument will be automatically quoted to protect whitespace, and any existing whitespace in the arguments will be preserved.
+suggestions for new shiny examples welcome but the main issue is that the examples need to be documented, tested and (most importantly) maintained.
+you can enable/disable them withuse/no warnings 'file::find';.
+vms there should be no reported test failures with a default configuration, though there are a number of tests marked todo that point to areas needing further debugging and/or porting work.
+pod2html now understands pod written using different line endings (pc-like crlf versus unix-like lf versus macclassic-like cr).
+you can ignore the error, but it does cause a slight problem: you cannot fully benefit from the h2ph utility (seeh2ph) that can be used to convert c headers to perl libraries, mainly used to be able to access from perl the constants defined using c preprocessor, cpp.
+modifying $_ inside for(..) for (1..5) { $_++ } works without complaint.
+pack() / unpack() can now process the perl internal numeric types: ivs, uvs, nvs-- and also long doubles, if supported by the platform.
+note that after this perl really does assume that everything is utf-8: for example if some input handle is not, perl will probably very soon complain about the input data like this "malformed utf-8 ..." since any old eight-bit data is not legal utf-8.
+perliol documents the internals of perlio with layers.
+[561] wait(), waitpid(), and backticks now return the correct exit status under windows 9x.
+mac os classic compilation of the standard perl distribution in mac os classic should now work if you have the metrowerks development environment and the missing mac-specific toolkit bits.
+h2xs uses the new extutils::constant module which will affect newly created extensions that define constants.
+as a part of the ithreads implementation perl will also use any necessary and detectable reentrant libc interfaces.
+[561] selected bug fixes numerous memory leaks and uninitialized memory accesses have been hunted down.
+compiling with gcc still not recommended because buggy code results, even with gcc 2.95.2.
+if you don't have /bin/mail, or if you have 'safe setuid scripts', or if suidperl is not installed, you are safe.
+for example: open kid_ps, "-|", "ps", "aux" or die $!; forks the ps(1) command (without spawning a shell, as there are more than three arguments to open()), and reads its standard output via the kid_ps filehandle.
+[561] duping socket handles with open(f, ">&mysock") now works under windows 9x.
+note that after this perl really does assume that everything is utf-8: for example if some input handle is not, perl will probably very soon complain about the input data like this "malformed utf-8 ..." since any old eight-bit data is not legal utf-8.
+the byteorder was only sizeof(long) bytes long (1234 or 4321), but now it is correctly sizeof(iv) bytes long, (12345678 or 87654321).
+libwww-perl (lwp) fails base/date #51 use libwww-perl 5.65 or later.
+the tr/// operator now works.
+in any case, suidperl should only be used by security experts who know exactly what they are doing and why they are using suidperl instead of some other solution such as sudo ( seehttp://www.courtesan.com/sudo/ ).
+the problem was caused by perl trying to report a suspected security exploit attempt using an external program, /bin/mail.
+io::socket::inet failed to open the specified port if the service name was not known.
+comparing with utf8 data does not magically upgrade non-utf8 data into utf8.
+in any case, the change will break existing code that relies on the current (ill-defined) semantics, so just avoid doing this in general.
+in other taint news, the exec list and system list have now been considered too risky (thinkexec @argv: it can start any program with any arguments), and now the said forms cause a warning under lexical warnings.
+iterative logical name translations are now limited to 10 iterations in imitation of show logical and other openvms facilities.
+file handles can be marked as accepting perl's internal encoding of unicode (utf-8 or utf-ebcdic depending on platform) by a pseudo layer ":utf8" : open($fh,">:utf8","uni.txt"); note for ebcdic users: the pseudo layer ":utf8" is erroneously named for you since it's not utf-8 what you will be getting but instead utf-ebcdic.
+the builtin dump() now gives an optional warning dump() better written as core::dump(), meaning that by default dump(...) is resolved as the builtin dump() which dumps core and aborts, not as (possibly) user-definedsub dump.
+perl installation leaves libnet unconfigured; use libnetcfg to configure it.
+[561] sort() is also fully reentrant, in the sense that the sort function can itself call sort().
+text::balanced, by damian conway, has been added, for extracting delimited text sequences from strings.
+unicos fixed various alignment problems that lead into core dumps either during build or later; no longer dies on math errors at runtime; now using full quad integers (64 bits), previously was using only 46 bit integers for speed.
+it is now implemented using a windows message loop, and is therefore less prone to random crashes.
+[561] attributes (such as :shared) didn't work with our().
+several debugger fixes: exit code now reflects the script exit code, condition"0" now treated correctly, the d command now checks line number,$. no longer gets corrupted, and all debugger output now goes correctly to the socket if remoteport is set.
+do followed by a bareword now ensures that this bareword isn't a keyword (to avoid a bug where do q(foo.pl) tried to call a subroutine called q).
+the main rationale was to have all core perlio layers to have all lowercase names.
+the default on vax (d_float) has not changed.
+since the new code is more correct (if you have two constants where the first one is a prefix of the second one, the first constantnever got defined), less lossy (it uses integers for integer constant, as opposed to the old code that used floating point numbers even for integer constants), and slightly faster, you might want to consider regenerating your extension code (the new scheme makes regenerating easy).h2xs now also supports c trigraphs.
+the core-dumping functionality will remain in future available as an explicit call to core::dump(), but in future releases the behaviour of an unqualified dump() call may change.
+it can be used to prepend site-specific directories to perl's default search path (@inc); see install for information.
+this implementation also allows later systems to callkill from within a signal handler.
+but quicksort was rescued at the last moment because it is faster than mergesort on certain inputs and platforms.
+if you find what you think is a bug, you might check the articles recently posted to the comp.lang.perl.misc newsgroup and the perl bug database at http://bugs.perl.org/ .
+new unicode semantics (no more use utf8, almost) previously in perl 5.6 to use unicode one would say "use utf8" and then the operations (like string concatenation) were unicode-aware in that lexical scope.
+(it is in fact a full implementation of sed in perl: you can use the sed functionality by using thepsed utility.)
+os/2 test failures the following tests are known to fail on os/2 (for clarity only the failures are shown, not the full error messages): ../lib/extutils/t/mkbootstrap.t 1 256 18 1 5.56% 8 ../lib/extutils/t/packlist.t 1 256 34 1 2.94% 17 ../lib/extutils/t/basic.t 1 256 17 1 5.88% 14 lib/os2_process.t 2 512 227 2 0.88% 174 209 lib/os2_process_kid.t 227 2 0.88% 174 209 lib/rx_cmprt.t 255 65280 18 3 16.67% 16-18 op/sprintf tests 91, 129, and 130 the op/sprintf tests 91, 129, and 130 are known to fail on some platforms.
+boms (byte order marks) at the beginning of perl files (scripts, modules) should now be transparently skipped.
+(this happens because the test scripts from under t/lib have been moved to be closer to the library/extension they are testing.)
+[561] mac os x (or darwin) should now be able to build perl even on hfs+ filesystems.
+xsubpp now understands pod documentation embedded in the *.xs files.
+the following tests are known to fail on os/2 (for clarity only the failures are shown, not the full error messages): ../lib/extutils/t/mkbootstrap.t 1 256 18 1 5.56% 8 ../lib/extutils/t/packlist.t 1 256 34 1 2.94% 17 ../lib/extutils/t/basic.t 1 256 17 1 5.88% 14 lib/os2_process.t 2 512 227 2 0.88% 174 209 lib/os2_process_kid.t 227 2 0.88% 174 209 lib/rx_cmprt.t 255 65280 18 3 16.67% 16-18 the op/sprintf tests 91, 129, and 130 are known to fail on some platforms.
+the comparison block is now run in scalar context, and the arguments to be sorted are always provided list context.
+nothing gets installed, but the code is worth studying for extension writers.
+a version of net::ping::external is available in cpan.
+{ s/ $from/$to/g; } }; 1; # in user's code: use myfilter qr/red/ => 'green'; print "red\n"; # this code is filtered, will print "green\n" print "bored\n"; # this code is filtered, will print "bogreen\n" no myfilter; print "red\n"; # this code is not filtered, will print "red\n" file::temp, by tim jenness, allows one to create temporary files and directories in an easy, portable, and secure way.
+carp was sometimes affected by this problem.
+rather than relying on c's argv[0] (which may not contain a full pathname) where possible $^x is now set by asking the operating system.
+you won't notice this for small arrays, but you will notice it with larger arrays, and you may not live long enough for the sort to complete on arrays of a million elements.
+the socketpair tests are known to be unhappy in sco 3.2v5.0.4: ext/socket/socketpair.t...............failed tests 15-45
+[561] printing quads (64-bit integers) with printf/sprintf now works without the q l ll prefixes (assuming you are on a quad-capable platform).
+this file is supposed to be used by hints file writers for architecture-wide changes (as opposed to config.over which is for site-wide changes).
+if building perl with interpreter threads (ithreads), the getgrent() , getgrnam(), and getgrgid() functions cannot return the list of the group members due to a bug in the multithreaded support of unicos/mk.
+h2xs uses the new extutils::constant module which will affect newly created extensions that define constants.
+the thread extension is now not built at all under ithreads ( configure -duseithreads) because it wouldn't work anyway (the thread extension requires being configured with-duse5005threads).
+timing problems the following tests may fail intermittently because of timing problems, for example if the system is heavily loaded.
+the performance has been improved for common scenarios.
+the regex compiler now maintains a structure that identifies nodes in the compiled bytecode with the corresponding syntactic features of the original regex expression.
+this will create in perl/build/directory a tree of symbolic links pointing to files in /path/to/perl/source.
+[561] autovivification of symbolic references of special variables described in the perlvar manpage (as in ${$num}) was accidentally disabled.
+additional bonuses are that the worst case behaviour ofsort() is now better (in computer science terms it now runs in time o(n log n), as opposed to quicksort's theta(n**2) worst-case run time behaviour), and that sort() is now stable (meaning that elements with identical keys will stay ordered as they were before the sort).
+stable means that ties are broken to preserve the original order of appearance in the input array.
+quicksort has a worst case run time that can grow like n**2, so-calledquadratic behaviour, and it can happen on patterns that may well arise in normal use.
+you can move the old perl shared library out of the way like this: cd /library/perl/darwin/core mv libperl.dylib libperlold.dylib and then reissue "make install".
+in multi-cpu boxes, there are some problems with the i/o buffering: some output may appear twice.
+(bsd_glob() does still sort platform natively, ascii or ebcdic, unless glob_alphasort is specified.)
+similarly, building the digest::md5 extension has been known to fail with "*** termination code 139 (bu21)".
+you will now need an explicit untie to destroy a self-tied glob.
+class::struct can now define the classes in compile time.
+perlcc has been rewritten and its user interface (that is, command line) is much more like that of the unix c compiler, cc.
+if you are on irix or tru64 platforms, new profiling/debugging options have been added; seethe perlhack manpage for more information about pixie and third degree.
+in aix 4.2, perl extensions that use c++ functions that use statics may have problems in that the statics are not getting initialized.
+it also correctly changes directories when chasing symbolic links.
+restricted hashes a restricted hash is restricted to a certain set of keys, no keys outside the set can be added.
+tie::refhash::nestable, by edward avis, allows storing hash references (unlike the standard tie::refhash)
+the debugger has a new dumpdepth option to control the maximum depth to which nested structures are dumped.
+since there are not that many amiga developers available, we could not get this fixed and tested in time for 5.8.0.
+chdir("") and chdir(undef) now give a deprecation warning because they cause a possible unintentional chdir to the home directory.
+i18n::langtags, by sean burke, has functions for dealing with rfc3066-style language tags.
+a change to self-tying of globs has caused them to be recursively referenced (see:two-phased garbage collection in the perlobj manpage).
+if configure finds that gcc was built for a different operating system release than is running, it now gives a clearly visible warning that there may be trouble ahead.
+cygwin "unable to remap" for example when building the tk extension for cygwin, you may get an error message saying "unable to remap".
+digest, frontend module for calculating digests (checksums), from gisle aas, has been added.
+in many platforms, the vendor-supplied 'cc' is too stripped-down to build perl (basically, 'cc' doesn't do ansi c).
+aix should now work better with gcc, threads, and 64-bitness.
+[561] file::spec->tmpdir() now prefers c:/temp over /tmp (works better when perl is running as service).
+hash values output from the algorithm on a hash of all 3-char printable ascii keys comes much closer to passing the diehard random number generation tests.
+use of the /c match modifier without an accompanying /g modifier elicits a new warning: use of /c modifier is meaningless without /g.
+the english module can now be used without the infamous performance hit by saying use english '-no_match_vars'; (assuming, of course, that you don't need the troublesome variables $` , $&, or $'.)
+it converts pod data to formatted overstrike text.
+clone will be executed once for every package that has it defined or inherited.
+all thread tests of perl now work, but not without adding some yield()s to the tests, so while pth (and other userlevel thread implementations) can be considered to be "working" with perl ithreads, keep in mind the possible non-preemptability of the underlying thread implementation.
+you will need a thread library package installed.
+beware: microperl makes many assumptions, some of which may be too bold; the resulting executable may crash or otherwise misbehave in wondrous ways.
+test 91 is known to fail on qnx6 (nto), because sprintf '%e',0 incorrectly produces0.000000e+0 instead of 0.000000e+00 .
+rather than relying on c's argv[0] (which may not contain a full pathname) where possible $^x is now set by asking the operating system.
+modulus of unsigned numbers now works (4063328477 % 65535 used to return 27406, instead of 27047).
+mime::quotedprint, by gisle aas, allows you to encode data in quoted-printable encoding, as defined inrfc 2045 - mime (multipurpose internet mail extensions).
+installation and configuration improvements generic improvements install now explains how you can configure perl to use 64-bit integers even on non-64-bit platforms.
+the method is also exportable as asockatmark() function.
+the builtin dump() now gives an optional warning dump() better written as core::dump(), meaning that by default dump(...) is resolved as the builtin dump() which dumps core and aborts, not as (possibly) user-defined sub dump.
+comparing with utf8 data does not magically upgrade non-utf8 data into utf8.
+this may or may not be a problem with ancient tcp/ip stacks of vms: we do not know since we weren't able to test perl in such configurations.
+note that this means that some scripts that may have relied on earlier buggy behavior may no longer work correctly.
+in particular binmode(fh) - and hence :raw - will now turn off both crlf and utf-8 translation and remove other layers (e.g. :encoding()) which would modify byte stream.
+it points at some problems with the signedness handling of the c compiler, as do the 64bitint, arith, and pow failures.
+if that doesn't help, you may have to try removing all the .bundle files from beneath /library/perl, and again "make install"-ing.
+this improves the portability ofsystem(@args) by avoiding the need for windowscmd shell specific quoting in perl programs.
+modulus of unsigned numbers now works (4063328477 % 65535 used to return 27406, instead of 27047).
+allow a read-only string on the left-hand side of a non-modifying tr///. if stderr is tied, warnings caused by warn and die now correctly pass to it.
+the tainting of %env elements via keys or values was previously unimplemented.
+callbacks (naughtily) exiting with "next;" instead of "return;" now work.
+as of november 2001 the only known vulnerable platform is linux, most likely all linux distributions.
+any encoding supported by encode module is also available to the ":encoding()" layer if perlio is used.
+eastern asian perl users are now welcomed in their own languages: readme.jp (japanese), readme.ko (korean), readme.cn (simplified chinese) and readme.tw (traditional chinese), which are written in normal pod but encoded in euc-jp, euc-kr, euc-cn and big5.
+though mostly working, unicode support still has problem spots on ebcdic platforms.
+file handles can be opened to "in memory" files held in perl scalars via: open($fh,'>', \$variable) ||
+[561] file::glob now supports glob_limit constant to limit the size of the returned list of filenames.
+this algorithm is reasonably fast while producing a much better spread of values than the old hashing algorithm (originally by chris torek, later tweaked by ilya zakharevich).
+mod_perl 1.26 doesn't build with threaded perl use mod_perl 1.27 or higher.
+thex command has been extended so thatx n expr dumps out the value of expr to a depth of at mostn levels.
+note that the new semantics doesn't work with the attribute::handlers module (as of version 0.76).
+multithreaded code should be migrated to the new ithreads model (seethe threads manpage, the threads::shared manpage and the perlthrtut manpage).
+it also has been made more portable.
+perl 5.8.0 doesn't build in amigaos.
+currently onlyprintf() is tested: how to output various basic data types from xs.
+when there is no name conflict, you can omit thein from the block name (e.g. \p{braillepatterns}), but to be safe, it's probably best to always use thein).
+perlclib documents the internal replacements for standard c library functions.
+this improvement is only available on vms v6.0 and later.
+but it is skipped for now because the failure is apple's fault, not perl's (blocked signals are lost).
+trying to use unicode characters on an i/o stream without marking the stream's encoding (usingopen() or binmode()) will cause "wide character" warnings.
+although "you shouldn't do that", it was possible to write code that depends on perl's hashed key order (data::dumper does this).
+the perl header files no longer suppress common warnings from the microsoft visual c++ compiler.
+the only exception is that a in prefix is required to signify a unicode block when a block name conflicts with a script name.
+package mypack; use attribute::handlers; sub wolf :attr(scalar) { print "howl!\n" } # later, in some package using or inheriting from mypack... my mypack $fluffy : wolf; # the attribute handler wolf will be called both variables and routines can have attribute handlers.
+devel::peek now has an interface for the perl memory statistics (this works only if you are using perl's malloc, and if you have compiled with debugging).
+tie::file, by mark-jason dominus, associates a perl array with the lines of a file.
+you can set the environment variable perl_test_net_ping to "1" (one) before running the perl test suite to enable all the net::ping tests.
+after configure has finished, you can just say make all test and perl will be built and tested, all in perl/build/directory.
+file handles can translate character encodings from/to perl's internal unicode form on read/write via the ":encoding()" layer.
+in particular, however, this allows variable attributes to be useful for tie interfaces, which was a deficiency of earlier releases.
+note that the 5.005 threads are unsupported and deprecated: if you have code written for the old threads you should migrate it to the new ithreads model.
+t/op/stat............................failed at test 29 lib/file/find/t/find.................failed at test 1 lib/file/find/t/taint................failed at test 1 lib/h2xs.............................failed at test 15 lib/pod/t/eol........................failed at test 1 lib/test/harness/t/strap-analyze.....failed at test 8 lib/test/harness/t/test-harness......failed at test 23 lib/test/simple/t/exit...............failed at test 1 the above failures are known as of 5.8.0 with native builds with long filenames, but there are a few more if running under dosemu because of limitations (and maybe bugs) of dosemu: t/comp/cpp...........................
+the information is attached to the newoffsets member of thestruct regexp.
+cert and various vendors and distributors have been alerted about the vulnerability.
+this is known problem with cygwin, and a workaround is detailed in here: http://sources.redhat.com/ml/cygwin/2001-12/msg00894.html cygwin ndbm tests fail on fat one can build but not install (or test the build of) the ndbm_file on fat filesystems.
+[561] less stack reserved per thread so that more threads can run concurrently.
+ieee-format floating point default on openvms alpha perl now uses ieee format (t_float) as the default internal floating point format on openvms alpha, potentially breaking binary compatibility with external libraries or existing data.
+the problem was caused by perl trying to report a suspected security exploit attempt using an external program, /bin/mail.
+please remember to set your environment variable lc_all to "c" (setenv lc_all c) before running "make test" to avoid a lot of warnings about the broken locales of mac os x.
+perlio::via::quotedprint, by elizabeth mattijsen, is an example of aperlio::via class: use perlio::via::quotedprint; open($fh,">:via(quotedprint)", $path); this will automatically convert everything output to $fh to quoted-printable.
+with the quicksort algorithm used to implement perl 5.6 and earlier, the order of ties is left up to the sort.
+autoload is now lvaluable, meaning that you can add the :lvalue attribute to autoload subroutines and you can assign to the autoload return value.
+installation (or build) on ntfs works fine.
+io::socket::inet now supports a value of zero for localport (usually meaning that the operating system will make one up.)
+in some setups the former has been known to spuriously also try to run "make install".
+using sort in scalar context now issues an optional warning.
+large unsigned numbers (those above 2**31) could sometimes lose their unsignedness, causing bogus results in arithmetic operations.
+one reason of this unfinishedness is its (currently) inherent unportability: since both package names and subroutine names may need to be mapped to file and directory names, the unicode capability of the filesystem becomes important-- and there unfortunately aren't portable answers.
+mime::base64, by gisle aas, allows you to encode data in base64, as defined inrfc 2045 - mime (multipurpose internet mail extensions) .
+all regular expression compilation error messages are now hopefully easier to understand both because the error message now comes before the failed regex and because the point of failure is now clearly marked by a{bar} has been deprecated for a while.
+this seems to be a compiler error since if compiled with gcc no core dump ensues, and no failures have been seen on the said test on any other platform.
+[561] multi-line matches like "a\nxb\n" =~ /(?!\a)x/m were flawed.
+internally, the execution of end blocks is now controlled by pl_exit_flags & perl_exit_destruct_end.
+because of the large number of tests, running the regression suite will take considerably longer time than it used to: expect the suite to take up to 4-5 times longer to run than in perl 5.6.
+unicode::collate, by sadahiro tomoyuki, implements the uca (unicode collation algorithm) for sorting unicode strings.
+handlers can be specific to type (scalar, array, hash, or code), or specific to the exact compilation phase (begin, check, init, or end).
+many test suite tests still fail and the co-existence of unicode and ebcdic isn't quite settled, but the situation is much better than with perl 5.6.
+the behavior in earlier versions of perl 5 was that arrays would interpolate into strings if the array had been mentioned before the string was compiled, and otherwise perl would raise a fatal compile-time error.

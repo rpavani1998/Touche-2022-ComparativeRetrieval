@@ -1,0 +1,300 @@
+once downloaded and executed, the installer will install the current non-developer release of r. raqua is a native mac os x darwin version of r with a r.app mac os xgui.
+bug reports on contributed packages should be sent first to the package maintainer, and only submitted to the r-bugs repository by package maintainers, mentioning the package in the subject line.
+you can find out the parent environment for an invocation of a function by using parent.frame() or sys.frame(sys.parent())
+these backports should also be suitable for other debian derivatives.
+one can also subscribe (or unsubscribe) via email, e.g. to r-help by sending ` subscribe' (or `unsubscribe') in the body of the message (not in the subject!)
+of course, in the case of bug reports it would be very helpful to have code which reliably reproduces the problem.
+parent environments are important because things like model formulas need to be evaluated in the environment the function was called from, since that's where all the variables will be available.
+to install dvi, info and pdf versions of the manuals, use make install-dvi, make install-info and make install-pdf, respectively.
+also, make sure that you include information on the system and version of r being used.
+in versions of r up to 2.4.1 an unknown escape sequence like `\p' was quietly interpreted as just `p'.
+previous: notation, up: introduction 1.5 feedback feedback via email to kurt.hornik@r-project.org is of course most welcome.
+from r 2.7.0png() by default uses the quartz device on mac os x, and that too works in batch mode.
+to install dvi, info and pdf versions of the manuals, use make install-dvi, make install-info and make install-pdf, respectively.
+the bin/macos directory of a cran site contains bin-hexed (hqx) and stuffit (sit) archives for a base distribution and a large number of add-on packages of r 1.7.1 to run under mac os 8.6 to mac os 9.2.2.
+previous: what is a bug?, up: r bugs 9.2 how to report a bug when you decide that there is a bug, it is important to report it and to report it in a way which is useful.
+to “submit” to cran, simply upload to ftp://cran.r-project.org/incoming/ and send an email to cran@r-project.org.
+otherwise, you can compile and install r yourself, which can be done very easily under a number of common unix platforms (seewhat machines does r run on? ).
+if you have a function that cannot handle two vectors but can handle two scalars, then you can still use outer() but you will need to wrap your function up first, to simulate vectorized behavior.
+the bin/solaris directory of a cran site contains binary packages for solaris on the sparc and x64 platforms, provided by mithun sridharan.
+consider for instance the semantics in cases like d2 test1() 3 3.14 r> test2() 3 3.141593 what is really used is the global value of .options, and usingoptions(opt = val) correctly updates it.
+before you actually submit a bug report, you should check whether the bug has already been reported and/or fixed.
+this document is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantability or fitness for a particular purpose.
+otherwise, you can compile and install r yourself, which can be done very easily under a number of common unix platforms (seewhat machines does r run on? ).
+of theopen source definition: the license must not restrict anyone from making use of the program in a specific field of endeavor.
+by default, this will install to the following directories: ${prefix}/bin the man page ${prefix}/lib/r all the rest (libraries, on-line help system, ...).
+you can also obtain it by writing to the free software foundation, inc., 51 franklin street, fifth floor, boston, ma 02110-1301, u.s.a. next:  citing this document, previous:  legalese, up:  introduction 1.2 obtaining this document the latest version of this document is always available from http://cran.r-project.org/doc/faq/ from there, you can obtain versions converted to plain ascii text, dvi, gnu info, html, pdf, postscript as well as the texinfo source used for creating all these formats using thegnu texinfo system.
+s is an elegant, widely accepted, and enduring software system, with conceptual integrity, thanks to the insight, taste, and effort of john chambers.
+for example, it may not restrict the program from being used in a business, or from being used for genetic research.
+as in > cat("\\n", "\n") \n some functions, particularly those involving regular expression matching, themselves use metacharacters, which may need to be escaped by the backslash mechanism.
+any two models can be compared withanova(model1, model2) , and drop1(model1) will show the sums of squares resulting from dropping single terms.
+it occurs when applications started prior to r have used all the available colors.
+if you also want to build r packages from source, also runapt-get install r-base-dev to obtain the additional tools required for this.
+for most installations the windows installer program will be the easiest tool to use.
+package gam from cran implements all the generalized additive models (gam) functionality as described in the gam chapter of the white book.
+argument names are also usually syntactic names, but again can be anything if they are quoted.
+earlier versions of the png() device uses the x11 driver, which is a problem in batch mode or for remote operation.
+under a unix-alike, if your installation supports the type="cairo" option to the png() device there should be no problems, and the default settings should just work.
+enclosing environments are important because a function can use variables in the enclosing environment to share information with other functions or with other invocations of itself (see the section on lexical scoping).
+for example, suppose that on a data set which you know to be quite large the command r> data.frame(x, y, z, monday, tuesday) never returns.
+if the problem occurs when netscape is running, try (re)starting it with either the-no-install (to use the default colormap) or the -install (to install a private colormap) option.
+by default, this will install to the following directories: - ${prefix}/bin - the front-end shell script - ${prefix}/man/man1 - the man page - ${prefix}/lib/r - all the rest (libraries, on-line help system, ...).
+if you don't know whether the command should take a long time, find out by looking in the manual or by asking for assistance.
+for the available mailing lists, andhttp://www.gmane.org/rss.php for details on rss feeds.
+note that the r-announce and r-packages lists are gatewayed into r-help.
+the r distribution contains functionality for a large number of statistical procedures.
+if the problem occurs when netscape is running, try (re)starting it with either the-no-install (to use the default colormap) or the -install (to install a private colormap) option.
+suppose you have c code file for dynloading into r, but you want to use r cmd shlib with compilation flags other than the default ones (which were determined when r was built).
+if you have a function that cannot handle two vectors but can handle two scalars, then you can still useouter() but you will need to wrap your function up first, to simulate vectorized behavior.
+local copies of .options , either in .globalenv or in a function environment (frame), are just silently disregarded.
+in such cases you don't want anything printed.
+(if this is not available on your system, you can obtain a pdf version of the object reference manual viacran.)
+printing text strings, using print() or by typing the name at the prompt will use the escape sequences too, but the cat() function will display the string as-is.
+you should still report the facts as well as any explanations or solutions.
+otherwise, element names can be any strings.
+these files can be previewed and printed using standard programs such asxdvi and dvips.
+note also that the r version of pairs() is fairly general and provides most of the functionality of splom(), and that r's default plot method has an argument asp allowing to specify (and fix against device resizing)
+questions likely to prompt discussion unintelligible to non-programmers (e.g., questions involving c or c++) should go to r-devel.
+the unix command-line interface to r can only provide the inbuilt command line editor which allows recall, editing and re-submission of prior commands provided that thegnu readline library is available at the time r is configured for compilation.
+in the above, prefix is determined during configuration (typically/usr/local) and can be set by running configure with the option $ ./configure --prefix=/where/you/want/r/to/go (e.g., the r executable will then be installed into /where/you/want/r/to/go/bin.)
+this is the “r home directory” (r_home) of the installed system.
+(if this is not available on your system, you can obtain a pdf version of the object reference manual viacran.)
+the r core team does not provide legal advice under any circumstances.
+this ensures that the site profile and saved data files are not read.
+this relies on the enclosing environment being the same each time the function is invoked.
+the aspect ratio of the plot.
+in addition, a large group of individuals has contributed to r by sending code and bug reports.
+it consists of a language plus a run-time environment with graphics, a debugger, access to certain system functions, and the ability to run programs stored in script files.
+the r core team can be reached at r-core@lists.r-project.org for comments and reports.
+if you also want to build r packages from source, also run apt-get install r-base-dev to obtain the additional tools required for this.
+in addition, plain text help pages as well ashtml and latex versions of the documentation are built.
+in particular, note that i do not have access to windows or macintosh systems.
+this relies on the enclosing environment being the same each time the function is invoked.
+the bin/solaris directory of a cran site contains binary packages for solaris on the sparc and x64 platforms, provided by mithun sridharan.
+send email to r-help@lists.r-project.org to send a message to everyone on the r-help mailing list.
+use make dvi to create dvi versions of the r manuals, such as refman.dvi (an r object reference index) andr-exts.dvi, the “r extension writers guide”, in thedoc/manual subdirectory.
+the manual's job is to make everything clear.
+if the explanations are based on guesses about how r is implemented, they will be useless; others will have to try to figure out what the facts must have been to lead to such speculations.
+from cran, you can obtain the latest official release of r, daily snapshots of r (copies of the current source trees), as gzipped and bzipped tar files, a wealth of additional contributed code, as well as prebuilt binaries for various operating systems (linux, mac os classic, mac os x, and ms windows).cran also provides access to documentation on r, existing mailing lists and the r bug tracking system.
+“an introduction to r” (r-intro) includes information on data types, programming elements, statistical modeling and graphics.
+inside bin/macosx/powerpc/contrib/x.y there are prebuilt binary packages (for powerpc version of mac os x) to be used with raqua corresponding to the “x.y ” release of r. the installation of these packages is available through the “package” menu of the r.appgui.
+one way to describe the scoping differences between r and s is to say that in s the enclosing environment isalways the global workspace, but in r the enclosing environment is wherever the function was created.
+how can r be installed (windows) the bin/windows directory of a cran site contains binaries for a base distribution and a large number of add-on packages fromcran to run on windows 2000 and later (including 64-bit versions of windows) on ix86 and x86_64 chips.
+note that the r-announce and r-packages lists are gatewayed into r-help.
+if you are not sure what the command is supposed to do after a careful reading of the manual this indicates a bug in the manual.
+what is most useful is an exact description of what commands you type, starting with the shell command to run r, until the problem happens.
+corrections to and comments on message translation should be sent to the last translator (listed at the top of the appropriate `.po' file) or to the translation team as listed at http://developer.r-project.org/translationteams.html.
+for earlier versions of r, you could change the file r_home/etc/makeconf to reflect your preferences, or (at least for systems usinggnu make) override them by the environment variablemakeflags.
+one can also subscribe (or unsubscribe) via email, e.g. to r-help by sending ` subscribe' (or `unsubscribe') in the body of the message (not in the subject!)
+as an example of how r can be used in teaching an advanced introductory statistics course, see d. nolan and t. speed (2000), “stat labs: mathematical statistics through applications”, springer texts in statistics, isbn 0-387-98974-9 this integrates theory of statistics with the practice of statistics through a collection of case studies (“labs”), and uses r to analyze the data.
+then summary.foo() should not print anything, but return an object of class "summary.foo", and you should write a method print.summary.foo() which nicely prints the summary information and invisibly returns its object.
+r-packages a moderated list for announcements on the availability of new or enhanced contributed packages.
+["() that had a bug causing r's internal data structures to be corrupted and making the data.frame() command fail from then on.
+whereas the resulting language is very similar in appearance to s, the underlying implementation and semantics are derived from scheme.
+it really has nothing much to do with names in the language, but it is traditional to call these strings file “names”.
+so for most user-visible functions the enclosing environment will be the global workspace, since that is where most functions are defined.
+note thatcran generally does not accept submissions of precompiled binaries due to security reasons.
+in particular, binary packages for windows and mac os x are provided by the respective binary package maintainers.
+this relies on the parent environment being potentially different with each invocation.
+use e.g.apt-get install r-base r-recommended to install the r environment and recommended packages.
+the enclosing environment for a function is fixed when the function is created.
+this is easily accomplished using paste() if the label is a simple character string, but not always obvious in case the label is an expression (for refined mathematical annotation).
+the act of running the program is not restricted, and the output from the program is covered only if its contents constitute a work based on the program.
+send email to r-help@lists.r-project.org to send a message to everyone on the r-help mailing list.
+note in particular that r-help is intended to be comprehensible to people who want to use r to solve problems but who are not necessarily interested in or knowledgeable about programming.
+to “submit” to cran, simply upload to ftp://cran.r-project.org/incoming/ and send an email to cran@r-project.org.
+the core of r is an interpreted computer language which allows branching and looping as well as modular programming using functions.
+this may save them precious time they can use for constantly improving r, and will typically also result in much quicker feedback for yourself.
+previous:  notation, up:  introduction 1.5 feedback feedback via email to kurt.hornik@r-project.org is of course most welcome.
+athttp://bugs.r-project.org/. second, consulthttps://svn.r-project.org/r/trunk/news, which records changes that will appear in thenext release of r, including some bug fixes that do not appear in bug tracking.
+rather than jumping to conclusions, show the problem to someone who knows for certain.
+most of the user-visible functions in r are written in r. it is possible for the user to interface to procedures written in the c, c++, or fortran languages for efficiency.
+most of the user-visible functions in r are written in r. it is possible for the user to interface to procedures written in the c, c++, or fortran languages for efficiency.
+in particular, it implements backfitting with both local regression and smoothing splines, and is extendable.
+alternatively the bug report can be emailed tor-bugs@r-project.org or submitted to the web page at http://bugs.r-project.org/. please try including results of sessioninfo() in your bug report.
+if these commands execute successfully, the r binary and a shell script front-end calledr are created and copied to the bin directory.
+as r uses c-style string handling, `\' is treated as an escape character, so that for example one can enter a newline as `\n'.
+the aspect ratio of the plot.
+within the *r* window you have all theess facilities, such as object-name completion, that we know and love.
+on an x11 device, plotting sometimes, e.g., when running demo("image"), results in “error: color allocation error”.
+the most important principle in reporting a bug is to report facts , not hypotheses or categorizations.
+you can also obtain the r faq from the doc/faq subdirectory of a cran site (seewhat is cran?).
+s is a very high level language and an environment for data analysis and graphics.
+third, if possible try the current r-patched or r-devel version of r. if a bug has already been reported or fixed, please do not submit further bug reports on it.
+you can also perform a “system-wide” installation using make install.
+in particular, note that i do not have access to windows or macintosh systems.
+so for most user-visible functions the enclosing environment will be the global workspace, since that is where most functions are defined.
+if r is already installed, it can be started by typing r at the shell prompt (of course, provided that the executable is in your path).
+in particular, it implements backfitting with both local regression and smoothing splines, and is extendable.
+software.opensuse.org directory: /download/home:/dsteuer/opensuse_10.2/ with this setting, online updates will check for new versions of r.
+if a functionf() is defined inside another function g() it will probably be used insideg() as well, so its parent environment and enclosing environment will probably be the same.
+note: it is very important that you indicate the copyright (license) information (gpl-2, gpl-3, bsd, artistic, ...) in your submission.
+if the input was such that youknow it should have been processed quickly, report a bug.
+if the label is a simple character string, but not always obvious in case the label is an expression (for refined mathematical annotation).
+if you type `1+1' or `summary(glm(y~x+z, family=binomial))' at the command line the returned value is automatically printed (unless it is invisible() ), but in other circumstances, such as in a source()d file or inside a function it isn't printed unless you specifically print it.
+for example, people sometimes think there is a bug in r's mathematics because they don't understand how finite-precision arithmetic works.
+this automatically includes the version information and sends the bug to the correct address.
+from network theory ltd, athttp://www.network-theory.co.uk/r/base/. for each set of manuals sold, the publisher donates usd 10 to the r foundation (seewhat is the r foundation?).
+taking forever to complete a command can be a bug, but you must make certain that it was really r's fault.
+more efficient, but harder to remember, is as.numeric(levels(f))[as.integer(f)] in any case, do not call as.numeric() or their likes directly for the task at hand (asas.numeric() or unclass() give the internal codes).
+“r installation and administration” (r-admin).
+using r, announcements (not covered by `r-announce' and `r-packages') about the development of r and the availability of new code.
+questions likely to prompt discussion unintelligible to non-programmers (e.g., questions involving c or c++) should go to r-devel.
+as an example of how r can be used in teaching an advanced introductory statistics course, see d. nolan and t. speed (2000), “stat labs: mathematical statistics through applications”, springer texts in statistics, isbn 0-387-98974-9 this integrates theory of statistics with the practice of statistics through a collection of case studies (“labs”), and uses r to analyze the data.
+you can find out the enclosing environment for a function f() using environment(f).
+thus, in filenames use something like "c:\\data\\money.dat" .
+this may save them precious time they can use for constantly improving r, and will typically also result in much quicker feedback for yourself.
+since mid-1997 there has been a core group (the “r core team”) who can modify the r source code archive.
+for most installations the windows installer program will be the easiest tool to use.
+one advantage of this method is that you have separate *r* and *gud-gdb* windows.
+otherwise, element names can be any strings.
+when using gud mode for debugging from within emacs, you may find it most convenient to use the directory with your code in it as the current working directory and then make a symbolic link from that directory to the r binary.
+you can also replace `\' by `/' ( "c:/data/money.dat" ).
+s is an elegant, widely accepted, and enduring software system, with conceptual integrity, thanks to the insight, taste, and effort of john chambers.
+if you create a function at the command line or load it in a package its enclosing environment is the global workspace.
+in addition, plain text help pages as well ashtml and latex versions of the documentation are built.
+parent environments are important because things like model formulas need to be evaluated in the environment the function was called from, since that's where all the variables will be available.
+the r core team can be reached at r-core@lists.r-project.org for comments and reports.
+if you call .c() , .fortran(), .external() or .call() (or .internal()) yourself (or in a function you wrote), you can always crash r by using wrong argument types (modes).
+first, try the “search existing reports” facility in the bug tracking page
+previous: r bugs, up: top 10 acknowledgments of course, many many thanks to robert and ross for the r system, and to the package writers and porters for adding to it.
+for this, you have to escape the escape character.
+who can modify the r source code archive.
+if the online argument list of a function disagrees with the manual, one of them must be wrong, so report the bug.
+you can also use make pdf to build pdf (portable document format) version of the manuals, and view these using e.g. acrobat.
+for example, it may not restrict the program from being used in a business, or from being used for genetic research.
+based on the s language,s-plus provides functionality in a wide variety of areas, including robust regression, modern non-parametric regression, time series, survival analysis, multivariate analysis, classical statistical tests, quality control, and graphics drivers.
+within the *r* window you have all theess facilities, such as object-name completion, that we know and love.
+the act of running the program is not restricted, and the output from the program is covered only if its contents constitute a work based on the program.
+use e.g. apt-get install r-base r-recommended to install the r environment and recommended packages.
+this relies on the parent environment being potentially different with each invocation.
+it may happen that when reading numeric data into r (usually, when reading in a file), they come in as factors.
+the recommended package lattice (which is based on another recommended package,grid) provides graphical functionality that is compatible with most trellis commands.
+fits a logistic regression model, computes some summary information and returns an object of class "summary.glm" (see how should i write summary methods?).
+if r executes an illegal instruction, or dies with an operating system error message that indicates a problem in the program (as opposed to something like “disk full”), then it is certainly a bug.
+as the help for outer() indicates, it does not work on arbitrary functions the way the apply() family does.
+you can also obtain the r faq from the doc/faq subdirectory of a cran site (seewhat is cran?).
+these files can be previewed and printed using standard programs such asxdvi and dvips.
+also, make sure that you include information on the system and version of r being used.
+if a function f() is defined inside another function g() it will probably be used inside g() as well, so its parent environment and enclosing environment will probably be the same.
+{{isbn} 3-900051-07-0}, url = {http://www.r-project.org} } citation strings (or bibtex entries) for r and r packages can also be obtained bycitation().
+an up-to-date html version is always available for web browsing athttp://stat.ethz.ch/r-manual/. printed copies of the r reference manual for some version(s) are available from network theory ltd, athttp://www.network-theory.co.uk/r/base/. for each set of manuals sold, the publisher donates usd 10 to the r foundation (seewhat is the r foundation?).
+if you type `1+1' or `summary(glm(y~x+z, family=binomial))' at the command line the returned value is automatically printed (unless it isinvisible() ), but in other circumstances, such as in a source()d file or inside a function it isn't printed unless you specifically print it.
+once downloaded and executed, the installer will install the current non-developer release of r. raqua is a native mac os x darwin version of r with a r.app mac os xgui.
+inside bin/macosx/powerpc/contrib/x.y there are prebuilt binary packages (for powerpc version of mac os x) to be used with raqua corresponding to the “x.y ” release of r. the installation of these packages is available through the “package” menu of the r.appgui.
+you can also obtain it by writing to the free software foundation, inc., 51 franklin street, fifth floor, boston, ma 02110-1301, u.s.a. next: citing this document, previous: legalese, up: introduction 1.2 obtaining this document the latest version of this document is always available from http://cran.r-project.org/doc/faq/ from there, you can obtain versions converted to plain ascii text, dvi, gnu info, html, pdf, postscript as well as the texinfo source used for creating all these formats using thegnu texinfo system.
+these backports should also be suitable for other debian derivatives.
+you can find out the enclosing environment for a functionf() using environment(f).
+as the help for outer() indicates, it does not work on arbitrary functions the way theapply() family does.
+on suse, you can set up an installation source for r within yast by setting (e.g.) protocol: http server name:
+finally, use make check to find out whether your r system works correctly.
+this document is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantability or fitness for a particular purpose.
+it consists of a language plus a run-time environment with graphics, a debugger, access to certain system functions, and the ability to run programs stored in script files.
+how can r be installed (macintosh) the bin/macosx directory of a cran site contains a standard apple installer package inside a disk image namedr.dmg.
+many of the r project's mailing lists are also available via gmane, from which they can be read with a web browser, using an nntp news reader, or via rss feeds.
+the “intuitive” behavior could easily be implemented, but problems would arise whenever the expression is contained in a variable, passed as a parameter, or is the result of a function call.
+add-on modules add additional capabilities.
+you could also set the next: are trellis displays implemented in r?, previous: why does plotting give a color allocation error?, up: r miscellanea colortype of x11() to "pseudo.cube" rather than the default "pseudo".
+you could also look at coplot() and dotchart() which might do at least some of what you want.
+package gam from cran implements all the generalized additive models (gam) functionality as described in the gam chapter of the white book.
+in a model such as ~a+b+a:b, r will report the difference in sums of squares between the models~1, ~a, ~a+b and ~a+b+a:b. if the model were ~b+a+a:b, r would report differences between~1, ~b, ~a+b , and ~a+b+a:b .
+convenient access to information on these lists, subscription, and archives is provided by the web interface athttp://stat.ethz.ch/mailman/listinfo/.
+this is the “r home directory” (r_home) of the installed system.
+if binaries are available for your platform (see are there unix binaries for r?), you can use these, following the instructions that come with them.
+do not report that data.frame() fails for large data sets.
+if this is so then when others got your report they would try out the data.frame() command on a large data set, probably with no day of the week variable name, and not see any problem.
+more efficient, but harder to remember, is as.numeric(levels(f))[as.integer(f)] in any case, do not call next: what are the enclosing and parent environments?, previous: how do i convert factors to numeric?, up: r miscellanea as.numeric() or their likes directly for the task at hand (as as.numeric() or unclass() give the internal codes).
+3.3.1 lexical scoping contrary to other implementations of the s language, r has adopted an evaluation model in which nested function definitions are lexically scoped.
+but in any case, it is unnecessary work for the ones trying to fix the problem.
+the r distribution contains functionality for a large number of statistical procedures.
+you can copy the script to a place where users can invoke it, for example to/usr/local/bin.
+note in particular that r-help is intended to be comprehensible to people who want to use r to solve problems but who are not necessarily interested in or knowledgeable about programming.
+it is just as important to report documentation bugs as program bugs.
+on an x11 device, plotting sometimes, e.g., when running demo("image"), results in “error: color allocation error”.
+online documentation for most of the functions and variables in r exists, and can be printed on-screen by typinghelp(name) (or ?name) at the r prompt, wherename is the name of the topic help is sought for.
+for gaussian gams you can use bruto() from package mda.
+the enclosing environment for a function is fixed when the function is created.
+starting with r 2.1.0, users can provide personal makevars configuration files in$home/.r to override the default flags.
+use try(), which returns an object of class "try-error" instead of an error, or preferably trycatch() , where the return value can be configured more flexibly.
+manuals written in thegnu texinfo system can also be converted to info files suitable for reading online with emacs or stand-alonegnu info; usemake info to create these versions (note that this requires makeinfo version 4.5).
+in the above, prefix is determined during configuration (typically/usr/local) and can be set by running configure with the option $ ./configure --prefix=/where/you/want/r/to/go (e.g., the r executable will then be installed into /where/you/want/r/to/go/bin.)
+looking at examples helps.
+it may happen that when reading numeric data into r (usually, when reading in a file), they come in as factors.
+it is probably best not to complain about such a problem until you have checked the documentation in the usual ways, feel confident that you understand it, and know for certain that what you want is not available.
+note that you need a fortran compiler or perhaps f2c in addition to a c compiler to build r. also, you need perl version 5 to build the r object documentations.
+if you create a function at the command line or load it in a package its enclosing environment is the global workspace.
+if you aren't familiar with the command, or don't know for certain how the command is supposed to work, then it might actually be working right.
+if these commands execute successfully, the r binary and a shell script front-end calledr are created and copied to the bin directory.
+enclosing environments are important because a function can use variables in the enclosing environment to share information with other functions or with other invocations of itself (see the section on lexical scoping).
+you can also perform a “system-wide” installation using make install.
+finally, a file name is a string identifying a file in the operating system for reading, writing, etc.
+you can find out the parent environment for an invocation of a function by usingparent.frame() or sys.frame(sys.parent()) .
+the bin/macos directory of a cran site contains bin-hexed (hqx) and stuffit (sit) archives for a base distribution and a large number of add-on packages of r 1.7.1 to run under mac os 8.6 to mac os 9.2.2.
+note thatcran generally does not accept submissions of precompiled binaries due to security reasons.
+on suse, you can set up an installation source for r within yast by setting (e.g.) protocol: http server name:
+for the available mailing lists, andhttp://www.gmane.org/rss.php for details on rss feeds.
+local copies of .options , either in .globalenv or in a function environment (frame), are just silently disregarded.
+use make dvi to create dvi versions of the r manuals, such as refman.dvi (an r object reference index) andr-exts.dvi, the “r extension writers guide”, in thedoc/manual subdirectory.
+how can r be installed (macintosh) the bin/macosx directory of a cran site contains a standard apple installer package inside a disk image namedr.dmg.
+however, we know that the introductory documentation is seriously inadequate, so you don't need to report this.
+in addition, a large group of individuals has contributed to r by sending code and bug reports.
+when creating data frames using data.frame() or read.table(), r by default ensures that the variable names are syntactically valid.
+in particular, binary packages for windows and mac os x are provided by the respective binary package maintainers.
+when using gud mode for debugging from within emacs, you may find it most convenient to use the directory with your code in it as the current working directory and then make a symbolic link from that directory to the r binary.
+most r commands do not generate any output.
+finally, a command's intended definition may not be best for statistical analysis.
+this is an x problem, and only indirectly related to r. it occurs when applications started prior to r have used all the available colors.
+the r core team does not provide legal advice under any circumstances.
+it really has nothing much to do with names in the language, but it is traditional to call these strings file “names”.
+suggestions can be submitted in the same ways as bugs, but please ensure that the subject line makes clear that this is for the wishlist and not a bug report, for example by starting with `wishlist:'.
+you can also replace `\' by `/' ("c:/data/money.dat" ).
+- r-help - the `main' r mailing list, for discussion about problems and solutions using r, announcements (not covered by `r-announce' and `r-packages') about the development of r and the availability of new code.
+note that the `development' version of readline including the appropriate headers is needed: users of linux binary distributions will need to install packages such aslibreadline-dev (debian) or readline-devel (red hat).
+unexpected results of comparison of decimal numbers, for example 0.28
+the recommended package lattice (which is based on another recommended package,grid) provides graphical functionality that is compatible with most trellis commands.
+thus, in filenames use something like next: how do i convert factors to numeric?, previous: how do file names work in windows?, up: r miscellanea "c:\\data\\money.dat" .
+if you have ghostscript you can usebitmap(), which produces a postscript or pdf file then converts it to any bitmap format supported by ghostscript.
+note that you need a fortran compiler or perhaps f2c in addition to a c compiler to build r. also, you need perl version 5 to build the r object documentations.
+reserved words are not syntactic names.
+invoking r with the --vanilla option may help in isolating a bug.
+package gss can fit spline-based gams too.
+based on the s language,s-plus provides functionality in a wide variety of areas, including robust regression, modern non-parametric regression, time series, survival analysis, multivariate analysis, classical statistical tests, quality control, and graphics drivers.
+manuals written in thegnu texinfo system can also be converted to info files suitable for reading online with emacs or stand-alonegnu info; usemake info to create these versions (note that this requires makeinfo version 4.5).
+of course, in the case of bug reports it would be very helpful to have code which reliably reproduces the problem.
+one way is to use paste() (or sprintf()) to concatenate a stem filename and the iteration number while file.path() constructs the path.
+software.opensuse.org directory: /download/home:/dsteuer/opensuse_10.2/ with this setting, online updates will check for new versions of r.
+one advantage of this method is that you have separate*r* and *gud-gdb* windows.
+that way.gdbinit can stay in the directory with the code and be used to set up the environment and the search paths for the source, e.g. as follows: set env r_home /opt/r set env r_papersize letter set env r_printcmd lpr dir /opt/r/src/appl dir /opt/r/src/main dir /opt/
+fits a logistic regression model, computes some summary information and returns an object of class"summary.glm" (see how should i write summary methods?).
+online documentation for most of the functions and variables in r exists, and can be printed on-screen by typinghelp(name) (or ?name) at the r prompt, wherename is the name of the topic help is sought for.
+note: it is very important that you indicate the copyright (license) information (gpl-2, gpl-3, bsd, artistic, ...) in your submission.
+many of the r project's mailing lists are also available via gmane, from which they can be read with a web browser, using an nntp news reader, or via rss feeds.
+how can r be installed (windows) the bin/windows directory of a cran site contains binaries for a base distribution and a large number of add-on packages fromcran to run on windows 2000 and later (including 64-bit versions of windows) on ix86 and x86_64 chips.
+then start gud (m-x gdb) giving the r binary (using its full path name) as the program to debug.
+that way.gdbinit can stay in the directory with the code and be used to set up the environment and the search paths for the source, e.g. as follows: set env r_home /opt/r set env r_papersize letter set env r_printcmd lpr dir /opt/r/src/appl dir /opt/r/src/main dir /opt/r/src/nmath dir /opt/r/src/unix next: r programming, previous: r and emacs, up: top 7 r miscellanea next: how can i save my workspace?,
+the core of r is an interpreted computer language which allows branching and looping as well as modular programming using functions.
+there is also a large set of functions which provide a flexible graphical environment for creating various kinds of data presentations.
+on some installations this produces ugly output, on others it is perfectly satisfactory.
+you can copy the script to a place where users can invoke it, for example to/usr/local/bin.
+simply add the line deb http://cran.r-project.org/bin/linux/debian stable/ (feel free to use a cran mirror instead of the master) to the file /etc/apt/sources.list, and install as usual.
+when creating data frames using data.frame() or read.table(), r by default ensures that the variable names are syntactically valid.
+- “an introduction to r” (r-intro) includes information on data types, programming elements, statistical modeling and graphics.
+as r uses c-style string handling, `\' is treated as an escape character, so that for example one can enter a newline as `\n'.
+of theopen source definition: the license must not restrict anyone from making use of the program in a specific field of endeavor.
+use the programps to find the process number of the currently running r process then use the attach command in gdb to attach it to that process.
+simply add the line deb http://cran.r-project.org/bin/linux/debian stable/ (feel free to use a cran mirror instead of the master) to the file /etc/apt/sources.list, and install as usual.
+if you want to debug the problem and find exactly what caused it, that is wonderful.
+convenient access to information on these lists, subscription, and archives is provided by the web interface athttp://stat.ethz.ch/mailman/listinfo/.
+you could also set the colortype of x11() to "pseudo.cube" rather than the default "pseudo".
+the “intuitive” behavior could easily be implemented, but problems would arise whenever the expression is contained in a variable, passed as a parameter, or is the result of a function call.
+if binaries are available for your platform (see are there unix binaries for r?), you can use these, following the instructions that come with them.
+from cran, you can obtain the latest official release of r, daily snapshots of r (copies of the current source trees), as gzipped and bzipped tar files, a wealth of additional contributed code, as well as prebuilt binaries for various operating systems (linux, mac os classic, mac os x, and ms windows).cran also provides access to documentation on r, existing mailing lists and the r bug tracking system.
+argument names are also usually syntactic names, but again can be anything if they are quoted.
+you can also use make pdf to build pdf (portable document format) version of the manuals, and view these using e.g. acrobat.
+use the programps to find the process number of the currently running r process then use theattach command in gdb to attach it to that process.
+use the next: acknowledgments, previous: r programming, up: top trace() function with argument signature= to add calls to the browser or any other code to the method that will be dispatched for the corresponding signature.
+one way to describe the scoping differences between r and s is to say that in s the enclosing environment isalways the global workspace, but in r the enclosing environment is wherever the function was created.
+s is a very high level language and an environment for data analysis and graphics.
+whereas the resulting language is very similar in appearance to s, the underlying implementation and semantics are derived from scheme.
+if r is already installed, it can be started by typing r at the shell prompt (of course, provided that the executable is in your path).
+there is also a large set of functions which provide a flexible graphical environment for creating various kinds of data presentations.

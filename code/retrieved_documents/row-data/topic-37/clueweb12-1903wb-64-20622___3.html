@@ -1,0 +1,268 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Other Systems [Verse]</title>
+<body>
+<br>
+<br>
+<br>
+<br>
+<b>Other systems</b> 
+<p> In this text we will take a look at some of the other 3D systems that are 
+available, and how they differ from Verse. Comparisons against the described 
+systems and the Verse architecture should help illustrate differences between 
+these systems and Verse. Note that not all (or, rather, very few) of the 
+systems mentioned below are actually very similar to Verse: many are something 
+completely different and included just to make the differences clear.</p> <b>
+Low-Level 3D Rendering APIs</b> 
+<p> Lowlevel 3D rendering APIs exist to give programmers a standardized 
+hardware-independent way of rendering 3D graphics. Often, the API is 
+accelerated (partly or in whole) by being implemented in dedicated 3D hardware. 
+The APIs free the programmer from the burden of learning how to program 
+individual hardware devices on a very low (register) level, and let him/her 
+concentrate on the application.</p> 
+<p> Perhaps the most well-known 3D graphics API is OpenGL. Having been around 
+since 1992, OpenGL is today's<i>de-facto</i> industry standard 2D and 3D 
+graphics API. OpenGL was initially developed by Silicon Graphics Inc., but is 
+today available on a wide variety of platforms: from the low- and middle-end to 
+the very high-end.</p> 
+<p> Another well-known 3D API is Microsoft's Direct3D, the 3D part of said 
+company's DirectX family of (primarily) game development APIs. Direct3D enjoys 
+great support from PC graphics hardware manufacturers, but is only available on 
+Microsoft operating systems, i.e., Windows 95/98/(NT/2000).</p> Other APIs like 
+3dfx's Glide, AutoDesk's Heidi, and Apple's and QuickDraw3D exist, but are not 
+as widespread in use.
+<p></p> 
+<p> Verse is not bound to a specific API or not even to the basic technique of 
+drawing 3D, but could be ray-traced, scanlined, or even rendered with voxels. 
+So we hope to see rendering engines using more than one of the above mentioned 
+3D APIs. We will for our development probably use OpenGL, because of its wide 
+availability on multiple platforms, its high performance and ease of use, and 
+the fact that is supports hardware acceleration of not just the rasterization 
+but also some of the geometry processing (on good hardware, that is:).</p> 
+<p> Soon Microsoft and SGI will release their next-generation 3D API, code 
+named<i>Fahrenheit</i>. Fahrenheit will introduce a new low-level rendering 
+API, FLL, which will replace Direct3D, but will sit next to OpenGL which will 
+continue to be developed. On top of FLL there will be a scene graph layer, 
+termed FSG (Fahrenheit Scene Graph), which is said to be the most significant 
+part of Fahrenheit. The FSG layer is meant to replace SGI's Open Inventor API 
+as soon as it becomes available. At the top level, Fahrenheit features a large 
+model API (FLM) as an extension to the FSG. The purpose of the FLM APIs is to 
+provide functionality specially optimized for visualization of very large 
+models (such as an entire automobile design). Microsoft will let Fahrenheit's 
+FLM layer replace its planned DirectModel API.</p> 
+<p><b>L&nbsp;I&nbsp;N&nbsp;K&nbsp;S&nbsp;</b><br>
+</p> 
+<ul> 
+<li>OpenGL</li> <br>
+
+<li>DirectX</li> <br>
+
+<li>Fahrenheit</li> <br>
+</ul> <br>
+<br>
+<b>Game 3D Engines</b> 
+<p> A 3D engine is a program used to display 3D graphics, often as a part of a 
+larger engine used to build a complete solution, such as a game. A lot of 
+engines have features like physics, networking and UI. The most common use for 
+a 3D engine is 3D games, and since these engines tend to be very specialized 
+they are rarely useable for any other purposes. Other problems with 3D engines 
+are that they are rarely ported to other platforms than &quot;Wintel&quot;, and 
+that they are fairly closed in terms of engine source code and tool 
+availability.</p> 
+<p> Even though most modern 3D engines are written on top of a 3D API like 
+OpenGL, Glide or Direct3D, they are considered to be very advanced, and 
+therefore many game developers choose to license engines from other companies 
+rather than developing their own engine. Examples of companies that offer 3D 
+engines for games include Epic Megagames, Lithtech and id Software. A lot of 
+people in the games industry think licensing is great, since it makes it 
+possible to focus on the game content rather than the technology, and it also 
+makes it possible to drive down the amount of money, staff and time needed to 
+finish a game. Due to the value of a 3D engine in the games market, licensing a 
+commercial 3D game engine has become too expensive for people who are 
+interested in other applications less profitable than games.</p> 
+<p> There are non-commercial 3D engines available too, but they are rarely 
+used because of the lack of documentation and tools needed to create data for 
+them. This problem has its origin in the way 3D engines are designed, with most 
+of the focus around effective rendering, and very little attention to 
+usability. In my experience it takes an artist many months to truly master a 3D 
+engine and many artist with less experience often create data that cannot be 
+used in a 3D engine, because of engine limitations.</p> 
+<p> The most interesting aspect of the 3D engines are the communities who 
+modify and extend games. For some time some companies (mainly id Software) have 
+encouraged people to modify their games by releasing editors, tools, and even 
+some source code. For the gaming industry this is a new way to prolong the life 
+time of games, since once you have finished a game you can download extensions 
+and levels from the Internet. This community have grown significantly and there 
+are now sites providing documentation tools and data of a high quality. It has 
+even gone so far that you can today download better editors and tutorials for a 
+game like Quake 2 than for a &quot;industry standard&quot; like VRML. It is our 
+hope there Verse will appeal to this community.</p> 
+<p> To make verse complete, we will need to write a 3D engine that will make 
+use the Verse api and the Verse data structure. But the difference is that in a 
+game engine, the engine designer designs everything to fit with his/her 3D 
+engine, but in the case of writing a 3D engine for verse one have to apply to 
+the verse standard. This of course limits the programer some what but on the 
+other hand they will have the benefit of being compatible whit other things 
+written for the verse standard, such as tools, servlets networking and so on. 
+Much time has been spent to make shore that the verse data set gives the 3D 
+engine programer freedom to program any way they see fit, but at the same time 
+open for optimizations. If a 3D artists or programers learns how the verse 
+standard works, they can produce things that will be compatible whit future 
+features in 3D engines and servlets.</p> 
+<p><b>L&nbsp;I&nbsp;N&nbsp;K&nbsp;S&nbsp;</b><br>
+</p> 
+<ul> 
+<li>id Softaware, makers of Doom, Doom II, and the Quake trilogy</li> <br>
+
+<li>Epic Mega Games, makers of Unreal</li> <br>
+
+<li>Monolith, makers of Shogo and the LithTech engine</li> <br>
+
+<li>Rust, an example of a gaming community site</li> <br>
+</ul> <br>
+<br>
+<b>
+Commercial High-Level APIs</b><br>
+
+<p> Two of the perhaps most well-known commercial high-level 3D graphic APIs 
+come from Silicon Graphics, Inc: IRIS Performer and Open Inventor.</p> 
+<p> <b>IRIS Performer</b><br>
+ Quoting Silicon Graphics' own overview, IRIX 
+Performer is &quot;high-performance 3D rendering toolkit for developers of 
+real-time, multiprocessed, interactive graphics applications for the SGI(TM) 
+product line&quot;. IRIX Performer (abbreviated below to just 
+&quot;Performer&quot;) is a set of C/C++ libraries for writing 3D graphics 
+programs. These libraries are tightly bound to the SGI's own IRIX hardware, and 
+thus not very portable. Perfomer uses either OpenGL or (the older) IRIS GL as 
+its lower-level rendering graphics library. Performer is fairly big; the main 
+library (<code>libpf</code>) contains roughly 35 classes (datatypes) with 
+hundreds of operations. There are four more libraries in the Performer API 
+suite. As another example of Performer's rather massive size and complexity, 
+consider the<code>pfEarthSky</code> class, which is used to create atmospheric 
+effects from a six-layered sky model.</p>
+<p> Performer is a toolkit for building single-machine applications only: the 
+classes to not deal with distribution of 3D data and interactive events over a 
+network.</p> <b>Open Inventor</b><br>
+ Another of Silicon Graphics's 
+technologies, Open Inventor is a a full cross-platform 3D development system. 
+It includes support for building hierarchical scenes of 3D objects, light 
+sources, etc. Inventor also includes an event model for interactive scenes, 
+animation objects, PostScript printing, and object picking. Unlike IRIS 
+Performer, Open Inventor is less tightly bound to Silicon Graphics, and is 
+available on non-SGI platforms, including common end-user operating systems 
+such as various versions of Microsoft Windows and MacOS.
+<p> Open Inventor includes a standard file format for 3D data. This is an 
+ASCII (text) format, which makes it easy to edit using ordinary text editing 
+software. The format is hierarchical, and very similar to VRML (not surprising, 
+since the initial VRML format was created by basically stripping down Open 
+Inventor and simplifying it). The file format includes numerous primitive 
+shapes (cones, cubes, cylinders, spheres, facesets, linesets, NURBs, and 
+several others) which are useful for quickly creating simple forms. Typically, 
+these shapes are all tesselated before being rendered as polygons.</p> 
+<p> We feel that using an ASCII text format for storing 3D data, while very 
+handy for small scenes, doesn't work for large amounts of data. Such data 
+cannot be edited by hand, it needs special tools in order to be manipulated, so 
+the storing the data in a human-readable file format is of limited interest. 
+The Verse geometry data does not support ready-made primitives like Inventor 
+does: everything is built from triangles (and the occasional quad). The 
+triangle is the simplest polygon, and a standard building block in polygonal 
+graphics. There is no loss of expressive power, since all Inventor objects are 
+converted to triangles sooner or later in the rendering process. Having 
+abstract primitive objects such as spheres of course makes it possible to vary 
+the detail level in the tesselation. The plan is to use sub-division surfaces 
+technology for this in Verse, thus making it possible to render any object 
+smoothly. We see a clear advantage in limiting the geometry moduling to just 
+simple triangles and quads, since that lessens the burden on implementors of 
+renderers for the system a great deal.</p> 
+<p> Open Inventor is a toolkit for developing interactive 3D applications, so 
+it could probably be used to implement something along the lines of Verse, if 
+you added the required networking code and used a binary file format. However, 
+Open Inventor is, like IRIS Performer, not a free software product. SGI makes 
+the execution-only environment (called an<i>eoe</i>) available for free, but we 
+want users of Verse to be able to develop new browsing software with an 
+absolute minimum of commercial software. Of course, one could choose to 
+implement Verse-related software using either IRIS Performer or Open Inventor, 
+just like one can use whatever sound and input toolkits one has available, but 
+we choose not to<i>base</i> the Verse architecture on any of these solutions. 
+</p> 
+<p><b>L&nbsp;I&nbsp;N&nbsp;K&nbsp;S&nbsp;</b><br>
+</p> 
+<ul> 
+<li>Silicon Graphics, Inc., makers of IRIS Performer and Open Inventor.</li> 
+<li>Template Graphics Software, makers of Open Inventor for a variety of 
+non-SGI platforms.</li> 
+<li>An overview of the relationship between Open Inventor and VRML.</li> </ul> 
+<br> <br>
+<b>DIVE</b><br>
+ DIVE is a system developed by the Swedish Institute 
+of Computer Science, SICS. It is meant as an experimental platform for 
+developing multi-user interactive environments. Having been around since the 
+early 1990:s, DIVE is perhaps one of the oldest systems of this kind.
+<p> DIVE is truly distributed, in that it is based on a peer-to-peer 
+networking model: there is no concept of a central server through which 
+everything must pass. Data is distributed using IP multicasting on supported 
+networks, and through small &quot;proxy servers&quot; on networks that don't 
+support it. Data in DIVE is arranged into<i>objects</i>, and the objects are 
+formed into a hierarchical structure. There is a root object, or world, in 
+which all other objects exist as children at some level. Each world is 
+associated with an IP multicast group address: clients connected to the world 
+send messages to this single IP address, and these messages are then 
+distributed (by the IP network) to all other clients in the world.</p> 
+<p> DIVE world descriptions can be stored on disk in text files. When the 
+first client connects to the world, it reads the world description from the 
+disk file. Subsequent clients receive the world state over the network. The 
+world is then maintained by update messages sent between clients, to 
+communicate changes. DIVE worlds are not persistent: they only exist as long as 
+at least one client is connected. Making them persistent without reducing the 
+degree of &quot;distributedness&quot; achieved by the peer-to-peer model is 
+very difficult.</p> 
+<p> DIVE objects are scriptable in a dialect of Tcl called DIVE/Tcl. Scripts 
+are distributed along with the objects themselves, and execute on all clients. 
+The DIVE/Tcl execution environment for each script is not distributed with the 
+code, so global variables, although being global in each interpreter, are not 
+seen by clients on other machines. To distribute data from Tcl scripts, 
+explicit use of DIVE properties. The DIVE/Tcl language allows procedures to be 
+bound to DIVE events and timers, thus making it possible for the code to run 
+when something &quot;interesting&quot; happens in the world. DIVE/Tcl also 
+includes procedures for manipulating DIVE geometry, generating events,</p> 
+<p> Some of the key differences between what SICS have made in DIVE and what 
+we plan with Verse are:</p> 
+<dl> 
+<dt> Security </dt> 
+<dd> While DIVE is designed as a platform for mostly academical use, the goal 
+of Verse is to be able to use it as a general-purpose 3D distribution 
+framework. This requires, among other things, that there is some kind of 
+security. It is not alright for any connected client to do anything to any 
+object at any time. DIVE on the other hand is completely without such 
+restrictions.</dd> 
+<dt> Centralized Server </dt> 
+<dd> Unlike DIVE, which uses peer-to-peer networking, Verse is designed to use 
+a standard client/server network architecture. This simplifies implementing 
+security policies, and makes world persistance easier to achieve.</dd> 
+<dt> Preemtive Multitasking </dt> 
+<dd> Code executing from a Verse code node will need to be preemptively 
+scheduled, since we can't trust users to write nice cooperative code.</dd> 
+<dt> Low-level </dt> 
+<dd> Verse is generally a lower-level, more primitive, platform than DIVE. At 
+the same time, it is perhaps somewhat more flexible. For example, while DIVE is 
+tied to DIVE/Tcl, C, and Java, Verse is essentially language-neutral. On the 
+other hand, achieving this language-neutrality requires implementing 
+interpreters for all wanted languages...</dd> </dl> 
+<p></p> 
+<p><b>L&nbsp;I&nbsp;N&nbsp;K&nbsp;S&nbsp;</b><br>
+</p> 
+<ul> 
+<li>The DIVE Home Page</li> 
+<li>Scriptics Inc., The Tcl Platform Company</li> 
+<li>IP Multicast Initiative</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br> <br>
+
+</body>

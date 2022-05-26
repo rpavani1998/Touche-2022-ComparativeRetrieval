@@ -1,0 +1,304 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Importing Eclipse Projects into NetBeans IDE - Tutorial</title>
+<body>
+Search: <br>
+<br>
+<br>
+
+<ul> 
+<li>Choose page language 
+<ul> 
+<li>Brazilian&nbsp;Portuguese</li> 
+<li>Japanese</li> 
+<li>Russian</li> 
+<li>Simplified&nbsp;Chinese</li> 
+<li>Spanish</li> </ul></li> </ul> <br>
+<br>
+HOME / Docs &amp; Support <br>
+<br>
+<h1>Importing Eclipse Projects into NetBeans IDE</h1> 
+<p><b>Contents</b></p> 
+<ul> 
+<li>The Import Eclipse Project Wizard</li> 
+<li>How the Import Wizard Works</li> 
+<li>Importing and Configuring Projects</li> 
+<li>Building and Running a Project</li> 
+<li>NetBeans Project Files</li> 
+<li>Version Control Considerations</li> 
+<li>Resynchronizing a Project</li> 
+<li>Resolving Import Problems</li> </ul> 
+<p><b>To complete this tutorial, you need the following software and resources.
+</b></p> Software or Resource Version Required <br>
+NetBeans IDE version 6.9 or 
+later <br>
+Java Development Kit (JDK) version 6 or 7 <br>
+<br>
+
+<h2>The Import Eclipse Project Wizard</h2> 
+<p>An enhanced support for importing Eclipse projects is available in the 
+NetBeans IDE. The Import Eclipse Project wizard enables you to use NetBeans to 
+work on Java desktop and web application projects that were created in Eclipse 
+and MyEclipse.</p> 
+<p>After creating a NetBeans project from an Eclipse project, you can work in 
+the following ways:</p> 
+<ul> 
+<li>Use NetBeans on a team project where other developers are using Eclipse. 
+</li> 
+<li>Use NetBeans and Eclipse interchangeably on a project. </li> 
+<li>Try out NetBeans on an existing project that was set up in Eclipse. </li> 
+</ul> 
+<p>top</p> 
+<h2>How the Import Wizard Works</h2> 
+<p>When you import a project, the IDE analyzes the Eclipse project metadata 
+and then creates a NetBeans project based on that metadata. The project import 
+does not impose changes on the Eclipse project structure, so it does not 
+interfere with the way the project works in Eclipse.</p> 
+<p>Once you have the project imported, you can use either or both the NetBeans 
+and Eclipse IDEs to edit, build, run, debug, and profile the project. If you 
+make a configuration change in the Eclipse project, you can resynchronize the 
+NetBeans project. This enables you to work on projects in NetBeans even if 
+everybody else on your team is working with Eclipse. The build path that you 
+set in Eclipse remains the master build path for the project.</p> 
+<p>top</p> 
+<h2>Importing and Configuring Projects</h2> 
+<p><b>To import an Eclipse project into NetBeans:</b></p> 
+<ol> 
+<li>Make sure that you have copy of the project that you want to import on 
+your system.
+<p>Typically, this project would already be in an Eclipse workspace on your 
+system.</p></li> 
+<li>Choose File &gt; Import Project &gt; Eclipse Project.</li> 
+<li>In the Workspace Location page of the wizard, select the Import Projects 
+from Workspace radio button and then specify the workspace location.</li> 
+<li>In the Projects to Import page, select the projects that you want to 
+import. Then select one of these two options for storing the NetBeans project 
+files:
+<ul> 
+<li><b>Store NetBeans project data inside Eclipse project folders.</b> 
+NetBeans adds folders and files within the top-level folder of the original 
+project.</li> 
+<li><b>Create imported NetBeans projects in a separate location.</b> NetBeans 
+uses the sources and libraries in the original Eclipse project folder but 
+creates a separate folder to hold NetBeans project metadata and build outputs.
+</li> </ul> 
+<p>Typically, it is better to store NetBeans project data inside Eclipse 
+project folders. In most cases, this means that the NetBeans project metadata 
+will refer to sources and libraries with the same paths that are used by the 
+Eclipse metadata. Therefore, checking out the project from a version control 
+system on different machines should result in similar behavior both in NetBeans 
+and Eclipse.</p> 
+<p>See NetBeans Project Files below for a list of files and folders that 
+NetBeans creates.</p></li> 
+<li>In the Servers page, register any servers that your projects need with 
+NetBeans IDE. (This page does not appear if you are not importing an web 
+applications.)</li> </ol> 
+<p>After you have completed the wizard, the following dialog boxes might 
+appear:</p> 
+<ul> 
+<li><b>Import Issues.</b> This dialog provides information about discrepancies 
+between the project structure in Eclipse and in NetBeans and points out actions 
+that you might need to take to correct the discrepancies.
+<p>You can copy the information from this dialog and paste it elsewhere for 
+future reference.</p> 
+<p>In most cases, you use the project's Project Properties dialog box to 
+resolve those issues. SeeResolving Import Problems for a guide to resolving the 
+most common problems.</p> </li> 
+<li><b>Resolve Reference Problems.</b> This dialog box alerts you to a 
+specific reference problem with one of your project libraries. You can solve 
+this problem after dismissing this dialog box by right-clicking the project's 
+node and choosing Resolve Reference Problems.</li> 
+<li><b>Resolve Missing Server.</b> This dialog box alerts you that the project 
+can not find a necessary server. You can solve this problem after dismissing 
+this dialog box by right-clicking the project's node and choosing Resolve 
+Missing Server.</li> </ul> 
+<p>After you have completed the wizard and have closed any of the above 
+informational dialog boxes, nodes for the projects will appear in the Projects 
+window.</p> 
+<p>If there are references in your project metadata to servers or other 
+resources that NetBeans can not resolve, the node for the project will appear 
+in red. You can resolve these references immediately by right-clicking the 
+project node and choosing Resolve Reference Problems or Resolve Missing Server.
+</p> 
+<p>For other types of project configuration adjustments, you use the Project 
+Properties dialog box. You open the Project Properties dialog box by 
+right-clicking the project's node and choosing Properties.</p> 
+<p>For more information on configuring your project, see Configuring the 
+Classpath and Other Project Settings in the Creating, Importing, and 
+Configuring Java Projects guide.</p> 
+<p>top</p> 
+<h2>Building and Running a Project</h2> 
+<p>Once you have the project imported into NetBeans, you can build and run the 
+project. All artifacts created from NetBeans build and run commands are created 
+in the<code>build</code> and <code>dist</code> folders. NetBeans does not 
+over-write output created from Eclipe build actions. If the Eclipse project 
+already has<code>build</code> and <code>dist</code> folders, the NetBeans 
+project creates folders called<code>nbbuild</code> and <code>nbdist</code> and 
+uses those for the build outputs.</p> 
+<p>The following are some of the build and run commands are available from the 
+Run menu:</p> 
+<ul> 
+<li><b>Run Project.</b> Test runs the application in the IDE.</li> 
+<li><b>Clean and Build Project.</b> Deletes the contents of the <code>build
+</code> (or <code>nbbuild</code>) and <code>dist</code> (or <code>nbdist</code>
+) folders and rebuilds all of the project's outputs. Uses the NetBeans build 
+script. Similar to the Clean command in Eclipse.</li> 
+<li><b>Clean.</b> Deletes the contents of the <code>nbbuild</code> and <code>
+nbdist</code> folders.</li> 
+<li><b>Build.</b> Rebuilds the project's outputs. If the Compile on Save 
+feature is enabled, the Build command is disabled. See theCompile on Save 
+section of the Creating, Importing, and Configuring Java Projects guide.</li> 
+</ul> 
+<p>For more information on building and running your application as well as 
+customizing the build process, seeCreating, Importing, and Configuring Java 
+Projects. </p> 
+<p>top</p> 
+<h2>NetBeans Project Files</h2> 
+<p>After you have imported the project, you will find the following folder and 
+files on your system:</p> 
+<ul> 
+<li><code>build.xml</code> file or <code>nb-build.xml</code> file. The main 
+NetBeans build script for the project. You can customize this script according 
+to the needs of your project. By default, this file is called<code>build.xml
+</code>. If such a file already exists in the project folder, the script is 
+called<code>nb-build.xml</code>.</li> 
+<li><code>nbproject</code> folder. Contains most of the NetBeans project 
+metadata, including resources that are called by the main NetBeans build 
+script. If you check this folder and the<code>build.xml</code> file or <code>
+nb-build.xml</code> into your version control system, other users will be able 
+to open the project in NetBeans. This folder also contains the<code>private
+</code> folder, which contains data specific to your system. This folder should 
+not be checked in to the version control system since its contents will vary 
+between users. SeeVersion Control Considerations below.</li> 
+<li><code>nbbuild</code> folder. When you build or run your project in 
+NetBeans, the project's sources are compiled into this folder.</li> 
+<li><code>nbdist</code> folder. When you build your project in NetBeans, the 
+project's distributable outputs are created and placed in this folder. Such 
+outputs might be JAR files and WAR files.</li> </ul> 
+<p>top</p> 
+<h2>Version Control Considerations</h2> 
+<p>If the project is checked out of a version control system, the <code>build
+</code> (or <code>nbbuild</code>), <code>dist</code> (or <code>nbdist</code>), 
+and the<code>nbproject/private</code> folders should not be checked into that 
+version control system.</p> 
+<p>If the project is under the CVS, Subversion, or Mercurial version control 
+systems, the appropriate &quot;ignore&quot; files are created or updated for 
+these directories when the project is imported.</p> 
+<p>Though <code>nbproject/private</code> should be ignored, <code>nbproject
+</code> should be checked into the version control system. <code>nbproject
+</code> contains project metadata that enables others users to open the project 
+in NetBeans without having to import the project first.</p> 
+<p>top</p> 
+<h2>Resynchronizing a Project</h2> 
+<p>The project importer features synchronization capabilities. If the 
+classpath in the Eclipse has changed since you initially imported it, you can 
+use the Resynchronize Eclipse Projects feature to update the classpath in the 
+corresponding NetBeans project.</p> 
+<p>Project resynchronization is one-way from Eclipse projects to NetBeans 
+projects. If you make changes to the project structure in NetBeans, those 
+changes are not propagated to the Eclipse project with the resynchronization 
+feature. If you intend to keep both Eclipse and NetBeans projects, use the 
+Eclipse project as the &quot;master&quot; project.</p> 
+<p>The IDE also resynchronizes the projects automatically if the changes to 
+the Eclipse configuration are unambiguous and do not require your input. This 
+automatic resynchronization occurs shortly after you open the project. If the 
+resynchronization requires your input, you need to manually resynchronize the 
+project.</p> 
+<p><b>To manually resynchronize NetBeans projects with Eclipse projects:</b>
+</p> 
+<ul> 
+<li>Choose File &gt; Import Project &gt; Resynchronize Eclipse Projects.</li> 
+</ul> 
+<p><b>Notes:</b> When you resynchronize a project, the resynchronization is 
+performed on all projects that you have imported from the workspace.</p> 
+<p>top</p> 
+<h2>Resolving Import Problems</h2> 
+<p>When you import a project into NetBeans, there might be some things that 
+can not be automatically resolved in NetBeans IDE. For some of these problems, 
+a menu item, such as Resolve Missing Server Problem, appears in the contextual 
+menu for the project. Other problems can be resolved in the Project Properties 
+dialog box for the imported project in NetBeans IDE.</p> 
+<p>Here is a list of common import problems and their solutions.</p> Problem 
+Message Solution <br>
+Resolve Missing Server Problem Right-click the project 
+node and choose Resolve Missing Server Problem. Then navigate to the file or 
+folder that contains the server. <br>
+Resolve Reference Problem Right-click the 
+project's node and choose Resolve Reference Problem. Then navigate to the file 
+or folder that contains the resource that is referred to from the project. <br>
+
+Eclipse platform for project<i>ProjectName</i> cannot be used. It is a JRE and 
+the NetBeans project requires a JDK. NetBeans will use the default platform. If 
+you would like to change the platform that NetBeans uses for the project, 
+choose Tools &gt; Platforms and specify a different platform. <br>
+Eclipse 
+project<i>ProjectName</i> claims to use JDK from the &quot;{1}&quot; directory. 
+But this directory does not exist. NetBeans will use the default platform. If 
+you would like to change the platform that NetBeans uses for the project, 
+choose Tools &gt; Platforms and specify a different platform. <br>
+NetBeans 
+does not support source includes/excludes per source root as Eclipse does. They 
+were merged and it is recommended that you double check them in project's 
+properties in Source panel. In NetBeans, includes and excludes are declared in 
+one place for the whole project. To check the includes and excludes in the 
+NetBeans project, right-click the project's node and the Projects window and 
+choose Properties. In the Project Properties dialog box, select the Sources tab 
+and then click the Includes/Excludes button. <br>
+Import failed due to <i>...
+</i>. More details can be found in IDE's log file. You can open the IDE's log 
+file by choosing View &gt; IDE Log. <br>
+Unknown project type - it cannot be 
+imported. You can only import the following Eclipse project types: Java 
+Project, Java Project from Existing Ant File, Static Web, Dynamic Web, and JPA 
+Project. <br>
+<br>
+
+<p>top</p> Send Feedback on This Tutorial <br>
+<br>
+
+<h2>See Also</h2> 
+<ul> 
+<li>NetBeans For Eclipse Users</li> 
+<li>Creating, Importing, and Configuring Java Projects</li> 
+<li>General Java Development Learning Trail</li> 
+<li>Java GUI Applications Learning Trail</li> 
+<li>Java EE &amp; Java Web Learning Trail</li> </ul> 
+<p>top</p> <br>
+
+<h1>Training</h1> <br>
+Java Programming Language <br>
+
+<h1>Support</h1> <br>
+<br>
+
+<h2>Documentation</h2> General Java Development <br>
+External Tools and 
+Services <br>
+Java GUI Applications <br>
+Java EE &amp; Java Web Development <br>
+Web Services Applications <br>
+NetBeans Platform (RCP) and Module Development 
+<br> PHP Applications <br>
+C/C++ Applications <br>
+Mobile Applications <br>
+<br>
+Sample Applications <br>
+Demos and Screencasts <br>
+
+<h2>More</h2> FAQs <br>
+Contribute Documentation! <br>
+Docs for Earlier 
+Releases <br>
+<br>
+<br>
+<br>
+SiteMap &nbsp; About Us &nbsp; Contact &nbsp; Legal
+ &nbsp;<br>
+ By use of this website, you agree to the NetBeans Policies and 
+Terms of Use. <br>
+ &copy; 2012, Oracle Corporation and/or its affiliates. <br>
+
+<br> <br>
+<br>
+
+</body>

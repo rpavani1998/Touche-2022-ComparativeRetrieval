@@ -1,0 +1,338 @@
+suppose that you have successfully written a tokenizer that returns a list of  strings, where some strings may contain a hyphen followed by a newline  character, e.g.long-\nterm.
+"( the cat ) ( sat ( on ( the mat )" >>>print check_parens(phrase.split())
+whenever a token other than a  parenthesis is encountered, we add it to a list at the appropriate level of  nesting.
+before we can begin we have to be explicit about how the complexity of a sentence is to be measured: word count, verb count, character count, parse-tree depth, etc.
+this is a chapter from natural language processing with python, by steven bird, ewan klein and edward loper, copyright © 2009 the authors.
+"( the cat ) ( sat ( on ( the mat ) ) )" >>>print convert_parens(phrase.split())
+[['the', 'cat'], ['sat', ['on', ['the', 'branch']]]] example 4.3 (code_convert_parens.py): figure 4.3: convert a nested phrase into a nested list using a stack lists can be used to represent another important data structure.
+decorate-sort-undecorate in chapter 4 we saw how to sort a list of items according to some property  of the list.
+['the', 'cat', 'sat'] >>> queue.append('on' )>>
+uni_text = text.encode('utf8') >>> print repr(uni_text.splitlines()[1]) '\xe7\x94\x9a\xe8\x87\xb3\xe7\x8c\xab\xe4\xbb\xa5\xe4\xba\xba\xe8\xb4\xb5' another aspect of defensive programming concerns the return statement of a function.
+% (self.node, childstr) ...
+this is a chapter from natural language processing with python, by  steven bird, ewan klein and edward loper, copyright © 2009 the authors.
+[] stack[-1].append(sublist) stack.append(sublist) elif  token ==')': # pop stack.pop() else: # update top of stack  stack[-1].append(token) return stack[0] >>> phrase =
+>>> from timeit import timer >>> timer( "sorted(words, lambda x, y: cmp(len(y), len(x)))", ... "words='i turned off the spectroroute'.split()").timeit() 8.3548779487609863 >>>timer("[pair[1] for pair in sorted((len(w), w) for w in words)]", ... "words='i turned off the spectroroute'.split()" ).timeit()9.9698889255523682
+1: ... return self[int(index[0])] ... else:  ... return self[int(index[0])][index[1:]] ...
+in order to be confident that all execution paths through a function  lead to a return statement, it is best to have a single return statement at the  end of the function definition.
+now, as we saw above, python provides a built-in function sort() that performs this task efficiently.
+the stack keeps track of this level of nesting, exploiting the fact  that the item at the top of the stack is actually shared with a more deeply  nested item.
+here we will generate a grid of letters, containing words found in the dictionary.
+here's how queues can be implemented using lists.
+the other cases are for handling slices, liket[1:2], or t[:].
+[['the', 'cat'], ['sat',  ['on', ['the', 'branch']]]] example 4.3 (code_convert_parens.py): figure 4.3: convert a nested phrase  into a nested list using a stack lists can be used to represent another important data structure.
+object-oriented programming is a programming paradigm in which complex  structures and processes are decomposed intoclasses, each encapsulating a  single data type and the legal operations on that type.
+as we will see insection 8.6, the space of possible parse trees is very  large; a parser can be thought of as providing a relatively efficient way to  find the right solution(s) within a very large space of candidates.
+we could use a queue of length n to create all  the n-grams of a text.
+sorted(wordlist.intersection(rev_wordlist))['ah', 'are', 'bag', 'ban', 'bard',  'bat', 'bats', 'bib', 'bob', 'boob', 'brag', 'bud', 'buns', 'bus', 'but',
+although the program in example 4.2 is a useful illustration of stacks, it  is overkill because we could have done a direct count:phrase.count('(')
+as we  saw in part ii, there are several algorithms for parsing.
+first we assign a default value , then in certain cases we replace it with a different value .
+this class is derived from python's built-in list class, permitting us to use standard list operations to access the children of a tree node.
+we will seldom have to deal with stacks explicitly, as the implementation of nltk parsers, treebank corpus readers, (and even python functions), all use stacks behind the scenes.
+the following is more  efficient: >>>
+it is distributed with thenatural language toolkit
+thus, the following version of ourtag() function is safer.
+a similar situation holds for many other superficially simple tasks,  such as sorting a list of words.
+a return statement can be used to pass multiple values back to the calling  program, by packing them into a tuple.
+with appropriate support on your terminal, the escaped text string inside the element above will be rendered as the following string of ideographs: 甚至猫以人贵.
+the collection of nltk modules exemplify a variety of algorithm  design techniques, including brute-force, divide-and-conquer, dynamic  programming, and greedy search.
+similar methods are provided for setting and deleting a child (using__setitem__) and __delitem__).
+each of these methods is a different algorithm, and requires different  amounts of computation time and different amounts of intermediate information  to store.
+['(', '('] example 4.2 (code_check_parens.py): figure 4.2: check whether parentheses  are balanced
+[http://www.nltk.org/ ], version 2.0b7, under the terms of thecreative commons  attribution-noncommercial-no derivative works 3.0 united states license
+for a computer that can do 100,000 evaluations per second, this would take over 10,000 years!
+we will seldom have to  deal with stacks explicitly, as the implementation of nltk parsers, treebank  corpus readers, (and even python functions), all use stacks behind the scenes.
+>>>from nltk.etree import elementtree as et >>> tree =
+this method was for accessing a child node.
+chars_used = ''.join(sorted(set(''.join(words))))
+hill-climbing search starting from a given location in the search space, evaluate nearby  locations and move to a new location only if it is an improvement on the  current location.
+to illustrate the difference in efficiency, we will create a list of 1000 numbers, randomize the list, then sort it, counting the number of list manipulations required.
+this section will discuss the tag.ngram module.
+the other cases are for  handling slices, liket[1:2], or t[:].
+['doyouseethekitty', 'seethedoggy', 'doyoulikethekitty', 'likethedoggy']  >>>hill_climb(text, seg1, 20) 61
+if  isinstance(child, tree): ... leaves.extend(child.leaves()) ... else: ...  leaves.append(child) ...
+... return '(%s: %s)'
+print repr(utf_enc) '' '' ''
+["sequoia", "abacadabra", "yiieeaouuu!"] >>> vowels =
+a o u v k r r t u i v a o a u k v v s l p e k a
+here  we will review the parts of the nltk code that defines thetree class.
+instead of writing extremely complex regular expressions, some simple  preprocessing does the trick: >>> words =
+however, it is important to understand what stacks are and how they work.
+how could we remove this redundancy?
+this document is revision: 8464
+arecursive descent parser performs backtracking search, applying grammar productions in turn until a match with the next input word is found, and backtracking when there is no match.
+exhaustive search enumerate search space, evaluate at each point this example: search space size is 255 = 36,028,797,018,963,968
+== 0: ... return self ...
+we do this by converting it to a set, then  back to a list.
+utf_enc = l.encode('utf8') ...
+[write version with two separate functions] 4.5   algorithm design an algorithm is a "recipe" for solving a problem.
+nltk.data.find('samples/sinorama-utf8.xml')
+data classes: trees in nltk
+discuss the clarity (or otherwise) of each of these approaches.
+>>>queue.pop(0) 'the' >>> queue.pop(0) 'cat' >>> queue['sat', 'on', 'the', 'branch'] note the list-based implementation of queues is inefficient for large queues.
+return leaves next, for computing the height: ... def height(self): ...
+text.encode('utf8') >>> print repr(uni_text.splitlines()[1])  '\xe7\x94\x9a\xe8\x87\xb3\xe7\x8c\xab\xe4\xbb\xa5\xe4\xba\xba\xe8\xb4\xb5' 4.4   more on defensive programming the return statement another aspect of defensive programming concerns the return statement of a  function.
+as with stacks, we will seldom have to deal with queues explicitly, as the implementation of nltk n-gram taggers (section 5.5) and chart parsers use queues behind the scenes.
+>>> words = 'i turned off the spectroroute'.split() >>> words.sort(cmp)>>> words ['i', 'off', 'spectroroute', 'the', 'turned'] >>>words.sort(lambda x, y: cmp(len(y), len(x))) >>> words ['spectroroute', 'turned', 'off', 'the', 'i'] this is inefficient when the list of items gets long, as we compute len() twice for every comparison (about 2nlog(n) times).
+this particular constructor calls the list initializer (similar to callingself = list(children)), then defines the node property of a tree.
+queue['sat', 'on', 'the', 'branch'] note the list-based implementation of queues is inefficient for large queues.
+if isinstance(child, tree): ... for  subtree in child.subtrees(filter): ... yield subtree processing classes: n-gram taggers in nltk
+here we will review the parts of the nltk code that defines thetree class.
+[write version with two separate functions] an algorithm is a "recipe" for solving a problem.
+for a systematic introduction to object-oriented design, please consult the large literature of books on this topic.
+return self[int(index[0])][index[1:]] ...
+thus, the  following version of ourtag() function is safer.
+nltk.data.find('samples/sinorama-gb.xml') >>>f = codecs.open(path, encoding='gb2312') >>> lines = f.readlines()>>> for l in lines: ...
+now do this using decorate-sort-undecorate, for large data size time comparison brute force wordfinder puzzle
+['sequoia', 'yiieeaouuu!'] >>>
+>>> class tree(list): next we define the initializer __init__(); python knows to call this function when you ask for a new tree object by writingt = tree(node, children).
+duck typing (hunt & thomas, 2000) about this document...
+this approach has a further benefit: it makes  it more likely that the function will only return a single type.
+return avg_wordlen, chars_used >>> proc_words(['not', 'a', 'good', 'way', 'to', 'write', 'functions']) (3, 'nacdefginorstuwy')
+o o u k t r k z a e l a v u k
+>>> shuffle(a); sort.merge(a) 6175 >>> shuffle(a); sort.quick(a)2378 readers are encouraged to look at nltk.misc.sort to see how these different methods work.
+>>> def tag(word): ...
+timer( "sorted(words, lambda x, y: cmp(len(y), len(x)))", ... "words='i  turned off the spectroroute'.split()").timeit() 8.3548779487609863  >>>timer("[pair[1] for pair in sorted((len(w), w) for w in  words)]", ... "words='i turned off the spectroroute'.split()" ).timeit()9.9698889255523682
+[ http://creativecommons.org/licenses/by-nc-nd/3.0/us/].
+in order to be confident that all execution paths through a function lead to a return statement, it is best to have a single return statement at the end of the function definition.
+if word in ['a', 'the', 'all']: ... result = 'det' ... return result
+i w a k e a a r o o e a k
+max_child_height = 0 ...
+>>> from random import shuffle >>> a = range(1000) #
+the loop pushes  material onto the stack when it gets an open parenthesis, and pops the stack  when it gets a close parenthesis.
+we can also read in the contents of an xml file using the etree package (at least, if the file is encoded as utf-8 — as of writing, there seems to be a problem reading gb2312-encoded files inetree).
+observe that this output contains redundant information; each word and its reverse is included.
+extremely wasteful brute force solution: >>> words = nltk.corpus.words.words('en') >>> for word1 in words: ... for word2 in words: ...
+return  self.pp() next we define some member functions that do other standard operations on  trees.
+now do this using decorate-sort-undecorate, for large data size time comparison wordfinder puzzle
+o x v k e r v t i a a e r k r k
+starting from a given location in the search space, evaluate nearby locations and move to a new location only if it is an improvement on the current location.
+the__str__()  function produces a human-readable version of the object; here we call a  pretty-printing function we have defined calledpp().
+an important data type in language processing is the syntactic tree.
+koai find words which, when reversed, make legal words.
+the comparison function says that we compare two times of the form ('mar', '2004') by reversing the order of the month and year, and converting the month into a number to get('2004', '3'), then using python's built-in cmp function to compare them.
+'\xe7\x94\x9a\xe8\x87\xb3\xe7\x8c\xab\xe4\xbb\xa5\xe4\xba\xba\xe8\xb4\xb5' '' 'in some cases, cats were valued above humans.' ''
+readers who would like a systematic  introduction to algorithm design should consult the resources mentioned at the  end of this tutorial.
+>>> shuffle(a); sort.merge(a) 6175 >>> shuffle(a);  sort.quick(a)2378 readers are encouraged to look at nltk.misc.sort to see how these different  methods work.
+as another example of search, suppose we want to find the most complex  sentence in a text corpus.
+"( the cat ) ( sat ( on ( the mat ) ) )"
+more: consider what happens as the lists get longer... another example: sorting dates of the form "1 jan 1970" >>>
+y2, month_index[m2], d2 ... return cmp(a2, b2)>>> sort(date_list, date_cmp)
+1: ... return self[int(index[0])] ... else: ...
+>>> def tag(word): ... result = 'noun' ...
+"jan" : 1, "feb" :  2,"mar" : 3, "apr" : 4, ... "may" : 5,  "jun" : 6, "jul" : 7, "aug" : 8, ...  "sep" : 9, "oct" : 10, "nov" : 11, "dec"  : 12... } >>> def date_cmp(date_string1, date_string2): ...   (d1,m1,y1) = date_string1.split()...
+et.parse(path)>>> text = tree.findtext('sent') >>> uni_text =
+o e o a r e r s e t r
+before we can begin we have to be explicit about how  the complexity of a sentence is to be measured: word count, verb count,  character count, parse-tree depth, etc.
+the outer loop will iterate over each token  in the list, while the inner loop will iterate over each character of a string.
+this class is derived from python's built-in list  class, permitting us to use standard list operations to access the children of  a tree node.
+this  particular constructor calls the list initializer (similar to callingself =  list(children)), then defines the node property of a tree.
+although the program in example 4.2 is a useful illustration of stacks, it is overkill because we could have done a direct count:phrase.count('(')
+if isinstance(index, int): ... return list.__getitem__(self, index) ...
+this approach has a further benefit: it makes it more likely that the function will only return a single type.
+we can compare its  performance by timing how long it takes to execute it a million times.
+for example, to multiply 16 by 12 we might use any of the following methods: each of these methods is a different algorithm, and requires different amounts of computation time and different amounts of intermediate information to store.
+conv1 = y1, month_index[m1], d1... conv2 =
+a return statement can be used to pass multiple values back to the calling program, by packing them into a tuple.
+set(word[::-1]for word in words) >>>
+list(vowels)]['sequoia'] indexing fuzzy spelling many nlp tasks can be construed as search problems.
+the collection of nltk modules exemplify a variety of algorithm design techniques, including brute-force, divide-and-conquer, dynamic programming, and greedy search.
+nltk.data.find('samples/sinorama-gb.xml')  >>>f = codecs.open(path, encoding='gb2312') >>> lines =
+the constructor's first argument is special, and is standardly calledself, giving us a way to refer to the current object from within its definition.
+about this document...
+kokarapato kokovurito kaukauvira kokopuvira kaekaesoto kavovovira kovakovara kaarekopie kaepievira kapuupiepa kokoruuto kikiraeko kataavira kovokovoa karivaito karuvira kapokari kurovira kitukitu kakupute kaereasi kukuriko kuperoo kakapua kikisi kavora kikipi kapua kaare koeto katai kuva kusi kovo
+this chapter introduces concepts in algorithms, data structures, program design, and applied python programming.
+this technique is called decorate-sort-undecorate.
+figure 4.1: stacks and queues stacks are used to keep track of the current context in computer processing  of natural languages (and programming languages too).
+a similar situation holds for many other superficially simple tasks, such as sorting a list of words.
+finally we generate the words which need to be found.
+>>>print convert_parens(phrase.split())
+mon 14 dec 2009 10:58:42 est
+extremely wasteful brute  force solution: >>> words = nltk.corpus.words.words('en') >>> for word1 in words: ... for word2 in words: ...
+in this section we show  you how to create simple data classes and processing classes by example.
+[pair[1] for pair in sorted((len(w), w) for w in words)[::-1]]['spectroroute', 'turned', 'the', 'off', 'i']
+o a v a e o r u k b  v k s q
+= date_string2.split() ...
+['doyouseethekittyseethedoggy',  'doyoulikethekitty', 'likethedoggy'] 59  ['doyouseethekittyseethedoggydoyoulikethekitty', 'likethedoggy'] 57  ['doyouseethekittyseethedoggydoyoulikethekittylikethedoggy'] example 4.4 (code_hill_climb.py): figure 4.4: hill-climbing search 4.8   object-oriented programming in python (draft)
+sorting algorithms now, as we saw above, python provides a built-in function sort() that  performs this task efficiently.
+else: ... leaves.append(child) ...
+for child in self:  ... if isinstance(child, tree): ...
+'in some cases, cats were valued above humans.' ''
+to illustrate  the difference in efficiency, we will create a list of 1000 numbers, randomize  the list, then sort it, counting the number of list manipulations required.
+the constructor's first argument is special, and is standardly calledself,  giving us a way to refer to the current object from within its definition.
+we can compare its performance by timing how long it takes to execute it a million times.
+as with stacks, we will seldom have to deal with queues  explicitly, as the implementation of nltk n-gram taggers (section 5.5) and  chart parsers use queues behind the scenes.
+4.3   chinese and xml codecs for processing chinese text have been incorporated into python  (since version 2.4).
+list(vowels)]['sequoia'] space-time tradeoffs fuzzy spelling 4.6   exercises ◑ consider again the problem of hyphenation across line-breaks.
+[] for token in tokens: if token == '(' :# push stack.append(token) elif token == ')': # pop stack.pop() return stack >>> phrase =
+we can also read in the contents of an xml file using the etree package (at  least, if the file is encoded as utf-8 — as of writing, there seems to be  a problem reading gb2312-encoded files inetree).
+conv2 = y2, month_index[m2], d2 ...  return  cmp(a2, b2)>>> sort(date_list, date_cmp)
+>>> class tree(list): next we define the initializer __init__(); python knows to call this  function when you ask for a new tree object by writingt = tree(node, children).
+however, we can use stacks for more sophisticated processing  of strings containing nested structure, as shown inexample 4.3.
+it also contains review of the basic mathematical notions of set, relation, and function, and illustrates them in terms of python data structures.
+return '(%s: %s)' % (self.node, childstr) ...
+all paths through the function body end at the single return statement.
+in the context of learning this is known as theobjective function, the property of candidate solutions we want to optimize.
+def flip(segs, pos): return segs[:pos] + `1-int(segs[pos])` + segs[pos+1:]def hill_climb(text, segs, iterations): for i in range(iterations): pos, best = 0, evaluate(text, segs)for i in range(len(segs)): score =
+for example, the task  of a parser is to identify one or more parse trees for a given sentence.
+a stack is a container that has a last-in-first-out (or lifo) policy for adding and removing items (seefigure 4.1).
+[pair[1] for pair in sorted((len(w), w) for w in  words)[::-1]]['spectroroute', 'turned', 'the', 'off', 'i']
+evaluate(text, flip(segs, i))if score >> print evaluate(text, seg1), segment(text, seg1) 63
+the first line of a class definition is the class keyword followed by the class name, in this casetree.
+f.readlines()>>> for l in lines: ...
+>>>queue.pop(0) 'the' >>> queue.pop(0) '
+return 1 + max_child_height and finally, for enumerating all the subtrees (optionally filtered): ... def subtrees(self, filter=
+it contains many working program fragments that you should try yourself.
+avg_wordlen = sum(len(word) for  wordin words)/len(words) ...
+here we will generate a grid of letters, containing words found in the  dictionary.
+>>> for i in range(len(used)): ... print "%-12s" % used[i],... if float(i+1)%5 == 0: print kokoropavira kororovivira kaereasivira kotokotoara kopuasivira kataitoarei kaitutuvira kerikerisi
+[[]] for token in tokens: if token == '(': # push sublist =
+: ... print word1 more efficient: >>> wordlist = set(words) >>> rev_wordlist =
+[] stack[-1].append(sublist) stack.append(sublist)
+write a function that iterates over the tokens in a  list, removing the newline character from each, in each of the following ways: use doubly-nested for loops.
+(hint: add diagnostic print statements to the function to help you  see what it is doing.)
+['doyouseethekittyseethedoggydoyoulikethekitty', 'likethedoggy'] 57
+here's how queues can be  implemented using lists.
+for child in self: ...
+in such cases, it is better to use python's built-in support for "double-ended queues",collections.deque.
+in chapter 4 we saw how to sort a list of items according to some property of the list.
+now we can try a simple sort method called bubble sort, that scans through the list many times, exchanging adjacent items if they are out of order.
+as we will see insection 8.6, the space of possible parse trees is very large; a parser can be thought of as providing a relatively efficient way to find the right solution(s) within a very large space of candidates.
+if not filter or filter(self): ... yield self ... for child in self: ...
+o u  k t r k z a e l a v u k
+o  r o v a k u n c k z o t
+for a computer that can do 100,000 evaluations per second, this would take  over 10,000 years!
+elif token ==')': # pop stack.pop() else: # update top of stack stack[-1].append(token) return stack[0] >>> phrase =
+the program inexample 4.2 processes a sentence with phrase markers, and checks that the parentheses are balanced.
+the program inexample 4.2 processes a sentence with  phrase markers, and checks that the parentheses are balanced.
+replace the inner loop with a call to re.sub() finally, replace the outer loop with call to the map() function, to apply  this substitution to each token.
+if word in ['a',  'the', 'all']: ...
+utf_enc =  l.encode('utf8') ...
+first we remove any duplicates and disregard the order in which the lexemes appeared in the dictionary.
+if isinstance(child, tree): ...
+with appropriate support on your terminal, the escaped text string inside  the element above will be rendered as the following string of  ideographs: 甚至猫以人贵.
+['sequoia', 'yiieeaouuu!']  >>>
+def check_parens(tokens): stack =
+then we select the first 200 words, and then only keep those  words having a reasonable length.
+the__str__() function produces a human-readable version of the object; here we call a pretty-printing function we have defined calledpp().
+all paths  through the function body end at the single return statement.
+> queue.append('the') >>> queue.append('branch')
+it  is distributed with thenatural language toolkit
+we see that two are left on the stack at the end; i.e. the parentheses are not balanced.
+conv1 = y1, month_index[m1], d1...
+the stack keeps track of this level of nesting, exploiting the fact that the item at the top of the stack is actually shared with a more deeply nested item.
+h  v o k k g i k t k k l a k a a r m u g e p
+a queue is a container that has a first-in-first-out (or fifo) policy for adding and removing items (seefigure 4.1).
+if isinstance(child, tree): ... for subtree in child.subtrees(filter): ... yield subtree
+avg_wordlen = sum(len(word) for wordin words)/len(words) ...
+we can try the same task using various sorting algorithms.
+we see that two are left on the stack at the  end; i.e. the parentheses are not balanced.
+o a v a e o r u k b v k s q
+as we saw in part ii, there are several algorithms for parsing.
+we could use a queue of length n to create all the n-grams of a text.
+['doyouseethekitty', 'seethedoggy', 'doyoulikethekitty', 'likethedoggy'] >>>hill_climb(text, seg1, 20) 61
+>>> for i in range(len(used)): ... print "%-12s" %  used[i],... if float(i+1)%5 == 0: print kokoropavira kororovivira kaereasivira  kotokotoara kopuasivira kataitoarei kaitutuvira kerikerisi
+[to be written] (hunt & thomas, 2000)
+now we can try a simple sort method called bubble sort, that scans  through the list many times, exchanging adjacent items if they are out of  order.
+http://www.jwz.org/doc/worse-is-better.html http://c2.com/cgi/wiki?dontrepeatyourself import this lists are a versatile data type.
+however, we can use stacks for more sophisticated processing of strings containing nested structure, as shown inexample 4.3.
+>>> words = list(set(lexemes)) >>> words = words[:200]  >>>words =
+we can use lists to implement so-called abstract data types such as stacks and queues.
+[] ... for child in self: ...
+the __repr__() function produces a string representation of the object, one that can be executed to re-create the object, and is accessed from the interpreter simply by typing the name of the object and pressing 'enter'.
+two other special member functions are __repr__() and __str__().
+if isinstance(index, int): ...  return list.__getitem__(self, index) ... else: ...
+[] ... for child in self: ... if isinstance(child, tree): ... leaves.extend(child.leaves()) ...
+it sorts the lista in-place, and returns the number of times it modified the list: >>> from nltk.misc import sort >>> sort.bubble(a) 250918
+for a  systematic introduction to object-oriented design, please consult the large  literature of books on this topic.
+for example, the task of a parser is to identify one or more parse trees for a given sentence.
+['(', '('] example 4.2 (code_check_parens.py): figure 4.2: check whether parentheses are balanced in python, we can treat a list as a stack by limiting ourselves to the three operations defined on stacks:append(item) (to push item onto the stack), pop() to pop the item off the top of the stack, and [-1] to access the item on the top of the stack.
+if not filter or filter(self):  ... yield self ...
+[http://www.nltk.org/ ], version 2.0b7, under the terms of thecreative commons attribution-noncommercial-no derivative works 3.0 united states license [ http://creativecommons.org/licenses/by-nc-nd/3.0/us/].
+>>> words = 'i turned off the spectroroute'.split() >>> words.sort(cmp)>>> words ['i', 'off', 'spectroroute', 'the', 'turned']  >>>words.sort(lambda x, y: cmp(len(y), len(x))) >>> words  ['spectroroute', 'turned', 'off', 'the', 'i'] this is inefficient when the list of items gets long, as we compute len()  twice for every comparison (about 2nlog(n) times).
+the loop pushes material onto the stack when it gets an open parenthesis, and pops the stack when it gets a close parenthesis.
+however, nltk also provides several algorithms for sorting lists, to illustrate the variety of possible methods.
+find words which, when reversed, make legal words.
+instead of writing extremely complex regular expressions, some simple preprocessing does the trick: >>> words =
+[w for w in words if 3 >> from nltk.misc.wordfinder import wordfinder >>> grid, used = wordfinder(words)>>> for i in range(len(grid)): ... for j in range(len(grid[i])): ... print grid[i][j], ...
+grid, used = wordfinder(words)>>> for i in range(len(grid)): ... for j  in range(len(grid[i])): ... print grid[i][j], ... print o g h k u u v
+>>> from random import shuffle >>> a = range(1000) #  [0,1,2,...999] >>> shuffle(a) # randomize
+'civic', 'dad', 'dam', 'decal', 'deed', 'deeps', 'deer', 'deliver', 'denier',  'desserts', 'deus', 'devil', 'dial', 'diaper', 'did', 'dim', 'dog', 'don',  'doom', 'drab', 'draw', 'drawer', 'dub', 'dud', 'edit', 'eel', 'eke', 'em',  'emit', 'era', 'ere', 'evil', 'ewe', 'eye', 'fires', 'flog', 'flow', 'gab',  'gag', 'garb', 'gas', 'gel', 'gig', 'gnat', 'god', 'golf', 'gulp', 'gum',  'gums', 'guns', 'gut', 'ha', 'huh', 'keel', 'keels', 'keep', 'knits', 'laced',  'lager', 'laid', 'lap', 'lee', 'leek', 'leer', 'leg', 'leper', 'level',  'lever', 'liar', 'live', 'lived', 'loop', 'loops', 'loot', 'loots', 'mad',  'madam', 'me', 'meet', 'mets', 'mid', 'mood', 'mug', 'nab', 'nap', 'naps',  'net', 'nip', 'nips', 'no', 'nod', 'non', 'noon', 'not', 'now', 'nun', 'nuts',  'on', 'pal', 'pals', 'pan', 'pans', 'par', 'part', 'parts', 'pat', 'paws',  'peek', 'peels', 'peep', 'pep', 'pets', 'pin', 'pins', 'pip', 'pit', 'plug',  'pool', 'pools', 'pop', 'pot', 'pots', 'pup', 'radar', 'rail', 'rap', 'rat',  'rats', 'raw', 'redder', 'redraw', 'reed', 'reel', 'refer', 'regal', 'reined',  'remit', 'repaid', 'repel', 'revel', 'reviled', 'reviver', 'reward', 'rotator',  'rotor', 'sag', 'saw', 'sees', 'serif', 'sexes', 'slap', 'sleek', 'sleep',  'sloop', 'smug', 'snap', 'snaps', 'snip', 'snoops', 'snub', 'snug', 'solos',  'span', 'spans', 'spat', 'speed', 'spin', 'spit', 'spool', 'spoons', 'spot',  'spots', 'stab', 'star', 'stem', 'step', 'stew', 'stink', 'stool', 'stop',  'stops', 'strap', 'straw', 'stressed', 'stun', 'sub', 'sued', 'swap', 'tab',  'tang', 'tap', 'taps', 'tar', 'teem', 'ten', 'tide', 'time', 'timer', 'tip',  'tips', 'tit', 'ton', 'tool', 'top', 'tops', 'trap', 'tub', 'tug', 'war',  'ward', 'warder', 'warts', 'was', 'wets', 'wolf', 'won'] observe that this output contains redundant information; each word and its  reverse is included.
+the comparison function says that we compare two times of the form ('mar',  '2004') by reversing the order of the month and year, and converting the month  into a number to get('2004', '3'), then using python's built-in cmp function to  compare them.
+a queue is  a container that has a first-in-first-out (or fifo) policy for adding and  removing items (seefigure 4.1).
+in this section we show you how to create simple data classes and processing classes by example.
+we do this by converting it to a set, then back to a list.
+set(word[::-1]for word in words) >>> sorted(wordlist.intersection(rev_wordlist))['ah', 'are', 'bag', 'ban', 'bard', 'bat', 'bats', 'bib', 'bob', 'boob', 'brag', 'bud', 'buns', 'bus', 'but', 'civic', 'dad', 'dam', 'decal', 'deed', 'deeps', 'deer', 'deliver', 'denier', 'desserts', 'deus', 'devil', 'dial', 'diaper', 'did', 'dim', 'dog', 'don', 'doom', 'drab', 'draw', 'drawer', 'dub', 'dud', 'edit', 'eel', 'eke', 'em', 'emit', 'era', 'ere', 'evil', 'ewe', 'eye', 'fires', 'flog', 'flow', 'gab', 'gag', 'garb', 'gas', 'gel', 'gig', 'gnat', 'god', 'golf', 'gulp', 'gum', 'gums', 'guns', 'gut', 'ha', 'huh', 'keel', 'keels', 'keep', 'knits', 'laced', 'lager', 'laid', 'lap', 'lee', 'leek', 'leer', 'leg', 'leper', 'level', 'lever', 'liar', 'live', 'lived', 'loop', 'loops', 'loot', 'loots', 'mad', 'madam', 'me', 'meet', 'mets', 'mid', 'mood', 'mug', 'nab', 'nap', 'naps', 'net', 'nip', 'nips', 'no', 'nod', 'non', 'noon', 'not', 'now', 'nun', 'nuts', 'on', 'pal', 'pals', 'pan', 'pans', 'par', 'part', 'parts', 'pat', 'paws', 'peek', 'peels', 'peep', 'pep', 'pets', 'pin', 'pins', 'pip', 'pit', 'plug', 'pool', 'pools', 'pop', 'pot', 'pots', 'pup', 'radar', 'rail', 'rap', 'rat', 'rats', 'raw', 'redder', 'redraw', 'reed', 'reel', 'refer', 'regal', 'reined', 'remit', 'repaid', 'repel', 'revel', 'reviled', 'reviver', 'reward', 'rotator', 'rotor', 'sag', 'saw', 'sees', 'serif', 'sexes', 'slap', 'sleek', 'sleep', 'sloop', 'smug', 'snap', 'snaps', 'snip', 'snoops', 'snub', 'snug', 'solos', 'span', 'spans', 'spat', 'speed', 'spin', 'spit', 'spool', 'spoons', 'spot', 'spots', 'stab', 'star', 'stem', 'step', 'stew', 'stink', 'stool', 'stop', 'stops', 'strap', 'straw', 'stressed', 'stun', 'sub', 'sued', 'swap', 'tab', 'tang', 'tap', 'taps', 'tar', 'teem', 'ten', 'tide', 'time', 'timer', 'tip', 'tips', 'tit', 'ton', 'tool', 'top', 'tops', 'trap', 'tub', 'tug', 'war', 'ward', 'warder', 'warts', 'was', 'wets', 'wolf', 'won']
+def convert_parens(tokens): stack =
+the  __repr__() function produces a string representation of the object, one that  can be executed to re-create the object, and is accessed from the interpreter  simply by typing the name of the object and pressing 'enter'.
+['doyouseethekittyseethedoggydoyoulikethekittylikethedoggy'] example 4.4 (code_hill_climb.py): figure 4.4: hill-climbing search object-oriented programming is a programming paradigm in which complex structures and processes are decomposed intoclasses, each encapsulating a single data type and the legal operations on that type.
+first, for accessing the leaves: ... def leaves(self): ... leaves =
+... def __repr__(self): ... childstr = ' '.join([repr(c) for c in self]) ...
+then we select the first 200 words, and then only keep those words having a reasonable length.
+here we define a function that returns a  tuple consisting of the average word length of a sentence, and the inventory of  letters used in the sentence.
+whenever a token other than a parenthesis is encountered, we add it to a list at the appropriate level of nesting.
+it would have been clearer to write two separate  functions.
+arecursive descent  parser performs backtracking search, applying grammar productions in turn until  a match with the next input word is found, and backtracking when there is no  match.
+the first line of a class definition is the class keyword followed by the  class name, in this casetree.
+a w j k u y l r n h n k r g v u k g i a u d j k v n
+def __init__(self, node, children): ... list.__init__(self,  children) ...
+o v r  s k a w j k u y l r n h n k r g v u k g i a u d j k v n
+a k o o s u t r i a u a u a s p v f o r
+in python, we can treat a list as a stack by limiting ourselves to the  three operations defined on stacks:append(item) (to push item onto the stack),  pop() to pop the item off the top of the stack, and [-1] to access the item on  the top of the stack.
+here we build a  (potentially deeply-nested) list of lists.
+o o r k v v p u j e t z p k b e i e t k u r a n e
+[0,1,2,...999] >>> shuffle(a) # randomize
+[w for w in words if set(w).issuperset(vowels)]
+def __getitem__(self, index): ...
+however, nltk also provides several algorithms  for sorting lists, to illustrate the variety of possible methods.
+(d2,m2,y2) = date_string2.split() ...
+4.2   abstract data types stacks and queues lists are a versatile data type.
+readers who would like a systematic introduction to algorithm design should consult the resources mentioned at the end of this tutorial.
+figure 4.1: stacks and queues stacks are used to keep track of the current context in computer processing of natural languages (and programming languages too).
+>>> from timeit import timer >>>
+kokarapato kokovurito kaukauvira kokopuvira kaekaesoto kavovovira kovakovara kaarekopie kaepievira  kapuupiepa kokoruuto kikiraeko kataavira kovokovoa karivaito karuvira kapokari  kurovira kitukitu kakupute kaereasi kukuriko kuperoo kakapua kikisi kavora  kikipi kapua kaare koeto katai kuva kusi kovo
+"( the cat ) ( sat ( on ( the mat )"  >>>print check_parens(phrase.split())
+evidently merge sort is much better than bubble sort, and quicksort is better still.
+["sequoia", "abacadabra",  "yiieeaouuu!"] >>> vowels =
+koai problem transformation (aka transform-and-conquer)
+backtracking search -- saw this in the recursive descent parser.
+first we remove any duplicates and disregard the order in which the  lexemes appeared in the dictionary.
+similar methods are provided  for setting and deleting a child (using__setitem__) and __delitem__).
+the first case is the simplest, when the index is an integer, e.g. t[2], we just ask for the list item in the obvious way.
+presorting, sets: find words which have at least (or exactly) one instance of all vowels.
+>>> def proc_words(words): ...
+here we build a (potentially deeply-nested) list of lists.
+def flip(segs, pos): return segs[:pos] + `1-int(segs[pos])` +  segs[pos+1:]def hill_climb(text, segs, iterations): for i in range(iterations):  pos, best = 0, evaluate(text, segs)for i in range(len(segs)): score =  evaluate(text, flip(segs, i))if score >> print evaluate(text, seg1), segment(text, seg1) 63
+in  such cases, it is better to use python's built-in support for  "double-ended queues",collections.deque.
+['doyouseethekittyseethedoggy', 'doyoulikethekitty', 'likethedoggy'] 59
+a stack is a container that has  a last-in-first-out (or lifo) policy for adding and removing items (seefigure  4.1).
+in the context of learning this is  known as theobjective function, the property of candidate solutions we want to  optimize.
+'\xe7\x94\x9a\xe8\x87\xb3\xe7\x8c\xab\xe4\xbb\xa5\xe4\xba\xba\xe8\xb4\xb5' ''
+... def __repr__(self): ... childstr = ' '.join([repr(c) for c in self])
+... return avg_wordlen, chars_used >>> proc_words(['not', 'a', 'good',  'way', 'to', 'write', 'functions']) (3, 'nacdefginorstuwy')
+chars_used = ''.join(sorted(set(''.join(words)))) ...
+as another example of search, suppose we want to find the most complex sentence in a text corpus.
+here we define a function that returns a tuple consisting of the average word length of a sentence, and the inventory of letters used in the sentence.
+it sorts the lista in-place, and returns the number of times it modified  the list: >>> from nltk.misc import sort >>> sort.bubble(a)  250918
+i k h v o k k g i k t k k l a k a a r m u g e p
+[w for w in words if sorted(c for c in w if c in vowels)
+def __str__(self): ...
+max(max_child_height, 1) ...
+evidently merge sort is much better than bubble sort, and quicksort is  better still.
+max_child_height = max(max_child_height,  child.height()) ... else: ...
+for  example, to multiply 16 by 12 we might use any of the following methods: add 16 to itself 12 times over perform "long multiplication", starting with the  least-significant digits of both numbers look up a multiplication table repeatedly halve the first number and double the second, 16*12 = 8*24 =  4*48 = 2*96 = 192 do 10*12 to get 120, then add 6*12 rewrite 16*12 as (x+2)(x-2), remember that 14*14=196, and add (+2)(-2)
+"jan" : 1, "feb" : 2,"mar" : 3, "apr" : 4, ... "may" : 5, "jun" : 6, "jul" : 7, "aug" : 8, ... "sep" : 9, "oct" : 10, "nov" : 11, "dec" : 12... } >>> def date_cmp(date_string1, date_string2): ... (d1,m1,y1) = date_string1.split()...
+(hint: add diagnostic print statements to the function to help you see what it is doing.)
+we can use lists to implement so-called  abstract data types such as stacks and queues.
+it would have been clearer to write two separate functions.
+codecs for processing chinese text have been incorporated into python (since version 2.4).
+nltk.data.find('samples/sinorama-utf8.xml') >>>from nltk.etree import elementtree as et >>> tree = et.parse(path)>>> text = tree.findtext('sent') >>>
+next we define another special function that python knows to call when we index a tree.
+return self.pp() next we define some member functions that do other standard operations on trees.
+4.7   search many nlp tasks can be construed as search problems.
+[w for w in words if 3 >> from nltk.misc.wordfinder import wordfinder >>>
+the following is more efficient: >>>
+next we define another special function that python knows to call when we  index a tree.
+def __init__(self, node, children): ... list.__init__(self, children) ...
+>>> words = list(set(lexemes)) >>> words = words[:200] >>>words =
+max(max_child_height, child.height()) ...

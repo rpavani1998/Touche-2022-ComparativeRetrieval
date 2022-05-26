@@ -1,0 +1,2535 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>User Guide</title>
+<body>
+
+<h1>User Guide</h1> 
+<p>The official Premake documentation.&copy; 2002-2010 Jason Perkins and the 
+Premake project.</p> 
+<p>This user guide reflects the current state of the software fairly closely, 
+but may lag in places, or get a little ahead of the official releases in 
+others. When in doubt, feel free to post a questionover in the forums. If you 
+spot any problems, or think something is unclear, feel free to leave a comment.
+</p> 
+<h1>What Is Premake?</h1> 
+<p>Imagine yourself the owner of an open source software project. Your users 
+are asking for a Visual Studio 2008 solution, but you don't have Visual Studio! 
+Or perhaps you are a cross-platform game developer struggling to keep projects, 
+solutions, and makefiles in sync. Its a common problem for open and 
+cross-platform projects: restrict yourself to a single, potentially sub-optimal 
+build tool--driving away potential contributors--or manually maintain two, 
+three, or more sets of build scripts.</p> 
+<p>Not working cross-platform? Have you ever been stuck using an old version 
+of Visual Studio because it was too difficult to upgrade the entire team?</p> 
+<p>Or maybe you just want an easy way to reconfigure your project for 
+different situations or environments, pulling in different source code or 
+libraries, switches and options.</p> 
+<h2>Enter Premake</h2> 
+<p>Premake is a build configuration tool. Describe your C, C++, or C# software 
+project usinga simple, easy to read syntax and let Premake generate the project 
+files for:</p> 
+<ul> 
+<li>Microsoft Visual Studio 2002-2010, including the Express editions</li> 
+<li>GNU Make, including Cygwin and MinGW</li> 
+<li>Apple Xcode</li> 
+<li>Code::Blocks</li> 
+<li>CodeLite</li> 
+<li>IC#Code SharpDevelop</li> 
+<li>MonoDevelop</li> </ul> 
+<p>Version 4.1 of Premake added experimental support for cross-compiling, 
+targeting:</p> 
+<ul> 
+<li>32- and 64-bit builds</li> 
+<li>Mac OS X 32- and 64-bit universal binaries</li> 
+<li>Playstation 3 (Visual Studio and GNU Make)</li> 
+<li>Xbox 360 (Visual Studio only)</li> </ul> 
+<p>Premake allows you to manage your project configuration in one place and 
+still support those pesky IDE-addicted Windows coders and/or cranky Linux 
+command-line junkies. It allows you to generate project files for tools that 
+you do not own. It saves the time that would otherwise be spent manually 
+keeping several different toolsets in sync. And it provides an easy upgrade 
+path as new versions of your favorite tools are released.</p> 
+<p>In addition to these project generation capabilities, Premake also provides 
+a completeLua scripting environment, enabling the automation of complex 
+configuration tasks, such as setting up new source tree checkouts or creating 
+deployment packages. These scripts will run on any platform, ending batch/shell 
+script duplication.</p> 
+<p>Premake is a &quot;plain old C&quot; application, distributed as a single 
+executable file. It is small, weighing in at around 200K. It does not require 
+any additional libraries or runtimes to be installed, and should build and run 
+pretty much anywhere. It is currently being tested and used on Windows, Mac OS 
+X, Linux, and other POSIX environments. It uses only a handful of platform 
+dependent routines (directory management, mostly). Adding support for 
+additional toolsets and languages is straightforward. The source code is 
+available under theBSD License. The source code is hosted on BitBucket; file 
+downloads are hosted onSourceForge.</p> 
+<h1>Building Premake</h1> 
+<p>Learn how to compile Premake from the source code.If you downloaded a 
+prebuilt binary package you can skip this page, which discusses how to build 
+the Premake source code.Jump ahead to Quick Start to begin learning how to use 
+and develop with Premake.</p> 
+<h2>Generating the Project Files</h2> 
+<p>If you downloaded one of the official source code release packages, the 
+project files have already been generated for you, and may be found in the<b>
+build/</b> directory. Skip ahead to the next section to learn about the 
+important differences between the build configurations.</p> 
+<p>Premake's Mercurial repository does not contain any project files. Instead, 
+usean existing copy of Premake to generate the files for your particular 
+toolset and environment.</p> 
+<p>Once you have a working Premake installed, embed the scripts by opening a 
+console or terminal to the source code directory and running the command</p> 
+<pre> premake4 embed </pre> 
+<p>Now generate the project files with a command like:</p> 
+<pre> premake4 gmake # for GNU makefiles using GCC premake4 vs2008 # for a 
+Visual Studio 2008 solution</pre> 
+<p>Use the --help option to see all of the available targets. You now have a 
+solution/makefile/workspace that you can load and build.</p> 
+<p>Note that when working against the Mercurial sources it is a good idea to 
+refresh the embedded scripts after each update.</p> 
+<pre> $ hg pull -u $ premake4 embed </pre> 
+<p>See <b>Debug vs. Release Modes</b> below for an explanation (and maybe 
+eventually I'll think of a better way to do this).</p> 
+<h2>Building the Source Code</h2> 
+<p>Premake can be built in either &quot;release&quot; (the default) or 
+&quot;debug&quot; modes. If you are using Makefiles (as opposed to an IDE), you 
+can choose which configuration to build with the<b>config</b> argument:</p> 
+<pre> make # build in release mode, both versions make config=debug # build in 
+debug mode, when generated with Premake 4.x make CONFIG=Debug # build in debug 
+mode, when generated with Premake 3.x</pre> 
+<p>If you do not supply a <b>config</b> argument, release mode will be used. 
+IDEs like Visual Studio provide their own mechanism for switching build 
+configurations.</p> 
+<h2>Debug vs. Release Modes</h2> 
+<p>A significant portion of Premake is written in Lua. For release builds (the 
+default) this has no impact, just build as normal and go.</p> 
+<p>When built in Debug mode, Premake will read its Lua scripts from the disk 
+at startup, enabling compile-less code/test iterations, and therefore faster 
+development. But it needs a little help finding the scripts. You can use the<b>
+/scripts</b> command line argument, like so:</p> 
+<pre> premake4 /scripts=~/Code/premake4/src gmake </pre> 
+<p>Or set a <b>PREMAKE_PATH</b> environment variable:</p> 
+<pre> PREMAKE_PATH=~/Code/premake4/src </pre> 
+<p>You need to specify the location of the Premake <b>src/</b> directory, the 
+one containing<b>_premake_main.lua</b>.</p> 
+<h2>Embedding the Scripts</h2> 
+<p>In release builds, Premake uses a copy of the scripts embedded into static 
+strings: see<b>src/host/scripts.c</b>. If you modify any of the core Lua 
+scripts (anything ending in<b>.lua</b>), you must also update these embedded 
+strings before your changes will appear in the release mode build.</p> 
+<p>You can update these strings by using the <b>embed</b> action, which is 
+part of Premake's own build script.</p> 
+<pre> premake4 embed </pre> 
+<p>This command embeds all of the scripts listed in <b>_manifest.lua</b> into 
+<b>src/host/scripts.c</b>. The next release build will include the updated 
+scripts.</p> 
+<h3>CONFUSED?</h3> 
+<p>The inclusion of the Lua scripts throws a wrench in things, and I certainly 
+understand if you have questions. I'll be glad to help you out. Leave a notein 
+the forums (the preferred approach), join the mailing list, or contact me 
+directly. Your questions will help me improve these instructions.</p> 
+<h1>Premake Quick Start</h1> 
+<p><em>A quick introduction for people who arrived here directly: Premake is a 
+build configuration tool. It reads a description of a software project and 
+generates the files for one of several different toolsets. By using Premake, 
+software developers can save time and support more tools and users.</em> Learn 
+More.</p> 
+<h2>Getting Premake</h2> 
+<p>If you don't have Premake already, you can download it now.</p> 
+<p>Premake is a small (around 200K) command line executable, delivered as a 
+single file. Just unpack the download and place the executable on your system 
+search path or anywhere else convenient.</p> 
+<h2>Using Premake</h2> 
+<p>The simplest Premake command is:</p> 
+<pre> premake4 <em>action</em> </pre> 
+<p>Usually you would like Premake to generate project files for a particular 
+toolset, in which case<em>action</em> is one of these toolset identifiers:</p> 
+vs2010 Visual Studio 2010 (or Express) <br>
+vs2008 Visual Studio 2008 (or 
+Express) <br>
+vs2005 Visual Studio 2005 (or Express), SharpDevelop, or 
+MonoDevelop <br>
+vs2003 Visual Studio 2003 <br>
+vs2002 Visual Studio 2002 <br>
+
+gmake GNU Make (including Cygwin and MinGW) <br>
+xcode3 Apple Xcode 3 <br>
+
+codeblocks Code::Blocks <br>
+codelite CodeLite <br>
+<br>
+
+<p>You can see a complete list of actions and other options by typing:</p> 
+<pre> premake4 --help </pre> 
+<p>Once the files have been generated you can load the solution or workspace 
+into your IDE and build as you normally would.</p> 
+<h2>Using the Generated Makefiles</h2> 
+<p>Running <b>make</b> with no options will build all targets using the 
+default configuration. To build a different configuration supply the<b>config
+</b> argument:</p> 
+<pre> make config=release </pre> 
+<p>Most projects provide debug and release configurations; to see the 
+available targets and configurations, type:</p> 
+<pre> make help </pre> 
+<p>Remove all generated binaries and intermediate files with:</p> 
+<pre> make clean </pre> 
+<p>Premake generated makefiles do <em>not</em> support a <b>make install</b> 
+step. Instead, project owners are encouraged toadd an install action to their 
+Premake scripts, which has the advantage of working with any toolset on any 
+platform. You can check for the existence of an install action by viewing the 
+help (run<b>premake4 --help</b> in the project directory).</p> 
+<h2>Next Steps</h2> 
+<p>If you are having trouble building your project, start by contacting the 
+project manager. If you are having trouble building or using Premake,visit our 
+Support page and I'll try to help you out.</p> 
+<p>To learn how to use Premake for your own software projects see Scripting 
+With Premake.</p> 
+<h1>Scripting with Premake</h1> 
+<p>In this section, I'll show you how to create project scripts for Premake.
+</p> 
+<h1>A Sample Script</h1> 
+<p>Premake is built on Lua, a powerful, fast, light-weight scripting language. 
+Premake scripts are really Lua programs, so anything you can do in Lua can also 
+be done in a Premake script. To this, Premake adds functions for defining 
+solutions, projects, and configurations as well as support for common build 
+configuration tasks. Premake also provides conventions for defining and 
+handling command line options and actions, allowing you to build sophisticated 
+configuration scripts.</p> 
+<p>Because of the descriptive nature of the Lua language, your build scripts 
+will often look more like static configuration files than mini-programs. Here 
+is an example of a fairly typical Premake script for a C++ executable.See the 
+Premake Cookbook for more examples of common configuration tasks.</p> 
+<pre>-- A solution contains projects, and defines the available configurations 
+solution&quot;MyApplication&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } &nbsp; -- A project defines one build target project 
+&quot;MyApplication&quot; kind &quot;ConsoleApp&quot; language &quot;C++&quot; 
+files{ &quot;**.h&quot;, &quot;**.cpp&quot; } &nbsp; configuration 
+&quot;Debug&quot; defines { &quot;DEBUG&quot; } flags { &quot;Symbols&quot; } 
+&nbsp; configuration&quot;Release&quot; defines { &quot;NDEBUG&quot; } flags { 
+&quot;Optimize&quot; } </pre> 
+<p>The indentation in this sample is arbitrary, this is the way I happen to 
+like it.</p> 
+<p>The following sections of this guide will walk you through all of the 
+features of Premake in a somewhat logical fashion. It isn't rocket science, and 
+you probably already have the gist of it from the example above, so feel free 
+to skip around. You can also refer to theReference section or the Lua Reference 
+Manual for information on a particular function or variable.</p> 
+<h1>A Bit of Meta</h1> 
+<p>Let me start with a bit of general information that you will need to know 
+to begin scripting.</p> 
+<h2>Files and File Names</h2> 
+<p>Premake will look for a file named <b>premake4.lua</b> by default, much like
+<b>make</b> looks for a file named <b>Makefile</b>. So that's the name you want 
+to give your project script files, generally.</p> 
+<p>You can specify a different file name using the <b>file</b> argument, like 
+so:</p> 
+<pre> premake4 --file=myfilename.lua </pre> 
+<p>You can define your entire project in one script file if you want, or you 
+can split up the projects into their own files, or any other organization you 
+can dream up. Use theinclude() function or Lua's <b>dofile()</b> to link all 
+the files together.</p> 
+<p>I personally like to use just one file for simple projects, and 
+one-file-per-project for more complex builds.</p> 
+<h2>Project Functions and Arguments</h2> 
+<p>You define your software project by calling a sequence of functions, such as
+solution, project, and defines. These functions set up the project state and 
+take care of error checking and the like.</p> 
+<p>When calling a function with a single string constant for an argument, Lua 
+allows you to drop the parenthesis that would normally appear around the 
+argument list. So these two statements are functionally identical:</p> 
+<pre>solution(&quot;MySolution&quot;) solution &quot;MySolution&quot;</pre> 
+<p>I find the latter form a bit more readable. The same goes with a single 
+list argument:</p> 
+<pre>defines({&quot;DEBUG&quot;, &quot;TRACE&quot;}) defines {&quot;DEBUG&quot;
+,&quot;TRACE&quot;}</pre> 
+<p>If you want to use a variable as an argument, or the result of a 
+calculation, then you must use the parenthesis:</p> 
+<pre>local lang = &quot;C++&quot; language (lang) -- need the parenthesis here 
+&nbsp; location(&quot;build/&quot; .. _ACTION) -- and here too</pre> 
+<h2>Values and Lists</h2> 
+<p>Many of Premake's functions accept a list of values as a parameter. For 
+instance, a list of source code files, or defined symbols, or build flags. When 
+defining a list of values you need to surround them in curly brackets, Lua's 
+syntax for a list. If you only want to set a single value, you can leave off 
+the brackets if you like.</p> 
+<pre>defines { &quot;DEBUG&quot;, &quot;TRACE&quot; } -- defines multiple 
+values defines &quot;NDEBUG&quot; -- defines a single value</pre> 
+<p>There are also functions that only accept a single value, such as solution 
+and project names, the project kind and language, and so on. If you try to pass 
+a list to these function you'll get an error. These string values may be 
+delimited with single (') or double (&quot;) quotes.</p> 
+<pre>language &quot;C++&quot; kind 'ConsoleApp'</pre> 
+<p>For more information on Lua programming, see the Lua website or Programming 
+in Lua. If you get stuck, post a question over in the forums and I will do my 
+best to help you out.</p> 
+<h1>Solutions and Projects</h1> 
+<p>Starting with Premake 4.0 I am following the Visual Studio naming 
+conventions for build components. For those of you unfamiliar with Visual 
+Studio I will try to provide to provide the synonyms used by other toolsets; if 
+I miss any let me know and I'll add them.</p> 
+<h2>Solutions</h2> 
+<p>At the top level of every build is a <em>solution</em>, acting as a 
+container and meta-project (other tools use the term<em>workspace</em>). 
+Solutions define a common set ofconfigurations and encapsulate one or more 
+projects (see below). You can define build-wide settings at the solution level; 
+these will apply to all of the projects contained by that solution.</p> 
+<p>Solutions are defined using the solution function. Most builds will need 
+only a single solution, but you are free to create more if needed. 
+Configurations are specified using theconfigurations function; see the next 
+section for more information.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; }</pre> 
+<p>The solution name, provided as a parameter to the function, is used as the 
+file name of the generated solution file. So avoid special characters; spaces 
+are okay.</p> 
+<h2>Projects</h2> 
+<p>The primary purpose of a solution is to act as a container for projects. A 
+<em>project</em> lists the settings and source files needed to build one binary 
+target. Just about every IDE uses the term &quot;project&quot; for this. In the 
+world of Make, you can think of projects as a makefile for one particular 
+library or executable; a solution is a meta-makefile that calls each project as 
+needed.</p> 
+<p>Projects are defined using the project function. You must create a solution 
+and list the available configurations before creating the first project.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } &nbsp; project &quot;MyProject&quot;</pre> 
+<p>The project name, like the solution name, is used as the file name for the 
+generated project file so avoid special characters.</p> 
+<p>Each project specifies a <em>kind</em> which determines what kind of output 
+is generated, such as a console or windowed executable, or a shared or static 
+library. Thekind function is used to specify this value.</p> 
+<p>Each project also specifies which programming language it uses, such as C++ 
+or C#. Thelanguage function is used to set this value.</p> 
+<pre>project &quot;MyProject&quot; kind &quot;ConsoleApp&quot; language 
+&quot;C++&quot;</pre> 
+<h2>Locations</h2> 
+<p>By default, Premake will place generated solution and project files in the 
+same directory as the script which defined them. If your Premake script is in<b>
+C:\Code\MyProject</b> then the generated files will also be in <b>
+C:\Code\MyProject</b>.</p> 
+<p>You can change the output location using the location function.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } location &quot;build&quot; &nbsp; project 
+&quot;MyProject&quot; location &quot;build&quot;</pre> 
+<p>The path provided for <b>location</b> should be specified relative to the 
+script file. Using the example and script above, the generated files will be 
+placed in<b>C:\Code\MyProject\build</b>.</p> 
+<h1>Adding Files</h1> 
+<p>You add files&mdash;source code, resources, and so on&mdash;to your project 
+using thefiles function.</p> 
+<pre>files { &quot;hello.h&quot;, -- you can specify exact names 
+&quot;*.c&quot;, -- or use a wildcard... &quot;**.cpp&quot; -- ...and recurse 
+into subdirectories }</pre> 
+<p>You can use wildcards in the file patterns to match a set of files. The 
+wildcard<b>*</b> will match files in one directory; the wildcard <b>**</b> will 
+match files in one directory and also recurse down into any subdirectories.</p> 
+<p>Files located in other directories should be specified relative to the 
+script file. For example, if the script is located at<b>myproject/build</b> and 
+the source files are at<b>myproject/src</b>, the files should be specified as
+</p> 
+<pre>files { &quot;../src/*.cpp&quot; }</pre> 
+<p>Paths should always use the forward slash <b>/</b> as a separator; Premake 
+will translate to the appropriate platform-specific separator as needed.</p> 
+<h3>Excluding Files</h3> 
+<p>Sometimes you want most, but not all, of the files in a directory. In that 
+case, use theexcludes function to mask out those few exceptions.</p> 
+<pre>files { &quot;*.c&quot; } excludes { &quot;a_file.c&quot;, 
+&quot;another_file.c&quot; }</pre> 
+<p>Excludes may also use wildcards.</p> 
+<pre>files { &quot;**.c&quot; } excludes { &quot;tests/*.c&quot; }</pre> 
+<p>Sometimes you may want to exclude all the files in a particular directory, 
+but aren't sure where that directory will fall in the source tree.</p> 
+<pre>files { &quot;**.c&quot; } excludes { &quot;**/Win32Specific/**&quot; }
+</pre> 
+<h1>Linking</h1> 
+<p>Linking to external libraries is done with the links function.</p> 
+<pre>links { &quot;png&quot;, &quot;zlib&quot; }</pre> 
+<p>When specifying libraries, system-specific decorations, such as prefixes or 
+file extensions, should be omitted. Premake will synthesize the correct format 
+based on the target platform automatically. The one exception to the rule is 
+Mac OS X frameworks, where the file extension is required to identify it as 
+such.</p> 
+<pre>links { &quot;Cocoa.framework&quot; }</pre> 
+<p>To link to a sibling project (a project in the same solution) use the <b>
+project name</b>. Premake will deduce the correct library path and name based 
+on the current platform and configuration.</p> 
+<pre>solution &quot;MySolution&quot; &nbsp; project 
+&quot;MyLibraryProject&quot; -- ...project settings here... &nbsp; project 
+&quot;MyExecutableProject&quot; -- ...project settings here... links { 
+&quot;MyLibraryProject&quot; }</pre> 
+<h3>Finding Libraries</h3> 
+<p>You can tell Premake where to search for libraries with the libdirs 
+function.</p> 
+<pre>libdirs { &quot;libs&quot;, &quot;../mylibs&quot; }</pre> 
+<p>If you need to discover the location of a library, use the os.findlib 
+function.</p> 
+<pre>libdirs { os.findlib(&quot;X11&quot;) }</pre> 
+<h1>Configurations</h1> 
+<p>A <em>configuration</em> is a collection of flags and options to apply to a 
+build, including build flags, header file and library search directories, and 
+more. Each solution defines its own list of configurations. The most common 
+configuration set, which is usually provided by default by most IDEs, is 
+&quot;Debug&quot; and &quot;Release&quot;. Visual Studio and other IDEs provide 
+facilities to quickly switch between configurations; Premake-generated 
+makefiles allow the configuration to be specified with a command-line parameter.
+</p> 
+<h2>Specifying Configurations</h2> 
+<p>At the solution level, specify your list of possible configurations by 
+calling theconfigurations function and passing it a list of names.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; }</pre> 
+<p>You are not limited to these two standard names. For instance, if your 
+project can be built as both as both static or shared libraries, you might use 
+this instead:</p> 
+<pre> configurations { &quot;DebugLib&quot;, &quot;DebugDLL&quot;, 
+&quot;ReleaseLib&quot;, &quot;ReleaseDLL&quot; }</pre> 
+<p>Some features of Premake, such as selecting a configuration from the 
+command line, are easier if you avoid spaces. However, spaces are allowed in 
+configuration names.</p> 
+<h2>Using Configurations</h2> 
+<p>Premake provides a great deal of flexibility when it comes to configuring 
+your build: you can apply settings across an entire solution, a project, or to 
+a targeted combination of configuration and toolset. Theconfiguration function 
+is used to apply settings to a particular build environment.</p> 
+<p>For example, you can define a symbol across all configurations of all 
+projects by setting it at the solution level, before any filters are enabled.
+</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } &nbsp; defines { &quot;MY_SYMBOL&quot; }</pre> 
+<p>Or, using the configuration function, you can limit it to a particular 
+configuration.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } &nbsp; configuration &quot;Debug&quot; defines { 
+&quot;MY_SYMBOL&quot; }</pre> 
+<p>The same rules hold true at the project level.</p> 
+<pre>project &quot;MyProject&quot; &nbsp; defines { &quot;TRACE&quot; } -- 
+this will be applied to every configuration &nbsp; configuration 
+&quot;Debug&quot; defines { &quot;DEBUG&quot; } -- this will only be applied to 
+Debug builds</pre> 
+<p>When values are supplied at multiple levels, list fields (like defines 
+above) are<em>concatenated</em> while single-value fields (like language) are 
+overridden. Project values take precedence over solution values, and will 
+appear after the solution values in lists. Values at the same level are 
+evaluated in the order in which they are encountered in the script.</p> 
+<p>This is just an overview of configuration filtering. For more details, 
+including a list of the available filter keywords, see the documentation for the
+configuration function.</p> 
+<p><em>(I can see where this topic might be a bit confusing for newcomers, and 
+I welcome suggestions for improving this text. Feel free to leave your ideas in 
+the comments.)</em></p> 
+<h1>Platforms</h1> 
+<p><em>Platform support is a new, experimental feature introduced in <b>
+Premake 4.1</b>. This is a potentially large area of development and it may 
+take a few releases to get it just right. The syntax and behavior described 
+here might change along the way.</em></p> 
+<p><em><b>An important caveat:</b> I don't target multiple platforms in my own 
+day to day work. I am relying on those of you that do, and the community at 
+large, to help me shape this feature.</em></p> 
+<p><em>One more disclaimer: I think this page is confusing. If you've got any 
+ideas on how I might explain it better please leave a comment. Thanks!</em></p> 
+<p>In addition to configurations, you can also target multiple hardware <em>
+platforms</em>, such as a 32-bit build and a 64-bit build. This is also known as
+cross compiling. These platforms can be quickly switched between from within 
+your IDE, or with a command-line parameter on the generated makefile.</p> 
+<p>In addition to 32- and 64-bit builds, Premake also supports Mac OS X 
+universal binaries, the Playstation 3, and the Xbox 360. See theplatforms 
+function documentation for a full list of supported platforms.</p> 
+<p>Unlike configurations, platforms are optional. If you don't need them, just 
+don't call theplatforms function at all, in which case the toolset's default 
+behavior will be used.</p> 
+<h2>Specifying Platforms</h2> 
+<p>The easiest way to target a particular platform is to supply the <b>
+--platform</b> argument to Premake. If you have a solution that builds on 
+Windows, and you want to a binary for the Xbox 360, you would call:</p> 
+<pre> premake4 --platform=xbox360 vs2005 </pre> 
+<p> The files generated by this call will include the default Win32 build 
+normally present in Visual Studio solutions, plus a new set of configurations 
+which target the Xbox 360. Assuming that you have the proper development tools 
+installed and your software is portable enough, you can now build an Xbox 360 
+binary.</p> 
+<p>If you frequently target several different platforms, and want to switch 
+between them without regenerating your project files, you can add them directly 
+to your script. Target platforms are part of the solution, just like 
+configurations:</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } platforms { &quot;Native&quot;, &quot;Universal&quot; }
+</pre> 
+<p>Not all tools will support all of the possible targets (currently only 
+Visual Studio supports the Xbox 360 platform). Unsupported platforms are 
+silently ignored; they simply will not appear in the generated build scripts.
+</p> 
+<p>Most toolsets require extra configuration to target multiple platforms. 
+Premake will generate a build script with the right instructions for a 64-bit 
+or an Xbox build, but that build will only succeed if the corresponding tools 
+and libraries have been installed on the developer machine. GCC users may need 
+to install the<b>GCC multilib</b> packages.</p> 
+<h2>The Native Platform</h2> 
+<p>In addition to the cross-compiling platform targets listed above, there is 
+a special target called<b>native</b> which preserves the default compiler 
+behavior. Taking GCC as an example, Premake's<b>x32</b> flag adds <b>-m32</b> 
+to the GCC command line, and the<b>x64</b> flag adds <b>-m64</b>. The native 
+platform, in contrast, does not add<em>any</em> flags to the command line and 
+lets GCC use its default behavior to target the current platform.</p> 
+<p>Normally you would include the native platform, and list it first to make 
+it the default.</p> 
+<pre>platforms { &quot;native&quot;, &quot;x32&quot;, &quot;x64&quot; }</pre> 
+<p>So if you wanted your code to &quot;just build&quot; on Windows or Unix, 
+32- or 64-bit systems, and you also wanted to allow folks to cross-compile for 
+the Xbox 360 or Mac OS X universal binaries, you could do:</p> 
+<pre>platforms { &quot;native&quot;, &quot;xbox360&quot;, &quot;universal&quot;
+}</pre> 
+<p>Sometimes it is important to know which platform you are targeting; you 
+might need to define specific symbols or link to different libraries. In this 
+case, the native platform would not be included in the list.</p> 
+<pre>platforms { &quot;x32&quot;, &quot;x64&quot; }</pre> 
+<h2>Platform Settings</h2> 
+<p>Like any other configuration-specific value, platform-specific settings are 
+set withconfiguration filters. If no platform is specified to the filter, the 
+subsequent settings will apply to all platforms.</p> 
+<pre>configuration { &quot;debug&quot; } defines &quot;_DEBUG&quot; -- this 
+symbol will appear in settings for ALL platforms</pre> 
+<p>If a specific platform identifier is listed, the settings will be applied 
+only when that platform is specifically selected by the user.</p> 
+<pre>configuration { &quot;xbox360&quot; } defines &quot;IS_XBOX360_BUILD&quot;
+-- this will only get applied when user chooses the Xbox 360 build</pre> 
+<p>The platform is just another configuration axis, which you can mix and 
+match with any other selectors. See theconfiguration function for more details.
+</p> 
+<pre>configuration { &quot;Debug&quot;, &quot;x64&quot; } defines 
+&quot;USE_64BIT_DEBUG_LIBRARY&quot;</pre> 
+<h2>Platforms and Makefiles</h2> 
+<p><i>I am still working out how the target platforms should be represented in 
+Premake-generated makefiles. Below is my best take so far; feedback and 
+suggestions for improvement are very much appreciated.</i></p> 
+<p>In the generated makefiles, platforms and build configurations are paired 
+up. If you defined a solution like this:</p> 
+<pre>platforms { &quot;native&quot;, &quot;x64&quot;, &quot;universal&quot; }
+</pre> 
+<p>There would be six possible configurations: <b>debug</b>, <b>release</b>, 
+<b>debug64</b>, <b>release64</b>, <b>debuguniv</b>, and <b>releaseuniv</b>. I 
+tried to truncate the platforms to something easy to type.</p> 
+<p>You target a specific configuration using the <b>config</b> argument.</p> 
+<pre> make config=debug64 </pre> 
+<p> If the makefile is executed without any arguments, the first build 
+configuration (in the example above,<b>debug</b>) will be used. For this 
+reason, it is recommended that you put<b>native</b> first in the list.</p> 
+<h1>Build Settings</h1> 
+<p>Premake provides an ever-growing list of build settings that you can tweak; 
+the following table lists some of the most common configuration tasks with a 
+link to the corresponding function. As you can see, theflags function provides 
+most of the features, and is a good place to start if you aren't sure how to 
+make something go.</p> Specify source code files files, excludes <br>
+Define 
+compiler or preprocessor symbols defines <br>
+Locate include files includedirs 
+<br> Link against libraries, frameworks, or sibling projects links, libdirs <br>
+Enable debugging information flags <br>
+Optimize for size or speed flags <br>
+
+Turn compiler or linker features on or off flags, buildoptions, linkoptions <br>
+Set the name or location of the compiled target file targetname, targetextension
+,<br>
+targetprefix, targetdir <br>
+<br>
+
+<p>For a comprehensive list of available settings and functions, see the 
+Scripting Reference page.</p> 
+<p>If you think something should be possible and you can't figure out how to 
+do it, feel free topost a question in the forums and someone will help you out.
+</p> 
+<h1>Command Line Arguments</h1> 
+<p>Premake provides the ability to define and handle new command-line 
+arguments from within your project script using thenewaction and newoption 
+functions.</p> 
+<h2>Actions and Options</h2> 
+<p>Premake recognizes two types of arguments: <em>actions</em> and <em>options
+</em>.</p> 
+<p>An <em>action</em> indicates what Premake should do on any given run. For 
+instance, the<b>vs2005</b> action indicates that Visual Studio 2005 project 
+files should be generated. The<b>clean</b> action causes all generated files to 
+be deleted. Only one action may be specified at a time (this is different than 
+Premake 3.x).</p> 
+<p>An <em>option</em> modifies the behavior of the action. For instance, the 
+<b>dotnet</b> option is used to change which .NET compiler set is used in the 
+generated files. Options can accept a value, such as<b>--dotnet=mono</b> or act 
+as a flag, like<b>--with-opengl</b>.</p> 
+<p>From within your script, you can identify the current action with the 
+_ACTION global variable, a string value. You can check for an option using the 
+_OPTIONS table, which contains a list of key-value pairs. The key is the option 
+identifier (&quot;dotnet&quot;), which references the command line value 
+(&quot;mono&quot;) or an empty string for valueless options.</p> 
+<pre>-- delete a file if the clean action is running if _ACTION == 
+&quot;clean&quot; then -- do something end &nbsp; -- use an option value in a 
+configuration targetdir ( _OPTIONS[&quot;outdir&quot;] )</pre> 
+<h2>Creating New Options</h2> 
+<p>New command-line options are created using the newoption function, passing 
+a table which fully describes the option. This is best illustrated with some 
+examples.</p> 
+<p>Here is an option intended to force the use of OpenGL in a 3D application. 
+It serves as a simple flag, and does not take any value.</p> 
+<pre>newoption { trigger = &quot;with-opengl&quot;, description = &quot;Force 
+the use of OpenGL for rendering, regardless of platform&quot; }</pre> 
+<p>Note the commas after each key-value pair; this is required Lua syntax for 
+a table. Once added to your script, the option will appear in the help text, 
+and you may use the trigger as a keyword in your configuration blocks.</p> 
+<pre>configuration &quot;with-opengl&quot; links { &quot;opengldrv&quot; } 
+&nbsp; configuration&quot;not with-opengl&quot; links { &quot;direct3ddrv&quot; 
+}</pre> 
+<p>The next example shows an option with a fixed set of allowed values. Like 
+the example above, it is intended to allow the user to specify a 3D API.</p> 
+<pre>newoption { trigger = &quot;gfxapi&quot;, value = &quot;API&quot;, 
+description= &quot;Choose a particular 3D API for rendering&quot;, allowed = { {
+&quot;opengl&quot;, &quot;OpenGL&quot; }, { &quot;direct3d&quot;, 
+&quot;Direct3D (Windows only)&quot; }, { &quot;software&quot;, &quot;Software 
+Renderer&quot; } } }</pre> 
+<p>As before, this new option will be integrated into the help text, along 
+with a description of each of the allowed values. Premake will check the option 
+value at startup, and raise an error on invalid values. The<b>value</b> field 
+appears in the help text, and is intended to give the user a clue about the 
+type of value that is expected. In this case, the help text will appear like 
+this:</p> 
+<pre><code>--gfxapi=API Choose a particular 3D API for rendering; one of: 
+opengl OpenGL direct3d Direct3D (Windows only) software Software Renderer</code>
+</pre> 
+<p>Unlike the example above, you now use the <em>value</em> as a keyword in 
+your configuration blocks.</p> 
+<pre>configuration &quot;opengl&quot; links { &quot;opengldrv&quot; } &nbsp; 
+configuration&quot;direct3d&quot; links { &quot;direct3ddrv&quot; } &nbsp; 
+configuration&quot;software&quot; links { &quot;softwaredrv&quot; }</pre> 
+<p>Or you could be more clever.</p> 
+<pre>links { _OPTIONS[&quot;gfxapi&quot;] .. &quot;drv&quot; }</pre> 
+<p>In this example, you would also want to provide a default behavior for the 
+case where no option is specified. You could place a bit of code like this 
+anywhere in your script.</p> 
+<pre>if not _OPTIONS[&quot;gfxapi&quot;] then _OPTIONS[&quot;gfxapi&quot;] = 
+&quot;opengl&quot; end</pre> 
+<p>As a last example of options, you may want to specify an option that 
+accepts an unconstrained value, such as an output path. Just leave off the list 
+of allowed values.</p> 
+<pre>newoption { trigger = &quot;outdir&quot;, value = &quot;path&quot;, 
+description= &quot;Output directory for the compiled executable&quot; }</pre> 
+<h2>Creating New Actions</h2> 
+<p>Actions are defined in much the same way as options, and can be as simple 
+as this:</p> 
+<pre>newaction { trigger = &quot;install&quot;, description = &quot;Install 
+the software&quot;, execute = function () -- copy files, etc. here end }</pre> 
+<p>The actual code to be executed when the action if fired should be placed in 
+the<b>execute()</b> function.</p> 
+<p>That's the simple version. If you are interested in developing more complex 
+actions, for instance to add support for a new toolset, see<b>Create a new 
+action</b> in the <b>Extending Premake</b> section.</p> 
+<h1>Help!</h1> 
+<p>If you are having trouble using Premake to generate build files for a 
+particular project, your best bet is to contact the manager of the project 
+first. They know their project better than I will, and may have seen the same 
+problem before.</p> 
+<p>If you are having a problem with Premake, or need help with your project 
+scripts, you have some choices.</p> 
+<p>First, check the Frequently Asked Questions. Someone may have asked the 
+same question before.</p> 
+<p>If you haven't already, read the Documentation. If you find a problem in 
+the documentation, leave a comment describing the problem on that page. I'll 
+see your comment and fix it up, and the in meantime others can benefit from 
+your input.</p> 
+<p>If you've found a bug in the software, or if you want to request a new 
+feature please visit thePremake Trackers on SourceForge. It is a good idea to 
+run a quick search first to make sure your issue hasn't already been reported. 
+If not, go ahead and create a new ticket. The tracker makes sure your request 
+gets the visibility and attention it deserves, with no chance of it slipping 
+through the cracks.</p> 
+<p>If you just have a question you want answered, stop by the forums and start 
+a new discussion. I try to check them daily and respond personally to most 
+posts.</p> 
+<h1>FAQs</h1> 
+<p>Here are answers to some of the most frequently asked questions about 
+Premake, taken fromthe forums and the mailing list.</p> 
+<p>How do I control the build order of my projects?<br>
+How do I build a 
+Universal/64-bit/Xbox binary?<br>
+Is it possible to invoke external tools?<br>
+
+Why is my Windows program trying to call main() instead of WinMain()?<br>
+How 
+do I get my cool new feature/bug fix included in Premake?</p> 
+<p></p> 
+<h3>Q. How do I control the build order of my projects?</h3> 
+<p>There are two ways: re-order the projects in the script, and create link 
+dependencies.</p> 
+<p>The project files generated by Premake will maintain the order of the 
+projects as they appear in your script. So you can change the build order by 
+rearranging the order of the projects in your script.</p> 
+<p>However, when people ask this question they are really asking how to link 
+against a library project. In this case you want to put the library<em>project 
+name</em>, not the library file name, in the list of links for the dependent 
+project.</p> 
+<p>So if I have a library project called &quot;MyLibrary&quot;...</p> 
+<pre>project &quot;MyLibrary&quot; kind &quot;SharedLib&quot;</pre> 
+<p>...I can link against it like this.</p> 
+<pre>project &quot;MyExecutable&quot; kind &quot;ConsoleApp&quot; links { 
+&quot;MyLibrary&quot; }</pre> 
+<p>Premake will automatically figure out the library file name and directory 
+and create a dependency between the two projects to ensure a proper build order.
+</p> 
+<p>You can also use this method to create a build dependency between 
+non-libraries. For instance, you may want to build an executable to use in the 
+prebuild step for another project. As shown above, just put the project name in 
+the list of links for the dependent project. Premake will recognize it as an 
+executable and create the build dependency, but skip the link dependency.</p> 
+<p>For more information, see the description of the links function.</p> 
+<p></p> 
+<h3>Q. How do I build a Universal/64-bit/Xbox binary?</h3> 
+<p>Supply the <b>--platform</b> option to Premake, and then build using the 
+corresponding configuration.</p> 
+<pre> premake4 --platform=universal gmake make config=releaseuniv clean make 
+config=releaseuniv</pre> 
+<p>Best practice is to clean before building a new platform. See Platforms for 
+more information. This feature requires Premake 4.1 or later.</p> 
+<p></p> 
+<h3>Q. Is it possible to invoke external tools?</h3> 
+<p>Yes, using Lua's <b>os.execute()</b> function. See the Lua Reference Manual 
+for details.</p> 
+<p></p> 
+<h3>Q. Why is my Windows program trying to call main() instead of WinMain()?
+</h3> 
+<p>Premake tries hard to make all build tools on all platforms perform as 
+similarly as possible. So, by default, it will configure your Windows 
+applications to call the standard<b>main()</b> entry point instead of the 
+Windows-specific<b>WinMain()</b>. You can change this behavior by adding the 
+WinMain build flag to your package, like so:</p> 
+<pre>flags { &quot;WinMain&quot; }</pre> 
+<p></p> 
+<h3>Q. How do I get my cool new feature/bug fix included in Premake?</h3> 
+<p>I love code contributions! The best way is to create a patch (see 
+Subversion's<b>diff</b> command) against the Subversion repository, or if 
+that's not possible, the most recent source code release. Post it to thePatch 
+Tracker on SourceForge&mdash;I get notified via email, and it provides a good 
+place to discuss and track it.</p> 
+<p>If you can't figure out how to make a patch, get it to me however you can. 
+I will do my best to make sense of it.</p> 
+<h1>Scripting Reference</h1> 
+<p>This section describes the functions and variables available to Premake 
+scripts.</p> 
+<p>Premake is built on Lua, so everything in the Lua Reference Manual applies 
+to a Premake script. Premake adds the ability to define solutions, projects, 
+and configurations, as well as functions useful for build configuration tasks.
+</p> 
+<p>You may also want to check out LuaForge for a wide assortment of Lua add-on 
+modules.</p> 
+<h1>_ACTION</h1> 
+<p>The <code>_ACTION</code> global variable stores the name of the action to 
+be performed on this execution run. As an example, if this command line was 
+used to launch Premake...</p> 
+<pre> $ premake4 vs2005 </pre> 
+<p>...then <code>_ACTION</code> will be set to &quot;vs2005&quot;. If there is 
+no action (for instance, if the command was<code>premake4 /help</code>) this 
+variable will be nil.</p> 
+<h1>_ARGS</h1> 
+<p>The <code>_ARGS</code> global variable stores any arguments to the current 
+action. As an example, if this command line was used to launch Premake...</p> 
+<pre> $ premake4 vs2005 alpha beta </pre> 
+<p> ...then <code>_ARGS[1]</code> will be set to &quot;alpha&quot; and <code>
+_ARGS[2]</code> to &quot;beta&quot;. If there are no arguments this array will 
+be empty.</p> 
+<h1>_OPTIONS</h1> 
+<p>The <b>_OPTIONS</b> global variable lists the current set of command line 
+options and their values, if any. For more information, seeCommand Line 
+Arguments.</p> 
+<h1>_PREMAKE_COMMAND</h1> 
+<p>The <code>_PREMAKE_COMMAND</code> global variable stores the full path to 
+the Premake executable.</p> 
+<p>Introduced in Premake 4.4.</p> 
+<h1>_PREMAKE_VERSION</h1> 
+<p>The <code>_PREMAKE_VERSION</code> global variable stores the current 
+Premake version, i.e. &quot;4.2&quot;.</p> 
+<h1>_SCRIPT</h1> 
+<p>The <code>_SCRIPT</code> global variable stores the full path of the 
+currently executing script.</p> 
+<h1>_WORKING_DIR</h1> 
+<p>The <code>_WORKING_DIR</code> global variable stores the current working 
+directory at the time Premake was launched.</p> 
+<p>Introduced in Premake 4.4.</p> 
+<h1>buildaction</h1> 
+<p>The <b>buildaction</b> function specifies how a file or set of files should 
+be treated during the compilation process. It is usually paired with a 
+configuration filter to select a file set. If no build action is specified for 
+a file a default action will be used, based on the file's extension.</p> 
+<pre>buildaction (&quot;action&quot;)</pre> 
+<p>Build actions are currently only supported for .NET projects, and not for C 
+or C++.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>action</i> is one of:</p> 
+<dl> 
+<dt> Compile </dt> 
+<dd> Treat the file as source code; compile and link it. </dd> 
+<dt> Embed </dt> 
+<dd> Embed the file into the target binary as a resource. </dd> 
+<dt> Copy </dt> 
+<dd> Copy the file to the target directory. </dd> 
+<dt> None </dt> 
+<dd> Do nothing with this file. </dd> </dl> 
+<h3>Examples</h3> 
+<p>Embed all PNG image files into the target binary.</p> 
+<pre>configuration &quot;**.png&quot; buildaction &quot;Embed&quot;</pre> 
+<h1>buildoptions</h1> 
+<p>The <b>buildoptions</b> function passes arguments directly to the compiler 
+command line without translation.</p> 
+<pre>buildoptions { &quot;options&quot; }</pre> 
+<p>If a project includes multiple calls to <b>buildoptions</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>options</i> is a list of compiler flags and options, specific to a 
+particular compiler.</p> 
+<h3>Examples</h3> 
+<p>Use <code>pkg-config</code> style configuration when building on Linux with 
+GCC. Build options are always compiler specific and should be targeted to a 
+particular toolset.</p> 
+<pre>configuration { &quot;linux&quot;, &quot;gmake&quot; } buildoptions { 
+&quot;`wx-config --cxxflags`&quot;, &quot;-ansi&quot;, &quot;-pedantic&quot; }
+</pre> 
+<h1>configuration</h1> 
+<p>The <b>configuration</b> function limits the subsequent build settings to a 
+particular environment.</p> 
+<pre>configuration { &quot;keywords&quot; }</pre> 
+<p>The <b>configuration</b> functions acts as a filter. Any settings that 
+appear after this function in the script will be applied only in those 
+environments that match all of the listed keywords. See below for some usage 
+examples.</p> 
+<h3>Parameters</h3> 
+<p><i>keywords</i> is a list of identifiers (see below). If all of these 
+identifiers are present in the current runtime environment, then the settings 
+following the<b>configuration</b> call will be applied. If any of the 
+identifiers is not the current environment the settings will be ignored.</p> 
+<p>The following table lists the available sources for keywords. Keywords are 
+not case-sensitive.</p> 
+<dl> 
+<dt> Configuration names </dt> 
+<dd> Any of the configuration names supplied to the configurations function. 
+</dd> 
+<dt> Action names </dt> 
+<dd> Any action name, such as <b>vs2005</b> or <b>gmake</b>. See the Quick 
+Start for a complete list. </dd> 
+<dt> Operating system names </dt> 
+<dd> Any of the operating system identifiers, such as <b>windows</b> or <b>
+macosx</b>, as returned by os.get. </dd> 
+<dt> Platform names </dt> 
+<dd> Any of the platform identifiers, such as <b>ps3</b> or <b>xbox360</b>. See
+platforms for a complete list. </dd> 
+<dt> Target kind </dt> 
+<dd> Any of the target kinds, such as <b>ConsoleApp</b> or <b>SharedLib</b>. 
+Seekind for a complete list. </dd> 
+<dt> Command-line options </dt> 
+<dd> Any of the available command-line options or the option values, whether 
+built-in or custom to the project.</dd> 
+<dt> File names </dt> 
+<dd> Although currently very limited, some settings can be applied to specific 
+files.</dd> </dl> 
+<p>In addition to the terms listed above, you may use the <b>*</b> and <b>**
+</b> wildcards to match more than one term or file. You may also use the 
+modifiers<b>not</b> and <b>or</b> to build more complex conditions. See the 
+examples below for more information.</p> 
+<h3>Return Value</h3> 
+<p>The function returns the current configuration object; see The 
+Configuration Block below for more information on the structure of this object.
+</p> 
+<h3>Examples</h3> 
+<p>Define a new symbol which applies only to debug builds; assumes a 
+configuration named &quot;Debug&quot; was defined as part of the solution.</p> 
+<pre>configuration &quot;Debug&quot; defines { &quot;_DEBUG&quot; }</pre> 
+<p>Define a symbol only when targeting Visual Studio 2005.</p> 
+<pre>configuration &quot;vs2005&quot; defines { &quot;VISUAL_STUDIO_2005&quot; 
+}</pre> 
+<p>Wildcards can be used to match multiple terms. Define a symbol for all 
+versions of Visual Studio.</p> 
+<pre>configuration &quot;vs*&quot; defines { &quot;VISUAL_STUDIO_2005&quot; }
+</pre> 
+<p>Add a suffix to the debug versions of libraries.</p> 
+<pre>configuration { &quot;Debug&quot;, &quot;SharedLib or StaticLib&quot; } 
+targetsuffix&quot;_d&quot; &nbsp; -- ...or... configuration { &quot;Debug&quot;,
+&quot;*Lib&quot; } targetsuffix &quot;_d&quot;</pre> 
+<p>Although support is currently quite limited (only buildaction works so 
+far), you may also apply settings to a particular file or set of files. This 
+example sets the build action for all PNG image files.</p> 
+<pre>configuration &quot;*.png&quot; buildaction &quot;Embed&quot;</pre> 
+<p>In the case of files you may also use the <b>**</b> wildcard, which will 
+recurse into subdirectories.</p> 
+<pre>configuration &quot;**.png&quot; buildaction &quot;Embed&quot;</pre> 
+<p>If multiple keywords are specified, they will be treated as a logical AND. 
+All terms must be present for the block to be applied. This example will apply 
+the symbol only for debug builds on Mac OS X.</p> 
+<pre>configuration { &quot;debug&quot;, &quot;macosx&quot; } defines { 
+&quot;DEBUG_MACOSX&quot; }</pre> 
+<p>Multiple terms must use Lua's curly bracket list syntax.</p> 
+<p>You can use the <b>or</b> modifier to match against multiple, specific 
+terms.</p> 
+<pre>configuration &quot;linux or macosx&quot; defines { 
+&quot;LINUX_OR_MACOSX&quot; }</pre> 
+<p>You can also use <b>not</b> to apply the settings to all environments where 
+the identifier is not set.</p> 
+<pre>configuration &quot;not windows&quot; defines { &quot;NOT_WINDOWS&quot; }
+</pre> 
+<p>Finally, you can reset the configuration filter and remove all active 
+keywords by passing the function an empty table.</p> 
+<pre>configuration {}</pre> 
+<h3>The Configuration Block</h3> 
+<p>Each call to <b>configuration</b> function creates a new configuration 
+block object. Unless you really know what you are doing, you should treat this 
+object as read-only and use the Premake API to make any changes. The 
+configuration block object contains the following values:</p> 
+<dl> 
+<dt> buildaction </dt> 
+<dd> A build action. </dd> 
+<dt> buildoptions </dt> 
+<dd> A list of compiler options. </dd> 
+<dt> defines </dt> 
+<dd> A list of compiler symbols. </dd> 
+<dt> excludes </dt> 
+<dd> A list of excluded files. </dd> 
+<dt> files </dt> 
+<dd> A list of files. </dd> 
+<dt> flags </dt> 
+<dd> A list of build flags. </dd> 
+<dt> implibdir </dt> 
+<dd> The import library directory. </dd> 
+<dt> implibextension </dt> 
+<dd> The import library file extension. </dd> 
+<dt> implibname </dt> 
+<dd> The import library base file name. </dd> 
+<dt> implibprefix </dt> 
+<dd> The import library file name prefix. </dd> 
+<dt> implibsuffix </dt> 
+<dd> The import library file name suffix. </dd> 
+<dt> includedirs </dt> 
+<dd> A list of include file search directories. </dd> 
+<dt> keywords </dt> 
+<dd> A list of keywords associated with the block. </dd> 
+<dt> kind </dt> 
+<dd> The target kind. </dd> 
+<dt> libdirs </dt> 
+<dd> A list of library search directories. </dd> 
+<dt> linkoptions </dt> 
+<dd> A list of linker options. </dd> 
+<dt> links </dt> 
+<dd> A list of libraries or assemblies to link against. </dd> 
+<dt> objdir </dt> 
+<dd> The objects and intermediate files directory. </dd> 
+<dt> pchheader </dt> 
+<dd> The target file name for precompiled header support. </dd> 
+<dt> pchsource </dt> 
+<dd> The target source file name for precompiled header support. </dd> 
+<dt> prebuildcommands </dt> 
+<dd> A list of pre-build commands. </dd> 
+<dt> prelinkcommands </dt> 
+<dd> A list of pre-link commands. </dd> 
+<dt> postbuildcommands </dt> 
+<dd> A list of post-build commands. </dd> 
+<dt> resdefines </dt> 
+<dd> A list of symbols for the resource compiler. </dd> 
+<dt> resincludedirs </dt> 
+<dd> A list of include file search paths for the resource compiler. </dd> 
+<dt> resoptions </dt> 
+<dd> A list of resource compiler options. </dd> 
+<dt> targetdir </dt> 
+<dd> The target output directory. </dd> 
+<dt> targetextension </dt> 
+<dd> The target file extension. </dd> 
+<dt> targetname </dt> 
+<dd> The target base file name. </dd> 
+<dt> targetprefix </dt> 
+<dd> The target file name prefix. </dd> 
+<dt> targetsuffix </dt> 
+<dd> The target file name suffix. </dd> 
+<dt> terms </dt> 
+<dd> The filter terms passed to the configuration function to create the block 
+(i.e. &quot;Debug&quot;).</dd> </dl> 
+<h1>configurations</h1> 
+<p>The <b>configurations</b> function specifies the set of build 
+configurations, such as &quot;Debug&quot; and &quot;Release&quot;, for a 
+solution.</p> 
+<pre>configurations { &quot;names&quot; }</pre> 
+<p>A configuration encapsulates a collection of build settings, allowing the 
+developer to easily switch between them. &quot;Debug&quot; and 
+&quot;Release&quot; are the most common configurations, the former providing 
+debugging information, and the latter providing optimizations.</p> 
+<p>The list of configurations must be specified before any projects are 
+defined, and once a project has been defined the configuration list may no 
+longer be changed.</p> 
+<h3>Applies To</h3> 
+<p>Solutions only.</p> 
+<h3>Parameters</h3> 
+<p><i>names</i> is a list of configuration names. Spaces are allowed, but may 
+make using certain Premake features, such as a command-line configuration 
+selection, more difficult.</p> 
+<h3>Return Value</h3> 
+<p>The function returns the current list of configuration names for the active 
+solution.</p> 
+<h3>Examples</h3> 
+<p>Specify debug and release configurations for a solution.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; }</pre> 
+<p>Add additional configurations for a dynamic link library version.</p> 
+<pre>configurations { &quot;Debug&quot;, &quot;Release&quot;, 
+&quot;DebugDLL&quot;, &quot;ReleaseDLL&quot; }</pre> 
+<p>You can retrieve the current list of configurations by calling the function 
+with no parameters.</p> 
+<pre>local cfgs = configurations()</pre> 
+<h1>debugargs</h1> 
+<p>The <b>debugargs</b> function specifies a list of arguments to pass to the 
+application when run under the debugger.</p> 
+<pre>debugargs { &quot;args&quot; }</pre> 
+<p>Note that this settings is not implemented for Xcode 3, which requires a 
+per-user configuration file in order to make it work.</p> 
+<p>In Visual Studio, this file can be overridden by a per-user configuration 
+file (such as<b>ProjectName.vcproj.MYDOMAIN-MYUSERNAME.user</b>). Removing this 
+file (which is done by Premake's clean action) will restore the default 
+settings.</p> 
+<p>Added in Premake 4.4.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>args</i> is a Lua list of arguments to provide to the executable while 
+debugging.</p> 
+<h3>Examples</h3> 
+<pre>configuration &quot;Debug&quot; debugargs { &quot;--append&quot;, 
+&quot;somefile.txt&quot; }</pre> 
+<h1>debugdir</h1> 
+<p>The <b>debugdir</b> function sets the working directory for the integrated 
+debugger.</p> 
+<pre>debugdir &quot;path&quot;</pre> 
+<p>Note that this settings is not implemented for Xcode 3, which requires a 
+per-user configuration file in order to make it work.</p> 
+<p>In Visual Studio, this file can be overridden by a per-user configuration 
+file (such as<b>ProjectName.vcproj.MYDOMAIN-MYUSERNAME.user</b>). Removing this 
+file (which is done by Premake's clean action) will restore the default 
+settings.</p> 
+<p>Added in Premake 4.4.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the path to the working directory, relative to the currently 
+executing script file.</p> 
+<h3>Examples</h3> 
+<pre>configuration &quot;Debug&quot; debugdir &quot;bin/debug&quot;</pre> 
+<h1>defines</h1> 
+<p>The <b>defines</b> function adds preprocessor or compiler symbols to a 
+project.</p> 
+<pre>defines { &quot;symbols&quot; }</pre> 
+<p>If a project includes multiple calls to <b>defines</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>symbols</i> specifies a list of symbols to be defined.</p> 
+<h3>Examples</h3> 
+<p>Define two new symbols in the current project.</p> 
+<pre>defines { &quot;DEBUG&quot;, &quot;TRACE&quot; }</pre> 
+<p>Symbols may also assign values.</p> 
+<pre>defines { &quot;CALLSPEC=__dllexport&quot; }</pre> 
+<h1>deploymentoptions</h1> 
+<p>The <b>deploymentoptions</b> function passes arguments directly to the 
+deployment tool command line without translation.</p> 
+<pre>deploymentoptions { &quot;options&quot; }</pre> 
+<p>If a project includes multiple calls to <b>deploymentoptions</b> the lists 
+are concatenated, in the order in which they appear in the script.</p> 
+<p>Deployment options are currently only supported for Xbox 360 targets.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>options</i> is a list of deployment tools flags and options.</p> 
+<h1>excludes</h1> 
+<p>The <b>excludes</b> function removes files, added with the files function, 
+from a project.</p> 
+<pre>excludes { &quot;file_list&quot; }</pre> 
+<p>If a project includes multiple calls to <b>excludes</b> the lists are 
+concatenated.</p> 
+<h3>Applies To</h3> 
+<p>Files may be set on the solution, project, and configuration level. 
+However, only project-level file lists are currently supported.</p> 
+<h3>Parameters</h3> 
+<p><i>file_list</i> specifies one or more file patterns, separated by commas. 
+File paths should be specified relative to the location of the script file. 
+File patterns may contain the<b>*</b> wildcard to match against files in the 
+current directory, or the<b>**</b> wildcard to perform a recursive match.</p> 
+<h3>Examples</h3> 
+<p>Add all C files in a directory, and then exclude a specific file.</p> 
+<pre>files { &quot;*.c&quot; } excludes { &quot;a_file.c&quot; }</pre> 
+<p>Add an entire directory tree of C files, and then exclude one particular 
+directory.</p> 
+<pre>files { &quot;**.c&quot; } excludes { &quot;tests/*.c&quot; }</pre> 
+<h1>files</h1> 
+<p>The <b>files</b> function adds files to a project.</p> 
+<pre>files { &quot;file_list&quot; }</pre> 
+<p>If a project includes multiple calls to <b>files</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Files may be set on the solution, project, and configuration level. 
+However, only project-level file lists are currently supported.</p> 
+<h3>Parameters</h3> 
+<p><i>file_list</i> specifies one or more file patterns, separated by commas. 
+File paths should be specified relative to the location of the script file. 
+File patterns may contain the<b>*</b> wildcard to match against files in the 
+current directory, or the<b>**</b> wildcard to perform a recursive match.</p> 
+<p>If a wildcard matches more files than you would like, you may filter the 
+list using theexcludes function.</p> 
+<h3>Examples</h3> 
+<p>Add two files to the current project.</p> 
+<pre>files { &quot;hello.cpp&quot;, &quot;goodbye.cpp&quot; }</pre> 
+<p>Add all C++ files from the <b>src/</b> directory to the project.</p> 
+<pre>files { &quot;src/*.cpp&quot; }</pre> 
+<p>Add all C++ files from the <b>src/</b> directory, and any subdirectories.
+</p> 
+<pre>files { &quot;src/**.cpp&quot; }</pre> 
+<h1>flags</h1> 
+<p>The <b>flags</b> function specifies build flags to modify the compiling or 
+linking process.</p> 
+<pre>flags { &quot;flag_list&quot; }</pre> 
+<p>If a project includes multiple calls to <b>flags</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>flags_list</i> is a list of string flag names; see below for a list of 
+valid flags. The flag values are<b>not</b> case-sensitive. Flags that are not 
+supported by a particular platform or toolset are ignored.</p> 
+<dl> 
+<dt> EnableSSE, EnableSSE2 </dt> 
+<dd> Use the SSE instruction sets for floating point math. </dd> 
+<dt> ExtraWarnings </dt> 
+<dd> Sets the compiler's maximum warning level. </dd> 
+<dt> FatalWarnings </dt> 
+<dd> Treat warnings as errors. </dd> 
+<dt> FloatFast </dt> 
+<dd> Enable floating point optimizations at the expense of accuracy. </dd> 
+<dt> FloatStrict </dt> 
+<dd> Improve floating point consistency at the expense of performance. </dd> 
+<dt> Managed </dt> 
+<dd> Enable Managed C++ (.NET). </dd> 
+<dt> MFC </dt> 
+<dd> Enable support for Microsoft Foundation Classes. </dd> 
+<dt> NativeWChar, NoNativeWChar </dt> 
+<dd> Enable or disable support for the <b>wchar</b> data type. If no flag is 
+specified, the toolset default will be used.</dd> 
+<dt> No64BitChecks </dt> 
+<dd> Disable 64-bit portability warnings. </dd> 
+<dt> NoEditAndContinue </dt> 
+<dd> Disable support for Visual Studio's Edit-and-Continue feature. </dd> 
+<dt> NoExceptions </dt> 
+<dd> Disable C++ exception support. </dd> 
+<dt> NoFramePointer </dt> 
+<dd> Disable the generation of stack frame pointers. </dd> 
+<dt> NoIncrementalLink </dt> 
+<dd> Disable support for Visual Studio's incremental linking feature. </dd> 
+<dt> NoImportLib </dt> 
+<dd> Prevent the generation of an import library for a Windows DLL. </dd> 
+<dt> NoManifest </dt> 
+<dd> Prevent the generation of a manifest for Windows executables and shared 
+libraries.</dd> 
+<dt> NoMinimalRebuild </dt> 
+<dd> Disable Visual Studio's minimal rebuild feature. </dd> 
+<dt> NoPCH </dt> 
+<dd> Disable precompiled header support. If not specified, the toolset default 
+behavior will be used. Also seepchheader and pchsource. </dd> 
+<dt> NoRTTI </dt> 
+<dd> Disable C++ runtime type information. </dd> 
+<dt> Optimize </dt> 
+<dd> Perform a balanced set of optimizations. </dd> 
+<dt> OptimizeSize </dt> 
+<dd> Optimize for the smallest file size. </dd> 
+<dt> OptimizeSpeed </dt> 
+<dd> Optimize for the best performance. </dd> 
+<dt> SEH </dt> 
+<dd> Enable structured exception handling. </dd> 
+<dt> StaticRuntime </dt> 
+<dd> Perform a static link against the standard runtime libraries. </dd> 
+<dt> Symbols </dt> 
+<dd> Generate debugging information. </dd> 
+<dt> Unicode </dt> 
+<dd> Enable Unicode strings. If not specified, the default toolset behavior is 
+used.</dd> 
+<dt> Unsafe </dt> 
+<dd> Enable the use of unsafe code in .NET applications. </dd> 
+<dt> WinMain </dt> 
+<dd> Use <b>WinMain()</b> as the program entry point for Windows applications, 
+rather than the default<b>main()</b>. </dd> </dl> 
+<p>If the existing flags are not sufficient, you can also pass tool-specific 
+arguments directly to the compiler or linker usingbuildoptions and linkoptions.
+</p> 
+<h3>Examples</h3> 
+<p>A common configuration: enable debugging symbols in the Debug 
+configuration, and optimize the Release configuration.</p> 
+<pre>configuration &quot;Debug&quot; flags { &quot;Symbols&quot; } &nbsp; 
+configuration&quot;Release&quot; flags { &quot;Optimize&quot; }</pre> 
+<p>You can specify multiple flags.</p> 
+<pre>flags { &quot;Symbols&quot;, &quot;ExtraWarnings&quot;, 
+&quot;FatalWarnings&quot; }</pre> 
+<h1>framework</h1> 
+<p>The <b>framework</b> function selects a .NET framework version.</p> 
+<pre>framework (&quot;version&quot;)</pre> 
+<p>This value currently is only applied to Visual Studio 2005 or later, and 
+GNU makefiles using Mono. If no framework is specified the toolset default is 
+used.</p> 
+<h3>Applies To</h3> 
+<p>Solutions and projects.</p> 
+<h3>Parameters</h3> 
+<p><i>version</i> is one of:</p> 
+<ul> 
+<li>1.0</li> 
+<li>1.1</li> 
+<li>2.0</li> 
+<li>3.0</li> 
+<li>3.5</li> 
+<li>4.0</li> </ul> 
+<h3>Examples</h3> 
+<p>Use the .NET 3.0 Framework.</p> 
+<pre>framework &quot;3.0&quot;</pre> 
+<h1>iif</h1> 
+<p>The <b>iif</b> function implements an immediate &quot;if&quot; clause, 
+returning one of two possible values.</p> 
+<pre>result = iif(condition, trueval, falseval)</pre> 
+<h3>Parameters</h3> 
+<p><i>condition</i> is the logical condition to test. <i>trueval</i> is the 
+value to return if the condition evaluates to true,<i>falseval</i> if the 
+condition evaluates false.</p> 
+<h3>Return Value</h3> 
+<p><i>trueval</i> is the condition evaluates true, <i>falseval</i> otherwise.
+</p> 
+<h3>Examples</h3> 
+<pre>result = iif(os.is(&quot;windows&quot;), &quot;is windows&quot;, &quot;is 
+not windows&quot;)</pre> 
+<p>Note that all expressions are evaluated before the condition is checked; 
+the following expression can not be implemented with an immediate if because it 
+may try to concatenate a string value.</p> 
+<pre>result = iif(x ~= nil, &quot;x is &quot; .. x, &quot;x is nil&quot;)</pre>
+<h1>imageoptions</h1> 
+<p>The <b>imageoptions</b> function passes arguments directly to the image 
+tool command line without translation.</p> 
+<pre>imageoptions { &quot;options&quot; }</pre> 
+<p>If a project includes multiple calls to <b>imageoptions</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<p>Image options are currently only supported for Xbox 360 targets.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>options</i> is a list of image tools flags and options.</p> 
+<h1>imagepath</h1> 
+<p>The <b>imagepath</b> function sets the file name of the deployment image 
+produced by the build.</p> 
+<pre>imagepath (&quot;path&quot;)</pre> 
+<p>This value is currently only used by the Xbox 360.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the full path for the image file, relative to the currently 
+executing script file.</p> 
+<h3>See Also</h3> 
+<p>imageoptions</p> 
+<h1>implibdir</h1> 
+<p>The <b>implibdir</b> function specifies the import library output 
+directory. Import libraries are generated for Windows DLL projects.</p> 
+<pre>implibdir (&quot;path&quot;)</pre> 
+<p>By default, the generated project files will place the import library in 
+the same directory as the compiled binary. The<b>implibdir</b> function allows 
+you to change this location.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the output directory for the library, relative to the 
+currently executing script file.</p> 
+<h3>See Also</h3> 
+<p>implibname<br>
+implibextension<br>
+implibprefix<br>
+implibsuffix</p> 
+<h3>Examples</h3> 
+<pre>implibdir &quot;../Libraries&quot;</pre> 
+<h1>implibextension</h1> 
+<p>The <b>implibextension</b> function specifies the import library file 
+extension. Import libraries are generated for Windows DLL projects.</p> 
+<pre>implibextension (&quot;ext&quot;)</pre> 
+<p>By default, the toolset static library file extension will be used (<b>.lib
+</b> with Windows tools, <b>.a</b> with GNU tools). The <b>implibextension</b> 
+function allows you to change this default.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>ext</i> is the new file extension, including the leading dot.</p> 
+<h3>See Also</h3> 
+<p>implibname<br>
+implibdir<br>
+implibprefix<br>
+implibsuffix</p> 
+<h3>Examples</h3> 
+<pre>implibextension &quot;.mpi&quot;</pre> 
+<h1>implibname</h1> 
+<p>The <b>implibname</b> function specifies the import library base file name. 
+Import libraries are generated for Windows DLL projects.</p> 
+<pre>implibname (&quot;name&quot;)</pre> 
+<p>By default, the target name will be used as the import library file name. 
+The<b>implibname</b> function allows you to change this default.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>name</i> is the new base file name.</p> 
+<h3>See Also</h3> 
+<p>implibdir<br>
+implibextension<br>
+implibprefix<br>
+implibsuffix</p> 
+<h3>Examples</h3> 
+<pre>implibname &quot;mytarget&quot;</pre> 
+<h1>implibprefix</h1> 
+<p>The <b>implibprefix</b> function specifies the import library file name 
+prefix. Import libraries are generated for Windows DLL projects.</p> 
+<pre>implibprefix (&quot;prefix&quot;)</pre> 
+<p>By default, the system naming convention will be used: no prefix on 
+Windows, a prefix of &quot;lib&quot; (as in<b>libMyProject.a</b>) on other 
+systems. The<b>implibprefix</b> function allows you to change this default.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>prefix</i> is the new file name prefix.</p> 
+<h3>See Also</h3> 
+<p>implibname<br>
+implibdir<br>
+implibextension<br>
+implibsuffix</p> 
+<h3>Examples</h3> 
+<pre>implibprefix &quot;plugin&quot;</pre> 
+<p>The prefix may also be set to an empty string for no prefix.</p> 
+<pre>implibprefix &quot;&quot;</pre> 
+<h1>implibsuffix</h1> 
+<p>The <b>implibsuffix</b> function specifies a file name suffix for the 
+import library base file name. Import libraries are generated for Windows DLL 
+projects.</p> 
+<pre>implibsuffix (&quot;suffix&quot;)</pre> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>suffix</i> is the new filename suffix.</p> 
+<h3>See Also</h3> 
+<p>implibname<br>
+implibdir<br>
+implibprefix<br>
+implibextension</p> 
+<h3>Examples</h3> 
+<pre>-- Add &quot;-d&quot; to debug versions of files configuration 
+&quot;Debug&quot; implibsuffix &quot;-d&quot;</pre> 
+<h1>include</h1> 
+<p>The <b>include</b> function looks for a file named <b>premake4.lua</b> in a 
+specified directory, and includes it in the current script.</p> 
+<pre>include &quot;directory&quot;</pre> 
+<p>This is equivalent to:</p> 
+<pre>dofile &quot;directory/premake4.lua&quot;</pre> 
+<p>This allows you to specify each project in its own <b>premake4.lua</b> 
+file, and then easily include them into a solution, or multiple solutions.</p> 
+<h3>Parameters</h3> 
+<p><i>directory</i> is the path to the included directory, relative to the 
+currently executing script file. The directory must contain a<b>premake4.lua</b>
+ file, or an error will occur. If you wish to call a file other than<b>
+premake4.lua</b>, use the dofile function instead.</p> 
+<h3>Return Value</h3> 
+<p>Any values returned by the included script are passed through to the caller.
+</p> 
+<h3>Examples</h3> 
+<pre>-- runs &quot;src/MyApplication/premake4.lua&quot; include 
+&quot;src/MyApplication&quot; &nbsp; -- runs 
+&quot;src/MyLibrary/premake4.lua&quot; include &quot;src/MyLibrary&quot;</pre> 
+<h1>includedirs</h1> 
+<p>The <b>includedirs</b> function specifies the include file search paths.</p>
+<pre>includedirs { &quot;paths&quot; }</pre> 
+<p>If a project includes multiple calls to <b>includedirs</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>paths</i> specifies a list of include file search directories. Paths 
+should be specified relative to the currently running script file.</p> 
+<h3>Examples</h3> 
+<p>Define two include file search paths.</p> 
+<pre>includedirs { &quot;../lua/include&quot;, &quot;../zlib&quot; }</pre> 
+<p>You can also use wildcards to match multiple directories. The <b>*</b> will 
+match against a single directory,<b>**</b> will recurse into subdirectories as 
+well.</p> 
+<pre>includedirs { &quot;../includes/**&quot; }</pre> 
+<h1>kind</h1> 
+<p>The <b>kind</b> function sets the kind of binary object being created by 
+the project, such as a console or windowed application, or a shared or static 
+library.</p> 
+<pre>kind (&quot;kind&quot;)</pre> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>kind</i> is the project kind identifier, and must be one of:</p> 
+<dl> 
+<dt> ConsoleApp </dt> 
+<dd> A console, or command-line, executable. </dd> 
+<dt> WindowedApp </dt> 
+<dd> An application that runs in a desktop window. This distinction does not 
+apply on Linux, but is important on Windows and Mac OS X.</dd> 
+<dt> SharedLib </dt> 
+<dd> A shared library, or DLL. </dd> 
+<dt> StaticLib </dt> 
+<dd> A static library. </dd> </dl> 
+<h3>Examples</h3> 
+<p>Set the project to generate a console executable.</p> 
+<pre>kind &quot;ConsoleApp&quot;</pre> 
+<p>Set the project to generate a shared library (DLL).</p> 
+<pre>kind &quot;SharedLib&quot;</pre> 
+<p>You can also set different kinds for each configuration. <b>This is not 
+supported by Xcode.</b></p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;DebugLib&quot;, 
+&quot;ReleaseLib&quot;, &quot;DebugDLL&quot;, &quot;ReleaseDLL&quot; } &nbsp; 
+project&quot;MyProject&quot; configuration &quot;*Lib&quot; kind 
+&quot;StaticLib&quot; &nbsp; configuration &quot;*DLL&quot; kind 
+&quot;SharedLib&quot;</pre> 
+<h1>language</h1> 
+<p>The <b>language</b> function sets the programming language used by a 
+project.</p> 
+<pre>language (&quot;lang&quot;)</pre> 
+<p>Premake currently supports <b>C</b>, <b>C++</b>, and <b>C#</b>. Not all 
+languages are supported by all of the generators; for instance, SharpDevelop 
+does not (currently) support C or C++ development, and Code::Blocks does not 
+support the .NET languages (C#, Managed C++).</p> 
+<h3>Applies To</h3> 
+<p>Solutions and projects.</p> 
+<h3>Parameters</h3> 
+<p><i>lang</i> is the language identifier. This is a string value, set to one 
+of<b>C</b>, <b>C++</b>, or <b>C#</b>. The value is not case sensitive.</p> 
+<h3>Examples</h3> 
+<p>Set the project language to C++.</p> 
+<pre>language &quot;C++&quot;</pre> 
+<p>Set the project language to C#</p> 
+<pre>language &quot;C#&quot;</pre> 
+<h1>libdirs</h1> 
+<p>The <b>libdirs</b> function specifies the library search paths.</p> 
+<pre>libdirs { &quot;paths&quot; }</pre> 
+<p>Library search directories are not well supported by the .NET tools. Visual 
+Studio will change relative paths to absolute, making it difficult to share the 
+generated project. MonoDevelop and SharpDevelop do not support search 
+directories at all, using only the GAC. In general, it is better to include the 
+full (relative) path to the assembly inlinks instead. C/C++ projects do not 
+have this limitation.</p> 
+<p>If a project includes multiple calls to <b>libdirs</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>paths</i> specifies a list of library search directories. Paths should 
+be specified relative to the currently running script file.</p> 
+<h3>Examples</h3> 
+<p>Define two library file search paths.</p> 
+<pre>libdirs { &quot;../lua/libs&quot;, &quot;../zlib&quot; }</pre> 
+<p>You can also use wildcards to match multiple directories. The <b>*</b> will 
+match against a single directory,<b>**</b> will recurse into subdirectories as 
+well.</p> 
+<pre>libdirs { &quot;../libs/**&quot; }</pre> 
+<h1>linkoptions</h1> 
+<p>The <b>linkoptions</b> function passes arguments directly to the linker 
+command line without translation.</p> 
+<pre>linkoptions { &quot;options&quot; }</pre> 
+<p>If a project includes multiple calls to <b>linkoptions</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>options</i> is a list of linker flags and options, specific to a 
+particular linker.</p> 
+<h3>Examples</h3> 
+<p>Use <code>pkg-config</code> style configuration when building on Linux with 
+GCC. Build options are always linker specific and should be targeted to a 
+particular toolset.</p> 
+<pre>configuration { &quot;linux&quot;, &quot;gmake&quot; } linkoptions { 
+&quot;`wx-config --libs`&quot; }</pre> 
+<h1>links</h1> 
+<p>The <b>links</b> function specifies a list of libraries and projects to 
+link against.</p> 
+<pre>links { &quot;references&quot; }</pre> 
+<p>If a project includes multiple calls to <b>links</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>references</i> is a list of library and project names.</p> 
+<p>When linking against another project in the same solution, specify the 
+project name here, rather than the library name. Premake will figure out the 
+correct library to link against for the current configuration, and will also 
+create a dependency between the projects to ensure a proper build order.</p> 
+<p>When linking against system libraries, do not include any prefix or file 
+extension. Premake will use the appropriate naming conventions for the current 
+platform.</p> 
+<h3>Examples</h3> 
+<p>Link against some system libraries.</p> 
+<pre>configuration &quot;windows&quot; links { &quot;user32&quot;, 
+&quot;gdi32&quot; } &nbsp; configuration &quot;linux&quot; links { &quot;m&quot;
+,&quot;png&quot; } &nbsp; configuration &quot;macosx&quot; -- OS X frameworks 
+need the extension to be handled properly links { &quot;Cocoa.framework&quot;, 
+&quot;png&quot; }</pre> 
+<p>In a solution with two projects, link the library into the executable. Note 
+that the project name is used to specify the link; Premake will automatically 
+figure out the correct library file name and directory and create a project 
+dependency.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } language &quot;C++&quot; &nbsp; project 
+&quot;MyExecutable&quot; kind &quot;ConsoleApp&quot; files &quot;**.cpp&quot; 
+links{ &quot;MyLibrary&quot; } &nbsp; project &quot;MyLibrary&quot; kind 
+&quot;SharedLib&quot; files &quot;**.cpp&quot;</pre> 
+<p>You may also create links between non-library projects. In this case, 
+Premake will generate a build dependency (the linked project will build first), 
+but not an actual link. In this example, MyProject uses a build dependency to 
+ensure that MyTool gets built first. It then uses MyTool as part of its build 
+process.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } language &quot;C++&quot; &nbsp; project 
+&quot;MyProject&quot; kind &quot;ConsoleApp&quot; files &quot;**.cpp&quot; links
+{ &quot;MyTool&quot; } prebuildcommands { &quot;MyTool --dosomething&quot; } 
+&nbsp; project&quot;MyTool&quot; kind &quot;ConsoleApp&quot; files 
+&quot;**.cpp&quot;</pre> 
+<h1>location</h1> 
+<p>The <b>location</b> function sets the destination directory for a generated 
+solution or project file.</p> 
+<pre>location (&quot;path&quot;)</pre> 
+<p>By default, solution and project files are generated into the same 
+directory as the script that defines them. The<b>location</b> function allows 
+you to change this location.</p> 
+<h3>Applies To</h3> 
+<p>Solutions and projects.</p> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the directory where the generated files should be stored, 
+specified relative to the currently executing script file.</p> 
+<h3>Examples</h3> 
+<p>Set the destination directory for a solution. Setting the location for a 
+project works the same way.</p> 
+<pre>solution &quot;MySolution&quot; location &quot;../build&quot;</pre> 
+<p>If you plan to build with multiple tools from the same source tree you 
+might want to split up the project files by toolset. The_ACTION global variable 
+contains the current toolset identifier, as specified on the command line. Note 
+that Lua syntax requires parenthesis around the function parameters in this 
+case.</p> 
+<pre>location (&quot;../build/&quot; .. _ACTION)</pre> 
+<h1>newaction</h1> 
+<p>The <b>newaction</b> function registers a new command-line action argument. 
+For more information, seeCommand Line Arguments.</p> 
+<pre>newaction (description)</pre> 
+<h3>Parameters</h3> 
+<p><i>description</i> is a table describing the new action. It may contain the 
+following fields:</p> 
+<dl> 
+<dt> trigger </dt> 
+<dd> The string identifier of the action; what the user would type on the 
+command line.</dd> 
+<dt> description </dt> 
+<dd> A short description of the action, to be displayed in the help text. </dd>
+<dt> execute </dt> 
+<dd> A function to be executed when the action is fired. </dd> </dl> 
+<h3>See Also</h3> 
+<p>Command Line Arguments</p> 
+<h3>Examples</h3> 
+<p>Register a new action to install the software project.</p> 
+<pre>newaction { trigger = &quot;install&quot;, description = &quot;Install 
+the software&quot;, execute = function () os.copyfile(
+&quot;bin/debug/myprogram&quot;, &quot;/usr/local/bin/myprogram&quot;) end }
+</pre> 
+<h1>newoption</h1> 
+<p>The <b>newoption</b> function registers a new command-line option argument. 
+For more information, seeCommand Line Arguments.</p> 
+<pre>newoption (description)</pre> 
+<h3>Parameters</h3> 
+<p><i>description</i> is a table describing the new option. It may contain the 
+following fields:</p> 
+<dl> 
+<dt> trigger </dt> 
+<dd> The string identifier of the option; what the user would type on the 
+command line.</dd> 
+<dt> description </dt> 
+<dd> A short description of the option, to be displayed in the help text. </dd>
+<dt> value </dt> 
+<dd> Optional. If the option needs a value, provides a hint to the user what 
+type of data is expected.</dd> 
+<dt> allowed </dt> 
+<dd> Optional. A list of key-value pairs listing the allowed values for the 
+option.</dd> </dl> 
+<h3>See Also</h3> 
+<p>Command Line Arguments</p> 
+<h3>Examples</h3> 
+<p>Register a new option to select a rendering API for a 3D application.</p> 
+<pre>newoption { trigger = &quot;gfxapi&quot;, value = &quot;API&quot;, 
+description= &quot;Choose a particular 3D API for rendering&quot;, allowed = { {
+&quot;opengl&quot;, &quot;OpenGL&quot; }, { &quot;direct3d&quot;, 
+&quot;Direct3D (Windows only)&quot; }, { &quot;software&quot;, &quot;Software 
+Renderer&quot; } } }</pre> 
+<h1>objdir</h1> 
+<p>The <b>objdir</b> function sets object and intermediate file directory for 
+a project.</p> 
+<pre>objdir (&quot;path&quot;)</pre> 
+<p>By default, object and intermediate files are stored in a directory named 
+&quot;obj&quot; in the same directory as the project. The<b>objdir</b> function 
+allows you to change this location.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the directory where the object and intermediate files should 
+be stored, specified relative to the currently executing script file.</p> 
+<h3>Examples</h3> 
+<p>Set an object directory for a project.</p> 
+<pre>project &quot;MyProject&quot; objdir &quot;objects&quot;</pre> 
+<p>Set object directories per configuration.</p> 
+<pre>configuration &quot;Debug&quot; objdir &quot;../obj_debug&quot; &nbsp; 
+configuration&quot;Release&quot; objdir &quot;../obj_release&quot;</pre> 
+<h1>os.chdir</h1> 
+<p>The <b>os.chdir</b> function changes the current working directory.</p> 
+<pre>os.chdir(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to the new working directory.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if successful, otherwise <b>nil</b> and an error message.</p> 
+<h1>os.copyfile</h1> 
+<p>The <b>os.copyfile</b> function copies a file from one location to another.
+</p> 
+<pre>os.copyfile(&quot;source&quot;, &quot;destination&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>Source</i> is the file system path to the file to be copied. <i>
+Destination</i> is the path to the copy location.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if successful, otherwise <b>nil</b> and an error message.</p> 
+<h1>os.findlib</h1> 
+<p>The <b>os.findlib</b> function scans the well-known system locations 
+looking for a library file.</p> 
+<pre>p = os.findlib(&quot;libname&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>libname</i> is name of the library to locate. It may be specified with 
+(libX11.so) or without (X11) system-specific decorations.</p> 
+<h3>Return Value</h3> 
+<p>The path containing the library file, if found. Otherwise, nil.</p> 
+<h1>os.get</h1> 
+<p>The <b>os.get</b> function identifies the currently targeted operating 
+system.</p> 
+<pre>id = os.get()</pre> 
+<h3>Parameters</h3> 
+<p>None.</p> 
+<h3>Return Value</h3> 
+<p>An operating system identifier, one of <b>bsd</b>, <b>linux</b>, <b>macosx
+</b>, <b>solaris</b>, or <b>windows</b>.</p> 
+<h3>Example</h3> 
+<pre>if os.get() == &quot;windows&quot; then -- do something Windows-specific 
+end</pre> 
+<h1>os.getcwd</h1> 
+<p>The <b>os.getcwd</b> function gets the current working directory.</p> 
+<pre>cwd = os.getcwd()</pre> 
+<h3>Parameters</h3> 
+<p>None.</p> 
+<h3>Return Value</h3> 
+<p>The current working directory.</p> 
+<h1>os.getversion</h1> 
+<p>Retrieve version information for the host operating system.</p> 
+<pre>os.getversion()</pre> 
+<p>Introduced in <b>Premake 4.4</b>, this function has not yet been 
+implemented for all platforms. On platforms where this has not been 
+implemented, it will return zero for all version numbers, and the platform name 
+as the description.</p> 
+<h3>Return Value</h3> 
+<p>A table, containing the following key-value pairs:</p> majorversion The 
+major version number <br>
+minorversion The minor version number <br>
+revision 
+The bug fix release or service pack number <br>
+description A human-readable 
+description of the OS version <br>
+<br>
+
+<h3>Examples</h3> 
+<pre>local ver = os.getversion() print(string.format(&quot; %d.%d.%d (%s)&quot;
+, ver.majorversion, ver.minorversion, ver.revision, ver.description)) &nbsp; -- 
+On Windows XP: &quot;5.1.3 (Windows XP)&quot; -- On OS X,: &quot;10.6.6 (Mac OS 
+X Snow Leopard)&quot;</pre> 
+<h1>os.is</h1> 
+<p>The <b>os.is</b> function checks the current operating system identifier 
+against a particular value.</p> 
+<pre>os.is(&quot;id&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>id</i> is one of the operating system identifiers <b>bsd</b>, <b>linux
+</b>, <b>macosx</b>, <b>solaris</b>, or <b>windows</b>.</p> 
+<h3>Return Value</h3> 
+<p>True if the supplied ID matches the current operating system identifier, 
+false otherwise.</p> 
+<h1>os.is64bit</h1> 
+<p>The <b>os.is64bit</b> function determines if the host is using a 64-bit 
+processor.</p> 
+<pre>os.is64bit()</pre> 
+<p>Introduced in <b>Premake 4.4</b>.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if the host system has a 64-bit processor, <b>false</b> 
+otherwise.</p> 
+<h3>Examples</h3> 
+<pre>if os.is64bit() then print(&quot;This is a 64-bit system&quot;) else print
+(&quot;This is NOT a 64-bit system&quot;) end</pre> 
+<h1>os.isdir</h1> 
+<p>The <b>os.isdir</b> function checks for the existence of directory.</p> 
+<pre>os.isdir(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>Path</i> is the file system path to check.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if a matching directory is found; <b>false</b> is there is no 
+such file system path, or if the path points to a file instead of a directory.
+</p> 
+<h1>os.isfile</h1> 
+<p>The <b>os.isfile</b> function checks for the existence of file.</p> 
+<pre>os.isfile(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>Path</i> is the file system path to check.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if a matching file is found; <b>false</b> is there is no such 
+file system path, or if the path points to a directory instead of a file.</p> 
+<h1>os.matchdirs</h1> 
+<p>The <b>os.matchdirs</b> function performs a wildcard match to locate one or 
+more directories.</p> 
+<pre>matches = os.matchdirs(&quot;pattern&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>patterm</i> is the file system path to search. It may contain single 
+(non-recursive) or double (recursive) asterisk wildcard patterns.</p> 
+<h3>Return Value</h3> 
+<p>A list of directories which match the specified pattern. May be empty.</p> 
+<h3>Example</h3> 
+<pre>matches = os.matchdirs(&quot;src/*&quot;) -- non-recursive match matches =
+os.matchdirs(&quot;src/**&quot;) -- recursive match &nbsp; matches = os
+.matchdirs(&quot;src/test*&quot;) -- may also match partial names</pre> 
+<h1>os.matchfiles</h1> 
+<p>The <b>os.matchdirs</b> function performs a wildcard match to locate one or 
+more directories.</p> 
+<pre>matches = os.matchfiles(&quot;pattern&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>patterm</i> is the file system path to search. It may contain single 
+(non-recursive) or double (recursive) asterisk wildcard patterns.</p> 
+<h3>Return Value</h3> 
+<p>A list of files which match the specified pattern. May be empty.</p> 
+<h3>Example</h3> 
+<pre>matches = os.matchfiles(&quot;src/*.c&quot;) -- non-recursive match 
+matches= os.matchfiles(&quot;src/**.c&quot;) -- recursive match</pre> 
+<h1>os.mkdir</h1> 
+<p>The <b>os.mkdir</b> function creates a new directory.</p> 
+<pre>os.mkdir(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>Path</i> is the file system path to be created.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if successful, otherwise <b>nil</b> and an error message.</p> 
+<h1>os.outputof</h1> 
+<p>The <b>os.outputof</b> function runs a shell command and returns the output.
+</p> 
+<pre>result = os.outputof(&quot;command&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><em>command</em> is a shell command to run.</p> 
+<h3>Return Value</h3> 
+<p>The output of the command.</p> 
+<h3>Examples</h3> 
+<pre>-- Get the ID for the host processor architecture local proc = os.outputof
+(&quot;uname -p&quot;)</pre> 
+<h1>os.pathsearch</h1> 
+<p>The <b>os.pathsearch</b> function searches a collection of paths for a 
+particular file.</p> 
+<pre>p = os.pathsearch(&quot;fname&quot;, &quot;path1&quot;, ...)</pre> 
+<h3>Parameters</h3> 
+<p><i>fname</i> is the name of the file being searched. This is followed by 
+one or more path sets to be searched.</p> 
+<p>Path sets match the format of the PATH environment variable: a 
+colon-delimited list of paths. On Windows, you may use a semicolon-delimited 
+list if drive letters might be included.</p> 
+<h3>Return Value</h3> 
+<p>The path to the directory which contains the file, if found. Otherwise, nil.
+</p> 
+<h3>Examples</h3> 
+<pre>local p = os.pathsearch(&quot;mysystem.config&quot;, 
+&quot;./config:/usr/local/etc:/etc&quot;)</pre> 
+<h1>os.rmdir</h1> 
+<p>The <b>os.rmdir</b> function removes an existing directory as well as any 
+files or subdirectories it contains.</p> 
+<pre>os.rmdir(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to be removed.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if successful, otherwise <b>nil</b> and an error message.</p> 
+<h1>os.stat</h1> 
+<p>The <b>os.stat</b> function retrieves information about a file.</p> 
+<pre>info = os.stat(&quot;path&quot;)</pre> 
+<p>Added in Premake 4.4.</p> 
+<h3>Parameters</h3> 
+<p><em>path</em> is the filesystem path to file for which to retrieve 
+information.</p> 
+<h3>Return Value</h3> 
+<p>A table of values:</p> 
+<dl> 
+<dt> mtime </dt> 
+<dd> Last modified timestamp </dd> 
+<dt> size </dt> 
+<dd> The file size in bytes </dd> </dl> 
+<h1>os.uuid</h1> 
+<p>The <b>os.uuid</b> function returns a Universally Unique Identifier.</p> 
+<pre>id = os.uuid()</pre> 
+<h3>Parameters</h3> 
+<p>None.</p> 
+<h3>Return Value</h3> 
+<p>A new UUID, a string value with the format <b>
+74CFC033-FA4D-4B1E-A871-7DC48FA36769</b>.</p> 
+<h1>path.getabsolute</h1> 
+<p>The <b>path.getabsolute</b> function converts a relative path an absolute 
+path.</p> 
+<pre>p = path.getabsolute(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the relative path to be converted. It does need to actually 
+exist on the file system.</p> 
+<h3>Return Value</h3> 
+<p>A new absolute path, calculated from the current working directory.</p> 
+<h1>path.getbasename</h1> 
+<p>The <b>path.getbasename</b> function returns the base file portion of a 
+path, with the directory and file extension removed.</p> 
+<pre>p = path.getbasename(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to be split.</p> 
+<h3>Return Value</h3> 
+<p>The base name portion of the supplied path, with any directory and file 
+extension removed.</p> 
+<h1>path.getdirectory</h1> 
+<p>The <b>path.getdirectory</b> function returns the directory portion of a 
+path, with any file name removed.</p> 
+<pre>p = path.getdirectory(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to be split.</p> 
+<h3>Return Value</h3> 
+<p>The directory portion of the path, with any file name removed. If the path 
+does not include any directory information, the &quot;.&quot; (single dot) 
+current directory is returned.</p> 
+<h1>path.getdrive</h1> 
+<p>The <b>path.getdrive</b> function returns the drive letter portion of a 
+path, if present.</p> 
+<pre>p = path.getdrive(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to be split.</p> 
+<h3>Return Value</h3> 
+<p>The drive letter portion of the path, if one is specified. Otherwise, nil.
+</p> 
+<h1>path.getextension</h1> 
+<p>The <b>path.getextension</b> function returns the file extension portion of 
+a path.</p> 
+<pre>p = path.getextension(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to be split.</p> 
+<h3>Return Value</h3> 
+<p>The file extension portion of the path, or an empty string if no extension 
+is present.</p> 
+<h1>path.getname</h1> 
+<p>The <b>path.getname</b> function returns the file name and extension, with 
+any directory information removed.</p> 
+<pre>p = path.getname(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to be split.</p> 
+<h3>Return Value</h3> 
+<p>The file name and extension, with no directory information.</p> 
+<h1>path.getrelative</h1> 
+<p>The <b>path.getrelative</b> function computes a relative path from one 
+directory to another.</p> 
+<pre>p = path.getrelative(&quot;src&quot;, &quot;dest&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>src</i> is the originating directory, <i>dest</i> is the target 
+directory. Both may be specified as absolute or relative.</p> 
+<h3>Return Value</h3> 
+<p>A relative path from <i>src</i> to <i>dest</i>.</p> 
+<h1>path.isabsolute</h1> 
+<p>The <b>path.isabsolute</b> function returns true if the specified path is 
+an absolute path.</p> 
+<pre>path.isabsolute(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to check.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if the specified path is absolute, <b>false</b> otherwise.</p> 
+<h1>path.iscfile</h1> 
+<p>The <b>path.iscfile</b> function returns true if the specified path 
+represents a C source code file, based on its file extension.</p> 
+<pre>path.iscfile(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to check.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if the path matches a well-known C file extension, <b>false</b> 
+otherwise.</p> 
+<h1>path.iscppfile</h1> 
+<p>The <b>path.iscppfile</b> function returns true if the specified path 
+represents a C++ source code file, based on its file extension.</p> 
+<pre>path.iscppfile(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to check.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if the path matches a well-known C++ file extension, <b>false
+</b> otherwise.</p> 
+<h1>path.isresourcefile</h1> 
+<p>The <b>path.isresourcefile</b> function returns true if the specified path 
+represents a Windows resource file, based on its file extension.</p> 
+<pre>path.isresourcefile(&quot;path&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to check.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if the path matches a well-known Windows resource file 
+extension,<b>false</b> otherwise.</p> 
+<h1>path.join</h1> 
+<p>The <b>path.join</b> function joins two path portions together into a 
+single path.</p> 
+<pre>path.join(&quot;leading&quot;, &quot;trailing&quot;)</pre> 
+<p>If <i>trailing</i> is an absolute path, then the leading portion is 
+ignored, and the absolute path is returned instead (see below for examples).</p>
+<h3>Parameters</h3> 
+<p><i>leading</i> is the beginning portion of the path; <i>trailing</i> is the 
+ending portion.</p> 
+<h3>Return Value</h3> 
+<p>A merged path.</p> 
+<h3>Examples</h3> 
+<pre>-- returns &quot;MySolution/MyProject&quot; p = path.join(
+&quot;MySolution&quot;, &quot;MyProject&quot;) &nbsp; -- returns 
+&quot;/usr/bin&quot;, because the trailing path is absolute p = path.join(
+&quot;MySolution&quot;, &quot;/usr/bin&quot;) &nbsp; -- tokens are assumed to 
+be absolute; this returns &quot;$(ProjectDir)&quot; p = path.join(
+&quot;MySolution&quot;, &quot;$(ProjectDir)&quot;)</pre> 
+<h1>path.rebase</h1> 
+<p>The <b>path.rebase</b> function takes a relative path and makes it relative 
+to a different location.</p> 
+<pre>path.rebase(&quot;path&quot;, &quot;oldbase&quot;, &quot;newbase&quot;)
+</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the relative path to conver. <i>oldbase</i> is the original 
+base directory, from with<i>path</i> is relative. <i>newbase</i> is the new 
+base directory, from where the resulting path should be relative.</p> 
+<h3>Return Value</h3> 
+<p>The rebased path.</p> 
+<h1>path.translate</h1> 
+<p>The <b>path.translate</b> function converts the file separators in a path.
+</p> 
+<pre>path.translate(&quot;path&quot;, &quot;newsep&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to translate. <i>newsep</i> is the new 
+path separator.</p> 
+<p>If <i>newsep</i> is nil, the native path separator for the current 
+environment will be used.</p> 
+<h3>Return Value</h3> 
+<p>The translated path.</p> 
+<h1>pchheader</h1> 
+<p>The <b>pchheader</b> function sets the main header file for precompiled 
+header support.</p> 
+<pre>pchheader &quot;file&quot;</pre> 
+<p>If no header file is set, the toolset default settings will be used.</p> 
+<h3>Applies To</h3> 
+<p>Projects only.</p> 
+<h3>Parameters</h3> 
+<p><i>file</i> is the name of the header file, as it is specified in your 
+source file<b>#include</b> statements.</p> 
+<h3>See Also</h3> 
+<p>pchsource</p> 
+<h3>Examples</h3> 
+<pre>pchheader &quot;afxwin.h&quot; pchsource &quot;afxwin.cpp&quot;</pre> 
+<h1>pchsource</h1> 
+<p>The <b>pchsource</b> function sets the main source file for precompiled 
+header support. This is only used by Visual Studio.</p> 
+<pre>pchsource &quot;file&quot;</pre> 
+<p>If no source file is set, the toolset default settings will be used.</p> 
+<h3>Applies To</h3> 
+<p>Projects only.</p> 
+<h3>Parameters</h3> 
+<p><i>file</i> is the name of the source file, specified relative to the 
+currently executing script file.</p> 
+<h3>See Also</h3> 
+<p>pchheader</p> 
+<h3>Examples</h3> 
+<pre>pchheader &quot;afxwin.h&quot; pchsource &quot;afxwin.cpp&quot;</pre> 
+<h1>platforms</h1> 
+<p><em>Platform support is a new, experimental feature which will be 
+introduced in<b>Premake 4.1</b>. The syntax and behavior described here might 
+change as we sort out the details.</em></p> 
+<p>The <b>platforms</b> function specifies a set of target hardware platforms 
+for a solution. This is an optional setting; if it is not provided the 
+toolset's default behavior will be used.</p> 
+<pre>platforms { &quot;identifiers&quot; }</pre> 
+<p>Please see the Platforms section of the user guide for a lot more 
+information on platforms and how they are used by Premake.</p> 
+<h3>Applies To</h3> 
+<p>Solutions only.</p> 
+<h3>Parameters</h3> 
+<p><i>identifiers</i> is a list of hardware platform identifiers, and may 
+include any of the following.</p> 
+<dl> 
+<dt> Native </dt> 
+<dd> A general build not targeting any particular platform; uses the default 
+build behavior of the compiler. If your project can be built in a generic 
+fashion, you should include this as the first platform option.</dd> 
+<dt> x32 </dt> 
+<dd> Target a 32-bit environment. </dd> 
+<dt> x64 </dt> 
+<dd> Target a 64-bit environment </dd> 
+<dt> Universal </dt> 
+<dd> Create a Mac OS X universal binary, targeting both 32- and 64-bit 
+versions of x86 and PPC. Note that in order to target multiple architectures, 
+automated dependency generation must be turned off. You should always do a 
+clean build when creating a universal target. Universal builds are not 
+supported by Visual Studio.</dd> 
+<dt> Universal32 </dt> 
+<dd> Like Universal above, but targeting only 32-bit platforms. </dd> 
+<dt> Universal64 </dt> 
+<dd> Like Universal above, but targeting only 64-bit platforms. </dd> 
+<dt> PS3 </dt> 
+<dd> Target the Playstation 3. </dd> 
+<dt> Xbox360 </dt> 
+<dd> Target the Xbox 360 compiler and linker under Visual Studio; ignored 
+elsewhere.</dd> </dl> 
+<p>Not all platforms are supported on all systems, unsupported platforms will 
+be silently ignored. Some targets require extra configuration of the build 
+tools on the client machine in order to support cross-compilation.</p> 
+<h3>Return Value</h3> 
+<p>The function returns the current list of target platforms for the active 
+solution.</p> 
+<h3>Examples</h3> 
+<p>Provide a generic build that will work anywhere, as well as a Mac OS X 
+Universal build.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } platforms { &quot;native&quot;, &quot;universal&quot; }
+</pre> 
+<p>Provide 32- and 64-bit specific build targets. No generic build is 
+provided, so one of these two platforms must always be used. Do this only if 
+your software requires knowledge of the underlying architecture at build time, 
+otherwise include &quot;native&quot; to provide a generic build.</p> 
+<pre>solution &quot;MySolution&quot; configurations { &quot;Debug&quot;, 
+&quot;Release&quot; } platforms { &quot;x32&quot;, &quot;x64&quot; }</pre> 
+<p>You can retrieve the current list of platforms by calling the function with 
+no parameters.</p> 
+<pre>local p = platforms()</pre> 
+<p>Once you have defined a list of platforms, you may use those identifiers to 
+set upconfiguration filters and apply platform-specific settings.</p> 
+<pre>configuration &quot;x64&quot; defines &quot;IS_64BIT&quot; &nbsp; -- You 
+can also mix platforms with other configuration selectors configuration { 
+&quot;Debug&quot;, &quot;x64&quot; } defines &quot;IS_64BIT_DEBUG&quot;</pre> 
+<h1>postbuildcommands</h1> 
+<p>The <b>postbuildcommands</b> function specifies shell commands to run after 
+build is finished.</p> 
+<pre>postbuildcommands { &quot;commands&quot; }</pre> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>commands</i> is one or more shell commands. These commands will be 
+passed to the shell exactly as entered, including path separators and the like.
+</p> 
+<h3>See Also</h3> 
+<p>prebuildcommands<br>
+prelinkcommands</p> 
+<h3>Examples</h3> 
+<pre>configuration &quot;windows&quot; postbuildcommands { &quot;copy 
+default.config bin\\project.config&quot; } &nbsp; configuration &quot;not 
+windows&quot; postbuildcommands { &quot;cp default.config 
+bin/project.config&quot; }</pre> 
+<h1>prebuildcommands</h1> 
+<p>The <b>prebuildcommands</b> function specifies shell commands to run before 
+each build.</p> 
+<pre>prebuildcommands { &quot;commands&quot; }</pre> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>commands</i> is one or more shell commands. These commands will be 
+passed to the shell exactly as entered, including path separators and the like.
+</p> 
+<h3>See Also</h3> 
+<p>prelinkcommands<br>
+postbuildcommands</p> 
+<h3>Examples</h3> 
+<pre>configuration &quot;windows&quot; prebuildcommands { &quot;copy 
+default.config bin\\project.config&quot; } &nbsp; configuration &quot;not 
+windows&quot; prebuildcommands { &quot;cp default.config 
+bin/project.config&quot; }</pre> 
+<h1>prelinkcommands</h1> 
+<p>The <b>prelinkcommands</b> function specifies shell commands to run after 
+the source files have been compiled, but before the link step.</p> 
+<pre>prelinkcommands { &quot;commands&quot; }</pre> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>commands</i> is one or more shell commands. These commands will be 
+passed to the shell exactly as entered, including path separators and the like.
+</p> 
+<h3>See Also</h3> 
+<p>prebuildcommands<br>
+postbuildcommands</p> 
+<h3>Examples</h3> 
+<pre>configuration &quot;windows&quot; prelinkcommands { &quot;copy 
+default.config bin\\project.config&quot; } &nbsp; configuration &quot;not 
+windows&quot; prelinkcommands { &quot;cp default.config bin/project.config&quot;
+}</pre> 
+<h1>printf</h1> 
+<p>The <b>printf</b> performs like its C counterpart, printing a formatted 
+string.</p> 
+<pre>printf(&quot;format&quot;, ...)</pre> 
+<p>It is equivalent to this Lua code:</p> 
+<pre>print(string.format(format, unpack(arg))</pre> 
+<h3>Parameters</h3> 
+<p><i>format</i> is a formatting string containing C <b>printf()</b> style 
+formatting codes. It is followed by a list of arguments to be substituted into 
+the format string.</p> 
+<h3>Return Value</h3> 
+<p>None.</p> 
+<h1>project</h1> 
+<p>The <b>project</b> function creates a new project and makes it active.</p> 
+<pre>project (&quot;name&quot;)</pre> 
+<p>Projects contain all of the settings necessary to build a single binary 
+target, and are synonymous with a Visual Studio project. These settings include 
+the list of source code files, the programming language used by those files, 
+compiler flags, include directories, and which libraries to link against.</p> 
+<p>Every project belongs to a solution. </p> 
+<h3>Parameters</h3> 
+<p><i>name</i> is a unique name for the project. If a project with the given 
+name already exists, it is made active and returned. The project name will be 
+used as the file name of the generated solution file.</p> 
+<h3>Return Value</h3> 
+<p>The function returns the active project object; see The Project Object 
+below for more information on the structure of this object.</p> 
+<h3>See Also</h3> 
+<p>solution</p> 
+<h3>Examples</h3> 
+<p>Create a new project named &quot;MyProject&quot;. Note that a solution must 
+exist to contain the project. The indentation is for readability and is 
+optional.</p> 
+<pre>solution &quot;MySolution&quot; configuration { &quot;Debug&quot;, 
+&quot;Release&quot; } &nbsp; project &quot;MyProject&quot;</pre> 
+<p>You can retrieve the currently active project object by calling <b>project
+</b> with no parameters.</p> 
+<pre>local prj = project()</pre> 
+<p>You can retrieve the list of projects associated with a solution using the 
+<b>projects</b> field on the solution object, which may then be iterated over.
+</p> 
+<pre>local prjs = solution().projects for i, prj in ipairs(prjs) do print(
+prj.name) end</pre> 
+<h3>The Project Object</h3> 
+<p>Each project is represented in Lua as a table of key-value pairs. Unless 
+you really know what you are doing, you should treat this object as read-only, 
+and use the Premake API to make any changes.</p> 
+<p>The project object contains the following values.</p> 
+<dl> 
+<dt> basedir </dt> 
+<dd> The directory where the project was original defined; acts as a root for 
+relative paths.</dd> 
+<dt> blocks </dt> 
+<dd> A list of configuration blocks. </dd> 
+<dt> language </dt> 
+<dd> The project language, if set. </dd> 
+<dt> location </dt> 
+<dd> The output directory for the generated project file. </dd> 
+<dt> name </dt> 
+<dd> The name of the project. </dd> 
+<dt> solution </dt> 
+<dd> The solution which contains the project. </dd> 
+<dt> uuid </dt> 
+<dd> The project's unique identifier. </dd> </dl> 
+<h1>resdefines</h1> 
+<p>The <b>resdefines</b> function specifies preprocessor symbols for the 
+resource compiler.</p> 
+<pre>resdefines { &quot;symbols&quot; }</pre> 
+<p>If a project includes multiple calls to <b>resdefines</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>symbols</i> specifies a list of symbols to be defined.</p> 
+<h3>Examples</h3> 
+<p>Define two new symbols in the current project.</p> 
+<pre>resdefines { &quot;DEBUG&quot;, &quot;TRACE&quot; }</pre> 
+<p>Symbols may also assign values.</p> 
+<pre>resdefines { &quot;CALLSPEC=__dllexport&quot; }</pre> 
+<h1>resincludedirs</h1> 
+<p>The <b>resincludedirs</b> function specifies the include file search paths 
+for the resource compiler.</p> 
+<pre>resincludedirs { &quot;paths&quot; }</pre> 
+<p>If a project includes multiple calls to <b>resincludedirs</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>paths</i> specifies a list of include file search directories. Paths 
+should be specified relative to the currently running script file.</p> 
+<h3>Examples</h3> 
+<p>Define two include file search paths.</p> 
+<pre>resincludedirs { &quot;../lua/include&quot;, &quot;../zlib&quot; }</pre> 
+<p>You can also use wildcards to match multiple directories. The <b>*</b> will 
+match against a single directory,<b>**</b> will recurse into subdirectories as 
+well.</p> 
+<pre>resincludedirs { &quot;../includes/**&quot; }</pre> 
+<h1>resoptions</h1> 
+<p>The <b>resoptions</b> function passes arguments directly to the resource 
+compiler command line without translation.</p> 
+<pre>resoptions { &quot;options&quot; }</pre> 
+<p>If a project includes multiple calls to <b>resoptions</b> the lists are 
+concatenated, in the order in which they appear in the script.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, configurations</p> 
+<h3>Parameters</h3> 
+<p><i>options</i> is a list of resource compiler flags and options, specific 
+to a particular compiler.</p> 
+<h3>Examples</h3> 
+<p>Use <code>pkg-config</code> style configuration when building on Linux with 
+GCC. Build options are always compiler specific and should be targeted to a 
+particular toolset.</p> 
+<pre>configuration { &quot;linux&quot;, &quot;gmake&quot; } resoptions { 
+&quot;`wx-config --cxxflags`&quot;, &quot;-ansi&quot;, &quot;-pedantic&quot; }
+</pre> 
+<h1>solution</h1> 
+<p>The <b>solution</b> function creates a new solution and makes it active.</p>
+<pre>solution (&quot;name&quot;)</pre> 
+<p>Solutions are the top-level objects in a Premake build script, and are 
+synonymous with a Visual Studio solution. Each solution contains one or more 
+projects, which it turn contain the settings to generate a single binary target.
+</p> 
+<h3>Parameters</h3> 
+<p><i>name</i> is a unique name for the solution. If a solution with the given 
+name already exists, it is made active and returned. The solution name will be 
+used as the file name of the generated solution file.</p> 
+<h3>Return Value</h3> 
+<p>The function returns the active solution object; see The Solution Object 
+below for more information on the structure of this object.</p> 
+<h3>Examples</h3> 
+<p>Create a new solution named &quot;MySolution&quot;.</p> 
+<pre>solution &quot;MySolution&quot;</pre> 
+<p>You can retrieve the currently active solution object by calling <b>solution
+</b> with no parameters.</p> 
+<pre>local sln = solution()</pre> 
+<p>You can the global variable <b>_SOLUTIONS</b> to list out all of the 
+currently defined solutions.</p> 
+<pre>for i, sln in ipairs(_SOLUTIONS) do print(sln.name) end</pre> 
+<h3>The Solution Object</h3> 
+<p>Each solution is represented in Lua as a table of key-value pairs. Unless 
+you really know what you are doing, you should treat this object as read-only, 
+and use the Premake API to make any changes.</p> 
+<p>The solution object contains the following values.</p> 
+<dl> 
+<dt> basedir </dt> 
+<dd> The directory where the project was original defined; acts as a root for 
+relative paths.</dd> 
+<dt> configurations </dt> 
+<dd> The list of valid configuration names. </dd> 
+<dt> blocks </dt> 
+<dd> A list of configuration blocks. </dd> 
+<dt> language </dt> 
+<dd> The solution language, if set. </dd> 
+<dt> location </dt> 
+<dd> The output directory for the generated solution file. </dd> 
+<dt> name </dt> 
+<dd> The name of the solution. </dd> 
+<dt> platforms </dt> 
+<dd> A list of target platforms. </dd> 
+<dt> projects </dt> 
+<dd> A list of projects contained by the solution. </dd> </dl> 
+<h1>string.endswith</h1> 
+<p>The <b>string.endswith</b> function returns true if the given string ends 
+with the provided sequence.</p> 
+<pre>string.endswith(&quot;haystack&quot;, &quot;needle&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>haystack</i> is the string to check. <i>needle</i> is the ending 
+sequence to check against.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if <i>haystack</i> ends with <i>needle</i>.</p> 
+<h1>string.explode</h1> 
+<p>The <b>string.explode</b> function returns an array of strings, each of 
+which is a substring of<i>s</i> formed by splitting on boundaries formed by <i>
+pattern</i>.</p> 
+<pre>string.explode(&quot;str&quot;, &quot;pattern&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>str</i> is the string to be split. <i>pattern</i> is the separator 
+pattern at which to split; it may use Lua's pattern matching syntax.</p> 
+<h3>Return Value</h3> 
+<p>A list of substrings.</p> 
+<h1>string.findlast</h1> 
+<p>The <b>string.findlast</b> function finds the last instance of a pattern 
+within a string.</p> 
+<pre>string.endswith(&quot;str&quot;, &quot;pattern&quot;, plain)</pre> 
+<h3>Parameters</h3> 
+<p><i>str</i> is the string to be searched. <i>pattern</i> is the pattern to 
+search for; it may use Lua's pattern matching syntax. If<i>plain</i> is true, 
+no pattern matching will be performed (faster).</p> 
+<h3>Return Value</h3> 
+<p>The matching pattern, if found, or nil if there were no matches.</p> 
+<h1>string.startswith</h1> 
+<p>The <b>string.startswith</b> function returns true if the given string 
+starts with the provided sequence.</p> 
+<pre>string.startswith(&quot;haystack&quot;, &quot;needle&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>haystack</i> is the string to check. <i>needle</i> is the starting 
+sequence to check against.</p> 
+<h3>Return Value</h3> 
+<p><b>True</b> if <i>haystack</i> starts with <i>needle</i>.</p> 
+<h1>table.contains</h1> 
+<p>The <b>table.contains</b> function determines if an array contains a 
+particular value.</p> 
+<pre>table.contains(arr, value)</pre> 
+<h3>Parameters</h3> 
+<p><i>arr</i> is the array to test; <i>value</i> is the value being tested for.
+</p> 
+<h3>Return Value</h3> 
+<p>True if the array contains the value, false otherwise.</p> 
+<h1>table.implode</h1> 
+<p>The <b>table.implode</b> function merges an array of items into a single, 
+formatted string.</p> 
+<pre>table.implode(arr, &quot;before&quot;, &quot;after&quot;, 
+&quot;between&quot;)</pre> 
+<h3>Parameters</h3> 
+<p><i>arr</i> is the array to be converted into a string. <i>before</i> is a 
+string to be inserted before each item.<i>after</i> is a string to be inserted 
+after each item.<i>between</i> is a string to be inserted between items.</p> 
+<h3>Return Value</h3> 
+<p>The formatted string.</p> 
+<h1>targetdir</h1> 
+<p>The <b>targetdir</b> function sets the destination directory for the 
+compiled binary target.</p> 
+<pre>targetdir (&quot;path&quot;)</pre> 
+<p>By default, the generated project files will place their compiled output in 
+the same directory as the script. The<b>targetdir</b> function allows you to 
+change this location.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>path</i> is the file system path to the directory where the compiled 
+target file should be stored. It is specified relative to the currently 
+executing script file.</p> 
+<h3>See Also</h3> 
+<p>targetname<br>
+targetextension<br>
+targetprefix</p> 
+<h3>Examples</h3> 
+<p>This project separates its compiled output by configuration type.</p> 
+<pre>project &quot;MyProject&quot; &nbsp; configuration &quot;Debug&quot; 
+targetdir&quot;bin/debug&quot; &nbsp; configuration &quot;Release&quot; 
+targetdir&quot;bin/release&quot;</pre> 
+<h1>targetextension</h1> 
+<p>The <b>targetextension</b> function specifies the file extension for the 
+compiled binary target.</p> 
+<pre>targetextension (&quot;ext&quot;)</pre> 
+<p>By default, the project will use the system's normal naming conventions: <b>
+.exe</b> for Windows executables, <b>.so</b> for Linux shared libraries, and so 
+on. The<b>targetextension</b> function allows you to change this default.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>ext</i> is the new file extension, including the leading dot.</p> 
+<h3>See Also</h3> 
+<p>targetname<br>
+targetdir<br>
+targetprefix<br>
+targetsuffix</p> 
+<h3>Examples</h3> 
+<pre>targetextension &quot;.zmf&quot;</pre> 
+<h1>targetname</h1> 
+<p>The <b>targetname</b> function specifies the base file name for the 
+compiled binary target.</p> 
+<pre>targetname (&quot;name&quot;)</pre> 
+<p>By default, the project name will be used as the file name of the compiled 
+binary target. A Windows executable project named &quot;MyProject&quot; will 
+produce a binary named<b>MyProject.exe</b>. The <b>targetname</b> function 
+allows you to change this default.</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>name</i> is the new base file name.</p> 
+<h3>See Also</h3> 
+<p>targetdir<br>
+targetextension<br>
+targetprefix<br>
+targetsuffix</p> 
+<h3>Examples</h3> 
+<pre>targetname &quot;mytarget&quot;</pre> 
+<h1>targetprefix</h1> 
+<p>The <b>targetprefix</b> function specifies the file name prefix for the 
+compiled binary target.</p> 
+<pre>targetprefix (&quot;prefix&quot;)</pre> 
+<p>By default, the system naming convention will be used: a &quot;lib&quot; 
+prefix for POSIX libraries (as in<b>libMyProject.so</b>), and no prefix 
+elsewhere. The<b>targetprefix</b> function allows you to change this default.
+</p> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>prefix</i> is the new file name prefix.</p> 
+<h3>See Also</h3> 
+<p>targetname<br>
+targetdir<br>
+targetextension<br>
+targetsuffix</p> 
+<h3>Examples</h3> 
+<pre>targetprefix &quot;plugin&quot;</pre> 
+<p>The prefix may also be set to an empty string for no prefix.</p> 
+<pre>targetprefix &quot;&quot;</pre> 
+<h1>targetsuffix</h1> 
+<p>The <b>targetsuffix</b> function specifies a file name suffix for the 
+compiled binary target.</p> 
+<pre>targetsuffix (&quot;suffix&quot;)</pre> 
+<h3>Applies To</h3> 
+<p>Solutions, projects, and configurations.</p> 
+<h3>Parameters</h3> 
+<p><i>suffix</i> is the new filename suffix.</p> 
+<h3>See Also</h3> 
+<p>targetname<br>
+targetdir<br>
+targetprefix<br>
+targetextension</p> 
+<h3>Examples</h3> 
+<pre>-- Add &quot;-d&quot; to debug versions of files configuration 
+&quot;Debug&quot; targetsuffix &quot;-d&quot;</pre> 
+<h1>uuid</h1> 
+<p>The <b>uuid</b> function sets the Universally Unique Identifier (UUID) for 
+a project.</p> 
+<pre>uuid (&quot;project_uuid&quot;)</pre> 
+<p>UUIDs are synonymous (for Premake's purposes) with Globally Unique 
+Identifiers (GUID).</p> 
+<p>Premake automatically assigns a UUID to each project, which is used by the 
+Visual Studio generators to identify the project within a solution. This UUID 
+is essentially random and will change each time the project file is generated. 
+If you are storing the generated Visual Studio project files in a version 
+control system, this will create a lot of unnecessary deltas. Using the<b>uuid
+</b> function, you can assign a fixed UUID to each project which never changes, 
+removing the randomness from the generated projects.</p> 
+<h3>Applies To</h3> 
+<p>Projects only.</p> 
+<h3>Parameters</h3> 
+<p><i>project_uuid</i> is the UUID for the current project. It should take the 
+form &quot;01234567-ABCD-ABCD-ABCD-0123456789AB&quot; (see the examples below 
+for some real UUID values). You can use the Visual Studioguidgen tool to create 
+new UUIDs, orthis website, or run Premake once to generate Visual Studio files 
+and copy the assigned UUIDs.</p> 
+<h3>Returns</h3> 
+<p>The current project UUID, or <b>nil</b> if no UUID has been set.</p> 
+<h3>Examples</h3> 
+<p>Set the UUID for a current project.</p> 
+<pre>uuid &quot;BE2461B7-236F-4278-81D3-F0D476F9A4C0&quot;</pre> 
+<h1>vpaths</h1> 
+<p>The <b>vpaths</b> function places files into groups or &quot;virtual 
+paths&quot;, rather than the default behavior of mirroring the filesystem in 
+IDE-based projects. So you could, for instance, put all header files in a group 
+called &quot;Headers&quot;, no matter where they appeared in the source tree.
+</p> 
+<pre>vpaths { [&quot;group&quot;] = &quot;pattern(s)&quot; }</pre> 
+<p>Note that <em>Lua tables do not maintain any ordering between key-value 
+pairs</em>, so there is no precedence between the supplied rules. That is, you 
+can't write a rule that rewrites the results of an earlier rule, since there is 
+no guarantee in which order the rules will run.</p> 
+<p>Added in Premake 4.4.</p> 
+<h3>Applies To</h3> 
+<p>Virtual paths, like files, may be set on the solution, project, and 
+configuration level. However, only project-level file lists are currently 
+supported.</p> 
+<h3>Parameters</h3> 
+<p>A list of key/value pairs, specified with Lua's standard syntax, which map 
+file patterns to the group in which they should appear. See the examples below 
+for a more complete explanation.</p> 
+<h3>Examples</h3> 
+<p>Place all header files into a virtual path called &quot;Headers&quot;. Any 
+directory information is removed, so a path such as<b>src/lua/lua.h</b> will 
+appear in the IDE as<b>Headers/lua.h</b>.</p> 
+<pre>vpaths { [&quot;Headers&quot;] = &quot;**.h&quot; }</pre> 
+<p>You may also specify multiple file patterns using the table syntax.</p> 
+<pre>vpaths { [&quot;Headers&quot;] = { &quot;**.h&quot;, &quot;**.hxx&quot;, 
+&quot;**.hpp&quot; } }</pre> 
+<p>It is also possible to include the file's path in the virtual group. Using 
+the same example as above, this rule will appear in the IDE as<b>
+Headers/src/lua/lua.h</b>.</p> 
+<pre>vpaths { [&quot;Headers/*&quot;] = &quot;**.h&quot; }</pre> 
+<p>Any directory information explicitly provided in the pattern will be 
+removed from the replacement. This rule will appear in the IDE as<b>
+Headers/lua/lua.h</b>.</p> 
+<pre>vpaths { [&quot;Headers/*&quot;] = &quot;src/**.h&quot; }</pre> 
+<p>You can also use virtual paths to remove extra directories from the IDE. 
+For instance, this rule will cause the previous example to appear as<b>lua/lua.h
+</b>, removing the <b>src</b> part of the path from <em>all</em> files.</p> 
+<pre>vpaths { [&quot;&quot;] = &quot;src&quot; }</pre> 
+<p>And of course, you can specify more than one rule at a time.</p> 
+<pre>vpaths { [&quot;Headers&quot;] = &quot;**.h&quot;, [&quot;Sources/*&quot;]
+= {&quot;**.c&quot;, &quot;**.cpp&quot;}, [&quot;Docs&quot;] = 
+&quot;**.txt&quot; }</pre> 
+<h1>Extending Premake</h1> 
+<p>A collection of how-to articles on extending and improving Premake. These 
+are intended for folks who want to add new actions or API functions to Premake. 
+If you just want to script your projects, have a look atScripting with Premake 
+instead.</p> 
+<p>This section is very much a work in progress, which I hope to gradually 
+build up over time.</p> 
+<h1>The Basics</h1> 
+<p><b>Some things you should know before you digging into the Premake 
+internals, in no particular order:</b></p> 
+<h3>Managing script files</h3> 
+<p>Before you begin, you should be able to build and run the debug 
+configuration of Premake. This will save you the trouble of embedding the 
+scripts and recompiling with each change, and will greatly speed up development.
+</p> 
+<p>When you have completed your changes and are ready to roll them out, note 
+that you must run<b>premake4 embed</b> and recompile in order to see your 
+changes in the release build of Premake. Debug builds load the scripts 
+dynamically at startup and so can skip this step.</p> 
+<p>Premake knows which scripts to load and run by reading the file <b>
+src/_manifest.lua</b>. Any new script file you create <em>must</em> be listed 
+in the manifest if you want it to run. This is a common mistake; I still make 
+it myself every once in a while.</p> 
+<p>The command <b>premake4 embed</b> copies all of the scripts listed in the 
+manifest into static C buffers in the file<b>src/host/scripts.c</b>, which then 
+gets compiled into the final executable. This is how I can ship a single 
+binary, rather than the whole source tree.</p> 
+<h3>Testing</h3> 
+<p>There is a fairly comprehensive set of automated tests in the <b>tests/</b> 
+folder. Create a debug build of Premake and then, in this tests directory, run 
+the command:</p> 
+<pre> ../bin/debug/premake4 test </pre> 
+<p>Or, if you're in a POSIX environment, run the <b>./test</b> shell script. I 
+am using my own homegrown testing framework, which is defined in<b>
+tests/testfx.lua</b>. You can add new test files in <b>tests/premake4.lua</b>.
+</p> 
+<h3>Namespaces</h3> 
+<p>Lua allows the creation of namespaces (of a sort) by putting your functions 
+into a table. This example creates a function<b>bar</b> in the namespace <b>
+premake.foo</b>.</p> 
+<pre>premake.foo = { } &nbsp; function premake.foo.bar() -- do something useful
+end</pre> 
+<p>I have begun moving all of Premake's internals into the <b>premake</b> 
+namespace, but it is a work in progress.</p> 
+<h3>And finally...</h3> 
+<p>Finally, post any questions you might have over in the forums and I will be 
+delighted (yes, delighted) to help you out. Your questions will help me improve 
+this documentation and Premake itself and are very much appreciated.</p> 
+<h1>Create a new action</h1> 
+<p>An <em>action</em> is what gets triggered when you run Premake; the command 
+<b>premake4 vs2008</b> triggers the Visual Studio 2008 action, while <b>
+premake4 clean</b> triggers the clean action.</p> 
+<p>I created an example action, available in the source code packages at <b>
+src/actions/example</b>, to help you get started. This example writes out 
+simple &quot;solution&quot; and &quot;project&quot; files, showing how to get 
+out the project information using the Premake APIs. The tutorial below will 
+show you how to use these example files to get started on your own actions.</p> 
+<p>If you have any questions, ask them over in the forums and I'll try to help 
+you out.</p> 
+<h2>Setting Up</h2> 
+<p>I keep all of the actions in <b>src/actions</b>, so create a new folder 
+there with an appropriate name. Look at the other folders at that location, 
+you'll get the idea.</p> 
+<p>Copy the files from <b>src/actions/example</b> to your new folder and 
+rename them appropriately. The leading underscore on<b>_example.lua</b> is 
+optional; it is a convention I use to indicate which file contains the action 
+description (more on that below). The underscore sorts this file to the top of 
+the list making it easy to locate. Files without the leading underscore contain 
+the actual implementation of the action.</p> 
+<p>I'll continue to use the original file names (like <b>_example.lua</b>) 
+through this explanation. Substitute in your new names.</p> 
+<p>Add your new files (and any others you create later) to the script manifest 
+at<b>src/_manifest.lua</b>.</p> 
+<pre>-- The master list of built-in scripts. Order is important! If you want to
+-- build a new script into Premake, add it to this list. &nbsp; return { -- 
+core files &quot;base/os.lua&quot;, &quot;base/path.lua&quot;, &nbsp; 
+&quot;...and so on...&quot;, &nbsp; -- Clean action 
+&quot;actions/clean/_clean.lua&quot;, &nbsp; -- Your new action goes here 
+&quot;actions/example/_example.lua&quot;, 
+&quot;actions/example/example_solution.lua&quot;, 
+&quot;actions/example/example_project.lua&quot;, }</pre> 
+<p>Order matters a little here: <b>_example.lua</b> defines the namespace for 
+the action and must appear first. See the comments in that file for more 
+information.</p> 
+<h2>Start coding</h2> 
+<p>I've loaded up the example files, particularly the action description, to 
+help you make sense of them. Rather than repeating all of that here, I'll just 
+let you go browse through the files and start plugging in the code for your own 
+actions.</p> 
+<p>If you get stuck, if something isn't clear, or you want to see a 
+demonstration of something that isn't covered by the exampledrop a note in the 
+forums and I'll try to help you out.</p> 
+</body>

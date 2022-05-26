@@ -1,0 +1,400 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Algorithm of the Week: Merge Sort | Web Builder Zone</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>Cloud Zone</li> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Enterprise Integration</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> 
+<li>Ruby Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Python 
+Zone <br>
+<strong>Did you know? DZone has great portals for Python, Cloud, NoSQL
+, andHTML5!</strong> Python Zone is brought to you in partnership with: <br>
+
+<br> <b>Stoimen Popov</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> 
+<li>@stoimenpopov </li> 
+<li> </li> 
+<li> </li> </ul> 
+<p> I've been working on web based projects built mainly with PHP and 
+JavaScript, where I mostly use Zend Framework and jQuery. I am interested in 
+any webpage optimizations techniques - for a faster web! Stoimen is a DZone MVB 
+and is not an employee of DZone and has posted 62 posts at DZone. You can read 
+more from them attheir website. View Full User Profile</p> 
+<h1>Algorithm of the Week: Merge Sort</h1>  03.06.2012  Email <br>
+ Views: 
+13063 <br>
+
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> <em>This content is part of the Python Zone, which is 
+presented to you by DZone andNew Relic. Visit the Python Zone for news, tips, 
+and tutorials on the Python programming language.&nbsp; New Relic provides the 
+resources and best practices to help you monitor these applications. </em> 
+<h3>Recommended Links</h3> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<p>Like this piece? Share it with your friends:</p> | More <br>
+<br>
+
+<p>Basically sorting algorithms can be divided into two main groups: those 
+based on comparisons and those that are not. I already posted about some of the 
+algorithms of the first group. Insertion sort, bubble sort and Shell sort are 
+based on the comparison model. The problem with these three algorithms is that 
+their complexity is O(n2) so they are very slow.</p> 
+<p>So is it possible to sort a list of items by comparing their items faster 
+than O(n2)? The answer is yes and here&rsquo;s how we can do it.</p> 
+<p>The nature of those three algorithms mentioned above is that we almost 
+compared each two items from initial list.<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+This, 
+of course, is not the best approach and we don&rsquo;t need to do that. Instead 
+we can try to divide the list into smaller lists and then sort them. After 
+sorting the smaller lists, which is supposed to be easier than sorting the 
+entire initial list, we can try to merge the result into one sorted list. This 
+technique is typically known as &ldquo;divide and conquer&rdquo;.</p> 
+<p>Normally if a problem is too difficult to solve, we can try to break it 
+apart into smaller sub-sets of this problem and try to solve them. Then somehow 
+we can merge the results of the solved problems.<br>
+<br>
+<br>
+</p> 
+<h2>Overview</h2> 
+<p>Merge sort is a comparison model sorting algorithm based on the 
+&ldquo;divide and conquer&rdquo; principle. So far so good, so let&rsquo;s say 
+we have a very large list of data, which we want to sort. Obviously it will be 
+better if we divide the list into two sub-lists with equal length and then sort 
+them. If they remain too large, we can continue breaking them down until we get 
+to something very easy to sort as shown on the diagram bellow.<br>
+<br>
+<br>
+
+</p> 
+<p>The thing is that in some step of the algorithm we have two sorted lists 
+and the tricky part is to merge them. However this is not so difficult.<br>
+ We 
+can start comparing the first items of the lists and than we can pop the 
+smaller of them both and put it into a new list containing the merged (sorted) 
+array.</p> 
+<h2>Implementation</h2> 
+<p>The good news is that this algorithm is fast, but not too difficult to 
+implement and that sounds quite good from a developer&rsquo;s point of view. 
+Here&rsquo;s the implementation in PHP. Note that every algorithm that follows 
+the divide and conquer principles can be easily implemented in a recursive 
+solution. However recursion can be bitter so you can go for a iterative 
+solution. Typically recursion is &ldquo;replaced&rdquo; by additional memory 
+space in iterative solutions. Here&rsquo;s a recursive version of merge sort.
+</p> 
+<pre>$input = array(6, 5, 3, 1, 8, 7, 2, 4); function merge_sort($arr) { if 
+(count($arr) &lt;= 1) { return $arr; } $left = array_slice($arr, 0, 
+(int)(count($arr)/2)); $right = array_slice($arr, (int)(count($arr)/2)); $left 
+= merge_sort($left); $right = merge_sort($right); $output = merge($left, 
+$right); return $output; } function merge($left, $right) { $result = array(); 
+while (count($left) &gt; 0 &amp;&amp; count($right) &gt; 0) { if ($left[0] 
+&lt;= $right[0]) { array_push($result, array_shift($left)); } else { 
+array_push($result, array_shift($right)); } } array_splice($result, 
+count($result), 0, $left); array_splice($result, count($result), 0, $right); 
+return $result; } // 1, 2, 3, 4, 5, 6, 7, 8 $output = merge_sort($input);</pre> 
+<h2><br>
+Complexity</h2> 
+<p>It&rsquo;s great that the complexity of merge sort is O(n*log(n)) even in 
+the worst case! Note that even quicksort&rsquo;s complexity can be O(n2) in the 
+worst case. So we can be sure that merge sort is very stable no matter the 
+input.<br>
+<br>
+<br>
+<br>
+</p> 
+<h2>Two reasons why merge sort is useful</h2> 
+<h3><br>
+1. Fast no matter the input</h3> 
+<p>Merge sort is a great sorting algorithm mainly because it&rsquo;s very fast 
+and stable. It&rsquo;s complexity is the same even in the worst case and it is 
+O(n*log(n)). Note that even quicksort&rsquo;s complexity is O(n2) in the worst 
+case, which for n = 20 is about 4.6 times slower!<br>
+<br>
+<br>
+</p> 
+<h3>2. Easy implementation</h3> 
+<p>Another cool reason is that merge sort is easy to implement. Indeed most 
+developers consider something fast to be difficult to implement, but 
+that&rsquo;s not the case of merge sort.</p> 
+<h2>Three reasons why merge sort is not useful<br>
+<br>
+</h2> 
+<h3>1. Slower than non-comparison based algorithms</h3> 
+<p>Merge sort is however based on the comparison model and as such can be 
+slower than algorithms not based on comparisons that can sort data in linear 
+time. Of course, this depends on the input data, so we must be careful of the 
+input.</p> 
+<h3>2. Difficult to implement for beginners</h3> 
+<p>Although I don&rsquo;t think this can be the main reason why not to use 
+merge sort some people say that it can be difficult to implement for beginners, 
+especially the merge part of the algorithm.</p> 
+<h3>3. Slower than insertion and bubble sort for nearly sorted input</h3> 
+<p>Again it is very important to know the input data. Indeed if the input is 
+nearly sorted the insertion sort or bubble sort can be faster. Note that in the 
+best case insertion and bubble sort complexity is O(n), while merge 
+sort&rsquo;s best case is O(n*log(n)).</p> 
+<p>As a conclusion I can say that merge sort is practically one of the best 
+sorting algorithms because it&rsquo;s easy to implement and fast, so it must be 
+considered by every developer!<br>
+<br>
+</p>  Tags: 
+<ul> 
+<li>algorithm</li> 
+<li>Python</li> 
+<li>PHP</li> </ul> Published at DZone with permission of Stoimen Popov, author 
+and DZone MVB (source). <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> 
+Python is a fast, powerful, dynamic, and versatile programming language that is 
+being used in a variety ofapplication domains. It has flourished as a 
+beginner-friendly language that is penetrating more and more industries. The
+Python Zoneis a community that features a diverse collection of news, 
+tutorials, advice, and opinions about Python and Django. The Python Zone is 
+sponsored byNew Relic, the all-in-one web application performance tool that 
+lets yousee performance from the end user experience, through servers, and down 
+to the line of application code.<br>
+
+<h2>Comments</h2> <br>
+
+<h3>Chaker Nakhli replied on Wed, 2012/03/07 - 6:43am</h3> 
+<p>Hello,</p> 
+<p>&nbsp;In this article you only present a recursive version of the merge 
+sort algorithm. An iterative approach is presented here:&nbsp;
+http://www.javageneration.com/?p=389. It is written in c# but it can be easily 
+converted to Java or any other language.</p> 
+<p>&nbsp;Cheers.&nbsp;</p> 
+<ul> 
+<li>Login or register to post comments</li> </ul> <br>
+
+<h3>Chris Smith replied on Wed, 2012/03/07 - 2:51pm</h3> 
+<p>Chaker,</p> 
+<p>Thanks for the information.&nbsp; I have republished your linked post here: 
+Recursive and Interative Merge Sort Implementations.</p> 
+<p>Thanks again! </p> 
+<ul> 
+<li>Login or register to post comments</li> </ul> 
+<h2>Comment viewing options</h2> Flat list - collapsedFlat list - expanded
+Threaded list - collapsedThreaded list - expanded <br>
+Date - newest firstDate 
+- oldest first <br>
+10 comments per page30 comments per page50 comments per page
+70 comments per page90 comments per page150 comments per page200 comments per 
+page250 comments per page300 comments per page <br>
+<br>
+ Select your preferred 
+way to display the comments and click &quot;Save settings&quot; to activate 
+your changes. 
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Links</h3> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> <br>
+<br>
+
+<h2>Spotlight Features</h2> 
+<h2>HTML5's Basic Design Principles</h2> 
+<h2>DNS for Developers &ndash; Now There&rsquo;s No Excuse Not To Know</h2> 
+<h2>ASP.NET Web API and Razor To Go Fully Open Source</h2> 
+<h2>Using &quot;Natural&quot;: A NLP Module for node.js</h2> 
+<ul> 
+<h2>Popular at DZone</h2> 
+<li>1:Transforming Elements in 3D Using CSS3</li> 
+<li>2:Javascript-off Unfriendly, And Proud About It</li> 
+<li>3:OO JS in 15 mins or Less</li> 
+<li>4:Toastr - A jQuery Plugin For Gnome/Growl Type Non-Blocking Notifications 
+- Functionn</li> 
+<li>5:Douglas Crockford - I removed comments from JSON because&hellip;</li> 
+<li>6:Simple JavaScript Notifications with toastr</li> 
+<li>7:The Mobile + Web Developer Conference, San Francisco</li> See more 
+popular at DZone <br>
+Subscribe to the RSS feed </ul> Around the DZone Network 
+ARCHITECTS <br>
+<br>
+MapReduce Star Trek Fan Fiction <br>
+WEB BUILDER <br>
+<br>
+
+3 Breakthrough Ways to Visualize HTML5 <br>
+JAVALOBBY <br>
+<br>
+Challenging the 
+Next Wave of System Engineers <br>
+JAVALOBBY <br>
+<br>
+Spring Integration - 
+Payload Storage via Header En... <br>
+MOBILE <br>
+<br>
+EvenTiles from Start to 
+Finish: Push Notifications <br>
+.NET <br>
+<br>
+Want To Improve WCF? Vote. <br>
+
+You Might Also Like 
+<ul> 
+<li>Why Developers Keep Making Bad Technology Choices</li> 
+<li>All Java Architects: Read This</li> 
+<li>Quotes Every Software Engineer Should Know</li> 
+<li>When to use JavaFX 2 instead of HTML5 for a Rich Internet Application 
+(RIA)?</li> 
+<li>6 Command Line Tools for Linux Performance Monitoring </li> 
+<li>10 Tips to Avoid Mental Burnout</li> 
+<li>Algorithm of the Week: How to Determine the Day of the Week</li> 
+<li>10 Best Eclipse Shortcuts</li> 
+<li>Node.js and MongoDB, A Beginner&rsquo;s Approach</li> 
+<li>GoogleDrive, Dropbox, Skydrive, etc.: Counting the Cost of Cloud Backup
+</li> 
+<li>100x better approach to software?</li> 
+<li>Apache TomEE: A Tomcat for the Cloud</li> 
+<li>Where Have all the Good Databases Gone?</li> 
+<li>Must-have Eclipse plugin: AnyEdit Tools</li> 
+<li>Guava Splitter vs StringUtils </li> </ul> Popular on Web Builder Zone 
+<ul> 
+<li>CSS Message Boxes for different message types</li> 
+<li>Image Cross Fade Transition with jQuery</li> 
+<li>Understanding the GWT compiler</li> 
+<li>Apple Product Gallery with jQuery Slider Gallery</li> 
+<li>Gmail Client Side Architecture Part 1</li> 
+<li>9 Signs You Shouldn't Hire THAT Web Guy</li> 
+<li>Design patterns and GWT</li> 
+<li>reForm: CSS Form Design Template for Any Layout</li> </ul> Latest Articles 
+<ul> 
+<li>Monitoring Stats From Memcached or Membase (Python, RRDTool) </li> 
+<li>YouTrack 3.3 With Advanced Full-Text Search Is Out!</li> 
+<li>Oracle v. Google - Updates While We Wait for the First Verdict</li> 
+<li>Google BigQuery: An Append-only Cloud SQL Service (for your 'Big Data')
+</li> 
+<li>Metro UI Theme for JQuery Mobile Unveiled</li> 
+<li>Some Thoughts On Service Oriented Architecture (Part 2) </li> 
+<li>Automated Build Systems with Puppet &amp; Cobbler</li> 
+<li>Why Eclipse WTP Doesn't Publish Libraries When Using m2e</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>Getting Started with Cloud Computing</h3> 
+<p>If you are looking for more information on Cloud Computing then this DZone 
+Refcard is for you. Get an in depth comparison on three different Cloud...</p> 
+<br> 
+<h3>BIRT 3.7 Report Design: Eclipse-Based BI and Big Data Visualization</h3>  
+Eclipse Business Intelligence and Reporting Tools (BIRT) is an open source, 
+Eclipse-based reporting system that integrates with your Java/J2EE... <br>
+
+<h3>Google App Engine for Java</h3> 
+<p>This DZone Refcard provides an in depth introduction to the cloud computing 
+technology, Google App Engine. Covering everything from the basics...</p> <br>
+
+<br> <br>
+<br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

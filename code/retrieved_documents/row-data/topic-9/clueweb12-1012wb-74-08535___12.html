@@ -1,0 +1,265 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Windows for Linux Users</title>
+<body>
+
+<h1>Windows for Linux Users</h1> David <br>
+Ilenia <br>
+Helen <br>
+Articles 
+<br> Photos <br>
+Programming <br>
+Padova&nbsp;Chronicles <br>
+
+<p> <b>David N. Welton</b><br>
+davidw@dedasys.com <br>
+ 2007-8-1 </p> 
+<p> This article was originally a wiki, at win4.leenooks.com. After many 
+months of very few updates, and a lot of spam, I decided to commit the 
+accumulated wisdom to an article. If you have any corrections or additions, 
+please email them to me.</p> 
+<p> <strong> A big thanks to everyone who contributed to the wiki over the 
+past couple of years!</strong> </p> 
+<h2>Introduction</h2> 
+<p> I have been fortunate to have used Linux exclusively for the past 10 years 
+or so, very rarely utilizing Microsoft Windows. Several years ago, I acquired 
+several clients that absolutely needed work done on the windows platform, so I 
+had to bite the bullet and dive in. It has mostly been as unpleasant as I 
+imagined, and I've had to struggle a lot, starting from the installation 
+onwards.</p> 
+<p> I created the original wiki in order to share some of the things I 
+learned. It is meant as a guide to windows for Linux users who are struggling 
+like I was to be productive with an unfamiliar system. Given the relative 
+popularity of windows and Linux, I don't expect that there are that many of us, 
+but perhaps that's changing these days.</p> 
+<h2>Installation</h2> 
+<p> I found the Windows XP installation process to be slower and far less 
+flexible than a recent Ubuntu install. Frankly, the Ubuntu text based installer 
+is visually better too, in that it gives me an idea of what's going on. There 
+are several ways of approaching the installation problem, depending on what you 
+need to accomplish:</p> 
+<h3>Windows on a second hard drive</h3> 
+<p> This is what I did, and it was difficult. Most advice on the web seems to 
+indicate that you are better off installing windows first, on the 
+primary/master hard drive, and then installing Linux elsewhere, because the 
+windows install is not terribly intelligent and doesn't give you the 
+flexibility to move things around as you see fit.</p> 
+<p> Given that I already had Linux installed, and wanted to put Windows on the 
+slave HD, I managed to get things working by</p> 
+<ol> 
+<li>Unplugging the Linux HD.</li> 
+<li>Installing Windows on the secondary HD.</li> 
+<li>Adding the following magic to grub:</li> </ol> 
+<pre> title Windows XP map (hd0) (hd1) map (hd1) (hd0) root (hd1,0) makeactive 
+chainloader +1</pre> 
+<p> Which makes things work ok. Under Linux, I can see the windows partion as 
+<code>/dev/hdb1/</code></p> 
+<h3>VMware</h3> 
+<p> This is probably the best approach, because you can very quickly swap in 
+and out of Windows. Drawbacks: you need a lot of memory to make it work, and 
+VMware isn't cheap. Since I didn't opt for this route, I don't have any 
+instructions, but I'm sure that plenty of people have accomplished this without 
+problems.</p> 
+<h3>Qemu</h3> 
+<p> This is an alternative to VMWare and is getting to be quite advanced if 
+you add the 'accelerator' download to it it's very fast.</p> 
+<h3>Linux On Windows</h3> 
+<p> This might be a suitable alternative in some cases - if you're stuck with 
+windows and want to use Linux from time to time, for instance. I don't have 
+much information beyond the idea of using VMWare on Windows to host Linux.</p> 
+<h3>Windows on a separate machine</h3> 
+<p> Dan O'Huiginn writes to suggest running Windows on a separate machine and 
+connecting to it viardesktop. That way you don't have to worry about the memory 
+and CPU requirements for having two OS's running at the same time, but can 
+still use both at once. The downside is that latency can be a bit higher, 
+meaning it's not a good way to watch movies, for instance. If you don't have a 
+spare computer, you could even use a service likeFlexiscale on a pay-as-you-go 
+basis, if you don't need Windows that often.</p> 
+<h2>Tools</h2> 
+<p> If you're a programmer like I am, you spend all your time working through 
+your tools - editors, compilers, scripts, and things of that ilk. What's out 
+there on windows?</p> 
+<h3>cygwin</h3> 
+<p> The first thing you need to get, of course, is cygwin This includes tons 
+of useful ports of Unix software to windows including bash (no cmd.exe for me, 
+thanks!), ssh, grep, ps, and all your favorites.</p> 
+<h3>GnuWin32</h3> GnuWin32 provides Win32 (MS Windows 95 / 98 / ME / NT / 2000 
+/ XP) ports of tools with a GNU or similar open source license. Useful if you 
+use Windows command prompt and want a minimal and non-invasive way to have 
+find, grep, sed, tail available or just to stop typing &quot;ls&quot; and get 
+&quot;command not found&quot; error messages.
+<h3>UnxUtils</h3> 
+<p>UnxUtils is another port of common tools. These are all native binaries, 
+with no dependence upon any of the cygwin DLL's, so they are a nice 
+alternative. The collection also includes some additional utilities for 
+clipboard access.</p> 
+<h3>xemacs</h3> 
+<p> Ok, ok, so I'm an emacs junkie! I normally use GNU Emacs, but Xemacs seems 
+much faster to get working on windows in that it has a windows installer. 
+Compare the instructionshere for installing GNU Emacs, with the simple 'Install 
+Now!' athttp://www.xemacs.org/Download/index.html. </p> 
+<h3>vi</h3> 
+<p> Those of you who prefer hitting the esc key all the time instead of 
+ctrl-alt-meta-shit can downloadCream and install. This will give you Vim plus a 
+bunch of plugins. Since Cream uses Windows-esque keybindings by default, you 
+can share it with cow-orkers who can't use a real editor, while you can either 
+change the default keybindings (it's even a menu option) back to vi, or simply 
+run the included Vim without the Cream plugins. Best of both worlds.</p> 
+<p> Another alternative is to install just VIM for Windows, which is just your 
+regular VIM (with no Windows flavor) at it's latest version (Windows Cream 
+usually lags a bit behind the latest VIM version).</p> 
+<h3>Eclipse</h3> 
+<p> Eclipse is an IDE platform. Since it also runs on Linux you may have heard 
+of it. It has good native support for Java, C and C++ development and CVS, and 
+with free plugins you also get Python, PHP, and Subversion, so in reality it 
+does a lot more than Java these days. Of course, it also takes something like a 
+gig of memory to get started, so be forewarned...</p> 
+<h3>Perl Shell</h3> 
+<p> The Perl Shell (psh) combines aspects of bash and other shells with the 
+power of Perl scripting. It aspires to be your primary login shell. This is a 
+production quality shell, and there is a native windows port.</p> 
+<h3>Subversion</h3> 
+<p> Every developer needs revision control. Subversion runs natively and you 
+can get plugins forWindows Explorer, Eclipse, and Visual Studio. </p> 
+<h3>SSH client</h3> 
+<p>PuTTY is a free implementation of Telnet and SSH for Win32 and Unix 
+platforms, along with an xterm terminal emulator. It provides also command line 
+file transfer clients and ssh-agent.</p> 
+<h3>Network Analyzer</h3> 
+<p> If you're writing network applications, or need to support them, a network 
+analysis tool can be very helpful in quickly getting to the root of problems.
+Ethereal is such a tool and is licensed under the GPL. It can read capture 
+files from many other analysis tools, making it a one-stop-tool for commercial 
+network helpdesks. Also of note is the 'Follow TCP Stream' option to 
+reconstruct a session starting with only a single packet from the stream. 
+Ethereal also (optionally) performs colour highlighting of packets. By default, 
+it will do this for TCP packets based on state. Ethereal does seem to have more 
+than its fair share of security vulnerabilities, so take care to keep it 
+up-to-date.</p> 
+<h2>Environment</h2> 
+<p> As someone who has very specific ideas about what my window manager and 
+environment should be like under Linux, Windows is a painful experience. This 
+page discusses tools and tips to make life a little bit easier and more 
+productive.</p> 
+<h3>Focus follows mouse and X11 Cut'n'Paste</h3> 
+<p> I am used to having the focus follow the mouse, instead of clicking hither 
+and yon to activate different windows. I also vastly prefer the X11 style mouse 
+left button/ middle button combination for copy and paste operations. I found 
+this program to be quite helpful: &quot;True X-Mouse Gizmo&quot;:
+http://fy.chalmers.se/~appro/nt/TXMouse/ </p> 
+<h3>Virtual Desktop Manager</h3> 
+<p> I like having multiple desktops. Microsoft themselves provide a virtual 
+desktop manager here:
+http://www.microsoft.com/windowsxp/downloads/powertoys/xppowertoys.mspx 
+although I would like it even more if I could use alt + arrow keys to navigate 
+between the different desktops, like I do in Linux. An alternative to 
+Microsoft's Virtual Desktop Manager isVirtuaWin. VirtuaWin is licensed under 
+the GPL and is modular. Recommended modules include 'VWAssigner', 'Win32WM' 
+(which allows X-style ALT+mouse moving/resizing of windows) and WinList.</p> 
+<h3>X</h3> 
+<p> In cygwin, if you've installed the X portion of the system, you can simply 
+run<code>startx</code> and get X programs like xterm (which is much nicer than 
+the clunky windows terminal screens).</p> 
+<h3>Tab completion at command prompt</h3> 
+<p> Tab completion is enabled by default in Windows XP but if you are running 
+an older release you can enable it as explained in thisarticle. </p> 
+<h3>Emacs Keys for input fields,... in all windows programs</h3> 
+<p> XKeymacs allows you to enable Emacs Keys in all Windows Applications. It 
+is configurable on a per-application per-key basis so if one key makes problems 
+in that application you can disable it and if the whole program doesn't work 
+right with a specific app you can still use it for all the others you are 
+running.</p> 
+<h3>Misc. registry patches</h3> 
+<ul> 
+<li>Maps Caps Lock to left ctrl:<br>
+
+<pre> [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlKeyboard Layout] 
+&quot;Scancode 
+Map&quot;=hex:00,00,00,00,00,00,00,00,02,00,00,00,1d,00,3a,00,00,00,00,00</pre> 
+</li> 
+<li>Use google as Internet explorer search assistant:<br>
+
+<pre> REGEDIT4 [HKEY_CURRENT_USERSoftwareMicrosoftInternet ExplorerMain] 
+&quot;Use Search Asst&quot;=&quot;no&quot; &quot;Search 
+Page&quot;=&quot;http://www.google.com&quot; &quot;Search 
+Bar&quot;=&quot;http://www.google.com/ie&quot; 
+[HKEY_CURRENT_USERSoftwareMicrosoftInternet ExplorerSearchURL] 
+&quot;&quot;=&quot;http://www.google.com/keyword/%s&quot; 
+&quot;provider&quot;=&quot;gogl&quot; 
+[HKEY_LOCAL_MACHINESOFTWAREMicrosoftInternet ExplorerSearch] 
+&quot;SearchAssistant&quot;=&quot;http://www.google.com/ie&quot;</pre> save as 
+filename.reg and double click on it. Works for 2000, not sure about others. 
+Will need to logout/in to take effect.</li> 
+<li>Run dos command prompt from right-click context menu:<br>
+
+<pre> [HKEY_CLASSES_ROOT\Directory\shell\cmd] @=&quot;Open Command Window 
+Here&quot; [HKEY_CLASSES_ROOT\Directory\shell\cmd\command] @=&quot;cmd.exe /k 
+\&quot;cd %L\&quot;&quot; [HKEY_CLASSES_ROOT\Drive\shell\cmd] @=&quot;Open 
+Command Window Here&quot; [HKEY_CLASSES_ROOT\Drive\shell\cmd\command] 
+@=&quot;cmd.exe /k \&quot;cd %L\&quot;&quot;</pre> (Tip from Frederik Juul 
+Christiani)</li> </ul> 
+<h3>Shell Replacements</h3> 
+<p> If you find explorer.exe to be a UI disaster, or just plain inconvenient, 
+you may want to try a replacement shell such as LiteStep,DarkStep, or some 
+other. This can be a good way to obviate the brain-dead window manager/desktop 
+environment that is provided with windows. A good place to start isShellfront, 
+orDMOZ. Be forewarned that some shell replacements (just like some X11 WMs) are 
+not very mature. Litestep is mature, and has an installer.</p> 
+<p> In addition windowblindshttp://www.windowblinds.net/ (although not linux 
+like at all) can do similar things with the windows shell to make it much more 
+useful.</p> 
+<h2>Programming</h2> 
+<p> In which we discuss some of the first things a Linux programmer might run 
+into when attempting to code on Windows, as well as cross-platform tools and 
+techniques that will let you write code that basically works on more than one 
+system, modulo the bit of tweaking that's always necessary.</p> 
+<p>Most of the major scripting languages (Ruby, Tcl, Python, Perl, and so on) 
+work pretty well on Windows, so using one of those is often a good idea.</p> 
+<h3>GUI Toolkits</h3> 
+<p> One area that has always been problematic is the GUI Toolkit. Make 
+something very cross-platform, and users are still likely to make applications 
+that don't look quite right anywhere. On the other hand, that's probably better 
+than being tied to one platform with no possibility of porting.</p> 
+<ul> 
+<li>wxWidgets is a C++ toolkit that seems to be gaining in popularity.</li> 
+<li> Tk is a cross platform toolkit that is closely associated with the Tcl 
+programming language. It is, however, available to other languages. Many view 
+it as having an antiquated look and feel, however, work is well underway to 
+modernize it, thanks to theTile project. </li> 
+<li>Qt is a C++ toolkit released by TrollTech, which has seen widespread 
+success in the KDE environment. Licensing issues may come into play for 
+commercial use, however.</li> 
+<li>The GTK+ toolkit has also been ported to Windows.</li> </ul> 
+<h3>Security</h3> 
+<p> We've all heard the horror stories about Windows security. Here are some 
+tips for improving it.</p> 
+<p>First off, we start with a guide dedicated to windows security: Secure your 
+Windows XP/2000 system. </p> 
+<p> And continue with some other suggestions, contributed by the wiki's users: 
+</p> 
+<p> One annoying problem is the huge number of malware (dialers, trojan 
+horses, bots ...) easily installed in virtue of os bugs. I found a little 
+utilityAutoruns (freeware but not free software) very useful to discover 
+register keys added by malware, making it easier to manually remove them.</p> 
+<h3>Windows Registry</h3> 
+<p> The following locations are favorites of malware and viruses - after 
+adding themselves here, they are automatically run.</p> 
+<ul> 
+<li>HKLM/Software/Microsoft/Windows/CurrentVersion/Run</li> 
+<li>HKLM/Software/Microsoft/Windows/CurrentVersion/RunServices</li> 
+<li>HKLM/Software/Microsoft/Windows/CurrentVersion/Explorer/Browser Helper 
+Objects</li> </ul> 
+<p> The Browser Helper Objects are add-ons to Internet Explorer. Some are 
+legitimate, like Flash, Spybot, Java, or Acrobat. Some are completely bogus 
+malware. In that case, one finds funny hexademical folders in the registry 
+'directory'. Each of these pertains to something called a GUID, a Globally 
+Unique Identifier. In this case, the GUID refers to a DLL add-on, and DLLs 
+contain class objects, so that's why we call this particular kind of GUID a 
+CLASSID. To find out which CLASSID goes to what add-on in IE, you have to look 
+in:<code>HKCR/CLSID</code> </p> 
+<h2>Other</h2> 
+<p>Other helpful programs that don't really fit in any category:</p> 
+<h3>Explore2fs</h3> 
+<p> Explore2fs is a file-manager that lets you browse ext2 and ext3 
+filesystems from within Windows.</p>  Copyright &copy; 2000-2011 David N. Welton
+</body>

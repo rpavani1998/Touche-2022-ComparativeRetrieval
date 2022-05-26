@@ -1,0 +1,252 @@
+at boot time, a special instance of the java vm is launched, called the  zygote.
+jni bridging one of the difficulties in porting gecko to android is that the android  platform is built around java, whereas gecko is very much all native  c/c++.
+we still have some ways to go, as there are issues in shader security and  portability, not to mention figuring out what to do on platforms where opengl  is not available.
+keeping as much of add-on code in javascript reduces the impact of internal changes to firefox, and allows for much easier maintainability.
+webgl introduces two interesting concepts that i think have application outside of webgl, thecanvasarraybuffer and canvasarray webglarraybuffer and webglarray.
+we’ll have some simple demos linked  for you soon, both here and on mark’s blog.
+because a number of internal interfaces changed between the  two versions, this leads to crashes or other problems when these components are  used.
+the only  api that the ndk exposes for graphics is opengl es.
+the service then gives it the name of its activity class and other info, which is then loaded, and a message is enqeued on the main thread to instantiate the new activity and send it an oncreate() message.
+there are two portions to the solution: the webglarraybuffer and a set of typed webglarray views.
+earlier this year, westarted a standardization effort  within thekhronos group which oversees opengl, and have made very rapid  progress.
+for example, ea/maxis recently added  collada export of creature designs to their popular gamespore, and they have a  sporepedia where players can see others’ creations.
+we still have some ways to go, as there are issues in shader security and portability, not to mention figuring out what to do on platforms where opengl is not available.
+but, that’s not fully how a new android activity is started.
+this is fine, but in some cases you may want to access skia directly from native code.
+of course, the above is cumbersome to write, so there are shorthands that will allocate a webglarraybuffer, and optionally fill it with data from a js array: var f1 =
+even  more complicated is the need to manage multiple types within a single memory  region; for performance, it’s often preferable to allocate one chunk of  video memory, and place coordinates, colors, and other types in there,  replacing them as necessary.
+all use  webglarraybuffers/webglarrays for pulling data in and out.
+it turns out, there are a couple of pieces here.
+for extra complex use cases, webglarrays can reference overlapping regions  of a webglarraybuffer: var buf = new webglarraybuffer(192); // same value from above var points  = new webglfloatarray(buf); var colors = new webglunsignedbytearray(buf);  points[0] = 12.3; points[1] = 23.4; points[2] = 34.5; colors[12] = 0xff;  colors[13] =
+i’m looking forward to seeing what people do with webgl, and how it can be useful on the web right now.
+colors[12] = 0xff; colors[13] = 0xaa; colors[14] = 0x00; colors[15] = 0x00;
+this is fine, but in  some cases you may want to access skia directly from native code.
+one of the difficulties in porting gecko to android is that the android platform is built around java, whereas gecko is very much all native c/c++.
+new webglunsignedbytearray(buf,  12*3*4, 12*4); this creates a buffer of 192 bytes, which is enough room for 12  3-coordinate float points followed by 12 rgba colors, with each component  represented as an unsigned byte.
+if you’re not familiar with webgl, it’s the evolution of work that mozilla starteda few years ago with experiments called canvas 3d — essentially a way of accessing opengl from within the browser, through the html5 canvas tag.
+we’ll have some simple demos linked for you soon, both here and on mark’s blog.
+then, a new process is started with the  main from activitythread.
+what’s worse, in a binary component, the line between supported/frozen and completely unfrozen internal gecko interfaces is blurred, making it easy to create a binary component that works well against one very specific version of firefox (potentially as specific as a minor security release), but causes serious problems with any other version.
+new webglarraybuffer(3*4); var floats =
+this is all subject to change, of course, though this is what the current gecko (and others’) implementation looks like.
+last night, i checked in some more work from mark steele (who’s focusing on the firefox webgl implementation), and along with that, enabled webgl in trunk nightlies.
+if offset is not given, it’s assumed to  be zero.
+this is possible, but requires version-specific code to accomplish.
+we’re working on improving theuser experience when third-party addons are installed in system-wide locations.
+the offset must always be a multiple of the element size (to  preserve alignment), and the buffer must obviously be large enough for the  given offset and length.
+to launch an app using the zygote process, a command-line tool called “dvz” can be used.
+the only supported way of adding functionality to firefox (whether a binary component is required or not) isthrough an add-on.
+there are two portions to the solution: the webglarraybuffer and a set of  typed webglarray views.
+edit 12/2: these types have changed names; they now have a webgl  prefix instead of a canvas prefix.
+with webgl, they could be fully 3d, even animated.
+then, flipwebgl.software_rendering to true, and you should be good to go.
+it’s a bit of a roundabout process.
+in particular, webgl often wants to deal with arrays  of a specific type — an array of integers, an array of floats, etc.
+webgl in firefox nightly builds 23 comments published by vladimir  september 18th, 2009 incanvas 3d, firefox, mozilla last night, i checked in some more work from mark steele (who’s  focusing on the firefox webgl implementation), and along with that, enabled  webgl in trunk nightlies.
+so, to be a  full android app, you have to go through this normal startup process.
+if the data is an entirely  wrong type (e.g. trying to store a string or an object), gecko currently throws  an exception, but this might become a silent 0 or similar in the future.
+in order to simplify future integration with native code, firefox 3.6 will  include support forjsctypes for add-on developers.
+i’m going to describe what i’ve discovered here, in case it’s useful for someone else; i haven’t been able to find much of this information, largely because i don’t think many people need to know any of this.
+you’ll note that this use is significantly more complex, and requires the user to keep track of the current position in terms of whatever element they’re modifying (thus setting array elements 12, 13, 14, and 15 for the color).
+so, vbos, texture data (if not loaded from a dom image element or from a canvasimagedata object), index array, etc.
+over the weekend i’ve put together this example, which uses webgl to  render an exported spore creature, and let the user rotate the 3d model to view  it from different angles.
+this approach is greatly preferred over writing binary components.
+new  webglfloatarray(buf); floats[0] = 12.3; floats[1] = 23.4; floats[2]
+this is interesting because it means that apps are not launched directly,  but instead somewhat indirectly through specializing a generic  “activity” process for a specific activity.
+new webglfloatarray(3); var f2 = new webglfloatarray([12.3,  23.4, 34.5]); the size of each webglarraybuffer is fixed; there is currently no way to  change its size once allocated.
+right now,  those previews are just as images.
+to launch a new activity, the activitymanagerservice is notified with an activity start request, including things like the name/class/etc. of the activity.
+firefox, through gecko, has always had a flexible component-based  architecture.
+the offset must always be a multiple of the element size (to preserve alignment), and the buffer must obviously be large enough for the given offset and length.
+once the initial work is done, the process listens to a socket  and waits for requests.
+a webglarraybuffer represents chunk of data.
+however, we haven’t provided great guidance about the  appropriate way to do so.
+it sends its arguments to the zygote, which will fork and then start executing the main method in a given class.
+firefox, through gecko, has always had a flexible component-based architecture.
+also, critically, add-ons include information indicating their compatibility with specific versions of firefox.
+this causes a number of problems, not the least of which is the removal of the user control that add-ons provide.
+also, critically, floating point data can be stored as 32-bit single-precision floats instead of 64-bit doubles, taking up half as much space when the underlying graphics system can’t support 64-bit values.
+however, there is a fairly good native bridge layer, jni, which is fairly heavily optimized by dalvik.
+if you’d like to experiment with webgl with a trunk nightly build (starting from friday, september 18th), all you have to do is flip a pref: load about:config, search for “webgl“, and double-click “webgl.enabled_for_all_sites” to change the value fromfalse to true.
+but progress is being quickly made.
+since my post on friday, we landed a few fixes to improve our webgl  implementation and to fix a couple of bugs we discovered on friday.
+they’re not updated yet, but they should be in the next day or  two.
+binary components have full access to the application and os, and so can impact stability, security, and performance.
+to use it, downloadwebgl-mesa-751.zip and extract it somewhere on  your computer.
+to  actually manipulate the data inside a webglarraybuffer, a webglarray has to be  created that references it.
+for extra complex use cases, webglarrays can reference overlapping regions of a webglarraybuffer: var buf = new webglarraybuffer(192); // same value from above var points = new webglfloatarray(buf); var colors = new webglunsignedbytearray(buf); points[0] = 12.3; points[1] = 23.4; points[2] = 34.5;
+also, critically, add-ons include information indicating their  compatibility with specific versions of firefox.
+right now, those previews are just as images.
+all of these implementations are going to have  some interoperability issues for the next little while, as the spec is still in  flux and we’re tracking it at different rates, but will hopefully start  to stabilize over the next few months.
+for example, a  third-party component that would like to perform some action implemented in  native code when an event is received can write the integration pieces in  javascript (capturing the event and so on), and use jsctypes to make function  calls to regular non-xpcom component native code.
+to launch an app using the zygote process, a command-line tool called  “dvz” can be used.
+webgl samples/demos and other bits 5 comments published by  vladimir september 21st, 2009 in canvas 3d, firefox, mozilla
+this has many  advantages for users: they can see that additional functionality is installed  in the add-ons manager, and from there they can easily enable or disable it, as  well as check for and receive updates.
+i’ve been looking to understand the android os better, so that i can answer some questions and create plans for getting gecko/firefox running on android-based devices.
+0xaa; colors[14] = 0x00; colors[15] = 0x00; in the buffer, this writes 3 float values followed by 4 byte values.
+it has a single file, osmesa32.dll, that you need to tell  firefox where to find:  open up about:config, and set the preference webgl.osmesalib to the path of osmesa32.dll.
+the web currently fudges around the problem of binary data by passing it around either in strings (because js strings are ucs2, therefore all 8-bit elements are valid, but with a performance and memeory cost), or often encoding as base64 (again going back to strings).
+so, the simplest way to connect these two is to write a shell app in java, which bridges events, messages, paint requests, etc. to the native code for handling.
+all of these implementations are going to have some interoperability issues for the next little while, as the spec is still in flux and we’re tracking it at different rates, but will hopefully start to stabilize over the next few months.
+for example: var buf =
+however, we haven’t provided great guidance about the appropriate way to do so.
+unfortunately, a number of third-party applications are using this approach to  integration, and are currently causing firefox 3.5 users stability  problems.
+unfortunately, a number of third-party applications are using this approach to integration, and are currently causing firefox 3.5 users stability problems.
+any api function that needs an array of data  takes a webglarraybuffer.
+it can be allocated with a size in bytes, but it can’t be accessed in any way.
+one of the first questions i asked was, “how do android apps start?”
+when paired with high-performance javascript, such as what we’ve seen come from both firefox and other browsers, should allow for some exciting fully 3d-enabled web applications.
+if the data is an entirely wrong type (e.g. trying to store a string or an object), gecko currently throws an exception, but this might become a silent 0 or similar in the future.
+if an attempt is made to store data in a webglarray that doesn’t fit  within the right type, a c-style cast is performed.
+if you’d like to experiment with webgl with a trunk nightly build  (starting from friday, september 18th), all you have to do is flip a pref: load  about:config, search for “webgl“, and double-click  “webgl.enabled_for_all_sites” to change the value  fromfalse to true.
+it became clear that pure js arrays are not a useful way of shoveling around lots of 3d data; their very flexibility makes them impractical for performance-critical uses.
+so, the simplest way to connect these  two is to write a shell app in java, which bridges events, messages, paint  requests, etc. to the native code for handling.
+then, a new process is started with the main from activitythread.
+so, to be a full android app, you have to go through this normal startup process.
+this api is overall lacking in developer niceties, since the focus was on  providing the necessary functionality.
+as we’ve seen the popularity of firefox increase, more and more binary components have been written to interface between firefox and other applications.
+this is all subject to change, of course, though this is what the  current gecko (and others’) implementation looks like.
+it’s fairly straightforward, with a few wrinkles.
+for those who want to try it out, you’ll need a recent firefox nightly (one from today, september 21, or newer), and with one preference flipped as described inthis post.
+having this version information allows for safe upgrades, especially when binary components are present.
+i’ll be working to update the very basic “getting started ” demos from the gl es 2 book that i ported to canvas 3d as well, so that  those who are interested in experimenting can have some good basic code to look  at.
+if offset is not given, it’s assumed to be zero.
+but progress is  being quickly made.
+in the buffer, this writes 3 float values followed by 4 byte values.
+over the weekend i’ve put together this example, which uses webgl to render an exported spore creature, and let the user rotate the 3d model to view it from different angles.
+next up, i’ll probably blog about porting issues for large native apps, including library compatibility, bionic, and integrating into a non-ant-based build system.
+the service then gives it the name of its activity class and  other info, which is then loaded, and a message is enqeued on the main thread  to instantiate the new activity and send it an oncreate() message.
+because a number of internal interfaces changed between the two versions, this leads to crashes or other problems when these components are used.
+in particular, creating binary components to interface with the os or with other applications is fairly straightforward, though ultimately dangerous.
+it won’t be fast, but it should be enough for you to get an idea of what’s going on, and to play with some of the demos.
+i’m looking forward to seeing what people do with webgl, and how it can  be useful on the web right now.
+the only api that the ndk exposes for graphics is opengl es.
+you’ll note that this use is significantly more complex, and requires the  user to keep track of the current position in terms of whatever element  they’re modifying (thus setting array elements 12, 13, 14, and 15 for the  color).
+this api is overall lacking in developer niceties, since the focus was on providing the necessary functionality.
+of course, the above is cumbersome to write, so  there are shorthands that will allocate a webglarraybuffer, and optionally fill  it with data from a js array:
+to launch a new activity, the  activitymanagerservice is notified with an activity start request, including  things like the name/class/etc. of the activity.
+for those of you on windows who don’t have an up to date opengl driver, or don’t have the possibility of getting one (e.g. many common intel graphics cards doesn’t have opengl drivers), you can enable software rendering by downloading a windows build of the mesa software opengl implementation.
+you’ll currently have the most luck on macos x machines or windows  machines with up-to-date opengl drivers.
+it can be  allocated with a size in bytes, but it can’t be accessed in any way.
+then, flipwebgl.software_rendering to true, and you  should be good to go.
+starting with firefox 3.6, only well-known components shipped with firefox will be loaded from the application components directory.
+keeping as much of  add-on code in javascript reduces the impact of internal changes to firefox,  and allows for much easier maintainability.
+so, we have these steps, dealing with the zygote process: the zygote process is executed at system boot; it does initialization, and  then runs a select() loop listening to requests the zygote process is sent a message, which includes the start args, which  will include the class name for main launch the zygote process reads connection args in zygoteconnection.runonce the zygote process forks in zygoteconnection.runonce ( zygote.forkandspecialize, native)
+webglarrays also  help manage memory usage — an array of byte color data now takes up  exactly as much memory as needed, instead of getting expanded out to 4 bytes.
+binary components have full access to the application and os,  and so can impact stability, security, and performance.
+(mac os x users shouldn’t need to bother with software rendering, since apple already provides a high quality opengl implementation, and linux users should be ok as long as they have recent opengl drivers installed.)
+this is interesting because it means that apps are not launched directly, but instead somewhat indirectly through specializing a generic “activity” process for a specific activity.
+the arguments to the webglarray constructors  are the offset from the start of the buffer (in bytes), and the length (in  elements).
+currently, third-party applications can drop binary components into the firefox application’s components directory and expect them to be loaded as part of our normal startup.
+you can ship multiple versions of your jni glue layer, optimized for each android version (or even platform), and load the right one during your app startup on the java side.
+in particular, webgl often wants to deal with arrays of a specific type — an array of integers, an array of floats, etc.
+this work might also be backported to the 3.5 branch, but that decision has not been made yet.
+= 34.5; the above chunk of code allocates a 12-byte webglarraybuffer, and then  creates a float-typed view onto the buffer which can then be manipulated  (almost) like a normal array.
+most of this stuff can be  done with the stock android sdk and ndk — except painting.
+if you extracted it to  “c:\temp”, you would put in “c:\temp\osmesa32.dll” in  the pref.
+as a proof of concept of this, i wrote a simple test app.
+this new process then contacts the  activitymanagerservice and asks, essentially, “what app am  i?”.
+they’re not updated yet, but they should be in the next day or two.
+new webglarraybuffer(12*3*4+12*4); var points =
+in addition, by keeping it as bare-bones as it is, it  allows for fast implementation on native hardware via the jits in all the  current-generation js engines.
+many of these components were written for firefox 3.0, and have not been updated for firefox 3.5; a situation that we have no way of detecting because of the lack of versioning information on these “bare” components.
+you can ship  multiple versions of your jni glue layer, optimized for each android version  (or even platform), and load the right one during your app startup on the java  side.
+higher level wrappers can be written in  js to simplify usage.
+along with the firefox implementation, a webgl implementation landed in webkit fairly recently.
+new webglfloatarray(3); var f2 = new webglfloatarray([12.3, 23.4, 34.5]); the size of each webglarraybuffer is fixed; there is currently no way to change its size once allocated.
+if you extracted it to “c:\temp”, you would put in “c:\temp\osmesa32.dll” in the pref.
+there are a number of reasons why this decision was made.
+(if you are a third-party application developer and have questions about integration in firefox, please contact me — i’d be happy to put you in touch with the right people who can answer questions and provide guidance.)
+new webglfloatarray(buf); floats[0]
+edit: new post up, with some samples!
+however, there is a fairly good native bridge layer, jni, which is  fairly heavily optimized by dalvik.
+an example: var buf =
+firefox application directory lockdown 2 comments published by  vladimir october 23rd, 2009 in firefox, mozilla starting with firefox 3.6, only well-known components shipped with firefox  will be loaded from the application components directory.
+most of this stuff can be done with the stock android sdk and ndk — except painting.
+they’re clearly separate processes  while they’re running, but it wasn’t clear how they were  launched.
+since my post on friday, we landed a few fixes to improve our webgl implementation and to fix a couple of bugs we discovered on friday.
+any other  components (both binary and script) will be ignored.
+in particular, creating binary components to interface with  the os or with other applications is fairly straightforward, though ultimately  dangerous.
+higher level wrappers can be written in js to simplify usage.
+a side effect of  this is that i couldn’t find a way to actually register an app with the  activitymanagerservice if it wasn’t launched by it.
+new webglfloatarray(buf, 0, 12*3); var colors =
+in order to simplify future integration with native code, firefox 3.6 will include support forjsctypes for add-on developers.
+earlier this year, westarted a standardization effort within thekhronos group which oversees opengl, and have made very rapid progress.
+this causes a number of problems, not the  least of which is the removal of the user control that add-ons provide.
+all use webglarraybuffers/webglarrays for pulling data in and out.
+any api function that needs an array of data takes a webglarraybuffer.
+it has a single file, osmesa32.dll, that you need to tell firefox where to find: open up about:config, and set the preference webgl.osmesalib to the path of osmesa32.dll.
+(if you are a third-party application developer and have questions about  integration in firefox, please contact me — i’d be happy to put you  in touch with the right people who can answer questions and provide guidance.)
+one of the first questions i asked was, “how  do android apps start?”
+we’re working on improving  theuser experience when third-party addons are installed in system-wide  locations.
+what’s  worse, in a binary component, the line between supported/frozen and completely  unfrozen internal gecko interfaces is blurred, making it easy to create a  binary component that works well against one very specific version of firefox  (potentially as specific as a minor security release), but causes serious  problems with any other version.
+it’s  fairly straightforward, with a few wrinkles.
+for those who want to try it out, you’ll  need a recent firefox nightly (one from today, september 21, or newer), and  with one preference flipped as described inthis post.
+in addition, by keeping it as bare-bones as it is, it allows for fast implementation on native hardware via the jits in all the current-generation js engines.
+(the latter is an interesting problem; we’re trying to ensure that the api can be implementable on top of a non-gl native 3d api, such as direct3d, so that might be one option.)
+the arguments to the webglarray constructors are the offset from the start of the buffer (in bytes), and the length (in elements).
+this avoids placing costly js array type conversion  in a potential critical performance path, and simplifies a number of aspects of  the api.
+this is, of course, not very portable, robust, or guaranteed to continue to  work by google, but it’s possible.
+it sends its arguments to the zygote,  which will fork and then start executing the main method in a given class.
+where does this fit in webgl?
+(the latter is an interesting problem; we’re  trying to ensure that the api can be implementable on top of a non-gl native 3d  api, such as direct3d, so that might be one option.)
+next up, i’ll probably blog about porting issues for large native  apps, including library compatibility, bionic, and integrating into a  non-ant-based build system.
+if length is not given, the length is assumed to be  “from offset until the end of the array buffer”; that value must be  a multiple of the element size.
+i can  see this type of dense/native type access being useful for both the file and  websockets apis as a way to exchange and deal with binary data.
+when paired with high-performance javascript, such as what we’ve seen  come from both firefox and other browsers, should allow for some exciting fully  3d-enabled web applications.
+it won’t be fast, but it should be enough for you  to get an idea of what’s going on, and to play with some of the  demos.
+in particular, the canvas prefix in the names might change soon.
+even more complicated is the need to manage multiple types within a single memory region; for performance, it’s often preferable to allocate one chunk of video memory, and place coordinates, colors, and other types in there, replacing them as necessary.
+so, vbos, texture data (if not loaded from a dom image element or from  a canvasimagedata object), index array, etc.
+this avoids placing costly js array type conversion in a potential critical performance path, and simplifies a number of aspects of the api.
+canvasarraybuffer and canvas*array 6 comments published by  vladimir november 6th, 2009 in canvas 3d, firefox, mozilla webgl introduces two interesting concepts that i think have application  outside of webgl, thecanvasarraybuffer and canvasarray webglarraybuffer and  webglarray.
+this process loads a bunch of the core java classes and performs initial processing of them, making it possible to avoid this step for each app launch.
+new webglunsignedbytearray(buf, 12*3*4, 12*4); this creates a buffer of 192 bytes, which is enough room for 12 3-coordinate float points followed by 12 rgba colors, with each component represented as an unsigned byte.
+(mac os x users shouldn’t need to bother with software rendering,  since apple already provides a high quality opengl implementation, and linux  users should be ok as long as they have recent opengl drivers installed.)
+as we’ve seen the popularity of firefox increase, more and more  binary components have been written to interface between firefox and other  applications.
+i’ll be working to update the very basic “getting started ” demos from the gl es 2 book that i ported to canvas 3d as well, so that those who are interested in experimenting can have some good basic code to look at.
+edit 12/2: these types have changed names; they now have a webgl prefix instead of a canvas prefix.
+with webgl, they could be fully 3d,  even animated.
+i’m going to describe what i’ve discovered here, in case it’s  useful for someone else; i haven’t been able to find much of this  information, largely because i don’t think many people need to know any  of this.
+if an attempt is made to store data in a webglarray that doesn’t fit within the right type, a c-style cast is performed.
+for example, ea/maxis recently added collada export of creature designs to their popular gamespore, and they have a sporepedia where players can see others’ creations.
+for those of you on windows who don’t have an up to date opengl  driver, or don’t have the possibility of getting one (e.g. many common  intel graphics cards doesn’t have opengl drivers), you can enable  software rendering by downloading a windows build of the mesa software opengl  implementation.
+the only supported way of adding functionality to firefox (whether a  binary component is required or not) isthrough an add-on.
+you’ll currently have the most luck on macos x machines or windows machines with up-to-date opengl drivers.
+there are some very rough hacks  in the test app, but for the most part it demonstrates that this approach can  work fine.
+new  webglfloatarray(buf, 0, 12*3); var colors =
+many of these components were written for firefox 3.0, and have  not been updated for firefox 3.5; a situation that we have no way of detecting  because of the lack of versioning information on these “bare”  components.
+any other components (both binary and script) will be ignored.
+a side effect of this is that i couldn’t find a way to actually register an app with the activitymanagerservice if it wasn’t launched by it.
+multiple webglarrays can reference the same webglarraybuffer.
+this process loads a bunch of the core java classes and performs  initial processing of them, making it possible to avoid this step for each app  launch.
+android hacking (part 1 of probably many) 4 comments published by vladimir november 19th, 2009 in firefox, mozilla i’ve been looking to understand the android os better, so that i can  answer some questions and create plans for getting gecko/firefox running on  android-based devices.
+= 12.3; floats[1] = 23.4; floats[2] = 34.5; the above chunk of code allocates a 12-byte webglarraybuffer, and then creates a float-typed view onto the buffer which can then be manipulated (almost) like a normal array.
+at boot time, a special instance of the java vm is launched, called the zygote.
+having this version  information allows for safe upgrades, especially when binary components are  present.
+they’re clearly separate processes while they’re running, but it wasn’t clear how they were launched.
+this has many advantages for users: they can see that additional functionality is installed in the add-ons manager, and from there they can easily enable or disable it, as well as check for and receive updates.
+for example, a third-party component that would like to perform some action implemented in native code when an event is received can write the integration pieces in javascript (capturing the event and so on), and use jsctypes to make function calls to regular non-xpcom component native code.
+zygoteconnection.handlechildproc is called, which does some cleanup and  eventually throws a methodandargscaller (viazygoteinit.invokestaticmain) … which takes us all the way back to zygoteinit.main, which catches  that trampoline exception, and calls run()
+to actually manipulate the data inside a webglarraybuffer, a webglarray has to be created that references it.
+it puts that information  in a list of activities to run.
+this is  possible, but requires version-specific code to accomplish.
+so, we have these steps, dealing with the zygote process:
+once the initial work is done, the process listens to a socket and waits for requests.
+this approach is  greatly preferred over writing binary components.
+this is, of course, not very portable, robust, or guaranteed to continue to work by google, but it’s possible.
+it puts that information in a list of activities to run.
+to use it, downloadwebgl-mesa-751.zip and extract it somewhere on your computer.
+this work might also  be backported to the 3.5 branch, but that decision has not been made yet.
+currently, third-party applications can drop binary components into the  firefox application’s components directory and expect them to be loaded  as part of our normal startup.
+along with the firefox implementation, a webgl implementation landed in  webkit fairly recently.
+if length is not given, the length is assumed to be “from offset until the end of the array buffer”; that value must be a multiple of the element size.
+in particular, the  canvas prefix in the names might change soon.
+the web currently fudges around the problem of  binary data by passing it around either in strings (because js strings are  ucs2, therefore all 8-bit elements are valid, but with a performance and  memeory cost), or often encoding as base64 (again going back to strings).
+it became clear that pure js arrays are not a useful way of shoveling  around lots of 3d data; their very flexibility makes them impractical for  performance-critical uses.
+this new process then contacts the activitymanagerservice and asks, essentially, “what app am i?”.
+also, critically, floating point data can be stored as 32-bit single-precision  floats instead of 64-bit doubles, taking up half as much space when the  underlying graphics system can’t support 64-bit values.
+if you’re not familiar with webgl, it’s the evolution of work  that mozilla starteda few years ago with experiments called canvas 3d —  essentially a way of accessing opengl from within the browser, through the  html5 canvas tag.
+i can see this type of dense/native type access being useful for both the file and websockets apis as a way to exchange and deal with binary data.
+there are some very rough hacks in the test app, but for the most part it demonstrates that this approach can work fine.
+webglarrays also help manage memory usage — an array of byte color data now takes up exactly as much memory as needed, instead of getting expanded out to 4 bytes.

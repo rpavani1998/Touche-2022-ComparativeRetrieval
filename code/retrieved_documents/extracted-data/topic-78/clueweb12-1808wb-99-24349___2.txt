@@ -1,0 +1,72 @@
+written by jorge tavares april 22, 2012 at 20:15 posted in programming tagged with common lisp, library, lisp, sorting algorithms, zsort«best paper award at eurogp 2012 subscribe to comments with rss.
+(defpar pfib (n) (declare (optimize (speed 3)))
+imho, it’s nicer than  `defpar’ and it’s not that longer.
+you are commenting using your twitter account.
+get every new post delivered to your inbox.
+enter your comment here...
+common lisp provides thesort and stable-sort functions but these can have different algorithms implemented according to each implementation, which can make an application unportable if you rely on a specific type of sorting.
+(  log out / change ) you are commenting using your facebook account.
+you are commenting using your wordpress.com account.
+jorge tavares april 26, 2012 at 8:42 fill in your details below or click an icon to log in: you are commenting using your wordpress.com account.
+james m. lawrence april 26, 2012 at 2:02
+with 6 comments zsort is a library that i started working on as a simple hobby project.
+but `defpar’ isn’t a winner either.
+fyi the next release of lparallel will add support for fine-grained parallelism, which may simplify some algorithms.
+anyway, i look forward for the new release!
+if `pfib' had been defined using `defun' instead of a `defpar', the `plet' would cause massive slowdown due to task overhead.
+but i don’t have strong opinions on it; pdefun, defpar, defparallel  seem about equally good and equally bad.
+i also wanted  to keep the length short in order to preserve indentation when switching  to/from `defun’.
+`defpfun’ might have  worked if it wasn’t so awkward.
+even if for most situations the standard functions are more than enough, thezsort library could be a useful complement.
+powered by wordpress.com
+it would be more coherent with other names, like pmap, preduce, plet, etc. jorge tavares april 23, 2012 at 14:53reply
+james m. lawrence april 23, 2012 at 10:26reply hi james, thanks for your update.
+james m. lawrence april 23, 2012 at 22:14
+however i found the expectation of seeing the `def’ prefix for toplevel  definitions too great.
+`defpar' does  not do any code-walking; it uses a macrolet and an alternate scheduler.
+`defpfun’ might have worked if it wasn’t so awkward.
+imho, it’s nicer than `defpar’ and it’s not that longer.
+what about `defparallel’?
+but i don’t have strong opinions on it; pdefun, defpar, defparallel seem about equally good and equally bad.
+(defun fib (n) (declare (optimize (speed 3)))
+blog at wordpress.com.
+fill in your details below or click an icon to log in: email (required) (address never made public)
+right now the implemented algorithms are: insertion sort, quicksort, randomized quicksort, merge sort, heapsort and counting sort.
+(  log out / change ) cancel notify me of follow-up comments via email.
+if `pfib' had been defined using `defun' instead of a `defpar', the `plet'  would cause massive slowdown due to task overhead.
+( log out / change ) you are commenting using your twitter account.
+(i am not settled on the name `defpar' because it's too close to `defparameter', however i lack something better.)
+regarding the name, what about “pdefun” ?
+i also wanted to keep the length short in order to preserve indentation when switching to/from `defun’.
+`defpar' does not do any code-walking; it uses a macrolet and an alternate scheduler.
+it is now part of quicklisp so it can be easily used (thankszack!).
+james m. lawrence april 23, 2012 at 10:26 reply hi james, thanks for your update.
+however, the main thing on the todo list is adding the possibility ofexternal sorting (to handle large amounts of data) and parallel versions of some sorting algorithms.
+the main goal of zsort is to be a collection of portable sorting algorithms.
+the plan is to add more algorithms, for example,bucket sort and timsort.
+cancel connecting to %s notify me of follow-up comments via email.
+i will definitely take a closer look at lparalell.
+and of course, all kind of suggestions and improvements are welcome!
+(if (< n 2) n (plet ((a (pfib (- n 1))) (b (pfib (- n 2))))
+also, the standard functions might not be the best for a certain situation and as such you might need a specialized sort.
+however i found the expectation of seeing the `def’ prefix for toplevel definitions too great.
+the journalist v1.9 by lucian e. marin.
+from your example it really looks quite easy to  code certain algorithms.
+(plet ((a (pfib (- n 1))) (b (pfib (- n 2))))
+(if (< n 2) n (let ((a (fib (- n 1))) (b (fib (- n 2))))
+(i am not settled on the name `defpar' because it's too close to  `defparameter', however i lack something better.)
+i am considering usinglparallel for this but i am still undecided.
+jorge tavares april 24, 2012 at 12:14
+it is a very nice piece of work!
+it  is a very nice piece of work!
+if they can be fast, even better.
+you are commenting using your facebook account.
+it would be more  coherent with other names, like pmap, preduce, plet, etc. jorge tavares april 23, 2012 at 14:53
+the disadvantage of `defparallel’ is that it is notoriously easy to fumble typing `parallel’, as you did in your first comment.
+jorge tavares april 26, 2012 at 8:42 leave a reply cancel reply
+on my two-core machine (pfib 35) is 2x faster than (fib 35).
+more or less around the same time i decided to checkwhich algorithms the different common lisp implementations use.
+yes, the original name was `pdefun’ for the reasons you mention.
+from your example it really looks quite easy to code certain algorithms.
+there is still a lot of work to be done, but i think the library as it is can already be a little useful.
+the disadvantage of `defparallel’ is that it is notoriously easy to  fumble typing `parallel’, as you did in your first comment.

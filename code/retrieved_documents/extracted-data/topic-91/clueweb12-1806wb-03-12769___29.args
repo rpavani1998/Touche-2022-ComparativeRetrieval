@@ -1,0 +1,137 @@
+precision and recall of the algorithm and the human experts.
+top: all synapses detected by the algorithm after training on the labels fromfig. 1.
+such high z-resolution allowed treating the data as one 3d volume of 1948×1342×409 voxels instead of a collection of 2d slices.
+for the training set fromfig. 1, the best algorithm performance was at the threshold of 98%, with recall of 0.92 and precision of 0.89.
+the probability threshold can be interactively adjusted by the user.
+labeling the training set, computing its appearance features and training the classifier took approximately 15 minutes.
+however, this approach relies on correct partitioning of the entire volume into cells, which is still impossible by fully automated means.
+when searching for synapses, the human observer is not limited to the imaging plane projections of the volume, but can also explore the planes orthogonal to it.
+(h5) we thank stephanie rosset for technical help with the sample preparation, natalya korogod and marie croisier for counting synapses in the images and michael hanselmann for fruitful discussions.
+after thresholding, only the cores of synapses, i.e. areas of very high synapse probability, are left.
+human errors were additionally reverified manually, to avoid assigning a detection error in case of a geometric disagreement between labelers, i.e. when two labelers labeled the same synapse at positions so far from each other, that their “ball” labels did not overlap.
+2a, on our data the quality of the prediction was stable with respect to the exact choice of the training set.
+briefly, the brain of an adult rat was fixed by cardiac perfusion of 2.5% glutaradehyde, and 2% paraformaldehyde in phosphate buffer, it was then vibratome sectioned and slices from the somatosensory cortex were stained with buffered potassium ferrocyanide and osmium, followed by osmium, and then uranyl acetate.
+the tissue preparation methods followed the protocol previously described in[6] and were performed in accordance with the procedures approved by the office vétérinaire cantonale lausanne (license number 2106).
+for example, as synapses are darker than intracellular space, the average intensity would serve as a good feature to distinguish these two, but would not help to separate synapses from membranes or mitochondria.
+trakem2 plug-in of the fiji framework[31] was used for the annotation.
+if an automated protocol was to be based on these criteria directly, it would require a segmentation of the entire volume to find the membrane apposition sites and a full segmentation of ultra-cellular structures to detect vesicles.
+most expert mistakes were made for different synapses, which is in line with the observations of[26] about attention-related errors of expert annotators of neurobiological images.
+a script for off-line thresholding and filtering is provided at [www.ilastik.org/synapse-detection].
+the interactive learning interface of ilastik allows the user to immediately assess the algorithm performance on a subset of data and, if necessary, to modify the training labels or the threshold value.
+synapses touching the left or top border of the image, as well as those touching the last slice of the stack, were excluded from the final count.
+similarly, most of the false negative detections also stem from synapses located very close to myelinated membranes.
+running the algorithm on the full test dataset took several hours, however, no user interaction was needed during this time.
+instead, more informative features are required that also encode geometrical properties of 3d voxel neighborhoods.
+edge detectors respond strongly to both membranes and endoplasmic reticulum.
+once the classifier has been trained on a tiny subset of data, it can automatically classify all voxels in the volume as synapse or non-synapse.
+however, using fairly thick 2d slices severely impedes detection of synapses in cases when the synaptic cleft is oriented at a low angle with respect to the plane of imaging[5].
+the standard em protocol used to prepare the brain tissue for imaging gives high contrast not only to synapses, but also to other cellular structures, such as mitochondria.
+to allow running of the algorithm on a modern desktop pc rather than a high-end server without compromising classification accuracy, we performed selection of features, based on their gini importance[25].
+since the real synapses are not spherical, these human annotations can not serve as voxel-level gold standard.
+on the conceptual side, we rely on machine learning methods that are currently transforming all of image analysis.
+finally, a deterministic post-processing step rejects synapse candidates with implausible sizes.
+bottom row: raw data and algorithm predictions on two other slices in the first training set.
+the test dataset, the gold standard set of synapse annotations and one of our training label sets can also be downloaded from the website.
+the statistical learning is performed on geometrical features of 3d neighborhoods of each voxel and can fully exploit the high z-resolution of the data.
+the four training sets were located in different parts of the image stack and contained approximately the same number of voxel labels.
+since the algorithm bases its decisions on geometric features computed in full 3d neighborhoods, it is not affected by synapse orientation.
+integration of ilastik with the vtk visualization allows the user to jump from a 3d object directly to its position in the image stack.
+the synapse probability threshold values are annotated next to the corresponding points of the curve.doi:10.1371/journal.pone.0024899.g002 after training, the classifiers were applied to the test dataset, and thresholding with different sensitivity levels was applied to the resulting synapse probability maps.
+the procedure is based on interactive machine learning and only requires a few labeled synapses for training.
+the human labelers only detected synapses and specified their approximate size by the ball labels, while the algorithm segmented synapses, i.e. listed every voxel belonging to a synapse candidate.
+a meaningful measure of success is how well the automated predictions on a separate test set agree with those of the human.
+besides that, they are just hard to discern when viewing the data in native (x-y) projection only.
+the color intensity corresponds to the certainty in the prediction, predictions for green class are omitted for clarity.doi:10.1371/journal.pone.0024899.g001 figure 2.
+to quantitatively assess the algorithm performance and its stability with regard to the training data, four training sets were created from images acquired in the same experiment, but not overlapping with the test set.
+top row: the complete set of user annotations for the first training set (20 brush strokes in total), with yellow labels for synapses, red for membranes, green for the rest.
+a 3d view of the synapses detected by the algorithm based on the training set fromfig. 1 (with probability ratio threshold of 92%) is illustrated in fig.
+each expert first analyzed the dataset independently from the others and the resulting three sets of annotations were compared automatically to find all discrepancies.
+since the automatic comparison procedure found differences between the expert annotations, these cases had to be re-examined jointly by all experts to establish a gold standard annotation.
+as for any machine learning-based algorithm, the performance of ilastik depends significantly on how well the training dataset represents the true variability of the test data.
+texture features respond to synapses, but also pick up thick mitochondrial membranes.
+since ilastik provides a convenient summary report of all detected synapses (fig. 4) and reduces the data from millions of voxels to just dozens of synapse candidates, the false positives for the entire stack can easily be discarded by a human in just a few minutes of additional proofreading.
+the milling was achieved with a gallium ion source at 30 kv with a current of 700 pamp.
+on a quantitative validation dataset of 111 synapses in 409 images of 1948×1342 pixels with manual annotations by three independent experts the error rate of the algorithm was found to be comparable to that of the experts (0.92 recall at 0.89 precision).
+in the interactive mode, it allows the user to immediately see the effect of newly added labels on the classifier's predictions, and therefore reduces the necessary labeling time.
+a small downsampled test dataset is also available as part of the supporting information (dataset s1).
+for evaluation purposes, we also excluded synapses which had their center in the first slice of the stack, to avoid the border effects described in the next section.
+e-mail: fred.hamprecht@iwr.uni-heidelberg.de the chemical synapse is the predominant means by which information is transferred and stored in the central nervous system.
+we provide a software bundle comprising a simple and intuitive graphical user interface for annotation, the machine learning algorithms and 3d visualization.
+the milling depth was measured at 9 nm per slice.
+funding: the authors gratefully acknowledge partial funding by the heidelberg graduate school for mathematical and computational methods for the sciences (http://mathcomp.uni-heidelberg.de/), by the excellence cluster cellular networks (http://www.cellnetworks.uni-hd.de/), by the viroquant (http://www.viroquant.uni-hd.de/) and sbcancer ( http://www.dkfz.de/en/sbcancer/index.html) research initiatives, the robert bosch gmbh ( http://www.bosch.com/worldsite_startpage/en/default.aspx) and the german research foundation (dfg,http://www.dfg.de/en/index.jsp) under grant no. ha-4364/6-1.
+as a consequence, the classification cannot simply be based on the raw intensity values of individual voxels.
+the fourth detection from the top (no. 36) is a false positive, which can easily be filtered out by a human expert by looking at a larger context.doi:10.1371/journal.pone.0024899.g004
+[23] provides an intuitive interface for classification and segmentation of 2d and 3d data.
+the lower limit for the size filter was computed as the approximate volume occupied by two vesicles at the given data resolution.
+the input data for the algorithm consists of scanning electron micrographs of neural tissue, provided as a pre-registered image stack, and user labels on a tiny subset of the data.
+the false positives of the algorithm are mostly caused by myelinated membranes or very dark lines located near mitochondria (fig.
+despite the advances in light microscopy, detailed structural analysis of synapses is still only possible with electron microscopy.
+for each training set, 2–3 synapses were labeled, and for each of those synapses it was sufficient to only label it in one of the slices.
+the statistical learning is performed on geometrical features of 3d neighborhoods of each voxel and can fully exploit the high z-resolution of the data.
+backscattered electrons were collected via the energy selective in-column detector (esb) using a grid tension of 1.1 kv.
+here we present and evaluate an extension of ilastik which includes interactively adjustable thresholding and finding of connected components, as well as a possibility to display the found objects in 3d with the help of the vtk toolkit[36].
+although the software can discriminate an arbitrary number of categories, we found three-class labeling of synapses vs. membranes vs. the rest of the tissue to produce the best results.
+on a quantitative validation dataset of 111 synapses in 409 images of 1948×1342 pixels with manual annotations by three independent experts the error rate of the algorithm was found to be comparable to that of the experts (0.92 recall at 0.89 precision).
+voxel features.doi:10.1371/journal.pone.0024899.t001 based on the features and user labels, the random forest classifier [25] computes a probability map for each voxel, i.e. its probability of belonging to one of the classes defined in the training phase.
+ilastik ( www.ilastik.org) is a freely available interactive learning and segmentation toolkit, which relies on a rich family of generic (nonlinear) image features and a robust nonlinear classifier[25] to estimate the probability of belonging to a synapse for each individual voxel.
+on the software side, we build on ilastik[23] and on our previous work, briefly described in [24].
+conversely, a false negative detection was counted, if a ball from the gold standard did not overlap with any of the synapse candidates; if such an overlap was found the corresponding synapse candidate was removed from the set of possible matches.
+once the classifier has been trained on a representative subset of the data, predictions on a very large dataset can be performed off-line in batch-processing mode.
+the obtained probability maps are smoothed by convolution with a gaussian with a standard deviation of 5 voxels to avoid local discontinuities caused by noisy voxel-wise predictions.
+the resulting set of 111 synapses formed the gold standard and was used to estimate the error rates of both the original human annotations and the results obtained by the algorithm.
+analysis of synapse size, shape and distribution contributes essential information to the understanding of neural circuitry, its function and its plasticity.
+the training of the classifier by means of a pointing device (mouse or tablet pen) is fully interactive in the sense that a real-time display of the current predictions allows the user to iteratively provide more labels and hence improve the classifier performance.
+the selected region was trimmed in an ultramicrotome and mounted onto an aluminium sem stub for imaging in the fib/sem microscope (zeiss nvision40), using a scanning electron beam at 1.3 kv with a current of 1 namp.
+the recent introduction of focused ion beam/scanning electron microscopy (fib/sem)[6] with isotropic resolution approaching 5 nm has now opened the door to a direct detection and segmentation of all synapses in large volumes of tissue, without the need to resort to extrapolation from paired slices.
+the human experts were researchers with experience in the analysis of electron micrographs of brain tissue and counting synapses in serial images.
+the voxelwise threshold for the detection of synaptic cores was specified as the probability of the synapse class.
+the other two experts, unlimited in time, made 2 and 3 false negative and 7 and 8 false positive detections respectively.
+due to boundary effects in the feature computation, the performance of the algorithm can decrease for voxels very close to the limits of the dataset, such as the voxels of the first and last scan of the stack.
+then, all connected components of adjacent voxels with a sufficiently high probability of belonging to a synapse are aggregated into synapse candidates.
+b: precision and recall of the algorithm compared to the human experts with and without the time limit.
+we expect the proposed tool to be useful not only for synapse counting, synapse density estimation or estimation of synapse-to-neuron ratio, but also for the ongoing efforts in the reconstruction of neural circuits[8], [9], [26] –[29].
+our software offers a convenient interface for labeling the training data and the possibility to visualize and proofread the results in 3d. the source code, the test dataset and the ground truth annotation are freely available on the website http://www.ilastik.org/synapse-detection.
+research article automated detection and segmentation of synaptic contacts in nearly isotropic serial electron microscopy images we describe a protocol for fully automated detection and segmentation of asymmetric, presumed excitatory, synapses in serial electron microscopy images of the adult mammalian cerebral cortex, taken with the focused ion beam, scanning electron microscope (fib/sem).
+the procedure is based on interactive machine learning and only requires a few labeled synapses for training.
+precision and recall of the algorithm results for the four different training sets.
+the test dataset consisted of 409 scanning electron micrographs from layer 2/3 of the adult rat somatosensory cortex.
+with serial section transmission electron microscopy (sstem), synaptic density can be estimated by manually counting synapses within a large volume, or by stereological extrapolation from paired 2d images[1]–[4].
+adding more classes, for example, for the mitochondria, did not help the classification.
+synapse detection results are stored in an hdf5-based ilastik project file and in an html summary report for convenient visualization and proofreading (fig. 4).
+overall, the algorithm performance is better than that of a human expert working with a four-hour time limit (0.9 recall and 0.86 precision), but worse than that of domain experts with unlimited time, who, in practice, worked on the problem on two consecutive days, though not all day long (recall of 0.97 and 0.98 and precision of 0.931 and 0.936).
+these synapses are oriented at a low angle to the plane of imaging and do not strictly qualify as synapses according to the morphological criteria, since the synaptic cleft is not seen in the plane of imaging.
+these stained sections were then dehydrated and embedded in durcupan resin.
+also, automated segmentation of vesicles is nontrivial, especially at lower resolution, and has not received much attention in the literature.
+the funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.
+our contribution proposes an automated approach of this type and shows, through quantitative evaluation on a set of 111 synapses, that state-of-the-art machine learning methods can now achieve detection rates comparable to those of humans for asymmetric synapses in fib/sem data.
+consequently, the performance of the segmentation part of the algorithm was assessed qualitatively and found to be of sufficiently high quality for detailed analysis of synapse morphology, seefig.
+the expert which only had 4 hours to label and verify the synapses, missed 11 synapses and found 20 false positives.
+note also, that the images with the training labels must be large enough to allow for computation of all features from neighborhoods of the labeled voxels.
+our software offers a convenient interface for labeling the training data and the possibility to visualize and proofread the results in 3d. the source code, the test dataset and the ground truth annotation are freely available on the website http://www.ilastik.org/synapse-detection.
+one of the experts only had four hours to label and verify the complete dataset, while the other two experts were not limited in time and took several hours longer.
+a small downsampled subvolume of the original data for trying out the interactive prediction.
+finally, automated methods for synapses detection have already been proposed for fluorescence light microscopy[21], [22].
+although the user is free to re-adjust the list and try out new feature combinations, we do not expect it to be necessary, except for the adjustment of the neighborhood sizes to the resolution of the data.
+synapses in the dataset were manually annotated by three independent human experts according to morphological criteria, including the presence of a pre- and post-synaptic density, as well as clustered vesicles close to the pre-synaptic membrane[30].
+rather than devise decision rules by hand, we use statistical learning from a labeled training set to infer robust classification rules.
+adding more labels did not improve the classification performance, as long as the already labeled set represented the data well, which can be judged, for example, by looking at the current algorithm predictions for some non-labeled synapses (fig. 1, bottom row).
+the quantitative validation of the automated synapse detection procedure, as well as the evaluation of the human experts' error rate, was carried out on a test dataset of 111 asymmetric, presumed glutamatergic, synapses (see materials and methods section for details on data acquisition and gold standard generation).
+in the probability maps, they become connected to the large false positives caused by these membranes, and these large connected components are then filtered out based on the size criterion (fig. 5g).
+this does not alter the authors' adherence to all the plos one policies on sharing data and materials, as detailed online in the guide for authors.
+uncertain detections are then filtered out by considering only those clusters of voxels with synapse probability greater than a given threshold and with size of at least 1000 voxels.
+one can also use a binary setup with synapses vs. the rest, but then the labeler has to take extra care to annotate enough membrane voxels to obtain a representative sample of the background.
+synapse detection summary report.
+to detect synapses in em images, human experts follow a set of morphological criteria: the presence of the pre- or post-synaptic densities, a visible synaptic cleft and a nearby cluster of at least two vesicles.
+the software runs on linux, macos and windows.
+if such an overlap was found, the corresponding gold standard ball was removed from the set of possible matches.
+these cores underestimate the real size of synapses, so to transition from detection to a proper segmentation we relax the synapse probability threshold to 0.5 for all voxels that are adjacent to synaptic cores.
+automated detection and segmentation of synaptic contacts in nearly isotropic serial electron microscopy images.
+still, even for the best quality em images, manual detection of synapses remains a difficult, error-prone and time-consuming task, which calls for automated protocols to overcome the tedium of manual analysis.
+for the evaluation of the error rate, a synapse candidate was considered to be a false positive, if its “ball” label from the human expert or its shape segmented by ilastik did not overlap with any ball in the gold standard dataset.
+since these rely on fluorescent pre-labeling of all synapses, they are not applicable to em images.
+even though our approach does not explicitly implement the morphological criteria listed above, it finds enough evidence in the geometric features, extracted from a local neighborhood of each voxel, to mimic the decisions of the human expert.
+the results show that with an adequate selection of appearance features, synapses are sufficiently different from other structures in neural tissue to allow for reliable automated detection in nearly isotropic fib/sem serial images.
+the prediction rules are learned automatically from examples, provided in the form of annotated images (the training dataset).
+rather than explicitly implementing the currently used criteria, machine learning allows to imitate the overall decisions of a human.
+the annotation of each expert included positions and approximate size of detected synapses, denoted by “ball” labels from trakem2.
+the acquired images were of 5 nm per pixel resolution with each image 1948×1342 pixels in size.

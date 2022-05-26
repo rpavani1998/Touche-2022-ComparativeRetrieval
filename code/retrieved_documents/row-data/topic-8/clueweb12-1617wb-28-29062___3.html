@@ -1,0 +1,281 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>SQLite Gets Write-Ahead Logs | SQL Zone</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>Cloud Zone</li> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Enterprise Integration</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+SQL Zone <br>
+<strong>Did you 
+know? DZone has great portals forPython, Cloud, NoSQL, and HTML5!</strong> <b>
+Mitch Pronschinske</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> 
+<li>@mpron</li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> </ul> 
+<p> Mitch Pronschinske is the Senior Content Curator (aka. &quot;Lord of the 
+Zones&quot;) at DZone. That means he writes and searches for the finest 
+developer content in the land so that you don't have to. He often has hotdogs 
+for lunch, likes to make his own ringtones, enjoys card and board games, and is 
+married to an underwear model. Mitch is a DZone employee and has posted 1688 
+posts at DZone. You can read more from them attheir website. View Full User 
+Profile</p> 
+<h1>SQLite Gets Write-Ahead Logs</h1>  07.21.2010  Email <br>
+ Views: 6061 <br>
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> 
+<h3>We Recommend These Resources</h3> 
+<h4>The Java Evolution Mismatch: Why You Need a Better JVM</h4> 
+<h4>Innovate Faster in the Cloud with a Platform as a Service</h4> 
+<h4>Best Practices for Open Source Adoption</h4> 
+<h4>Developing .NET/C# Applications with VoltDB</h4> 
+<h4>Micro Focus Silk Performer</h4> There's reason to celebrate today as 
+SQLite 3.7 is released in GA.&nbsp; The lightweight, ubiquitous database 
+includes some game-changing new features, which have arrived about two years 
+after the 3.6 beta came out.&nbsp; Today'srelease will feature nested 
+transactions, constrained foreign keys, write-ahead logs, and more.<br>
+<br>
+
+You can probably find a fewdevices around you right now that use SQLite.&nbsp; 
+The FOSS database engine is embedded in everything from Skype and AIR, to 
+programming language bundles like Python and PHP, to browsers like Firefox and 
+Chrome, and all major smartphones. &nbsp;<br>
+<br>
+SQLite is an in-process 
+library that can be used when a client/server database is not the best 
+option.&nbsp; It implements a serverless, self-contained, transactional SQL DB 
+engine that requires no configuration.&nbsp; SQLite 3.7 will add query planner 
+enhancements, nested transactions, constrained foreign keys, and write-ahead 
+logging, which has been one of the most anticipated new features.<br>
+<br>
+
+<h2>Write-Ahead Logging (WAL)</h2>There are several distinct advantages to 
+using WAL instead of SQLite'srollback journal for implementing atomic commits 
+and rollbacks.<br>
+<br>
+
+<ol> 
+<li>In many cases, WAL is much faster.</li> 
+<li>Better concurrency.&nbsp; WAL doesn't let readers block writers and vice 
+versa. &nbsp;</li> 
+<li>WAL's disk I/O operations are usually more sequential.</li> 
+<li>Uses fewer fsync() operations, making it less vulnerable to issues in 
+systems with broken fsync() system calls</li> </ol> <br>
+Some disadvantages in 
+this approach include an extra operation of checkpointing and less appeal as an 
+application file-format.&nbsp; WAL is only available if the VFS supports 
+shared-memory primitives.&nbsp; WAL also does not work over a network 
+filesystem.<br>
+<br>
+
+<h2>Oracle Joins SQLite</h2> In related news, Oracle joined the SQLite 
+Consortium last month.&nbsp; This means that Oracle will be have access to more 
+complete test suites for validating Berkeley DB's SQLite API, which was 
+unveiled in March.&nbsp; Oracle Senior Project Manager Gregory Burd had nothing 
+but glowing compliments for thelittle engine that can.&nbsp; He said that 
+SQLite 3's ANSI C API is the &quot;new 'ODBC'&quot; for relational DB access, 
+and that SQLite makes &quot;the right trade-offs.&quot;&nbsp; Now Oracle has 
+plans to continually work with SQLite developers, which means that conservative 
+project manager of yours can get behind using SQLite knowing that Oracle is now 
+behind it.<br>
+<br>
+The documentation should show you how to migrate from 3.6 
+to 3.7.&nbsp; Gohere to find out how to 
+use&nbsp;SQLite&nbsp;in&nbsp;different&nbsp;languages<br>
+ Tags: 
+<ul> 
+<li>Database</li> 
+<li>Oracle</li> 
+<li>sqlite</li> 
+<li>SQL</li> </ul> Published at DZone with permission of Mitch Pronschinske, 
+author. <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> 
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Resources</h3> 
+<h4>Innovate Faster in the Cloud with a Platform as a Service</h4> 
+<h4>Java Enterprise Performance</h4> 
+<h4>Best Practices for Building High Performance Development Teams</h4> 
+<h4>Micro Focus SilkTest 2011</h4> 
+<h4>NOSQL for the Enterprise</h4> <br>
+<br>
+
+<h2>Spotlight Features</h2> 
+<h2>How Twitter Does MySQL - Get Their Fork</h2> 
+<h2>Heterogeneous Computing Is Here, Now</h2> 
+<h2>Cretaceous COBOL Can Spawn Jurassic Java</h2> 
+<h2>BIRT 3.7 Report Design Refcard - Meet the Author: Michael Williams</h2> 
+Around the DZone Network WEB BUILDER <br>
+<br>
+Newly Hatched Python Tools for 
+You <br>
+.NET <br>
+<br>
+How Content Negotiation Works in ASP.NET Web A... <br>
+
+MOBILE <br>
+<br>
+EvenTiles from Start to Finish: 256-MB Windows Pho... <br>
+
+JAVALOBBY <br>
+<br>
+Implementing Your Own &quot;SOA&quot; Registry: the Maven 
+Wa... <br>
+JAVALOBBY <br>
+<br>
+Beer and Pizza with Facebook: Learning Their 
+Secre... <br>
+WEB BUILDER <br>
+<br>
+The Developer&rsquo;s Guide to HTML5 Canvas 
+<br> You Might Also Like 
+<ul> 
+<li>What Happened When We Loaded Every Music CD in Existence into RavenDB</li> 
+<li>An Introduction to NoSQL Patterns</li> 
+<li>Is This The IDE You've Been Looking For? </li> 
+<li>Algorithm of the Week: Boyer-Moore String Searching</li> 
+<li>Java Based Startups - We Want To Hear From You</li> 
+<li>Integrate Your Enterprise Apps 'Like a Boss'</li> 
+<li>Beer and Pizza with Facebook: Learning Their Secrets...</li> 
+<li>Oracle v Google Trial Day 2: Ellison Testifies</li> 
+<li>Developer Productivity is Important - Reality or Myth?</li> 
+<li>The Visitor Pattern Re-visited</li> 
+<li>TDD: Do We Really Have To Do It?</li> 
+<li>How to Use Three.js, a Lightweight 3D Library, with Neo4j</li> 
+<li>Spring Integration Project Creation VS. Apache Camel Project Creation</li> 
+<li>Cretaceous COBOL Can Spawn Jurassic Java</li> 
+<li>Heterogeneous Computing Is Here, Now</li> </ul> Popular on SQL Zone 
+<ul> 
+<li>Custom Date Formatting in SQL Server</li> 
+<li>Querying Active Directory Through SQL Server</li> 
+<li>How-To Remote MySQL Database Administration With MySQL GUI tools</li> 
+<li>Get Business Days and Working Hours in a Month</li> 
+<li>SchemaSpy - Excellent Database Graphs for Free!</li> 
+<li>Why the Database as a Service is a Bad Idea</li> 
+<li>Making Your MySQL Tables More Effecient By Using Correct Fieldtypes</li> 
+<li>Troubleshooting Relay Log Corruption in MySQL</li> </ul> Latest Articles 
+<ul> 
+<li>6 Command Line Tools for Linux Performance Monitoring </li> 
+<li>SOA Patterns: Composite Front-End UI Pattern</li> 
+<li>Deleting All .class Files with Groovy </li> 
+<li>Templating Web Services With Velocity Using Camel </li> 
+<li>The Importance of Design-Mode for Client-Side MVC</li> 
+<li>Sometimes It's Easier to Just Write Your SQL</li> 
+<li>Groovy Grape: Troubleshooting Failed Download</li> 
+<li>Exciting Ideas in Java 8: Streams</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>Google App Engine for Java</h3> 
+<p>This DZone Refcard provides an in depth introduction to the cloud computing 
+technology, Google App Engine. Covering everything from the basics...</p> <br>
+
+<h3>BIRT 3.7 Report Design: Eclipse-Based BI and Big Data Visualization</h3>  
+Eclipse Business Intelligence and Reporting Tools (BIRT) is an open source, 
+Eclipse-based reporting system that integrates with your Java/J2EE... <br>
+
+<h3>Getting Started with Cloud Computing</h3> 
+<p>If you are looking for more information on Cloud Computing then this DZone 
+Refcard is for you. Get an in depth comparison on three different Cloud...</p> 
+<br> <br>
+<br>
+<br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> RSS </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

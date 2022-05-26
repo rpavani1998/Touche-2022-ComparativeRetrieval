@@ -1,0 +1,1108 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>What makes software engineering for climate models different? | Serendipity</title>
+<body>
+
+<h1>Serendipity</h1>  Or, What has Software Engineering got to do with Climate 
+Change? 
+<ul> 
+<li>Home</li> 
+<li>About Steve</li> 
+<li>Sitemap (blog contents)</li> 
+<li>Popular Posts</li> 
+<li></li> </ul> <br>
+<br>
+Home &gt; climate modeling, research methods &gt; 
+What makes software engineering for climate models different?<br>
+
+<h2>What makes software engineering for climate models different?</h2> March 
+24th, 2010 sme Leave a comment Go to comments <br>
+
+<p>This week I attended a&nbsp;Dagstuhl seminar on&nbsp;New Frontiers for 
+Empirical Software Engineering. It was a select gathering, with many&nbsp;great 
+people, which meant lots of fascinating discussions, and not enough time to 
+type up all the ideas we&rsquo;ve been bouncing around. I was invited to run a 
+working group on the challenges to empirical software engineering posed by 
+climate change. I started off with a quick overview of the three research 
+themes&nbsp;we identified at the Oopsla workshop in the fall:</p> 
+<ul> 
+<li>Climate Modeling, which we could characterize as a kind of end-user 
+software development, embedded in a scientific process;</li> 
+<li>Global collective decision-making, which involves creating the software 
+infrastructure for collective curation of sources of evidence in a highly 
+charged political atmosphere;</li> 
+<li>Green Software Engineering, including carbon accounting for the software 
+systems lifecycle (development, operation and disposal), but where we have no 
+existing no measurement framework, and tendency to to make unsupported claims 
+(aka&nbsp;greenwashing).</li> </ul> 
+<p>Inevitably, we spent most of our time this week talking about the first 
+topic &ndash; software engineering of computational models, as that&rsquo;s the 
+closest to the existing expertise of the group, and the most obvious place to 
+start.</p> 
+<p>So, here&rsquo;s a summary of our discussions. The bright ideas are due to 
+the group (Vic Basili, Lionel Briand, Audris Mockus, Carolyn Seaman and Claes 
+Wohlin), while the mistakes in presenting them here are all mine.</p> 
+<p>A lot of our discussion was focussed on the observation that climate 
+modeling (and software for computational science in general) is a very 
+different kind of software engineering than most of what&rsquo;s discussed in 
+the SE literature. It&rsquo;s like we&rsquo;ve identified a new species of 
+software engineering, which appears to be a an outlier (perhaps an entirely new
+<em>phylum</em>?). This discovery (and the resulting comparisons) seems to tell 
+us a lot about the other species that we thought we already understood.</p> 
+<p>The SE research community hasn&rsquo;t really tackled the question of how 
+the different contexts in which software development occurs might affect 
+software development practices, nor when and how it&rsquo;s appropriate to 
+attempt to generalize empirical observations across different contexts. In our 
+discussions at the workshop, we came up with many insights for mainstream 
+software engineering, which means this is a two-way street: plenty of 
+opportunity for re-examination of mainstream software engineering, as well as 
+learning how to study SE for climate science. I should also say that many of 
+our comparisons apply to computational science in general, not just climate 
+science, although we used climate modeling for many specific examples.</p> 
+<p>We ended up discussing three closely related issues:</p> 
+<ol> 
+<li>How do we characterize/distinguish different points in this space 
+(different species of software engineering)? We focussed particularly on how 
+climate modeling is different from other forms of SE, but we also attempted to 
+identify factors that would distinguish other species of SE from one another. 
+We identified lots of contextual factors that seem to matter. We looked for 
+external and internal constraints on the software development project that seem 
+important. External constraints are things like resource limitations, or 
+particular characteristics of customers or the environment where the software 
+must run. Internal constraints are those that are imposed on the software team 
+by itself, for example, choices of working style, project schedule, etc.</li> 
+<li>Once we&rsquo;ve identified what we think are important distinguishing 
+traits (or constraints), how do we investigate whether these are indeed salient 
+contextual factors? Do these contextual factors really explain observed 
+differences in SE practices, and if so how? We need to consider how we would 
+determine this empirically. What kinds of study are needed to investigate these 
+contextual factors? How should the contextual factors be taken into account in 
+other empirical studies?</li> 
+<li>Now imagine we have already characterized this space of species of SE. 
+What measures of software quality attributes (e.g. defect rates, productivity, 
+portability, changeability&hellip;) are robust enough to allow us to make valid 
+comparisons between species of SE? Which metrics can be applied in a consistent 
+way across vastly different contexts? And if none of the traditional software 
+engineering metrics (e.g. for quality, productivity, &hellip;) can be used for 
+cross-species comparison, how can we do such comparisons?</li> </ol> 
+<p>In my study of the climate modelers at the UK Met Office Hadley centre, I 
+had identified a list of potential success factors that might explain why the 
+climate modelers appear to be successful (i.e. to the extent that we are able 
+to assess it, they appear to build good quality software with low defect rates, 
+without following a standard software engineering process). My list was:</p> 
+<ul> 
+<li><em>Highly tailored software development process</em> &ndash; software 
+development is tightly integrated into scientific work;</li> 
+<li><em>Single Site Development</em> &ndash; virtually all coupled climate 
+models aredeveloped at a single site, managed and coordinated at a single site, 
+once they become sufficiently complex [edited - see Bob's comments below], 
+usually a government lab as universities don&rsquo;t have the resources;</li> 
+<li><em>Software developers are domain experts</em> &ndash; they do not 
+delegate programming tasks to programmers, which means they avoid the 
+misunderstandings of the requirements common in many software projects;</li> 
+<li><em>Shared ownership and commitment to quality</em>, which means that the 
+software developers are more likely to make contributions to the project that 
+matter over the long term (in contrast to, say, offshored software development, 
+where developers are only likely to do the tasks they are immediately paid for);
+</li> 
+<li><em>Openness</em> &ndash; the software is freely shared with a broad 
+community, which means that there are plenty of people examining it and 
+identifying defects;</li> 
+<li><em>Benchmarking</em> &ndash; there are many groups around the world 
+building similar software, with regular, systematic comparisons on the same set 
+of scenarios, throughmodel inter-comparison projects (this trait could be 
+unique &ndash; we couldn&rsquo;t think of any other type of software for which 
+this is done so widely).</li> 
+<li><em>Unconstrained Release Schedule</em> &ndash; as there is no external 
+customer, software releases are unhurried, and occur only when the software is 
+considered stable and tested enough.</li> </ul> 
+<p>At the workshop we identified many more distinguishing traits, any of which 
+might be important:</p> 
+<ul> 
+<li><em>A stable architecture</em>, defined by physical processes: atmosphere, 
+ocean, sea ice, land scheme,&hellip;. AllGCMs have the same conceptual 
+architecture, and it is unchanged since modeling began, because it is derived 
+from the natural boundaries in physical processes being simulated [edit: I mean 
+the top level organisation of the code, not the choice of numerical methods, 
+which do vary across models - see Bob's comments below]. This is used as an 
+organising principle both for the code modules, and also for the teams of 
+scientists who contribute code. However, the modelers don&rsquo;t necessarily 
+derive some of the usual benefits of stable software architectures, such as 
+information hiding and limiting the impacts of code changes, because the 
+modules have very complex interfaces between them.</li> 
+<li><em>The modules and integrated system each have independent lives</em>, 
+owned by different communities. For example, a particular ocean model might be 
+used uncoupled by a large community, and also be integrated into several 
+different coupled climate models at different labs. The communities who care 
+about the ocean model on its own will have different needs and priorities than 
+each of communities who care about the coupled models. Hence, the 
+inter-dependence has to be continually re-negotiated. Some other forms of 
+software have this feature too: Audris mentioned voice response systems in 
+telecoms, which can be used stand-alone, and also in integrated call centre 
+software; Lionel mentioned some types of embedded control systems onboard 
+ships, where the modules are used indendently on some ships, and as part of a 
+larger integrated command and control system on others.</li> 
+<li><em>The software has huge societal importance,&nbsp;but <em>the impact of 
+software errors is very limited</em>. First, a contrast: for automotive 
+software, a software error can immediately lead to death, or huge expense, 
+legal liability, etc, &nbsp;as cars are recalled. What would be the impact of 
+software errors in climate models? An error may affect some of the experiments 
+performed on the model, with perhaps the most serious consequence being the 
+need to withdraw published papers (although I know of no cases where this has 
+happened because ofsoftware errors rather than methodological errors). Because 
+there are many other modeling groups, and scientific results are filtered 
+through processes of replication, and systematic assessment of the overall 
+scientific evidence, the impact of software errors on, say, climate policy is 
+effectively nil. I guess it is possible that systematic errors are being made 
+by many different climate modeling groups in the same way, but these 
+wouldn&rsquo;t be coding errors &ndash; they would be errors in the 
+understanding of the physical processes and how best to represent them in a 
+model.</em></li> 
+<li><em>The programming language of choice is Fortran</em>, and is unlikely to 
+change for very good reasons. The reasons are simple: there is a huge body of 
+legacy Fortran code, everyone in the community knows and understands Fortran 
+(and for many of them, only Fortran), and Fortran is ideal for much of the work 
+of coding up the mathematical formulae that represent the physics. Oh, and 
+performance matters enough that the overhead of object oriented languages makes 
+them unattractive. Several climate scientists have pointed out to me that it 
+probably doesn&rsquo;t matter what language they use, the bulk of the code 
+would look pretty much the same &ndash; long chunks of sequential code 
+implementing a series of equations. Which means there&rsquo;s really no push to 
+discard Fortran.</li> 
+<li><em>Existence and use of shared infrastructure and frameworks</em>. An 
+example used by pretty much every climate model isMPI. However, unlike Fortran, 
+which is generally liked (if not loved), everyone universally hates MPI. If 
+there was something better they would use it. [OpenMP doesn't seem to have any 
+bigger fanclub]. There are alsoframeworks for structuring climate models and 
+coupling the different physics components (more on these in asubsequent post). 
+Use of frameworks is an internal constraint that will distinguish some species 
+of software engineering, although I&rsquo;m really not clear how it will relate 
+to choices of software development process. More research needed.</li> 
+<li><em>The software developers are very smart people</em>. Typically with 
+PhDs in physics or related geosciences. When we discussed this in the group, we 
+all agreed this is a very significant factor, and that you don&rsquo;t need 
+much (formal) process with very smart people. But we couldn&rsquo;t think of 
+any existing empirical evidence to support such a claim. So we speculated that 
+we needed a multi-case case study, with some cases representing software built 
+by very smart people (e.g. climate models, the Linux kernel, Apache, etc), and 
+other cases representing software built by &hellip;. stupid people. But we felt 
+we might have some difficulty recruiting subjects for such a study (unless we 
+concealed our intent), and we would probably get into trouble once we tried to 
+publish the results </li> 
+<li><em>The software is developed by users for their own use</em>, and this 
+<em>software is mission-critical</em> for them. I mentioned this above, but 
+want to add something here. Most open source projects are built by people who 
+want a tool for their own use, but that others might find useful too. The tools 
+are built on the side (i.e. not part of the developers&rsquo; main job 
+performance evaluations) but most such tools aren&rsquo;t critical to the 
+developers&rsquo; regular work. In contrast, climate models are absolutely 
+central to the scientific work on which the climate scientists&rsquo; job 
+performance depends. Hence, we described them as mission-critical, but only in 
+a personal kind of way. If that makes sense.</li> 
+<li><em>The software is used to build a product line</em>, rather than an 
+individual product. All the main climate models have a number of different 
+model configurations, representing different builds from the codebase (rather 
+than say just different settings). In the extreme case, the UK Met Office 
+produces several operational weather forecasting models and several research 
+climate models from the same unified codebase, although this is unusual for a 
+climate modeling group.</li> 
+<li><em>Testing focuses almost exclusively on integration testing</em>. In 
+climate modeling, there is very little unit testing, because it&rsquo;s hard to 
+specify an appropriate test for small units in isolation from the full 
+simulation. Instead the focus is on very extensive integration tests, with 
+daily builds, overnight regression testing, anda rigorous process of comparing 
+the output from runs before and after each code change. In contrast, most other 
+types of software engineering focus instead on unit testing, with elaborate 
+test harnesses to test pieces of the software in isolation from the rest of the 
+system. In&nbsp;embedded software, the testing environment usually needs to 
+simulate the operational environment; the most extreme case I&rsquo;ve seen is 
+the software for the international space station, where the only end-to-end 
+software integration was the final assembly in low earth orbit.</li> 
+<li><em>Software development activities are completely entangled</em> with a 
+wide set of other activities: doing science. This makes it almost impossible to 
+assess software productivity in the usual way, and even impossible to estimate 
+the total development cost of the software. We tried this as a thought 
+experiment at the Hadley Centre, and quickly gave up: there is no sensible way 
+of drawing a boundary to distinguish some set of activities that could be 
+regarded as contributing to the model development, from other activities that 
+could not. The only reasonable path to assessing productivity that we can think 
+of must focus on time-to-results, or time-to-publication, rather than on 
+software development and delivery.</li> 
+<li><em>Optimization doesn&rsquo;t help</em>. This is interesting, because one 
+might expect climate modelers to put a huge amount of effort into optimization, 
+given that century-long climate simulations still take weeks/months on some of 
+the world&rsquo;s fastest supercomputers. In practice, optimization, where it 
+is done, tends to be an afterthought. The reason is that the model is changed 
+so frequently that hand optimization of any particular model version is not 
+useful. Plus the code has to remain very understandable, so very clever 
+designed-in optimizations tend to be counter-productive.</li> 
+<li><em>There are very few resources available for software infrastructure</em>
+. Most of the funding is concentrated on the frontline science (and the costs 
+of buying and operating supercomputers). It&rsquo;s very hard to divert any of 
+this funding to software engineering support, so development of the software 
+infrastructure is sidelined and sporadic.</li> 
+<li>&hellip;and last but not least,&nbsp;<em>A very politically charged 
+atmosphere</em>. A large number of people actively seek to undermine the 
+science, and to discredit individual scientists, for political (ideological) or 
+commercial (revenue protection) reasons. We discussed how much this directly 
+impacts the climate modellers, and I have to admit I don&rsquo;t really know. 
+My sense is that all of the modelers I&rsquo;ve interviewed are shielded to a 
+large extend from the political battles (I never asked them about this). Those 
+scientists who have been directly attacked (e.g.&nbsp;Mann,&nbsp;Jones,&nbsp;
+Santer) tend to be scientists more involved in creation and analysis of 
+datasets, rather than GCM developers. However, I also think the situation is 
+changing rapidly, especially in the last few months, and climate scientists of 
+all types are starting to feel more exposed.</li> </ul> 
+<p>We also speculated about some other contextual factors that might 
+distinguish different software engineering species, not necessarily related to 
+our analysis of computational science software. For example:</p> 
+<ul> 
+<li>Existence of competitors;</li> 
+<li>Whether software is developed for single-person-use versus intended for 
+broader user base;</li> 
+<li>Need for certification (and different modes by which certification might 
+be done, for example where there are liability issues, and the need to 
+demonstrate due diligence)</li> 
+<li>Whether software is expected to tolerate and/or compensate for hardware 
+errors. For example, for automotive software, much of the complexity comes from 
+building fault-tolerance into the software because correcting hardware problems 
+introduced in design or manufacture is prohibitively expense. We pondered how 
+often hardware errors occur in supercomputer installations, and whether if they 
+did it would affect the software. I&rsquo;ve no idea of the answer to the first 
+question, but the second is readily handled by the checkpoint and restart 
+features built into all climate models. Audris pointed out that given the 
+volumes of data being handled (terrabytes per day), there are almost certainly 
+errors introduced in storage and retrieval (i.e. bits getting flipped), and 
+enough that standard error correction would still miss a few. However, 
+there&rsquo;s enough noise in the data that in general, such things probably go 
+unnoticed, although we speculated what would happen when the most significant 
+bit gets flipped in some important variable.</li> </ul> 
+<p>More interestingly, we talked about what happens when these contextual 
+factors change over time. For example, the emergence of a competitor where 
+there was none previously, or the creation of a new regulatory framework where 
+none existed. Or even, in the case of health care, when change in the 
+regulatory framework relaxes a constraint &ndash; such as the recent US 
+healthcare bill, under which it (presumably) becomes easier to share health 
+records among medical professionals if knowledge of pre-existing conditions is 
+no longer a critical privacy concern. An example from climate modeling: 
+software that was originally developed as part of a PhD project intended for 
+use by just one person eventually grows into a vast legacy system, because it 
+turns out to be a really useful model for the community to use. And another: 
+the move from single site development (which is how nearly all climate models 
+were developed) to geographically distributed development, now that it&rsquo;s 
+getting increasingly hard to get all the necessary expertise under one roof, 
+because of the increasing diversity of science included in the models.</p> 
+<p>We think there are lots of interesting studies to be done of what happens 
+to the software development processes for different species of software when 
+such contextual factors change.</p> 
+<p>Finally, we talked a bit about the challenge of finding metrics that are 
+valid across the vastly different contexts of the various software engineering 
+species we identified. Experience with trying to measure defect rates in 
+climate models suggests that it is much harder to make valid comparisons than 
+is generally presumed in the software literature. There really has not been any 
+serious consideration of these various contextual factors and their impact on 
+software practices in the literature, and hence we might need to re-think a lot 
+of the ways in which claims for generality are handled in empirical software 
+engineering studies. We spent some time talking about the specific case of 
+defect measurements, but I&rsquo;ll save that for a future post.</p> 
+<p></p> Tags: <br>
+Comments (16) Trackbacks (4) Leave a comment Trackback <br>
+
+<ol> 
+<li> <br>
+ Bryan Lawrence <br>
+ March 26th, 2010 at 16:40 | #1 <br>
+Reply | 
+Quote <br>
+
+<p>Very timely Steve. Thanks. I&rsquo;m writing a talk for next week on 
+software infrastructures for earth system modelling. I think you&rsquo;ve just 
+given me a few slides &ndash; which will of course get due attribution.</p> 
+</li> 
+<li> <br>
+ Bob Pasken <br>
+ March 26th, 2010 at 23:26 | #2 <br>
+Reply | Quote 
+<br> 
+<p>I think you miss by a mile on a couple of points. The first is</p> 
+<p>&ldquo;Single Site Development &ndash; virtually all climate models are 
+developed at a single site, usually a government lab as universities 
+don&rsquo;t have the resources;&rdquo;</p> 
+<p>Although I am not directly involved in climate modeling, I am involved in 
+mesoscale modeling (1000 -&gt; 300 meter horizontal resolution). Like to 
+climate modeling community the mesoscale model development community is done at 
+the local university AND national labs. Many of the mesoscale models AND 
+climate models were initial developed at universities then migrated to the 
+larger computing facilities over time. MIROC3.2, INGV-SXG, ECHAM5/MPI-OM are 
+examples of university generated models. PCM from NCAR is a merger of multiple 
+model types from universities into a single framework model. MM5, RAMS and WRF 
+are examples of mesoscale models that began at universities.</p> 
+<p>A second miss is</p> 
+<p>&ldquo;A stable architecture, defined by physical processes: atmosphere, 
+ocean, sea ice, land scheme,&hellip;. All GCMs have the same conceptual 
+architecture, and it is unchanged since modeling began, because it is derived 
+from the natural boundaries in physical processes being simulated.&rdquo;</p> 
+<p>You are correct the models are constrained by physical processes, but the 
+models DO NOT have the same conceptual architecture and certainly have changed 
+significantly. Indeed the primary point of having multiple models is that 
+don&rsquo;t have the same conceptual architecture (unless you mean simulate the 
+climate). The underlying methods are very different. Finite differencing vs 
+spectral methods vs finite element vs analytical solutions all have 
+significantly different methods for solving the same problem.</p> 
+<p>Thirdly </p> 
+<p>&ldquo;The programming language of choice is Fortran, and is unlikely to 
+change for very good reasons. The reasons are simple: there is a huge body of 
+legacy Fortran code, everyone in the community knows and understands Fortran 
+(and for many of them, only Fortran), and Fortran is ideal for much of the work 
+of coding up the mathematical formulae that represent the physics.&rsquo;</p> 
+<p>Fortran is the language of choice and the reason has nothing to do with 
+legacy code. Nearly all modelers that I know are fluent not only in Fortran, 
+but C, C++, and Perl as well. Fortran is the language used because it allows 
+you to express the mathematics and physics in a very clear succinct fashion. 
+The idea here is that a craftsman has many tools in his tool chest the amateur 
+believes everything is a nail. The only common feature in terms of programming 
+tools amongst modelers is a universal HATRED of object-oriented programming 
+languages, particularly python.<br>
+ Object-oriented programming is the answer 
+to a question that nobody has ever felt the need to ask. Programming in an 
+object-oriented language is like kicking a dead whale down the beach</p> </li> 
+<li> <br>
+ steve <br>
+ March 27th, 2010 at 07:23 | #3 <br>
+Reply | Quote <br>
+
+<p>Bob: Thanks for your comments &ndash; that&rsquo;s very helpful feedback.
+</p> 
+<p>The single site development thing is interesting, and I grossly 
+oversimplified. I was trying to say that it&rsquo;s an important success factor 
+at the UK Met Office; I&rsquo;m now exploring this assertion by looking at 
+other models for which development is more distributed. I think I could claim 
+that in general, once a coupled GCM becomes sufficiently complex, there is a 
+tendency to migrate to a single site. This is not universally true, but where 
+it is not, it causes coordination problems. The UK Met Office is an extreme 
+example of single site development; other places have a more federated 
+approach. For example, NCAR&rsquo;s CCSM is a genuine community model, with 
+some of the submodels managed at other sites. NCAR coordinates how these 
+multiple communities contribute to the coupled model, with a team dedicated to 
+managing coordination of the various community contributions, folding 
+externally contributed changes into the coupled model.</p> 
+<p>On architectures, we appear to have different definitions of the word 
+&ldquo;architecture&rdquo;. I&rsquo;m talking about the top level structure of 
+the code in a coupled model, and the corresponding organisation of teamwork. 
+You&rsquo;re talking about the implementation choices for the core numerical 
+equations in an atmospheric and/or ocean model. Software architecture (at least 
+the way software engineers use the term) is different from choice of 
+implementation algorithm.</p> 
+<p>On Fortran, I completely agree with the reasons you give for Fortran being 
+used; I disagree with the comment that it has nothing to do with legacy code. 
+For climate modeling centers, it would be almost impossible to discard the 
+existing models, or to port them to another language. Both this, and the years 
+of experience in using Fortran in the community act as a strong constraint on 
+language choice. We could debate the relative impact of the reasons each of us 
+gives, but it would be pointless &ndash; the fact is that Fortran is the 
+language of choice, and there are many good reasons why this is so.</p> </li> 
+<li> <br>
+ jstults <br>
+ March 27th, 2010 at 09:19 | #4 <br>
+Reply | Quote <br>
+<blockquote> 
+<p>The only common feature in terms of programming tools amongst modelers is a 
+universal HATRED of object-oriented programming languages, particularly python.
+</p> </blockquote> 
+<p>I like python, but my python tends to look like Fortran, and I mostly call 
+stuff written in Fortran and wrapped with F2Py (Like Bob, I&rsquo;m not climate 
+modeler either, my entire domain might reach 300 meters, but the software 
+doesn&rsquo;t care about the scale, everything is non-dimensionalized anyway).
+</p> 
+<blockquote> 
+<p>the fact is that Fortran is the language of choice, and there are many good 
+reasons why this is so</p> </blockquote> 
+<p>The other thing to realize is that Fortran (modern 90/95 etc) <i>is</i> a 
+high level language for scientific computing. Write down pseudo-code for an 
+algorithm involving lots of operations on vectors and it looks pretty much the 
+same after you translate it into Fortran90 or Matlab.</p> </li> 
+<li> <br>
+ George Crews <br>
+ March 27th, 2010 at 10:26 | #5 <br>
+Reply | Quote
+<br> 
+<p>Hi Steve,</p> 
+<p>Thanks for your insights into the minds of climate modelers. As a person 
+who has spent decades doing technical/engineering programming in areas 
+unrelated to climate modeling, I find the post very interesting.</p> 
+<p>You ask what makes software engineering for climate models different. The 
+answer should be &mdash; nothing. Consensus software engineering practices 
+should be entirely sufficient when developing climate software. That this is 
+not the case (e.g., &ldquo;without following a standard software engineering 
+process&rdquo;) is, IMHO, a significant issue. I come away from the post with 
+the feeling the climate software community is insular. This is all the more odd 
+to me since the science upon which climate software is based is mostly 
+multidisciplinary.</p> 
+<p>You mention that for the climate models the &ldquo;developers are domain 
+experts &ndash; they do not delegate programming tasks to programmers, which 
+means they avoid the misunderstandings of the requirements common in many 
+software projects&rdquo;.</p> 
+<p>Great idea. Maybe we should have farmers design and build tractors. Farmers 
+are domain experts too.</p> 
+<p>Other &ldquo;success factors&rdquo; you mention, such as: highly tailored 
+process, single site development, shared ownership, commitment to quality, 
+openness, and benchmarking are all attributes commonly found in successful 
+software projects, regardless of ilk. A question would be, how are these common 
+attributes measured and documented for climate software? Are they real or 
+imagined?</p> 
+<p>You mentioned a &ldquo;unconstrained release schedule&rdquo; for the 
+climate software. There is a relationship between software schedule and the 
+software&rsquo;s functionality. Arbitrary schedules merely mean arbitrary 
+functionality. This luxury has nothing to do with quality per se.</p> 
+<p>Then you mention distinguishing traits such as stable architecture and a 
+modular/integrated/framework (component?, OO?) design. Again, these are often 
+features of modern software of all types. So I fail to understand what is so 
+distinguishing about such traits.</p> 
+<p>Then there is the statement: &ldquo;The software has huge societal 
+importance, but the impact of software errors is very limited.&rdquo; I 
+don&rsquo;t see how it can be both ways. How can something be of great 
+importance whether or not it is correct? IMHO, the most serious consequence of 
+a climate software being defective would be to then use it to make a defective 
+political decision costing trillions of dollars to society.</p> 
+<p>Then there is: &ldquo;The software developers are very smart people.&rdquo; 
+That&rsquo;s great, since software development is the most complicated thing 
+people do. That&rsquo;s because, in general, if people could program anything 
+any more complicated, and the software still work, they would. But you see the 
+problem with this? Being smart is only an advantage if you design and build 
+simple software. But such is not the case with the climate software. It&rsquo;s 
+as complicated as people can make it.</p> 
+<p>I could go on, but I think I&rsquo;ve made my point. IMHO, climate software 
+developers are not as different as they may think.</p> 
+<p>George</p> 
+<p><em>[George: Read the post again. This is a set of hypotheses from a 
+workshop brainstorming - the whole point is that we haven't yet studied which 
+of these dimensions matter - we're trying to figure out ways of measuring them. 
+You, however, seem to be proceeding from an assumption that if they don't use 
+standard SE processes, then there must be something wrong with their software. 
+I would recommend studying the domain before making such grand assumptions. - 
+Steve]</em></p> </li> 
+<li> <br>
+ Dave C <br>
+ March 27th, 2010 at 11:57 | #6 <br>
+Reply | Quote <br>
+
+<blockquote> 
+<p> <strong>Bob Pasken :</strong><br>
+ Fortran is the language of choice and 
+the reason has nothing to do with legacy code. Nearly all modelers that I know 
+are fluent not only in Fortran, but C, C++, and Perl as well. Fortran is the 
+language used because it allows you to express the mathematics and physics in a 
+very clear succinct fashion. The idea here is that a craftsman has many tools 
+in his tool chest the amateur believes everything is a nail. The only common 
+feature in terms of programming tools amongst modelers is a universal HATRED of 
+object-oriented programming languages, particularly python.<br>
+ 
+Object-oriented programming is the answer to a question that nobody has ever 
+felt the need to ask. Programming in an object-oriented language is like 
+kicking a dead whale down the beach</p> </blockquote> 
+<p>This comment interests me. I haven&rsquo;t used Fortran, but have used 
+Python and R for data analysis in my own work. Indeed, I&rsquo;ve used Python 
+for modeling; not a climate-related model, but a relatively complex model in 
+the software engineering domain itself (as yet unpublished).</p> 
+<p>I did consider building my model in R, but ultimately chose Python, almost 
+entirely on the basis that it<em>is</em> object-oriented. Though Python lacks 
+the specialised libraries of R, it makes architectural design easier. It seems 
+to have just enough in the way of functional language structures that 
+succinctly writing model equations is not too much of a chore. I do make use of 
+polymorphism, which I think has helped in achieving a reasonably clean design 
+in my case. (In another language, I&rsquo;m sure my code would run a lot 
+faster, but that&rsquo;s not my principal concern.)</p> 
+<p>I wonder if this preference is due to differences in the domain, or in 
+problem solving conventions shaped by the languages themselves.</p> </li> 
+<li> <br>
+ jstults <br>
+ March 27th, 2010 at 15:05 | #7 <br>
+Reply | Quote <br>
+<blockquote> 
+<p>&hellip;the whole point is that we haven&rsquo;t yet studied which of these 
+dimensions matter&hellip; You, however, seem to be proceeding from an 
+assumption that if they don&rsquo;t use standard SE processes, then there must 
+be something wrong with their software. I would recommend studying the domain 
+before making such grand assumptions.</p> </blockquote> 
+<p>The dimensions that matter for the correctness of PDE solvers are pretty 
+well established (see Roache&rsquo;s early work, also more recently 
+Oberkampf/Trucano/et al out of Sandia and a host of various others scattered 
+about); the dimensions that matter for usefulness in decision support are 
+probably a little more of an open research area (but there&rsquo;s still plenty 
+of work in this area that you guys seem to be ignoring, maybe this is too far 
+away from the development process to interest you?). I don&rsquo;t think anyone 
+is jumping to the conclusion that &ldquo;there&rsquo;s necessarily something 
+wrong with the code&rdquo; (were you George?), but the conclusion that 
+&ldquo;we don&rsquo;t know if there&rsquo;s anything wrong (and neither do 
+you)&rdquo; is pretty well supported based on the sort of process you describe 
+which does not include formal code verification, nor calculation verification 
+(maybe you&rsquo;re leaving those parts out because they are just a given? if 
+so, man I&rsquo;d really like to see some reports on grid convergence results 
+for the models used in the IPCC&rsquo;s write-ups). Validation will remain a 
+fundamental problem for climate modeling, but that&rsquo;s probably another 
+discussion (and a fruitful area for new research btw). Rather than compare the 
+practice of climate modelers to standard software development practice, it 
+might be more instructive to compare their procedures to those of other 
+computational physicists. There areglimmers of hope, but the results were not 
+encouraging.</p> 
+<p>Maybe George and I are just interested in slightly different questions than 
+your research community so we&rsquo;re talking past each other a bit.</p> </li> 
+<li> <br>
+ Bryan Lawrence <br>
+ March 27th, 2010 at 15:26 | #8 <br>
+Reply | 
+Quote <br>
+
+<p>In my experience (when I was a climate modeller, talking to climate 
+modellers), many who had had *enough* exposure to object orientation, would 
+cheerfully admit that O-O codes could well have made some model tasks easier, 
+but given that the job was already done in Fortran &hellip;</p> 
+<p>&hellip; so my experience is precisely the opposite of Bob&rsquo;s. 
+Further, many of the folk I know choose to use O-O languages, particularly 
+python, to do data analysis, so far from hating it &hellip; it&rsquo;s an 
+analysis language of choice.</p> 
+<p>Which is all to say that any generalisations are just that. It&rsquo;d be 
+surprising if there weren&rsquo;t exceptions. I guess the interesting question 
+is whether these variations are clumped in particular communities or whether 
+there is a broad distribution of behaviours. I look forward to Steve telling us 
+(because most of us down our own rabbit holes have no time to pop our heads up 
+and survey the landscape).</p> </li> 
+<li> <br>
+ steve <br>
+ March 27th, 2010 at 16:31 | #9 <br>
+Reply | Quote <br>
+
+<blockquote> 
+<p>Maybe George and I are just interested in slightly different questions than 
+your research community so we&rsquo;re talking past each other a bit.</p> 
+</blockquote> 
+<p>To some extent yes. I will get on to the kinds of correctness/validation 
+questions you&rsquo;re asking about, but need to do some more groundwork first. 
+For now, I&rsquo;m still exploring the broader context in which the coding 
+takes place, and how activities are organised.<br>
+ I&rsquo;ve some papers on 
+my &ldquo;to read&rdquo; pile that might answer some of your questions, Josh. I 
+haven&rsquo;t read &lsquo;em yet, though, so no guarantees:<br>
+
+http://dx.doi.org/10.1109/MCISE.2002.1032431<br>
+
+http://www.gfdl.noaa.gov/bibliography/related_files/ih9401.pdf<br>
+
+http://www.osti.gov/energycitations/product.biblio.jsp?osti_id=518379<br>
+
+http://ams.allenpress.com/perlserv/?doi=10.1175%2FMWR2788.1&amp;request=get-document&amp;ct=1
+<br> The first looks like a good overview; the last gets into the guts of 
+testing the numerical routines. The middle two papers are a little older, and 
+seem to date from the time when atmosphere models still needed flux 
+adjustments. (Edit: oops, I just noticed the last of these is what you already 
+linked to; maybe you should contact the authors and see what they&rsquo;ve done 
+more recently).</p> 
+<p>BTW Bryan points out my paper is behind a paywall. I&rsquo;ve added a link 
+here (http://www.easterbrook.ca/steve/?p=974) to the draft version which is a 
+little longer (we had to condense it for page limits).</p> </li> 
+<li> <br>
+ Bryan Lawrence <br>
+ March 27th, 2010 at 17:27 | #10 <br>
+Reply | 
+Quote <br>
+
+<p>Grid convergence. I read the links, quickly, so sorry if I go off on the 
+wrong tack. (Disclosure: I still consider myself a dynamicist, my day job used 
+to be the science of gravity waves and their parameterisation in models. Why 
+tell you this, because a lot of what I did was because we knew the grids 
+didn&rsquo;t converge, and I wouldn&rsquo;t want you to think I was hiding 
+that).</p> 
+<p>There is *NO WAY* we can run models at high enough resolution to have grids 
+converge in the way I think was suggested as required. Even if we could do 
+that, we could only afford to run one instance of the model anyway, and that 
+wouldn&rsquo;t be very interesting &hellip; certainly not for decadal and near 
+term prediction, and frankly, for longer term, the climate problem just 
+doesn&rsquo;t seem to be susceptible to upscaling issues (at least for the 
+global mean). It is absolutely an issue for the regional scale. But this 
+isn&rsquo;t about software engineering, it&rsquo;s about the science that we 
+are encoding in our models.</p> 
+<p>(parameterisations do have &ldquo;fudge&rdquo; factors in them, but we like 
+to call those empirical adjustments. The key point being that they are 
+empirical.)</p> </li> 
+<li> <br>
+ jstults <br>
+ March 27th, 2010 at 18:17 | #11 <br>
+Reply | Quote 
+<br> 
+<blockquote> 
+<p>and frankly, for longer term, the climate problem just doesn&rsquo;t seem 
+to be susceptible to upscaling issues (at least for the global mean)</p> 
+</blockquote> 
+<p>Generally the resolution required to show &lsquo;convergence&rsquo; depends 
+on the functional; for functionals like the global mean (of anything), 
+I&rsquo;d think that you<i>could</i> show convergence (in fact one of those 
+papers I linked mentions that some things converge and some things 
+don&rsquo;t). So the answer is &ldquo;it depends&rdquo; (isn&rsquo;t that 
+always the answer?). I&rsquo;ve been meaning to do a post on the different 
+convergence behavior of a weather-like functional compared to a climate-like 
+functional using the Lorenz &lsquo;63 system, but it keeps getting pushed down 
+my queue&hellip;</p> 
+<blockquote> 
+<p>parameterisations do have &ldquo;fudge&rdquo; factors in them, but we like 
+to call those empirical adjustments. The key point being that they are 
+empirical.</p> </blockquote> 
+<p>Sure; I understand that, nobody&rsquo;s (at least I&rsquo;m not) asking for 
+DNS or molecular dynamics simulations of atmospheric and ocean flows over 
+centuries, but how solid is the empirical basis for you parameter choice when 
+it is used as a fix for a grid you know is under-resolved? It seems reasonable, 
+as you say, that the changes only matter for more regional things, but we 
+really don&rsquo;t know until we converge a solution (and aren&rsquo;t the 
+regional things where we can make a much more direct connection to the things 
+people care about?).</p> 
+<p>Steve thanks for sharing from your reading list.</p> </li> 
+<li> <br>
+ Bob Pasken <br>
+ March 29th, 2010 at 23:48 | #12 <br>
+Reply | Quote 
+<br> 
+<p>@George Crews <br>
+ George you say</p> 
+<p>You mention that for the climate models the &ldquo;developers are domain 
+experts &ndash; they do not delegate programming tasks to programmers, which 
+means they avoid the misunderstandings of the requirements common in many 
+software projects&rdquo;.</p> 
+<p>Great idea. Maybe we should have farmers design and build tractors. Farmers 
+are domain experts too.</p> 
+<p>You haven&rsquo;t talked to many meteorologists/physicist/engineers have 
+you? My meteorology majors will graduate with a second degree in either 
+mathematics or computer science. A meteorology graduate student without a math 
+or CS backgeound won&rsquo;t be able to graduate in a reasonable length of time 
+(M.S. &lt;= 4 years) because they will have to take the time to fill in the 
+missing pieces. How can you write the code necessary to process the data in 
+real-time coming from fore and aft pointing aircraft Doppler radars without 
+knowing how interrupts are preocessed. How can you write the code to process 
+the data in real-time from a ship-borne radar that is rolling, pitching and 
+yawing.</p> 
+<p>A more appropriate analogy would be the the chief engineer at John Deere 
+retiring to a farm and designing a new tractor for his hilly farm</p> </li> 
+<li> <br>
+ George Crews <br>
+ March 30th, 2010 at 07:56 | #13 <br>
+Reply | 
+Quote <br>
+
+<p>@Bob Pasken <br>
+ Hi Bob,</p> 
+<p>You say:</p> 
+<blockquote> 
+<p>A more appropriate analogy would be the the chief engineer at John Deere 
+retiring to a farm and designing a new tractor for his hilly farm.</p> 
+</blockquote> 
+<p>Unfortunately, I have encountered the following argument a distressing 
+number of times:</p> 
+<p>1. As a good scientist, I am automatically a good engineer.<br>
+ 2. As a 
+good engineer, I am automatically a good programmer.<br>
+ 3. As a good 
+programmer, I am automatically a good Software Quality Assurance Analyst 
+(whatever that is, nothing significant I would guess).</p> 
+<p>What hubris. Programming is a domain in its own right. It&rsquo;s the most 
+complicated domain there is because if people could make their programs any 
+more complicated they would. Programming is also an art. Even a computer 
+science degree does not make you a good programmer.</p> 
+<p>Anecdotal though it may be, it has been my experience that only about 5% of 
+&ldquo;smart people&rdquo; could ever actually write great software. Or, as I 
+like to put it, I am 95% confident nobody can write great software.</p> 
+<p>BTW, Python is my favorite programming language. It has a particularly 
+simple object model, that you can completely ignore if you want to. And it 
+comes with &ldquo;batteries included.&rdquo; Even things likeSciPy. So I fail 
+to understand the &ldquo;universal HATRED&rdquo; modelers have about it. Guess 
+it means I haven&rsquo;t ever really modeled anything using Python?</p> 
+<p>George</p> </li> 
+<li> <br>
+ Eli Rabett <br>
+ March 30th, 2010 at 23:20 | #14 <br>
+Reply | Quote 
+<br> 
+<p>A good parallel to climate models are computational chemistry codes such as 
+Gaussian, Spartan, Gamess, Molpro, etc. Again, usually a strong FORTRAN base, 
+written by domain experts and increasingly commercialized.</p> </li> 
+<li> <br>
+ Tom Clune <br>
+ May 25th, 2010 at 15:28 | #15 <br>
+Reply | Quote 
+<br> 
+<p>As someone who at least has a foot (well maybe a toe) in both communities, 
+I agree with many of the observations about the the unique aspects of 
+developing scientific models. However, I strongly disagree that the current 
+situation with regard to software engineering is any where near an optimum for 
+this community. We scientists have become all too accustomed to 1000+ line 
+procedures with short variable names, and are generally unaware of what clean, 
+understandable code can look like. Yes, there are limits to what can be done 
+with a complex mathematical relationship expressed in source code, but there is 
+little excuse for much of the implementation quality in the remaining portions 
+of the code.</p> 
+<p>Even in the hard-core numerical portions, much can often be done to improve 
+the situation. I once worked on a project where I was helping some scientists 
+translate some IDL code into Fortran (for performance and portability). I ran 
+across a RK routine and could tell that a Runge-Kutta scheme was lurking in the 
+200-300 lines of code. As it turns out, there was also a fair bit of spherical 
+geometry and other indirectly related code that was one &ldquo;long chunk of 
+sequential code implementing a series of equations&rdquo;. I decided to 
+refactor the Fortran implementation, and was very pleased by the results. In 
+the end, the top level RK routine looked almost like something you would see in 
+a text book. The spherical geometry was in a separate module, as were the bits 
+of logic for accessing files to get offline wind fields and implementing 
+periodicity. All far easier to understand. And why does it matter? At the very 
+least the next developer would have a much easier time introducing for example 
+an adaptive RK scheme. But I also was able to discover that the treatment of 
+the lat-lon grid was terribly inaccurate near the poles and was able to 
+introduce a more correct geometric treatment that allowed 10x larger step 
+sizes. I never would have even attempted that change in the original code. I 
+strongly doubt that this particular bit of code is unique in terms of the 
+opportunity it provided.</p> 
+<p>Interestingly, in my experience, most modelers are to some degree aware 
+that there is a problem, and are even open to assistance in reducing the source 
+code &ldquo;entropy&rdquo;. They merely lack the skills and/or time to improve 
+the code through refactoring, and our understandably apprehensive about change. 
+But they continue to bear the costs of this entropy (often called &ldquo;code 
+debt&rdquo;) through (1) steep learning curve for new scientists, (2) increased 
+difficulty in extending the model, and (3) increased difficulty in debugging 
+the model when it breaks. I really wish that these costs could be quantified so 
+that we could judge whether it was in the long term interests of the 
+organization to hire more professional software developers to improve long term 
+scientific productivity. I&rsquo;m more than prepared to admit that the costs 
+would be counterproductive, but I want to be convinced.</p> </li> 
+<li> <br>
+ John Cary <br>
+ June 2nd, 2010 at 14:02 | #16 <br>
+Reply | Quote 
+<br> 
+<p>The whole language choice seems always to degenerate into a religious war, 
+and like all religious wars, the sides tend to be chosen on the basis of where 
+one grew up.</p> 
+<p>My experience is that different scientific communities have made different 
+choices, even though they are all coding up equations. The AMR framework, 
+CHOMBO, is all C++, as is the VORPAL EM/accelerator/plasma framework. The 
+Synergia beam modeling framework is Python linking in modules in Fortran and 
+C++. Most fusion codes are Fortran, but many are C, and the FACETS framework is 
+C++ that links in modules written in C++, Fortran, Python, and C. Much viz work 
+and data analysis is now done with Python/matplotlib/scipy, while other is done 
+within the VisIt C++ application.</p> 
+<p>With over 30 years of scientific programming behind me, I really 
+don&rsquo;t see any universal hatred of any language or methodology such as OO. 
+I see more of &ldquo;one should use what one is most productive in, whether 
+that is because of familiarity or technique.&rdquo; I have also seen that some 
+communities are more conservative, others more avant garde. People in any of 
+these communities are doing good work.</p> </li> </ol> 
+<ol> 
+<li>  March 25th, 2010 at 08:01 | #1 <br>
+ Tweets that mention What makes 
+software engineering for climate models different? | Serendipity &mdash; 
+Topsy.com <br>
+</li> 
+<li>  August 19th, 2010 at 06:48 | #2 <br>
+ Scientific bricolage and what to 
+do about it | Serendipity <br>
+</li> 
+<li>  November 15th, 2010 at 15:57 | #3 <br>
+ Software Product Line or Not? 
+&laquo; Rocky Dunlap's Weblog <br>
+</li> 
+<li>  November 27th, 2010 at 04:13 | #4 <br>
+ Do Climate Models need 
+Independent Verification and Validation? | Serendipity <br>
+</li> </ol> <br>
+
+Name (required) <br>
+E-Mail (will not be published) (required) <br>
+Website <br>
+<br> Subscribe to comments feed <br>
+<br>
+<br>
+Academics always fight over the 
+peer-review process Taking breaks, staying healthy <br>
+RSS <br>
+
+<h3>Fresh Serendipity:</h3> 
+<ul> 
+<li>How Climate Science is Done </li> 
+<li>Some CMIP5 statistics </li> 
+<li>Climate modeling in an open, transparent world </li> 
+<li>A warmer earth is a more &ldquo;electrifying&rdquo; world </li> 
+<li>Aerosols: Are They Good or Bad? </li> 
+<li>Peak X (for many values of X) </li> 
+<li>A Geoengineering Primer </li> 
+<li>New Course: Systems Thinking for Global Problems </li> 
+<li>Up for review: Assessing climate model software quality </li> 
+<li>Green Revolving Funds </li> 
+<li>Another sign of the death of Science in America </li> 
+<li>Visit our course blog </li> 
+<li>How much extra energy are we adding to the earth system? </li> 
+<li>New Trans-disciplinary Lecture Series on Climate Change </li> 
+<li>Understanding non-linear systems: Hurricane Damage </li> </ul> 
+<h3>Latest tweets:</h3> 
+<ul> 
+<li>My ex-students want more than an academic career can offer (BTW @
+yorchopolis is brilliant - hire him!) http://t.co/rFJlCD6f 1 day ago</li> 
+<li>@CameronNeylon To be provocative, I have no favs, b/c replicable has very 
+poor cost/benefit ratio. Replicable always(!?) has better payoff2 days ago</li> 
+<li>@richardabetts Surely it's a fixed delta (once farm is operational) rather 
+than a trend? Also, FTA: *large* wind farms...3 days ago</li> 
+<li>@scribblemoose Thanks! I'm celebrating my twitterday in Reading, but sadly 
+won't make it to York on this trip. Next time!!!3 days ago</li> 
+<li>Happy twitterday to me! First anniversary of getting on twitter. I got no 
+work done this past year, but it was fun!3 days ago</li> 
+<li>More updates...</li> </ul> 
+<h3>Categories</h3> 
+<ul> 
+<li>advocacy </li> 
+<li>blogging </li> 
+<li>books </li> 
+<li>climate informatics </li> 
+<li>climate modeling </li> 
+<li>climate science </li> 
+<li>collaborative science </li> 
+<li>conferences </li> 
+<li>courses </li> 
+<li>data modeling </li> 
+<li>debunking </li> 
+<li>education </li> 
+<li>Geoengineering </li> 
+<li>greentech </li> 
+<li>humour </li> 
+<li>impacts and adaptation </li> 
+<li>Information Vizualization </li> 
+<li>Peak Oil </li> 
+<li>philosophy </li> 
+<li>politics </li> 
+<li>psychology </li> 
+<li>reducing emissions </li> 
+<li>research ideas </li> 
+<li>research methods </li> 
+<li>Science Communication </li> 
+<li>sociology </li> 
+<li>software tools </li> 
+<li>sustainability </li> 
+<li>systems thinking </li> 
+<li>Toronto events </li> 
+<li>Uncategorized </li> </ul> 
+<h3>Archives</h3> 
+<ul> 
+<li>May 2012</li> 
+<li>April 2012</li> 
+<li>March 2012</li> 
+<li>February 2012</li> 
+<li>January 2012</li> 
+<li>December 2011</li> 
+<li>November 2011</li> 
+<li>October 2011</li> 
+<li>September 2011</li> 
+<li>August 2011</li> 
+<li>July 2011</li> 
+<li>June 2011</li> 
+<li>May 2011</li> 
+<li>April 2011</li> 
+<li>March 2011</li> 
+<li>February 2011</li> 
+<li>January 2011</li> 
+<li>December 2010</li> 
+<li>November 2010</li> 
+<li>October 2010</li> 
+<li>September 2010</li> 
+<li>August 2010</li> 
+<li>July 2010</li> 
+<li>June 2010</li> 
+<li>May 2010</li> 
+<li>April 2010</li> 
+<li>March 2010</li> 
+<li>February 2010</li> 
+<li>January 2010</li> 
+<li>December 2009</li> 
+<li>November 2009</li> 
+<li>October 2009</li> 
+<li>September 2009</li> 
+<li>August 2009</li> 
+<li>July 2009</li> 
+<li>June 2009</li> 
+<li>May 2009</li> 
+<li>April 2009</li> 
+<li>March 2009</li> </ul> 
+<h3>&nbsp;</h3>  May 2012 M T W T F S S <br>
+&laquo; Apr &nbsp; &nbsp; <br>
+
+&nbsp; 1 2 3 4 5 6 <br>
+7 8 9 10 11 12 13 <br>
+14 15 16 17 18 19 20 <br>
+21 22 
+23 24 25 26 27 <br>
+28 29 30 31 &nbsp; <br>
+<br>
+<br>
+
+<h3>Blogroll</h3> 
+<ul> 
+<li>&nbsp;RealClimate 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Gristmill 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;DeSmogBlog 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Monbiot.com 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;ClimateProgress 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Only in it for the Gold 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;The Cost of Energy 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;The Way Things Break 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Greenfyre's 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;The Intersection 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Alternative Energy Action Network 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;More Grumbine Science 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;http://www.ecoequity.org/ 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;A Few Things Ill-Considered 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Mind of Dan 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Global Warming Art 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Yale Climate Forum 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Left as an Exercise 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;James Empty Blog 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Deltoid 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;People and Place 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Crock of the Week 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Climate Denial Crock of the Week 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Capital Climate 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Azimuth 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Climate Charts and Graphs 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> </ul> 
+<h3>Colleagues</h3> 
+<ul> 
+<li>&nbsp;Catenary (Jorge Aranda) 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Carolyn's weblog 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;The Third Bit (Greg Wilson) 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Skoolr (Jon Pipitone) 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Human Side of SE (Janice Singer) 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Normally On (Alicia Grubb) 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Sarah Strong 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Ainsley Lawson 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Brent Mombourquette 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Maria Yancheva 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Samar (Summer) Sabie 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> 
+<li>&nbsp;Debeakered (Jono Lung) 
+<p></p> <br>
+
+<p>Close preview</p>  Loading... </li> </ul> 
+<h3>Meta</h3> 
+<ul> 
+<li>Register</li> 
+<li>Log in</li> 
+<li>Entries RSS</li> 
+<li>Comments RSS</li> 
+<li>WordPress.org</li> </ul> <br>
+<br>
+Top WordPress  Copyright &copy; 
+2009-2012 Serendipity<br>
+ Theme by NeoEase. Valid XHTML 1.1 and CSS 3. <br>
+
+<br> <br>
+
+</body>

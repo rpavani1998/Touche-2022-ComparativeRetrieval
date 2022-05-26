@@ -1,0 +1,144 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Quick Sort</title>
+<body>
+
+<h3>Quick Sort</h3> <br>
+<br>
+LA&nbsp;home<br>
+Computing<br>
+Algorithms<br>
+ 
+&nbsp;glossary<br>
+ &nbsp;Sorting<br>
+ &nbsp;&nbsp;Insertion<br>
+ &nbsp;&nbsp;
+Quick<br>
+ &nbsp;&nbsp;Merge<br>
+ &nbsp;&nbsp;Heap<br>
+ &nbsp;&nbsp;
+Dutch&nbsp;N.F.<br>
+ &nbsp;&nbsp;Radix<br>
+ &nbsp;&nbsp;<b>Quick</b><br>
+<br>
+
+<br> 
+<p>Quick sort partitions the array into two sections, the first of 
+&quot;small&quot; elements and the second of &quot;large&quot; elements. It 
+then sorts the small and large elements separately.</p> 
+<p>Ideally, partitioning would use the <em>median</em> of the given values, 
+but the median can only be found by scanning the whole array and this would 
+slow the algorithm down. In that case the two partitions would be of equal 
+size; In the simplest versions of quick sort an arbitrary element, typically 
+the first element is used as an estimate (guess) of the median.</p> 
+<pre> quicksort(int a[], int lo, int hi) /* sort a[lo..hi] */ { int left, 
+right, median, temp; if( hi &gt; lo ) /* i.e. at least 2 elements, then */ { 
+left=lo; right=hi; median=a[lo]; /* NB. just an estimate! */ while(right &gt;= 
+left) /* partition a[lo..hi] */ /* a[lo..left-1]&lt;=median and 
+a[right+1..hi]&gt;=median */ { while(a[left] &lt; median) left++; /* a[left] 
+&gt;= median */ while(a[right] &gt; median) right--; /* a[left] &gt;= median 
+&gt;= a[right] */ if(left &gt; right) break; //swap: temp=a[left]; 
+a[left]=a[right]; a[right]=temp; left++; right-- } /* a[lo..left-1]&lt;=median 
+and a[right+1..hi]&gt;=median and left &gt; right */ quicksort(a, lo, right);// 
+divide and conquer quicksort(a, left, hi); } }/*quicksort*/ function quick(a, 
+N) /* sort a[1..N], N.B. 1 to N */ { quicksort(a, 1, N); }</pre> 
+<p><b>[You need a JavaScript enabled Browser.]</b></p> 
+<p>Change the data in the HTML FORM below, click `go', and experiment:</p> L
+<br>.<br>
+A<br>
+l<br>
+l<br>
+i<br>
+s<br>
+o<br>
+n<br>
+<br>
+<br>
+ 
+input:&nbsp;&nbsp; <br>
+ output: <br>
+ trace:&nbsp;&nbsp; <br>
+<br>
+
+<h3>Complexity</h3> 
+<h4>Time</h4> 
+<p>In the <em>best case</em>, the partitions are of equal size at each 
+recursive call, and there are then log2(N) <em>levels</em> of recursive calls. 
+The whole array is scanned at each<em>level</em> of calls, so the total work 
+done is O(N*log(N)).</p> 
+<p>The <em>average</em> time complexity is also O(N*log(N)). </p> 
+<p>The <em>worst case</em> time complexity is O(N2). This occurs when the 
+estimate of the median is systematically always poor, e.g. on already sorted 
+data, but this is very unlikely to happen by chance.</p> 
+<h4>Space</h4> 
+<p>As coded above the best- and average-case space-complexity is O(log(N)), 
+for the stack-space used.</p> 
+<p>The worst-case space-complexity is O(N), but it can be limited to O(log(N)) 
+if the code is modified so that the<em>smaller</em> half of the array is sorted 
+first (and an explicit stack, or the tail-recursion optimisation, used).</p> 
+<p>In that case, the best-case space-complexity becomes O(1)  [-- Andrew 
+Clausen '05],  &quot; <code>gcc -O2</code>  does tail-recursion optimization, 
+but<code>-O1</code> doesn't. &quot; </p> 
+<h3>Stability</h3> 
+<p>Quick sort is not stable. </p> 
+<h3>Testing</h3> 
+<p>It is <em>very easy</em> to make errors when programming Quick sort. The 
+basic idea is simple but the details of the manipulation of the 
+&quot;pointers&quot; hi, lo, left, right, are very easily messed up - this is 
+the voice of bitter experience!</p> 
+<h3>Notes</h3> 
+<ul> 
+<li>C. A. R. Hoare, <i>Algorithm 63, Partition</i>;&nbsp; <i>Algorithm 64, 
+Quicksort</i>, p321;&nbsp; <i>Algorithm 65: FIND</i>, Comm. of the ACM, <b>4</b>
+ p321-322, 1961.<br>
+ C. A. R. Hoare, <i>Quicksort</i>, Comp. J. <b>5</b>(1) 
+p10-15 1962.<br>
+ Tony Hoare published quick sort in 1961. </li> 
+<li>The particular coding above is after  N. Wirth , <i>Algorithms and Data 
+Structures</i>,  Prentice-Hall 1986 . </li> 
+<li>Partitioning has other applications, e.g. to find the kth largest or 
+smallest element of an array (e.g. median when k=N/2) without completely 
+sorting the array.</li> 
+<li>Quick sort can be made faster, i.e. its constant of proportionality 
+reduced, by various techniques:
+<ul> 
+<li>Use a simpler sort, e.g. insertion sort, when the section of the array to 
+be sorted is &quot;small&quot;.</li> 
+<li>Use a better estimate for the median, e.g. median of three. </li> 
+<li>Implement a non-recursive version with an explicit stack. In this case 
+push the<em>larger</em> partition on the stack while the smaller section is 
+sorted, because this limits the stack requirements to O(log2(N)). </li> </ul> 
+</li> 
+<li>See the Dutch National Flag problem for the possibilities of a 3-way 
+partition and quick-sort.</li> </ul> &copy; L. A.<br>
+www:<br>
+The C++ Cookbook 
+ mastering the language<br>
+<br>
+<br>
+<br>
+free:<br>
+Linux<br>
+ &nbsp;Ubuntu 
+operating-sys<br>
+OpenOffice office-suite<br>
+The GIMP ~photoshop<br>
+Firefox 
+web-browser<br>
+FlashBlock flash on/off<br>
+<br>
+<br>
+<b></b> <br>
+<br>
+<br>
+
+<br> &copy; L. Allison &nbsp; http://www.allisons.org/ll/ &nbsp;  ( or as 
+otherwise indicated), <br>
+ Created with &quot;vi (Linux + 
+Solaris)&quot;,&nbsp; charset=iso-8859-1,&nbsp; fetched Sunday, 12-Feb-2012 
+21:17:59 EST. <br>
+<br>
+<br>
+<br>
+
+</body>

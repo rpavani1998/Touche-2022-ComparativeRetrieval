@@ -1,0 +1,2447 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Regression Problems -- and their Solutions</title>
+<body>
+
+<h1>Regression Problems -- and their Solutions</h1> 
+<blockquote> Tests and confidence intervals <br>
+Partial residual plots, added 
+variable plots <br>
+Some plots to explore a regression <br>
+Overfit <br>
+
+Underfit <br>
+Influential points <br>
+Influential clusters <br>
+Non gaussian 
+residuals <br>
+Heteroskedasticity <br>
+Correlated errors <br>
+Unidentifiability 
+<br> Missing values <br>
+Extrapolation <br>
+Miscellaneous <br>
+The curse of 
+dimension <br>
+Wide problems <br>
+</blockquote> 
+<p> In this chapter, we list some of the problems that may occur in a 
+regression and explain how to spot them -- graphically. Often, you can solve 
+the problem by transforming the variables (so that the outliers and influential 
+observations disappear, so that the residuals look normal, so that the 
+residuals have the same variance -- quite often, you can do all this at the 
+same time), by altering the model (for a simpler or more complex one) or by 
+using another regression (GLS to account for heteroskedasticity and correlated 
+residuals, robust regression to account for remaining influencial observations).
+</p> 
+<pre> Overfit: choose a simpler model Underfit: curvilinear regression, 
+non-linear regression, local regression Influential points: transform the data, 
+robust regression, weighted least squares, remove the points Influential 
+clusters: transform the data, mixtures Non-gaussian residuals: transform the 
+data, robust regression, normalp Heteroskedasticity: gls correlated residuals: 
+gls Unidentifiability: shrinkage methods Missing values: discard the 
+observations??? The curse of dimension (GAM,...) Combining regressions (BMA,...)
+</pre> 
+<h2>Tests and confidence intervals</h2> 
+<p> After this bird's eye view of several regression techniques, let us come 
+back to linear regression.</p> 
+<h3>Tests </h3> 
+<p> The &quot;summary&quot; function gave us the results of a Student T test 
+on the regression coefficients -- that answered the question &quot;is this 
+coefficient significantly different from zero?&quot;.</p> 
+<pre> &gt; x &lt;- rnorm(100) &gt; y &lt;- 1 + 2*x + .3*rnorm(100) &gt; 
+summary(lm(y~x)) ... Coefficients: Estimate Std. Error t value Pr(&gt;|t|) 
+(Intercept) 1.08440 0.03224 33.64 &lt;2e-16 *** x 2.04051 0.03027 67.42 
+&lt;2e-16 ***</pre> 
+<p> In the same example, if we have a prior idea on the value of the 
+coefficient, we can test this value: here, let us test if the intercept is 1.
+</p> 
+<p> (When you write a formula to describe a model, some operators are 
+interpreted in a different way (especially * and ^): to be sure that they will 
+be understood as arithmetic operations on the variables, surround them with 
+I(...). Here, it is not needed.)</p> 
+<pre> &gt; x &lt;- rnorm(100) &gt; y &lt;- 1 + 2*x + .3*rnorm(100) &gt; 
+summary(lm(I(y-1)~x)) Call: lm(formula = I(y - 1) ~ x) Residuals: Min 1Q Median 
+3Q Max -0.84692 -0.24891 0.02781 0.20486 0.60522 Coefficients: Estimate Std. 
+Error t value Pr(&gt;|t|) (Intercept) -0.01294 0.02856 -0.453 0.651 x 1.96405 
+0.02851 68.898 &lt;2e-16 *** --- Signif. codes: 0 `***' 0.001 `**' 0.01 `*' 
+0.05 `.' 0.1 ` ' 1 Residual standard error: 0.2855 on 98 degrees of freedom 
+Multiple R-Squared: 0.9798, Adjusted R-squared: 0.9796 F-statistic: 4747 on 1 
+and 98 DF, p-value: &lt; 2.2e-16</pre> 
+<p> Under the hypothesis that this coefficient is 1, let us check if the other 
+is zero.</p> 
+<pre> &gt; summary(lm(I(y-1)~0+x)) Call: lm(formula = I(y - 1) ~ 0 + x) 
+Residuals: Min 1Q Median 3Q Max -0.85962 -0.26189 0.01480 0.19184 0.59227 
+Coefficients: Estimate Std. Error t value Pr(&gt;|t|) x 1.96378 0.02839 69.18 
+&lt;2e-16 *** --- Signif. codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
+Residual standard error: 0.2844 on 99 degrees of freedom Multiple R-Squared: 
+0.9797, Adjusted R-squared: 0.9795 F-statistic: 4786 on 1 and 99 DF, p-value: 
+&lt; 2.2e-16</pre> 
+<p> Other method: </p> 
+<pre> &gt; x &lt;- rnorm(100) &gt; y &lt;- 1 + 2*x + .3*rnorm(100) &gt; a 
+&lt;- rep(1,length(x)) &gt; summary(lm(y~offset(a)-1+x)) Call: lm(formula = y ~ 
+offset(a) - 1 + x) Residuals: Min 1Q Median 3Q Max -0.92812 -0.09901 0.09515 
+0.28893 0.99363 Coefficients: Estimate Std. Error t value Pr(&gt;|t|) x 2.04219 
+0.03114 65.58 &lt;2e-16 *** --- Signif. codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 
+`.' 0.1 ` ' 1 Residual standard error: 0.3317 on 99 degrees of freedom Multiple 
+R-Squared: 0.9816, Adjusted R-squared: 0.9815 F-statistic: 5293 on 1 and 99 DF, 
+p-value: &lt; 2.2e-16</pre> 
+<p> Let us check if it is equal to 2: </p> 
+<pre> &gt; summary(lm(I(y-1-2*x)~0+x)) Call: lm(formula = I(y - 1 - 2 * x) ~ 0 
++ x) Residuals: Min 1Q Median 3Q Max -0.85962 -0.26189 0.01480 0.19184 0.59227 
+Coefficients: Estimate Std. Error t value Pr(&gt;|t|) x -0.03622 0.02839 -1.276 
+0.205 Residual standard error: 0.2844 on 99 degrees of freedom Multiple 
+R-Squared: 0.01618, Adjusted R-squared: 0.006244 F-statistic: 1.628 on 1 and 99 
+DF, p-value: 0.2049</pre> 
+<p> Other method: </p> 
+<pre> &gt; summary(lm(y~offset(1+2*x)+0+x)) Call: lm(formula = y ~ offset(1 + 
+2 * x) + 0 + x) Residuals: Min 1Q Median 3Q Max -0.92812 -0.09901 0.09515 
+0.28893 0.99363 Coefficients: Estimate Std. Error t value Pr(&gt;|t|) x 0.04219 
+0.03114 1.355 0.179 Residual standard error: 0.3317 on 99 degrees of freedom 
+Multiple R-Squared: 0.9816, Adjusted R-squared: 0.9815 F-statistic: 5293 on 1 
+and 99 DF, p-value: &lt; 2.2e-16</pre> 
+<p> More generally, you can use the &quot;offset&quot; function in a linear 
+regression when you know exactly one of the coefficients.</p> 
+<p> Other method: </p> 
+<pre> x &lt;- rnorm(100) y &lt;- 1 + 2*x + .3*rnorm(100) library(car) 
+linear.hypothesis( lm(y~x), matrix(c(1,0,0,1), 2, 2), c(1,2) )</pre> 
+<p> This checks if </p> 
+<pre> [ 1 0 ] [ first coefficient ] [ 1 ] [ ] * [ ] = [ ] [ 0 1 ] [ second 
+coefficient ] [ 2 ].</pre> 
+<p> This yields: </p> 
+<pre> F-Test SS = 0.04165324 SSE = 9.724817 F = 0.2098763 Df = 2 and 98 p = 
+0.8110479</pre> 
+<h3>Confidence intervals and prediction intervals </h3> 
+<p> You can compute confidence intervals on the parameters. </p> 
+<pre> &gt; library(MASS) &gt; n &lt;- 100 &gt; x &lt;- rnorm(n) &gt; y &lt;- 1 
+- 2*x + rnorm(n) &gt; r &lt;- lm(y~x) &gt; r$coefficients (Intercept) x 
+0.9569173 -2.1296830 &gt; confint(r) 2.5 % 97.5 % (Intercept) 0.7622321 
+1.151603 x -2.3023449 -1.957021</pre> 
+<p> You can also look for confidence intervals on the predicted values. It can 
+be a confidence interval of aX+b (confidence band) or -- this is different -- 
+of E[Y|X=x] (prediction band).</p> 
+<pre> x &lt;- runif(20) y &lt;- 1-2*x+.1*rnorm(20) res &lt;- lm(y~x) plot(y~x) 
+new &lt;- data.frame( x=seq(0,1,length=21) ) p &lt;- predict(res, new) points( 
+p ~ new$x, type='l' ) p &lt;- predict(res, new, interval='confidence') points( 
+p[,2] ~ new$x, type='l', col=&quot;green&quot; ) points( p[,3] ~ new$x, 
+type='l', col=&quot;green&quot; ) p &lt;- predict(res, new, 
+interval='prediction') points( p[,2] ~ new$x, type='l', col=&quot;red&quot; ) 
+points( p[,3] ~ new$x, type='l', col=&quot;red&quot; ) 
+title(main=&quot;Confidence and prediction bands&quot;) legend( 
+par(&quot;usr&quot;)[1], par(&quot;usr&quot;)[3], yjust=0, c(&quot;Confidence 
+band&quot;, &quot;Prediction band&quot;), lwd=1, lty=1, 
+col=c(&quot;green&quot;, &quot;red&quot;) )</pre> 
+<p></p> 
+<p> TODO: stress the difference between the two... </p> 
+<p> Away from the values of the sample, the intervals grow. </p> 
+<pre> plot(y~x, xlim=c(-1,2), ylim=c(-3,3)) new &lt;- data.frame( 
+x=seq(-2,3,length=200) ) p &lt;- predict(res, new) points( p ~ new$x, type='l' 
+) p &lt;- predict(res, new, interval='confidence') points( p[,2] ~ new$x, 
+type='l', col=&quot;green&quot; ) points( p[,3] ~ new$x, type='l', 
+col=&quot;green&quot; ) p &lt;- predict(res, new, interval='prediction') 
+points( p[,2] ~ new$x, type='l', col=&quot;red&quot; ) points( p[,3] ~ new$x, 
+type='l', col=&quot;red&quot; ) title(main=&quot;Confidence and prediction 
+bands&quot;) legend( par(&quot;usr&quot;)[1], par(&quot;usr&quot;)[3], yjust=0, 
+c(&quot;Confidence band&quot;, &quot;Prediction band&quot;), lwd=1, lty=1, 
+col=c(&quot;green&quot;, &quot;red&quot;) )</pre> 
+<p></p> 
+<pre> plot(y~x, xlim=c(-5,6), ylim=c(-11,11)) new &lt;- data.frame( 
+x=seq(-5,6,length=200) ) p &lt;- predict(res, new) points( p ~ new$x, type='l' 
+) p &lt;- predict(res, new, interval='confidence') points( p[,2] ~ new$x, 
+type='l', col=&quot;green&quot; ) points( p[,3] ~ new$x, type='l', 
+col=&quot;green&quot; ) p &lt;- predict(res, new, interval='prediction') 
+points( p[,2] ~ new$x, type='l', col=&quot;red&quot; ) points( p[,3] ~ new$x, 
+type='l', col=&quot;red&quot; ) title(main=&quot;Confidence and prediction 
+bands&quot;) legend( par(&quot;usr&quot;)[1], par(&quot;usr&quot;)[3], yjust=0, 
+c(&quot;Confidence band&quot;, &quot;Prediction band&quot;), lwd=1, lty=1, 
+col=c(&quot;green&quot;, &quot;red&quot;) )</pre> 
+<p></p> 
+<p> Here are other ways of representing the confidence and prediction 
+intervals.</p> 
+<pre> N &lt;- 100 n &lt;- 20 x &lt;- runif(N, min=-1, max=1) y &lt;- 1 - 2*x + 
+rnorm(N, sd=abs(x)) res &lt;- lm(y~x) plot(y~x) x0 &lt;- seq(-1,1,length=n) new 
+&lt;- data.frame( x=x0 ) p &lt;- predict(res, new) points( p ~ x0, type='l' ) p 
+&lt;- predict(res, new, interval='prediction') segments( x0, p[,2], x0, p[,3], 
+col='red') p &lt;- predict(res, new, interval='confidence') segments( x0, 
+p[,2], x0, p[,3], col='green', lwd=3 )</pre> 
+<p></p> 
+<pre> mySegments &lt;- function(a,b,c,d,...) { u &lt;- par('usr') e &lt;- 
+(u[2]-u[1])/100 segments(a,b,c,d,...) segments(a+e,b,a-e,b,...) 
+segments(c+e,d,c-e,d,...) } plot(y~x) p &lt;- predict(res, new) points( p ~ x0, 
+type='l' ) p &lt;- predict(res, new, interval='prediction') mySegments( x0, 
+p[,2], x0, p[,3], col='red') p &lt;- predict(res, new, interval='confidence') 
+mySegments( x0, p[,2], x0, p[,3], col='green', lwd=3 )</pre> 
+<p></p> 
+<h3>Test on a pair of variables (ellipses) </h3> 
+<p> You can want a confidence interval for a single, isolated, parameter -- 
+you get an interval -- or for several parameters at a time -- you get an 
+ellipsoid, called the confidence region. It brings more information than the 
+1-variable confidence intervals (you cannot combine those intervals). Thus you 
+might want to plot these ellipses.</p> 
+<p> The ellipse you get is skewed, because it comes from the correlation 
+matrix of the two coefficients: simply diagonalize it in an orthonormal basis 
+and the eigen vectors will give you the axes.</p> 
+<pre> library(ellipse) my.confidence.region &lt;- function (g, a=2, b=3) { e 
+&lt;- ellipse(g,c(a,b)) plot(e, type=&quot;l&quot;, xlim=c( min(c(0,e[,1])), 
+max(c(0,e[,1])) ), ylim=c( min(c(0,e[,2])), max(c(0,e[,2])) ), ) x &lt;- 
+g$coef[a] y &lt;- g$coef[b] points(x,y,pch=18) cf &lt;- summary(g)$coefficients 
+ia &lt;- cf[a,2]*qt(.975,g$df.residual) ib &lt;- cf[b,2]*qt(.975,g$df.residual) 
+abline(v=c(x+ia,x-ia),lty=2) abline(h=c(y+ib,y-ib),lty=2) points(0,0) 
+abline(v=0,lty=&quot;F848&quot;) abline(h=0,lty=&quot;F848&quot;) } n &lt;- 20 
+x1 &lt;- rnorm(n) x2 &lt;- rnorm(n) x3 &lt;- rnorm(n) y &lt;- x1+x2+x3+rnorm(n) 
+g &lt;- lm(y~x1+x2+x3) my.confidence.region(g)</pre> 
+<p></p> 
+<pre> n &lt;- 20 x &lt;- rnorm(n) x1 &lt;- x+.2*rnorm(n) x2 &lt;- 
+x+.2*rnorm(n) y &lt;- x1+x2+rnorm(n) g &lt;- lm(y~x1+x2) my.confidence.region(g)
+</pre> 
+<p></p> 
+<p> In the three following plots, the probability that the actual values of 
+the parameters be in the pink area is the same.</p> 
+<pre> my.confidence.region &lt;- function (g, a=2, b=3, which=0, col='pink') { 
+e &lt;- ellipse(g,c(a,b)) x &lt;- g$coef[a] y &lt;- g$coef[b] cf &lt;- 
+summary(g)$coefficients ia &lt;- cf[a,2]*qt(.975,g$df.residual) ib &lt;- 
+cf[b,2]*qt(.975,g$df.residual) xmin &lt;- min(c(0,e[,1])) xmax &lt;- 
+max(c(0,e[,1])) ymin &lt;- min(c(0,e[,2])) ymax &lt;- max(c(0,e[,2])) plot(e, 
+type=&quot;l&quot;, xlim=c(xmin,xmax), ylim=c(ymin,ymax), ) if(which==1){ 
+polygon(e,col=col) } else if(which==2){ 
+rect(x-ia,par('usr')[3],x+ia,par('usr')[4],col=col,border=col) } else 
+if(which==3){ rect(par('usr')[1],y-ib,par('usr')[2],y+ib,col=col,border=col) } 
+lines(e) points(x,y,pch=18) abline(v=c(x+ia,x-ia),lty=2) 
+abline(h=c(y+ib,y-ib),lty=2) points(0,0) abline(v=0,lty=&quot;F848&quot;) 
+abline(h=0,lty=&quot;F848&quot;) } my.confidence.region(g, which=1)</pre> 
+<p></p> 
+<pre> my.confidence.region(g, which=2)</pre> 
+<p></p> 
+<pre> my.confidence.region(g, which=3)</pre> 
+<p></p> 
+<h3>The dangers of multiple tests </h3> 
+<p> When you perform a multiple regression, you try to retain as few 
+predictive variables as possible, while retaining all those that are relevant. 
+To choose or discard variables, you might be tempted to perform a lot of 
+statistical tests.</p> 
+<p> This is a bad idea. </p> 
+<p> Indeed, for each testm you have a certain risk of making a mistake -- and 
+those risks pile up.</p> 
+<p> However, this is usually what we do -- we rarely have the choice. You can 
+either start with a model with no variable at all, then add the 
+&quot;best&quot; predictive variable (say, the one with the higher correlation) 
+and progressively add other variables (say, the ones that provide the biggest 
+increase in R^2) and stop when you reach a certain criterion (say, when F^2 
+reaches a certain value); or start with a saturated model, containing all the 
+variables an successively remove the variables that provide the smallest 
+decrease in R^2 and stop when F^2 reaches a value fixed in advance.</p> 
+<p> TODO: Tukey, etc. (in the Anova chapter?) </p> 
+<h3>Regression and sums of squares </h3> 
+<p> When you read regression or anova (analysis of variance) results, you 
+often face a table &quot;full of sums of squares&quot;.</p> 
+<p> RSS (Residual Sum of Squares): this is the quantity you try to minimize in 
+a regression. More precisely, let X be the predictive variable, Y the variable 
+to predict and hat(Yi) the predicted velue, we set</p> 
+<pre> hat Yi = b0 + b1 Xi</pre> 
+<p> and we try to find the values of b0 and b1 that minimize </p> 
+<pre> RSS = Sum( (Yi - hat Yi)^2 ).</pre> 
+<p> TSS (Total sum of squares): The is the sun of squares minimized when you 
+look for the mean of Y</p> 
+<pre> TSS = Sum( (Yi - bar Y)^2 )</pre> 
+<p> ESS (Explained Sum of Squares): This is the difference between the 
+preceding two sums of squares. It can also be written as a sum of squares.</p> 
+<pre> ESS = Sum( ( hat Yi - bar Y )^2 )</pre> 
+<p> R-square: &quot;determination coefficient&quot; or &quot;percentage of 
+variance of Y explained by X&quot;. The closer to one, the better the 
+regression explains the variations of Y.</p> 
+<pre> R^2 = ESS/TSS.</pre> 
+<p> You can give a graphical interpretation of the determination coefficient. 
+The data are clustered in a band of height RSS around the regression line, 
+while the height of the plot is TSS. We then have R^2=1-RSS/TSS.</p> 
+<pre> n &lt;- 20000 x &lt;- runif(n) y &lt;- 4 - 8*x + rnorm(n) plot(y~x, 
+pch='.') abline(lm(y~x), col='red') arrows( .1, -6, .1, 6, code=3, lwd=3, 
+col='blue' ) arrows( .9, -3.2-2, .9, -3.2+2, code=3, lwd=3, col='blue' ) text( 
+.1, 6, &quot;TSS&quot;, adj=c(0,0), cex=2, col='blue' ) text( .9, -3.2+2, 
+&quot;RSS&quot;, adj=c(1,0), cex=2, col='blue' )</pre> 
+<p></p> 
+<h3>Reading the results of a regression </h3> 
+<p> We have seen three way of printing the results of a regression: with the 
+&quot;print&quot;, &quot;summary&quot; and &quot;anova&quot; functions. The 
+last line of the &quot;anova&quot; function compares our model with the null 
+model (i.e., with the model with no explanatory variables at all, y ~ 1).</p> 
+<pre> &gt; x &lt;- rnorm(100) &gt; y &lt;- 1 + 2*x + .3*rnorm(100) &gt; 
+summary(lm(y~x)) Call: lm(formula = y ~ x) Residuals: Min 1Q Median 3Q Max 
+-0.84692 -0.24891 0.02781 0.20486 0.60522 Coefficients: Estimate Std. Error t 
+value Pr(&gt;|t|) (Intercept) 0.98706 0.02856 34.56 &lt;2e-16 *** x 1.96405 
+0.02851 68.90 &lt;2e-16 *** --- Signif. codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 
+`.' 0.1 ` ' 1 Residual standard error: 0.2855 on 98 degrees of freedom Multiple 
+R-Squared: 0.9798, Adjusted R-squared: 0.9796 F-statistic: 4747 on 1 and 98 DF, 
+p-value: &lt; 2.2e-16</pre> 
+<p> The result of the &quot;anova&quot; function explains where these fugures 
+come from: you have the sum of squares, their &quot;mean&quot; (just divide by 
+the &quot;number of degrees of freedom&quot;), their quotient (F-value) and the 
+probability that this quotient be as high if the slope of the line is zero 
+(i.e., the p-value of the test of H0: &quot;the slope is zero&quot; against H1: 
+&quot;the slope is not zero&quot;).</p> 
+<pre> &gt; anova(lm(y~x)) Analysis of Variance Table Response: y Df Sum Sq 
+Mean Sq F value Pr(&gt;F) x 1 386.97 386.97 4747 &lt; 2.2e-16 *** Residuals 98 
+7.99 0.08 --- Signif. codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1
+</pre> 
+<p> More generally, the &quot;anova&quot; function performs a test that 
+compares embedded models (here, a model with an intercept and a slope, and a 
+model with an intercept and no slope).</p> 
+<h3>Comparing two models </h3> 
+<p> In a multiple regression, you strive to retain as few variables as 
+possible. In this process, you want to compare models: e.g., compare a model 
+with a lot of variable and a model with fewer variables.</p> 
+<p> The &quot;anova&quot; function performs that kind of comparison (it does 
+not answer the question &quot;is this model better?&quot; but &quot;are these 
+models significantly different?&quot; -- if they are not significantly 
+different, you will reject the more complicated one).</p> 
+<pre> data(trees) r1 &lt;- lm(Volume ~ Girth, data=trees) r2 &lt;- lm(Volume ~ 
+Girth + Height, data=trees) anova(r1,r2)</pre> 
+<p> The result </p> 
+<pre> Analysis of Variance Table Model 1: Volume ~ Girth Model 2: Volume ~ 
+Girth + Height Res.Df RSS Df Sum of Sq F Pr(&gt;F) 1 29 524.30 2 28 421.92 1 
+102.38 6.7943 0.01449 * --- Signif. codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 
+0.1 ` ' 1</pre> 
+<p> tells us that the two models are significantly different with a risk of 
+error under 2%.</p> 
+<p> Here are a few other examples. </p> 
+<pre> x1 &lt;- rnorm(100) x2 &lt;- rnorm(100) x3 &lt;- rnorm(100) b &lt;- .1* 
+rnorm(100) y &lt;- 1 + x1 + x2 + x3 + b r1 &lt;- lm( y ~ x1 ) r2 &lt;- lm( y ~ 
+x1 + x2 + x3 ) anova(r1,r2) # p-value = 2e-16 y &lt;- 1 + x1 r1 &lt;- lm( y ~ 
+x1 ) r2 &lt;- lm( y ~ x1 + x2 + x3 ) anova(r1,r2) # p-value = 0.25 y &lt;- 1 + 
+x1 + .02*x2 - .02*x3 + b r1 &lt;- lm( y ~ x1 ) r2 &lt;- lm( y ~ x1 + x2 + x3 ) 
+anova(r1,r2) # p-value = 0.10</pre> 
+<p> You can compare more that two model (but always nested models: each model 
+is included in the next).</p> 
+<pre> y &lt;- 1 + x1 + x2 + x3 + b r1 &lt;- lm( y ~ x1 ) r2 &lt;- lm( y ~ x1 + 
+x2 ) r3 &lt;- lm( y ~ x1 + x2 + x3 ) anova(r1,r2,r3) # p-values = 2e-16 (both)
+</pre> 
+<p> If, in the comparison of two models, you get a very high p-value, i.e., if 
+the two models are not significantly different, you will reject the more 
+complex and retain the simplest.</p> 
+<h3>Anova and regression </h3> 
+<p> You can present the computations performed in a regression as an anova 
+table. Furthermore, the idea behind the computations is the same: express the 
+variance of Y as the sum of a variance of a variable affine in X and a residual 
+variance, and minimize this residual variance.</p> 
+<pre> x &lt;- runif(10) y &lt;- 1 + x + .2*rnorm(10) anova(lm(y~x))</pre> 
+<p> Here, the anova tells us that, indeed, Y depend on X, with a risk of error 
+under 1%.</p> 
+<pre> Analysis of Variance Table Response: y Df Sum Sq Mean Sq F value 
+Pr(&gt;F) x 1 0.85633 0.85633 20.258 0.002000 ** Residuals 8 0.33817 0.04227
+</pre> 
+<p> It still works with several predictive variables. </p> 
+<pre> x &lt;- runif(10) y &lt;- runif(10) z &lt;- 1 + x - y + .2*rnorm(10) 
+anova(lm(z~x+y))</pre> 
+<p> The analysis of variance table tells us that z depends on x and y, with a 
+risk of error under 1%.</p> 
+<pre> Analysis of Variance Table Response: z Df Sum Sq Mean Sq F value 
+Pr(&gt;F) x 1 2.33719 2.33719 45.294 0.0002699 *** y 1 0.73721 0.73721 14.287 
+0.0068940 ** Residuals 7 0.36120 0.05160</pre> 
+<p> Counterintuitive and frightening as it may be, you might notice that the 
+result depends on the order of the parameters...</p> 
+<pre> &gt; anova(lm(z~y+x)) Analysis of Variance Table Response: z Df Sum Sq 
+Mean Sq F value Pr(&gt;F) y 1 2.42444 2.42444 46.985 0.000241 *** x 1 0.64996 
+0.64996 12.596 0.009355 ** Residuals 7 0.36120 0.05160</pre> 
+<p> In some cases, you can even get contradictory results: depending on the 
+order of the predictive variables, you can find that z sometimes depends on x, 
+sometimes not.</p> 
+<pre> &gt; x &lt;- runif(10) &gt; y &lt;- runif(10) &gt; z &lt;- 1 + x + 5*y + 
+.2*rnorm(10) &gt; anova(lm(z~x+y)) Analysis of Variance Table Response: z Df 
+Sum Sq Mean Sq F value Pr(&gt;F) x 1 0.0104 0.0104 0.1402 0.7192 y 1 7.5763 
+7.5763 102.1495 1.994e-05 *** Residuals 7 0.5192 0.0742 &gt; anova(lm(z~y+x)) 
+Analysis of Variance Table Response: z Df Sum Sq Mean Sq F value Pr(&gt;F) y 1 
+7.1666 7.1666 96.626 2.395e-05 *** x 1 0.4201 0.4201 5.664 0.04889 * Residuals 
+7 0.5192 0.0742</pre> 
+<h2>Partial residual plots, added variable plots</h2> 
+<h2>Some plots to explore a regression</h2> 
+<h3>Residuals </h3> 
+<p> The residuals are the differences between the observed values and the 
+predicted values.</p> 
+<h3>Residuals and noise </h3> 
+<p> The noise is the difference between the observed values and the actual 
+values: it appears in the model, e.g.</p> 
+<pre> Y = a + b X + noise</pre> 
+<p> Residues and noise are two different things. Even from a statistical point 
+of view, they look different. For instance, their variance is not the same 
+(neither is the shape of their distribution, by the way). The following 
+simulation estimates the variance of the residuals: we get 0.008893307 while 
+the noise variance was 0.01.</p> 
+<pre> a &lt;- 1 b &lt;- -2 s &lt;- .1 n &lt;- 10 N &lt;- 1e6 v &lt;- NULL for 
+(i in 1:N) { x &lt;- rnorm(n) y &lt;- 1-2*x+s*rnorm(n) v &lt;- append(v, 
+var(lm(y~x)$res)) } mean(v)</pre> 
+<p> You can show that the variance of the residual of the observation i is </p>
+<pre> sigma^2 * ( 1 - h_i )</pre> 
+<p> where sigma^2 is the noise variance and h_i is the &quot;leverage&quot; of 
+observation i (the i-th diagonal term of t(X)%*%X).</p> 
+<h3>Studentized (or standardized) residuals </h3> 
+<p> These are the normalized residuals. Their variance is estimated from all 
+the sample.</p> 
+<pre> ?rstandard</pre> 
+<h3>Jackknife (or studentized) residuals </h3> 
+<p> These are still the &quot;normalized&quot; residuals, but this time, we 
+estimate the variance with the sample without the current observation.</p> 
+<pre> ?rstudent</pre> 
+<h3>Plotting the residuals </h3> 
+<p> Let us consider the following example. </p> 
+<pre> n &lt;- 100 x1 &lt;- rnorm(n) x2 &lt;- rnorm(n) x3 &lt;- x1^2+rnorm(n) 
+x4 &lt;- 1/(1+x2^2)+.2*rnorm(n) y &lt;- 1+x1-x2+x3-x4+.1*rnorm(n) 
+pairs(cbind(x1,x2,x3,x4,y))</pre> 
+<p></p> 
+<p> The residuals are full-fledged statistical variables: you can look at them 
+through box-and-whisker plots, histograms, qqplots, etc. You can also plot them 
+as a function of the predicted values, as a function of the various predictive 
+variables or as a function of the observation number.</p> 
+<pre> r &lt;- lm(y~x1+x2+x3+x4) boxplot(r$res, horizontal=T)</pre> 
+<p></p> 
+<pre> hist(r$res)</pre> 
+<p></p> 
+<pre> plot(r$res, main='Residuals')</pre> 
+<p></p> 
+<pre> plot(rstandard(r), main='Standardized residuals')</pre> 
+<p></p> 
+<pre> plot(rstudent(r), main=&quot;Studentized residuals&quot;)</pre> 
+<p></p> 
+<pre> plot(r$res ~ r$fitted.values, main=&quot;Residuals and predicted 
+values&quot;) abline(h=0, lty=3)</pre> 
+<p></p> 
+<pre> op &lt;- par(mfrow=c(2,2)) plot(r$res ~ x1) abline(h=0, lty=3) 
+plot(r$res ~ x2) abline(h=0, lty=3) plot(r$res ~ x3) abline(h=0, lty=3) 
+plot(r$res ~ x4) abline(h=0, lty=3) par(op)</pre> 
+<p></p> 
+<pre> n &lt;- 100 x1 &lt;- rnorm(n) x2 &lt;- 1:n y &lt;- rnorm(1) for (i in 
+2:n) { y &lt;- c(y, y[i-1] + rnorm(1)) } y &lt;- x1 + y r &lt;- lm(y~x1+x2) # 
+Or simply: lm(y~x1) op &lt;- par(mfrow=c(2,1)) plot( r$res ~ x1 ) plot( r$res ~ 
+x2 ) par(op)</pre> 
+<p></p> 
+<p> It is usually a bad idea to plot the residuals as a function of the 
+observed values, because the &quot;noise term&quot; in the model appears on 
+both axes, and you (almost) end up plotting this noise as a function of 
+itself...</p> 
+<pre> n &lt;- 100 x &lt;- rnorm(n) y &lt;- 1-x+rnorm(n) r &lt;- lm(y~x) 
+plot(r$res ~ y) abline(h=0, lty=3) abline(lm(r$res~y),col='red') 
+title(main='Not a good idea...')</pre> 
+<p></p> 
+<h3>Partial regression plot (or added variable plot) </h3> 
+<p> Let us consider a regression situation with two predictive variables X1 
+and X2 and one variable to predict Y.</p> 
+<p> You can study the effect of X1 on Y after removing the (linear) effect of 
+X2 on Y: simply regress Y against X2, X1 against X2 and plot the residuals of 
+the former against those of the latter.</p> 
+<p> Those plots may help you spot influent observations. </p> 
+<pre> partial.regression.plot &lt;- function (y, x, n, ...) { m &lt;- 
+as.matrix(x[,-n]) y1 &lt;- lm(y ~ m)$res x1 &lt;- lm(x[,n] ~ m)$res plot( y1 ~ 
+x1, ... ) abline(lm(y1~x1), col='red') } n &lt;- 100 x1 &lt;- rnorm(n) x2 &lt;- 
+rnorm(n) x3 &lt;- x1+x2+rnorm(n) x &lt;- cbind(x1,x2,x3) y &lt;- 
+x1+x2+x3+rnorm(n) op &lt;- par(mfrow=c(2,2)) partial.regression.plot(y, x, 1) 
+partial.regression.plot(y, x, 2) partial.regression.plot(y, x, 3) par(op)</pre> 
+<p></p> 
+<p> There is already an &quot;av.plot&quot; function in the &quot;car&quot; 
+package for this.</p> 
+<pre> library(car) av.plots(lm(y~x1+x2+x3),ask=F)</pre> 
+<p></p> 
+<p> The &quot;leverage.plots&quot;, still in the &quot;car&quot; package, 
+generalizes this idea.</p> 
+<pre> ?leverage.plots</pre> 
+<h3>Partial residual plots </h3> 
+<p> It is very similar to partial regression plots: this time, you plot Y, 
+from which you have removed the effects of X2, as a function of X1. It is more 
+efficient than oartial regression to spot non-linearities -- but partial 
+regression is superior when it comes to spotting influent or outlying 
+observations.</p> 
+<pre> my.partial.residual.plot &lt;- function (y, x, i, ...) { r &lt;- lm(y~x) 
+xi &lt;- x[,i] # Y, minus the linear effects of X_j yi &lt;- r$residuals + 
+r$coefficients[i] * x[,i] plot( yi ~ xi, ... ) } n &lt;- 100 x1 &lt;- rnorm(n) 
+x2 &lt;- rnorm(n) x3 &lt;- x1+x2+rnorm(n) x &lt;- cbind(x1,x2,x3) y &lt;- 
+x1+x2+x3+rnorm(n) op &lt;- par(mfrow=c(2,2)) my.partial.residual.plot(y, x, 1) 
+my.partial.residual.plot(y, x, 2) my.partial.residual.plot(y, x, 3) par(op)
+</pre> 
+<p></p> 
+<p> The &quot;car&quot; or &quot;Design&quot; packages provide functions to 
+plot the partial residuals.</p> 
+<pre> library(car) ?cr.plots ?ceres.plots library(Design) ?plot.lrm.partial 
+?lrm</pre> 
+<h2>Overfit</h2> 
+<h3>Overfit </h3> 
+<p> The regression might be &quot;too close&quot; to the data, to the point 
+that it becomes irrealistic, that it performs poorly with 
+&quot;out-of-sample&quot; data. The situation is not always as striking and 
+obvious as here. However, if you want to choose, say, a non-linear model (or 
+anyting complex), you must be able to justify it. In particular, compare the 
+number of parameters to estimate with the number of observations...</p> 
+<pre> n &lt;- 10 x &lt;- seq(0,1,length=n) y &lt;- 1-2*x+.3*rnorm(n) 
+plot(spline(x, y, n = 10*n), col = 'red', type='l', lwd=3) points(y~x, pch=16, 
+lwd=3, cex=2) abline(lm(y~x)) title(main='Overfit')</pre> 
+<p></p> 
+<p> This is mainly common-sense. </p> 
+<p> In the case of a linear regression, you can compare the determination 
+coefficient (in case of overfit, it is close to 1) and the adjusted 
+determination coefficient (that accounts for overfitting problems).</p> 
+<pre> &gt; summary(lm(y~poly(x,n-1))) Call: lm(formula = y ~ poly(x, n - 1)) 
+Residuals: ALL 10 residuals are 0: no residual degrees of freedom! 
+Coefficients: Estimate Std. Error t value Pr(&gt;|t|) (Intercept) 0.01196 
+poly(x, n - 1)1 -1.94091 poly(x, n - 1)2 -0.02303 poly(x, n - 1)3 -0.08663 
+poly(x, n - 1)4 -0.06938 poly(x, n - 1)5 -0.34501 poly(x, n - 1)6 -0.51048 
+poly(x, n - 1)7 -0.28479 poly(x, n - 1)8 -0.22273 poly(x, n - 1)9 0.39983 
+Residual standard error: NaN on 0 degrees of freedom Multiple R-Squared: 1, 
+Adjusted R-squared: NaN F-statistic: NaN on 9 and 0 DF, p-value: NA &gt; 
+summary(lm(y~poly(x,n-2))) Call: lm(formula = y ~ poly(x, n - 2)) Residuals: 1 
+2 3 4 5 6 7 8 9 10 -0.001813 0.016320 -0.065278 0.152316 -0.228473 0.228473 
+-0.152316 0.065278 -0.016320 0.001813 Coefficients: Estimate Std. Error t value 
+Pr(&gt;|t|) (Intercept) 0.01196 0.12644 0.095 0.940 poly(x, n - 2)1 -1.94091 
+0.39983 -4.854 0.129 poly(x, n - 2)2 -0.02303 0.39983 -0.058 0.963 poly(x, n - 
+2)3 -0.08663 0.39983 -0.217 0.864 poly(x, n - 2)4 -0.06938 0.39983 -0.174 0.891 
+poly(x, n - 2)5 -0.34501 0.39983 -0.863 0.547 poly(x, n - 2)6 -0.51048 0.39983 
+-1.277 0.423 poly(x, n - 2)7 -0.28479 0.39983 -0.712 0.606 poly(x, n - 2)8 
+-0.22273 0.39983 -0.557 0.676 Residual standard error: 0.3998 on 1 degrees of 
+freedom Multiple R-Squared: 0.9641, Adjusted R-squared: 0.6767 F-statistic: 
+3.355 on 8 and 1 DF, p-value: 0.4</pre> 
+<p> If you are reasonable, the determination coefficient and its adjusted 
+version are very close.</p> 
+<pre> &gt; x &lt;- seq(0,1,length=n) &gt; y &lt;- 1-2*x+.3*rnorm(n) &gt; 
+summary(lm(y~poly(x,10))) Call: lm(formula = y ~ poly(x, 10)) Residuals: Min 1Q 
+Median 3Q Max -0.727537 -0.206951 -0.002332 0.177562 0.902353 Coefficients: 
+Estimate Std. Error t value Pr(&gt;|t|) (Intercept) -0.01312 0.02994 -0.438 
+0.662 poly(x, 10)1 -6.11784 0.29943 -20.431 &lt;2e-16 *** poly(x, 10)2 -0.11099 
+0.29943 -0.371 0.712 poly(x, 10)3 -0.04936 0.29943 -0.165 0.869 poly(x, 10)4 
+-0.28863 0.29943 -0.964 0.338 poly(x, 10)5 -0.15348 0.29943 -0.513 0.610 
+poly(x, 10)6 0.12146 0.29943 0.406 0.686 poly(x, 10)7 0.05066 0.29943 0.169 
+0.866 poly(x, 10)8 0.09707 0.29943 0.324 0.747 poly(x, 10)9 0.07554 0.29943 
+0.252 0.801 poly(x, 10)10 0.42494 0.29943 1.419 0.159 --- Signif. codes: 0 
+`***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 Residual standard error: 0.2994 on 
+89 degrees of freedom Multiple R-Squared: 0.8256, Adjusted R-squared: 0.8059 
+F-statistic: 42.12 on 10 and 89 DF, p-value: &lt; 2.2e-16 &gt; 
+summary(lm(y~poly(x,1))) ... Multiple R-Squared: 0.8182, Adjusted R-squared: 
+0.8164 ...</pre> 
+<h3>Sample too small </h3> 
+<p> If the sample is too small, you will not be able to estimate much, In such 
+situationm you have to restrict yourself to simple (simplistic) models, such as 
+linear models, becaus the overfitting risk is too high.</p> 
+<h3>Too many variables </h3> 
+<pre> TODO Explain what you can do if there are more variables than 
+observations. The naive approach will not work: n &lt;- 100 k &lt;- 500 x &lt;- 
+matrix(rnorm(n*k), nr=n, nc=k) y &lt;- apply(x, 1, sum) lm(y~x) svm</pre> 
+<h2>Underfit</h2> 
+<h3>Underfit (curvilinearity) </h3> 
+<p> Sometimes, the model is too simplistic. </p> 
+<pre> x &lt;- runif(100, -1, 1) y &lt;- 1-x+x^2+.3*rnorm(100) plot(y~x) 
+abline(lm(y~x), col='red')</pre> 
+<p></p> 
+<p> On the preceding plot, it is not obvious, but you can spot the problem if 
+you try to see if a polynomial model would not be better,</p> 
+<pre> &gt; summary(lm(y~poly(x,10))) ... Coefficients: Estimate Std. Error t 
+value Pr(&gt;|t|) (Intercept) 1.29896 0.02841 45.725 &lt; 2e-16 *** poly(x, 
+10)1 -4.98079 0.28408 -17.533 &lt; 2e-16 *** poly(x, 10)2 2.53642 0.28408 8.928 
+5.28e-14 *** poly(x, 10)3 -0.06738 0.28408 -0.237 0.813 poly(x, 10)4 -0.15583 
+0.28408 -0.549 0.585 poly(x, 10)5 0.15112 0.28408 0.532 0.596 poly(x, 10)6 
+0.04512 0.28408 0.159 0.874 poly(x, 10)7 -0.29056 0.28408 -1.023 0.309 poly(x, 
+10)8 -0.39384 0.28408 -1.386 0.169 poly(x, 10)9 -0.25763 0.28408 -0.907 0.367 
+poly(x, 10)10 -0.09940 0.28408 -0.350 0.727</pre> 
+<p> or by using splines (or any other regularization method) an by looking at 
+the result,</p> 
+<pre> plot(y~x) lines(smooth.spline(x,y), col='red', lwd=2) 
+title(main=&quot;Splines can help you spot non-linear relations&quot;)</pre> 
+<p></p> 
+<pre> plot(y~x) lines(lowess(x,y), col='red', lwd=2) title(main='Non-linear 
+relations and &quot;lowess&quot;')</pre> 
+<p></p> 
+<pre> plot(y~x) xx &lt;- seq(min(x),max(x),length=100) yy &lt;- predict( 
+loess(y~x), data.frame(x=xx) ) lines(xx,yy, col='red', lwd=3) 
+title(main='Non-linear relation and &quot;loess&quot;')</pre> 
+<p></p> 
+<p> or by looking at the residuals with any regularization method (plot the 
+residuals as a function of the predicted values or as a function of the 
+predictive variables).</p> 
+<pre> r &lt;- lm(y~x) plot(r$residuals ~ r$fitted.values, xlab='predicted 
+values', ylab='residuals', main='Residuals and predicted values') 
+lines(lowess(r$fitted.values, r$residuals), col='red', lwd=2) abline(h=0, lty=3)
+</pre> 
+<p></p> 
+<pre> plot(r$residuals ~ x, xlab='x', ylab='residuals', main='Residuals and 
+the predictive variable') lines(lowess(x, r$residuals), col='red', lwd=2) 
+abline(h=0, lty=3)</pre> 
+<p></p> 
+<p> In some (rare) cases, you have several observations for the same value of 
+the predictive variables: you can then perform the following test.</p> 
+<pre> x &lt;- rep(runif(10, -1, 1), 10) y &lt;- 1-x+x^2+.3*rnorm(100) r1 &lt;- 
+lm(y ~ x) r2 &lt;- lm(y ~ factor(x)) anova(r1,r2)</pre> 
+<p> Both models should give the same predictions: here, it is not the case. 
+</p> 
+<pre> Analysis of Variance Table Model 1: y ~ x Model 2: y ~ factor(x) Res.Df 
+RSS Df Sum of Sq F Pr(&gt;F) 1 98 19.5259 2 90 6.9845 8 12.5414 20.201 &lt; 
+2.2e-16 *** --- Signif. codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1
+</pre> 
+<p> Let us try with a linear relation. </p> 
+<pre> x &lt;- rep(runif(10, -1, 1), 10) y &lt;- 1-x+.3*rnorm(100) r1 &lt;- 
+lm(y ~ x) r2 &lt;- lm(y ~ factor(x)) anova(r1,r2)</pre> 
+<p> The models are not significantly different. </p> 
+<pre> Analysis of Variance Table Model 1: y ~ x Model 2: y ~ factor(x) Res.Df 
+RSS Df Sum of Sq F Pr(&gt;F) 1 98 9.6533 2 90 8.9801 8 0.6733 0.8435 0.5671
+</pre> 
+<h3>Structural changes: TODO </h3> 
+<pre> # Non-linearity library(lmtest) ?harvtest ?raintest ?reset</pre> 
+<p> The &quot;strucchange&quot; package detects structural changes (very often 
+with time series, e.g., in econometry). There is a structural change when (for 
+instance) the linear model is correct, but its coefficients change for time to 
+time. If you know where the change occurs, you just split your sample into 
+several chuks and perform a regression on each (to make sure that a change 
+occured, you can test the equality of the coefficients in the chunks).</p> 
+<p> But usually, you do not know where the changes occur. You can try with 
+moving window to find the most probable date for the structural change (you can 
+take a window with a constant width, or one with a constrant number of 
+observations).</p> 
+<pre> TODO: an example # Structural change library(strucchange) efp(..., 
+type=&quot;Rec-CUSUM&quot;) efp(..., type=&quot;OLS-MOSUM&quot;) plot(efp(...)) 
+sctest(efp(...)) TODO: an example Fstat(...) plot(Fstat(...)) sctest(Fstat(...))
+</pre> 
+<h2>Influential points</h2> 
+<h3>Influential observations </h3> 
+<p> Some points might bear an abnormally high influence on the regression 
+results. SOmetimes, they come from mistakes (they should be identified and 
+corrected), sometimes, they are perfectly normal but extreme. The leverage 
+effect can yield incorrect results.</p> 
+<pre> n &lt;- 20 done.outer &lt;- F while (!done.outer) { done &lt;- F 
+while(!done) { x &lt;- rnorm(n) done &lt;- max(x)&gt;4.5 } y &lt;- 1 - 2*x + 
+x*rnorm(n) r &lt;- lm(y~x) done.outer &lt;- max(cooks.distance(r))&gt;5 } 
+plot(y~x) abline(1,-2,lty=2) abline(lm(y~x),col='red',lwd=3) lm(y~x)$coef</pre> 
+<p></p> 
+<p> The first thing to do, even before starting the regression, is to look at 
+the variables one at a time.</p> 
+<pre> boxplot(x, horizontal=T)</pre> 
+<p></p> 
+<pre> stripchart(x, method='jitter')</pre> 
+<p></p> 
+<pre> hist(x, col='light blue', probability=T) lines(density(x), col='red', 
+lwd=3)</pre> 
+<p></p> 
+<p> Same for y. </p> 
+<pre> boxplot(y, horizontal=T)</pre> 
+<p></p> 
+<pre> stripchart(y, method='jitter')</pre> 
+<p></p> 
+<pre> hist(y, col='light blue', probability=T) lines(density(y), col='red', 
+lwd=3)</pre> 
+<p></p> 
+<p> Here, there is an extreme point. AS there is a single one, we might be 
+tempted to remove it -- if there were several, we would rather try to transform 
+the data.</p> 
+<p> There is a measure of the &quot;extremeness&quot; of a point -- its 
+leverage --: the diagonal elements of the hat matrix</p> 
+<pre> H = X (X' X)^-1 X'</pre> 
+<p> It is called &quot;hat matrix&quot; because </p> 
+<pre> \hat Y = H Y.</pre> 
+<p> Those values tells us how an error on a predictive variable prapagates to 
+the predictions.</p> 
+<p> The leverages are between 1/n and 1. Under 0.2, it is fine. You will not 
+that this uses the predictive variable X but not the variable to predict Y.</p> 
+<pre> plot(hat(x), type='h', lwd=5)</pre> 
+<p></p> 
+<p> You can also measure the effect of each observation on the regression: 
+remove the point, compute the regression, the predicted values and compare them 
+with the values predicted from the whole sample:</p> 
+<pre> plot(dffits(r),type='h',lwd=3)</pre> 
+<p></p> 
+<p> You can also compare the coefficients: </p> 
+<pre> plot(dfbetas(r)[,1],type='h',lwd=3)</pre> 
+<p></p> 
+<pre> plot(dfbetas(r)[,2],type='h',lwd=3)</pre> 
+<p></p> 
+<p> In higher dimensions, you can plot the variation of a coefficient as a 
+function of the variation of other coefficients.</p> 
+<pre> n &lt;- 200 x1 &lt;- rnorm(n) x2 &lt;- rnorm(n) yy &lt;- x1 - x2 + 
+rnorm(n) yy[1] &lt;- 10 r &lt;- lm(yy~x1+x2) pairs(dfbetas(r))</pre> 
+<p></p> 
+<p> Cook's distance measures the effect of an observation on the regression as 
+a whole. You should start to be cautious when D &gt; 4/n.</p> 
+<pre> cd &lt;- cooks.distance(r) plot(cd,type='h',lwd=3)</pre> 
+<p></p> 
+<p> You can also have a look at the box-and-whiskers plot, the scatterplot, 
+the histogram, the density of Cook's distances (for a moment, we put aside our 
+pathological example).</p> 
+<pre> n &lt;- 100 xx &lt;- rnorm(n) yy &lt;- 1 - 2 * x + rnorm(n) rr &lt;- 
+lm(yy~xx) cd &lt;- cooks.distance(rr) plot(cd,type='h',lwd=3)</pre> 
+<p></p> 
+<pre> boxplot(cd, horizontal=T)</pre> 
+<p></p> 
+<pre> stripchart(cd, method='jitter')</pre> 
+<p></p> 
+<pre> hist(cd, probability=T, breaks=20, col='light blue')</pre> 
+<p></p> 
+<pre> plot(density(cd), type='l', col='red', lwd=3)</pre> 
+<p></p> 
+<pre> qqnorm(cd) qqline(cd, col='red')</pre> 
+<p></p> 
+<p> Some suggest to compare the distribution of Cook's distance with a 
+half-gaussian distribution. People often do that for variables whose values are 
+all positive -- but it does not look like a half-gaussian!</p> 
+<pre> half.qqnorm &lt;- function (x) { n &lt;- length(x) 
+qqplot(qnorm((1+ppoints(n))/2), x) } half.qqnorm(cd)</pre> 
+<p></p> 
+<p> You can use those values to spot the most important points on the 
+scatterplot pr on a residual plot.</p> 
+<pre> m &lt;- max(cooks.distance(r)) plot(y~x, cex=1+5*cooks.distance(r)/m)
+</pre> 
+<p></p> 
+<pre> cd &lt;- cooks.distance(r) # rescaled Cook's distance rcd &lt;- (99/4) * 
+cd*(cd+1)^2 rcd[rcd&gt;100] &lt;- 100 plot(r$res~r$fitted.values, 
+cex=1+.05*rcd) abline(h=0,lty=3)</pre> 
+<p></p> 
+<p> You can also use colors. </p> 
+<pre> m &lt;- max(cd) plot(r$res, cex=1+5*cd/m, 
+col=heat.colors(100)[ceiling(70*cd/m)], pch=16, ) points(r$res, cex=1+5*cd/m) 
+abline(h=0,lty=3)</pre> 
+<p></p> 
+<pre> plot(r$res, cex=1+.05*rcd, col=heat.colors(100)[ceiling(rcd)], pch=16, ) 
+points(r$res, cex=1+.05*rcd) abline(h=0,lty=3)</pre> 
+<p></p> 
+<p> The following example should be more colorful. </p> 
+<pre> n &lt;- 100 x &lt;- rnorm(n) y &lt;- 1 - 2*x + rnorm(n) r &lt;- lm(y~x) 
+cd &lt;- cooks.distance(r) m &lt;- max(cd) plot(r$res ~ r$fitted.values, 
+cex=1+5*cd/m, col=heat.colors(100)[ceiling(70*cd/m)], pch=16, ) points(r$res ~ 
+r$fitted.values, cex=1+5*cd/m) abline(h=0,lty=3)</pre> 
+<p></p> 
+<p> It might be prettier on a black background. </p> 
+<pre> op &lt;- par(fg='white', bg='black', col='white', col.axis='white', 
+col.lab='white', col.main='white', col.sub='white') plot(r$res ~ 
+r$fitted.values, cex=1+5*cd/m, col=heat.colors(100)[ceiling(100*cd/m)], pch=16, 
+) abline(h=0,lty=3) par(op)</pre> 
+<p></p> 
+<p> You can also have a look at the &quot;lm.influence&quot;, 
+&quot;influence.measures&quot;, &quot;ls.diag&quot; functions.</p> 
+<p> TODO: delete the following plot? </p> 
+<pre> # With Cook's distance x &lt;- rnorm(20) y &lt;- 1 + x + rnorm(20) x 
+&lt;- c(x,10) y &lt;- c(y,1) r &lt;- lm(y~x) d &lt;- cooks.distance(r) d &lt;- 
+(99/4)*d*(d+1)^2 + 1 d[d&gt;100] &lt;- 100 d[d&lt;20] &lt;- 20 d &lt;- d/20 
+plot( y~x, cex=d ) abline(r) abline(coef(line(x,y)), col='red') 
+abline(lm(y[1:20]~x[1:20]),col='blue')</pre> 
+<p></p> 
+<h2>Influential clusters</h2> 
+<h3>Clusters of outliers </h3> 
+<p> When there is not a single extreme value but several, it is trickier to 
+spot. You can try with a resistant regression, such as a trimmed regression 
+(lts).</p> 
+<p> Usually, those multiple extreme values do not appear at random (as would 
+an isolated outlier), but have a real meaning -- as such, they should be dealt 
+with. You can try to spot them with unsupervised learning algorithms.</p> 
+<pre> ?hclust ?kmeans TODO: give an example</pre> 
+<p> A cluster of extreme values can also be a sign that the model is not 
+appropriate.</p> 
+<pre> TODO: write up (and model) the following example (mixture) n &lt;- 200 s 
+&lt;- .2 x &lt;- runif(n) y1 &lt;- 1 - 2 * x + s*rnorm(n) y2 &lt;- 2 * x - 1 + 
+s*rnorm(n) y &lt;- ifelse( sample(c(T,F),n,replace=T,prob=c(.25,.75)), y1, y2 ) 
+plot(y~x) abline(1,-2,lty=3) abline(-1,2,lty=3)</pre> 
+<p></p> 
+<h2>Non gaussian residuals</h2> 
+<h3>Non-gaussian residuals </h3> 
+<p> If the residuals are not gaussian, the least squares estimators are not 
+optimal (some robust estimators are better, even if they are biased) and, even 
+worse, all the tests, variance computations, confidence interval computations 
+are wrong.</p> 
+<p> However, if the residuals are less dispersed that with a gaussian 
+distribution or, to a lesser extent, if the sample is very large, you can 
+forget those problems.</p> 
+<p> You can spot non-gaussian residuals with histograms, box-and-whiskers 
+plots (boxplots) or quantile-quantile plots.</p> 
+<pre> x &lt;- runif(100) y &lt;- 1 - 2*x + .3*exp(rnorm(100)-1) r &lt;- 
+lm(y~x) boxplot(r$residuals, horizontal=T)</pre> 
+<p></p> 
+<pre> hist(r$residuals, breaks=20, probability=T, col='light blue') 
+lines(density(r$residuals), col='red', lwd=3) f &lt;- function(x) { dnorm(x, 
+mean=mean(r$residuals), sd=sd(r$residuals), ) } curve(f, add=T, 
+col=&quot;red&quot;, lwd=3, lty=2)</pre> 
+<p></p> 
+<p> Do not forget the quantile-quantile plots. </p> 
+<pre> qqnorm(r$residuals) qqline(r$residuals, col='red')</pre> 
+<p></p> 
+<p> Let us look at what happens with non-gaussian residuals. We shall consider 
+a rather extreme situation: a Cauchy variable with a hole in the middle and a 
+rather small sample.</p> 
+<pre> rcauchy.with.hole &lt;- function (n) { x &lt;- rcauchy(n) x[x&gt;0] 
+&lt;- 10+x[x&gt;0] x[x&lt;0] &lt;- -10+x[x&lt;0] x } n &lt;- 20 x &lt;- 
+rcauchy(n) y &lt;- 1 - 2*x + .5*rcauchy.with.hole(n) plot(y~x) abline(1,-2) r 
+&lt;- lm(y~x) abline(r, col='red')</pre> 
+<p></p> 
+<pre> op &lt;- par(mfrow=c(2,2)) hist(r$residuals, breaks=20, probability=T, 
+col='light blue') lines(density(r$residuals), col='red', lwd=3) f &lt;- 
+function(x) { dnorm(x, mean=mean(r$residuals), sd=sd(r$residuals), ) } curve(f, 
+add=T, col=&quot;red&quot;, lwd=3, lty=2) qqnorm(r$residuals) 
+qqline(r$residuals, col='red') plot(r$residuals ~ r$fitted.values) 
+plot(r$residuals ~ x) par(op)</pre> 
+<p></p> 
+<p> Let us compute some forecasts. </p> 
+<pre> n &lt;- 10000 xp &lt;- runif(n,-50,50) yp &lt;- predict(r, 
+data.frame(x=xp), interval=&quot;prediction&quot;) yr &lt;- 1 - 2*xp + 
+.5*rcauchy.with.hole(n) sum( yr &lt; yp[,3] &amp; yr &gt; yp[,2] )/n</pre> 
+<p> We get 0.9546, i.e., we are in the prediction interval in (more than) 5% 
+of the cases -- but the prediction interval is huge: it tells us that we cannot 
+predict much.</p> 
+<p> Let us try with a smaller sample. </p> 
+<pre> n &lt;- 5 x &lt;- rcauchy(n) y &lt;- 1 - 2*x + .5*rcauchy.with.hole(n) r 
+&lt;- lm(y~x) n &lt;- 10000 xp &lt;- sort(runif(n,-50,50)) yp &lt;- predict(r, 
+data.frame(x=xp), interval=&quot;prediction&quot;) yr &lt;- 1 - 2*xp + 
+.5*rcauchy.with.hole(n) sum( yr &lt; yp[,3] &amp; yr &gt; yp[,2] )/n</pre> 
+<p> Even worse: 0.9975. </p> 
+<p> To see what happens, let us plot some of these points. </p> 
+<pre> done &lt;- F while(!done) { # A situation where the prediction interval 
+is not too # large, so that it appears on the plot. n &lt;- 5 x &lt;- 
+rcauchy(n) y &lt;- 1 - 2*x + .5*rcauchy.with.hole(n) r &lt;- lm(y~x) n &lt;- 
+100000 xp &lt;- sort(runif(n,-50,50)) yp &lt;- predict(r, data.frame(x=xp), 
+interval=&quot;prediction&quot;) done &lt;- ( yp[round(n/2),2] &gt; -75 &amp; 
+yp[round(n/2),3] &lt; 75 ) } yr &lt;- 1 - 2*xp + .5*rcauchy.with.hole(n) 
+plot(yp[,1]~xp, type='l', xlim=c(-50,50), ylim=c(-100,100)) points(yr~xp, 
+pch='.') lines(xp, yp[,2], col='blue') lines(xp, yp[,3], col='blue') abline(r, 
+col='red') points(y~x, col='orange', pch=16, cex=1.5) points(y~x, cex=1.5)</pre>
+<p></p> 
+<pre> done &lt;- F while(!done) { # Even worse: the sign of the slope is 
+incorrect n &lt;- 5 x &lt;- rcauchy(n) y &lt;- 1 - 2*x + 
+.5*rcauchy.with.hole(n) r &lt;- lm(y~x) n &lt;- 100000 xp &lt;- 
+sort(runif(n,-50,50)) yp &lt;- predict(r, data.frame(x=xp), 
+interval=&quot;prediction&quot;) print(r$coef[2]) done &lt;- ( yp[round(n/2),2] 
+&gt; -75 &amp; yp[round(n/2),3] &lt; 75 &amp; r$coef[2]&gt;0 ) } yr &lt;- 1 - 
+2*xp + .5*rcauchy.with.hole(n) plot(yp[,1]~xp, type='l', xlim=c(-50,50), 
+ylim=c(-100,100)) points(yr~xp, pch='.') lines(xp, yp[,2], col='blue') 
+lines(xp, yp[,3], col='blue') abline(r, col='red') points(y~x, col='orange', 
+pch=16, cex=1.5) points(y~x, cex=1.5)</pre> 
+<p></p> 
+<p> We see that the prediction interval is huge if there are several outliers. 
+Let us try with smaller values.</p> 
+<pre> n &lt;- 10000 xp &lt;- sort(runif(n,-.1,.1)) yp &lt;- predict(r, 
+data.frame(x=xp), interval=&quot;prediction&quot;) yr &lt;- 1 - 2*xp + 
+.5*rcauchy.with.hole(n) sum( yr &lt; yp[,3] &amp; yr &gt; yp[,2] )/n</pre> 
+<p> We get 0.9932... </p> 
+<pre> done &lt;- F while (!done) { n &lt;- 5 x &lt;- rcauchy(n) y &lt;- 1 - 
+2*x + .5*rcauchy.with.hole(n) r &lt;- lm(y~x) done &lt;- T } n &lt;- 10000 xp 
+&lt;- sort(runif(n,-2,2)) yp &lt;- predict(r, data.frame(x=xp), 
+interval=&quot;prediction&quot;) yr &lt;- 1 - 2*xp + .5*rcauchy.with.hole(n) 
+plot(c(xp,x), c(yp[,1],y), pch='.', xlim=c(-2,2), ylim=c(-50,50) ) 
+lines(yp[,1]~xp) abline(r, col='red') lines(xp, yp[,2], col='blue') lines(xp, 
+yp[,3], col='blue') points(yr~xp, pch='.') points(y~x, col='orange', pch=16) 
+points(y~x)</pre> 
+<p></p> 
+<pre> done &lt;- F essais &lt;- 0 while (!done) { n &lt;- 5 x &lt;- rcauchy(n) 
+y &lt;- 1 - 2*x + .5*rcauchy.with.hole(n) r &lt;- lm(y~x) yp &lt;- predict(r, 
+data.frame(x=2), interval='prediction') done &lt;- yp[3]&lt;0 essais &lt;- 
+essais+1 } print(essais) # Around 20 or 30 n &lt;- 10000 xp &lt;- 
+sort(runif(n,-2,2)) yp &lt;- predict(r, data.frame(x=xp), 
+interval=&quot;prediction&quot;) yr &lt;- 1 - 2*xp + .5*rcauchy.with.hole(n) 
+plot(c(xp,x), c(yp[,1],y), pch='.', xlim=c(-2,2), ylim=c(-50,50) ) 
+lines(yp[,1]~xp) points(yr~xp, pch='.') abline(r, col='red') lines(xp, yp[,2], 
+col='blue') lines(xp, yp[,3], col='blue') points(y~x, col='orange', pch=16) 
+points(y~x)</pre> 
+<p></p> 
+<pre> done &lt;- F e &lt;- NULL for (i in 1:100) { essais &lt;- 0 done &lt;- F 
+while (!done) { n &lt;- 5 x &lt;- rcauchy(n) y &lt;- 1 - 2*x + 
+.5*rcauchy.with.hole(n) r &lt;- lm(y~x) yp &lt;- predict(r, data.frame(x=2), 
+interval='prediction') done &lt;- yp[3]&lt;0 essais &lt;- essais+1 } e &lt;- 
+append(e,essais) } hist(e, probability=T, col='light blue') lines(density(e), 
+col='red', lwd=3) abline(v=median(e), lty=2, col='red', lwd=3)</pre> 
+<p></p> 
+<pre> &gt; mean(e) [1] 25.8 &gt; median(e) [1] 19</pre> 
+<p> In short, to have the most incorrect prediction intervals, take large 
+values of x, bit not too large (close to 0, the predictions are correct, away 
+from 0, the prediction intervals are huge).</p> 
+<p> I wanted to prove, here, on an example, that non gaussian residuals 
+produces confidence intervals too small and thus incorrect results. I was 
+wrong: the confidence intervals are correct but very large, to the point that 
+the forecasts are useless.</p> 
+<p> Exercice: do the same with other distributions (Cauchy, uniform, etc.), 
+either for the noise or for the variables.</p> 
+<h2>Heteroskedasticity</h2> 
+<h3>Heteroscedasticity </h3> 
+<p> For the least squares estimators to be optimal and for the test results to 
+be correct, we had to assume (among other hypotheses) that the variance of the 
+noise was constant. If it is not, it is said toe be heteroscedastic.</p> 
+<pre> x &lt;- runif(100) y &lt;- 1 - 2*x + .3*x*rnorm(100) plot(y~x) r &lt;- 
+lm(y~x) abline(r, col='red') title(main=&quot;Heteroscedasticity&quot;)</pre> 
+<p></p> 
+<p> You can spot the problem on the residuals. </p> 
+<pre> plot(r$residuals ~ r$fitted.values)</pre> 
+<p></p> 
+<p> Or, more precisely, on their absolute value, on which you can perform a 
+non-linear regression.</p> 
+<pre> plot(abs(r$residuals) ~ r$fitted.values) lines(lowess(r$fitted.values, 
+abs(r$residuals)), col='red')</pre> 
+<p></p> 
+<pre> plot(abs(r$residuals) ~ x) lines(lowess(x, abs(r$residuals)), col='red')
+</pre> 
+<p></p> 
+<p> Here is a concrete example. </p> 
+<pre> data(crabs) plot(FL~RW, data=crabs)</pre> 
+<p></p> 
+<pre> r &lt;- lm(FL~RW, data=crabs) plot(r, which=1)</pre> 
+<p></p> 
+<pre> plot(r, which=3, panel = panel.smooth)</pre> 
+<p></p> 
+<p> The &quot;spread.level.plot&quot; from the &quot;car&quot; package has the 
+same aim: it plots the absolute value of the residuals as a function of the 
+predicted values, on logarithmic scales and suggests a transformation to get 
+rid of heteroscedasticity.</p> 
+<pre> library(car) spread.level.plot(r)</pre> 
+<p></p> 
+<p> You can also see the problem in a more computational way, by splitting the 
+sample into two parts and performing a test to see if the two parts have the 
+same variance.</p> 
+<pre> n &lt;- length(crabs$RW) m &lt;- ceiling(n/2) o &lt;- order(crabs$RW) r 
+&lt;- lm(FL~RW, data=crabs) x &lt;- r$residuals[o[1:m]] y &lt;- 
+r$residuals[o[(m+1):n]] var.test(y,x) # p-value = 1e-4</pre> 
+<p> Let us see, on an example, what the effects of heteroscedasticity are. </p>
+<pre> x &lt;- runif(100) y &lt;- 1 - 2*x + .3*x*rnorm(100) r &lt;- lm(y~x) xp 
+&lt;- runif(10000,0,.1) yp &lt;- predict(r, data.frame(x=xp), 
+interval=&quot;prediction&quot;) yr &lt;- 1 - 2*xp + .3*xp*rnorm(100) sum( yr 
+&lt; yp[,3] &amp; yr &gt; yp[,2] )/n</pre> 
+<p> We get 1: where the variance is small, the confidence intervals are too 
+small.</p> 
+<pre> x &lt;- runif(100) y &lt;- 1 - 2*x + .3*x*rnorm(100) r &lt;- lm(y~x) xp 
+&lt;- runif(10000,.9,1) yp &lt;- predict(r, data.frame(x=xp), 
+interval=&quot;prediction&quot;) yr &lt;- 1 - 2*xp + .3*xp*rnorm(100) sum( yr 
+&lt; yp[,3] &amp; yr &gt; yp[,2] )/n</pre> 
+<p> We get 0.67: where the variance is higher, the confidence intervals are 
+too small.</p> 
+<p> We can see this graphically. </p> 
+<pre> x &lt;- runif(100) y &lt;- 1 - 2*x + .3*x*rnorm(100) r &lt;- lm(y~x) n 
+&lt;- 10000 xp &lt;- sort(runif(n,)) yp &lt;- predict(r, data.frame(x=xp), 
+interval=&quot;prediction&quot;) yr &lt;- 1 - 2*xp + .3*xp*rnorm(n) 
+plot(c(xp,x), c(yp[,1],y), pch='.') lines(yp[,1]~xp) abline(r, col='red') 
+lines(xp, yp[,2], col='blue') lines(xp, yp[,3], col='blue') points(yr~xp, 
+pch='.') points(y~x, col='orange', pch=16) points(y~x) 
+title(main=&quot;Consequences of heteroscedasticity on prediction 
+intervals&quot;)</pre> 
+<p></p> 
+<p> The simplest way to get rid of heteroscedasticity is (when it works) to 
+transform the data. If it is possible, find a transformation of the data that 
+will both have it look gaussian and get rid of heteroscedasticity.</p> 
+<p> Generalized least squaes allow you to perform a regression with 
+heteroscedastic data, but you have to know how the variance varies.</p> 
+<pre> TODO: put this example later? n &lt;- 100 x &lt;- runif(n) y &lt;- 1 - 
+2*x + x*rnorm(n) plot(y~x) r &lt;- lm(y~x) abline(r, col='red') 
+title(main=&quot;Classical linear regression&quot;)</pre> 
+<p></p> 
+<pre> plot(abs(r$res) ~ x) r2 &lt;- lm( abs(r$res) ~ x ) abline(r2, 
+col=&quot;red&quot;) title(main=&quot;Heteroscedasticity of the residuals&quot;)
+</pre> 
+<p></p> 
+<p> The idea of weighted least squares is to give a lesser weight (i.e., a 
+lesser importance) to observations whose variance is high.</p> 
+<pre> # We assume the the standard deviation of the residuals # is of the form 
+a*x a &lt;- lm( I(r$res^2) ~ I(x^2) - 1 )$coefficients w &lt;- (a*x)^-2 r3 
+&lt;- lm( y ~ x, weights=w ) plot(y~x) abline(1,-2, lty=3) abline(lm(y~x), 
+lty=3, lwd=3) abline(lm(y~x, weights=w), col='red') legend( 
+par(&quot;usr&quot;)[1], par(&quot;usr&quot;)[3], yjust=0, c(&quot;acutal 
+model&quot;, &quot;least squares&quot;, &quot;weighted least squares&quot;), 
+lwd=c(1,3,1), lty=c(3,3,1), col=c(par(&quot;fg&quot;), par(&quot;fg&quot;), 
+'red') ) title(&quot;Weighted least squares and heteroscedasticity&quot;)</pre> 
+<p></p> 
+<p> On the contrary, the prediction intervals are not very convincing... </p> 
+<pre> TODO: check what follows # Prediction intervals N &lt;- 10000 xx &lt;- 
+runif(N,min=0,max=2) yy &lt;- 1 - 2*xx + xx*rnorm(N) plot(y~x, xlim=c(0,2), 
+ylim=c(-3,2)) points(yy~xx, pch='.') abline(1,-2, col='red') xp &lt;- 
+seq(0,3,length=100) yp1 &lt;- predict(r, new=data.frame(x=xp), 
+interval='prediction') lines( xp, yp1[,2], col='red', lwd=3 ) lines( xp, 
+yp1[,3], col='red', lwd=3 ) yp3 &lt;- predict(r3, new=data.frame(x=xp), 
+interval='prediction') lines( xp, yp3[,2], col='blue', lwd=3 ) lines( xp, 
+yp3[,3], col='blue', lwd=3 ) legend( par(&quot;usr&quot;)[1], 
+par(&quot;usr&quot;)[3], yjust=0, c(&quot;least squares&quot;, &quot;weighted 
+least squares&quot;), lwd=3, lty=1, col=c('red', 'blue') ) 
+title(main=&quot;Prediction band&quot;)</pre> 
+<p></p> 
+<p> You can also do that with the &quot;gls&quot; function </p> 
+<pre> ?gls ?varConstPower ?varPower r4 &lt;- gls(y~x, weights=varPower(1, 
+form= ~x)) ???</pre> 
+<h3>lmtest </h3> 
+<pre> library(help=lmtest) library(help=strucchange) # Heteroscedasticity 
+library(lmtest) ?dwtest ?bgtest ?bptest ?gqtest ?hmctest</pre> 
+<h2>Correlated errors</h2> 
+<h3>Correlated errors </h3> 
+<p> In the case of time series, of geographical data (or more generally, data 
+for which you ave a notion of &quot;proximity&quot; between the observations), 
+the errors of two consecutive observations may be correlated.</p> 
+<p> In the case of time series, you can see the problem in an autocorrelogram. 
+</p> 
+<pre> my.acf.plot &lt;- function (x, n=10, ...) { y &lt;- rep(NA,n) l &lt;- 
+length(x) for (i in 1:n) { y[i] &lt;- cor( x[1:(l-i)], x[(i+1):l] ) } plot(y, 
+type='h', ylim=c(-1,1),...) } n &lt;- 100 x &lt;- runif(n) b &lt;- 
+.1*rnorm(n+1) y &lt;- 1-2*x+b[1:n] my.acf.plot(lm(y~x)$res, lwd=10) abline(h=0, 
+lty=2)</pre> 
+<p></p> 
+<pre> z &lt;- 1-2*x+.5*(b[1:n]+b[1+1:n]) my.acf.plot(lm(z~x)$res, lwd=10) 
+abline(h=0, lty=2)</pre> 
+<p></p> 
+<p> Here is a very autocorrelated example. </p> 
+<pre> n &lt;- 500 x &lt;- runif(n) b &lt;- rep(NA,n) b[1] &lt;- 0 for (i in 
+2:n) { b[i] &lt;- b[i-1] + .1*rnorm(1) } y &lt;- 1-2*x+b[1:n] 
+my.acf.plot(lm(y~x)$res, n=100) abline(h=0, lty=2) title(main='Very 
+autocorrelated example')</pre> 
+<p></p> 
+<p> We do not see anything on the plot of the residuals as a function of the 
+predicted values.</p> 
+<pre> r &lt;- lm(y~x) plot(r$res ~ r$fitted.values) title(main=&quot;Residuals 
+of the very correlated example&quot;)</pre> 
+<p></p> 
+<p> On the contrary, if you plot the residuals as a function of time, it is 
+clearer.</p> 
+<pre> r &lt;- lm(y~x) plot(r$res) title(main=&quot;Residuals of the very 
+correlated example&quot;)</pre> 
+<p></p> 
+<p> Another means of spotting the problem is to check if the correlation 
+between x[i] and x[i-1] is significantly non zero.</p> 
+<pre> n &lt;- 100 x &lt;- runif(n) b &lt;- rep(NA,n) b[1] &lt;- 0 for (i in 
+2:n) { b[i] &lt;- b[i-1] + .1*rnorm(1) } y &lt;- 1-2*x+b[1:n] r &lt;- 
+lm(y~x)$res cor.test(r[1:(n-1)], r[2:n]) # p-value under 1e-15 n &lt;- 100 x 
+&lt;- runif(n) b &lt;- .1*rnorm(n+1) y &lt;- 1-2*x+b[1:n] r &lt;- lm(y~x)$res 
+cor.test(r[1:(n-1)], r[2:n]) # p-value = 0.3 y &lt;- 1-2*x+.5*(b[1:n]+b[1+1:n]) 
+cor.test(r[1:(n-1)], r[2:n]) # p-value = 0.3 (again)</pre> 
+<p> See also the Durbin--Watson test: </p> 
+<pre> library(car) ?durbin.watson library(lmtest) ?dwtest</pre> 
+<p> and the chapter on time series. </p> 
+<p> Yet another means of spotting the problem is to plot the consecutive 
+residuals in 2 or 3 dimensions.</p> 
+<pre> n &lt;- 500 x &lt;- runif(n) b &lt;- rep(NA,n) b[1] &lt;- 0 for (i in 
+2:n) { b[i] &lt;- b[i-1] + .1*rnorm(1) } y &lt;- 1-2*x+b[1:n] r &lt;- 
+lm(y~x)$res plot( r[1:(n-1)], r[2:n], xlab='i-th residual', ylab='(i+1)-th 
+residual' )</pre> 
+<p></p> 
+<p> In the following example, we do not see anything with two consecutive 
+terms (well, it looks like a Rorschach test, it is suspicious): we need three.
+</p> 
+<pre> n &lt;- 500 x &lt;- runif(n) b &lt;- rep(NA,n) b[1] &lt;- 0 b[2] &lt;- 0 
+for (i in 3:n) { b[i] &lt;- b[i-2] + .1*rnorm(1) } y &lt;- 1-2*x+b[1:n] r &lt;- 
+lm(y~x)$res plot(data.frame(x=r[3:n-2], y=r[3:n-1], z=r[3:n]))</pre> 
+<p></p> 
+<pre> plot(r)</pre> 
+<p></p> 
+<p> It is exaclty like that we can see the problems of some old random number 
+generators. In three dimensions, front view, there is nothing visible,</p> 
+<pre> data(randu) plot(randu) # Nothing visible</pre> 
+<p></p> 
+<p> but if we rotate the figure... </p> 
+<pre> library(xgobi) xgobi(randu)</pre> 
+<p></p> 
+<p> You can also turn the picture directly in R, by taking a 
+&quot;random&quot; rotation matrix (exercice: write a function to produce such 
+a matrix -- hint: there is one somewhere inthis document).</p> 
+<pre> m &lt;- matrix( c(0.0491788982891203, -0.998585856299176, 
+0.0201921658647648, 0.983046639705112, 0.0448184901961194, -0.177793720645666, 
+-0.176637312387723, -0.028593540105802, -0.983860594462783), nr=3, nc=3) plot( 
+t( m %*% t(randu) )[,1:2] )</pre> 
+<p></p> 
+<p> Here is a real example. </p> 
+<pre> data(EuStockMarkets) plot(EuStockMarkets)</pre> 
+<p></p> 
+<pre> x &lt;- EuStockMarkets[,1] y &lt;- EuStockMarkets[,2] r &lt;- lm(y~x) 
+plot(y~x) abline(r, col='red', lwd=3)</pre> 
+<p></p> 
+<pre> plot(r, which=1)</pre> 
+<p></p> 
+<pre> plot(r, which=3)</pre> 
+<p></p> 
+<pre> plot(r, which=4)</pre> 
+<p></p> 
+<pre> r &lt;- r$res hist(r, probability=T, col='light blue') lines(density(r), 
+col='red', lwd=3)</pre> 
+<p></p> 
+<pre> plot(r)</pre> 
+<p></p> 
+<pre> acf(r)</pre> 
+<p></p> 
+<pre> pacf(r)</pre> 
+<p></p> 
+<pre> r &lt;- as.vector(r) x &lt;- r[1:(length(r)-1)] y &lt;- r[2:length(r)] 
+plot(x,y, xlab='x[i]', ylab='x[i+1]')</pre> 
+<p></p> 
+<p> In such a situation, you can use generalized least squares. The AR1 model 
+assumes that two successive errors are correlated:</p> 
+<pre> e_{i+1} = r * e_i + f_i</pre> 
+<p> Where r is the &quot;AR1 coefficient&quot; and the f_i are independant. 
+</p> 
+<pre> n &lt;- 100 x &lt;- rnorm(n) e &lt;- vector() e &lt;- append(e, 
+rnorm(1)) for (i in 2:n) { e &lt;- append(e, .6 * e[i-1] + rnorm(1) ) } y &lt;- 
+1 - 2*x + e i &lt;- 1:n plot(y~x)</pre> 
+<p></p> 
+<pre> r &lt;- lm(y~x)$residuals plot(r)</pre> 
+<p></p> 
+<p> The &quot;gls&quot; function (generalized least squares) is in the 
+&quot;nlme&quot; package.</p> 
+<pre> library(nlme) g &lt;- gls(y~x, correlation = corAR1(form= ~i))</pre> 
+<p> Here is the result. </p> 
+<pre> &gt; summary(g) Generalized least squares fit by REML Model: y ~ x Data: 
+NULL AIC BIC logLik 298.4369 308.7767 -145.2184 Correlation Structure: AR(1) 
+Formula: ~i Parameter estimate(s): Phi 0.3459834 Coefficients: Value Std.Error 
+t-value p-value (Intercept) 1.234593 0.15510022 7.959971 &lt;.0001 x -1.892171 
+0.09440561 -20.042992 &lt;.0001 Correlation: (Intr) x 0.04 Standardized 
+residuals: Min Q1 Med Q3 Max -2.14818684 -0.75053384 0.02200128 0.57222518 
+2.45362824 Residual standard error: 1.085987 Degrees of freedom: 100 total; 98 
+residual</pre> 
+<p> We can look at the confidence interval on the autocorrelation coefficient. 
+</p> 
+<pre> &gt; intervals(g) Approximate 95% confidence intervals Coefficients: 
+lower est. upper (Intercept) 0.926802 1.234593 1.542385 x -2.079516 -1.892171 
+-1.704826 Correlation structure: lower est. upper Phi 0.1477999 0.3459834 
+0.5174543 Residual standard error: lower est. upper 0.926446 1.085987 1.273003
+</pre> 
+<p> Let us compare with a naive regression. </p> 
+<pre> library(nlme) plot(y~x) abline(lm(y~x)) abline(gls(y~x, correlation = 
+corAR1(form= ~i)), col='red')</pre> 
+<p></p> 
+<p> In this example, there is no remarkable effect. In the following, the 
+situation is more drastic.</p> 
+<pre> n &lt;- 1000 x &lt;- rnorm(n) e &lt;- vector() e &lt;- append(e, 
+rnorm(1)) for (i in 2:n) { e &lt;- append(e, 1 * e[i-1] + rnorm(1) ) } y &lt;- 
+1 - 2*x + e i &lt;- 1:n plot(lm(y~x)$residuals)</pre> 
+<p></p> 
+<pre> plot(y~x) abline(lm(y~x)) abline(gls(y~x, correlation = corAR1(form= 
+~i)), col='red') abline(1,-2, lty=2)</pre> 
+<p></p> 
+<p> We shall come back on this when we tackle time series. </p> 
+<p> For spatial data, it is more complicated. </p> 
+<p> TODO: a reference??? </p> 
+<h2>Unidentifiability</h2> 
+<h3>Multicolinearity (unidentifiability) </h3> 
+<p> The correlation coefficient between two variables tells you if they are 
+correlated. But you can also have relations between more than two variables, 
+such as X3 = X1 + X2. To detect those, you can perform a regression of Xk 
+agains the other Xi's and check the R^2: if it is high (&gt;1e-1), Xk can be 
+expressed from the other Xi.</p> 
+<pre> n &lt;- 100 x &lt;- rnorm(n) x1 &lt;- x+rnorm(n) x2 &lt;- x+rnorm(n) x3 
+&lt;- rnorm(n) y &lt;- x+x3 summary(lm(x1~x2+x3))$r.squared # 1e-1 
+summary(lm(x2~x1+x3))$r.squared # 1e-1 summary(lm(x3~x1+x2))$r.squared # 1e-3
+</pre> 
+<p> Other example, with three dependant variables. </p> 
+<pre> n &lt;- 100 x1 &lt;- rnorm(n) x2 &lt;- rnorm(n) x3 &lt;- x1+x2+rnorm(n) 
+x4 &lt;- rnorm(n) y &lt;- x1+x2+x3+x4+rnorm(n) 
+summary(lm(x1~x2+x3+x4))$r.squared # 0.5 summary(lm(x2~x1+x3+x4))$r.squared # 
+0.4 summary(lm(x3~x1+x2+x4))$r.squared # 0.7 summary(lm(x4~x1+x2+x3))$r.squared 
+# 3e-3</pre> 
+<p> Real example (with the adjusted determination coefficient): </p> 
+<pre> check.multicolinearity &lt;- function (M) { a &lt;- NULL n &lt;- 
+dim(M)[2] for (i in 1:n) { m &lt;- as.matrix(M[, 1:n!=i]) y &lt;- M[,i] a &lt;- 
+append(a, summary(lm(y~m))$adj.r.squared) } names(a) &lt;- names(M) 
+print(round(a,digits=2)) invisible(a) } data(freeny) names(freeny) &lt;- paste( 
+names(freeny), &quot; (&quot;, round(check.multicolinearity(freeny), digits=2), 
+&quot;)&quot;, sep='') pairs(freeny, upper.panel=panel.smooth, 
+lower.panel=panel.smooth)</pre> 
+<p></p> 
+<p> In such a situation, the fact that a certain coefficient be statistically 
+different from zero depends on the presence of other variables. With all the 
+variables, the first variables does not play a significant role, but the second 
+does.</p> 
+<pre> &gt; summary(lm(freeny.y ~ freeny.x)) ... Coefficients: Estimate Std. 
+Error t value Pr(&gt;|t|) (Intercept) -10.4726 6.0217 -1.739 0.0911 . 
+freeny.xlag quarterly revenue 0.1239 0.1424 0.870 0.3904 freeny.xprice index 
+-0.7542 0.1607 -4.693 4.28e-05 *** freeny.xincome level 0.7675 0.1339 5.730 
+1.93e-06 *** freeny.xmarket potential 1.3306 0.5093 2.613 0.0133 * ... Multiple 
+R-Squared: 0.9981, Adjusted R-squared: 0.9978</pre> 
+<p> On the contrary, if you only retain the first two variables, it is the 
+opposite.</p> 
+<pre> &gt; summary(lm(freeny.y ~ freeny.x[,1:2])) ... Estimate Std. Error t 
+value Pr(&gt;|t|) (Intercept) 2.18577 1.47236 1.485 0.146 freeny.x[, 1:2]lag 
+quarterly revenue 0.89122 0.07412 12.024 3.63e-14 *** freeny.x[, 1:2]price 
+index -0.25592 0.17534 -1.460 0.153 ... Multiple R-Squared: 0.9958, Adjusted 
+R-squared: 0.9956</pre> 
+<p> Furthermore, the estimation of the coefficients anf their standard 
+deviation is worrying: in a multilinearity situation, you cannot be sure of the 
+sign of the coefficients.</p> 
+<pre> n &lt;- 100 v &lt;- .1 x &lt;- rnorm(n) x1 &lt;- x + v*rnorm(n) x2 &lt;- 
+x + v*rnorm(n) x3 &lt;- x + v*rnorm(n) y &lt;- x1+x2-x3 + rnorm(n)</pre> 
+<p> Let us check that the variables are linearly dependant. </p> 
+<pre> &gt; summary(lm(x1~x2+x3))$r.squared [1] 0.986512 &gt; 
+summary(lm(x2~x1+x3))$r.squared [1] 0.98811 &gt; 
+summary(lm(x3~x1+x2))$r.squared [1] 0.9862133</pre> 
+<p> Let us look at the most relevant ones. </p> 
+<pre> &gt; summary(lm(y~x1+x2+x3)) Call: lm(formula = y ~ x1 + x2 + x3) 
+Residuals: Min 1Q Median 3Q Max -3.0902 -0.7658 0.0793 0.6995 2.6456 
+Coefficients: Estimate Std. Error t value Pr(&gt;|t|) (Intercept) 0.06361 
+0.11368 0.560 0.5771 x1 1.47317 0.94653 1.556 0.1229 x2 1.18874 0.98481 1.207 
+0.2304 x3 -1.70372 0.94366 -1.805 0.0741 . --- Signif. codes: 0 `***' 0.001 
+`**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 Residual standard error: 1.135 on 96 degrees 
+of freedom Multiple R-Squared: 0.4757, Adjusted R-squared: 0.4593 F-statistic: 
+29.03 on 3 and 96 DF, p-value: 1.912e-13</pre> 
+<p> It is the third. </p> 
+<pre> &gt; lm(y~x3)$coef (Intercept) x3 0.06970513 0.98313878</pre> 
+<p> Its coefficient was negative, but if we remove the other variables, it 
+becomes positive.</p> 
+<p> Instead of looking at the determination coefficient (percentage of 
+explained variance) R^2, you can look at the &quot;Variance Inflation 
+Factors&quot; (VIF),</p> 
+<pre> 1 V_j = ----------- 1 - R_j^2 &gt; vif(lm(y~x1+x2+x3)) x1 x2 x3 48.31913 
+41.13990 52.10746</pre> 
+<p> Instead of looking at the R^2, you can look at the correlation matrix 
+between the estimated coefficients.</p> 
+<pre> n &lt;- 100 v &lt;- .1 x &lt;- rnorm(n) x1 &lt;- x + v*rnorm(n) x2 &lt;- 
+rnorm(n) x3 &lt;- x + v*rnorm(n) y &lt;- x1+x2-x3 + rnorm(n) 
+summary(lm(y~x1+x2+x3), correlation=T)$correlation</pre> 
+<p> We get </p> 
+<pre> (Intercept) x1 x2 x3 (Intercept) 1.0000000000 -0.02036269 0.0001812560 
+0.02264558 x1 -0.0203626936 1.00000000 -0.1582002900 -0.98992751 x2 
+0.0001812560 -0.15820029 1.0000000000 0.14729488 x3 0.0226455841 -0.98992751 
+0.1472948846 1.00000000</pre> 
+<p> We can see that X1 and X3 are dependant. We can also see it graphically. 
+</p> 
+<pre> n &lt;- 100 v &lt;- .1 x &lt;- rnorm(n) x1 &lt;- x + v*rnorm(n) x2 &lt;- 
+rnorm(n) x3 &lt;- x + v*rnorm(n) y &lt;- x1+x2-x3 + rnorm(n) m &lt;- 
+summary(lm(y~x1+x2+x3), correlation=T)$correlation plot(col(m), row(m), 
+cex=10*abs(m), xlim=c(0, dim(m)[2]+1), ylim=c(0, dim(m)[1]+1), 
+main=&quot;Correlation matrix of the coefficients of a regression&quot;)</pre> 
+<p></p> 
+<p> TODO: A graphical representation of this correlation matrix (transform it 
+into a distance matrix, perform an MDS, plot the points, add their MST -- or 
+simply plot the MST, without the MDS).</p> 
+<p> Here is yet another way of spotting the problem: compute the ratio of the 
+largest eigen value and the smallest. Under 100, it is fine, over 1000, it is 
+worrying. This is called the &quot;contitionning index&quot;.</p> 
+<pre> m &lt;- model.matrix(y~x1+x2+x3) d &lt;- eigen( t(m) %*% m, symmetric=T 
+)$values d[1]/d[4] # 230</pre> 
+<p> To solve the problem, you can remove the &quot;superfluous&quot; variables 
+-- but you might run into interpretation problems. You can also ask for more 
+data (multicolinearity are more frequent when you have many variables and few 
+observations). You can also use regression techniques adapted to 
+multicolinearity, such as &quot;ridge regression&quot; or SVM (see somewhere 
+below).</p> 
+<p> We have already run into this problem with polynomial regression: to get 
+rid of multicolinearity, we had orthonormalized the predictive variables.</p> 
+<pre> &gt; y &lt;- cars$dist &gt; x &lt;- cars$speed &gt; m &lt;- cbind(x, 
+x^2, x^3, x^4, x^5) &gt; cor(m) x x 1.0000000 0.9794765 0.9389237 0.8943823 
+0.8515996 0.9794765 1.0000000 0.9884061 0.9635754 0.9341101 0.9389237 0.9884061 
+1.0000000 0.9927622 0.9764132 0.8943823 0.9635754 0.9927622 1.0000000 0.9951765 
+0.8515996 0.9341101 0.9764132 0.9951765 1.0000000 &gt; m &lt;- poly(x,5) &gt; 
+cor(m) 1 2 3 4 5 1 1.000000e+00 6.409668e-17 -1.242089e-17 -3.333244e-17 
+7.935005e-18 2 6.409668e-17 1.000000e+00 -4.468268e-17 -2.024748e-17 
+2.172470e-17 3 -1.242089e-17 -4.468268e-17 1.000000e+00 -6.583818e-17 
+-1.897354e-18 4 -3.333244e-17 -2.024748e-17 -6.583818e-17 1.000000e+00 
+-4.903304e-17 5 7.935005e-18 2.172470e-17 -1.897354e-18 -4.903304e-17 
+1.000000e+00</pre> 
+<p> TODO: Give the example of mixed models </p> 
+<pre> Adding a subject-dependant intercept is equivalent to imposing a certain 
+correlation structure.</pre> 
+<h2>Missing values</h2> 
+<p> Important variables may be missing, that can change the results of the 
+regression and their interpretation.</p> 
+<p> In the following example, we have three variables. </p> 
+<pre> n &lt;- 100 x &lt;- runif(n) z &lt;- ifelse(x&gt;.5,1,0) y &lt;- 2*z -x 
++ .1*rnorm(n) plot( y~x, col=c('red','blue')[1+z] )</pre> 
+<p></p> 
+<p> If we take into account the three variables, there is a negative 
+correlation between x and y.</p> 
+<pre> &gt; summary(lm( y~x+z )) Call: lm(formula = y ~ x + z) Residuals: Min 
+1Q Median 3Q Max -0.271243 -0.065745 0.002929 0.068085 0.215251 Coefficients: 
+Estimate Std. Error t value Pr(&gt;|t|) (Intercept) 0.01876 0.02404 0.78 0.437 
+x -1.05823 0.07126 -14.85 &lt;2e-16 *** z 2.05321 0.03853 53.28 &lt;2e-16 *** 
+--- Signif. codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 Residual 
+standard error: 0.1008 on 97 degrees of freedom Multiple R-Squared: 0.9847, 
+Adjusted R-squared: 0.9844 F-statistic: 3125 on 2 and 97 DF, p-value: &lt; 
+2.2e-16</pre> 
+<p> On the contrary, if we do not have z, the correlation becomes positive. 
+</p> 
+<pre> &gt; summary(lm( y~x )) Call: lm(formula = y ~ x) Residuals: Min 1Q 
+Median 3Q Max -1.05952 -0.38289 -0.01774 0.50598 1.05198 Coefficients: Estimate 
+Std. Error t value Pr(&gt;|t|) (Intercept) -0.5689 0.1169 -4.865 4.37e-06 *** x 
+2.1774 0.2041 10.669 &lt; 2e-16 *** --- Signif. codes: 0 `***' 0.001 `**' 0.01 
+`*' 0.05 `.' 0.1 ` ' 1 Residual standard error: 0.5517 on 98 degrees of freedom 
+Multiple R-Squared: 0.5374, Adjusted R-squared: 0.5327 F-statistic: 113.8 on 1 
+and 98 DF, p-value: &lt; 2.2e-16</pre> 
+<p> To avoid this problem, you should include all the variables that are 
+likely to be important (you select them from a prior knowledge of the domain 
+studied, i.e., with non-statistical methods).</p> 
+<p> To confirm a given effect, you can also try other models (if they all 
+confirm the effect, and its direction, it is a good omen) or gather more data, 
+either from the same experiment, or from a comparable but slightly different 
+one.</p> 
+<h2>Extrapolation</h2> 
+<p> You often want to extrapolate from your data, i.e., infer what happens at 
+larger scale (say, you have data with X in [0,1] and you would like conclusions 
+for X in [0,10]). Several problems occur. The first is that the prediction 
+intervals increase when you get away from the sample values.</p> 
+<pre> n &lt;- 20 x &lt;- rnorm(n) y &lt;- 1 - 2*x - .1*x^2 + rnorm(n) 
+#summary(lm(y~poly(x,10))) plot(y~x, xlim=c(-20,20), ylim=c(-30,30)) r &lt;- 
+lm(y~x) abline(r, col='red') xx &lt;- seq(-20,20,length=100) p &lt;- predict(r, 
+data.frame(x=xx), interval='prediction') lines(xx,p[,2],col='blue') 
+lines(xx,p[,3],col='blue') title(main=&quot;Widening of the prediction 
+band&quot;)</pre> 
+<p></p> 
+<p> Furthermore, if the relation looks linear on a small scale, it might be 
+completely different on a larger scale.</p> 
+<pre> plot(y~x, xlim=c(-20,20), ylim=c(-30,30)) r &lt;- lm(y~x) abline(r, 
+col='red') xx &lt;- seq(-20,20,length=100) yy &lt;- 1 - 2*xx - .1*xx^2 + 
+rnorm(n) p &lt;- predict(r, data.frame(x=xx), interval='prediction') 
+points(yy~xx) lines(xx,p[,2],col='blue') lines(xx,p[,3],col='blue') 
+title(main=&quot;Extrapolation problem: it is not linear...&quot;)</pre> 
+<p></p> 
+<pre> data(cars) y &lt;- cars$dist x &lt;- cars$speed o &lt;- 
+x&lt;quantile(x,.25) x1 &lt;- x[o] y1 &lt;- y[o] r &lt;- lm(y1~x1) xx &lt;- 
+seq(min(x),max(x),length=100) p &lt;- predict(r, data.frame(x1=xx), 
+interval='prediction') plot(y~x) abline(r, col='red') 
+lines(xx,p[,2],col='blue') lines(xx,p[,3],col='blue')</pre> 
+<p></p> 
+<h2>Miscellaneous</h2> 
+<h3>Models </h3> 
+<p> If you give the same data to different persons (for instance, students, in 
+an exam), each will have a different model with different forecasts. The 
+forecasts and the corresponding confidence intervals are usually incompatible: 
+the prediction intervals are always too small...</p> 
+<h3>Measurement errors </h3> 
+<p> There can be measurement errors on the predictive variable: this yields to 
+biased estimations of the parameters (towards 0).</p> 
+<pre> n &lt;- 100 e &lt;- .5 x0 &lt;- rnorm(n) x &lt;- x0 + e*rnorm(n) y &lt;- 
+1 - 2*x0 + e*rnorm(n) plot(y~x) points(y~x0, col='red') abline(lm(y~x)) 
+abline(lm(y~x0),col='red')</pre> 
+<p></p> 
+<p> On the other hand, there is no problem about the predictions, because the 
+measurement errors will always be present and are accounted for.</p> 
+<h2>The curse of dimension</h2> 
+<pre> TODO: proofread this. In particular, mention the dangers of variable 
+selection. There are actually two different subjects here: - the curse of 
+dimension - combining models</pre> 
+<p> The curse of dimension </p> 
+<p> TODO: put this part after the other regressions (logistic, Poisson, 
+ordinal, multilogistic).</p> 
+<p> TODO: write this part. </p> 
+<p> TODO: I mainly mention non-linear models in high dimensions. But what can 
+one do when there are more variables than observations? See: svm (support 
+vector machines).</p> 
+<h3>Introduction </h3> 
+<p> We have already mentionned the &quot;curse of dimension&quot;: what can we 
+do when we have more variables than observations? What can we do when we want a 
+non-linear regression with a very large number of variables: In both cases, if 
+we try to play the game as in two dimensions, we end up with too many 
+parameters to estimate with respect to the number of available observations. 
+Either we cannot gat any estimation, or the estimations are almost random 
+(somewhere else in this document, we call this &quot;overfit&quot;).</p> 
+<p> We can turn around the problem by choosing simpler models, models with 
+fewer variables -- simpler, but not too simple: the model has to be 
+sufficiently complex to describe the data.</p> 
+<p> The following regression methods lie between linear regression (relevant 
+when there are too few observations to allow anything else, or when the data is 
+too noisy) and multiimensional non-linear regression (unuseable, because there 
+are too many parameters to estimate). The allow us to thwart the curse of 
+dimension. More precisely, we shall mention variable selection, principal 
+component regression, ridge regression, lasso, partial least squares, 
+Generalized Additive Models (GAMs) and tree-based algorith,s (CART, MARS).</p> 
+<p> TODO: give the structure of this chapter </p> 
+<p> Putative structure of this chapter: </p> 
+<pre> Variables selection GAM, ACE?, AVAS? Trees: CART, MARS Bootstrap: 
+bagging, boosting (But there is already a chapter about the bootstrap -- the 
+previous chapter...)</pre> 
+<p> Remark: Not all the methods we shall mention seem to be implemented in R. 
+</p> 
+<h3>Variable selection and non-supervised classification </h3> 
+<p> When facing real data with a very large number of variables, we shall 
+first reduce the dimension, for instance, by selecting the &quot;most 
+relevant&quot; variables and discarding the others.</p> 
+<p> But how do we do that? </p> 
+<pre> TODO (This is a good question...)</pre> 
+<p> Here are a few ideas (beware: not all thes ideas are good). </p> 
+<pre> Compute a PCA and &quot;round&quot; the components to the 
+&quot;nearest&quot; variables. Reverse the problem and look at the variables: 
+are some of them &quot;close&quot;, in some sense (e.g., define a notion of 
+distance between the variables and perform a distance analysis). Then, retain a 
+single variables from each cluster.</pre> 
+<h3>TODO </h3> 
+<pre> TO SORT Variables selection to predict a qualitative variables 1. 
+Perform ANOVAs and only retain important variables (say, p-value&gt;0.05) n 
+&lt;- 100 k &lt;- 5 x &lt;- matrix(rnorm(n*k),nc=k) y &lt;- x[,1] + x[,2] - 
+sqrt(abs(x[,3]*x[,4])) y &lt;- y-median(y) y &lt;- factor(y&gt;0) pairs(x, 
+col=as.numeric(y)+1)</pre> 
+<p></p> 
+<pre> for (i in 1:k) { f &lt;- summary(lm(x[,i]~y))$fstatistic f &lt;- 
+pf(f[1],f[2],f[3], lower.tail=F) print(paste(i, &quot;; p =&quot;, round(f, 
+digits=3))) } 2. With the retained variables, compute the correlations and 
+their p-values (the p-value of a correlation if the p-value of the test of H0: 
+&quot;correlation=0&quot;. TODO: gove an example with colinear variables. 
+cor(x) round(cor(x),digits=3) m &lt;- cor(x) for (i in 1:k) { for (j in 1:k) { 
+m[i,j] &lt;- cor.test(x[,i],x[,j])$p.value } } m round(m,digits=3) m&lt;.05 
+Exercise: write a &quot;print&quot; method for correlation matrices that adds 
+stars besides the correlations significantly different from zero.</pre> 
+<h3>Variables selection and regression </h3> 
+<p> When there are too many perdictive variables in a regression (with respect 
+to the number of observations), the first thing that comes to the mind, is to 
+remode the &quot;spurious&quot; or &quot;redundant&quot; variables. Here are 
+several ways of doing so.</p> 
+<h3>General idea </h3> 
+<p> We can start with a model containing all the variables, discard the 
+variable that brings the least to the regression (the one whose p-value is the 
+largest) and go on, until we have removed all the variables whose p-value is 
+over a pre-specified threshold. We remove the variables one at a time, because 
+each time we remove one, the p-value of the others change. (We have already 
+mentionned this phenomenon when we presented polynomial regression: the 
+predictive variables need not be orthogonal.)</p> 
+<p> We can also do the opposite: start with an empty model and add the 
+variables one after the other, starting with the one with the smallest p-value.
+</p> 
+<p> Finally, we can combine both methods: First add the variables, then try to 
+remove them, try do add some more, etc.. (this may happen: we might decide to 
+add variable A, then variable B, then variable C, then remove variable B, then 
+add variable D, etc. -- as the predictive variables are not orthogonal, the 
+fact that a variable is present or not in the model depends on the other 
+variables). We stop when the criteria tell us to stop, or when we get tired.</p>
+<p> In the preceding discussion, we have used the p-value to decide if we were 
+to keep or discard a variable: use can choose another criterion, say, the R^2 
+or a penalized log-likelihood, such as the AIC (Akaike Information Criterion),
+</p> 
+<pre> AIC = -2log(vraissemblance) + 2 p,</pre> 
+<p> or the BIC (Bayesian Information Criterion), </p> 
+<pre> BIC = -2log(vraissemblance) + p ln n.</pre> 
+<p> Let us consider an example. </p> 
+<pre> library(nlme) # For the &quot;BIC&quot; function (there may be another 
+one elsewhere) n &lt;- 20 m &lt;- 15 d &lt;- 
+as.data.frame(matrix(rnorm(n*m),nr=n,nc=m)) i &lt;- sample(1:m, 3) d &lt;- 
+data.frame(y=apply(d[,i],1,sum)+rnorm(n), d) r &lt;- lm(y~., data=d) AIC(r) 
+BIC(r) summary(r)</pre> 
+<p> It yields: </p> 
+<pre> Call: lm(formula = y ~ ., data = d) Residuals: 1 2 3 4 5 6 7 8 -0.715513 
+0.063803 0.233524 1.063999 -0.001007 -0.421912 0.712749 -1.188755 9 10 11 12 13 
+14 15 16 -1.686568 -0.907378 0.293071 -0.506539 0.644674 2.046780 0.236374 
+-0.110205 17 18 19 20 0.256414 0.397595 0.052581 -0.463687 Coefficients: 
+Estimate Std. Error t value Pr(&gt;|t|) (Intercept) -0.03322 0.86408 -0.038 
+0.971 V1 0.76079 1.23426 0.616 0.571 V2 0.60744 0.52034 1.167 0.308 V3 -0.18183 
+1.09441 -0.166 0.876 V4 0.49537 0.68360 0.725 0.509 V5 0.54538 1.72066 0.317 
+0.767 V6 -0.16841 0.89624 -0.188 0.860 V7 0.51331 1.25093 0.410 0.703 V8 
+0.25457 2.05536 0.124 0.907 V9 0.34990 0.82277 0.425 0.693 V10 0.72410 1.26269 
+0.573 0.597 V11 0.69057 1.84400 0.374 0.727 V12 0.64329 1.15298 0.558 0.607 V13 
+0.07364 0.79430 0.093 0.931 V14 -0.06518 0.53887 -0.121 0.910 V15 0.92515 
+1.18697 0.779 0.479 Residual standard error: 1.798 on 4 degrees of freedom 
+Multiple R-Squared: 0.7795, Adjusted R-squared: -0.04715 F-statistic: 0.943 on 
+15 and 4 DF, p-value: 0.5902</pre> 
+<p> The &quot;gls&quot; function gives you directly the AIC and the BIC. </p> 
+<pre> &gt; r &lt;- gls(y~., data=d) &gt; summary(r) Generalized least squares 
+fit by REML Model: y ~ . Data: d AIC BIC logLik 86.43615 76.00316 -26.21808 ...
+</pre> 
+<p> These quantities are important when you compare models with a different 
+number of parameters: the log-likelihood will always increase if you add more 
+variables, falling in the &quot;overfit&quot; trap. On the contrary, the AIC 
+and the BIC have a corrective term to avoid this trap.</p> 
+<pre> library(nlme) n &lt;- 20 m &lt;- 15 d &lt;- 
+as.data.frame(matrix(rnorm(n*m),nr=n,nc=m)) # i &lt;- sample(1:m, 3) i &lt;- 
+1:3 d &lt;- data.frame(y=apply(d[,i],1,sum)+rnorm(n), d) k &lt;- m res &lt;- 
+matrix(nr=k, nc=5) for (j in 1:k) { r &lt;- lm(d$y ~ as.matrix(d[,2:(j+1)])) 
+res[j,] &lt;- c( logLik(r), AIC(r), BIC(r), summary(r)$r.squared, 
+summary(r)$adj.r.squared ) } colnames(res) &lt;- c('logLik', 'AIC', 'BIC', 
+&quot;R squared&quot;, &quot;adjusted R squared&quot;) res &lt;- t( t(res) - 
+apply(res,2,mean) ) res &lt;- t( t(res) / apply(res,2,sd) ) matplot(0:(k-1), 
+res, type = 'l', col = c(par('fg'),'blue','green', 'orange', 'red'), lty = 1, 
+xlab = &quot;Number of variables&quot;) legend(par('usr')[2], par('usr')[3], 
+xjust = 1, yjust = 0, c('log-vraissemblance', 'AIC', 'BIC', &quot;R^2&quot;, 
+&quot;adjusted R^2&quot; ), lwd = 1, lty = 1, col = c(par('fg'), 'blue', 
+'green', &quot;orange&quot;, &quot;red&quot;) ) abline(v=3, lty=3)</pre> 
+<p></p> 
+<p> (In some cases, in the previous simulation, the AIC and the BIC have a 
+local minimum for three variables and a global minimim for a dozen variables.)
+</p> 
+<p> There are other criteria, such as the adjusted R-squared or Mallow's Cp. 
+</p> 
+<pre> &gt; library(wle) &gt; r &lt;- mle.cp(y~., data=d) &gt; summary(r) Call: 
+mle.cp(formula = y ~ ., data = d) Mallows Cp: (Intercept) V1 V2 V3 V4 V5 V6 V7 
+V8 V9 V10 V11 V12 V13 V14 V15 cp [1,] 0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 0 -5.237 
+[2,] 0 1 0 0 0 0 0 1 0 0 1 0 0 0 1 0 -4.911 [3,] 0 0 1 0 0 0 0 1 0 0 1 0 0 0 1 
+0 -4.514 [4,] 0 0 0 0 0 0 0 1 0 0 1 0 1 0 1 0 -4.481 [5,] 0 0 0 0 0 0 1 1 0 0 1 
+0 0 0 1 0 -4.078 [6,] 0 1 1 0 0 0 0 1 0 0 1 0 0 0 1 0 -3.854 [7,] 0 0 0 1 0 0 0 
+1 0 0 1 0 0 0 1 0 -3.829 [8,] 0 1 0 0 0 0 1 1 0 0 1 0 0 0 1 0 -3.826 [9,] 1 0 0 
+0 0 0 0 1 0 0 1 0 0 0 1 0 -3.361 [10,] 0 0 0 0 0 0 1 1 0 0 1 0 1 0 1 0 -3.335 
+[11,] 0 0 0 0 1 0 0 1 0 0 1 0 1 0 1 0 -3.287 [12,] 0 0 0 0 0 0 0 1 1 0 1 0 0 0 
+1 0 -3.272 [13,] 0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 1 -3.261 [14,] 0 0 0 0 1 0 0 1 0 
+0 1 0 0 0 1 0 -3.241 [15,] 0 0 0 0 0 0 0 1 0 0 1 1 0 0 1 0 -3.240 [16,] 0 1 0 1 
+0 0 0 1 0 0 1 0 0 0 1 0 -3.240 [17,] 0 0 0 0 0 0 0 1 0 1 1 0 0 0 1 0 -3.240 
+[18,] 0 0 0 0 0 1 0 1 0 0 1 0 0 0 1 0 -3.240 [19,] 0 0 0 0 0 0 0 1 0 0 1 0 0 1 
+1 0 -3.237 [20,] 0 1 0 0 0 0 0 1 0 0 1 0 1 0 1 0 -3.216 Printed the first 20 
+best models &gt; i [1] 7 10 14</pre> 
+<h3>Example, by hand </h3> 
+<pre> get.sample &lt;- function () { # Number of observations n &lt;- 20 # 
+Number of variables m &lt;- 10 # Number of the variables that actually play a 
+role k &lt;- sample(1:m, 5) print(k) # Coefficients b &lt;- rnorm(m); b &lt;- 
+round(sign(b)+b); b[-k] &lt;- 0 x &lt;- matrix(nr=n, nc=m, rnorm(n*m)) y &lt;- 
+x %*% b + rnorm(n) data.frame(y=y, x) }</pre> 
+<p> Let us select the variables, starting with an empty model, and 
+progressively adding the variable whose p-value is the smallest.</p> 
+<pre> my.variable.selection &lt;- function (y,x, p=.05) { nvar &lt;- dim(x)[2] 
+nobs &lt;- dim(x)[1] v &lt;- rep(FALSE, nvar) done &lt;- FALSE while (!done) { 
+print(paste(&quot;Iteration&quot;, sum(v))) done &lt;- TRUE # Ceck if one of 
+the p-values is less than p pmax &lt;- 1 imax &lt;- NA for (i in 1:nvar) { 
+if(!v[i]){ # Compute the p-value m &lt;- cbind(x[,v], x[,i]) m &lt;- 
+as.matrix(m) pv &lt;- 1 try( pv &lt;- summary(lm(y~m))$coefficients[ 
+dim(m)[2]+1, 4 ] ) if( is.nan(pv) ) pv &lt;- 1 if (pv&lt;pmax) { pmax &lt;- pv 
+imax &lt;- i } } } if (pmax&lt;p) { v[imax] &lt;- TRUE done &lt;- FALSE 
+print(paste(&quot;Adding variable&quot;, imax, &quot;with p-value&quot;, pmax)) 
+} } v } d &lt;- get.sample() y &lt;- d$y x &lt;- d[,-1] k.exp &lt;- 
+my.variable.selection(y,x)</pre> 
+<p> Quite often, we find the right model, but not always. </p> 
+<pre> &gt; d &lt;- get.sample() [1] 9 4 7 8 2 &gt; y &lt;- d$y &gt; x &lt;- 
+d[,-1] &gt; k.exp &lt;- my.variable.selection(y,x) [1] &quot;Iteration 0&quot; 
+[1] &quot;Adding variable 8 with p-value 0.00326788125893668&quot; [1] 
+&quot;Iteration 1&quot; [1] &quot;Adding variable 3 with p-value 
+0.0131774876254023&quot; [1] &quot;Iteration 2&quot; [1] &quot;Adding variable 
+9 with p-value 0.0309234855260663&quot; [1] &quot;Iteration 3&quot; [1] 
+&quot;Adding variable 4 with p-value 0.00370166323917281&quot; [1] 
+&quot;Iteration 4&quot;</pre> 
+<p> Let us comparer the theoretical model with the empirical one. </p> 
+<pre> &gt; x &lt;- as.matrix(x) &gt; summary(lm(y~x[,c(9,4,7,8,2)])) ... 
+Estimate Std. Error t value Pr(&gt;|t|) (Intercept) 0.1471 0.3260 0.451 0.65870 
+x[, c(9, 4, 7, 8, 2)]X9 1.2269 0.3441 3.565 0.00311 ** x[, c(9, 4, 7, 8, 2)]X4 
+1.9826 0.3179 6.238 2.17e-05 *** x[, c(9, 4, 7, 8, 2)]X7 1.2958 0.4149 3.123 
+0.00748 ** x[, c(9, 4, 7, 8, 2)]X8 2.6270 0.4089 6.425 1.59e-05 *** x[, c(9, 4, 
+7, 8, 2)]X2 -0.9715 0.3086 -3.148 0.00712 ** Residual standard error: 1.287 on 
+14 degrees of freedom Multiple R-Squared: 0.8859, Adjusted R-squared: 0.8451 
+F-statistic: 21.73 on 5 and 14 DF, p-value: 3.837e-06 &gt; 
+summary(lm(y~x[,k.exp])) ... Estimate Std. Error t value Pr(&gt;|t|) 
+(Intercept) -0.005379 0.360940 -0.015 0.98831 x[, k.exp]X3 -1.070913 0.443122 
+-2.417 0.02886 * x[, k.exp]X4 1.292099 0.376419 3.433 0.00370 ** x[, k.exp]X8 
+2.863028 0.469379 6.100 2.03e-05 *** x[, k.exp]X9 1.541648 0.388408 3.969 
+0.00123 ** Residual standard error: 1.537 on 15 degrees of freedom Multiple 
+R-Squared: 0.8254, Adjusted R-squared: 0.7788 F-statistic: 17.73 on 4 and 15 
+DF, p-value: 1.486e-05</pre> 
+<p> The theoretical model looks better... </p> 
+<p> To assess the relevance of a model, as always, we plot the data -- here, 
+the residuals as a function of each variable included (in black, before adding 
+it, in red, after).</p> 
+<pre> get.sample &lt;- function () { # Number of observations n &lt;- 20 # 
+Number of variables m &lt;- 10 # Number of the variables that actually appear 
+in the model k &lt;- sample(1:m, 5) print(k) # Coefficients b &lt;- rnorm(m); b 
+&lt;- round(sign(b)+b); b[-k] &lt;- 0 x &lt;- matrix(nr=n, nc=m, rnorm(n*m)) y 
+&lt;- x %*% b + rnorm(n) data.frame(y=y, x) } my.variable.selection &lt;- 
+function (y,x, p=.05) { nvar &lt;- dim(x)[2] nobs &lt;- dim(x)[1] v &lt;- 
+rep(FALSE, nvar) p.values &lt;- matrix(NA, nr=nvar, nc=nvar) res1 &lt;- list() 
+res2 &lt;- list() done &lt;- FALSE while (!done) { 
+print(paste(&quot;Iteration&quot;, sum(v))) done &lt;- TRUE # Is there a 
+p-value lower that pmax &lt;- 1 imax &lt;- NA for (i in 1:nvar) { if(!v[i]){ # 
+Compute the p-value m &lt;- cbind(x[,v], x[,i]) m &lt;- as.matrix(m) pv &lt;- 1 
+try( pv &lt;- summary(lm(y~m))$coefficients[ dim(m)[2]+1, 4 ] ) if( is.nan(pv) 
+) pv &lt;- 1 if (pv&lt;pmax) { pmax &lt;- pv imax &lt;- i } 
+p.values[i,sum(v)+1] &lt;- pv } } if (pmax&lt;p) { print(paste(&quot;Adding 
+variable&quot;, imax, &quot;with p-value&quot;, pmax)) m1 &lt;- 
+as.matrix(x[,v]) res1[[ length(res1)+1 ]] &lt;- NULL try( res1[[ length(res1)+1 
+]] &lt;- data.frame(res=lm(y~m1)$res,xi=x[,imax]) ) v[imax] &lt;- TRUE done 
+&lt;- FALSE m2 &lt;- as.matrix(cbind(x[,v], x[,imax])) res2[[ length(res2)+1 ]] 
+&lt;- data.frame(res=lm(y~m2)$res,xi=x[,imax]) } } list(variables=v, 
+p.values=p.values[,1:sum(v)], res1=res1, res2=res2) } d &lt;- get.sample() y 
+&lt;- d$y x &lt;- d[,-1] res &lt;- my.variable.selection(y,x) k &lt;- 
+ceiling(length(res$res1)/3) op &lt;- par(mfrow=c(k,3)) for (i in 
+1:length(res$res1)) { r1 &lt;- res$res1[[i]] r2 &lt;- res$res2[[i]] plot(r1[,1] 
+~ r1[,2], ylab=&quot;res&quot;, xlab=names(r1)[2]) points(r2[,1] ~ r2[,2], 
+col='red') } par(op)</pre> 
+<p></p> 
+<p> We can also plot the evolution of the p-values (in bold, the variables 
+that were retained).</p> 
+<pre> matplot(t(res$p.values), type='l', lty=1, lwd=1+2*res$variables) 
+abline(h=.05, lty=3)</pre> 
+<p></p> 
+<p> Exercise: improve the preceding function. Start with an empty set of 
+variables; add them, one at a time, if their p-value is under 0.05, starting 
+with the variables with the lowest p-value; when you run out aof variables to 
+add, remove, one at a time, those whose p-value is larger that 0.05, startin 
+with the variables with the highest p-value; when you run out of variables to 
+remove, start adding them again; etc. What happens with the example above? What 
+happens if we change the threshold?</p> 
+<p> Exercise: find, in the data provided with R or its packages, a data set 
+with many variables (compared to the number of observations) and apply the 
+methods presented above. What happens?</p> 
+<pre> grep variable str_data | perl -p -e 's/^(.*\s)([0-9]+)(\s+variables:)/$2 
+$1$2$3/' | sort -n library(ade4) data(microsatt) x &lt;- microsatt$tab # 18 
+observations, 112 variables, a lot of zeroes... y &lt;- x[,3] x &lt;- x[,-3] 
+For this example, we have 16 parameters for 18 observations: it does not 
+work... We can interpret this as follows. The vector we wanted to predict is 
+&quot;almost&quot; orthogonal to the others. No. It could be, but here it is 
+not the case. library(ade4) data(microsatt) x &lt;- microsatt$tab # 18 
+observations, 112 variables, a lot of zeroes... y &lt;- x[,3] x &lt;- x[,-3] yn 
+&lt;- y/sqrt(sum(y*y)) xn &lt;- t(t(x)/sqrt(apply(x*x, 2, sum))) plot( 
+sort(as.vector(t(yn) %*% xn)), type='h')</pre> 
+<p></p> 
+<h3>Examples </h3> 
+<p> Actually, there are already a few functions to do this. </p> 
+<pre> regsubsets (in the &quot;leaps&quot; package) leaps (in the 
+&quot;leaps&quot; package -- prefer &quot;regsubsets&quot;) subset (in the 
+&quot;car&quot; package) stepAIC (in the &quot;MASS&quot; package)</pre> 
+<p> Let us try them on our example. </p> 
+<pre> d &lt;- get.sample() y &lt;- d[,1] x &lt;- as.matrix(d[,-1]) 
+library(leaps) a &lt;- regsubsets(y~x) summary(a)</pre> 
+<p> It yields (the &quot;true&quot; variables are 1, 3, 6, 7, 10): </p> 
+<pre> Selection Algorithm: exhaustive X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 1 ( 1 ) 
+&quot; &quot; &quot; &quot; &quot; &quot; &quot; &quot; &quot; &quot; &quot; 
+&quot; &quot;*&quot; &quot; &quot; &quot; &quot; &quot; &quot; 2 ( 1 ) &quot; 
+&quot; &quot; &quot; &quot;*&quot; &quot; &quot; &quot; &quot; &quot; &quot; 
+&quot; &quot; &quot; &quot; &quot; &quot; &quot;*&quot; 3 ( 1 ) &quot; &quot; 
+&quot; &quot; &quot;*&quot; &quot; &quot; &quot; &quot; &quot; &quot; 
+&quot;*&quot; &quot; &quot; &quot; &quot; &quot;*&quot; 4 ( 1 ) &quot;*&quot; 
+&quot; &quot; &quot;*&quot; &quot; &quot; &quot; &quot; &quot; &quot; 
+&quot;*&quot; &quot; &quot; &quot; &quot; &quot;*&quot; 5 ( 1 ) &quot;*&quot; 
+&quot; &quot; &quot;*&quot; &quot; &quot; &quot; &quot; &quot; &quot; 
+&quot;*&quot; &quot;*&quot; &quot; &quot; &quot;*&quot; 6 ( 1 ) &quot;*&quot; 
+&quot; &quot; &quot;*&quot; &quot; &quot; &quot; &quot; &quot; &quot; 
+&quot;*&quot; &quot;*&quot; &quot;*&quot; &quot;*&quot; 7 ( 1 ) &quot;*&quot; 
+&quot; &quot; &quot;*&quot; &quot; &quot; &quot; &quot; &quot;*&quot; 
+&quot;*&quot; &quot;*&quot; &quot;*&quot; &quot;*&quot; 8 ( 1 ) &quot;*&quot; 
+&quot; &quot; &quot;*&quot; &quot;*&quot; &quot; &quot; &quot;*&quot; 
+&quot;*&quot; &quot;*&quot; &quot;*&quot; &quot;*&quot;</pre> 
+<p> The &quot;subsets&quot; function in the &quot;car&quot; packages can plot 
+this.</p> 
+<pre> library(leaps) library(car) get.sample &lt;- function () { # Number of 
+observations n &lt;- 20 # Number of variables m &lt;- 10 # Number of the 
+variables that actually appear in the model k &lt;- sample(1:m, 5) print(k) # 
+Coefficients b &lt;- rnorm(m); b &lt;- round(sign(b)+b); b[-k] &lt;- 0 x &lt;- 
+matrix(nr=n, nc=m, rnorm(n*m)) y &lt;- x %*% b + rnorm(n) list(y=y, x=x, k=k, 
+b=b) } d &lt;- get.sample() x &lt;- d$x y &lt;- d$y k &lt;- d$k b &lt;- d$b 
+subsets(regsubsets(x,y), statistic='bic', legend=F) 
+title(main=paste(sort(k),collapse=', '))</pre> 
+<p></p> 
+<p> Let us also mention the &quot;stepAIC&quot; function, in the 
+&quot;MASS&quot; package.</p> 
+<pre> d &lt;- data.frame(y=y,x) r &lt;- stepAIC(lm(y~., data=d), trace = TRUE) 
+r$anova &gt; r$anova Stepwise Model Path Analysis of Deviance Table Initial 
+Model: y ~ X1 + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 Final Model: y ~ X1 
++ X3 + X4 + X5 + X7 + X10 Step Df Deviance Resid. Df Resid. Dev AIC 1 NA NA 9 
+18.62116 20.57133 2 - X9 1 0.007112768 10 18.62828 18.57897 3 - X6 1 
+0.037505223 11 18.66578 16.61919 4 - X2 1 0.017183580 12 18.68296 14.63760 5 - 
+X8 1 0.098808619 13 18.78177 12.74309 &gt; k [1] 5 10 3 7 4</pre> 
+<p> Let us compare with the theoretical model. </p> 
+<pre> &gt; summary(lm(y~x[,k])) ... Estimate Std. Error t value Pr(&gt;|t|) 
+(Intercept) 0.2473 0.3023 0.818 0.426930 x[, k]1 1.7478 0.3330 5.249 0.000123 
+*** x[, k]2 1.4787 0.2647 5.587 6.7e-05 *** x[, k]3 -1.5362 0.4903 -3.133 
+0.007334 ** x[, k]4 -1.1025 0.2795 -3.944 0.001470 ** x[, k]5 1.6863 0.4050 
+4.164 0.000956 *** Residual standard error: 1.27 on 14 degrees of freedom 
+Multiple R-Squared: 0.8317, Adjusted R-squared: 0.7716 F-statistic: 13.84 on 5 
+and 14 DF, p-value: 5.356e-05 &gt; AIC(lm(y~x[,k])) [1] 73.1798 &gt; b [1] 0 0 
+-2 2 2 0 -1 0 0 2 &gt; summary(lm(y~x[,c(1,3,4,5,7,10)])) ... Estimate Std. 
+Error t value Pr(&gt;|t|) (Intercept) 0.1862 0.2886 0.645 0.52992 x[, c(1, 3, 
+4, 5, 7, 10)]1 -0.4408 0.2720 -1.620 0.12915 x[, c(1, 3, 4, 5, 7, 10)]2 -1.6742 
+0.4719 -3.548 0.00357 ** x[, c(1, 3, 4, 5, 7, 10)]3 1.5300 0.3953 3.870 0.00193 
+** x[, c(1, 3, 4, 5, 7, 10)]4 1.7813 0.3159 5.639 8.07e-05 *** x[, c(1, 3, 4, 
+5, 7, 10)]5 -1.0521 0.2664 -3.949 0.00167 ** x[, c(1, 3, 4, 5, 7, 10)]6 1.4903 
+0.2506 5.946 4.85e-05 *** Residual standard error: 1.202 on 13 degrees of 
+freedom Multiple R-Squared: 0.86, Adjusted R-squared: 0.7954 F-statistic: 13.31 
+on 6 and 13 DF, p-value: 6.933e-05 &gt; AIC(lm(y~x[,c(1,3,4,5,7,10)])) [1] 
+71.50063</pre> 
+<p> If we look at the p-values, we would like to remove X1, but if we look at 
+the AIC, we would like to keep it...</p> 
+<h3>Stepwise regression is BAD </h3> 
+<pre> TODO</pre> 
+<h3>Stepwise regression and Bayesian Model Averaging (BMA) </h3> 
+<p> The main problem of stepwise regression is that we are very likely to 
+choose a bad model. An alternative is to this is select not one but several 
+models. Then, we can compute the forecasts for each of those models and combine 
+them, giving them a weight proportionnal to the likelihood of the model.</p> 
+<pre> # We select a &quot;good&quot; regression model, using the BIC as a # 
+criterion, by starting from a model and adding or # removing variables at 
+random, if this improves the BIC. # The second version also accepts models that 
+are slightly # worse, with a certain probability (high if the model is # only 
+slightly worse, low if it is really worse). We end # up with a Markov chain 
+that wanders in the space of all # models, staying longer at models that are 
+more # probable. You can use this to average predictions over # those models. 
+This is called MCMC (Markov Chain Monte # Carlo) or MCMCMC (Markov Chain Monte 
+Carlo Model # Combination). # You can also change the &quot;temperature&quot;, 
+i.e., the # probability that a worse model will be accepted, when # the 
+algorithm proceeds. If you end with a temperature # equal to zero, you get a 
+single solution, as with the # steepest descent, but you are less likely to be 
+stuck in # a local minimum (this is called simulated annealing); if # you 
+decrease the temperature until 1, you get another # MCMC, with a different 
+burn-up period. # For more details: #
+http://www.stat.washington.edu/raftery/Research/PDF/volinsky1997.pdf # 
+http://www.research.att.com/~volinsky/bma.html library(stats4) # for BIC 
+bma.fit.model &lt;- function (y, x, df) { # df: data.frame containing the data 
+# y: name of the variable to predict # x: name of the predictive variables 
+(vector of strings) if (length(x)==0) { x &lt;- &quot;1&quot; } s &lt;- 
+paste(&quot;lm(&quot;, y, &quot;~&quot;, paste(x, collapse=&quot;+&quot;), 
+&quot;, data=df)&quot;) #cat(&quot;&gt;&quot;, s, &quot;\n&quot;) r &lt;- 
+eval(parse(text=s)) BIC(logLik(r)) } bma.neighbour &lt;- function (model, 
+variables) { # model: vector containing the variables in the current model # 
+variable: vector containing the names of all the variables among # which we 
+choose. model &lt;- variables %in% model n &lt;- length(model) i &lt;- 
+sample(1:n, 1) model[i] &lt;- ! model[i] variables[ model ] } 
+bma.steepest.descent &lt;- function (y, x, df, N=1000) { # df: data.frame 
+containing the data # y: name of the variable to predict # x: name of the 
+predictive variables among which we # shall choose # N: Number of iterations 
+current.model &lt;- character(0) current.bic &lt;- 
+bma.fit.model(y,current.model,df) for (i in 1:N) { new.model &lt;- 
+bma.neighbour(current.model, x) new.bic &lt;- bma.fit.model(y, new.model, df) 
+if (new.bic &lt; current.bic) { current.bic &lt;- new.bic current.model &lt;- 
+new.model cat(&quot;(&quot;, i, &quot;) BIC=&quot;, current.bic, &quot; &quot;, 
+paste(current.model,collapse=&quot; &quot;), &quot;\n&quot;, sep=&quot;&quot;) 
+} else { cat(&quot;(&quot;,i,&quot;) BIC=&quot;, new.bic, &quot;\r&quot;, 
+sep=&quot;&quot;) } } current.model } bma.mcmc.descent &lt;- function (y, x, 
+df, N=1000, temperature=1) { if (length(temperature)==1) { temperature &lt;- 
+rep(temperature,N) } res &lt;- matrix(NA, nr=N, nc=length(x)) colnames(res) 
+&lt;- x current.model &lt;- character(0) current.bic &lt;- 
+bma.fit.model(y,current.model,df) for (i in 1:N) { new.model &lt;- 
+bma.neighbour(current.model, x) new.bic &lt;- bma.fit.model(y, new.model, df) 
+res[i,] &lt;- x %in% new.model if ( current.bic - new.bic &gt; temperature[i] * 
+log(runif(1)) ) { current.bic &lt;- new.bic current.model &lt;- new.model 
+cat(&quot;(&quot;, i, &quot;) BIC=&quot;, current.bic, &quot; &quot;, 
+paste(current.model,collapse=&quot; &quot;), &quot;\n&quot;, sep=&quot;&quot;) 
+} else { cat(&quot;(&quot;,i,&quot;) BIC=&quot;, new.bic, &quot;\r&quot;, 
+sep=&quot;&quot;) } } res } N &lt;- 100 df &lt;- data.frame( y = rnorm(N), x1 = 
+rnorm(N), x2 = rnorm(N), x3 = rnorm(N), x4 = rnorm(N), x5 = rnorm(N) ) df$y 
+&lt;- df$y + .1 * df$x1 + .5 * df$x3 bma.steepest.descent(&quot;y&quot;, 
+setdiff(names(df),&quot;y&quot;), df) r &lt;- bma.mcmc.descent(&quot;y&quot;, 
+setdiff(names(df),&quot;y&quot;), df) apply(r[-(1:500),], 2, sum) 
+bma.mcmc.descent(&quot;y&quot;, setdiff(names(df),&quot;y&quot;), df, N=1000, 
+temperature=c(seq(20,1,length=500), # Simulated annealing seq(1,0,length=250), 
+rep(0,250))) TODO: Explain what I am doing... TODO: A prior (for the number of 
+variables...) TODO: Explain the danger of MCMC: we have to check that it 
+actually converges. Typically: run several chains with different starting 
+points, they should give the same results. TODO: A few plots??? barplot( 
+apply(r[-(1:500),], 2, sum) ) predictions with the &quot;best&quot; (wrong) 
+model and predictions with the average model (but what do we plot? the error 
+histograms? error2~error1?) TODO: An example where it works... True model: y ~ 
+x1 + x2 + x3 but x1, x2 and x3 are not observed, we only have x11 = x1 + 
+noise1, x12 = x1 + noise2, etc. The MCMC should alternate between x11 and x12, 
+x21 and x22, etc.</pre> 
+<p> You might also want to have a look at the BMA and ensembleBMA packages. 
+</p> 
+<p> Other approaches try to combine models, not predictions -- for this, the 
+models have to be expressed or transformed into a common framework.</p> 
+<h3>Model selection and the Vapnik-Chervonenkis dimension </h3> 
+<p> Imagine you want to predict a quantitative variable y from other variables 
+x1, ..., xn; you have tried several algorithms (say, logistic regression, 
+stepwise logistic regression, decision trees, decision forests, support vector 
+machines (SVM), neural networks) and you would like to compare them. You can 
+easily measure how they fare on the learning sample, bit what will happen with 
+new data? Indeed, if the model performs well on the training data, it might 
+simply have overfitted the data and be completely useless -- there is a subtle 
+tradeoff between the performance on the training sample and the ability to 
+generalize.</p> 
+<pre> TODO: a plot depicting this tradeoff. performance in-sample ~ model 
+complexity performance out-of-sample ~ model complexity (on the same plot) 
+set.seed(1) n &lt;- 20 x &lt;- runif(n, -1, 1) y &lt;- 1 - x^2 + .2*rnorm(n) X 
+&lt;- runif(10000, -1, 1) Y &lt;- 1 - X^2 + .2*rnorm(1000) N &lt;- n res &lt;- 
+matrix(NA, nc=N, nr=2) dimnames(res) &lt;- list( c(&quot;In-sample error&quot;, 
+&quot;Out-of-sample error&quot;), &quot;Model complexity&quot; = 
+as.character(1:N) ) r &lt;- lm(y~x) res[1,1] &lt;- mean(abs(residuals(r))) 
+res[2,1] &lt;- mean(abs(predict(r, data.frame(x=X)) - Y)) for (i in 2:N) { r 
+&lt;- lm(y ~ poly(x,i-1)) res[1,i] &lt;- mean(abs(residuals(r))) res[2,i] &lt;- 
+mean(abs(predict(r, data.frame(x=X)) - Y)) } op &lt;- par(mar=c(5,4,4,4)) ylim 
+&lt;- c(0, 1.5*max(res[1,])) plot(res[1,], col=&quot;blue&quot;, 
+type=&quot;l&quot;, lwd=3, ylim=ylim, axes=F, xlab=&quot;Model 
+complexity&quot;, ylab=&quot;&quot;, main=&quot;In- and out-of-sample 
+error&quot;) axis(1) axis(2, col=&quot;blue&quot;) par(new=TRUE) plot(res[2,], 
+col=&quot;red&quot;, type=&quot;b&quot;, lwd=3, ylim=ylim, axes=F, 
+xlab=&quot;&quot;, ylab=&quot;&quot;, main=&quot;&quot;) axis(4, 
+col=&quot;red&quot;) mtext(&quot;In-sample error&quot;, 2, line=2, 
+col=&quot;blue&quot;, cex=1.2) mtext(&quot;Out-of-sample error&quot;, 4, 
+line=2, col=&quot;red&quot;, cex=1.2) par(op)</pre> 
+<p></p> 
+<p> A simple way of estimating the ability of a model to generalize is to cut 
+the sample into two parts, use the first as a training set and the second as a 
+test sample, to assess the model. To get a better idea, you can repeat this 
+several times, with different partitions of the initial sample.</p> 
+<pre> TODO: Example (take an example from &quot;mlbench&quot; and keep it 
+until the end of this section. Also choose a couple of algorithms, say: 
+logistic regression, stepwise logictic regression, SVM and stick to them.) for 
+(i in data(package=&quot;mlbench&quot;)$results[,&quot;Item&quot;]) { 
+do.call(&quot;data&quot;, list(i)) cat(i, &quot;\n&quot;) str(get(i)) } # If we 
+restrict ourselves to predicting a binary variable str(Sonar) 
+str(PimaIndiansDiabetes) str(Ionosphere) library(mlbench) data(Sonar) glm( 
+Class ~ ., data=Sonar, family=&quot;binomial&quot;)</pre> 
+<p> Another way of estimating the quality of a model is the log-likelihood, 
+i.e., the (conditionnal) probability of observing the data we have actually 
+observed given the model -- however, if the model is sufficiently complex, 
+i.e., if it has sufficiently many parameters, it can perfectly fit the learning 
+sample. This prevents us from comparing models with a different number of 
+parameters -- which is exactly what we want to do...</p> 
+<p> One way out of this problem is to compensate for an excessive number of 
+parameters by adding a &quot;penalty&quot; to the log-likelihood, depending on 
+the number of parameters. The AIC (Akaike Information Criterion) and the BIC 
+(Bayesian Information Criterion) are examples of such penalized log-likelihoods.
+</p> 
+<pre> TODO: Example</pre> 
+<p> You might have a few qualms about the &quot;number of parameters&quot; 
+used in the definition of the AIC or the BIC. Indeed, if you have two 
+parameters, you can cheat and code them as a single number (just choose a 
+bijection between R and R^2). But even without cheating, this poses a problem: 
+how do we count the &quot;number of variable&quot; in a regression on the 
+subset of variables? We have to somehow combine the number of initial variables 
+(n) and the number of selected variables (k): do we consider that there are n 
+parameters (some of which are zero)? do we use a boolean parameter for each 
+variable telling us if it is retained or not (n+k parameters)? do we only count 
+the retained variables (k parameters)? do we use a single discrete-valued 
+variable to code the subset of retained variables (k+1 parameters)?</p> 
+<p> The notion of &quot;number of variables&quot; is fine for classical 
+regression, but the problems we have just mentionned call for an other, more 
+general notion, better suited to &quot;machine learning algorithms&quot;, i.e., 
+to algorithmic and not only statistical methods.</p> 
+<p> Enters the VC (Vapnik-Chervonenkis) dimension. </p> 
+<p> The situation is as follows: we have a qualitative variable y, 
+quantitative variables x1, ..., xn neasured on a sample; we refer to 
+(x1(i),...xn(i)) (without y) as an observation; we also have a classification 
+algorithm f : (x,a) |---&gt; f(x,a) that tries to predict y from x; here, 
+&quot;a&quot; are the parameters of the classification algorithm, to be 
+deternined (e.g., the coefficients of a regression, the weights of a neural 
+network).</p> 
+<p> The classification algorithm f is said to shatter the observations 
+o1,...,om if, for any training set (o1,y1),...,(om,ym) there exists a such that 
+f(.,a) makes no mistakes on the training set. If you prefer formulas:</p> 
+<pre> y \in Y (Y is a finite set) x \in R^n a in | f: X*A --&gt; Y f shatters 
+(x1,...,xm) \in (R^n)^m iif \forall y1,...,ym \in Y \exists a \in A \forall i 
+\in [1,m] f(xi, a) = yi</pre> 
+<p> The VC dimension of the classification algorithm f is the largest number 
+of points shattered by f. If you prefer formulas:</p> 
+<pre> VC(f) = Max { m : \exists x1,...,xm \in R^n such that x1,...,xn shatters 
+f } = Max { m : \exists x1,...,xm \in R^n \forall y1,...,ym \in Y \exists a \in 
+A \forall i \in [1,m] f(xi, a) = yi }</pre> 
+<p> Examples: </p> 
+<pre> VC(linear classifier, in dimension n) = n + 1 VC(SVM) = ??? TODO</pre> 
+<p> The raison d'etre of the VC dimension is the following theorem: </p> 
+<pre> Out-of sample error rate &lt;= In-sample error rate + sqrt( (VC*(1 + 
+log(2N/VC)) - log(p/4)) / N )</pre> 
+<p> with probability p, where N is the test sample size. </p> 
+<p> One can use this formula for &quot;Structural Risk Minimization&quot; 
+(SRM) and choose the model with the lowest VC bound on the out-of-sample error 
+rate -- this bound plays the same role as the AIC or the BIC.</p> 
+<pre> TODO: plot in-sample error ~ model VC bound on the out-of-sample error ~ 
+model</pre> 
+<p> There is however a problem with this bound: it is extremely conservative 
+-- your classification algorithm could well perform 100 times better...</p> 
+<p> As a conclusion, if you have to select a model among several, stick to the 
+BIC (if you know how to compute it for your algorithm and if your data are 
+well-behaved) or cross-validation.</p> 
+<p> For more details, check A. Moore's tutorials: </p> 
+<pre> http://www.autonlab.org/tutorials/vcdim08.pdf 
+http://www.autonlab.org/tutorials/</pre> 
+<h3>Genetic algorithms and non-linear model selection </h3> 
+<p> If you want to choose a model from a reasonable set (say, a few dozen 
+models), you can fit them all, compute some measure of model quality (AIC, BIC, 
+cross-validation error, VC bound, etc.) and select the best one.</p> 
+<p> If the number of models is not reasonable (for instance, if you have 100 
+variables and want a model using a subset of them -- there are 2^100 of them), 
+you can try various optimization algorithms, that wander through the space of 
+all models (e.g., try to add or remove a variable to the current model and keep 
+the new one if it is better, again and again, until you can no longer improve 
+it -- this is a descent algorithm, but you could also use simulated annealing 
+to avoid local extrema.</p> 
+<p> But sometimes, the number of models is not reasonable and the models are 
+rather unwieldy: there can be no simple and obvious notion of a 
+&quot;nearby&quot; model that would allow you to easily sample the space of all 
+models. This is the case, for instance, if you want a non-linear model: your 
+space of models could be &quot;all the formulas one can obtain from the 
+predictive variables, the basic arithmetic operations (+ - * /) and a few 
+selected functions (sin, exp, log)&quot;.</p> 
+<p> Such a formula can be represented by a tree. For instance, </p> 
+<pre> sqrt( 1 - x1 * x3 ) 1.17 * ----------------------- exp( sin( x1 / x2 ) )
+</pre> 
+<p> can be represented as </p> 
+<pre> * / \ / \ / \ 1.17 / / \ / \ / \ sqrt exp | | | | | | - sin | / \ | / \ 
+| / \ 1 * / / \ / \ / \ / \ x1 x3 x1 x2</pre> 
+<p> The Lisp programmers amoung you would represent this as </p> 
+<pre> (* 1.17 (/ (sqrt (- 1 (* x1 x3))) (exp (sin (/ x1 x3)))))</pre> 
+<p> Contrary to waht it seems, this complex structure does not rule out 
+classical local search algorithms: all we need is a notion of a 
+&quot;nearby&quot; formula or &quot;nearby&quot; tree. Indeed, one can get a 
+tree near a given one by applying one of the following &quot;mutations&quot;: 
+replace a node (an operator) by another, of the same arity; replace a leaf; 
+select a subtree and replace it by a random tree; insert a node (if its arity 
+if not one, complete it with random trees); delete a node; splice the root.</p> 
+<p> One can go one step further and use genetic algorithms: contrary to local 
+search methods, where we have a single current candidate model, we have a pool 
+(or &quot;population&quot;) of models (one or two hundreds) and we go from one 
+generation to the next by mutating and pairing the models. Besides the 
+mutations, we also need a way to combine two parent models into a child model; 
+this is called cross-over and can be done as follows: select a subtree in both 
+parents and interchange them.</p> 
+<pre> TODO: Implementation? (I am not sure R is the language of choice if you 
+want to play with trees).</pre> 
+<p> See also: </p> 
+<pre> http://www.olsen.ch/research/workingpapers/gpForVolatility.pdf 
+http://www.olsen.ch/research/307_ga_pase95.pdf</pre> 
+<p> Generalizations: </p> 
+<p> - Respect the type of the operators (in programming language parlance, the 
+signature of the functions), i.e., take into account wether the functions take 
+as arguments and return arbitrary reals, reals in the interval [0,1], positive 
+numbers, boolean values, etc.</p> 
+<p> - Do not use genetic algorithms for the constants, but use classical 
+optimization algorithms;</p> 
+<p> - Take into account the possibility of non-relevant peaks in the BIC 
+landscape, e.g., by penalizing the BIC according to the number of individuals 
+around or by clustering the individuals, thereby creating subpopulations;</p> 
+<p> - Be creative and use other kinds of operators, for instance, exponential 
+moving averages (in finance, people feed very long irregular time series to 
+genetic algorithms) or boolean operators (&lt; &amp; | ifelse, e.g., to create 
+trading rules).</p> 
+<h3>Dimension reduction </h3> 
+<p> The &quot;dr&quot; package provides several dimension reduction algorithms.
+</p> 
+<pre> library(help=dr) xpdf /usr/lib/R/library/dr/doc/drdoc.pdf</pre> 
+<p> TODO: (understand and) explain those algorithms: sir, save, phd. (the PDF 
+file above is not clear).</p> 
+<pre> sir Sliced Inverse Regression save Sliced Average Variance Estimation 
+phd Principal Hessian Direction</pre> 
+<p> TODO: an example, with a few plots... (take another example, not that from 
+the manual...)</p> 
+<pre> # From the manual library(dr) data(ais) # The data op &lt;- 
+par(mfrow=c(3,3)) for (i in names(ais)) { hist(ais[,i], col='light blue', 
+probability=T, main=i) lines(density(ais[,i]),col='red',lwd=3) } par(op) # 
+Their logarithm op &lt;- par(mfrow=c(3,3)) for (i in names(ais)) { x &lt;- NA 
+try( x &lt;- log(ais[,i]) ) if( is.na(x) | any(abs(x)==Inf) ){ plot.new() } 
+else { hist(x, col='light blue', probability=T, main=i) 
+lines(density(x),col='red',lwd=3) } } par(op) # Dimension reduction r &lt;- 
+dr(LBM ~ Ht + Wt + log(RCC) + WCC, data=ais, method=&quot;sir&quot;) plot(r) r 
+summary(r) # TODO: mention the tests for the dimension</pre> 
+<h3>SVM (Support Vector Machines) </h3> 
+<p> SVM appear, for instance, in the following situation. </p> 
+<p> Genetics can be used to assess a risk in a patient. If we know the 
+mecanisms behind a given pathology, if we know what genes are involved (i.e., 
+what genes are over- or under-expressed in that pathology, or what mutations 
+trigger the disease), we can perform the tests. But often, we do not know the 
+mecanisms of the pathology -- yet. However, we can still hope to come to a 
+conclusion by performing tests &quot;at random&quot;. We take a few dozen 
+patients (or a few hundred: those tests are very expensive), whose condition is 
+known (for instance, by invasive tests, such as post-mortem examinations) and 
+we look for the presence/absence, or for the expression of tens of tousands of 
+genes (this can be done on a small piece od glass called a 
+&quot;micro-chip&quot; or a &quot;micro-array&quot;). And we want to predict 
+the patient's condition (wether he has the disease) from the genes.</p> 
+<p> You have noticed the problem: there are too many variables. (As a rule of 
+thum, you should have (at least) ten times more parameters to estimate than 
+observations -- here, it could be 100 times less...)</p> 
+<p> First idea: restrict yourself to 20 variables, chosen on the basis of 
+prior knowledge.</p> 
+<p> Second idea: restrict yourself to 20 variables, the 20 best. The is the 
+variable selection, that we have already presented.</p> 
+<p> Third idea: In the case the variable to predict is qualititive (as in our 
+example), the problem is to find a hyperplane separating two clouds of points. 
+Instead of looking for a hyperplane, i.e., an affine function f so that f&gt;0 
+iif the patient is affected (if there are really many variables, there is a 
+wealth of such hyperplanes), we can look for a thick hyperplance, i.e., an 
+affine function f so that f &gt; a iif the patient is affected and f &lt; -a 
+iif the patient is not affected, with a as large as possible.</p> 
+<p> Actually, the SVM method is more general: we first increase the dimension, 
+to allow for non-linear effects (for instance, we could map a 2-dimensional 
+vector space to a 5-dimensional vector space by (x,y) --&gt; (x,y,x^2,y^2,x*y)) 
+and only then look for a thick separating hyperplane.</p> 
+<p> The algorithm is as follows. </p> 
+<p> 1. Find a separating thick hyperplane, as thick as possible. This is a 
+simple Lagrange multipliers problem -- it can also be seen as a quadratic 
+programming problem. We have a Lagrange multiplier for each point: if the 
+multiplier is zero, the points does not play any role (it is in the midst of 
+the cloud of points, it is far away from the separating hyperplane); if the 
+multiplier is non-zero, we say it is a &quot;support vector&quot;. Those points 
+will &quot;touch&quot; the thick hyperplane, they will limit its thickness -- 
+actually, you can even forget the other points</p> 
+<p> 2. If it does not work, increase the dimension. You could try various 
+embeddings, such as (x,y) |---&gt; (x,x^2,x*y,y^2), but actually, we can simply 
+change the &quot;hyperplane&quot; equation (well, it will no longer be a 
+hyperplane) by replacing the scalar product used to define it by a kernel, such 
+as K(x,y) = ( &lt;x,y&gt; + a )^b or K(x,y) = exp( -a Norm(x-y)^2 ). If you use 
+algorithms that do not use coordinates but just scalar products, this trick 
+(the &quot;kernel trick&quot;) allows you to increase the dimension without 
+having to compute the actual coordinates.</p> 
+<p> 3. You can also accept that certain points end on the &quot;wrong&quot; 
+side of the hyperplane, with a penality.</p> 
+<pre> n &lt;- 200 x &lt;- rnorm(n) y &lt;- rnorm(n) u &lt;- sqrt(x^2+y^2) u 
+&lt;- ifelse( u&lt;.5*mean(u), 1, 2) plot(y~x, col=u, pch=15)</pre> 
+<p></p> 
+<pre> help.search(&quot;svm&quot;) help.search(&quot;support vector 
+machine&quot;) library(e1071) library(help=e1071) ?svm library(e1071) u &lt;- 
+factor(u) r &lt;- svm(u~x+y) { # The &quot;plot.svm&quot; calls 
+&quot;browser()&quot;: Why??? # (I use it when I debug my code, it is probably 
+the # same for them.) # And then it crashes... # (e1071 version 1.3-16, 1.3-16) 
+browser &lt;- function () {} try( plot(r, data.frame(x,y,u), y~x) ) }</pre> 
+<p></p> 
+<pre> n &lt;- 200 x &lt;- runif(n, -1,1) y &lt;- runif(n, -1,1) u &lt;- 
+abs(x-y) u &lt;- ifelse( u&lt;.5*mean(u), 1, 2) plot(y~x, col=u, pch=15)</pre> 
+<p></p> 
+<pre> u &lt;- factor(u) r &lt;- svm(u~x+y) { browser &lt;- function () {} try( 
+plot(r, data.frame(x,y,u), y~x) ) }</pre> 
+<p></p> 
+<p> If you want to seriously use SVMs, you will try various values for the 
+&quot;cost&quot; and &quot;gamma&quot; parameters, and you will select the best 
+with, for instance, a cross-validation.</p> 
+<p> SVM can be generalized: </p> 
+<p> To distinguish between more than two classes, you can consider the classes 
+two at a time and then use a majority rule to forecast the class of a new 
+observation.</p> 
+<p> Alternatively, you can also try to distinguish a class against the union 
+of all the other classes; do that for each class; then use a majority rule for 
+prediction.</p> 
+<p> One can also use SVM to &quot;distinguish between a single class&quot;. It 
+sounds odd, but it allows you to spot outliers.</p> 
+<p> you can also use SVMs for regression. In linear regression, you are 
+looking for a hyperplane &quot;near&quot; most of the points; with SVMs, you 
+will be looking for a thick hyperplane, as thin as possible, that contains all 
+the observations. It is the same Lagrange multiplier problem as above, with all 
+the inequalities reversed.</p> 
+<p> There is a dual way of interpreting these methods: take the median 
+hyperplane of the segment joining the two nearest points in the convex hull of 
+both clouds of points. If the convex hull intersect, replace them with 
+&quot;reduced convex hulls&quot; (still defined as the set of barycenters of 
+the points, but with a restriction on the coefficients: for instance, we ask 
+that they be all under 0.5, so as not to give too much importance to an 
+isolated point).</p> 
+<p> For more details, more examples and a comparison of SVMs and regression 
+trees, see</p> 
+<pre> /usr/lib/R/library/e1071/doc/svmdoc.pdf</pre> 
+<p> For other details: </p> 
+<pre> http://bioconductor.org/workshops/Heidelberg02/moldiag-svm.pdf 
+http://www.kernel-machines.org/ 
+http://www.csie.ntu.edu.tw/~cjlin/papers/ijcnn.ps.gz 
+http://www.acm.org/sigs/sigkdd/explorations/issue2-2/bennett.pdf 
+http://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.ps.gz</pre> 
+<h3>TODO </h3> 
+<p> Exercise: use an SVM in the situation described in the introduction 
+(microarrays).</p> 
+<p> TODO: explain (understand?) what follows. Is it finished??? </p> 
+<pre> library(help=sma) library(help=pamr) library(e1071) library(sma) 
+data(MouseArray) # Mice number 1, 2 and 3: control # Number 4, 5, 6: treatment 
+m &lt;- t(mouse.lratio$M) m &lt;- data.frame( mouse=factor(c(1,1,1,2,2,2)), m) 
+# r &lt;- svm(mouse~., data=m, na.action=na.omit, kernel=&quot;linear&quot;) # 
+Out of memory... m &lt;- m[,1:500] r &lt;- svm(mouse~., data=m, 
+na.action=na.omit, kernel=&quot;linear&quot;) TODO: finish this. In particular: 
+how do we read the result? Forecast; m &lt;- t(mouse.lratio$M) m &lt;- 
+m[,!is.na(apply(m,2,sum))] m &lt;- data.frame( mouse=factor(c(1,1,1,2,2,2)), m) 
+m &lt;- m[,1:500] m6 &lt;- m[6,] m &lt;- m[1:5,] r &lt;- svm(mouse~., data=m, 
+na.action=na.omit, kernel=&quot;linear&quot;) predict(r,m6) # 1 instead of 2... 
+r &lt;- svm(mouse~., data=m, na.action=na.omit) predict(r,m6) # 1 instead of 
+2... # One could expect that kind of error: library(cluster) m &lt;- 
+t(mouse.lratio$M) m &lt;- m[,!is.na(apply(m,2,sum))] plot(hclust(dist(m))) 
+rm(m,m6,r)</pre> 
+<h3>GAM (Generatized Additive Model) </h3> 
+<p> Generalized Additive Models (GAMs) appear when you try to describe a 
+non-linear situation with a large number of variables.</p> 
+<p> If the model were linear, the number of variables would be reasonable, but 
+in a non-linear situation, it explodes...</p> 
+<p> For a linear model, we would write </p> 
+<pre> Y = b0 + b1 x1 + b2 x2 + ... + bn xn.</pre> 
+<p> where the bi are numbers. There are n+1 parameters to estimate. </p> 
+<p> A non-linear model would be </p> 
+<pre> Y = f(x1,x2,...,xn)</pre> 
+<p> where f is any function. Even if you restrict the shape of the function f, 
+say, a polynomial of degree 2, the dimension of the space of such functions 
+grows to fast (here, 1+n+n(n+1)/2).</p> 
+<p> Side note: at school, one studies polynomials of one variable, but not 
+polynomial of several variables. One of the reason is that dimension -- 
+actually, you can give a geometric interpretation of the computations you do 
+with polynomials: with one variable, you are in a straight line, and the 
+geometry of the straight line is, well, straightforward; with two variables, 
+you are in the plane, you can study curves, which can be more intricate; the 
+more variables you have, the more complicated the geometry. This is called 
+algebraic geometry. End of the side note.</p> 
+<p> A generalized additive model is </p> 
+<pre> Y = a + f1(x1) + f2(x2) + ... + fn(xn)</pre> 
+<p> where the fi are arbitrary functions (you will estimate them as you want: 
+splines, kernel, local regression, etc.). The important point is that they are 
+functions of one variable: they are not too complex.</p> 
+<p> Of course, all the functions R^n --&gt; R cannot be written like that: but 
+we have a lot of them and most of the time this will be sufficient. But a big 
+problem lurks behind this simplification: we completely forget potential 
+interactions between variables. Non-linearity or integration, you will have to 
+choose. (Well, actually, if you think there is an interaction between two of 
+your variables, you will include this interaction -- but just this one --; the 
+model then becomes y = a + f(x1,x2) + f3(x3) + ... + f(xn).)</p> 
+<p> The algorithm used to find those functions is iterative. If we forget the 
+constant, it would be:</p> 
+<p> 1. Take a first estimation of the fi, say, as constants, from a linear 
+regression.</p> 
+<p> 2. For all k, define fk as the local regression of </p> 
+<pre> Y - Sum(fj(xj)) ~ Xk j!=k</pre> 
+<p> 3. Iterate ultil convergence. </p> 
+<p> If you do not forget the constant: </p> 
+<pre> 1. alpha &lt;- mean(y) f[k] &lt;- 0 2. f[k] &lt;- Smoother( Y - alpha - 
+Sum(fj(xj)) ) j!=k 3. f[k] &lt;- f[k] - 1/N * Sum fk(xik) i 4. Goto 2 until the 
+f[k] no longer change.</pre> 
+<p> You can generalize this algorithm by adding interaction terms, when 
+needed: fij(xi,xj), etc.</p> 
+<p> You can also ask that some of those functions have a predetermined form, 
+e.g., that they be linear.</p> 
+<p> One can show that this algorithm actually minimizes a penalized sum of 
+squares.</p> 
+<p> Variant: You can generalize this method to logistic or Poisson regression 
+(it is then interpreted with a penalized log-likelihood), but the algorithm is 
+a bit different (a mixture of backfitting and IRLS). For a multilogistic 
+regression, it is even more complicated.</p> 
+<p> You can also interpret the Generalized Additive Model as the quest for the 
+best transformation of the predictive variables so that the linear model be 
+valid.</p> 
+<p> Remark: as always, we assume that the variable to predict is gaussian -- 
+it is significantly non gaussian, we shall transform it. For the predictive 
+variables, it may not be that important, but (to avoid numeric instability) 
+they should have the same order of magnitude (I think).</p> 
+<p> Let us now see how to do all this with R. </p> 
+<pre> TODO library(mgcv) ?gam n &lt;- 200 x1 &lt;- runif(n,-3,3) x2 &lt;- 
+runif(n,-3,3) x3 &lt;- runif(n,-3,3) f1 &lt;- sin; f2 &lt;- cos; f3 &lt;- abs; 
+y &lt;- f1(x1) + f2(x2) + f3(x3) + rnorm(n) pairs(cbind(y,x1,x2,x3)) # Nothing 
+really visible...</pre> 
+<p></p> 
+<pre> library(mgcv) r &lt;- gam(y~s(x1)+s(x2)+s(x3)) x &lt;- 
+seq(-3,3,length=200) z &lt;- rep(0,200) m.theoretical &lt;- 
+cbind(f1(x),f2(x),f3(x)) m.experimental &lt;- cbind( predict(r, 
+data.frame(x1=x,x2=z,x3=z)), predict(r, data.frame(x1=z,x2=x,x3=z)), predict(r, 
+data.frame(x1=z,x2=z,x3=x)) ) matplot(m.theoretical, type='l', lty=1) 
+matplot(m.experimental, type='l', lty=2, add=T)</pre> 
+<p></p> 
+<p> It is difficult to compare, because the curves are shifted... </p> 
+<pre> zero.mean &lt;- function (m) { t(t(m)-apply(m,2,mean)) } 
+matplot(zero.mean(m.theoretical), type='l', lty=1) 
+matplot(zero.mean(m.experimental), type='l', lty=2, add=T) 
+title(main=&quot;GAM&quot;) legend(par('usr')[2], par('usr')[3], xjust=1, 
+yjust=0, c('theoretical curves', 'experimental curves'), lty=c(1,2))</pre> 
+<p></p> 
+<pre> op &lt;- par(mfrow=c(2,2)) for (i in 1:3) { plot(r, select=i) 
+lines(zero.mean(m.theoretical)[,i] ~ x, lwd=3, lty=3, col='red') } par(op)</pre>
+<p></p> 
+<pre> res &lt;- residuals(r) op &lt;- par(mfrow=c(2,2)) plot(res) plot(res ~ 
+predict(r)) hist(res, col='light blue', probability=T) lines(density(res), 
+col='red', lwd=3) rug(res) qqnorm(res) qqline(res) par(op)</pre> 
+<p></p> 
+<pre> op &lt;- par(mfrow=c(2,2)) plot(res ~ x1) plot(res ~ x2) plot(res ~ x3) 
+par(op)</pre> 
+<p></p> 
+<p> TODO: refer to other documents, URLs... TODO: &quot;thin-plate regression 
+spline&quot; ???</p> 
+<p> TODO: Other functions to fit GAMs: </p> 
+<pre> library(mda) ?bruto # Gaussian GAM library(help=gss) ?glm # ???</pre> 
+<p> TODO: What criterion is used? </p> 
+<pre> GCV ???</pre> 
+<h3>Classification and Regression Trees (CART (TM)) </h3> 
+<p> It is a means of predicting a qualitative binary variable with many 
+(quantitative or qualitative) variables, with no linearity assumption 
+whatsoever.</p> 
+<p> The algorithm is the following. Choose one of the variables and a cutpoint 
+so as to maximize some statistical criterion; iterate until there are only a 
+few (20 to 50) observations in each class. The result can be seen as a tree. 
+prune that tree (for instance, compare with other (bootstrap) samples; or find 
+the number of nodes so that the tree built from 90% of the data give the best 
+possible results on the remaining 10%).</p> 
+<pre> library(rpart) data(kyphosis) r &lt;- rpart(Kyphosis ~ ., data=kyphosis) 
+plot(r) text(r)</pre> 
+<p></p> 
+<p> The first application is obtaining a decision tree, that can predict a 
+result with few variables, i.e., with few tests (for instance, in emergency 
+medicine).</p> 
+<p> Another application is the study of missing values. </p> 
+<pre> library(Hmisc) ?transcan</pre> 
+<p> It is VERY important to prune the tree, otherwise, you get a tree that 
+describes the sample and not the population.</p> 
+<pre> TODO: plot</pre> 
+<p> The method can be generalized to predict a &quot;counting variable&quot; 
+(Poisson regression).</p> 
+<p> This method is not very stable: a similar sample can give a completely 
+different tree. However, you can reduce the variance of the result with the 
+bagging method. See also MART.</p> 
+<h3>PRIM (Patient Rule Induction Method, aka Bump Hunting) </h3> 
+<p> We want to predict a binary variable Y from quantitative variables, by 
+looking for boxes in the space of predictive variables in which we have often 
+Y=1. The algorithm is the following.</p> 
+<pre> 1. Take a box (i.e., a part of the space delimited by hyperplanes 
+parallel to the axes), containing all the data points. 2. Reduce it in one 
+dimension so as to increase the proportion of points with Y=1. 3. Go back to 2, 
+so that the box contains sufficiently few misclassified points. 4. Try to 
+enlarge the box. 5. Remove the points from this box. 6. Start again, until 
+there are no more points. 7. As always, prune the result, so as to avoid 
+overfit.</pre> 
+<p> We end up with a bunch of boxes, each of which can be seen as a rule. This 
+is actually a variant of Regression Trees (CART): with regression trees, each 
+node of the tree is a rule with exactly one variable and one equality; with 
+PRIM, we still have a tree, its nodes are rules, but rule is made of several 
+inequalities of the form X_i &lt; a or X_i &gt; a.</p> 
+<p> Apparently, this algorithm is not implemented in R. </p> 
+<pre> help.search('PRIM') help.search('bump')</pre> 
+<p> There are out-of-memory implementations (i.e., implementations that do not 
+put all the data in memory): TurboPRIM.</p> 
+<h3>Bagging (bootstrap aggregation) </h3> 
+<p> One idea, to increase the quality on an estimator (a non-linear and 
+unstable one, e.g., a regression tree) is simply to compute its 
+&quot;mean&quot; on several bootstrap samples.</p> 
+<p> For instancem the result of forecast by a regression tree is usually a 
+class (1, 2, ..., or k): we replace it by a vector (0,0,...,0,1,0,...,0) (put 
+&quot;1&quot; for the predicted class, 0 for the others) and we take the 
+average of those vectors -- we do not get a single class, but a probability 
+distribution (bayesian readers will prefer the words &quot;posterior 
+distribution&quot;).</p> 
+<p> Remark: the structure of the estimator is lost -- if it was a tree, you 
+get a bunch of trees (a forest), whose predictions are more reliable, but which 
+is harder to interpret.</p> 
+<p> Remark: This idea has no effect whatsoever with linear estimators: they 
+commute with the mean.</p> 
+<p> Remark: in some cases, the auelity of the estimator can worsen. </p> 
+<p> In the following example, the forecasts are correct 99% of the time. </p> 
+<pre> library(ipred) do.it &lt;- function (formula, data, test) { r &lt;- 
+bagging(formula, data=data, coob=T, control=rpart.control(xval=10)) p2 &lt;- 
+test$Class p1 &lt;- predict(r,test) p1 &lt;- factor(p1, levels=levels(p2)) res1 
+&lt;- sum(p1==p2) / length(p1) # Only with the trees r &lt;- bagging(formula, 
+data=data, nbagg=1, control=rpart.control(xval=10)) p2 &lt;- test$Class p1 
+&lt;- predict(r,test) p1 &lt;- factor(p1, levels=levels(p2)) res2 &lt;- 
+sum(p1==p2) / length(p1) c(res1, res2, res1/res2) } # An example from 
+&quot;mlbench&quot; (it is a collection of such # examples) library(mlbench) 
+data(Shuttle) n &lt;- dim(Shuttle)[1] k &lt;- sample(1:n,200) do.it( Class ~ ., 
+data = Shuttle[k,], test = Shuttle[-k,] ) # Idem, 99.5% rm(Shuttle) data(Vowel) 
+n &lt;- dim(Vowel)[1] k &lt;- sample(1:n,200) do.it( Class ~ ., data = 
+Vowel[k,], test = Vowel[-k,] ) # Better: 47% instead of 36% rm(Vowel)</pre> 
+<p> You can interpret the bagging method as an alternative to the maximum 
+likelihood method: to estimate a parameter, the Maximum Likelihood Method looks 
+at the distribution of this parameter and chooses its mode; Bagging, on the 
+other hand, uses simulations to estimate this distribution (it is a randomized 
+algorithm) and selects its mean.</p> 
+<p> See also: </p> 
+<pre> /usr/lib/R/library/ipred/doc/ipred-examples.pdf</pre> 
+<h3>Boosting </h3> 
+<p> This is very similar to bagging (we compute an estimator on several 
+bootstrap samples), but the bootstrap samples are not taken at random: they are 
+selected according to the performance of the previous estimators. Usually, we 
+simply assign a weight (a probability of appearing in the next bootstrap 
+sample) to each observations according to the preceding results.</p> 
+<p> Usually, it works quite well, better that the bagging -- but in some 
+cases, the estimator can worsen...</p> 
+<p> TODO: with R??? </p> 
+<h3>Ensemble methods </h3> 
+<p> The methods presented above, bagging and boostring, replace an estimator 
+by a set of estimators. We then use these families of estimators. All the 
+estimators of a given family are of the same kind (say, all are trees, or all 
+are neural networks).</p> 
+<p> But nothing prevents you from mixing completely different estimators. </p> 
+<p> TODO: examples (tree + linear regression?) </p> 
+<p> You can also use those methods for non-supervised classification (i.e., 
+when you try to find classes in your sample, without any &quot;training 
+set&quot; to hint at the rules to form those classes).</p> 
+<pre> TODO: examples</pre> 
+<h3>Random Forest </h3> 
+<p> Again, this is very similar to the bagging: we build regression trees on 
+bootstrap samples, nut at each node of each tree, we do not use all the 
+variables, but just a small (random) subset of variables. It can be seen as a 
+&quot;noisy&quot; variant of bagging.</p> 
+<p> Here is an example (three or four minutes of computation -- there are 500 
+trees...).</p> 
+<pre> library(randomForest) do.it &lt;- function (formula, data, test) { r 
+&lt;- randomForest(formula, data=data) p2 &lt;- test$Class p1 &lt;- 
+predict(r,test) p1 &lt;- factor(p1, levels=levels(p2)) res1 &lt;- sum(p1==p2) / 
+length(p1) # Only with the trees r &lt;- bagging(formula, data=data, nbagg=1, 
+control=rpart.control(xval=10)) p2 &lt;- test$Class p1 &lt;- predict(r,test) p1 
+&lt;- factor(p1, levels=levels(p2)) res2 &lt;- sum(p1==p2) / length(p1) c(res1, 
+res2, res1/res2) } library(mlbench) data(Vowel) n &lt;- dim(Vowel)[1] k &lt;- 
+sample(1:n,200) do.it( Class ~ ., data = Vowel[k,], test = Vowel[-k,] ) # From 
+42% to 67% rm(Vowel)</pre> 
+<p> It is better than bagging (with the same sample, we go from 42% to 45% of 
+good answers).</p> 
+<p> Actually, the &quot;randomForest&quot; function is a little more verbose. 
+</p> 
+<pre> &gt; r &lt;- randomForest(Class~., data=Vowel) &gt; r Call: 
+randomForest.formula(x = Class ~ ., data = Vowel[k, ]) Type of random forest: 
+classification Number of trees: 500 No. of variables tried at each split: 3 OOB 
+estimate of error rate: 26% Confusion matrix: hid hId hEd hAd hYd had hOd hod 
+hUd hud hed class.error hid 11 3 0 0 0 0 0 0 0 3 0 0.3529412 hId 2 11 1 0 0 0 0 
+0 1 0 0 0.2666667 hEd 0 2 6 2 0 0 0 0 0 0 2 0.5000000 hAd 0 0 0 20 0 1 0 0 0 0 
+1 0.0909091 hYd 0 0 0 0 23 2 0 0 0 0 1 0.1153846 had 0 0 0 2 5 7 0 0 0 0 1 
+0.5333333 hOd 0 0 0 0 2 0 13 1 1 0 0 0.2352941 hod 0 0 0 0 0 0 2 11 1 0 0 
+0.2142857 hUd 0 0 0 0 0 0 2 2 16 2 0 0.2727273 hud 1 0 0 0 0 0 0 1 2 15 0 
+0.2105263 hed 0 0 0 0 2 2 0 0 2 0 15 0.2857143</pre> 
+<p> First, we remark that the error rate is optimistic (26% instead of 33% -- 
+and the oob bootstrap is supposed to be pessimistic...).</p> 
+<p> We also get the confusion matrix, that gives the &quot;distances&quot; 
+between the classes: we can use it to plot the classes in the plane, with a 
+Distance Analysis algorithm (MDS (MultiDimensional Scaling), etc. -- we have 
+already mentionned this).</p> 
+<pre> library(randomForest) library(mlbench) library(mva) data(Vowel) r &lt;- 
+randomForest( Class ~ ., data = Vowel, importance = TRUE ) # Trois minutes... m 
+&lt;- r$confusion # We have a confusion matrix instead of a distance matrix. # 
+We try to tweak the matrix to get something that looks # like a distance matrix 
+-- this might not be the best way # to proceed. m &lt;- m[,-dim(m)[2]] m &lt;- 
+m+t(m)-diag(diag(m)) n &lt;- dim(m)[1] m &lt;- m/( matrix(diag(m),nr=n,nc=n) + 
+matrix(diag(m),nr=n,nc=n, byrow=T) ) m &lt;- 1-m diag(m) &lt;- 0 mds &lt;- 
+cmdscale(m,2) plot(mds, type='n') text(mds, colnames(m)) rm(Vowel)</pre> 
+<p></p> 
+<p> We also have the importance of each of the predictive variables. </p> 
+<pre> &gt; r$importance Measure 1 Measure 2 Measure 3 Measure 4 V1 178.94737 
+16.674731 0.9383838 0.4960153 V2 563.15789 38.323021 0.9222222 1.0000000 V3 
+100.00000 13.625267 0.8343434 0.4212575 V4 200.00000 23.420278 0.8909091 
+0.5169644 V5 321.05263 26.491365 0.8959596 0.5819186 V6 189.47368 20.299312 
+0.8828283 0.5022913 V7 84.21053 10.596949 0.7777778 0.3544800 V8 110.52632 
+16.071039 0.8454545 0.4107499 V9 47.36842 10.219346 0.8424242 0.3301638 V10 
+63.15789 8.857154 0.8292929 0.3274473</pre> 
+<p> TODO: explain/understand. </p> 
+<p> Graphically, this suggests that we only consider V2, or V2 and V5, or even 
+V2, V5 and V1.</p> 
+<pre> op &lt;- par(mfrow = c(2,2)) m &lt;- r$importance n &lt;- dim(m)[1] for 
+(i in 1:4) { plot(m[,i], type = &quot;h&quot;, lwd=3, col='blue', axes=F, 
+ylab='', xlab='Variables', main = colnames(r$importance)[i] ) axis(2) axis(1, 
+at=1:n, labels=rownames(m)) # The two highest values in red a &lt;- 
+order(m[,i], decreasing=T) m2 &lt;- m[,i] m2[ -a[1:2] ] &lt;- NA lines(m2, 
+type='h', lwd=5, col='red') } par(op)</pre> 
+<p></p> 
+<p> In the examples, we have stressed classification trees, but it also works 
+with regression trees.</p> 
+<p> You can also use random forests to detect outliers. </p> 
+<pre> TODO: finish reading the article in Rnews_2002-3.pdf 
+http://cran.r-project.org/doc/Rnews/Rnews_2002-3.pdf (at the end: ROC)</pre> 
+<p> See: </p> 
+<pre> Rnews_2002-3.pdf http://cran.r-project.org/doc/Rnews/Rnews_2002-3.pdf 
+TODO: I often speak of &quot;regression trees&quot;, but I have only defined 
+&quot;classification trees&quot;. What is a &quot;regression tree&quot;? MARS?
+</pre> 
+<h3>Outlier detection </h3> 
+<p> TODO: move this section to a better location. </p> 
+<p> TODO: find real data with one (or two) group(s) of outliers. </p> 
+<h3>Non supervised learning </h3> 
+<p> Here, we simply ask the computer to try and find classes in the data. If 
+he puts most of the data in a class and the rest in a few isolated classes, you 
+should worry.</p> 
+<p> (Of course, if you have several variables, you first look at them one at a 
+time, and only then all together.)</p> 
+<p> TODO: idem with hiearchical classification. should we get a balanced tree? 
+</p> 
+<h3>Supervised learning </h3> 
+<p> Surprisingly, you cam also use supervised learning algorithms. The idea is 
+to put all the data in the same class and add random (uniformly distributed) 
+data, in a second class. Then, we ask the computer to try to predict the class 
+from the data. Observations from the first class but misclassified as elements 
+of the second are potential outliers.</p> 
+<p> The &quot;uniform distribution&quot; is arbitrary and may not be a good 
+choice. If you have already considered 1-dimensional problems and focus on 
+outliers that are only revealed when you look at the data in higher dimensions, 
+you can replace this uniform distribution by sampling independantly in each 
+variable.</p> 
+<pre> TODO: an example...</pre> 
+<h3>Neural networks </h3> 
+<p> TODO: recall what a neural net is... </p> 
+<p> You can use neural nets for regression (i.e., to forecats a quantitative 
+variable) or for supervised classification (i.e., to forecats a qualitative 
+variable).</p> 
+<p> If we again our vowel recognition example, we get around 6% of good 
+results (between 55% and 65%).</p> 
+<pre> library(nnet) do.it &lt;- function (formula, data, test, size=20) { r 
+&lt;- nnet(formula, data=data, size=size) p2 &lt;- test$Class p1 &lt;- 
+predict(r,test) nam &lt;- colnames(p) i &lt;- 
+apply(p1,1,function(x){order(x)[11]}) p1 &lt;- nam[i] p1 &lt;- factor(p1, 
+levels=levels(p2)) res1 &lt;- sum(p1==p2) / length(p1) res1 } library(mlbench) 
+data(Vowel) n &lt;- dim(Vowel)[1] k &lt;- sample(1:n,200) do.it(Class~., 
+data=Vowel[k,], test=Vowel[-k,])</pre> 
+<h3>Bayesian Networks </h3> 
+<p> TODO </p> 
+<pre> library(deal) demo(rats) TODO: look in /usr/lib/R/library/deal/demo/ 
+hiscorelist &lt;- heuristic(newrat, rats.df, rats.prior, restart = 10, degree = 
+7, trace = TRUE)</pre> 
+<h3>MARS (Multivariate Adaptative Regression Splines) </h3> 
+<p> We are again in a regression setup: we want to predict a quantitative 
+variable Y from quantitative variables X. To this end, we try to write Y as a 
+linear combination of functions of the form (Xj-t)_+ or (t-Xj)_+, where Xj is 
+one of the variables and t=xij is one of the observations. This is very similar 
+to regression trees, but the forecasts are piecewise linear instead of 
+piecewise constant.</p> 
+<p> The algorithm is the following (it is a regression, where the predictive 
+variables are of the form (Xj-t)_+ and (t-Xj)_+ -- we do not take all these 
+variables (there would be too many), but just a subset of them).</p> 
+<pre> 1. Start with a single, constant, function. 2. Compute the coefficients 
+of the model. For the first iteration, it is simply Y ~ 1. 3. Add the pair of 
+functions (Xj-t)_+, (t-Xj)_+ to the set of predictive variables, choosing Xj 
+and t=xij so as to reduce the error as much as possible. 4. Go to 2. 5. Do not 
+forget to prune the resulting tree! (as for regression trees or classification 
+trees)</pre> 
+<p> You can generalize this idea to logistic regression, multiple logistic 
+regression, etc. (in those cases, you no longer use least squares to find the 
+coefficients, but maximum likelihood).</p> 
+<p> In R, you can use the &quot;mars&quot; function from the &quot;mda&quot; 
+package.</p> 
+<p> Let us consider the following example. </p> 
+<pre> library(mda) library(mlbench) data(BostonHousing) x &lt;- BostonHousing 
+x[,4] &lt;- as.numeric(x[,4]) pairs(x)</pre> 
+<p></p> 
+<p> The variables seem very well suited to the methos: some have two 
+&quot;humps&quot; -- and the very idea of the MARS algorithm is to separate 
+such humps -- we should end with gaussian-looking variables.</p> 
+<pre> op &lt;- par(mfrow=c(4,4)) for (i in 1:14) { hist(x[,i],probability=T, 
+col='light blue', main=paste(i,names(x)[i])) 
+lines(density(x[,i]),col='red',lwd=3) rug(jitter(x[,i])) } 
+hist(log(x[,1]),probability=T, col='light blue', main=&quot;log(x1)&quot;) 
+lines(density(log(x[,1])),col='red',lwd=3) rug(jitter(log(x[,1]))) par(op)</pre>
+<p></p> 
+<pre> op &lt;- par(mfrow=c(4,4)) for (i in 1:14) { qqnorm(x[,i], 
+main=paste(i,names(x)[i])) qqline(x[,i], col='red') } qqnorm(log(x[,1]), 
+main=&quot;log(x1)&quot;) qqline(log(x[,1]), col='red') par(op)</pre> 
+<p></p> 
+<p> We take the logarithm of the variable to predict, becaus it is really far 
+from gaussian (we leave the others alone: MARS will separate their humps and 
+they should, afterwards, look normal). (At fisrt, I had not transformed it -- 
+the results were extremely poor: the forecast error was as large as the the 
+standard deviation of the variable...)</p> 
+<pre> x[,1] &lt;- log(x[,1]) n &lt;- dim(x)[1] k &lt;- sample(1:n, 100) d1 
+&lt;- x[k,] d2 &lt;- x[-k,] r &lt;- mars(d1[,-1],d1[,1]) p &lt;- predict(r, 
+d2[,-1]) res &lt;- d2[,1] - p op &lt;- par(mfrow=c(4,4)) plot(res) plot(res~p) 
+for (i in 2:14) { plot(res~d2[,i]) } par(op)</pre> 
+<p></p> 
+<pre> op &lt;- par(mfrow=c(2,2)) qqnorm(r$fitted.values, main=&quot;fitted 
+values&quot;) qqline(r$fitted.values) hist(r$fitted.values,probability=T, 
+col='light blue', main='fitted values') lines(density(r$fitted.values), 
+col='red', lwd=3) rug(jitter(r$fitted.values)) qqnorm(res, 
+main=&quot;residuals&quot;) qqline(res) hist(res, probability=T, col='light 
+blue', main='residuals') lines(density(res),col='red',lwd=3) rug(jitter(res)) 
+par(op)</pre> 
+<p></p> 
+<p> If we compare with a naive regression, it is slightly better. </p> 
+<pre> &gt; mean(res^2) [1] 0.6970905 &gt; r2 &lt;- lm(crim~., data=d1) &gt; 
+res2 &lt;- d2[,1] - predict(r2,d2) &gt; mean(res2^2) [1] 0.7982593</pre> 
+<p> A naive regression with anly the &quot;hunched&quot; variables (bad idea@ 
+the other variables bring som important information):</p> 
+<pre> &gt; kk &lt;- apply(r$cuts!=0, 2, any) &gt; kk &lt;- (1:length(kk))[kk] 
+&gt; kk &lt;- c(1, 1+kk) &gt; r3 &lt;- lm(crim~., data=d1[,kk]) &gt; res3 &lt;- 
+d2[,1] - predict(r3,d2) &gt; mean(res3^2) [1] 0.7930023</pre> 
+<p> If we try to select the variables: </p> 
+<pre> &gt; library(MASS) &gt; r4 &lt;- stepAIC(lm(crim~., data=d1)) &gt; res4 
+&lt;- d2[,1]-predict(r4,d2) &gt; mean(res4^2) [1] 0.8195915</pre> 
+<p> (You can try many other methods...) </p> 
+<h3>HME (Hierarchical Mixture of Experts) </h3> 
+<p> This is similar to CART, with the following differences. The nodes of the 
+tree are probabilistic. The nodes depend on a linear combinaition of the 
+predictive variables, not of a single variable. We perform a linear regression 
+at each leaf (with CART, we assign a constant to each leaf). There is no 
+algorithm to find the structure of the tree: you have to choose it yourself.</p>
+<p> TODO: with R? </p> 
+<h3>MART </h3> 
+<pre> TODO</pre> 
+<h3>TODO: TO SORT </h3> 
+<pre> heuristic(deal) Heuristic greedy search with random restart Title: 
+Learning Bayesian Networks with Mixed Variables tune.rpart(e1071) Convenience 
+tuning functions</pre> 
+<h3>Stacking </h3> 
+<pre> ??? TODO</pre> 
+<h3>Bumping </h3> 
+<pre> ??? TODO</pre> 
+<h2>Wide problems</h2> 
+<p> TODO: put this somewhere else -- it should be with ridge regression, 
+partial least squares, etc.</p> 
+<h3>Supervised Principal component Analysis (SPCA) </h3> 
+<p> Principal component Analysis is a simple and efficient means of reducing 
+the dimensionality of a data set, or reducing the number of variables one will 
+have to look at but, it the context of regression, it misses a point: in 
+principal component regression, where one tries to predict or explain a 
+variable y from many variables x1, ..., xn, one computes the PCA of the 
+predictive variables x1,...,xn, and regresses y against the first components -- 
+but one does not take the variable to predict into account! In other words, we 
+select non-redundant variables, that account for the shape of the cloud of 
+points in the x variables, instead of selecting non-redundant variables with 
+some power to predict y.</p> 
+<p> This is the same problem that leads to Partial Least Squares (PLS). 
+Supervised principal components are much easier to understand, though. The 
+algorithm goes as follows:</p> 
+<pre> Compute the principal components of those of the predictive variables 
+that are the most correlated with the variable to predict y (using some 
+threshold, chosen by cross-validation). Regress y against the first principal 
+components.</pre> 
+<p> Well, the actual algorithm is slightly more complicated: one does not 
+directly us the correlation to select the variables. For more details, see:</p> 
+<pre> http://www-stat.stanford.edu/~tibs/ftp/spca.pdf 
+http://www-stat.stanford.edu/~tibs/superpc/tutorial.html</pre> 
+<p> In R, this method is available in the &quot;superpc&quot; package and can 
+accomodate classical or survival regression.</p> 
+<pre> TODO: Example... library(superpc) # Some simulated data n &lt;- 50 # 
+Number of observations (e.g., patients) m &lt;- 500 # Number of values to 
+predict p &lt;- 1000 # Number of variables or &quot;features&quot; (e.g., 
+genes) q &lt;- 20 # Number of useful variables x &lt;- matrix( rnorm((n+m)*p), 
+nr=n+m ) z &lt;- svd(x[,1:q])$u y &lt;- 1 - 2 * z[,1] d &lt;- list( x = 
+t(x[1:n,]), y = y[1:n], featurenames = paste(&quot;V&quot;, 
+as.character(1:p),sep=&quot;&quot;) ) new.x &lt;- list( x = t(x[-(1:n),]), y = 
+y[-(1:n)], featurenames = paste(&quot;V&quot;, 
+as.character(1:p),sep=&quot;&quot;) ) # Compute the correlation (more 
+precisely, a score) of # each variable with the outcome. train.obj &lt;- 
+superpc.train(d, type=&quot;regression&quot;) hist(train.obj$feature.score, col 
+= &quot;light blue&quot;, main = &quot;SPCA (Supervised Principal Component 
+Analysis)&quot;)</pre> 
+<p></p> 
+<pre> ## PROBLEM: This should not look like that... # Compute the threshold to 
+be used on the scores to select # the variables to retain. cv.obj &lt;- 
+superpc.cv(train.obj, d) superpc.plotcv(cv.obj) title(&quot;SPCA&quot;)</pre> 
+<p></p> 
+<pre> fit.cts &lt;- superpc.predict( train.obj, d, new.x, threshold = 0.7, 
+n.components = 3, prediction.type = &quot;continuous&quot; ) r &lt;- 
+superpc.fit.to.outcome(train.obj, new.x, fit.cts$v.pred) 
+plot(r$results$fitted.values, new.x$y, xlab=&quot;fitted values&quot;, 
+ylab=&quot;actual values&quot;, main=&quot;SPCA forecasts&quot;) abline( 
+lm(new.x$y ~ r$results$fitted.values), col=&quot;red&quot;, lwd=3 ) abline(0, 
+1, lty=2, lwd=2)</pre> 
+<p></p> 
+<p> <br>
+ This work is licensed under a Creative Commons 
+Attribution-NonCommercial-ShareAlike 2.5 License. </p> 
+<p>Vincent Zoonekynd<br>
+&lt;zoonek@math.jussieu.fr&gt;<br>
+ latest 
+modification on Sat Jan 6 10:28:22 GMT 2007</p> 
+</body>

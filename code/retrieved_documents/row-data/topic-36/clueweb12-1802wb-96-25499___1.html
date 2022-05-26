@@ -1,0 +1,129 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Eclipse versus NetBeans -- Mac OS X runs both - AlBlue&rsquo;s Blog</title>
+<body>
+
+<h1>AlBlue&rsquo;s Blog</h1> 
+<h2>Macs, Modularity and More</h2> 
+<ul> 
+<li>RSS</li> </ul> <br>
+
+<ul> 
+<li>All</li> 
+<li>Eclipse</li> 
+<li>Git</li> 
+<li>Java</li> 
+<li>OSGi</li> 
+<li>Mac</li> 
+<li>@alblue</li> </ul> 
+<h1>Eclipse versus NetBeans -- Mac OS X runs both</h1> 
+<p> Apr 29th, 2005 </p> 2005, eclipse, mac <br>
+
+<p>Charles Ditzel (e-mail, blog), infamous Sun employee and vociferous critic 
+ofEclipse on Mac OS X wrote recently that <i>&ldquo;The result is that many 
+Eclipse developers have switched to NetBeans and others are beginning the 
+migration to NetBeans by using both IDEs.&rdquo;</i>.</p> 
+<p>Firstly, it&rsquo;s clear to see that Charles&rsquo; viewpoint is heavily 
+biased towards NetBeans. The guy works for Sun Microsystems, he blogs about 
+NetBeans as if it&rsquo;s the best project in the world, and clearly 
+isn&rsquo;t interested in an impartial view. So take what he says with a pinch 
+of salt at best.</p> 
+<p>In reality, there are a number of Java IDEs out there, and each tends to 
+have its own loyal following of developers. But in the bigger world, there are 
+a number of developers who just use it to write code. There&rsquo;s several 
+different development environments:Eclipse, IntelliJ IDEA, JBuilder and of 
+courseNetBeans. What&rsquo;s more interesting is that there a number of 
+commercial spin-offs, and of those,Rational Software Architect (formerly 
+WebSphere Studio Application Developer) are both built on top of Eclipse, 
+Borland has become an Eclipse srategic partner, and the BEA Weblogic Studio are 
+Eclipse-based (or Eclipse-aligned) as well. It&rsquo;s not hard to wonder why 
+that in areview of the four top IDEs (though, surprisingly, IntelliJ/IDEA 
+wasn&rsquo;t reviewed), that Sun&rsquo;s Enterprise Studio came bottom of the 
+four.</p> 
+<p>But the main reason for eschewing Charles&rsquo; review of Eclipse vs 
+NetBeans is his comments onEclipse on Mac OS X broken. I&rsquo;m sorry 
+Charles&rsquo;, but that just isn&rsquo;t true. I&rsquo;ve been using Eclipse 
+on Mac OS X since it came out, and I was spending my spare time as a tester for 
+the Eclipse Mac OS X release before it became 2.1. I raised 280 bugs towards 
+improving the quality of the application as a whole, and whilst I agree 
+it&rsquo;s not quite there (it&rsquo;s not quite as &lsquo;polished&rsquo; as a 
+normal Eclipse App), it&rsquo;s still perfectly usable. In fact, you seem to 
+have surfed the bug reports for anything involving &lsquo;SWT&rsquo; and 
+&lsquo;Mac OS X&rsquo; and then linked them in your blog, rather than having an 
+understanding about them; I don&rsquo;t see your name cropping up in any bug 
+reports or comments.</p> 
+<p>His main gripe is that Eclipse is bad because you can&rsquo;t create/run 
+Swing apps in Eclipse on Mac OS X. This has actually been traced to a bug in 
+the AWT implementation of the JVM, and the radar bug filed with Apple. (Radar 
+is the name of Apple&rsquo;s bug-tracking system, in case you&rsquo;re 
+interested.) It&rsquo;s also related to the fact that Suns JVM implementation 
+(which Apple licenses) isn&rsquo;t sufficiently flexible to allow other GUI 
+threads to interact with Swing, so if there&rsquo;s a bad boy in the crowd, 
+it&rsquo;s still Swing, not Eclipse. Saying that X doesn&rsquo;t work with Y 
+when Y just plain refuses to work with anything else is not a great way to win 
+an argument.</p> 
+<p>There&rsquo;s also a mistake in his blog about the fact that &lsquo;I can 
+run the same code on any platform&rsquo;. Well, actually Charles, that 
+isn&rsquo;t quite true. The Mac OS X download takes the form of a Mac OS X 
+application; the Windows has a windows launcher. Granted, 99% of the code 
+behind-the-covers is portable, but the bit at the front (the launcher) is 
+different in both places. Guess what? That&rsquo;s exactly the same principle 
+behind Eclipse. It too has the same set of plugins for the code base, of which 
+99% is common; the 1% in Eclipse&rsquo;s case includes both the OS-specific 
+launcher and also the SWT DLLs. In fact, the plugin architecture allows for 
+multiple window providers and operating systems in the<i>same</i> install; so I 
+have a shared Plugins directory which I actually share for both Windows and Mac 
+environments. The only difference is that where a vanilla install of Eclipse 
+for Windows will have a plugin for the Windows SWT, and the Mac has one for the 
+Aqua SWT, I actually have both in the plugin directory.</p> 
+<p>(On a side node, if we want to complain about installers; how about 
+configuring your download process to get rid of the .gz extension? All browsers 
+know about GZip decompression on the fly, with the result that when the file 
+gets down, it&rsquo;s saved as NetBeans_4-1.dmg.gz, but it&rsquo;s been 
+decompressed by my browser; so the OS refuses to open it. The Eclipse install 
+takes the right &lsquo;Mac OS X&rsquo; approach, and provides it as a DMG, 
+which can be dragged and dropped into the right place.)</p> 
+<p>A less blinkered viewpoint about where Eclipse and NetBeans are heading in 
+the community is fairly obvious; all you have to do is look to which companies 
+are aligned with which environment:</p> 
+<dl> 
+<dt> NetBeans </dt> 
+<dd> 
+<ul> 
+<li>Sun</li> </ul> </dd> 
+<dt> Eclipse </dt> 
+<dd> 
+<ul> 
+<li>Borland</li> 
+<li>BEA and Sybase</li> 
+<li>Scapa</li> 
+<li>Actuate</li> 
+<li>Wind River</li> 
+<li>Computer Associates</li> 
+<li>IBM</li> </ul> </dd> </dl> 
+<p>If you also read between the lines, Oracle are leaning towards Eclipse; 
+don&rsquo;t be surprised to see that they join in the not too distant future.
+</p> 
+<p> Posted by Alex Blewitt Apr 29th, 2005 2005, eclipse, mac </p> Tweet <br>
+
+<p> &laquo; When Java just doesn't Swing Apple shifts to Intel: what is all 
+the fuss about? &raquo; </p> 
+<h1>Recent Posts</h1> 
+<ul> 
+<li> My first published article </li> 
+<li> Why OSGi qualifiers aren't working </li> 
+<li> Using Humans to solve a Tooling problem </li> 
+<li> EclipseCon 2012 Day 3 </li> 
+<li> EclipseCon 2012 Day 2 </li> </ul> 
+<h1>Github Repos</h1> 
+<ul> 
+<li>Status updating...</li> </ul> @alblue on Github <br>
+
+<h1>Latest Tweets</h1> 
+<ul> 
+<li>Status updating...</li> </ul> Follow @alblue <br>
+
+<h1>On Delicious</h1> 
+<p>My Delicious Bookmarks &raquo;</p> 
+<p> Copyright &copy; 2012 - Alex Blewitt - Powered by Octopress </p> 
+</body>

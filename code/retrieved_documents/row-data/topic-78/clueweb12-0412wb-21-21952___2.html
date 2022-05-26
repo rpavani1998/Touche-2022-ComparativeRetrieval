@@ -1,0 +1,165 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Optimizing Sort Algorithms For The PS3 Part 4 (Offloading On 1 SPU) by Pierre-Andre Saulais - Codeplay.com</title>
+<body>
+Login or Register <br>
+
+<ul> 
+<li>Home</li> 
+<li>Games</li> 
+<li>Compilers</li> 
+<li>Company</li> 
+<li>Support</li> </ul> 
+<ul> 
+<li>Codeplay</li> 
+<li>Academia</li> 
+<li>Blogs</li> 
+<li>Team</li> 
+<li>Documents</li> 
+<li>Publications</li> 
+<li>Partners</li> 
+<li>Jobs</li> 
+<li>Media</li> 
+<li>Contact Us</li> </ul> 
+<ul> 
+<li>  Pierre-Andre Saulais <br>
+ Research Student </li> 
+<li>Codeplay Bloggers</li> 
+<li> </li> 
+<li>Similar Blogs</li> 
+<li>Codeplay sets out to wre..</li> 
+<li>Codeplay Launches Offloa..</li> 
+<li>Offload&trade; Feedback</li> 
+<li>Offload&trade; compiler ..</li> 
+<li>The New Website</li> </ul> 
+<ul> 
+<li>Pierre-Andre Saulais's Blogs</li> </ul>  &raquo;  Optimizing Sort 
+Algorithms for the PS.. Tweet <br>
+
+<h1>Optimizing Sort Algorithms For The PS3 Part 4 (Offloading On 1 SPU)</h1> 
+<h4>Posted on Monday 11th of July 2011 10:23:16 AM.</h4> <br>
+
+<p>Sorting is a simple but important concept for implementing games. For 
+example, sorting transparent objects before rendering or sorting objects by 
+state attribute (e.g. texture) to improve batching. Because of the way most 
+algorithms work (comparing and swapping pairs of items) sorting often takes 
+precious time. With multi-core architectures like the PS3 it makes sense to 
+parallelize this operation to maximize the use of these cores.</p> 
+<p>In the first three parts we have implemented the quicksort, merge and merge 
+sort algorithms, as well as optimized them on the PS3's PPU. In this part we 
+will start running these implementations on a SPU to improve performance even 
+further.</p> 
+<h2>Quick Links</h2> 
+<p>Part 1 (Quicksort)</p> 
+<p>Part 2 (Merge)</p> 
+<p>Part 3 (Merge Sort)</p> 
+<p>Part 4 (Offloading on 1 SPU)</p> 
+<p>Part 5 (Parallel Sort on 2 SPUs)</p> 
+<p>Part 6 (Final Optimizations)</p> 
+<p>The entire series is also available as a single PDF document.</p> 
+<h2>Offload The Sort Code On 1 SPU</h2> 
+<p>The first step for sorting in parallel is to offload sorting an array chunk 
+on a SPU using Offload. This can be done by using either an__offload or 
+__blockingoffload block in the C++ code. The former spawns a thread on a SPU 
+and runs the code inside of the block (see code below). The latter is similar 
+except that the execution of the function containing the offload block is 
+stopped until the block has finished executing. For now we will use the latter 
+as we are using only one SPU and not doing any processing on the PPU.</p> 
+<pre>template&lt;typename T&gt; void sortOffloaded(T *data, size_t start, 
+size_t end) { size_t count = (end - start + 1); if(count &lt; 2) return; // run 
+the code in the following block on a SPU and wait until it finishes 
+__blockingoffload(data, start, end) { mySort(data, start, end); }; }</pre> 
+<p>Sorting 64K floats using quicksort on the SPU takes 39.7 ms while 20K takes 
+10.7 ms. As we have seen on the PPU it takes 16.8 ms to sort 64K floats while 
+20K takes 7.1 ms. Thus offloading the quicksort code as-is results in severe 
+slowdowns: 0.4x for floats and 0.2x for integers.</p> 
+<p>This is mainly due to the fact that the array is stored in main (PPU) 
+memory. Since the sorting code is running on the SPU, every read and write from 
+and to the array has to go through Offload's software cache. This cache has to 
+issue DMA requests to copy memory between the PPU and SPU. The easiest solution 
+to this issue is to copy the array data to the SPU's local RAM, sort the local 
+array and copy it back to the PPU memory when finished. The local array is 
+allocated with 128-byte aligned memory which generally improves performance 
+over non-aligned arrays.</p> 
+<p>One of the main issue with this approach is the 256 KB RAM size for storing 
+code and data. This means that with big enough arrays the whole array does not 
+fit in the RAM. For now we can only sort arrays that fit inside the SPU RAM, 
+but we will solve this issue later.</p> 
+<pre>template&lt;typename T, typename S&gt; void sortOffloadedLocalMem(T 
+*data, size_t start, size_t end) { size_t count = (end - start + 1); if(count 
+&lt; 2) return; __blockingoffload(data, start, end, count) { size_t size = 
+count * sizeof(T); // enforce the maximum array size if(count &lt;= 
+MAX_SPU_ARRAY_COUNT) { T __attribute__((aligned(128))) 
+copy[MAX_SPU_ARRAY_COUNT]; // copy the array from PPU to SPU 
+__builtin_memcpy(copy, data + start, size); // sort the local array 
+mySort(copy, 0, count &ndash; 1); // copy the array back from SPU to PPU 
+__builtin_memcpy(data + start, copy, size); } else { printf(&quot;Error: array 
+size (%d) exceeds maximum size (%d)\n&quot;, count, MAX_SPU_ARRAY_COUNT); } }; }
+</pre> 
+<h2>Results</h2> 
+<p>With this approach it only takes 3.1 ms to sort 20K floats on the SPU using 
+quicksort. This represents a 1.5x speed-up over execution on PPU, however 
+sorting integers results in 0.6x slowdowns. Similarly merge sort sees 2-2.4x 
+speed-up for floats and 1.9-2.1x speed-ups for integers. Quicksort is limited 
+to ~40K arrays in SPU's local memory while merge sort's limit is ~20K.</p> 
+<p>The table below compares the performance of sorting on 1 SPU and the 
+various implementations presented in the last post. The user-defined structure 
+used ('face') contains one floating point (depth value) and three integer 
+indices. This could be used to sort non-opaque polygons by depth.</p> 
+<p>&nbsp;</p> 
+<p>4K faces</p> 
+<p>20K floats</p> 
+<p>20K ints</p> 
+<p>64K floats </p> 
+<p>64K ints</p> <br>
+
+<p>Iterative quicksort</p> 
+<p>2.6 ms</p> 
+<p>4.7 ms</p> 
+<p>2.1 ms</p> 
+<p>16.8 ms</p> 
+<p>7.1 ms</p> <br>
+
+<p>Iterative quicksort, on 1 SPU</p> 
+<p>7.5 ms</p> 
+<p>10.7 ms</p> 
+<p>10.7 ms</p> 
+<p>39.7 ms</p> 
+<p>39.4 ms</p> <br>
+
+<p><strong>Iterative quicksort, on 1 SPU (local mem.)</strong></p> 
+<p><strong>2.6 ms</strong></p> 
+<p><strong>3.1 ms</strong></p> 
+<p><strong>3.1 ms</strong></p> 
+<p>&ndash;</p> 
+<p>&ndash;</p> <br>
+
+<p>Iterative merge sort (vectorized merge)</p> 
+<p>3.7 ms</p> 
+<p>2.8 ms</p> 
+<p>2.4 ms</p> 
+<p>10.8 ms</p> 
+<p>9.6 ms</p> <br>
+
+<p><strong>Iterative merge sort, on 1 SPU (local mem.)</strong></p> 
+<p><strong>3.6 ms</strong></p> 
+<p><strong>1.2 ms</strong></p> 
+<p><strong>1.2 ms</strong></p> 
+<p>&ndash;</p> 
+<p>&ndash;</p> <br>
+<br>
+
+<p>In the next part in the series we will see how to run our sort functions on 
+multiple SPUs in parallel to build a parallel sort implementation and work 
+around the current arrays size limitation.</p> 
+<p>&nbsp;</p> 
+<h1>Comments</h1> <b>Copyright 2002 - 2012 Codeplay Software Ltd.</b> <br>
+<b>
+All Rights Reserved.</b> <br>
+<i>&quot;PlayStation&reg;&quot; is a registered 
+trademark, and &quot;Cell Broadband Engine&quot; is a trademark of Sony 
+Computer Entertainment Inc.</i> <b>Tel:</b> +44 131 466 0503 <br>
+<b>Email:</b> 
+info@codeplay.com <br>
+<b>VAT:</b> GB 802 8335 47 
+</body>

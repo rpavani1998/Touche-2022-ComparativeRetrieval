@@ -1,0 +1,417 @@
+if you have fedora linux, life is really simple.
+math functions: the usual exp(), log(), log10() , sqrt() etc. are available, as well as min() , max(), sum(), sort() , round(), floor() etc.
+in any subsequent statistical analyses, r would do its best to cope with the missing data, in the obvious manners.
+downloading from the web: however, the package you want may not be in your r installation.
+a call to .libpaths() again, without an argument, will show you a list of all the places r now will look at for loading a package when requested.
+but the graphics are for the output, e.g. plots, not for the input.
+here we used the built-in function round(), but you can do the same thing with functions that you write yourself.
+if you want the lines "connecting the dots" but don't want the dots themselves, includetype="l" in your call to lines(): > plot(x,y,type="l") > lines(x,z,type="l") the call to plot() both initiates the plot and draws the first curve.
+for that reason, you might want to put all the commands you're using to build up a graph in a file, and then usesource() to execute them.
+if there are r commands you would like to have executed at the beginning of every r session, you can place them in a file.
+of course, we could get both the cloud and the smoothed curve: plot(x,y) lines(lowess(x,y))
+if we answery, then the next time we run r, all those objects will automatically be loaded.
+would assign all of your objects to list, thus removing everything.
+as the cantonese say, yauh peng, yauh leng --"both inexpensive and beautiful.
+codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 residual standard error: 16.31 on 53 degrees of freedom multiple r-squared: 0.5183, adjusted r-squared: 0.5092 f-statistic: 57.03 on 1 and 53 df, p-value: 5.85e-10 so for example, we estimate that exam 1 scores explain about 50% of the variation in exam 3 scores.
+here is the straightforward way: sim3 source("oc.r") here's another example, to automate the saving of a graph which is displayed on the screen: # prints the currently displayed graph, on device number dvnum, to the # file filename; dvnum will typically be 2; filename must be the name of # a pdf file, quoted; it closes the pdf file and restores dvnum as the # current device prpdf fit1 fit1$coefficients (intercept) exam1 3.7008841 0.7458898 we can do the same thing in functions we write ourselves.
+you can check which packages are currently loaded by typing > .path.package() loading from your hard drive: if you need a package which is in your r installation but not loaded into memory yet, you must request it.
+for instance, if you have a long vectorx and wish to display it one screen at a time, then instead of typing > x type > page(x) set the hit q to quit the pager, type "/abc" to search for the string "abc" in the pager output, etc.
+again, that will already be taken care of by the spreadsheet or whatever generated the file in the first place, but i mention it because you will need to use the quotes in your r commands.
+error t1* 5 0.2375 1.708637 normally, we would assign the result of boot() to an object, as we did withb above.
+a second r session (10 minutes): here we will do some multivariate analysis, and also introduce data frames, which allow a richer structure than simply using individual vectors.
+the call > trace(f,t) would instruct r to call the function t() every time we enter the functionr().
+as you can see, other than the first record, which contains the names of the columns (i.e. the variables), each line contains the three exam scores for one student.
+then you can invoke various debugging operations, such as: you can single-step through the code by hitting the enter key.
+built-in data sets: r includes a few real data sets, for use in teaching or in testing software.
+the libraries are visible as subdirectories of your library directory in your r installation tree, e.g. /usr/lib/r/library.
+when source() is executed, the code in the specified file is run.
+but you can learn a lot from tutorials on the web.
+we could re-establish the screen as the current device, then copy it to the pdf device: > dev.set(2) x11 2 > dev.copy(which=3) pdf 3 note carefully that the pdf file is not usable until we close it, which we do as follows: > dev.set(3) pdf 3 > dev.off() x11 2
+of course, we can add labels to the table and do various statistical analyses on it, not covered here.
+this can be especially useful for graphics functions.
+the left brace demarcates the start of the body of the function.
+for instance, would place a legend at the point (2000,31162) in the graph, with a little line of type 1 and label of "cs".
+a call to .libpaths() again, without an argument, will show you a list of all the places r now will look at for loading a package when requested.
+it's also useful if you are not quite sure what an r library function does; by looking at the code you may understand it better.
+but i often work with government databases, and they tend to release these as either straight excel files, or as.csv files.
+you can get a lot more if you set r up to dump frames on a crash: > options(error=dump.frames)
+for example, text(2.5,4,"abc") would write the text "abc" at the point (2.5,4) in the graph.
+[,1] [,2] [1,] 0.5 0.5 [2,] -0.5 0.5 the function write.table() works very much like read.table().
+typing locator(1) will tell r that you will click in 1 place in the graph.
+(the "[1]" helps users read voluminous output consisting of many rows.
+for instance, instead of retrieving the means of the three variables individually, by callingmean() on each vector, we can get the whole group of means via one single command: > colmeans(testscores) exam1 exam2 exam3 62.14545 51.27273 50.05455
+again, that will already be taken care of by the spreadsheet or whatever generated the file in the first place, but i mention it because you will need to use the quotes in your r commands.
+changing character sizes: the cex() function: the cex() ("character expand") function allows you to expand or shrink characters within a graph, very useful.
+(if you had not already entered it viadebug()), and can proceed as described above.
+you can use the function help.search() to do a "google"-style search through r's documentation in order to determine which function will play a desired role.
+we could re-establish the screen as the current device, then copy it to the pdf device: > dev.set(2) x11 2 > dev.copy(which=3) pdf 3 note carefully that the pdf file is not usable until we close it, which we do as follows: > dev.set(3) pdf 3 > dev.off() x11 2
+we now have two devices open, as we can confirm: > dev.list() x11 pdf 2 3 our first device, the screen, is named x11 when r runs on unix; it is device number 2.
+it suffers from a less-than-perfect display, but is definitely worthwhile.
+first, the scatter plot: > plot(testscores$exam1,testscores$exam3) a scatter plot window then pops up.
+for instance, > legend(2000,31162,legend="cs",lty=1) would place a legend at the point (2000,31162) in the graph, with a little line of type 1 and label of "cs".
+so, for instance, the callabline(2,5) will draw the line y = 2 + 5x.
+all graphics output will now go to this file instead of to the screen.
+in order to get a certain string placed exactly where you want it, you may need to engage in some trial and error.
+to "browse," go to the place in your r directory tree where the base is stored.
+but i often work with government databases, and they tend to release these as either straight excel files, or as.csv files.
+note that r definitely does have graphics--tons of it.
+you can skip to the end of the "current context" (a loop or a function) by typing c.
+since all normal r operations and functions are still available to you, you can query the value of a variable, just type its name, as you would in ordinary interactive usage of r. (if the variable's name is one of the debug() commands, though, say c, you'll need to do something likeprint(c) to print it out.)
+inside that package is a function, boot(), which will do the work of bootstrapping.
+the object orientation also allows you to combine several commands, each one using the output of the last, with the resulting combination being quite powerful and extremely flexible.
+here we used the built-in function round(), but you can do the same thing with functions that you write yourself.
+the object orientation also allows you to combine several commands, each one using the output of the last, with the resulting combination being quite powerful and extremely flexible.
+this example will place things into even sharper focus: > z j 8 > j [1] true false true true > y y[j] [1] 1 30 5 we may just want to find the positions within z at which the condition occurs.
+after we finally entered a right brace to end the function body, r resumed the > prompt.
+the call > trace(f,t) would instruct r to call the function t() every time we enter the functionr().
+we could also close the device by exiting r, though it's probably better to proactively close.)
+(again, it won't be very fancy for the time being, since we are using default values, but you can make it fancy with some added commands when you learn more about r.)
+this is handy if you're using a function that you've written but have forgotten what its arguments are, for instance.
+in any subsequent statistical analyses, r would do its best to cope with the missing data, in the obvious manners.
+as you can see, other than the first record, which contains the names of the columns (i.e. the variables), each line contains the three exam scores for one student.
+you can print the values of variables as you usually do in r's interactive mode.
+for instance, in our earlier example data frame testscores from our second 5-minute example above: we saw in our 10-minute introduction above how to create a data frame by reading from a data file.
+it features a pop-up window in which you can watch your progress as you step through your source code, gives you the ability to easily set breakpoints, etc.
+once you do so, r will tell you the exact coordinates of the point you clicked on.
+but if our file had contained any code not in a function, it would have been executed.
+note that we do not need to qualify the name exam2 when usingsubset().
+for example, we could put the above commands in a file,testscores.r , with contents d1 = density(testscores$exam1,from=0,to=100) d2 = density(testscores$exam2,from=0,to=100) plot(d2,main="",xlab="") lines(d1) to execute these commands, we would type > source("testscores.r")
+codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 residual standard error: 16.31 on 53 degrees of freedom multiple r-squared: 0.5183, adjusted r-squared: 0.5092 f-statistic: 57.03 on 1 and 53 df, p-value: 5.85e-10 so for example, we estimate that exam 1 scores explain about 50% of the variation in exam 3 scores.
+you thus do not have to recreate the objects again from scratch if you wish to continue work from before.
+[1] 2 8 9 writing efficient r code: try to avoid writing large loops, instead of having r's rich functionality do the work for you.
+the functional programming aspect of importance to most users will be that one applies an operation to an entire list of elements, one by one, making things extremely convenient.
+however, you can change them, e.g. > z x1 x2 1 1 3 2 2 4 > names(z) z col 1 col 2 1 1 3 2 2 4 tables: consider the data matrix 1 1 1 2 2 2 3 1 2 2 where in the usual statistical fashion each row represents one subject under study.
+the first record of the.csv file has the names of the variables.
+the functional programming aspect of importance to most users will be that one applies an operation to an entire list of elements, one by one, making things extremely convenient.
+plotting multiple curves, using the lines() function: the plot() function works in stages, i.e. you can build up a graph in stages by giving more and more commands.
+more on the functional programming nature of r: elementwise operations on vectors: the key point is that r functions operate on vectors, in an elementwise fashion.
+par will give you documentation on the various graphics parameters, but it is rather overwhelming.
+yet at the same time we can work them as numbers; r will be smart enough to leave the names out of things then.
+r has no "undo" command (though theess interface to r described below does).
+one can applyplot(), for example, to many types of objects, getting an appropriate plot for each.
+for example, in testscores, we can add a variable which is the difference between exams 1 and 2: > testscores$diff21 attach(testscores)
+would be that in which our data is a data frame, sayd consisting of 100 rows of two columns.
+[1] 1 you can view the code for a function (either one you wrote, or one in r), e.g. > f1 function(a,b) return(a+b)
+the left brace demarcates the start of the body of the function.
+more on the object orientation of r: managing your objects: the ls() command will list all of your current objects.
+computer scientists would say that r is polymorphic, which means that the same function can be applied to different types of objects, with results tailored to the different object types.
+this one won't be very pretty, but r has all kinds of bells and whistles you can use optionally.
+[1] 3 solving systems of linear equations: the function solve() will solve systems of linear equations, and even find matrix inverses.
+they are nowhere near what a good debugging tool offers, but with skillful usage they can be effective.
+the example() function will actually run the examples shown in the output ofhelp().
+note, though, that if you want to single-step after hitting a breakpoint, you must typen for the first step, though you can just hit the enter key for subsequent steps.
+use the text() function to place some text anywhere in the current graph.
+that is accessible fromr home page, but it's easier to use theinstall.packages() function.
+in our case here, we just had a function in the file, so the effect was for r to read the function in to its list of functions.
+we used r's vector filtering to avoid a loop, and even though r internally will loop through the array, it will do so much faster than we would with an explicit loop in our r code.
+object "exam3" not found let's see how well the third exam score can be predicted from the first, using a linear regression function: > fit1 fit1$coefficients (intercept) exam1 3.7008841 0.7458898 note the effect of object orientation here.
+this quantity is easy to find analytically, but we'll use simulation.
+on one machine, i encountered a tcl/tk problem when i tried to loaddebug.
+on linux machines, you can compile the source yourself by using the usual configure make make install sequence.
+here is the straightforward way: sim3 source("oc.r") here's another example, to automate the saving of a graph which is displayed on the screen: # prints the currently displayed graph, on device number dvnum, to the # file filename; dvnum will typically be 2; filename must be the name of # a pdf file, quoted; it closes the pdf file and restores dvnum as the # current device prpdf fit1 fit1$coefficients (intercept) exam1 3.7008841 0.7458898 we can do the same thing in functions we write ourselves.
+[1] 8 8 8 8 yet another influence of the functional programming philosophy is that functions do not change their arguments (unless the result is re-assigned to the argument).
+if you're doing anything with random numbers, you'll need to be able to reproduce the same stream of numbers each time you run your program during the debugging session.
+you could just usesample() for this, but r has a package,boot, which automates the procedure for you.
+note that we do not need to qualify the name exam2 when usingsubset().
+"r by example", a quick chart on how to do various tasks in r, nicely categorized r reference card, 4 pages, very handy r programming the programming section of zoonekynd's tutorial (includes some material on oop)
+getting a response which contains this excerpt: mvrnorm(mass) simulate from a multivariate normal distribution this tells us that the function mvrnorm() will do the job, and it is in the packagemass.
+to cancel all mtrace() breaks, issue mtrace.off() .
+in this manner, we get a uniform interface to different classes.
+this will add that new directory to the ones r was already using.
+as with most of the other graphics functions, there are lots of options, e.g. point color, background color, etc.
+call locator(2) to get the locations of 2 places, etc.
+for that reason, you might want to put all the commands you're using to build up a graph in a file, and then usesource() to execute them.
+the net effect would be to report a count ofz = 1 in the original frame.
+before you loadedmass, "help(mvrnorm)" would have given an error message).
+are all accessible as components of this objectlmout, in lmout$coefficients, lmout$residuals etc.
+in order to get a certain string placed exactly where you want it, you may need to engage in some trial and error.
+yes, we need the testscores$ prefix there on exam2 .
+automating actions with the trace() function: the trace() function is quite flexible and powerful, though it takes some initial effort to learn.
+so, for instance, the callabline(2,5) will draw the line y = 2 + 5x.
+if speed is an issue, such as when working with large data sets or long-running simulations, one must avoid explicit loops as much as possible, because r can do them a lot faster than you can.
+pinpointing locations: the locator() function: typing locator(1) will tell r that you will click in 1 place in the graph.
+this of course means that the person who wrote the class, knowing the r idiom, would have had the foresight of writing such a function in the class, knowing that people would expect one.
+then we would have typed 50 na 40 in that line of the exams file.
+i could execute the code for (i in 1:5) { fname sprintf("abc%fdef",1.5)
+execution will pause atf(), and a window will pop up, showing the source code for that function.
+one can applyplot(), for example, to many types of objects, getting an appropriate plot for each.
+it is automatically invoked by some r commends, such ashelp(), and you can invoke it yourself on lengthy output.
+for instance, > rm(a,b,x,y,z,uuu) would remove the objects a, b. one of the named arguments of rm() is list , which makes it easier to remove multiple objects.
+for instance, in oursecond 5-minute example above: points(testscores$exam1,testscores$exam3,pch="+") would superimpose onto the current graph the points of the exam scores from that example, using "+" signs to mark them.
+for instance, inthe section titled "packages (libraries)" above, we needed a function to generate random variates from multivariate normal distributions.
+the rbind() and cbind() functions enable one to add rows or columns to a matrix or data frame.
+for instance, inthe section titled "packages (libraries)" above, we needed a function to generate random variates from multivariate normal distributions.
+in our case here, we just had a function in the file, so the effect was for r to read the function in to its list of functions.
+(unix users will recognize the similarity to unix shell pipe commands.)
+then we would have typed 50 na 40 in that line of the exams file.
+[1] 1 the operation still works, because the number 1.2 is actually considered to be a vector, that happens to consist of a single element 1.2.
+i then installed the patched version of 2.5.0, anddebug worked fine.
+note also that a vector is considered a one-row matrix, not a one-column matrix, and thus is suitable as the left factor in a matrix product, but not directly usable as the right factor.
+r includes a few real data sets, for use in teaching or in testing software.
+if you want the lines "connecting the dots" but don't want the dots themselves, includetype="l" in your call to lines(): > plot(x,y,type="l") > lines(x,z,type="l") the call to plot() both initiates the plot and draws the first curve.
+as described in ther faq, ess offers r users: r support contains code for editing r source code (syntactic indentation and highlighting of source code, partial evaluations of code, loading and error-checking of code, and source code revision maintenance) and documentation (syntactic indentation and highlighting of source code, sending examples to running ess process, and previewing), interacting with an inferior r process from within emacs (command-line editing, searchable command history, command-line completion of r object and file names, quick access to object and search lists, transcript recording, and an interface to the help system), and transcript manipulation (recording and saving transcript files, manipulating and editing saved transcripts, and re-evaluating commands from transcript files).
+there is still a debugging tool available to you after the fact: you can do a "post mortem" by simply callingtraceback().
+for instance, you can change the number of bins by specifying thebreaks variable;hist(z,breaks=12) would draw a histogram of the data z with 12 bins.
+this is nice, since it means that you, as a user, have fewer commands to remember!
+i noted in our introductory section, why you should use r, that using the nrow() function in conjunction with filtering provides a way to obtain a count of records satisfying various conditions.
+for example write.table(x,"x.dat",row.names=f,col.names=f) writes the matrix x to a file x.dat, with no column or row labels.
+you can use the function help.search() to do a "google"-style search through r's documentation in order to determine which function will play a desired role.
+for example, if we wish to save as a pdf file, we do something like this: > pdf("d12.pdf") this opens a file, which we have chosen here to call d12.pdf .
+if you're doing anything with random numbers, you'll need to be able to reproduce the same stream of numbers each time you run your program during the debugging session.
+the command prompt will now be something like browse[1] instead of just >.
+functions are first-class objects: functions can be used as arguments, assigned, etc.
+you could just usesample() for this, but r has a package,boot, which automates the procedure for you.
+to execute these commands, we would type > source("testscores.r")
+note that as described here, the breakpoints are hard-coded into the function's source code.
+(the "[1]" helps users read voluminous output consisting of many rows.
+so, you can see that the data frame testscores is a way of packaging the vectors of values of the individual variables, plus the associated variable names.
+for example write.table(x,"x.dat",row.names=f,col.names=f) writes the matrix x to a file x.dat, with no column or row labels.
+you then can pick up other features from this document (and others) as the need arises.
+the fact that r uses column-major order then determined where these four numbers were put.
+[1] 1 you can view the code for a function (either one you wrote, or one in r), e.g. > f1 function(a,b) return(a+b)
+i personally do not use it, but it clearly has some powerful features for those who wish to put in a bit of time to learn the package.
+extracting numbers from your objects: recall that when one does almost any complex operation in r, the results are returned packaged as an object.
+for instance, > rm(a,b,x,y,z,uuu) would remove the objects a, b. one of the named arguments of rm() is list , which makes it easier to remove multiple objects.
+though the terms object-oriened and functional programming may pique the interests of computer scientists, they are actually quite relevant to anyone who uses r.
+otherwise, hitting enter immediately after hitting a breakpoint is equivalent to hittingc .
+a somewhat more sophisticated example (they can become quite complex) would be that in which our data is a data frame, sayd consisting of 100 rows of two columns.
+i personally do not use it, but it clearly has some powerful features for those who wish to put in a bit of time to learn the package.
+for instance, you know that you can use theplot() function on just about any object produced by r.
+to determine what function, if any, does this, we could type > help.search("multivariate normal")
+a first r session (5 minutes): executing r: (if you do not already have r installed, go first to the section below titledhow to obtain/install r.)
+since we specified the matrix entries in the above example, we would not have need to specifyncol; nrow would be enough.
+it is indexed to allow you to quickly find how to do something.
+the point is that the round() function was applied individually to each element in the vectory.
+in his full site a nice short first introduction by m. hlynka of the university of windsor a general tutorial but with lots of graphics and good examples from real data sets, very nice job, by prof. dong-yun kim of the dept. of math.
+as you can see, the function to be applied needs at least one argument, which will play the role of one row or column in the array.
+so, load the library: > library(mass) then mvrnorm() will now be ready to use.
+the term object-oriented can be explained by example, say statistical regression.
+to determine what function, if any, does this, we could type > help.search("multivariate normal")
+let's now make a scatter plot of the original exam1-exam3 data, together with the fitted regression line.
+the example() function will actually run the examples shown in the output ofhelp().
+not only does this save you programming time, it produces faster code, since r's functions have been written for efficiency.
+if we had wanted to regress exam3 against both exam1 and exam2, we would issue the following command: > fit12 plot(c(1,2,3), c(1,2,4)) plots the points (1,1), (2,2) and (3,4).
+as another example, let's plot nonparametric density estimates (these are basically smoothed histograms) for exams 1 and 2 from ourexams file in our section titled "a second r session" above in the same graph.
+see the online help pages for details, e.g. by typing > help(pnorm) the usual exp(), log(), log10() , sqrt() etc. are available, as well as min() , max(), sum(), sort() , round(), floor() etc.
+setting breakpoints with the browser() function: if single-stepping is too tedious, an alternative is to place breakpoints, by simply inserting the call browser() at the points at which you wish execution to pause.
+when source() is executed, the code in the specified file is run.
+reading spreadsheet files: i must confess to being a non-spreadsheet user.
+for example, we may wish to run an r script that generates a graph output file, and not have to bother with manually running r.
+as my sample data set, i have created a file named exams, consisting of grades for the three exams in a certain course (two midterm exams and a final exam).
+again since all normal r operations and functions are still available to you, you can set new breakpoints, etc. to turn off debugging for that function, type > undebug(f) note that if you simultaneously have a separate window open in which you are editing your source code, each time you reload it usingsource() , the debugging status is lost.
+here are some that i find useful: various r search engines are listed in the the r home page; click on search.
+the above set of operations to print a graph can become tedious if used a lot, so it makes sense to put them into a file.
+calling theattributes() function will give you all this, plus the class of the object itself.
+otherwise, hitting enter immediately after hitting a breakpoint is equivalent to hittingc .
+computer scientists would say that r is polymorphic, which means that the same function can be applied to different types of objects, with results tailored to the different object types.
+text(2.5,4,"abc",cex = 1.5) would print the same text as in our earlier example, but with characters 1.5 times normal size.
+object "exam3" not found introduction to regression in r: let's see how well the third exam score can be predicted from the first,
+[1] 1 3 4 also, in our student exam scores example above, we could use the expression > goodexam2 = 62]
+we can also create a data frame directly, using the functiondata.frame().
+you can get a stack report by typing "where".
+for example, if we wish to save as a pdf file, we do something like this: > pdf("d12.pdf") this opens a file, which we have chosen here to call d12.pdf .
+this of course means that the person who wrote the class, knowing the r idiom, would have had the foresight of writing such a function in the class, knowing that people would expect one.
+note that r definitely does have graphics--tons of it.
+if speed is an issue, such as when working with large data sets or long-running simulations, one must avoid explicit loops as much as possible, because r can do them a lot faster than you can.
+the ls() command will list all of your current objects.
+other information on startup files, e.g. the file .rdata which records your workspace if you request it to be saved when you exit r, is available by typing help(.rprofile)
+in fact, what happened above actually occurred at a more fundamental level.
+so, for instance, the above data would show that the third person in our sample is not planning to vote for x, and did not vote in the last election.
+but if our file had contained any code not in a function, it would have been executed.
+the last value computed will be returned by default.
+it features a pop-up window in which you can watch your progress as you step through your source code, gives you the ability to easily set breakpoints, etc.
+note that we asked r to have blank labels for the figure as a whole and for the x axis; otherwise, r would have gotten such labels fromd2 , which would have been specific to exam 2.
+if we want to have a graph saved to a file, we must set up another device.
+the above set of operations to print a graph can become tedious if used a lot, so it makes sense to put them into a file.
+i fixed that (i was on a linux system) by setting the environment variable, in my case by typing % setenv tcl_library /usr/share/tcl8.4 each time you wish to use debug, load it by executing > .libpaths("/myr") > library(debug) or, place these in an r startup file, say .rprofile in the directory in which you want these commands to run automatically.
+they are nowhere near what a good debugging tool offers, but with skillful usage they can be effective.
+you can make nicer labels, etc.
+you can put any set of r commands in a file, say a.r, and then have them automatically executed by typing source("a.r")
+of course, r's functional programming features, described in our section with that title, provide many ways to help us avoid explicit loops.
+you can use the lty parameter in plot() to specify the type of line, e.g solid, dashed, etc.
+thus people all over the world have written their own special-purpose r packages, placing them in the cran repository.
+it offers very short and quick entry into r.
+[3,] 3 1 this is not just for compactness of code, but for speed.
+thus the overall expression was w[c(f,t,t),], meaning to choose the second and third rows of w. without that final comman, indicating rows, r would have given us an error message.
+we could set ourstatistic() function to dolm boot(d,dolm,r=500) note that this example also illustrates the fact that boot() can indeed handle vector-valued statistics.
+smoothing points: the lowess() function: just plotting a cloud of points, whether connected or not, may turn out to be just an uninformative mess.
+then at the r prompt, type > install.packages("mvtnorm","/a/b/c/") this will cause r to automatically go to cran, download the package, compile it, and load it into a new directory/a/b/c/mvtnorm.
+but the graphics are for the output, e.g. plots, not for the input.
+if for instance we had wanted to find the mean score on exam 2, r would find the mean among all students except the third.
+text(2.5,4,"abc",cex = 1.5) would print the same text as in our earlier example, but with characters 1.5 times normal size.
+as another example, let's plot nonparametric density estimates (these are basically smoothed histograms) for exams 1 and 2 from ourexams file in our section titled "a second r session" above in the same graph.
+then at the r prompt, type > install.packages("mvtnorm","/a/b/c/") this will cause r to automatically go to cran, download the package, compile it, and load it into a new directory/a/b/c/mvtnorm.
+insufficiently explained in many tutorials, and understanding it will enable you to much more easily learn new r features later on.
+we could also close the device by exiting r, though it's probably better to proactively close.)
+at this point, you can single-step through your code by repeatedly hitting the enter key.
+you can set finer breakpoints, at the line level, using bp() .
+and as you long as you answer yes to the question "save workspace image?" put to you when you quit the session, r will save all the objects you created in that session, and restore them in your next session.
+session data: as you proceed through an r session, r will record which commands you submit.
+if there are r commands you would like to have executed at the beginning of every r session, you can place them in a file.
+the coefficients themselves are accompanied within the object by their names, and when we print the coefficients r knows to print the names with them.
+error t1* 5 0.2375 1.708637 normally, we would assign the result of boot() to an object, as we did withb above.
+also, a nice feature is that you can edit functions from within r.
+[1] "abc1.5def" during a session, you can scroll back and forth in your command history by typing ctrl-p and ctrl-n. you can also use thehistory() command to list your more recent commands (which will be run through thepager).
+getting a response which contains this excerpt: mvrnorm(mass) simulate from a multivariate normal distribution this tells us that the function mvrnorm() will do the job, and it is in the packagemass.
+thus people all over the world have written their own special-purpose r packages, placing them in the cran repository.
+the cex() ("character expand") function allows you to expand or shrink characters within a graph, very useful.
+all graphics output will now go to this file instead of to the screen.
+this is handy if you're using a function that you've written but have forgotten what its arguments are, for instance.
+revelle of the dept. of psychology of northwestern university; especially good for material on multivariate statistics and structural equation modeling a rough form of john verzani's book, simpler ; nice coverage of various statistical procedures a large general reference by vincent zoonekynd; really excellent with as wide a statistics coverage as i've seen anywhere a nice page on r oop draft of john maindonald's book; he also has scripts, data etc.
+you can return to the > prompt by typing q.
+so, when someone develops a new r class for others to use, we can try to apply, say, summary() and reasonably expect it to work.
+we can load any of them but typing its name, e.g. > lakehuron string manipulation: r has a number of string manipulation utilities, such as paste() , sprintf(), substr() and strsplit.
+this one won't be very pretty, but r has all kinds of bells and whistles you can use optionally.
+[1] 0.832 but as noted in the section titled "writing efficient r code", you should try to use r's built-in features for greater speed.
+saving graphics (and other) command sequences to files: it may be very useful to save your graphics commands to a file.
+# generate 100 n(0,1) variates and plot their histogram dev.off() # close the file we could run it automatically by simply typing r cmd batch --vanilla x
+as you proceed through an r session, r will record which commands you submit.
+just type $ yum install r you can also probably do something like this in ubuntu linux, etc.
+the total length of this document in its entirety is not short, but the 5- and 10-minute introductory sessions below are designed so that you will be using r within minutes.
+the coefficients themselves are accompanied within the object by their names, and when we print the coefficients r knows to print the names with them.
+our variable names didn't have any embedded spaces in this case, but if they had, we'd need to quote any such name.
+if we answery, then the next time we run r, all those objects will automatically be loaded.
+you can check which packages are currently loaded by typing > .path.package()
+inside that package is a function, boot(), which will do the work of bootstrapping.
+when browser() is called, you do indeed enter the browser (if you had not already entered it viadebug()), and can proceed as described above.
+since we specified the matrix entries in the above example, we would not have need to specifyncol; nrow would be enough.
+i fixed that (i was on a linux system) by setting the environment variable, in my case by typing % setenv tcl_library /usr/share/tcl8.4 each time you wish to use debug, load it by executing > .libpaths("/myr") > library(debug) or, place these in an r startup file, say .rprofile in the directory in which you want these commands to run automatically.
+(r can also use .csv files, from spreadsheets.
+this would have the same effect as placing the command browser() in our source code for gy(), but would be quicker and more convenient than inserting such a line, saving the file and rerunning source() to load in the new version of the file.
+(again, it won't be very fancy for the time being, since we are using default values, but you can make it fancy with some added commands when you learn more about r.)
+for example, we could put the above commands in a file,testscores.r , with contents d1 = density(testscores$exam1,from=0,to=100)
+back in the r interactive window, you'll see a promptd(1)>.
+we now have two devices open, as we can confirm: > dev.list() x11 pdf 2 3 our first device, the screen, is named x11 when r runs on unix; it is device number 2.
+the ones automatically loaded when you start r include thebase subdirectory, but in order to save memory and time, r does not automatically load all the packages.
+but you may find the locator() function to be a much quicker way to go.
+introduction to r data files and frames: as my sample data set, i have created a file named exams, consisting of grades for the three exams in a certain course (two midterm exams and a final exam).
+so, for instance, the above data would show that the third person in our sample is not planning to vote for x, and did not vote in the last election.
+the resulting new frame would be fed into nrow(), the function that counts the number of rows in a frame.
+for instance, instead of retrieving the means of the three variables individually, by callingmean() on each vector, we can get the whole group of means via one single command: > colmeans(testscores) exam1 exam2 exam3 62.14545 51.27273 50.05455
+[3,] 3 1 applying the same function to all rows or all columns of a matrix/data frame: this is not just for compactness of code, but for speed.
+the ones automatically loaded when you start r include thebase subdirectory, but in order to save memory and time, r does not automatically load all the packages.
+[1] 3 the function solve() will solve systems of linear equations, and even find matrix inverses.
+for a data frame, for example, these will be the names of the columns.
+it may be very useful to save your graphics commands to a file.
+the latter is searched for such a file first, which allows you to customize for a particular project.
+"its virtues: i should warn you that one submits commands to r via text, rather than mouse clicks in a graphical user interface (gui).
+the above code would be better written > x length(x[x system.time(sim1(1000))
+so, when someone develops a new r class for others to use, we can try to apply, say, summary() and reasonably expect it to work.
+the pager: this displays material one screen at a time.
+of course, we can add labels to the table and do various statistical analyses on it, not covered here.
+the last value computed will be returned by default.
+put to you when you quit the session, r will save all the objects you created in that session, and restore them in your next session.
+specifying many predictor variables in lm(): the "a ~ b+c+..." notation for specifying a response variable a and predictor variables b, c, ... is usually nice, but sometimes troublesome if you have many predictors or you are writing r programs.
+the default device is the screen.
+the resulting new frame would be fed into nrow(), the function that counts the number of rows in a frame.
+we can load any of them but typing its name, e.g. > lakehuron r has a number of string manipulation utilities, such as paste() , sprintf(), substr() and strsplit.
+after we finally entered a right brace to end the function body, r resumed the > prompt.
+this can be especially useful for graphics functions.
+not only does this save you programming time, it produces faster code, since r's functions have been written for efficiency.
+it requires another package, mvbutils, and the tcl/tk scripting and graphics system.
+[1] 1 the operation still works, because the number 1.2 is actually considered to be a vector, that happens to consist of a single element 1.2.
+once you do so, r will tell you the exact coordinates of the point you clicked on.
+for instance, you know that you can use theplot() function on just about any object produced by r.
+r version 2.5.0, i found that a bug in r caused the debug package to fail.
+[,1] [,2] [1,] 0.5 0.5 [2,] -0.5 0.5 writing a data frame to a file: the function write.table() works very much like read.table().
+adding more rows or columns to a matrix/data frame: the rbind() and cbind() functions enable one to add rows or columns to a matrix or data frame.
+we could set ourstatistic() function to dolm boot(d,dolm,r=500) note that this example also illustrates the fact that boot() can indeed handle vector-valued statistics.
+i noted in our introductory section, why you should use r, that using the nrow() function in conjunction with filtering provides a way to obtain a count of records satisfying various conditions.
+the debug package provides a more usable debugging interface than r's built-in facilities do.
+we can add columns, i.e. new variables, to the data frame.
+that is accessible fromr home page, but it's easier to use theinstall.packages() function.
+the latter is searched for such a file first, which allows you to customize for a particular project.
+note, though, that if you want to single-step after hitting a breakpoint, you must typen for the first step, though you can just hit the enter key for subsequent steps.
+so, you can see that the data frame testscores is a way of packaging the vectors of values of the individual variables, plus the associated variable names.
+the term object-oriented can be explained by example, say statistical regression.
+however, the package you want may not be in your r installation.
+of course, r's functional programming features, described in our section with that title, provide many ways to help us avoid explicit loops.
+the "a ~ b+c+..." notation for specifying a response variable a and predictor variables b, c, ... is usually nice, but sometimes troublesome if you have many predictors or you are writing r programs.
+the advantage of this is that if we ever wanted to rerun this sequence of commands, say with a slightly different set of parameters, we need only edit the filetestscores.r to reflect the parameter changes and then run as above.
+r has no "undo" command (though theess interface to r described below does).
+you can put any set of r commands in a file, say a.r, and then have them automatically executed by typing source("a.r") r uses packages to store groups of related pieces of software.
+first the subset() function would take the data frame x03, and cull out all those records for which the variable z has the value 1.
+in fact, what happened above actually occurred at a more fundamental level.
+as you can see, the function to be applied needs at least one argument, which will play the role of one row or column in the array.
+[1] 2.333333 these of course are especially useful when writing programs (see our the section titled "r programming below), but they are useful for interactive use too, since r does record your commands (see"session data" below).
+but you may find the locator() function to be a much quicker way to go.
+as with most of the other graphics functions, there are lots of options, e.g. point color, background color, etc.
+the first record of the.csv file has the names of the variables.
+the line + for (n in x) { will again instantly be recognized by python programmers.
+the debug package: the debug package provides a more usable debugging interface than r's built-in facilities do.
+as two-dimensional arrays: one can refer to the rows and columns of a data frame using two-dimensional array notation.
+the trace() function is quite flexible and powerful, though it takes some initial effort to learn.
+if for instance we had wanted to find the mean score on exam 2, r would find the mean among all students except the third.
+for a data frame, for example, these will be the names of the columns.
+before you loadedmass, "help(mvrnorm)" would have given an error message).
+> install.packages("debug","/myr") r version 2.5.0, i found that a bug in r caused the debug package to fail.
+note also that a vector is considered a one-row matrix, not a one-column matrix, and thus is suitable as the left factor in a matrix product, but not directly usable as the right factor.
+for example, in testscores, we can add a variable which is the difference between exams 1 and 2: > testscores$diff21 attach(testscores)
+if we had wanted to regress exam3 against both exam1 and exam2, we would issue the following command: > fit12 plot(c(1,2,3), c(1,2,4)) plots the points (1,1), (2,2) and (3,4).
+sd to get information on the sd() function.
+one can define functions, use constructs such as loops and conditionals, etc.
+if we want to have a graph saved to a file, we must set up another device.
+let's now make a scatter plot of the original exam1-exam3 data, together with the fitted regression line.
+our current device is now the pdf file (which we could confirm by calling dev.cur()).
+the fact that r uses column-major order then determined where these four numbers were put.
+the names() function will tell us the names of the attributes of the given object.
+in our example above, we would call it this way: > fit1 ls.print(fit1) to regress exam3 against exam1 and exam2, we would type: > fit12  lsfit(cbind(testscores$exam1,testscores$exam2),testscores$exam3)
+for instance, if you have a long vectorx and wish to display it one screen at a time, then instead of typing > x type > page(x) set the hit q to quit the pager, type "/abc" to search for the string "abc" in the pager output, etc.
+r is capable of reading.csv files.
+other information on startup files, e.g. the file .rdata which records your workspace if you request it to be saved when you exit r, is available by typing help(.rprofile)
+[1] 2.333333 these of course are especially useful when writing programs (see our the section titled "r programming below), but they are useful for interactive use too, since r does record your commands (see"session data" below).
+if single-stepping is too tedious, an alternative is to place breakpoints, by simply inserting the call browser() at the points at which you wish execution to pause.
+consider the filez.r: pdf("xh.pdf") # set graphical output file hist(rnorm(100)) # generate 100 n(0,1) variates and plot their histogram dev.off() # close the file we could run it automatically by simply typing r cmd batch --vanilla
+our variable names didn't have any embedded spaces in this case, but if they had, we'd need to quote any such name.
+the comments then help you remember what you were doing when you read the record.
+then you can invoke various debugging operations, such as: to turn off debugging for that function, type > undebug(f) note that if you simultaneously have a separate window open in which you are editing your source code, each time you reload it usingsource() , the debugging status is lost.
+just plotting a cloud of points, whether connected or not, may turn out to be just an uninformative mess.
+loops: the line + for (n in x) { will again instantly be recognized by python programmers.
+[1] 5.2 7.9 4.4 you can also do "slicing" of arrays, picking out elements with specific indices, e.g. > y[c(1,3)]
+for instance, you can change the number of bins by specifying thebreaks variable;hist(z,breaks=12) would draw a histogram of the data z with 12 bins.
+the point is that the round() function was applied individually to each element in the vectory.
+this displays material one screen at a time.
+to read your dataset into your r space, issue the command d help.start() r will then invoke a default web browser.
+the comments then help you remember what you were doing when you read the record.
+[1] 0.832 but as noted in the section titled "writing efficient r code", you should try to use r's built-in features for greater speed.
+we can also create a data frame directly, using the functiondata.frame().
+but you can learn a lot from tutorials on the web.
+in our example above, we would call it this way: > fit1 ls.print(fit1) to regress exam3 against exam1 and exam2, we would type: > fit12 lsfit(cbind(testscores$exam1,testscores$exam2),testscores$exam3)
+par will give you documentation on the various graphics parameters, but it is rather overwhelming.
+this quantity is easy to find analytically, but we'll use simulation.
+[1] 5.2 7.9 4.4 vector slicing: you can also do "slicing" of arrays, picking out elements with specific indices, e.g. > y[c(1,3)]
+a more functional debugging package available for r, of course called debug.
+the file contents in that directory gives brief descriptions of each entity.
+though the terms object-oriened and functional programming may pique the interests of computer scientists, they are actually quite relevant to anyone who uses r.
+yet at the same time we can work them as numbers; r will be smart enough to leave the names out of things then.
+to "browse," go to the place in your r directory tree where the base is stored.
+it's also useful if you are not quite sure what an r library function does; by looking at the code you may understand it better.
+the help is piped through the pager.
+(unix users will recognize the similarity to unix shell pipe commands.)
+note that we asked r to have blank labels for the figure as a whole and for the x axis; otherwise, r would have gotten such labels fromd2 , which would have been specific to exam 2.
+my tutorial is concerned mainly with general r operations, rather than the details of the specific statistical procedures.
+the default device is the screen.
+this is nice, since it means that you, as a user, have fewer commands to remember!
+the above code would be better written > x length(x[x system.time(sim1(1000))
+we used r's vector filtering to avoid a loop, and even though r internally will loop through the array, it will do so much faster than we would with an explicit loop in our r code.
+of course, we could get both the cloud and the smoothed curve: plot(x,y) lines(lowess(x,y))
+there is still a debugging tool available to you after the fact: you can do a "post mortem" by simply callingtraceback().
+if a name contains a blank, the name must be quoted.
+here we will do some multivariate analysis, and also introduce data frames, which allow a richer structure than simply using individual vectors.
+the plot() function works in stages, i.e. you can build up a graph in stages by giving more and more commands.
+would assign all of your objects to list, thus removing everything.
+thus the overall expression was w[c(f,t,t),], meaning to choose the second and third rows of w. without that final comman, indicating rows, r would have given us an error message.
+" its virtues: it's a public-domain implementation of the widely-regarded s statistical language; r/s is thede facto standard among professional statisticians open-software nature means it's easy to get help from the user community, and lots of new functions get contributed by users, many of which are prominent statisticians comparable, and often superior, in power to commercial products in most senses available for windows, macs, unix/linux in addition to enabling statistical operations, it's a general programming language, so that you canprogram your more complex tasks object-oriented and functional programming structure your data sets are saved between sessions, so you don't have to reload each time i should warn you that one submits commands to r via text, rather than mouse clicks in a graphical user interface (gui).
+for instance, in oursecond 5-minute example above: points(testscores$exam1,testscores$exam3,pch="+") would superimpose onto the current graph the points of the exam scores from that example, using "+" signs to mark them.
+you thus do not have to recreate the objects again from scratch if you wish to continue work from before.
+note that as described here, the breakpoints are hard-coded into the function's source code.
+[1] 2 8 9 try to avoid writing large loops, instead of having r's rich functionality do the work for you.
+this would have the same effect as placing the command browser() in our source code for gy(), but would be quicker and more convenient than inserting such a line, saving the file and rerunning source() to load in the new version of the file.
+the advantage of this is that if we ever wanted to rerun this sequence of commands, say with a slightly different set of parameters, we need only edit the filetestscores.r to reflect the parameter changes and then run as above.
+it would also be quicker and more convenient to undo, by simply running > untrace(gy) you can turn tracing on or off globally by calling tracingstate() , with the argument true to turn it on, false to turn it off.
+running r in batch mode: sometimes it's preferable to automate the process of running r. for example, we may wish to run an r script that generates a graph output file, and not have to bother with manually running r.
+it is automatically invoked by some r commends, such ashelp(), and you can invoke it yourself on lengthy output.
+[1] "abc1.5def" handy miscellaneous features: during a session, you can scroll back and forth in your command history by typing ctrl-p and ctrl-n. you can also use thehistory() command to list your more recent commands (which will be run through thepager).
+recall that when one does almost any complex operation in r, the results are returned packaged as an object.
+as described in ther faq, ess offers r users: r support contains code for editing r source code (syntactic indentation and highlighting of source code, partial evaluations of code, loading and error-checking of code, and source code revision maintenance) and documentation (syntactic indentation and highlighting of source code, sending examples to running ess process, and previewing), interacting with an inferior r process from within emacs (command-line editing, searchable command history, command-line completion of r object and file names, quick access to object and search lists, transcript recording, and an interface to the help system), and transcript manipulation (recording and saving transcript files, manipulating and editing saved transcripts, and re-evaluating commands from transcript files).
+on one machine, i encountered a tcl/tk problem when i tried to loaddebug.

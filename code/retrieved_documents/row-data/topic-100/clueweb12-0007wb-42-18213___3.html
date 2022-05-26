@@ -1,0 +1,151 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Python 2.5's 'with' Statement</title>
+<body>
+
+<ol> 
+<li>About.com</li> 
+<li>Computing &amp; Technology</li> 
+<li>Python</li> </ol> <br>
+<br>
+Python <br>
+Search<br>
+
+<ul> 
+<li>Python</li> 
+<li>Basic Python</li> 
+<li>Intermediate Python</li> 
+<li>Pro Python</li> 
+<li></li> </ul> 
+<ul> 
+<li>Share</li> 
+<li></li> </ul> 
+<p><b>Discuss</b> in our forum</p> 
+<h1>Python 2.5's 'with'&nbsp;Statement</h1> 
+<p>From&nbsp;Al Lukaszewski,&nbsp;former&nbsp;About.com Guide</p>  See More 
+About: 
+<ul> 
+<li>python tutorials</li> 
+<li>python</li> 
+<li>beginning programming tutorials</li> 
+<li>python 2.5</li> 
+<li>python's with statement</li> </ul> <br>
+ One of the new features that was 
+released with Python 2.5 last month is the 'with' statement. For those of you 
+who are used to Python's try...except statement, you may find this to be the 
+biggest boon of upgrading. The basic structure is as follows:
+<pre><code> from __future__ import with_statement with &lt;expression&gt; as 
+&lt;variable&gt;: &Acirc; &Acirc; &Acirc; &Acirc; with-block</code></pre> It is 
+meant to replace the process so oft repeated:
+<pre><code> &lt;setup your variables&gt; try: &Acirc; &Acirc; &Acirc; &Acirc; 
+&lt;action to be done&gt; except: &Acirc; &Acirc; &Acirc; &Acirc; &lt;action to 
+be done&gt; else: &Acirc; &Acirc; &Acirc; &Acirc; &lt;action to be done&gt; 
+finally: &Acirc; &Acirc; &Acirc; &Acirc; &lt;action to be done&gt;</code></pre> 
+One of the problems in this process is that, regardless of the actions to be 
+done, the setup is always executed. This is less than optimum. If you have more 
+than one type of the same kind of setup, things become verbose very quickly. If 
+you have read my tutorial on inserting data into MySQL databases, you may 
+recall the class Table. Python 2.5 now allows you to define a class and 
+interact with it multiple times as follows:
+<pre><code> from __future__ import with_statement class Table: &Acirc; &Acirc; 
+&Acirc; &Acirc; def __init__(self, db, name): &Acirc; &Acirc; &Acirc; &Acirc; 
+&Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; self.db = db 
+&Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; 
+&Acirc; &Acirc; self.name = name &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; 
+&Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; self.dbc = 
+self.db.cursor() &Acirc; &Acirc; &Acirc; &Acirc; def additem(self, item): 
+&Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; sql = 
+&quot;INSERT INTO &quot; + self.name + &quot; VALUES(&quot; + id + &quot;, 
+&quot; + item + &quot;)&quot; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; 
+&Acirc; &Acirc; self.dbc.execute(sql) &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; 
+&Acirc; &Acirc; &Acirc; return with Table as spreadsheet: &Acirc; &Acirc; 
+&Acirc; &Acirc; do something with spreadsheet variable</code></pre> Rather than 
+define a Table instance separately, the setup becomes part and parcel of the 
+code structure. Similarly, with file objects, one can skip the file object 
+assignment line and simply put in the 'with' statement. In my ScripTip, I used 
+the following basic structure:
+<pre><code> fileIN = open(sys.argv[1], &quot;r&quot;) line = fileIN.readline() 
+while line: &Acirc; &Acirc; &Acirc; &Acirc; [some bit of analysis here] &Acirc; 
+&Acirc; &Acirc; &Acirc; line = fileIN.readline()</code></pre> Now in Python 
+2.5, I can simply write:
+<pre><code> from __future__ import with_statement with open(sys.argv[1], 
+&quot;r&quot;) as fileIN: &Acirc; &Acirc; &Acirc; &Acirc; for line in fileIN: 
+&Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; &Acirc; [some bit of 
+analysis here]</code></pre> The new 'with' statement cuts the code needed from 
+5 to 3 and makes the program a bit more readable for humans. If you would like 
+to read more about Python's 'with' statement, you can read about it at the main 
+Python site or at  Effbot.org. <br>
+ Related Articles 
+<ul> 
+<li>Python - Quick Tip</li> 
+<li>Python - QuickTips</li> 
+<li>Python and MySQL - Inserting Python Data Into a MySQL Database - Taking 
+Dat...</li> 
+<li>Reading a Single Line from a File With Python</li> 
+<li>Executing Python Programs - Python Shell vs Python Program Files</li> </ul>
+<br> <br>
+ Explore Python  Must Reads 
+<ul> 
+<li>What is Python?</li> 
+<li>Learn Python</li> 
+<li>Hello, World!</li> 
+<li>Python 3.0 </li> 
+<li>Regular Expressions</li> </ul>  Most Popular 
+<ul> 
+<li>&quot;Hello, World!&quot;</li> 
+<li>Line-By-Line File Analysis</li> 
+<li>What is Python?</li> 
+<li>Python Text Editors</li> 
+<li>String Methods - 1 of 2</li> </ul>  See More About: 
+<ul> 
+<li>python tutorials</li> 
+<li>python</li> 
+<li>beginning programming tutorials</li> 
+<li>python 2.5</li> 
+<li>python's with statement</li> </ul>  By Category <br>
+
+<ul> 
+<li>Beginning Python</li> 
+<li>Python 3.0</li> 
+<li>Python Library</li> 
+<li>Regular Expressions</li> 
+<li>Web Development</li> 
+<li>Advanced Python</li> 
+<li>Database Programming</li> 
+<li>Networking</li> 
+<li>ScripTips</li> 
+<li>Python Jobs</li> 
+<li>Programming Glossary</li> 
+<li>Suggested Resources</li> </ul> <br>
+Python <br>
+
+<ol> 
+<li>About.com</li> 
+<li>Computing &amp; Technology</li> 
+<li>Python</li> 
+<li>ScripTips</li> 
+<li>Python 2.5's 'with' Statement</li> </ol> 
+<ul> 
+<li>Most Popular</li> 
+<li>Latest Articles</li> 
+<li>RSS</li> </ul> 
+<ul> 
+<li>Advertise on About.com</li> 
+<li>Our Story</li> 
+<li>News &amp; Events</li> 
+<li>Work at About</li> 
+<li>SiteMap</li> 
+<li>All Topics</li> 
+<li>Reprints</li> 
+<li>Help</li> </ul> 
+<ul> 
+<li>Write for About</li> 
+<li>User Agreement</li> 
+<li>Ethics Policy</li> 
+<li>Patent Info.</li> 
+<li>Privacy Policy</li> 
+<li>Your Ad Choices</li> </ul> 
+<p>&copy;2012 About.com. All rights reserved.&nbsp;</p> 
+<p>A part of&nbsp;The New York Times Company.</p> <br>
+
+</body>

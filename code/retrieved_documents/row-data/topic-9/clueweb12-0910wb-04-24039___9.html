@@ -1,0 +1,352 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Why Is Parallel Programming So Hard</title>
+<body>
+<br>
+
+<ul> 
+<li>IT Software Strategy</li> 
+<li>S/W Dev Tools &amp; Tips</li> 
+<li>Tech Trends</li> 
+<li>Expert Insight</li> </ul> 
+<ul> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> 
+<ul> 
+<li>Feature RSS</li> </ul> </li> 
+<li> </li> 
+<li> </li> </ul> 
+<ul> 
+<li>Multicore Platforms</li> 
+<li>Virtualization</li> 
+<li>Cloud Computing</li> 
+<li>Security</li> 
+<li>Parallel Programming</li> 
+<li>Open Source/Linux</li> 
+<li>Mobile Software</li> </ul> 
+<h2>Expert Insight</h2> <br>
+
+<h1>Why Is Parallel Programming So Hard</h1> 
+<p>By: Rich Seidner </p> 
+<ul> 
+<li>email</li> 
+<li></li> 
+<li>facebook</li> 
+<li></li> 
+<li>addthis</li> 
+<li></li> </ul> 
+<p>Most people first learn how to program serially. Later they learn about 
+multitasking and threading. But with the advent of multicore processors, most 
+programmers are still pretty intimidated by the prospect of true parallel 
+programming.</p> 
+<p>To help serial programmers make the transition to parallel, we talked to 
+distinguished IBM engineer Paul E. McKenney. (McKenney maintainsRCU in the 
+Linux kernel and has written the detailed guidebook <em>Is Parallel Programming 
+Hard, And, If So, What Can You Do About It?&nbsp;</em>) Here&rsquo;s what he 
+had to say.</p> 
+<p><strong>Q:</strong> <strong>What makes parallel programming harder than 
+serial programming? How much of this is simply a new mindset one has to adopt?
+</strong></p> 
+<p><strong>McKenney:</strong> Strange though it may seem, although parallel 
+programming is indeed harder than sequential programming, it is not<em>that</em>
+ much harder. Perhaps the people complaining about parallel programming have 
+forgotten about parallelism in everyday life: Drivers deal naturally with many 
+other cars; sports team members deal with other players, referees and sometimes 
+spectators; and schoolteachers deal with large numbers of (sometimes unruly) 
+children. It is not parallel programming that is hard, but ratherprogramming 
+itself.</p> 
+<p>Nevertheless, parallelism can pose difficult problems for longtime 
+sequential programmers, just asGit can be for longtime users of revision 
+control systems. These problems include design and coding habits that are 
+inappropriate for parallel programming, but also sequential APIs that are 
+problematic for parallel programs.</p> 
+<p>This turns out to be a problem both in theory and practice. For example, 
+consider a collection API whose addition and deletion primitives return the 
+exact number of items in the collection. This has simple and efficient 
+sequential implementations but is problematic in parallel. In contrast, 
+addition and deletion primitives that do not return the exact number of items 
+in the set have simple and efficient parallel implementations.</p> 
+<p>As a result, much of the difficulty in moving from sequential to parallel 
+programming is in fact adopting a new mindset. After all, if parallel 
+programming really is mind-crushingly difficult, why are there so many 
+successful parallel open-source projects?</p> 
+<p><strong>Q: What does a serial programmer have to rethink when approaching 
+parallel programming? Enterprise programmers know how to multitask and thread, 
+but most don&rsquo;t have a clue how to tap into the power of 
+multicore/parallel programming.</strong></p> 
+<p><strong>McKenney: </strong>The two biggest learning opportunities are a) 
+partitioning problems[SK7]&nbsp; to allow efficient parallel solutions, and b) 
+using the right tool for the job. Sometimes people dismiss partitioned problems 
+as &ldquo;embarrassingly parallel,&rdquo; but these problems are exactly the 
+ones for which parallelism is the most effective. Parallelism is first and 
+foremost a performance optimization, and therefore has its area of 
+applicability. For a given problem, parallelism might well be the right tool 
+for the job, but other performance optimizations might be better. Use the right 
+tool for the job!</p> 
+<p><strong>Q: What can best help serial programmers retool themselves into 
+parallel programmers?</strong>&nbsp;&nbsp;&nbsp;</p> 
+<p><strong>McKenney: </strong>All tools and languages, parallel or not, are 
+domain-specific. So look at the tools and languages used by parallel 
+programmers in application domains that interest you the most. There are a lot 
+of parallel open-source projects out there, and so there is no shortage of 
+existing practice to learn from. If you are not interested in a specific 
+application domain, focus on tools used by a vibrant parallel open-source 
+project. For example, the project I participate in has been called out as having
+made great progress in parallelism by some prominent academic researchers. </p> 
+<p>But design is more important than specific tools or languages. If your 
+design fully partitions the problem, then parallelization will be easy in 
+pretty much any tool or language. In contrast, no tool or language will help a 
+flawed design. Finally, if your problem is inherently unpartitionable, perhaps 
+you should be looking at other performance optimization.</p> 
+<p>Back in the 1970s and 1980s, the Great Programming Crisis was at least as 
+severe as the current Great Multicore Programming Crisis. The primary solutions 
+were not high-minded tools or languages, but rather the lowly spreadsheet, word 
+processor, presentation manager, and relational database. These four lowly 
+tools transformed the computer from an esoteric curiosity into something that 
+almost no one can live without. But the high-minded tools and languages of the 
+time are long forgotten, and rightly so. The same thing will happen with 
+parallelism: The average person doesn&rsquo;t care about fancy parallel 
+languages and synchronization techniques; they just want their 
+smartphone&rsquo;s battery to last longer.</p> 
+<p>Of course, I have my favorite languages, tools and techniques, mostly from 
+the perspective of someone hacking kernels or the lower levels of parallel 
+system utilities. I have had great fun with parallel programming over the past 
+two decades, and I hope your readers have at least as much fun in the decades 
+to come!</p> 
+<p><em>For more on this topic, check out Paul E. McKenney&rsquo;s blog.<br>
+
+<br>Photo Credit:@iStockphoto.com/michelangelus<br>
+</em></p> 
+<h3>Read more about: Parallel Programming </h3> 
+<ul> 
+<li>email</li> 
+<li></li> 
+<li>facebook</li> 
+<li></li> 
+<li>addthis</li> 
+<li></li> </ul> 
+<p><strong>Rich Seidner</strong> <em>is a technology veteran, an independent 
+researcher, a writer and an editor serving technology clients.&nbsp;Based in 
+Woodside, Calif., his blood type is &ldquo;technology.&rdquo;</em></p> &laquo; 
+Previous Feature Next Feature &raquo; <br>
+
+<p>Go to Homepage</p> 
+<h5>Rate This Article</h5> * * * * * 
+<p>Click a star to rate this article</p> 
+<h3>Leave a comment</h3> Comment <br>
+
+<h6>There are no comments at this time. Please try back later.</h6> 
+<h2>From Our Sponsor</h2> 
+<h2>Free<br>
+ Subscriptions</h2> <br>
+First Name: <br>
+Email: <br>
+Software 
+developer tools, compilers, libraries, SDKs Multicore Platforms Parallel 
+Programming Mobile Software Development Open Source/Linux solutions 
+Virtualization Cloud Computing Security Manageability Server Solutions Data 
+Center Solutions Desktop Solutions Mobile Solutions Server-based Virtualization 
+Client-based Virtualization Intel&reg; Atom&trade; Software Development Graphics
+Graphics/digital content creation and developer tools Special FX/animation and 
+audio technologies Game development: Intel&reg; Visual Adrenaline program <br>
+
+<br> <br>
+<br>
+<br>
+
+<ul> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> </ul> 
+<ul> 
+<li>The Dell UltraSharp U2412M 24-inch LED-backlit display features 1920- by 
+1200-pixel resolution, delivers 2.3 million pixels, features in-plane switching 
+(IPS), a 2,000,000-1 contrast ratio, DisplayPort and DVI connectivity. Plus, it 
+only costs $399. [Hot new 24-inch display that doesn't break the bank]</li> 
+<li>Upgrade your organization&rsquo;s browsers and operating systems while 
+keeping legacy Web applications running seamlessly. UniBrows, a lightweight 
+Internet Explorer add-on, enables organizations to run IE6-dependent 
+applications in IE8 or IE9 without modifying a single line of code.</li> 
+<li>Git is a top open source development tool designed for decentralized 
+development teams -- where a central source code repository may not exist, it 
+handles small to very large projects. Every Git clone is a repository with 
+complete history and revision tracking capabilities, not dependent on a central 
+server.</li> 
+<li>Version 12 of Google's Chrome has arrived: Most notable, the browser 
+alerts users to potential security risks (based on whether downloaded Web files 
+are on Google's Safe Browsing API blacklist) and supports hardware-accelerated 
+3-D graphics in Windows Vista, Windows 7 and Mac's Snow Leopard.</li> 
+<li>Cortexica Vision Systems has created a biologically inspired system that 
+enables intelligent image recognition using principles derived from the human 
+visual cortex. This platform will be used to create radically new products.</li>
+<li>Naratte's Zoosh mobile app neatly sidesteps the radio requirement for 
+near-field communications (NFC). It operates a secure link by generating a 
+sound too high-pitched for the human ear -- all you need is a speaker and 
+microphone. It even works for phones that don&rsquo;t run apps.</li> 
+<li>The Yocto Project is an open-source project that provides a complete Linux 
+development environment with tools, metadata and documentation for creating 
+custom Linux-based systems for embedded products, regardless of the hardware 
+architecture.</li> 
+<li>It comes with a 1 GHz dual-core processor, 4-inch high-res display (960 x 
+540), 8MP camera for 1080p video, an HDMI jack, 3G mobile hotspot capabilities, 
+Wi-Fi, a MicroSD Card slot, a front-facing camera and tons more. The phone is 
+enterprise-ready.</li> 
+<li>Asahi Kasei Corp. is introducing a tiny, inch-square RFID device that can 
+be read by a computer or smartphone. It holds such info as name, birth date and 
+blood type, and can transmit links to data, like X-ray images. Only $25.</li> 
+<li>The cloud-based Meraki Enterprise Cloud Controller makes it easy to manage 
+multiple wireless enterprise LANs across multiple locations. It scales to 
+10,000 Access Points and provides network-wide visibility, automatic RF 
+optimization, network monitoring, alerts and more.</li> 
+<li>This light, slim premium tablet sports a 10.1&rdquo; HD resolution 
+(1280x800) display. Its 1GHz processor runs Android 3.1 Honeycomb, it plays 
+Flash content and its 3MP camera shoots 720p HD video. Connects via Wi-Fi, 
+802.11 a/b/g/n and Bluetooth.</li> 
+<li>Want to develop cross-platform apps easily? Try Nitobi's PhoneGap. The 
+open-source solution lets you write and deploy apps for iOS, Android, 
+BlackBerry, Symbian and Palm using HTML and JavaScript rather than Objective-C 
+and Cocoa.</li> 
+<li>It's been years, but the latest Java platform upgrade, Java SE 7, is worth 
+the wait. Java has better multicore and parallelism support, support for 
+dynamic languages like JRuby, compiler optimizations, enhanced audio and 
+graphics.</li> 
+<li>Norton Mobile Security protects against malware, phishing, theft and spam. 
+Facing potential Android and mobile security risks, review this security 
+software for further peace of mind.</li> 
+<li>Eucalyptus version 3 is an Infrastructure-as-a-Service (IaaS) solution, 
+Amazon Web Services (AWS)-compliant and supports cloud storage platforms.</li> 
+<li>Apache Hadoop is an open-source software framework for distributed 
+processing of large data sets across clusters of computers. Designed to scale 
+to thousands of machines, it detects and handles failures at the application 
+layer.</li> 
+<li>Microsoft developer Truong Do built Mouse Without Borders, which lets you 
+control up to four computers on the same wireless network as if they were one 
+machine with multiple displays. Read about it here .</li> 
+<li>River Trail is an extension of JavaScript for parallel programming in the 
+browser. The code looks like JavaScript and works with HTML5. If you want to 
+take your mobile/multicore code to the next level, follow the River Trail.</li> 
+<li>McAfee's DeepSAFE operates close to the processor and below the operating 
+system, enabling new protection technologies against rootkit attacks that 
+provide a direct view of system memory and processor activity. (Available in 
+winter 2011.) [Protection against rootkit attacks]</li> 
+<li>In Windows 8, Microsoft's Windows Share is a live clipboard for sharing 
+text, bitmaps, HTML, files and other type of data between applications.</li> 
+<li>Opa is a concise language and development platform for writing distributed 
+Web applications. It spares developers from relying on the more difficult HTML, 
+CSS, JavaScript and SQL codes.</li> 
+<li>Android 4.0, a unified mobile OS for tablets and smartphones, features: 
+facial recognition for unlocking your device, near field communication wireless 
+technology, security enhancements and more.</li> 
+<li>Microsoft&rsquo;s Project Roslyn introduces experimental compilers for 
+.Net that aim to bring powerful new features to C#, Visual Basic and Visual 
+Studio. Analysts think it may well reinvent how we view compilers and compiled 
+languages altogether.</li> 
+<li>KVM is an open-source virtualization solution for Linux on x86 hardware. 
+It runs within a conventional operating system, and can run multiple virtual 
+machines running unmodified Linux or Windows images.</li> 
+<li>LaCie&rsquo;s solid state drive delivers data transfer speeds up to 
+480MB/s usingIntel&rsquo;s Thunderbolt 10GB/s technology. Small enough to fit 
+in your hand (just 1.6&rdquo; x 5.5&rdquo; x 3.3&rdquo;), it&rsquo;s suitable 
+for any computer with a Thunderbolt port.</li> 
+<li>The 13-millimeter-thin Acer Aspire S3 Ultrabook rivals the MacBook Air, 
+with solid state drives, battery that lasts up to seven hours, 
+second-generation Intel Core, and 1.3 MP HD webcam. Plus, it goes to sleep and 
+awakes in just two seconds.</li> 
+<li>Splashtop Pro lets IT manage tablets accessing remote desktop computers. 
+This Web-based service offers secure access that backs up company data in the 
+case of a lost device.</li> 
+<li>CloudBees is a platform service for building, testing and deploying Java 
+web applications into the cloud. It eliminates infrastructure costs by giving 
+IT a single platform to develop and maintain apps.</li> 
+<li>Google's client-side Web language, Dart, aims to combine the best of 
+JavaScript and structured programming techniques. Developers can write a Web 
+application in Dart and compile it to run with high performance on any browser.
+</li> 
+<li>Yahoo!'s Cocktails helps Web developers write applications that maintain 
+their fidelity across various devices and browsers, all using standard Web 
+technologies such as HTML5, JavaScript and CSS.</li> 
+<li>ChocolateChip-UI is a free HTML development framework for mobile 
+interfaces. Built over HTML5 and JavaScript, ChUI works through WAML, turning 
+it into pure HMTL5. Add your own HTML, CSS and JavaScript, and voila, you've 
+got a mobile UI!</li> 
+<li>Dell has partnered with mobile phone service Fongo to offer Dell Voice, a 
+free-to-download VoIP phone alternative that may help users of Android and iOS 
+devices save on the costs of their mobile calls. Currently available only in 
+Canada.</li> 
+<li>This mobile security app features anti-malware, firewall and anti-theft 
+features and browsing protection in case you visit malicious websites. It 
+identifies installed apps that use permissions that could be dangerous, and 
+provides remote locating and locking.</li> 
+<li>MongoDB is an open-source data store written in C++ that supports diverse 
+programming languages, has an SQL-like query language, plus powerful features 
+for performance and scalability for MongoDB actively supported, out-of-the-box 
+scalability. [Open-source database technology]</li> </ul> 
+<h5>Ultra-sharp, Inexpensive Display</h5> Previous Next <br>
+<br>
+
+<p>Is Your Head in the Cloud?</p> 
+<p>Cross-platform or Pedal to the Metal?</p> 
+<p>Are You Stuck on XP With IE6?</p> <br>
+<br>
+
+<ul> 
+<li>Developer</li> 
+<li>mobile devices</li> 
+<li>Enterprise</li> 
+<li>Multicore Platforms</li> 
+<li>Mobile Software</li> 
+<li>Cloud Computing</li> 
+<li>Security</li> 
+<li>mobile developers</li> 
+<li>user interfaces</li> 
+<li>Virtualization</li> </ul> 
+<ul> 
+<li>IT Software Strategy</li> 
+<li>S/W Dev Tools &amp; Tips</li> 
+<li>Tech Trends</li> 
+<li>Expert Insight</li> </ul> 
+<ul> 
+<li>Terms of Use</li> 
+<li> - Privacy</li> 
+<li> - Contact Us</li> 
+<li> - About Us</li> 
+<li> - Disclaimer</li> 
+<li> - Leave Feedback</li> </ul> 
+<p>Copyright &copy; 2012 Studio One Networks. All Rights Reserved</p> <br>
+
+</body>

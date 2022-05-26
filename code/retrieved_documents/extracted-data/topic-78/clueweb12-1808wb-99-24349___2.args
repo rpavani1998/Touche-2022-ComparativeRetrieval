@@ -1,0 +1,31 @@
+written by jorge tavares april 22, 2012 at 20:15 posted in programming tagged with common lisp, library, lisp, sorting algorithms, zsort«best paper award at eurogp 2012 subscribe to comments with rss.
+imho, it’s nicer than `defpar’ and it’s not that longer.
+common lisp provides thesort and stable-sort functions but these can have different algorithms implemented according to each implementation, which can make an application unportable if you rely on a specific type of sorting.
+you are commenting using your wordpress.com account.
+jorge tavares april 26, 2012 at 8:42 fill in your details below or click an icon to log in: you are commenting using your wordpress.com account.
+with 6 comments zsort is a library that i started working on as a simple hobby project.
+fyi the next release of lparallel will add support for fine-grained parallelism, which may simplify some algorithms.
+if `pfib' had been defined using `defun' instead of a `defpar', the `plet' would cause massive slowdown due to task overhead.
+i also wanted to keep the length short in order to preserve indentation when switching to/from `defun’.
+`defpfun’ might have worked if it wasn’t so awkward.
+even if for most situations the standard functions are more than enough, thezsort library could be a useful complement.
+`defpar' does not do any code-walking; it uses a macrolet and an alternate scheduler.
+`defpfun’ might have worked if it wasn’t so awkward.
+imho, it’s nicer than `defpar’ and it’s not that longer.
+if `pfib' had been defined using `defun' instead of a `defpar', the `plet' would cause massive slowdown due to task overhead.
+i also wanted to keep the length short in order to preserve indentation when switching to/from `defun’.
+`defpar' does not do any code-walking; it uses a macrolet and an alternate scheduler.
+however, the main thing on the todo list is adding the possibility ofexternal sorting (to handle large amounts of data) and parallel versions of some sorting algorithms.
+the main goal of zsort is to be a collection of portable sorting algorithms.
+the plan is to add more algorithms, for example,bucket sort and timsort.
+cancel connecting to %s notify me of follow-up comments via email.
+i will definitely take a closer look at lparalell.
+also, the standard functions might not be the best for a certain situation and as such you might need a specialized sort.
+from your example it really looks quite easy to code certain algorithms.
+if they can be fast, even better.
+you are commenting using your facebook account.
+the disadvantage of `defparallel’ is that it is notoriously easy to fumble typing `parallel’, as you did in your first comment.
+on my two-core machine (pfib 35) is 2x faster than (fib 35).
+from your example it really looks quite easy to code certain algorithms.
+there is still a lot of work to be done, but i think the library as it is can already be a little useful.
+the disadvantage of `defparallel’ is that it is notoriously easy to fumble typing `parallel’, as you did in your first comment.

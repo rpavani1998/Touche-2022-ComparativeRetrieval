@@ -1,0 +1,157 @@
+post: returns a new array containing only stuff[lb] .. stuff[ub].
+print some basic information.
+null) { indent = indent.substring(2); observer.print(indent + "sorted: "); printsubarray(sorted, 0, sorted.length-1, observer);
+*/ public void quicksort(object[] stuff) { quicksort(stuff, 0,  stuff.length-1); } // quicksort(object[])/**
+arrays of size k. arrayclass)?
+*/ public int  partition(object[] stuff,int lb, int ub) { // stub.
+not if you limit yourself to basic operations of comparing and swapping.
+usually we choose simple criteria for the buckets, such as the first (or  nth) letter in a string.
+the position of the pivot //
+quicksrt/** * split the array given by [lb .. ub] into  ``smaller'' and * ``larger'' elements, where smaller and larger are defined by  * their relationship to a pivot.
+incomparableexception { object[] sorted; //
+validate this page's html.
+// print all but the last element followed by a comma for (int i = lb; i < ub; ++i) { out.print(stuff[i].tostring() + ","); } //
+** * merge two sorted arrays into a new single sorted array.
+** the current indent level.
+[instructions] [search] [current] [news] [syllabus] [glance] [links] [ handouts] [project] [outlines] [labs] [assignments] [quizzes] [exams] [examples ] [eij] [jpds] [tutorial] [api] back to some sorting algorithms.
+contact our webmaster at rebelsky@grinnell.edu
+most are taken from outline 26 of csc152 99f. back to some sorting algorithms.
+index of middle element //
+the pivot used to split the vector int mid; //
+print the last element out.println(stuff[ub]); } // printsubarray } //
+any or all of the information on the pages may be incorrect.
+* if the simpleoutput object is non-null, prints a simple log * of what's happening.
+in the quicksort algorithm, you split (partition)
+because we divide in half each time, there are log_2(n) levels.
+how do we partition?
+* post: the vector is sorted (using the standard meaning).
+* post: the vector is sorted (using the standard  meaning).
+determine the position of the pivot, while rearranging the array.
+middle = (lb + ub) / 2; //
+while ((leftindex < left.length) && (rightindex < right.length)) {if(compare.precedes(left[leftindex],right[rightindex])) { result[index++] = left[leftindex++]; } // first element in left subvector is smallerelse { result[index++] = right[rightindex++]; } // first element in right subvector is smaller } // while both vectors have elements// copy any remaining parts of each vector.
+how might we write it so that it creates a sorted array?
+notes contents summary import simpleoutput; /** * a collection of techniques for sorting an input array.
+it depends on how well we  partition.
+this page generated on wed mar 8 09:10:17 2000 by siteweaver.
+| public methods | //
+recursive case: split and merge else { // find the middle of the subarray.
+the  array to be sorted into two pieces, those smaller than or equal to the pivot  and those greater than the pivot.
+pre: both vectors are sorted.
+[instructions] [search] [current] [news] [syllabus] [glance] [links] [ handouts] [project] [outlines] [labs] [assignments] [quizzes] [exams] [examples ] [eij] [jpds] [tutorial] [api] disclaimer often, these pages were created "on the fly" with little, if any, proofreading.
+but if you're willing to use extra space and know something about the  original data, then you can do better.
+index into result array.
+if (lb == ub) return; //
+with a little work, you can do this partitioning in place, so that there  is no overhead (and so that ``glueing'' is basically a free operation).
+* post: the two arguments are not changed */ public object[] merge(object[] left, object[] right, comparator compare)throws
+* * @author samuel a. rebelsky * @version 1.1 of march 2000 */ public class mergesorter { // +--------+-------------------------------------------------- //
+class testmergesorter arrays of size k as the same "level".
+while(leftindex < left.length) { result[index++] = left[leftindex++]; } // while the left vector has elements while(rightindex < right.length) { result[index++] = right[rightindex++]; } // while the right vector has elements// that's it return result; } // merge/*
+lb <= ub < stuff.length * post: the vector is sorted (using  the standard meaning).
+if each partition is perfect (splits it exactly in half), we can stop the  process after o(log_2(n)) levels.
+* pre: the elements in the array can be compared to each other.
+* post: does not affect the original array.
+base case: size one arrays are sorted.
+on to discussion of assignment 3.
+recursive case// print information, if appropriate if (observer !=
+there are n/k arrays of size k.
+*/ protected object[] copysubarray(object[] stuff, int lb, int ub) { // create the new array.
+we'll do an example later.
+* sort part of an array using  quicksort.
+int rightindex=0;// index into right array.
+running time, revisited we can also use a somewhat nontraditional analysis technique.
+lb <= ub < stuff.length * post: does not affect stuff.
+other versions we've written merge sort so that it does not affect the original array.
+*/ public void quicksort(object[] stuff) { quicksort(stuff, 0, stuff.length-1); } // quicksort(object[])/**
+if we always chose the largest element as the pivot, this algorithm would be  equivalent toselection sort, and would take time o(n*n).
+validate this  page's html.
+quicksort is it possible to write an o(n*log2n) sorting algorithm that is based on  comparing and swapping, but doesn't require significantly extra space?
+pre: there is sufficient memory to allocate the new array.
+*/ protected object[] mergesort(object[] stuff, int lb, int ub, comparator compare, simpleoutput observer)throws
+the pivot used  to split the vector int mid; //
+running time can be a constant (as long as you can guarantee the number  of items in any bucket)!
+putpivotatfront(stuff,lb,ub); //
+you can also split into three parts: those smaller than some middle  element, those equal to some middle element, and those larger than some middle  element.
+in bucket sort (the one rob suggested), you create  separate ``buckets'' for kinds of elements, put each element into the  appropriate bucket, sort each bucket, and then take them out again.
+new simpleoutput(); mergesorter sorter =new mergesorter();
+if we partition into two equal halves, then we can say partitioning a vector of length n takes o(n) steps.
+this page may be found at  http://www.math.grin.edu/~rebelsky/courses/cs152/2000s/outlines/outline.27.html source text last modified wed mar 8 09:05:39 2000.
+* sort part of an array, creating a new sorted version of the * part of the array.
+the sorted version int middle; //
+going from level k to level k+1, we do o(n) work to merge.
+index into left array.
+pre: elements in both vectors may be compared to each other.
+pre: there is sufficient memory to complete the creation of the * new array (and the other steps of the algorithm).
+make a fresh copy so that // it's safe to modify (and is the appropriate size.
+if  (lb<=mid-1) quicksort(stuff, lb,mid-1);if (mid+1<=ub) quicksort(stuff,  mid+1,ub); } //
+if (lb<=mid-1) quicksort(stuff, lb,mid-1);if (mid+1<=ub) quicksort(stuff, mid+1,ub); } // quicksrt/** * split the array given by [lb .. ub] into ``smaller'' and * ``larger'' elements, where smaller and larger are defined by * their relationship to a pivot.
+printsubarray(object[] stuff, int lb,int ub, simpleoutput out) {
+object[] sorted = sorter.sort(args, new stringcomparator(), out);for (int i = 0; i < sorted.length; ++i) { out.println(i + ": " + sorted[i]); } // for } //
+return sorted; } // mergesort(object[], int, int, comparator) /
+* * sort an array using quicksort.
+[eij] [jpds] [tutorial] [api] disclaimer often, these pages were created "on the  fly" with little, if any, proofreading.
+* post: the returned array is sorted, and contains all the * elements of the two arrays (no more, no less).
+in radix sort, we sort using a binary representation of  the things we're sorting.
+*/ public void quicksort(object[] stuff, int lb, int ub, comparator compare) {// variables object pivot; //
+unfortunately, merge sort requires significantly more memory than do the  other sorting routines (you can spend some time trying to come up with an ``in  place'' merge sort, but you are quite likely to fail).
+this gives a running time of o(n*log_2(n)).
+wednesday, 8 march 2000 filled in the details.
+therefore, f(n) is in o(nlog2n).
+object[] result =new object[left.length + right.length]; //
+incomparableexception {// create a new array of the appropriate size.
+new object[ub-lb+1]; for (int i = lb; i <= ub; i++) { result[i-lb] = stuff[i]; }return result; } // copysubarray /
+partition(object[]) what is the running time of quicksort?
+this page may be found at http://www.math.grin.edu/~rebelsky/courses/cs152/2000s/outlines/outline.27.html source text last modified wed mar 8 09:05:39 2000.
+the time to partition those two partitions into four parts is also o(n).
+* post: returns a sorted version of the array (where sorted is * defined carefully elsewhere).
+* sort part of an array using quicksort.
+held wednesday, march 8, 2000 overview today we consider three more-efficient sorting algorithms.
+* sort an array, creating a new sorted version of the array.
+if (observer != null) { observer.print(indent + "sorting: "); printsubarray(stuff, lb, ub, observer); indent = indent + " "; } // base case: vector of size 0 or 1.
+mid = partition(stuff, lb, ub);// recurse on nonempty subarrays.
+you don't include the pivot in either piece  (so that the recursive case is ``smaller'').
+on average, we don't quite do half, but it's close enough that it doesn't  make a significant difference.
+* * @author samuel a. rebelsky * @version 1.0 of september 1999 */ public class testmergesorter { public static void main(string[] args)throws exception { simpleoutput out =
+typically, using something like the following  strategy: set pivot to the first element of the subarray set left to the start of  the subarray set right to the end of the subarray move left and right toward  each other, swap their contents when you observe that one side is  "wrong" (something on the left is larger than the pivot, something on  the right is larger than the pivot) variations how might you change mergesort so that the pivot need not be an element  of the array?
+can you figure it out?
+any or all of the information on  the pages may be incorrect.
++----------------+------------------------------------------ //
+so, the running time is o(n*log_2(n)).
+please contact me if you notice errors.
+*/ public object[] sort(object[] stuff, comparator compare, simpleoutput observer)throws
+lb <= ub < stuff.length * post: the vector is sorted (using the standard meaning).
+// as long both vectors have elements, copy the smaller one.
+will that save space?
+object[] right = mergesort(stuff, middle+1, ub, compare, observer); sorted = merge(left, right, compare); } //
+pre: the elements in the array can be compared to each other.
+assume that we're dealing with n = 2x for some x. consider all the sorts of arrays of size k as the same  "level".
+pre: all elements in the subarray can be compared to each other.
+*/ public void quicksort(object[] stuff, int lb, int  ub, comparator compare) {// variables object pivot; //
+mergesorter import mergesorter; import simpleoutput; import stringcomparator; /** * a simple test of selection sort.
+return the index of the pivot * between those  elements.
+putpivotatfront(stuff,lb,ub); // determine the position of the pivot, while rearranging the array.
+pre: all elements in the array  can be compared to each other.
+(it is not necesarrily okay to partition the array into two parts: those  less than or equal to the element, and those greater than or equal to the  element.)
+if you can arrange things so that each bucket contains only a few  elements (say no more than four), then the main cost is putting in to buckets  and taking out of buckets.
+create indices into the three arrays.
+* * copy a subarray (so that we can return it without affecting it).
+pre: all elements in the array can be compared to each other.
+fundamentals of computer science ii (csc-152 2000s)
+however, bad choice of pivots can give significantly worse running time.
+history created as a blank outline.
+if (lb == ub) return; // pick a pivot and put it at the front of the array.
+mid =  partition(stuff, lb, ub);// recurse on nonempty subarrays.
+*/ public int partition(object[] stuff,int lb, int ub) { // stub.
+pick a pivot  and put it at the front of the array.
+object[] left = mergesort(stuff, lb, middle, compare, observer);
+how might you rewrite mergesort iteratively?
+set pivot to the first element of the subarray set left to the start of the subarray set right to the end of the subarray move left and right toward each other, swap their contents when you observe that one side is "wrong" (something on the left is larger than the pivot, something on the right is larger than the pivot) tuesday, 18 january 2000 wednesday, 8 march 2000 back to some sorting algorithms.
+used when logging steps.
+yes, if you're willing to rely on probabilities.
+better sorting techniques are there better sorting techniques (ones that take less than o(nlog2n))?
+how might we write it like the previous sorting methods (which were for  subclasses of ourarray class)?
+incomparableexception {return mergesort(stuff, 0, stuff.length-1, compare, observer); } // sort(object[])// +----------------+------------------------------------------ // | helper methods | //
+return the index of the pivot * between those elements.
+base  case: size one arrays are sorted.
+uses the first element of the array * as the pivot.
+[instructions] [search] [current] [news] [syllabus] [glance] [links] [ handouts] [project] [outlines] [labs] [assignments] [quizzes] [exams] [examples ]
+if (ub <= lb) { sorted = copysubarray(stuff, lb, ub); } //

@@ -1,0 +1,226 @@
+from the figure, it is also clear that the retained mode also uses some features of directdraw.
+applications can define higher-level templates using existing lower-level or other higher-level templates.
+a limitation of this model is that it may produce a banding effect if the colour depth available is not very good.
+due to this, applications developed using such features will work on all hardware platforms.
+this method is used to query an object for its supported interface and hence the supported methods.
+figure 2 shows the three modules of the rendering engine and their interactions with the direct3d api, before displaying the results on the rendering target, which is the 2d display surface.
+transformation module the transformation module is the first of the three modules of the rendering engine.
+some of the other features include support for transparent blitting and support for overlays, for implementing sprites and managing multiple layers of animation.
+direct3d is available to the developer as an api, using which, applications utilizing 3d graphics can be developed much faster using a standard way.
+usually, a 3d scene is specified using a data file, which provides all the relevant information required for rendering purposes.
+this file format is natively supported and used by the retained mode, which provides objects and methods to read, save and manipulate a file.
+this 2d data is then given to the lighting module, which calculates the light received by the data, considering the lights in the scene.
+the file format is the directx file format and has a ``.x'' extension.
+in c++, a com interface is like an abstract base class, with all methods being pure virtual.
+the components of directx are: directdraw - for 2d interactions, like fast 2d blitting (bit block transfers), overlays, etc directsound - for incorporating soung into applications directplay - for incorporating multiple users into the applications, using the network for communicating between the users direct3d - for incorporating 3d capabilities into applications directinput - for incorporating support for other peripherals, like joysticks, into the applications of these components, let us briefly cover the directdraw component, before covering the overview of direct3d. directdraw the directdraw component is important, as many of its features are used either directly or indirectly by the direct3d component of directx.
+this choice of using the hardware features if available, is transparent to the user.
+in case a hardware platform does not support a certain feature, direct3d provides an equivalent implementation in software.
+a restriction of this model is that only gray shades can be displayed and the textures used have to be of 8-bit depth.
+by bipin patwardhan | published nov 22 2002 10:00 pm in directx and xna - article - comments (0) - revisions (4) - related stuff (25) direct3d constitutes one of the emerging apis from microsoft corporation, for providing new software features to developers, so that new and existing features of the pc can be exploited much better than is possible presently.
+this layer helps provide a unified driver model for accelerated 3d. rendering engine the rendering engine forms an important part of direct3d.
+it uses the data provided by the transformation module and calculates the lighting information for the received data.
+the methods of the com object have to be explicitly invoked through note the explicit use of the pointer to the virtual tablelpvtbl and passing of the object itself as the first parameter in each method call.
+this is done by providing a consistent interface to the hardware.
+after rasterization, the data is 2d, lit using the different lights in the scene and may also have the specified texture maps applied to them.
+hardware independence is guaranteed by directx, by providing requirement guidelines to all hardware vendors.
+the file format is the directx file format and has a ``.x'' extension.
+the directdraw component is implemented in hardware and software.
+figure 1: place of direct3d from figure 1, it is clear that the retained mode uses the immediate mode, transparent to the developer using the retained mode.
+additionally, the time spent in developing such well known and well defined techniques is saved, helping in developing applications faster transparent access to hardware acceleration - is one of the very important features of direct3d, which uses the hardware support, if available.
+directx provides a standard, robust platform to application developers, by guaranteeing hardware independence.
+data this part contains the actual object information.
+this effect is produced when the number of pixels available for representing the colours is far less than the number of colours actually required by the application to display the data properly.
+additionally, the newer versions of directx make use of mmx technology.
+the hal protects the application from the differences of the different hardware.
+when com objects are used through c++, thequeryinterface method returns a pointer to the virtual table and the different methods supported by the object can be accessed directly.
+all of the features of direct3d are built on top of the hal, which provides hardware independence and makes applications portable.
+the diagram shows the sequence of operations performed on the data, before it is displayed.
+com interface all the functions supported by a com object are available as interfaces of that object.
+by providing a consistent interface across all hardware platforms, taking care of incompatibilities is shifted away from the application developer, resulting in less code and hence faster development.
+direct3d is available to the developer as an api, using which, applications utilizing 3d graphics can be developed much faster using a standard way.
+applications can also make use of additional objects like directdrawpalette and directdrawclipper.
+another motivating factor for choosing these two languages is the comfort level of the authors, in using these languages.
+an advantage of this model over the rgb model is that it gives better performance than the rgb model.
+the hel is a companion of direct3d and provides software emulation for the features of the 3d rendering pipeline, not supported by the hardware.
+for developing these applications, direct3d provides the following features: device independence - helps shield the applications from the vagaries of the different hardware platforms.
+the name is followed by the uuid (universally unique identifier) of the com object to be used to read this template when it is encountered.
+this module uses one more state register, the viewport, for holding the dimensions of the 2d display area.
+rasterization module for more details on the direct3d api and its features, refer [3] and [2].
+a restriction of this model is that only gray shades can be displayed and the textures used have to be of 8-bit depth.
+applications developed using direct3d are scalable as a part or whole of the 3d rendering pipeline can be in the hardware and direct3d can make use of it, if it is detected.
+the transformation module combines all the matrices into one composite matrix and uses this for computations, as using only one matrix, as opposed to four, speeds up the calculations in the application.
+directdraw improves performance by providing support for 2d functions of the applications.
+though this model supports multiple light sources, the colour components of the lights are ignored.
+whenever a com object is used, its reference count is incremented by one.
+the developer is not made aware of this usage.
+in the banding effect, the transition from one colour to another, is not smooth.
+hardware independence is guaranteed by directx, by providing requirement guidelines to all hardware vendors.
+though this model supports multiple light sources, the colour components of the lights are ignored.
+a template has a name, which is used to identify the data type being read, when it is encountered.
+the present applications, written in dos, have to take care of the different hardware configurations, making them quite configuration specific and harder to port to different configurations.
+the lit data is then given to the rasterization module, which calculates the transparency and applies the texture to the data.
+the hal protects the application from the differences of the different hardware.
+the transformation module combines all the matrices into one composite matrix and uses this for computations, as using only one matrix, as opposed to four, speeds up the calculations in the application.
+some of the other features include support for transparent blitting and support for overlays, for implementing sprites and managing multiple layers of animation.
+these apis provide objects and functions for developing real-time, high-performance applications on the windows platform.
+the reference count is decremented by one, when the object is released, using therelease method.
+the data file specifies a cube.
+for developing these applications, direct3d provides the following features: device independence - helps shield the applications from the vagaries of the different hardware platforms.
+the feature of instancing allows reference to an data set, if it is required at multiple places, instead of replicating all the data elements.
+it also provides fast access to a blitting (bit block transfer) and buffer flipping.
+what this means is that a com object can be used irrespective of the language being used for developing the application requiring 3d capabilities.
+using these languages does not change the way we use com objects for incorporating 3d content into our applications.
+place figure 1 shows the different parts of direct3d, in relation to the other modules of a win32 system.
+- is the other model supported by the lighting module of the rendering engine.
+place figure 1 shows the different parts of direct3d, in relation to the other modules of a win32 system.
+due to this, the complexity of software development is reduced and the incompatibilities between the hardware platforms is neutralized as far as possible.
+it is responsible for taking a scene definition in terms of points in 3d, the different texture specifications, the lights and the camera specifications, and rendering ready, so that it can be displayed on the display device.
+though direct3d does not provide a file format for specifying whole scenes, it provides a file format to specify a 3d mesh object that can be placed in a scene.
+applications can define higher-level templates using existing lower-level or other higher-level templates.
+on being given the execute call, the module goes through the list of vertices to be displayed and generates the transfomed vertices to be rendered.
+at the end of drawing, the screen is updated by flipping the back and the front buffers.
+it also provides fast access to a blitting (bit block transfer) and buffer flipping.
+after rasterization, the data is 2d, lit using the different lights in the scene and may also have the specified texture maps applied to them.
+it is also extensible and new templates can be added very easily.
+in this tutorial, we have seen that direct3d is one of the components of directx and is an api for 3d graphics programming.
+the version numbers are followed by the format type, which can be one of the following: if the file is a compressed file, the compression type is specified following the format type.
+an object is a valid candidate for garbage collection, when its reference count becomes zero.
+as the information available on direct3d is quite a lot, we will present the information on direct3d using three tutorials, with each covering a different aspect of direct3d.
+the application developer only has to put the detection facility into the application, which will allow it to query the hardware to find and use its capabilities, if present.
+most of the objects and interfaces in directx are based on com and many of the directx apis are instantiated as a set of ole objects.
+the primary motivation for developing these libraries is that the performance of existing windows applications catering to graphics intensive application like games and multimedia is very poor in comparison to the same applications developed on dos.
+figure 3: transformation module lighting module the lighting module of the rendering engine is the second of the three modules.
+due to this, the complexity of software development is reduced and the incompatibilities between the hardware platforms is neutralized as far as possible.
+these numbers can be used to take care of versioning problems in data files, if required.
+these apis provide objects and functions for developing real-time, high-performance applications on the windows platform.
+the file format allows storage of predefined object meshes, texture and animations, in addition to allows storage of user defined objects.
+the developer is not made aware of this usage.
+the retained mode is a high-level interface, while the immediate mode is a lower-level interface to the features of direct3d.
+the application developer only has to put the detection facility into the application, which will allow it to query the hardware to find and use its capabilities, if present.
+this module handles the geometry transformations in the rendering engine.
+as a result of this, applications become independent of the hardware platform and hence become more portable common driver model to hardware - guarantees to applications, that all the drivers supporting direct3d will support a defined minimal set of features and capabilities.
+any system providing 3d, will have to use direct3d to provide its own features.
+it provides direct access to the off screen bitmaps, making access faster.
+each of these modules can be hardware accelerated, transparent to the user of the application.
+a template defines how a data stream is to be interpreted by the reader of the file.
+in addition to these features, direct3d provides a fast software based rendering of the full 3d rendering pipeline.
+additionally, the time spent in developing such well known and well defined techniques is saved, helping in developing applications faster transparent access to hardware acceleration - is one of the very important features of direct3d, which uses the hardware support, if available.
+the compression type can be one of the following: - ``txt'' - text file - ``bin'' - binary file - ``com'' - compressed file the compression type is followed by 4 digits, which indicate the number of bits used to represent floating point numbers.
+though we have said until now that direct3d can be used to display 3d data and though it is possible to generate 3d data on the fly, it is very difficult and restrictive to store information of various complex models and scenes, typically used in 3d systems, directly inside the application.
+additionally, direct3d provides a specification to all hardware developers, which help their cards support the various direct3d features.
+it uses the data provided by the transformation module and calculates the lighting information for the received data.
+the header part contains information which helps identify the file.
+this module handles the geometry transformations in the rendering engine.
+the primary motivation for developing these libraries is that the performance of existing windows applications catering to graphics intensive application like games and multimedia is very poor in comparison to the same applications developed on dos.
+figure 2: rendering engine modules the 3d data to be displayed, is given to the transformation module, which maps the 3d data onto its equivalent 2d data.
+the directdraw object represents the display adapter card.
+each of these modules can be hardware accelerated, transparent to the user of the application.
+rasterization module a limitation of this model is that it may produce a banding effect if the colour depth available is not very good.
+though we have said until now that direct3d can be used to display 3d data and though it is possible to generate 3d data on the fly, it is very difficult and restrictive to store information of various complex models and scenes, typically used in 3d systems, directly inside the application.
+this model uses only the gray component of each light source specified in the scene, to calculate a single shade value.
+the file format allows storage of predefined object meshes, texture and animations, in addition to allows storage of user defined objects.
+the data part can either store actual data or a reference to the data.
+this layer is tightly integrated with the directdraw hal and the graphics device interface (gdi) driver of the win32 system.
+the application, at runtime can detect the hardware capabilities and use them if present
+additionally, the newer versions of directx make use of mmx technology.
+} figure 7: data format skeleton sample data file a sample data file, to help understand the file format is presented in appendix a. directx and com before we conclude the overview on direct3d, we would like to briefly comment in the relationship between directx and the component object model (com), and its usage.
+the directdrawsufrace object represents the display memory, on which the data to be displayed is rendered.
+the functionality of the rendering engine is provided using three modules, namely thetransformation module, the lighting module and the rasterization module.
+it is the responsibility of the application to callrelease, after its work with the com object is over.
+applications can also make use of additional objects like directdrawpalette and directdrawclipper.
+transformation module the transformation module is the first of the three modules of the rendering engine.
+iunknown to allow a component user to query for an interface, all com objects have to be derived from the standardiunknown interface.
+this model helps produce more realistic effects of the given scene, as it uses the full colour content of the light sources and the material of the object being lit.
+this module takes only execute calls and the data and displays it onto the display surface.
+for developing applications using direct3d on windows, knowledge of windows programming using the sdk or mfc is necessary.
+the compression type is followed by 4 digits, which indicate the number of bits used to represent floating point numbers.
+any system providing 3d, will have to use direct3d to provide its own features.
+this layer is tightly integrated with the directdraw hal and the graphics device interface (gdi) driver of the win32 system.
+by providing a consistent interface across all hardware platforms, taking care of incompatibilities is shifted away from the application developer, resulting in less code and hence faster development.
+on being given the execute call, the module goes through the list of vertices to be displayed and generates the transfomed vertices to be rendered.
+the file format allows specification of fixed path animations and also supports instancing of objects, which helps in reuse of data sets and hence reducing the total size of the object being manipulated.
+rgb model - is the other model supported by the lighting module of the rendering engine.
+after this flipping operation, the back buffer becomes the current front buffer while the front buffer becomes the current back buffer direct3d after taking a brief look at the capabilities of directdraw, let us come to the overview of direct3d. introduction direct3d, is part of directx and is the component that helps us integrate 3d into windows applications.
+this model supports multiple coloured light sources.
+this module uses one more state register, the viewport, for holding the dimensions of the 2d display area.
+this module takes only execute calls and the data and displays it onto the display surface.
+this effect is produced when the number of pixels available for representing the colours is far less than the number of colours actually required by the application to display the data properly.
+all data objects have to belong to one of the templates specified after the header.
+the retained mode is a high-level interface, while the immediate mode is a lower-level interface to the features of direct3d.
+the components of directx are: directdraw - for 2d interactions, like fast 2d blitting (bit block transfers), overlays, etc directsound - for incorporating soung into applications directplay - for incorporating multiple users into the applications, using the network for communicating between the users direct3d - for incorporating 3d capabilities into applications directinput - for incorporating support for other peripherals, like joysticks, into the applications of these components, let us briefly cover the directdraw component, before covering the overview of direct3d. directdraw the directdraw component is important, as many of its features are used either directly or indirectly by the direct3d component of directx.
+directdraw is the only client of the directdraw hardware abstraction layer (hal).
+also, its performance as compared to the monochromatic model may be less rasterization module the rasterization module is the last of the three modules of the rendering engine.
+all these features help in drastically improving the performance of the windows applications as compared to windows applications written without such support.
+all com objects work on the principle of reference counting.
+directx provides a standard, robust platform to application developers, by guaranteeing hardware independence.
+an advantage of this model over the rgb model is that it gives better performance than the rgb model.
+the application, at runtime can detect the hardware capabilities and use them if present
+all these features help in drastically improving the performance of the windows applications as compared to windows applications written without such support.
+by bipin patwardhan | published nov 22 2002 10:00 pm in directx and xna article revisions (4) related stuff (25) direct3d constitutes one of the emerging apis from microsoft corporation, for providing new software features to developers, so that new and existing features of the pc can be exploited much better than is possible presently.
+we saw that the rendering engine of direct3d consists of three modules, namely the transformation module, the lighting module and the rasterization module.
+the diagram shows the sequence of operations performed on the data, before it is displayed.
+this function returns a pointer to the direct3drm (direct3d retained mode) object, which provides different methods like creation of a viewport, loading a mesh, etc.
+com advantage an advantage that we get by using com is that we can have language independence between the com object and its users.
+from the figure, it is also clear that the retained mode also uses some features of directdraw.
+as the information available on direct3d is quite a lot, we will present the information on direct3d using three tutorials, with each covering a different aspect of direct3d.
+in addition to these features, direct3d provides a fast software based rendering of the full 3d rendering pipeline.
+though direct3d does not provide a file format for specifying whole scenes, it provides a file format to specify a 3d mesh object that can be placed in a scene.
+usually, a 3d scene is specified using a data file, which provides all the relevant information required for rendering purposes.
+c++ and com code written c++ and com is less complex that equivalent code written in c and com.
+applications using directdraw only communicate with directdraw and cannot access the hal directly or indirectly.
+applications using directdraw only communicate with directdraw and cannot access the hal directly or indirectly.
+all of the features of direct3d are built on top of the hal, which provides hardware independence and makes applications portable.
+the hel is a companion of direct3d and provides software emulation for the features of the 3d rendering pipeline, not supported by the hardware.
+figure 2 shows the three modules of the rendering engine and their interactions with the direct3d api, before displaying the results on the rendering target, which is the 2d display surface.
+this api gives hardware independence in addition to transparent hardware acceleration and a fast software based emulation for missing hardware implementations of the rendering pipeline.
+the lit data is then given to the rasterization module, which calculates the transparency and applies the texture to the data.
+figure 1: place of direct3d from figure 1, it is clear that the retained mode uses the immediate mode, transparent to the developer using the retained mode.
+figure 3: transformation module lighting module the lighting module of the rendering engine is the second of the three modules.
+in the banding effect, the transition from one colour to another, is not smooth.
+the directdrawsufrace object represents the display memory, on which the data to be displayed is rendered.
+if an interface is supported by an object, a reference is returned, which in turn can be used to access the different methods provided in the interface.
+as a result of this, applications become independent of the hardware platform and hence become more portable common driver model to hardware - guarantees to applications, that all the drivers supporting direct3d will support a defined minimal set of features and capabilities.
+additionally, direct3d provides a specification to all hardware developers, which help their cards support the various direct3d features.
+figure 4: lighting module the lighting module can be operated in any one of the two lighting models it supports.
+after getting a pointer to the interface, the application can call specific methods from the interface, to get its job done.
+the present applications, written in dos, have to take care of the different hardware configurations, making them quite configuration specific and harder to port to different configurations.
+this model helps produce more realistic effects of the given scene, as it uses the full colour content of the light sources and the material of the object being lit.
+this file format is natively supported and used by the retained mode, which provides objects and methods to read, save and manipulate a file.
+applications developed using direct3d are scalable as a part or whole of the 3d rendering pipeline can be in the hardware and direct3d can make use of it, if it is detected.
+view->release(); c and com a major difference between using c and c++ and com is that thequeryinterface method does no return a pointer to the virtual table, when com objects are used through c. the methods of the com object have to be explicitly invoked through the virtual table as is illustrated in the sample code in source listing 2.
+the directdraw component is implemented in hardware and software.
+each data object is read using a corresponding template object.
+the supported features can be accessed by asking for a specific interface from the com object.
+applications using these features will see a boost in performance eases addition of 3d to applications - as direct3d provides a standard mechanism and a standard set of algorithms for 3d graphics, applications requiring such features can be developed much faster.
+directdraw is the only client of the directdraw hardware abstraction layer (hal).
+due to this, applications developed using such features will work on all hardware platforms.
+applications using these features will see a boost in performance eases addition of 3d to applications - as direct3d provides a standard mechanism and a standard set of algorithms for 3d graphics, applications requiring such features can be developed much faster.
+figure 4: lighting module the lighting module can be operated in any one of the two lighting models it supports.
+the user of a component has to query the component for an interface.
+the sample in source listing 1 illustrates the usage of com objects through c++.
+this choice of using the hardware features if available, is transparent to the user.
+rasterization module for more details on the direct3d api and its features, refer [3] and [2].
+figure 2: rendering engine modules the 3d data to be displayed, is given to the transformation module, which maps the 3d data onto its equivalent 2d data.
+a template defines how a data stream is to be interpreted by the reader of the file.
+the file format allows specification of fixed path animations and also supports instancing of objects, which helps in reuse of data sets and hence reducing the total size of the object being manipulated.
+these numbers can be used to take care of versioning problems in data files, if required.
+this model uses only the gray component of each light source specified in the scene, to calculate a single shade value.
+this module maintains a stack of the current lights and the ambient light level and the different material properties of the data.
+this file format is template driven and is architecture neutral and context free.
+this module maintains a stack of the current lights and the ambient light level and the different material properties of the data.
+this is done by providing a consistent interface to the hardware.
+it provides direct access to the off screen bitmaps, making access faster.
+if the interface is supported, queryinterface returns a pointer to the interface and calls addref to increment the reference count on the com object.
+this file format is template driven and is architecture neutral and context free.
+in case a hardware platform does not support a certain feature, direct3d provides an equivalent implementation in software.
+also, its performance as compared to the monochromatic model may be less the rasterization module is the last of the three modules of the rendering engine.
+this layer helps provide a unified driver model for accelerated 3d. rendering engine the rendering engine forms an important part of direct3d.
+after this flipping operation, the back buffer becomes the current front buffer while the front buffer becomes the current back buffer direct3d after taking a brief look at the capabilities of directdraw, let us come to the overview of direct3d. introduction direct3d, is part of directx and is the component that helps us integrate 3d into windows applications.
+if the file is a compressed file, the compression type is specified following the format type.
+it is also extensible and new templates can be added very easily.
+the functionality of the rendering engine is provided using three modules, namely thetransformation module, the lighting module and the rasterization module.
+this 2d data is then given to the lighting module, which calculates the light received by the data, considering the lights in the scene.
+`zip'' template the different templates used in the file follow the header information.
+this referencing is used for the feature of instancing, supported by the file format.
+it is responsible for taking a scene definition in terms of points in 3d, the different texture specifications, the lights and the camera specifications, and rendering ready, so that it can be displayed on the display device.
+directdraw improves performance by providing support for 2d functions of the applications.

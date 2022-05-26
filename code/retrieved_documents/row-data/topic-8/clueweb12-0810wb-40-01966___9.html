@@ -1,0 +1,392 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Algorithm of the Week: Merge Sort | Groovy Zone</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone 7</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Cloud Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+Python Zone <br>
+<strong>Did you 
+know? DZone has great portals forPython, Cloud, NoSQL, and HTML5!</strong> 
+Python Zone is brought to you in partnership with:  &amp;lt;A 
+href=&quot;http://avpa.dzone.com/servlet/click/zone?zid=183&amp;amp;pid=0&amp;amp;lookup=true&amp;amp;custom1=textad&amp;amp;position=1&quot; 
+rel=&quot;nofollow&quot; target=&quot;_blank&quot;&amp;gt; &amp;lt;IMG 
+src=&quot;http://avpa.dzone.com/servlet/view/banner/image/zone?zid=183&amp;amp;pid=0&amp;amp;custom1=textad&amp;amp;position=1&quot; 
+height=&quot;60&quot; width=&quot;468&quot; hspace=&quot;0&quot; 
+vspace=&quot;0&quot; border=&quot;0&quot; alt=&quot;Click Here!&quot;&amp;gt; 
+&amp;lt;/A&amp;gt; <br>
+<b>Stoimen Popov</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> 
+<li>@stoimenpopov </li> 
+<li> </li> 
+<li> </li> </ul> 
+<p> I've been working on web based projects built mainly with PHP and 
+JavaScript, where I mostly use Zend Framework and jQuery. I am interested in 
+any webpage optimizations techniques - for a faster web! Stoimen is a DZone MVB 
+and is not an employee of DZone and has posted 54 posts at DZone. You can read 
+more from them attheir website. View Full User Profile</p> 
+<h1>Algorithm of the Week: Merge Sort</h1>  03.06.2012  Email <br>
+ Views: 9071
+<br> 
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> <em>This content is part of the Python Zone, which is 
+presented to you by DZone andNew Relic. Visit the Python Zone for news, tips, 
+and tutorials on the Python programming language.&nbsp; provides the resources 
+andbest practices to help you monitor these applications. </em> 
+<h3>Recommended Links</h3> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<p>Like this piece? Share it with your friends:</p> | More <br>
+
+<p>This section is brought to you in partnership with:<br>
+</p> 
+<p>Basically sorting algorithms can be divided into two main groups: those 
+based on comparisons and those that are not. I already posted about some of the 
+algorithms of the first group. Insertion sort, bubble sort and Shell sort are 
+based on the comparison model. The problem with these three algorithms is that 
+their complexity is O(n2) so they are very slow.</p> 
+<p>So is it possible to sort a list of items by comparing their items faster 
+than O(n2)? The answer is yes and here&rsquo;s how we can do it.</p> 
+<p>The nature of those three algorithms mentioned above is that we almost 
+compared each two items from initial list.<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+This, 
+of course, is not the best approach and we don&rsquo;t need to do that. Instead 
+we can try to divide the list into smaller lists and then sort them. After 
+sorting the smaller lists, which is supposed to be easier than sorting the 
+entire initial list, we can try to merge the result into one sorted list. This 
+technique is typically known as &ldquo;divide and conquer&rdquo;.</p> 
+<p>Normally if a problem is too difficult to solve, we can try to break it 
+apart into smaller sub-sets of this problem and try to solve them. Then somehow 
+we can merge the results of the solved problems.<br>
+<br>
+<br>
+</p> 
+<h2>Overview</h2> 
+<p>Merge sort is a comparison model sorting algorithm based on the 
+&ldquo;divide and conquer&rdquo; principle. So far so good, so let&rsquo;s say 
+we have a very large list of data, which we want to sort. Obviously it will be 
+better if we divide the list into two sub-lists with equal length and then sort 
+them. If they remain too large, we can continue breaking them down until we get 
+to something very easy to sort as shown on the diagram bellow.<br>
+<br>
+<br>
+
+</p> 
+<p>The thing is that in some step of the algorithm we have two sorted lists 
+and the tricky part is to merge them. However this is not so difficult.<br>
+ We 
+can start comparing the first items of the lists and than we can pop the 
+smaller of them both and put it into a new list containing the merged (sorted) 
+array.</p> 
+<h2>Implementation</h2> 
+<p>The good news is that this algorithm is fast, but not too difficult to 
+implement and that sounds quite good from a developer&rsquo;s point of view. 
+Here&rsquo;s the implementation in PHP. Note that every algorithm that follows 
+the divide and conquer principles can be easily implemented in a recursive 
+solution. However recursion can be bitter so you can go for a iterative 
+solution. Typically recursion is &ldquo;replaced&rdquo; by additional memory 
+space in iterative solutions. Here&rsquo;s a recursive version of merge sort.
+</p> 
+<pre>$input = array(6, 5, 3, 1, 8, 7, 2, 4); function merge_sort($arr) { if 
+(count($arr) &lt;= 1) { return $arr; } $left = array_slice($arr, 0, 
+(int)(count($arr)/2)); $right = array_slice($arr, (int)(count($arr)/2)); $left 
+= merge_sort($left); $right = merge_sort($right); $output = merge($left, 
+$right); return $output; } function merge($left, $right) { $result = array(); 
+while (count($left) &gt; 0 &amp;&amp; count($right) &gt; 0) { if ($left[0] 
+&lt;= $right[0]) { array_push($result, array_shift($left)); } else { 
+array_push($result, array_shift($right)); } } array_splice($result, 
+count($result), 0, $left); array_splice($result, count($result), 0, $right); 
+return $result; } // 1, 2, 3, 4, 5, 6, 7, 8 $output = merge_sort($input);</pre> 
+<h2><br>
+Complexity</h2> 
+<p>It&rsquo;s great that the complexity of merge sort is O(n*log(n)) even in 
+the worst case! Note that even quicksort&rsquo;s complexity can be O(n2) in the 
+worst case. So we can be sure that merge sort is very stable no matter the 
+input.<br>
+<br>
+<br>
+<br>
+</p> 
+<h2>Two reasons why merge sort is useful</h2> 
+<h3><br>
+1. Fast no matter the input</h3> 
+<p>Merge sort is a great sorting algorithm mainly because it&rsquo;s very fast 
+and stable. It&rsquo;s complexity is the same even in the worst case and it is 
+O(n*log(n)). Note that even quicksort&rsquo;s complexity is O(n2) in the worst 
+case, which for n = 20 is about 4.6 times slower!<br>
+<br>
+<br>
+</p> 
+<h3>2. Easy implementation</h3> 
+<p>Another cool reason is that merge sort is easy to implement. Indeed most 
+developers consider something fast to be difficult to implement, but 
+that&rsquo;s not the case of merge sort.</p> 
+<h2>Three reasons why merge sort is not useful<br>
+<br>
+</h2> 
+<h3>1. Slower than non-comparison based algorithms</h3> 
+<p>Merge sort is however based on the comparison model and as such can be 
+slower than algorithms not based on comparisons that can sort data in linear 
+time. Of course, this depends on the input data, so we must be careful of the 
+input.</p> 
+<h3>2. Difficult to implement for beginners</h3> 
+<p>Although I don&rsquo;t think this can be the main reason why not to use 
+merge sort some people say that it can be difficult to implement for beginners, 
+especially the merge part of the algorithm.</p> 
+<h3>3. Slower than insertion and bubble sort for nearly sorted input</h3> 
+<p>Again it is very important to know the input data. Indeed if the input is 
+nearly sorted the insertion sort or bubble sort can be faster. Note that in the 
+best case insertion and bubble sort complexity is O(n), while merge 
+sort&rsquo;s best case is O(n*log(n)).</p> 
+<p>As a conclusion I can say that merge sort is practically one of the best 
+sorting algorithms because it&rsquo;s easy to implement and fast, so it must be 
+considered by every developer!<br>
+<br>
+</p>  Tags: 
+<ul> 
+<li>algorithm</li> 
+<li>Python</li> 
+<li>PHP</li> </ul> Published at DZone with permission of Stoimen Popov, author 
+and DZone MVB (source). <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> <br>
+Python is a fast, powerful, dynamic, and versatile programming language that is 
+being used in a variety ofapplication domains. It has flourished as a 
+beginner-friendly language that is penetrating more and more industries. The
+Python Zoneis a community that features a diverse collection of news, 
+tutorials, advice, and opinions about Python and Django. The Python Zone is 
+sponsored byNew Relic, the all-in-one web application performance tool that 
+lets yousee performance from the end user experience, through servers, and down 
+to the line of application code. <br>
+<br>
+
+<h2>Comments</h2> <br>
+
+<h3>Chaker Nakhli replied on Wed, 2012/03/07 - 5:43am</h3> 
+<p>Hello,</p> 
+<p>&nbsp;In this article you only present a recursive version of the merge 
+sort algorithm. An iterative approach is presented here:&nbsp;
+http://www.javageneration.com/?p=389. It is written in c# but it can be easily 
+converted to Java or any other language.</p> 
+<p>&nbsp;Cheers.&nbsp;</p> 
+<ul> 
+<li>Login or register to post comments</li> </ul> <br>
+
+<h3>Chris Smith replied on Wed, 2012/03/07 - 1:51pm</h3> 
+<p>Chaker,</p> 
+<p>Thanks for the information.&nbsp; I have republished your linked post here: 
+Recursive and Interative Merge Sort Implementations.</p> 
+<p>Thanks again! </p> 
+<ul> 
+<li>Login or register to post comments</li> </ul> 
+<h2>Comment viewing options</h2> Flat list - collapsedFlat list - expanded
+Threaded list - collapsedThreaded list - expanded <br>
+Date - newest firstDate 
+- oldest first <br>
+10 comments per page30 comments per page50 comments per page
+70 comments per page90 comments per page150 comments per page200 comments per 
+page250 comments per page300 comments per page <br>
+<br>
+ Select your preferred 
+way to display the comments and click &quot;Save settings&quot; to activate 
+your changes. 
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Links</h3> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<p>This section is brought to you in partnership with:<br>
+</p> <br>
+
+<h2>Spotlight Features</h2> 
+<h2>HTML5 Canvas Refcard</h2> 
+<p></p> 
+<h2>Learn HTML5 in 5 Minutes!</h2> 
+<p></p> 
+<h2>Maven: Great Idea, Poor Implementation</h2> 
+<p></p> 
+<ul> 
+<h2>Popular at DZone</h2> 
+<li>1:Scala For Building DSLs (domain-specific languages)</li> 
+<li>2:Griffon 0.9.5-rc2 released</li> 
+<li>3:GroovyFX First Official Release</li> 
+<li>4:Groovy, A Reasonable JVM Language for DevOps</li> 
+<li>5:Simple Servlets in Groovy</li> 
+<li>6:Spock Framework 0.6 released</li> 
+<li>7:The Big Three &ndash; Scala, Clojure and Groovy</li> See more popular at 
+DZone <br>
+Subscribe to the RSS feed </ul> Around the DZone Network WEB BUILDER 
+<br><br>
+On Useless Testing... <br>
+ARCHITECTS <br>
+<br>
+Using JMX to Profile 
+Neo4j Via JDK and VIsualVM <br>
+CLOUD <br>
+<br>
+FeedHenry Powers Mobile 
+Application on Cloud Found... <br>
+WEB BUILDER <br>
+<br>
+Devops and Drupal 
+Survey: the Results <br>
+MOBILE <br>
+<br>
+Windows Phone Local Database Tip: 
+Working with Enc... <br>
+D <br>
+<br>
+NUnit&rsquo;s New 'Action Attributes' 
+Feature is AOP t... <br>
+You Might Also Like 
+<ul> 
+<li>The 10 commandments of good source control management </li> 
+<li>Algorithm of the Week: Merge Sort</li> 
+<li>GitHub Was Hacked Over the Weekend - Here's What Happened, From Multiple 
+Sources</li> 
+<li>Unit testing is for lazy people</li> 
+<li>Some Useful Java Classes That You Might Not Know About</li> 
+<li>All the mouse events in JavaScript</li> 
+<li>Creating a build pipeline using Maven, Jenkins, Subversion and Nexus.</li> 
+<li>Defining a RESTful Framework</li> 
+<li>Developer Efficiency - XCode vs. Eclipse vs. Visual Studio</li> 
+<li>Groovy, A Reasonable JVM Language for DevOps</li> 
+<li>Sometimes it takes 2 days to do 2 hours of work</li> 
+<li>Interfaces in Dynamic Languages </li> 
+<li>Client-side server monitoring with Jolokia and JMX </li> 
+<li>Getting Started With Data Mining </li> 
+<li>Test Driven Development without Tears</li> </ul> Popular on Groovy Zone 
+<ul> 
+<li>Groovy will replace the Java language as dominant language</li> 
+<li>A Domain-Specific Language for unit manipulations</li> 
+<li>Higher-order functions with Groovy, part 1</li> 
+<li>From Java to Groovy, part 2: closures and native syntax for lists</li> 
+<li>Dynamic Typing vs Dynamic Language Explained</li> 
+<li>Alex Tkachman on Static Groovy: the inside scoop</li> 
+<li>The war on Grails is really a war on Spring</li> 
+<li>Grails 1.0 released!</li> </ul> Latest Articles 
+<ul> 
+<li>NetBeans Weekly News (Issue #527 - Mar 5, 2012) </li> 
+<li>NUnit&rsquo;s New 'Action Attributes' Feature is AOP to Your Unit Tests
+</li> 
+<li>Introduction to Log Parser Studio</li> 
+<li>Visual Studio Installer Projects: Life After Visual Studio 2010</li> 
+<li>Final thoughts on S#arp Lite</li> 
+<li>How to Create MultiView Editors for Nodes</li> 
+<li>Analyzing S#arp Lite - Tasks</li> 
+<li>Use Windows 8 Icons with Segoe UI Symbol</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>HTML5 Canvas: A Web Standard for Dynamic Graphics</h3> <br>
+
+<h3>Groovy</h3> 
+<p>Programming Groovy is easy to start with. This reference of best practices 
+and idiomatic solutions smoothly guides you to the next step of...</p> <br>
+<br>
+<br> <br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

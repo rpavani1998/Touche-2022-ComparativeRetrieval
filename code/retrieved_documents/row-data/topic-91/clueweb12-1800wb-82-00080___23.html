@@ -1,0 +1,1140 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Journal of the Operational Research Society - Consumer finance: challenges for operational research</title>
+<body>
+
+<ul> 
+<li>Jump&nbsp;to&nbsp;main&nbsp;content</li> 
+<li>Jump&nbsp;to&nbsp;navigation</li> </ul> 
+<p>Full text access provided to Carnegie Mellon University<br>
+ by Hunt 
+Library---Acquisitions </p> <br>
+<br>
+
+<ul> 
+<li>Admin Login</li> 
+<li>My account</li> 
+<li>E-alert sign up</li> </ul> 
+<ul> 
+<li>Institutional Registration</li> 
+<li>Personal Registration</li> 
+<li>Subscribe</li> </ul> <br>
+<br>
+<br>
+
+<ul> 
+<li>Site Map</li> 
+<li>Subject Areas</li> </ul> Search This journal All content 
+Advanced&nbsp;search <br>
+<br>
+<br>
+<br>
+Journal home  &gt;  Archive  &gt; 
+Special Issue Papers  &gt; Full text <br>
+
+<h1>Special Issue Paper</h1> 
+<p><i>Journal of the Operational Research Society</i> (2010) <b>61,</b> 
+41&ndash;52. doi:10.1057/jors.2009.104</p> 
+<h2>Consumer finance: challenges for operational research</h2> 
+<p>L C&nbsp;Thomas1</p> 
+<p>1School of Management, University of Southampton, Southampton, UK</p> 
+<p>Correspondence: LC Thomas, School of Management, University of Southampton, 
+Southampton, SO17&nbsp;1BJ, UK. E-mail:L.Thomas@soton.ac.uk</p> 
+<p>Received 8&nbsp;June&nbsp;2009; Accepted 30&nbsp;July&nbsp;2009. </p> Top 
+of page 
+<h3>Abstract</h3> 
+<p>Consumer finance has become one of the most important areas of banking, 
+both because of the amount of money being lent and the impact of such credit on 
+global economy and the realisation that the credit crunch of 2008 was partly 
+due to incorrect modelling of the risks in such lending. This paper reviews the 
+development of credit scoring&mdash;the way of assessing risk in consumer 
+finance&mdash;and what is meant by a credit score. It then outlines 10 
+challenges for Operational Research to support modelling in consumer finance. 
+Some of these involve developing more robust risk assessment systems, whereas 
+others are to expand the use of such modelling to deal with the current 
+objectives of lenders and the new decisions they have to make in consumer 
+finance.</p> 
+<h4>Keywords: </h4> 
+<p>Consumer finance, credit scoring, risk-based pricing, classification 
+techniques, customer lifetime value</p> Top of page 
+<h3>Introduction</h3> 
+<p>Consumer finance was the sleeping giant of the modern economy, until it 
+awoke with a vengeance in 2007 and showed what impact problems with the risk 
+assessment of consumer borrowing and the consequent mis-pricing of financial 
+instruments based on this borrowing could have. Until then, despite its 
+importance to the individual consumer, and the fact that it was using an 
+increasing number of those who had trained in Operational Research (OR) and 
+statistics, the modelling underlying it was hardly discussed in any finance 
+course, and the number of research papers in the area was minute compared with 
+that on the corporate credit market or on the pricing of exotic equity-based 
+options. This was because the risk models developed in the 1950s and 1960s 
+still seemed to be working well and were surprisingly robust to changes in 
+economic conditions. More emphasis was being put by lenders on the use of OR 
+models in the marketing of these products, since the traditional approach of 
+one market 'price' (namely the interest rate being charged on the loan) was 
+giving way to variable pricing. At the same time, some lenders sought to 
+integrate all the models into a customer lifetime value framework. These are 
+still challenges for OR in this area but the subprime mortgage crisis, the 
+failure of the ratings agencies to assess the risk of residential 
+mortgage-backed securities, and the consequent credit crunch, requires a 
+reassessment of some of the quantitative models that had proved so successful 
+up to then.</p> 
+<p>Consumer credit has been around for 4000 years. There is a Sumerian clay 
+tablet recording how two farmers borrowed money to purchase grain with the 
+promise of paying back more at harvest time. In the Middle Ages, the discussion 
+on whether it was right to charge interest on loans not only gave the focal 
+point of a Shakespearean play but also exercised both Moslem and Catholic 
+theologians. However, it is only in the last 50 years, with the advent of 
+credit cards (first issued in the US in 1958 and then in the UK in 1966) and 
+the growth in home ownership and hence mortgage loans, that consumer credit has 
+become so widespread.Figure 1 shows how the total household borrowing in the US 
+overtook that of total business borrowing in the late 1980s, and that by 2004 
+the total borrowing on mortgages had also exceeded the total business 
+borrowing, although that has drawn level again in 2008.Figure 2 similarly shows 
+the growth in consumer borrowing in the UK in the 15 years since 1992. 
+Borrowing went up more than 350% in that time, and even with the housing crisis 
+of 2007 and 2008, the amount outstanding on mortgage loans is still more than 
+&pound;1.2 trillion.</p> 
+<h5>Figure 1.</h5> 
+<p>Comparison of US household and business debt.</p> Full figure and legend (15
+K) <br>
+<br>
+
+<h5>Figure 2.</h5> 
+<p>Total consumer borrowing (calculated by credit action based on Bank of 
+England statistics).</p> Full figure and legend (176K) <br>
+<br>
+
+<p>Such a growth in consumer lending could not have been possible without an 
+automated approach to assessing the credit risk that the loan to an individual 
+consumer would not be repaid. (In 2007, it was estimated that the number of 
+credit cards and debit cards in circulation worldwide exceeded three billion. 
+One would need a lot of analysts to subjectively decide whether all those cards 
+should be issued.) Moreover, laws such as the Equal Credit Opportunity Acts in 
+the US have outlawed discrimination in the giving of credit unless there are 
+statistical models that can defend such decisions. These statistically based 
+automated approaches to assessing consumer credit risk go under the name of 
+credit scoring. The models forecast how likely the applicant for credit is to 
+be 'Bad' and to default on the loan within a given time period. Those borrowers 
+who do not default on the loan within the chosen time period are 'Good'. The 
+consumer lending decision can then be modelled as a decision tree.Figure 3 
+shows a simplified case where the credit score just takes two values&mdash;one 
+corresponds to a High chance of being Good (Good Risk), the other to a Low 
+chance of being Good (Bad Risk).</p> 
+<h5>Figure 3.</h5> 
+<p>Decision tree of consumer lending decisions.</p> Full figure and legend (20K
+) <br>
+<br>
+
+<p>The notation of Figure 3 says that the profit to lender if the loan is 
+repaid is<i>g</i>; -<i>l</i> is the loss if the loan is not repaid; <i>q</i> is 
+the chance the consumer will take the loan if offered it;<i>p</i>(<i>H</i>) is 
+the probability that a consumer rated High will be Good; and<i>p</i>(<i>L</i>) 
+is the chance a consumer rated Low will be Good. The lender should then accept 
+applicants with High credit scores if</p> <br>
+
+<p> and accept applicants with Low credit scores if </p> <br>
+
+<p> Credit scoring began in the 1950s when it was realised that statistical 
+classification methods&mdash;the first being discriminant analysis (Fisher, 1936
+)&mdash;could be used to classify loans into Goods (non-defaulting) and Bads 
+(defaulting), using the characteristics of the loan and the borrowers. 
+Initially, it was used by mail-order companies and finance houses and only 
+after the advent of credit cards did banks start using it&mdash;firstly for 
+credit cards, then for personal loans and finally for mortgages. This initial 
+use of credit scoring, which is called application scoring, was to support the 
+decision of whether to grant credit to a new applicant. Its philosophy was 
+pragmatic, in that it only wanted to predict, not explain, and hence used any 
+characteristic that improved the discriminating power of the system. Moreover, 
+it concentrated on a very specific risk&mdash;the chance a borrower will become 
+90 days overdue in their repayments in the next 12 months. Whether the loan was 
+profitable to the lender, whether the borrower would continue to repay beyond 
+this period, how much the borrower used the loan facility&mdash;none of these 
+risks were considered. The approach also assumed that the relationship between 
+loan/borrower characteristics and credit worthiness was stable at least over a 
+4- of 5-year period. It considered data on applicants of 2 years ago, and 
+looked at their performance over the subsequent year. This performance was used 
+to determine whether the applicant was Bad (the specific risk occurred) or Good 
+(it did not occur). This sample was then used to build a classification system 
+that best separated the Goods from the Bads, using the characteristics of the 
+loan and the borrower. The standard classification methods result in a 
+scorecard and a cut-off so that those with scores above the cut-off are 
+considered Good (and would be accepted if they apply) and those below it are 
+classified as Bad (and would be rejected if they apply). So a scorecard built 
+on a 2-year-old sample is used to determine which applicants to take for the 
+next few years. After sometime, the process is repeated and a new scorecard is 
+constructed.</p> 
+<p>The second variant of credit scoring, behavioural scoring, was introduced 
+in the 1980s when it was thought to be useful to assess the credit risk of 
+existing customers, as well as new applicants. Therefore, once again the target 
+variable was whether the borrower would default in the next 12 months, but now 
+it was possible to use information on the borrower's recent (usually last 12 
+months) repayment and purchase performance. Such scores are now used by almost 
+all lenders and are routinely updated each month. The most powerful 
+characteristics are whether the borrowers have recently been in arrears and the 
+current information from the credit bureau on their overall credit performance. 
+Although behavioural scoring was an obvious extension of application scoring, 
+it was also an opportunity missed. Firstly, it is not used to support a 
+specific decision but rather it is used by the lender as part of a customer 
+relationship strategy to determine whether to increase credit limits, seek to 
+up sell or cross-sell other products. The aim of these actions, however, is to 
+improve the profitability of the customer, but there might be other measures 
+rather than default risk in the next 12 months, which give a better handle on 
+profit. Moreover, behavioural scoring only used static characteristics about 
+the customer's past performance and used these to estimate the customer's 
+status at a fixed time in the future. An alternative would have been to build a 
+dynamic model of how a customer has been performing, which would allow one to 
+forecast the future dynamic behaviour of the customer.</p> 
+<p>In the past few years, credit scoring had been changing, as lenders want 
+credit scoring to support their business objectives of profitability and market 
+share. Lenders want to optimise all the decisions they make about the borrower, 
+not just whether or not to offer the borrower a standard loan product. Even in 
+the initial decision, lenders now have a number of variants of a loan product 
+they can offer, be it platinum, gold, silver or standard credit cards, or 
+tracker, fixed rate and variable rate mortgages, and within each they can 
+decide what credit limit to offer and what interest rate and fee (the price 
+components) to charge. The growth in the internet and the telephone as ways of 
+undertaking the application process means applications are essentially private 
+and so the product can be 'customised' to depend on the applicants' 
+characteristics, allowing for variable pricing. Similarly, lenders are more 
+likely to adjust the product or offer alternative or extra products during 
+their relationship with the customer and so are anxious to know what impact 
+such changes will have on the default risk and the profitability of the 
+customer. Lenders want to use 'credit scoring' to help make these variable 
+pricing decisions and to determine the long-term profitability of a customer 
+under different lender actions. Moreover, profitability is as much about 
+marketing as about risk assessment, and hence there is a need to combine the 
+work done by financial organisations' marketing and risk assessment OR groups. 
+Currently, these groups see themselves as adversaries, with one group wanting 
+to take as many applicants as they can and the other to be as discriminating as 
+possible about who they take. The models used by marketers to segment customers 
+and to estimate propensity of purchase are very similar to the ones used by the 
+risk teams to determine how many different scorecards to develop and then to 
+estimate the likelihood of default for each customer.</p> 
+<p>The other factor that has been affecting credit scoring in the past few 
+years is the change in banking regulations introduced by the Basel II Accord (
+Basel Committee on Bank Supervision, 2005a). Under these new regulations, banks 
+are allowed to use the estimates from their own internal risk-rating systems in 
+the formula, which determines the minimum capital they have to set aside to 
+cover the credit risk in their lending. Clearly, for lending to consumers, 
+these internal risk-rating systems are application and behavioural scoring 
+systems. In fact, it is only worthwhile for banks to move to these internal 
+ratings-based systems, if they use them for their consumer lending, as the main 
+saving in capital compared with the alternative externally imposed capital 
+ratios is in consumer lending. The Accord requires its ratings to have many of 
+the properties of the existing credit-scoring systems. For example it defines 
+default as 90 days overdue in the next 12 months (although some national 
+regulators such as the Financial Services Authority in the UK had modified this 
+to 180 days overdue). However, it also requires much more of credit scoring, 
+with its emphasis on validating the probability of default estimates rather 
+than just ensuring the ranking of borrowers is accurate, which was how credit 
+scoring systems were previously judged. The Accord also concentrates on the 
+long-run probability of default, not just the probability of default, in the 
+next 12 months; it emphasises the need to stress test models and also requires 
+some completely new estimates such as loss given default, which we will return 
+to later.</p> Top of page 
+<h3>Defining a credit score</h3> 
+<p>In this paper, we outline some of the challenges that these developments in 
+credit scoring bring. We also discuss what re-evaluation is needed of the 
+methodology that underpins scoring because of the problems of the last few 
+years in consumer lending and the mis-pricing of the securitised products based 
+on such lending. Before doing so, it is worth recalling what a credit score is 
+and what properties it has.</p> 
+<p>We assume that each consumer, be it an applicant in the case of an 
+application score or a current borrower in the case of a behavioural score, can 
+be described by a set of characteristics<b>x</b>=(<i>x</i>1,<i>x</i>2,...,<i>x
+</i><i>m</i>), <b>x</b><i>X</i>, where <i>X</i> is the set of all possible 
+borrower characteristic combinations. These characteristics include 
+socio-economic data such as age and residential status; credit bureau 
+information such as whether the applicant is on the electoral role; and in the 
+case of behavioural scores, performance data such as the number of missed 
+payments in the last 12 months. Having decided on what risk is being 
+assessed&mdash;say repayments being more than 90 days overdue in the next 12 
+months&mdash;those for which that event occurs are Bads and the others are 
+Goods. A score,<i>s</i>(<b>x</b>), is then a function of the characteristics <b>
+x</b> of a potential borrower, which can be translated into the probability 
+estimate that the borrower will be Good. The critical assumption in credit 
+scoring is that the score is all that is required for predicting the 
+probability of the applicant being Good. It is similar to a sufficient 
+statistic. One also usually assumes that the score has a monotonic increasing 
+relationship with the probability of being Good; hence, if a borrower has a 
+higher score than a second borrower, the first borrower has a higher 
+probability of being Good than does the second.</p> 
+<p>A proper or sufficient score <i>s</i>(<b>x</b>) captures as much 
+information for predicting the probability of a performance outcome, say 
+Good/Bad, as does the original data vector,<b>x</b>, so that </p> <br>
+
+<p>When appropriate we will drop the <b>x</b> dependence of the score and write
+</p> <br>
+
+<p>One form of a score is the log odds score, where </p> <br>
+
+<p> Hence, a log odds score could have values from minus infinity (when P(G|<b>
+x</b>)=0) to plus infinity when (P(G|<b>x</b>)=1). Log odds scores are produced 
+when one uses logistic regression to determine the classification scorecard but 
+can also be obtained from other approaches by scaling, therefore it is 
+reasonable to assume a scorecard has such a property.</p> 
+<p>Specifying the score of an event is equivalent to specifying its 
+probability because we can write the probability in terms of the score:</p> <br>
+<p> One interesting feature of a log odds score is that it separates out 
+completely the information about the population from information about the 
+individual borrower being scored. Applying Bayes' rule in the case of the 
+probability of a Good or a Bad having attributes<b>x</b> with the distribution 
+of Goods and Bads in the population given by<i>p</i><i>G</i> and <i>p</i><i>B
+</i>, respectively, gives </p> <br>
+
+<p> where <i>p</i>(<b>x</b>) is the probability that an applicant will have 
+attributes<b>x</b>. Applying this in Equation (3) gives </p> <br>
+
+<p>Thus, a log odds score is the sum of a term depending only on the 
+population odds (<i>s</i><i>pop</i>=ln<i>o</i><i>pop</i>) and a term that 
+depends of the information of the borrower<b>x</b>. The first term on the RHS of
+(6) is the 'prior' score&mdash;the score of a randomly selected individual from 
+the population; this score is then increased or decreased by the score that is 
+based on the data that are unique to a particular individual.</p> 
+<p>For further details on the basics of credit scoring and the different 
+approaches to building a scorecard, one can look at the books byMays (1998), 
+McNab and Wynn (2000), Thomas <i>et al</i> (2002, 2004), Mays (2004), Anderson 
+(2007) and Thomas (2009a) and the review papers by Hand and Henley (1997), 
+Thomas (2000), Thomas <i>et al</i> (2005) and Crook <i>et al</i> (2007). The 
+type of marketing models that can be used in consumer finance can be found in 
+examples such asLilien and Rangaswamy (2004).</p> 
+<p>Now it is time to turn to the challenges that OR in consumer finance faces.
+</p> 
+<h4>Challenge 1: finding the 'silver bullet' or is there a better way to build 
+risk-assessment systems</h4> 
+<p>Discriminant analysis was the first method by which scorecards were built 
+(seeEisenbeis (1978) for a critique of its use in credit scoring), but by the 
+early 1980s, the growth in computer power meant that logistic regression had 
+taken over as the main way by which commercial scorecards were built (Mays, 2004
+;Anderson, 2007). Other approaches based on linear programming ( Freed and 
+Glover, 1981, 1986) and maximising divergence ( Thomas, 2009a) are also used 
+commercially. Another popular alternative is to use classification trees, with 
+its origins both in statistics (Breiman <i>et al</i>, 1984) and machine 
+learning (Quinlan, 1993), although this of course ends up not with a scorecard 
+but with groups of customers described by combinations of their 
+characteristics, where each group is classified as either Good or Bad. However, 
+any classification approach can be applied to the credit scoring problem and so 
+in the past 20 years researchers have tried neural nets (Desai <i>et al</i>, 
+1997; Malhotra and Malhotra, 2002), support vector machines ( Van Gestel <i>et 
+al</i>, 2006; Huang <i>et al</i>, 2007; Bellotti and Crook, 2009), genetic 
+algorithms (Desai <i>et al</i>, 1997; Ong <i>et al</i>, 2005), nearest 
+neighbour methods (Chatterjee and Barcun, 1970; Henley and Hand, 1997) and ant 
+colony optimisation (Martens <i>et al</i>, 2007). The review paper by Baesens 
+<i>et al</i> (2008) explains how OR models and data-mining methods are used for 
+a number of such classification problems, particularly in credit scoring. More 
+sophisticated versions of these regression approaches have been looked at, 
+including projection pursuit regression and multivariate adaptive regression 
+splines (Lee and Chen, 2005).</p> 
+<p>So, what methodology results in a scorecard with the best discrimination in 
+credit scoring? What often happens is that the paper that introduces a new 
+method can show that there is some small improvement by using it rather than 
+using an existing method, but one is always slightly concerned that this may be 
+down to the expertise of the authors in their own method and the fact that they 
+do not take such care with existing methods. For example, many of the newer 
+methods essentially construct non-linear scorecards with interactions between 
+characteristics, but experts in the linear approaches to credit scorecard 
+building&mdash;logistic and linear regression&mdash;tend to know from 
+experience about such interactions and allow for them by building separate 
+scorecards for different segments of the population or by introducing 
+interaction variables.Baesens <i>et al</i> (2003b) undertook a careful 
+comparison of different methods andXiao <i>et al</i> (2006) compared the more 
+recently applied methods. It is true that some methods performed slightly 
+better than others&mdash;neural nets, support vector machines, logistic 
+regression&mdash;but the differences were small and often the hypothesis that 
+two scorecards were equally good at discriminating could not be rejected. 
+Moreover, in several countries, one has to be able to explain why one rejects 
+an applicant for credit, and therefore 'black box' methods such as neural nets 
+and support vector machines would not be allowed. Thus, researchers are looking 
+to see whether they can devise classification trees that mimic the performance 
+of the 'black box' and hence give reasons for assuming the applicant is Bad and 
+should be rejected. (Baesens <i>et al</i>, 2003a; Martens <i>et al</i>, 2008).
+</p> 
+<p>One way of finding an improved risk system is to use a combination of 
+methods. For example, there are classification trees in which some of the 
+variables are a 'score' obtained using another method. Similarly, one might 
+have a regression approach in which one characteristic is the different nodes 
+of a classification tree. Another area in which researchers are seeking to find 
+improved credit scoring methods&mdash;that is find the silver bullet which will 
+be 'the' best way of building scorecards&mdash;is ensemble methods. This 
+follows Breiman's introduction of random forests (Breiman, 2001), which 
+consists of a large number of classification trees, each built on a subset of 
+the data and only using a subset of the characteristics. A new case is then 
+classified by each of these trees and its predicted class is taken to be that 
+which the majority of the trees predict. This idea of building a large number 
+of models and choosing what the majority predicts could be used with all the 
+classification methodologies, not just classification trees.</p> 
+<p>However, the idea that a new methodology will produce far better 
+discrimination using existing characteristics than the current methods is 
+questioned by many experts. There is a view (Overstreet <i>et al</i>, 1992) 
+that there are a large number of quite different scorecards that have close to 
+the best discrimination possible&mdash;the flat maximum effect&mdash;and so in 
+the large samples used to build commercial scorecards, it is likely that most 
+methods will find one of these almost optimal scorecards. Still, that does not 
+stop people from trying, although it would be more useful if the experiments 
+were carried out on the sizes of samples, 10&nbsp;000&ndash;50&nbsp;000, 
+usually used in scorecard building, rather than on the small samples of less 
+than 1000, which are easily available in public literature.</p> 
+<h4>Challenge 2: introducing economics and market conditions into 
+risk-assessment systems</h4> 
+<p>The assumption that credit worthiness is time independent over intervals of 
+3 or 4 years meant that credit scores have been built using the 
+socio-demographic characteristics of the borrower, the credit bureau 
+information about the borrower, details of the loan and even the repayment 
+performance of the borrower on the loan, but not using anything about the 
+current economic and market conditions. This assumption has been challenged in 
+the last few years, first by the Basel Accord, which makes a point that its 
+definition of probability of default is a long-run average (ie averaging over a 
+full economic cycle) and not just the point in time probability of default. 
+This suggests that the probability of default does vary, as economic conditions 
+vary, even if the credit worthiness of the borrower is not changing and has 
+required some ingenuity by lenders to translate a credit score, which is 
+clearly a point in time (PIT) estimate, into the through the cycle (TTC) 
+estimate. Secondly, the detailed investigations of the subprime mortgage crisis 
+showed that the credit scores changed as the economic conditions worsened (
+Demyanyk and Van Hemert, 2008). This is only to be expected if we recall the 
+decomposition of the credit score in(6). If we include the time at which the 
+score is being used, then what we require at time<i>t</i> is the score <i>s</i>(
+<b>x</b>,<i>t</i>)=<i>s</i><i>Pop</i>(<i>t</i>)+<i>s</i><i>Inf</i>(<b>x</b>,<i>t
+</i>). What we have is <i>s</i>(<b>x</b>,<i>t</i>0)=<i>s</i><i>Pop</i>(<i>t</i>0
+)+<i>s</i><i>Inf</i>(<b>x</b>,<i>t</i>0), where <i>t</i>0 is the time at which 
+the sample on which the scorecard was built was performing. One could possibly 
+argue that<i>s</i><i>Inf</i>(<b>x</b>) is independent of <i>t</i>, although 
+that is highly unlikely, but there is no way<i>s</i><i>Pop</i>(<i>t</i>) cannot 
+depend on the current economic and market conditions. There are some recent 
+suggestions of how to include these economic conditions, either directly into a 
+regression scorecard (Zandi, 1998), or using survival analysis ( Malik and 
+Thomas, 2009a; Bellotti and Crook, 2008). Similar ideas were previously used to 
+identify how the likelihood of purchasing financial products depends both on 
+the characteristics of the customer and on economic conditions (Tang <i>et al
+</i>, 2007). The use of interaction terms and time-dependent coefficients, 
+which proved so successful there, can obviously be taken across to building 
+economy-based credit scorecards.</p> 
+<h4>Challenge 3: dealing with new ways of assessing what is a Good customer
+</h4> 
+<p>The traditional way of defining a Bad was a borrower who became 90 days 
+overdue in the next 12 months. When personal bankruptcy rules became easier in 
+certain countries, notably in the US, it became apparent that the performance 
+of borrowers before they sought bankruptcy was different from those who just 
+defaulted on their loan. Thus, bankruptcy scores were developed where a Bad was 
+someone who went bankrupt in the next 12 months.</p> 
+<p>Although a system that assessed the profitability of the customer is the 
+aim of many lenders, this is proving hard to implement. Instead, what has 
+happened is that lenders score separately a number of the events that affect 
+profitability. Attrition scores assess whether the borrower will cancel the 
+loan product shortly. Usage scores assess how much a borrower will use the loan 
+product. Propensity scores assess how likely it is that the lender can up sell 
+or cross sell other products to the borrower.Li and Hand (2002) suggested that 
+instead of assessing default risk directly, one should try to predict future 
+values of other aspects of the borrower's performance, such as the balance on 
+the account, and then from these estimate the risk of default. Such an indirect 
+approach requires both that the intermediate elements be predicted well and 
+that there is a strong relationship between them and the default risk. It does 
+have the advantage, however, although that it may be possible to use these 
+intermediate components to estimate profitability as well as default risk.</p> 
+<p>One real change in defining Good/Bad in the last few years is the use of 
+survival analysis ideas to allow the estimation of a borrower's default risk 
+over any future time horizon, not just a fixed 12 months. In survival analysis, 
+one is interested in estimating the default hazard rate,<i>h</i>(<i>t</i>), 
+where<i>h</i>(<i>t</i>)<i></i><i>t</i> is the conditional probability of 
+default in (<i>t</i>,<i>t</i>+<i></i><i>t</i>], given there has been no default 
+in (0,<i>t</i>]. So if <i>T</i> is the time when default occurs, <i>P</i><i>B
+</i>(<i>t</i>) is the probability that there has been default by time <i>t</i>, 
+(<i>P</i><i>B</i>'(<i>t</i>) its derivative) and <i>P</i><i>G</i>(<i>t</i>)=1-
+<i>P</i><i>B</i>(<i>t</i>), then: </p> <br>
+
+<p>This is not the probability that a borrower will default at a time <i>t</i> 
+into the loan but rather the probability that given the fact that the borrower 
+is still active at time<i>t</i>, he will default in the next period of time. It 
+is easy then to see that, given the hazard function, we can calculate the 
+probability of default over any time period because</p> <br>
+
+<p> If one uses the proportional hazards or accelerated life models of 
+survival analysis, one is able to obtain a score that describes the 'risk' of a 
+consumer defaulting over any and all time horizons. In the proportional hazard 
+model, the hazard function for default at time period<i>t</i> into the loan for 
+a borrower with characteristics<b>x</b> decomposes into the product of the 
+baseline hazard function multiplied by an enhanced risk due to the borrower's 
+characteristics, namely,</p> <br>
+
+<p> Hence, <i>s</i>(<b>x</b>) can be considered as a risk score in that the 
+higher the score the less likely the borrower is to default. This model can 
+work both as a parametric model in which the baseline hazard function is of a 
+specific family of distributions or semi parametrically using the results ofCox 
+(1972). Cox showed that one can first calculate the score without making any 
+assumptions about the distribution and then use the Kaplan Meier approach to 
+estimate the empirical distribution for<i>h</i>0(<i>t</i>) that best fits the 
+data.</p> 
+<p>In the accelerated life model, one can only use the parametric approach, 
+but the assumption is that the probability of a borrower with characteristics<b>
+x</b> not defaulting before time <i>t</i>(<i>P</i><i>G</i>(<i>t</i>,<b>x</b>)) 
+is given by</p> <br>
+
+<p> or </p> <br>
+
+<p> where again <i>s</i>(<b>x</b>) is the equivalent of a risk score.</p> 
+<p>These ideas have been developing over the past decade ( Banasik <i>et al</i>
+, 1999; Stepanova and Thomas, 2001, 2002), and are now being taken on board by 
+practitioners. Survival analysis has also been used to build scorecards when 
+only a few months data are available (Hand and Kelly, 2001). As mentioned in 
+Challenge 2, survival analysis can also be used to introduce economic 
+conditions into scorecards.</p> 
+<p>One advantage of the survival analysis approach is that the competing risk 
+idea means that one can use the same data to estimate several different events. 
+In the competing risk approach, one has several ways in which a loan could 
+finish&mdash;default, early repayment, normal repayment&mdash;and one can model 
+each of these separately using the fact that as far as a default is concerned, 
+a borrower who pays off early at time<i>t</i> has a history censored at that 
+time. This competing risk approach can be expanded in two directions. One can 
+model purchasing as well as attrition and default events separately and then 
+seek to combine them to get a customer lifetime value approach (Challenge 10). 
+Alternatively, one can concentrate on default only but recognise that default 
+can occur for different reasons&mdash;financial naivety, loss of employment, 
+fraud, marital breakdown, for example&mdash;and seek to model the time until 
+default for these different reasons separately before finally combining them 
+using the competing risk idea.</p> 
+<p>Thus, there seems to be a great deal more research that is required to 
+develop more appropriate Good/Bad assessments both in terms of expanding from 
+default to profitability and in removing any pre-defined time horizon on the 
+time over which the customer is assessed.</p> 
+<h4>Challenge 4: variable- and risk-based pricing</h4> 
+<p>One way that lenders are seeking to increase their profit is by offering 
+generic loan products such as credit cards, but by tailoring the details of the 
+product for each individual. In credit cards, this would mean varying the 
+interest rate charged, the credit limit offered, whether an annual fee is 
+charged and whether bonuses such as air miles are given for purchases made with 
+the card. This is possible because the use of the internet and the telephone as 
+application channels means the application process is much more private and so 
+varying offers can be made without applicants being aware of what is being 
+offered to others.</p> 
+<p>One of the simplest schemes would be to adjust the interest rate charged, 
+<i>r</i>, to be a function of the probability, <i>p</i>, of the applicant being 
+a Good. For a log odds score, Equation(4) shows how this probability is related 
+to the credit score of the applicant. Consider a very simple example where 1 
+unit is lent, the cost of capital for the lender is<i>r</i><i>F</i> (the risk 
+free rate), the loss given default (the fraction of the amount outstanding at 
+default which is finally lost) is<i>l</i><i>D</i>, and the lender will charge 
+an interest rate<i>r</i>(<i>p</i>), which is related to the probability <i>p</i>
+ of the applicant being a Good. If the take probability or response rate of an 
+applicant to a loan offer with interest rate<i>r</i> is <i>q</i>(<i>r</i>), 
+then the expected profit to the lender of making an offer<i>r</i> is </p> <br>
+
+<p> Differentiating (11) and setting the derivative to zero gives </p> <br>
+
+<p>where we assume that <i>s</i> is a log odds application score so <i>s</i>
+=ln(<i>p</i>/1-<i>p</i>).</p> 
+<p>The reality is that the take probability <i>q</i> is a function of <i>r</i> 
+and<i>p</i>. This is because of adverse selection ( Ausubel, 1999; Calem <i>et 
+al</i>, 2006) in which more Bads apply for consumer credit at higher interest 
+rates than might be expected. There are also affordability issues, as the 
+interest rate charged can affect the ability of the borrower to repay, as was 
+seen in the subprime mortgage crisis, in which many of the borrowers only 
+defaulted when the interest rates went from the initial low rates to the higher 
+rates that came in after 2 or 3 years of the loan. There is very little 
+mathematical modelling of what are appropriate variable rate functions to 
+charge apart from Phillips's book (Phillips, 2005). Similarly there needs to be 
+much more empirical work on what are appropriate take probability functions. In 
+particular, how does the take probability vary according to the risk score of 
+the applicant and the rate charged by the lender. As there are so many 
+combinations that could be considered, there are experimental design problems 
+for any lender to obtain this sort of information efficiently. Other factors 
+must also be important, such as the rates being charged by other lenders, 
+whether the product offers other features, such as air miles or free travel 
+insurance, and in the case of revolving credit, whether the applicants believe 
+they will be transactors (pay off their balance every month) or revolvers (and 
+so have balances on which interest is charged).</p> 
+<p>The problem of finding the optimal price at which to sell a product has 
+been around for many years. There are two main approaches. One is to estimate 
+the response function (the take probability) as above, whereas the second is to 
+model the situation as a game. Such games could involve a number of 
+buyers&mdash;the borrowers in this case&mdash;and sellers&mdash;the 
+lenders&mdash;and the use of game theory to model such pricing situations has a 
+long history from Edgeworth's work on market games in 1881 (Edgeworth, 1881) to 
+Gibbens and Kelly's work on pricing the internet (Gibbens and Kelly, 1999)</p> 
+<h4>Challenge 5: expanding approaches to deal with new forms of credit granting
+</h4> 
+<p>As well as new modelling challenges in existing forms of credit granting 
+there are new types of loans that need risk-assessment systems that are 
+different from those that have worked for personal loans, credit cards and 
+mortgages. The two that are attracting most interest at present are microcredit 
+and payday loans.</p> 
+<p>Microcredit involves giving very small loans to those in poverty in order 
+to help them develop a business, which will sustain them and their family and 
+so bring them out of poverty. It began in the Indian subcontinent but is now 
+being used by many other countries and is even recognised by major 
+international banks as a significant source of future lending. The United 
+Nations declared 2005 to be the International Year of MicroCredit. Clearly, 
+standard risk-assessment systems cannot work for people who have no history of 
+being advanced credit previously and no involvement with a banking system. Yet 
+there is a need to ensure that the credit loaned is repaid, even if the time 
+periods involved may be very long&mdash;several years if not decades&mdash;and 
+there is a need to assess both the character of the individual and the 
+potential of the idea that the loan will initially fund. Recently, there has 
+been some initial work on how one would need to modify standard credit scoring 
+systems to deal with these questions (Mok, 2008).</p> 
+<p>At the other extreme of time scale is payday loans. Payday loans are small, 
+very short-term loans with extremely high interest rates that are effectively 
+advances on a borrower's next pay packet. The loan is taken out usually at the 
+middle or towards the end of the month and the lender is given a post-dated 
+cheque or a way of accessing the borrower's current account on the day the pay 
+cheque is paid in at the end of the month. This is a much faster-moving 
+environment than that for normal loans, as the loans are of such short 
+durations, and their repayment depends on the borrower's ability and desire to 
+pay back the loan that month. So proven ability to handle such short-term 
+loans, and the local economic situation are important features. Thus, one needs 
+to build scorecards that can respond very quickly to changes in economic and 
+market behaviour and to immediate changes in the borrower's behaviour, and 
+circumstances. Moreover such loans are increasingly receiving special 
+legislation which requires proof that their risk-assessment systems are robust.
+</p> 
+<h4>Challenge 6: meeting the regulatory challenge, particularly that in the 
+Basel Accord</h4> 
+<p>As mentioned earlier, the introduction of the new banking regulations, the 
+Basel II Accord (BCBS, 2005a), concerning the amount of capital that banks need 
+to set aside to cover their risk, has had a major impact on credit scoring. 
+Introduced in Europe in 2007/2008, in the US in 2009 and scheduled to be 
+introduced in most countries between 2008 and 2012, it was a response to the 
+distortions in lending caused by the first Accord of 1988, rather than a 
+response to the credit crunch. Although it should have had some effect on the 
+lending that precipitated the subprime mortgage crisis if it had been in effect 
+then, it would not have dealt with the liquidity risk or the fact that some 
+lenders thought securitisation meant they can absolve themselves of the risks 
+of their lending. It is likely that some governments will now impose tighter 
+regulations than those proposed in the Accord. However, the idea that banks 
+need to build models of the credit risk of their lending and the output of 
+these is used to set their capital requirements&mdash;the internal based rating 
+approach&mdash;will remain.</p> 
+<p>The Accord is presenting four challenges to credit scoring&mdash;the 
+internal ratings approach to consumer lending. The first is the need to 
+validate the probability of default predictions that the scorecard makes 
+rather, than the relative ranking of the borrowers, which was what is important 
+in deciding which applicants for credit to accept. So one needs to be confident 
+in the translation of score to probability of default and to use the standard 
+chi-square and normal distribution-type tests to validate the model by 
+backtesting to compare actual numbers of defaults with predicted ones (BCBS, 
+2005b). Since there is clearly some dependence between defaults of different 
+individuals, and often the number of defaults are very low, one needs to 
+develop sophisticated models to cope with these problems (Benjamin <i>et al</i>
+, 2006).</p> 
+<p>A second challenge is that the Accord requires estimates of the long-run 
+average of the 12-month default rate (the TTC default rate) for a segment of 
+borrowers while a credit score estimates the default rate in the next 12 months 
+(the PIT estimate). Translating from Point-in-Time default rates to Through the 
+Cycle default rates highlights the time dependency of a score which we outlined 
+in Challenge 2. If<i>s</i>(<i>t</i>,<b>x</b>) is a log odds score at time <i>t
+</i> for a borrower with characteristics <b>x</b> then the probability of 
+defaulting in the next 12 months<i>p</i><i>t</i>(<i>B</i>,<b>x</b>) starting at 
+<i>t</i> is </p> <br>
+
+<p> This is the PIT estimate, but what one needs to do is get a TTC estimate, 
+which if the cycle is of length<i>T</i> starting say at time <i>t</i>0 would be 
+</p> <br>
+
+<p> This involves estimating how the score <i>s</i>(<i>t</i>,<b>x</b>) changes 
+over time, which brings us back to Challenge 2. It also presupposes that the 
+score to probability of default transformation stays as a log odds 
+transformation and ignores what happens when scores are recalibrated during the 
+cycle.</p> 
+<p>A third problem is the Basel Accord's instance on stress testing, which 
+means predicting the future performance of a portfolio of loans under extreme 
+economic conditions. One can do this by sensitivity analysis in which one 
+changes the value of one of the factors that impacts on the model, or by 
+scenario analysis. In the latter approach one identifies a combination of the 
+overall conditions that can lead to poor economic performance. Although there 
+have been several surveys of what stress testing banks currently do (BIS, 2005; 
+FSA, 2005), these point out to the lack of a consistent stress-testing 
+methodology for credit risk as opposed to market risk. The critical issue is 
+how to build a model of the credit risk of portfolios of consumer loans, which 
+includes economic and market conditions and so can then be run under the 
+extreme scenarios suggested by the regulators. This is so important we identify 
+it as a separate challenge (Challenge 7) and discuss it further later. 
+Researchers are beginning to address different ways of building models of the 
+credit risk for portfolios of consumer loans, which can then be used for stress 
+testing (Breeden, 2007; Breeden <i>et al</i>, 2008; Rosch and Scheule, 2008; 
+Malik and Thomas, 2009b).</p> 
+<p>Similarly, the fourth issue that the Basel Accord has highlighted, the need 
+to model the recovery rate (RR) (or alternatively the Loss Given Default (LGD), 
+where RR=1-LGD) of what percentage of a defaulted loan will subsequently be 
+recovered is also so important that it deserves to be considered as a separate 
+challenge (Challenge 8).</p> 
+<h4>Challenge 7: modelling the credit risk of portfolios of consumer loans</h4>
+<p>Credit scoring has proved very successful at assessing the relative risk of 
+individual borrowers defaulting. The previous discussion though highlighted the 
+credit-rating agencies failure to assess the risk of consumer asset-backed 
+securities and the Basel requirements to stress test portfolios of consumer 
+loans. Both these show the need for such risk assessment also to be modelled at 
+the portfolio level. Portfolio-level credit risk models were developed more 
+than a decade ago for corporate loans with models that allowed the correlation 
+in share prices to be surrogates for the correlation in defaults. This is not 
+possible nor sensible for portfolios of consumer loans as default there does 
+not depend on the value of assets but on cash flow considerations and personal 
+attitudes to debt. However, that does not prevent building credit risk models 
+for portfolios of consumer loans, which have strong parallels with the 
+corporate portfolio models (Thomas, 2009b). As was suggested in Challenge 6, 
+several models are being developed, all of which include economic conditions as 
+part of the model. By applying Monte Carlo simulation, using different future 
+economic scenarios, one can then use such a model to estimate portfolio-level 
+default rates. The types of models developed so far include reputation-based 
+models (Muniz de Andrade and Thomas, 2007), dual time dynamics ( Breeden, 2007; 
+Breeden and Thomas, 2008), survival analysis ( Malik and Thomas, 2009a; 
+Bellotti and Crook, 2008) and correlation models with added economic variables (
+Rosch and Scheule, 2003). Given the amount of research that has gone into 
+corporate credit risk models, one suspects that there will be considerably more 
+research into these consumer equivalents, given the realisation by bankers now 
+of how much more is being lent to households than to companies.</p> 
+<h4>Challenge 8: modelling Loss Given Default and the collection process</h4> 
+<p>There had been little analytic modelling of the collections process for any 
+form of lending until the advent of the Basel Accord. The Accord though 
+requires banks to estimate LGD (Bennett <i>et al</i>, 2005) for all loan 
+segments whether they have yet defaulted or not. LGD is related to RR (ie, the 
+percentage of the debt outstanding which the collections department recovers) 
+by LGD=1-RR. Before this, there had been some work on estimating RRs in 
+corporate lending as these affect the price of risky bonds. The edited book by
+Altman<i>et al</i> (2005) outlines the mainly regression-based models that seek 
+to relate RRs to economic factors and characteristics of the loan and the 
+defaulter in the corporate setting. The work on modelling the collections 
+process for mortgage lending is directly motivated by Basel (Lucas, 2006). This 
+model splits the problem into whether the mortgaged property needs to be 
+repossessed and then into forecasting what price the property will be sold for. 
+Such two-stage models could also be used for other secured loans like car 
+finance.</p> 
+<p>For unsecured consumer credit, Matuszyk <i>et al</i> (2009) have recognised 
+that the RR depends both on decisions by the lender as well as the uncertainty 
+about the borrower's ability and intention to repay. They used a decision-tree 
+approach to model the strategic-level decision of whether to collect the debt 
+in house, use an agent or sell off the debt. Modelling the amount recovered 
+overall (or under one of these strategies) in terms of the characteristics of 
+the debtor and the loan is proving to be very difficult. The initial approaches 
+have looked at linear and logistic regression, non-linear transformation so as 
+to fit Beta or log-log distributions, mixture models (especially to identify 
+the 'won't pay' (LGD=1), and even quantile regression ideas (Somers and 
+Whittaker, 2007). All seem to give correlations between actual and predicted 
+values of no better than 0.1&ndash;0.2. Moreover, the data that banks are now 
+storing systematically on the outcomes of their collections process are being 
+used to develop models of the sequence and timing of the collections operations 
+so as to optimise the RR (De Almeida Filho <i>et al</i>, 2008). So, not only is 
+it proving difficult to get reasonable estimates of LGD and RR using existing 
+data, but building models to optimise or at least improve the collections 
+process is likely to mean that RRs in the future will be significantly improved 
+on those found in these data. Thus, currently LGD modelling is like estimating 
+a moving target.</p> 
+<h4>Challenge 9: developing combined marketing and risk-assessment models that 
+help with the operations management of borrower's accounts</h4> 
+<p>One of the most surprising aspects of consumer lending in most financial 
+organisations is the lack of integration between the marketing and credit risk 
+groups. Both are interested in maximising the profit for the organisation by 
+making decisions about potential and actual customers; both use statistical 
+methods to segment the population and to predict how likely the customer is to 
+perform certain events&mdash;be it purchasing a new financial product or 
+defaulting on an existing loan. The methods used are very similar&mdash;almost 
+all the methods mentioned in Challenge 1 could be applied to build marketing 
+prediction models. Both groups use the same data about a customer to build 
+their models and, yet, rarely are combined models built.</p> 
+<p>The book by Beck and Siegel (2001) outlines the way marketing is used in 
+consumer lending, but there are surprisingly few integrated models that include 
+risk and marketing features in consumer lending. In fact,Burez and Van den Poel 
+(2008) produce a churn model in a paper entitled 'resolving the conflict 
+between the sales and credit department'. One could argue that the pricing 
+models of Challenge 4 are a start but the marketing aspects of the model are 
+not widely used, apart from the work on multiple features in credit cards (
+Thomas<i>et al</i>, 2006). Buckinx <i>et al</i> (2007) use the transactional 
+information to estimate the customer loyalty to the organisation, whileVan den 
+Poel and Larivi&egrave;re (2004) model which product features prevent customers 
+churning to another organisation. There seem to be so many obvious benefits in 
+seeking to integrate the ideas and the models in the two areas. For example, 
+there are some marketing models that seek to assess the 'emotions' of the 
+customer from their interactions with the company (Coussement and van den Poel, 
+2009) but there is no risk-assessment model that includes the customers 
+'emotions'.</p> 
+<h4>Challenge 10: developing valid customer lifetime value models when 
+lifetime means lifetime</h4> 
+<p>This final challenge is an obvious extension of Challenge 9. The overall 
+goal of marketing and credit risk modelling is to improve the profitability of 
+the customer to the financial organisation by improving customer relationship 
+management. To do this, one needs to estimate customer lifetime value. Whereas 
+in many retail environments the horizon may be just until the next purchase or 
+possibly just for a few years, in the consumer finance area, lifetime can 
+really mean lifetime&mdash;pension products for example. Thus, one needs to 
+build lifetime value models that can cope with the changes in economic and 
+market conditions over long time intervals as well as forecasting the changes 
+in the customer's situation and priorities.Tang <i>et al</i> (2007) built a 
+survival analysis model that included the interactions between economic and 
+socio-demographic variables to estimate changes in the purchases of pension 
+products.Donkers <i>et al</i> (2007) made a comparison of a number of different 
+types of customer lifetime value models using insurance industry data, while
+Verhoef and Donkers (2001) made the comparison between choice-based probit 
+models and potential value regression type models.Baesens <i>et al</i> (2004) 
+used Bayesian network classifiers to estimate the parameters of where in the 
+life cycle a customer might currently be.Benoit and van den Poel (2009) have 
+used quantile regression to estimate customer lifetime value. All these models 
+concentrate on the purchase aspects&mdash;time to and value of next purchase 
+and churn&mdash;and do not include the default risk elements that can affect 
+profitability in a major way. With approaches such as the competing risk idea 
+in survival analysis it should be possible to combine these two major factors 
+that affect customer profitability.</p> Top of page 
+<h3>Conclusion</h3> 
+<p>Given the turmoil in the financial markets during 2007 and 2008, which has 
+at last made practitioners and researchers realise how large a proportion of 
+the banking industry is based on consumer lending, there is no question that 
+research in this area will be very active for the foreseeable future. In 
+particular, the lack of models for the credit risk of portfolios of consumer 
+loans and not modelling how economic conditions affect credit scores is now 
+recognised as having exacerbated the credit crunch of 2008/2009. As many 
+researchers have for more than a decade addressed these problems in corporate 
+lending, it is reasonable to expect they will expand their research to the 
+consumer lending case.</p> 
+<p>The tremendous increase in computer storage capacity and the requirement of 
+the Basel Accord that banks have sufficient historical data to validate their 
+credit scoring models have meant that banks are now willing and able to store 
+much more consumer finance data over much longer periods than they used to do. 
+This will prove a vital tool in meeting several of the challenges outlined 
+previously. For example, up to 5 years ago, most banks had hardly any data on 
+the outcome of their collections and recoveries process, but the need to 
+estimate LGD for all consumer loans means that such data are now carefully 
+recorded and analysed.</p> 
+<p>Having seen what impact the failure to control the risks in consumer 
+lending have had on the world economy, regulators and bankers will want to 
+develop suitable models (and have enough analysts to build and monitor them) to 
+control these risks in the future&mdash;or at least for the next decade. This 
+should mean that consumer finance will have a much higher profile in university 
+Finance and Operational Research courses in the future, so that entrants to the 
+finance industry are aware of the need for models and the challenges of 
+building models to solve the problems in this area. This paper has sought to 
+identify some of these challenges.</p> Top of page 
+<h3>References</h3> 
+<ol> 
+<li> Altman E, Resti A and Sironi A (2005). Recovery Risk. Risk Books: London.
+</li> 
+<li> Anderson R (2007). The Credit Scoring Toolkit Theory and Practice for 
+Retail Credit Risk Management and Decision Automation. Oxford University Press: 
+Oxford.</li> 
+<li> Ausubel LM (1999). Adverse selection in the credit card market. Working 
+Paper. University of Maryland.</li> 
+<li> Baesens B, Setiono R, Mues C and Vanthienen J (2003a). Using neural 
+network rule extraction and decision tables for credit-risk evaluation.Mngt Sci 
+49: 312&ndash;329.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Baesens B, Van Gestel T, Viaene S, Stepanova M, Suykens J and Vanthienen 
+J (2003b). Benchmarking state-of-the-art classification algorithms for credit 
+scoring.J Opl Res Soc 54: 627&ndash;635.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL
+</li> 
+<li> Baesens B, Verstraeten G, van den Poel D, Egmont-Petersen M, van Kenhove 
+P and Vanthienen J (2004). Bayesian network classifiers for identifying the 
+slope of the customer lifecycle of long-life customers.Eur J Opl Res 156: 
+508&ndash;523.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Baesens B, Mues C, Martens D and Vanthienen J (2008). 50 years of data 
+mining and OR: Upcoming trends and challenges.J Opl Res Soc 60: 
+S16&ndash;S23.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Banasik J, Crook JN and Thomas LC (1999). Not if but when will borrowers 
+default.J Opl Res Soc 50: 1185&ndash;1190.&nbsp;|&nbsp;Article&nbsp;|&nbsp;
+OpenURL</li> 
+<li> Bank of International Settlements (2005). Stress testing at major 
+financial institutions: Survey results and practice. CGFS Publication 24, Basel.
+</li> 
+<li> Basel Committee on Banking Supervision (BCBS) (2005a, comprehensive 
+version 2006).International Convergence of Capital Measurement and Capital 
+Standards &ndash; A Revised Framework. Bank for International Settlements: 
+Basel.</li> 
+<li> Basel Committee on Banking Supervision (BCBS) (2005b). Studies on the 
+validation of Internal rating systems. Working Paper 14, Basel.</li> 
+<li> Beck RE and Siegel SM (2001). Consumer Lending. American Bankers 
+Association: Washington DC.</li> 
+<li> Bellotti T and Crook JN (2008). Credit scoring with macroeconomic 
+variables using survival analysis.J Opl Res Soc, advance online publication 10 
+December, doi:10.1057/jors.2008.130.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL
+</li> 
+<li> Bellotti T and Crook JN (2009). Support vector machines for credit 
+scoring and discovery of significant features.Expert Syst Appl 36: 
+3302&ndash;3308.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Benjamin N, Cathcart A and Ryan K (2006). Low default portfolios: A 
+proposal for conservative estimation of default probabilities. Financial 
+Services Authority: London.</li> 
+<li> Bennett RL, Catarineu E and Moral G (2005). Loss Given Default validation 
+Studies on the validation of Internal rating systems. Working Paper 14. Basel 
+Committee on Banking Supervision, Basel, pp 60&ndash;76.</li> 
+<li> Benoit DF and van den Poel D (2009). Benefits of quantile regression for 
+the analysis of customer lifetime value in a contractual setting: An 
+application in financial services.Expert Syst Appl 36: 
+10475&ndash;10484.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Breeden JL (2007). Modeling data with multiple time dimensions. Comput 
+Stat Data An 51: 4761&ndash;4785.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Breeden JL and Thomas LC (2008). The relationship between default and 
+economic cycle for retail portfolios across countries.J Risk Model Validation 2
+(3): 11&ndash;47.</li> 
+<li> Breeden JW, Thomas LC and Mcdonald JW (2008). Stress testing retail loan 
+portfolios with dual-time dynamics.J Risk Model Validation 2(2): 43&ndash;62.
+</li> 
+<li> Breiman L, Friedman JH, Olshen RA and Stone CJ (1984). Classification and 
+Regression Trees. Wadsworth: Belmont, California.</li> 
+<li> Breiman L (2001). Random forests. Mach Learn 45: 5&ndash;32.&nbsp;|&nbsp;
+Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Buckinx W, Verstraeten G and van den Poel D (2007). Predicting customer 
+loyalty using the internal transactional database.Expert Syst Appl 32: 
+125&ndash;134.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Burez J and Van den Poel D (2008). Separating financial from commercial 
+customer churn: A modeling step towards resolving the conflict between the 
+sales and credit department.Expert Syst Appl 35: 497&ndash;514.&nbsp;|&nbsp;
+Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Calem PS, Gordy MB and Mester LJ (2006). Switching costs and adverse 
+selection in the market for credit cards: New evidence.J Ban Financ 30: 
+1653&ndash;1685.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Chatterjee S and Barcun S (1970). A nonparametric approach to credit 
+screening.J Am Stat Assoc 65: 150&ndash;154.&nbsp;|&nbsp;Article&nbsp;|&nbsp;
+OpenURL</li> 
+<li> Coussement K and van den Poel D (2009). Improving customer attrition 
+prediction by integrating emotions from client/company interaction emails and 
+evaluating multiple classifiers.Expert Syst Appl 36: 
+6127&ndash;6134.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Cox DR (1972). Regression models and life tables (with discussion). J R 
+Stat Soc B 34: 187&ndash;220.&nbsp;|&nbsp;ISI&nbsp;|</li> 
+<li> Crook JN, Edelman DB and Thomas LC (2007). Recent developments in 
+consumer credit risk assessment.Eur J Opl Res 18: 1447&ndash;1465.&nbsp;|&nbsp;
+Article&nbsp;|&nbsp;OpenURL</li> 
+<li> De Almeida Filho AT, Mues C and Thomas LC (2008). Optimizing the 
+collections process in consumer credit. Working Paper Centre for Risk Research. 
+University of Southampton, to appear inProduction and Operation Management.</li>
+<li> Demyanyk Y and Van Hemert O (2008). Understanding the Subprime Mortgage 
+Crisis. Working Paper (2008), available at the Social Science Research Network. 
+See ssrn.com/abstract=1020396.</li> 
+<li> Desai VS, Conway DG, Crook JN and Overstreet GA (1997). Credit scoring 
+models in the credit union environment using neural networks and genetic 
+algorithms.IMA J Math Appl Bus Indust 8: 323&ndash;346.</li> 
+<li> Donkers B, Verhoef P and Jong M (2007). Modeling CLV: A test of competing 
+models in the insurance industry.Quant Marketing Econ 5: 
+163&ndash;190.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Edgeworth FY (1881). Mathematical Psychics: An Essay on the Application 
+of Mathematics to the Moral Sciences. Kegan Paul and Co.: London, pp viii, 150.
+</li> 
+<li> Eisenbeis RA (1978) Problems in applying discriminant analysis in credit 
+scoring models.J Banking and Finance <b>2</b>: 205&ndash;219; reprinted, In: 
+Thomas LC, Edelman DB and Crook JN (eds)Readings in Credit Scoring (2004) OUP: 
+Oxford, pp 17&ndash;32.</li> 
+<li> Financial Services Authority (2005). Stress testing. Discussion Paper 
+05/02, London.</li> 
+<li> Fisher RA (1936). The use of multiple measurements in taxonomic problems. 
+Ann Eugenic 7: 179&ndash;188.</li> 
+<li> Freed N and Glover F (1981). A linear programming approach to the 
+discriminant problem.Decision Sci 12: 68&ndash;74.&nbsp;|&nbsp;Article
+&nbsp;|&nbsp;OpenURL</li> 
+<li> Freed N and Glover F (1986). Evaluating alternative linear programming 
+models to solve the two-group discriminant problem.Decision Sci 17: 
+151&ndash;162.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Gibbens RJ and Kelly FP (1999). Resource pricing and the evolution of 
+congestion control.Automatica 35: 1969&ndash;1985.&nbsp;|&nbsp;Article
+&nbsp;|&nbsp;ISI&nbsp;|&nbsp;OpenURL</li> 
+<li> Hand DJ and Henley WE (1997). Statistical classification methods in 
+consumer credit scoring: A review.J R Stat Soc A 160: 
+523&ndash;541.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Hand DJ and Kelly MG (2001). Lookahead scorecards for new fixed term 
+credit products.J Opl Res Soc 52: 989&ndash;996.&nbsp;|&nbsp;Article
+&nbsp;|&nbsp;OpenURL</li> 
+<li> Henley WE and Hand DJ (1997). Construction of a k-nearest neighbour 
+credit scoring system.IMA J Math Appl Bus Indust 8: 305&ndash;321.</li> 
+<li> Huang C-L, Chen M-C and Wang C-J (2007). Credit scoring with a data 
+mining approach based on support vector machines.Expert Syst Appl 33: 
+847&ndash;856.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Lee T-S and Chen I-F (2005). A two-stage hybrid credit scoring model 
+using artificial neural networks and multivariate adaptive regression splines.
+Expert Syst Appl 28: 743&ndash;752.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li>
+<li> Li HG and Hand DJ (2002). Direct versus indirect credit scoring 
+classifications.J Opl Res Soc 53: 647&ndash;654.&nbsp;|&nbsp;Article
+&nbsp;|&nbsp;OpenURL</li> 
+<li> Lilien GR and Rangaswamy A (2004). Marketing Engineering. Trafford: 
+Victoria.</li> 
+<li> Lucas A (2006). Basel II Problem Solving. 
+http://www3.imperial.ac.uk/portal/pls/portallive/docs/1/7287866.PDF.</li> 
+<li> Malhotra R and Malhotra DK (2002). Differentiating between good credits 
+and bad credits using neuro-fuzzy systems.Eur J Opl Res 136: 
+190&ndash;211.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Malik M and Thomas LC (2009a). Modelling credit risk of portfolio of 
+consumer loans.Journal of the Operational Research Society, advance online 
+publication, 28 October, doi:10.1057/jors.2009.123.</li> 
+<li> Malik M and Thomas LC (2009b). Transition matrix models for consumer 
+credit ratings. Working Paper. CORMSIS, University of Southampton.</li> 
+<li> Martens D, De Backer M, Haesen R, Vanthienen J, Snoeck M and Baesens B 
+(2007). Classification with ant colony optimization.IEEE T Evolut Comput 11: 
+651&ndash;665.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Martens D, Huysmans J, Setiono R, Vanthienen J and Baesens B (2008). Rule 
+extraction from support vector machines: An overview of issues and application 
+in credit scoring.Rule Extraction from Support Vector Machines, Springer: New 
+York, pp 33&ndash;63.</li> 
+<li> Matuszyk A, Mues C and Thomas LC (2009). Modelling LGD for unsecured 
+personal loans; Decision Tree approach.Journal of the Operational Research 
+Society, advance online publication, 14 October, 
+doi:10.1057/jors.2009.67.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Mays E (1998). Credit Risk Modeling, Design and Application. Fitzroy 
+Dearborn publishers: Chicago.</li> 
+<li> Mays E (2004). Credit Scoring for Risk Managers, The Handbook for Lenders
+. Thomson South Western: Mason Ohio.</li> 
+<li> McNab H and Wynn A (2000). Principles and Practice of Consumer Credit 
+Risk Management. CIB Publishing: Canterbury.</li> 
+<li> Mok J-K (2008). Process Scoring for Micro Credit Loans, 
+http://www.few.vu.nl/stagebureau/stage/stageverslagen/stageverslag-mokg.pdf.
+</li> 
+<li> Muniz de Andrade FW and Thomas LC (2007). Structural models in consumer 
+credit.Eur J Opl Res 183: 1569&ndash;1581.&nbsp;|&nbsp;Article&nbsp;|&nbsp;
+OpenURL</li> 
+<li> Ong CS, Haung JJ and Tzeng G (2005). Building credit scoring models using 
+genetic programming.Expert Syst Appl 30: 507&ndash;518.</li> 
+<li> Overstreet GA, Bradley EL and Kemp Jr RS, (1992). The flat maximum effect 
+and generic linear scoring models: A test.IMA J Mngt Math 4: 97&ndash;109.</li> 
+<li> Phillips RL (2005). Pricing and Revenue Optimization. Stanford Business 
+Books: Stanford, California.</li> 
+<li> Quinlan JR (1993). C4.5: Programs for Machine Learning. Morgan Kaufman: 
+San Mateo, California.</li> 
+<li> Rosch D and Scheule H (2003). Forecasting retail portfolio credit risk. J 
+Risk Financ 5: 16&ndash;32.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Rosch D and Scheule H (2008). Stress Testing in Financial Institutions. 
+Risk Books: London.</li> 
+<li> Somers M and Whittaker J (2007). Quantile regression for modelling 
+distributions of profit and loss.Eur J Opl Res 183: 
+1477&ndash;1487.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Stepanova M and Thomas LC (2001). PHAB scores: Proportional hazards 
+analysis behavioural scores.J Opl Res Soc 52: 1007&ndash;1016.&nbsp;|&nbsp;
+Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Stepanova M and Thomas LC (2002). Survival analysis methods for personal 
+loan data.Opns Res 50: 277&ndash;289.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL
+</li> 
+<li> Tang LL, Thomas LC, Thomas S and Bozzetto J-F (2007). It's the economy 
+stupid: modelling financial product purchases.Int J Bank Marketing 25: 
+22&ndash;38.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Thomas LC (2000). A survey of credit and behavioural scoring; Forecasting 
+financial risk of lending to consumers.I J Forecasting 16: 
+149&ndash;172.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Thomas LC (2009a). Consumer Credit Models, Pricing, Profit and Portfolios
+. Oxford University Press: Oxford.</li> 
+<li> Thomas LC (2009b). Modelling the credit risk for portfolios of consumer 
+loans: Analogies with corporate loan models.Math Comput Simulat 20: 
+2525&ndash;2534.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Thomas LC, Edelman DB and Crook JN (2002). Credit Scoring and its 
+Applications. SIAM: Philadelphia, US.</li> 
+<li> Thomas LC, Edelman DB and Crook JN (2004). Readings in Credit Scoring. 
+Oxford University Press: Oxford.</li> 
+<li> Thomas LC, Oliver RW and Hand DJ (2005). A survey of the issues in 
+consumer credit modelling research.J Opl Res Soc 56: 
+1006&ndash;1015.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Thomas LC, Jung KM, Thomas SDA and Wu Y (2006). Modelling consumer 
+acceptance probabilities.Expert Syst Appl. 30: 507&ndash;518.&nbsp;|&nbsp;
+Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Van den Poel D and Larivi&egrave;re B (2004). Customer attrition analysis 
+for financial services using proportional hazard models.Eur J Opl Res 157: 
+196&ndash;217.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Van Gestel T, Baesens B, Suykens JAK, Van den Poel D, Baestaens DE and 
+Willekens M (2006). Bayesian kernel based classification for financial distress 
+detection.Eur J Opl Res 172: 979&ndash;1003.&nbsp;|&nbsp;Article&nbsp;|&nbsp;
+OpenURL</li> 
+<li> Verhoef PC and Donkers ACD (2001). Predicting Customer Potential Value: 
+An application in the insurance industry. Research Paper ERS-2001-01-MKT 
+Revision, Erasmus Research Institute of Management (ERIM).</li> 
+<li> Xiao W, Zhao Q and Fei Q (2006). A comparative study of data mining 
+methods in consumer loans credit scoring management.J Syst Sci Syst Eng 15: 
+419&ndash;435.&nbsp;|&nbsp;Article&nbsp;|&nbsp;OpenURL</li> 
+<li> Zandi M (1998). Incorporating economic information into credit risk 
+underwriting in (1998). In: Mays E (ed).Credit Risk Modeling, Design and 
+Application. Fitzroy Dearborn Publishers: Chicago, pp. 155&ndash;168.</li> </ol>
+<br> 
+<h1>Main navigation</h1> 
+<ul> 
+<li>Journal home</li> 
+<li>Advance online publication 
+<ul> 
+<li>About AOP</li> </ul> </li> 
+<li>Current issue</li> 
+<li>Archive 
+<ul> 
+<li>Review Papers</li> 
+<li>Highly Cited Articles</li> </ul> </li> 
+<li>Catalog entry</li> </ul> 
+<ul> 
+<li>Online submission</li> 
+<li>Instructions for authors</li> 
+<li>Contact editorial office</li> 
+<li>About the journal</li> 
+<li>Contact the society</li> 
+<li>Subscribe</li> 
+<li>Contact Palgrave Macmillan</li> 
+<li>Sample articles</li> 
+<li>Order reprints</li> 
+<li>Rights and permissions</li> 
+<li>Business &amp; Management Media Pack 2012</li> </ul> 
+<h2>Related titles</h2> 
+<ul> 
+<li>European Journal of Information Systems</li> 
+<li>Health Systems</li> 
+<li>International Abstracts in Operations Research</li> 
+<li>Journal of International Business Studies</li> 
+<li>Journal of Information Technology</li> 
+<li>Journal of Information Technology Teaching Cases</li> 
+<li>Journal of Revenue and Pricing Management</li> 
+<li>Journal of Simulation</li> 
+<li>Knowledge Management Research &amp; Practice</li> 
+<li>Maritime Economics &amp; Logistics</li> 
+<li>OR Insight</li> </ul> 
+<h2>Palgrave Macmillan Journals</h2> 
+<ul> 
+<li>Home</li> 
+<li>For authors</li> 
+<li>For institutions</li> 
+<li>For librarians</li> 
+<li>For personal users</li> 
+<li>For advertisers</li> </ul> 
+<h2>Palgrave Macmillan Books</h2> 
+<ul> 
+<li>Home</li> 
+<li>Operational Research</li> </ul> 
+<h1>Extra navigation</h1> . 
+<h2>ARTICLE NAVIGATION - FULL TEXT</h2> Previous  | Next <br>
+
+<ul> 
+<li>Table of contents</li> 
+<li>Download PDF</li> 
+<li>Send to a friend</li> 
+<li>Request Permission</li> 
+<li>Abstract</li> 
+<li>Introduction</li> 
+<li>Defining a credit score</li> 
+<li>Conclusion</li> 
+<li>References</li> 
+<li>Figures and Tables</li> </ul> 
+<ul> 
+<li>Export citation</li> 
+<li>Export references</li> </ul> 
+<ul></ul> <br>
+
+<h2>Society resources</h2> 
+<ul> 
+<li>Society home</li> </ul>  ADVERTISEMENT <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<p>Top</p> <br>
+ This journal is a member of and subscribes to the principles 
+of theCommittee on Publication Ethics. <br>
+<br>
+
+<p>Journal of the Operational Research Society</p> 
+<p>ISSN: 0160-5682</p> 
+<p>EISSN: 1476-9360</p> <br>
+<br>
+
+<ul> 
+<li>About Palgrave Macmillan</li> 
+<li>Contact Us</li> 
+<li>Legal Notice</li> 
+<li>Privacy Policy</li> 
+<li>Accessibility Statement</li> 
+<li>RSS Web feeds</li> 
+<li>Help</li> </ul> <br>
+
+<p> Copyright &copy; 2012 Palgrave Macmillan, a division of Macmillan 
+Publishers Limited. A company registered in England and Wales under Company 
+Number: 785998 with its registered office at Brunel Road, Houndmills, 
+Basingstoke, Hants, RG21 6XS, United Kingdom.<br>
+Palgrave Macmillan Journals - 
+partner ofINASP, JDP, Cross Ref, COUNTER, COPE and iThenticate. View Partners 
+</p> <br>
+
+</body>

@@ -1,0 +1,132 @@
+ranking is especially needed when the sizes of the elements are large, and that moving them around is resource-consuming.
+it does not use any work array and is faster when xvalt is of very small size (< 20), or already almost sorted, but worst case behavior (intially inverse sorted) can easily happen.
+in that case, the total overhead for random vector simulation was nearly 1 minute.
+such a routine would prove useful in finding a limited number of unique values in an array.
+also, orderpack contains a partial unique ranking routine.
+in most cases, the quicksort or merge sort method is faster.
+i joyfully mix french and english in these names, for instance, iwrkf is an integer index (i) of temporary nature (wrk) representing an upper limit (f -- fin is end in french); that i used my pretty-printer f90ppr to indent and lay out the source code.
+it does not use any work array subroutine inspar (xvalt, nord) sorts partially xvalt, bringing the nord lowest values at the begining of the array.
+in many cases, the refined quicksort method implemented by valnth / indnth is faster, though much more difficult to read and understand.
+in most cases, the quicksort or merge sort method is faster.
+it does not use any work array and is faster when nord is very small (2-5), but worst case behavior (intially inverse sorted) can easily happen.
+in fact, the time was dominated by the simultation of the vector, looping, and other overhead.
+the relative proportion of initial order and random order is 1-pcls / pcls, thus when pcls = 0, there is no change in the order whereas the new order is fully random when pcls = 1.
+in many instances, it suits better the actual need of the user, who can then use the index array to order other related sets or to select some elements, than a sorting program would.
+it does not use any work array and is faster when nord is very small (2-5), but worst case behavior can happen fairly probably (initially inverse sorted).
+a word of apology when one looks at the description of a sorting algorithm, the process seems pretty simple, and can usually hold in 10 to 20 lines of pseudo-code.
+for performance reasons, the first 2 passes are taken out of the standard loop, and use dedicated coding.
+download all at once news bugs were corrected as of fall 2010 in unirnk, uniinv (the routine tried to access the 4th value when there are only 3) and in rnkpar (the routine fails when the 3 first values are equal).
+the routine is similar to pure merge-sort ranking, but on the last pass, it sets indices in igoest to the rank of the original value in an ordered set with duplicates removed.
+subroutine refpar (xvalt, irngt, nord) ranks partially xvalt by irngt, up to order nord this version is not optimized for performance, and is thus not as difficult to read as some other ones.
+as an added bonus orderpack provides an unusual routine which allows user controllable partial random permutation of arrays.
+subroutine unirnk (xvalt, irngt, nuni) ranks an array, removing duplicate entries (uses merge sort).
+this version is not optimized for performance, and is thus not as difficult to read as some other ones.
+such unique ranking routines allow users to isolate individual cases out of a mass of discrete data.
+it may be noted that there could be some cases when one would get stuck in a sort of local minimum, where local perturbations cannot further reduce the correlation and where global ones lead to overpass the target.
+it uses insertion sort, limiting insertion to the first nord values.
+orderpack contains conventional or unconditional sorting routines as well.
+it does not use any work array and is faster when nord is very small (2-5), but worst case behavior (intially inverse sorted) can easily happen.
+subroutine ctrper (xvalt, pcls) permute array xvalt randomly, but leaving elements close to their initial locations the routine takes the 1...size(xvalt) index array as real values, takes a combination of these values and of random values as a perturbation of the index array, and sorts the initial set according to the ranks of these perturbated indices.
+random permutation: an interesting use of ranking a variation of the following problem was raised on the internet sci.math.num-analysis news group: given an array, i would like to find a random permutation of this array that i could control with a ``nearbyness'' parameter so that elements stay close to their initial locations.
+perhaps the following should have been under the``word of apology'' item: my programming style does not stick tightly to commonly established rules.
+specifically, we know of no other fortran code which sorts or ranks only a small proportion of an array (partial ordering).
+it also has better worst case behavior than indnth, but is about 10% slower in average for random uniformly distributed values.
+the existing fortran code base provides many conventional ranking or sorting routines, but very few specialized ranking or sorting routines.
+this subroutine uses insertion sort, limiting insertion to the first nord values, and even less when one can know that the value that is considered will not be the nordth.
+on a 460 mhz alphastation with compaq fortran 90 v5.2, taking care to increase stacksize, partial ranking by itself took 2.3 seconds,i.e. 23 milliseconds per vector.
+make extensive use of work arrays: memory can be extended, time cannot.
+the routine first sorts the two arrays, so as to get the match of maximum possible correlation.
+this is fine and recommended for small programs, but yet may lead to architecture andmakefile problems for large applications.
+many times the frequency of the unique values proves interesting (e.g., empirical distributions).
+if you want to modify my programs, it might be useful to know: that i don't state implicit none, i prefer to rely on a good compiler to catch the sort of errors that it catches, and even more of them; that i use some naming conventions that go back to the 6-character variable names limit, and the conventions of implicit typing.
+users can freely download orderpack 2.0 from this site.
+the existing fortran code base provides many conventional ranking or sorting routines, but very few specialized ranking or sorting routines.
+there are three main ways to implement it: when one looks at the description of a sorting algorithm, the process seems pretty simple, and can usually hold in 10 to 20 lines of pseudo-code.
+for performance reasons, the first 2 passes are taken out of the standard loop, and use dedicated coding.
+in many cases, the refined quicksort method is faster.
+this subroutine uses insertion sort, limiting insertion to the first nord values, and even less when one can know that the value that is considered will not be the nordth.
+it uses only a work array of size nord and is faster when nord is very small (2-5), but worst case behavior can happen fairly probably (initially inverse sorted).
+a similar experiment involved 100 trials of simulating a random vector of length 1,000,000 and ranking the 20 smallest elements (keeping duplicates).
+similar bugs were corrected as of march 2011 in rnkpar and rapknr (the routines may fail when ranking 3 values out of 4).
+it also has better worst case behavior than valnth/indnth, and is about 20% faster in average for random uniformly distributed values.
+assume that cache size is relatively small, and try to maximize cache hits.
+unique ranking subroutine unirnk (xvalt, irngt, nuni) ranks an array, removing duplicate entries (uses merge sort).
+this version is not optimized for performance, and is thus not as difficult to read as some other ones.
+it also has better worst case behavior than indnth, but is about 10% slower in average for random uniformly distributed values.
+it uses insertion sort, limiting insertion to the first nord values.
+i would like to pair the elements of these arrays so that the given correlation coefficient is attained, i.e. to reconstruct a realistic dataset, though very likely not to be the true one.
+this subroutine uses insertion sort, limiting insertion to the first nord values.
+ranks array xvalt into index array irngt, using merge-sort this version is not optimized for performance, and is thus not as difficult to read as the previous one.
+in many cases, the refined quicksort method implemented by valnth / indnth is faster, though much more difficult to read and understand.
+so please accept my apologies that this code is often complex and difficult to read.
+at all times, the nord first values in ilowt correspond to distinct values of the input array.
+in some instances, one is not actually interested in modifying the order of the elements in a set, but only in knowing how to access them in increasing -- or decreasing -- order.
+that way, the target correlation is approached from above, by a controlled increase in randomness.
+embedding the routine of interest as a "contained routine" into the calling procedure.
+in order to make use of fortran 90 argument passing improvements, it is necessary to make the routine interface known to the calling program.
+the routine is similar to pure merge-sort ranking, but on the last pass, it sets indices in igoest to the rank of the original value in an ordered set with duplicates removed.
+subroutine rinpar (xvalt, irngt, nord) ranks partially xvalt by irngt, up to order nord this version is not optimized for performance, and is thus not as difficult to read as some other ones.
+the routines in orderpack have been designed to take advantage of modern machines.
+on a 600 mhz piii machine using the cvf 6.1a compiler it took under 2.7 seconds for the unique partial ranking.
+finally, many fortran sorting or ranking routines do not take advantage of available memory and cache to maximize performance.
+it does not use any work array partial sorting subroutine inspar (xvalt, nord) sorts partially xvalt, bringing the nord lowest values at the begining of the array.
+i know from an independent source the value of the correlation coefficient between the incomes of the parents and of their children.
+in many instances, it suits better the actual need of the user, who can then use the index array to order other related sets or to select some elements, than a sorting program would.
+in addition, many applications need to work with only the unique values in an array (unique ordering).
+ranks array xvalt into index array irngt, using merge-sort this version is not optimized for performance, and is thus not as difficult to read as the previous one.
+ranking in some instances, one is not actually interested in modifying the order of the elements in a set, but only in knowing how to access them in increasing -- or decreasing -- order.
+the routines in orderpack have been designed to take advantage of modern machines.
+on a 600 mhz piii machine using the cvf 6.1a compiler it took under 2.7 seconds for the unique partial ranking.
+in that case, the total overhead for random vector simulation was nearly 1 minute.
+orderpack contains conventional or unconditional sorting routines as well.
+such unique ranking routines allow users to isolate individual cases out of a mass of discrete data.
+a similar point is that the index array can be used to index other data.
+one of the advantages of carrying out ranking rather than sorting is that the index array can be computed without the performance penalty of moving the elements around when they are of large sizes.
+it does not use any work array and is faster when nord is very small (2-5), but worst case behavior can happen fairly probably (initially inverse sorted).
+it may be noted that there could be some cases when one would get stuck in a sort of local minimum, where local perturbations cannot further reduce the correlation and where global ones lead to overpass the target.
+in the end, the number of lines of source code may be multiplied tenfold, and the readability decreased in a similar proportion.
+in order to make use of fortran 90 argument passing improvements, it is necessary to make the routine interface known to the calling program.
+as an added bonus orderpack provides an unusual routine which allows user controllable partial random permutation of arrays.
+subroutine ctrper (xvalt, pcls) permute array xvalt randomly, but leaving elements close to their initial locations the routine takes the 1...size(xvalt) index array as real values, takes a combination of these values and of random values as a perturbation of the index array, and sorts the initial set according to the ranks of these perturbated indices.
+since we wanted to provide generic versions of the routines, and to bef-compatible, this is the way we used here.
+but if one wants an optimized program, one takes this simple implementation, and looks for redundant operations, investigates runs with sample data sets with a profiling tool, and is led to duplicate code with slight modifications rather than use tests in inner loops, to process differently the first and the last iterations, or to take into account some special cases that are only special in that they can be done faster.
+in fact, the time was dominated by the simultation of the vector, looping, and other overhead.
+but if one wants an optimized program, one takes this simple implementation, and looks for redundant operations, investigates runs with sample data sets with a profiling tool, and is led to duplicate code with slight modifications rather than use tests in inner loops, to process differently the first and the last iterations, or to take into account some special cases that are only special in that they can be done faster.
+at all times, the nord first values in ilowt correspond to distinct values of the input array.
+author: michel olagnon similar bugs were corrected as of march 2011 in rnkpar and rapknr (the routines may fail when ranking 3 values out of 4).
+subroutine refpar (xvalt, irngt, nord) ranks partially xvalt by irngt, up to order nord this version is not optimized for performance, and is thus not as difficult to read as some other ones.
+in many cases, the refined quicksort method is faster.
+the routine first sorts the two arrays, so as to get the match of maximum possible correlation.
+ranking is especially needed when the sizes of the elements are large, and that moving them around is resource-consuming.
+one of the advantages of carrying out ranking rather than sorting is that the index array can be computed without the performance penalty of moving the elements around when they are of large sizes.
+many times the frequency of the unique values proves interesting (e.g., empirical distributions).
+to show the potential speed gains, we conducted an experiment involving 100,000 trials of simulating a random vector of length 500 with duplicates and ranking the 9 smallest unique elements (duplicates discarded).
+unfortunately, this is the price to pay for speed of execution.
+for performance reasons, the first 2 passes are taken out of the standard loop, and use dedicated coding.
+so please accept my apologies that this code is often complex and difficult to read.
+for performance reasons, the first 2 passes are taken out of the standard loop, and use dedicated coding.
+finally, many fortran sorting or ranking routines do not take advantage of available memory and cache to maximize performance.
+i know from an independent source the value of the correlation coefficient between the incomes of the parents and of their children.
+that way, the target correlation is approached from above, by a controlled increase in randomness.
+in the end, the number of lines of source code may be multiplied tenfold, and the readability decreased in a similar proportion.
+programming style programming style is personal, and difficult to modify when one has been programming for several decades.
+subroutine rinpar (xvalt, irngt, nord) ranks partially xvalt by irngt, up to order nord this version is not optimized for performance, and is thus not as difficult to read as some other ones.
+specifically, we know of no other fortran code which sorts or ranks only a small proportion of an array (partial ordering).
+it does not use any work array and is faster when xvalt is of very small size (< 20), or already almost sorted, but worst case behavior (intially inverse sorted) can easily happen.
+a similar experiment involved 100 trials of simulating a random vector of length 1,000,000 and ranking the 20 smallest elements (keeping duplicates).
+the routine is similar to pure merge-sort ranking, but on the last pass, it discards indices that correspond to duplicate entries.
+it uses only a work array of size nord and is faster when nord is very small (2-5), but worst case behavior can happen fairly probably (initially inverse sorted).
+in addition, many applications need to work with only the unique values in an array (unique ordering).
+i would like to pair the elements of these arrays so that the given correlation coefficient is attained, i.e. to reconstruct a realistic dataset, though very likely not to be the true one.
+in many cases, the refined quicksort method is faster.
+ranking consists in finding, for each element of a set, its rank in the sorted set, without effectively changing the initial order (or disorder !) of the set.
+also, orderpack contains a partial unique ranking routine.
+this subroutine uses insertion sort, limiting insertion to the first nord values.
+to show the potential speed gains, we conducted an experiment involving 100,000 trials of simulating a random vector of length 500 with duplicates and ranking the 9 smallest unique elements (duplicates discarded).
+unfortunately, this is the price to pay for speed of execution.
+the routine is similar to pure merge-sort ranking, but on the last pass, it discards indices that correspond to duplicate entries.
+perhaps the following should have been under the``word of apology'' item: my programming style does not stick tightly to commonly established rules.
+such a routine would prove useful in finding a limited number of unique values in an array.
+it also has better worst case behavior than valnth/indnth, and is about 20% faster in average for random uniformly distributed values.
+programming style is personal, and difficult to modify when one has been programming for several decades.
+on a 460 mhz alphastation with compaq fortran 90 v5.2, taking care to increase stacksize, partial ranking by itself took 2.3 seconds,i.e. 23 milliseconds per vector.

@@ -1,0 +1,47 @@
+recursive implementations of merge sort make 2n - 1 method calls in the worst case, compared to quicksort's n, thus has roughly twice as much recursive overhead as quicksort.
+in this application, we sort each new piece that is received using any sorting algorithm, and then merge it into our sorted list so far using the merge operation.
+in some sense, main ram can be seen as a fast tape drive, level 3 cache memory as a slightly faster one, level 2 cache memory as faster still, and so on.
+in java, the arrays.sort() methods use mergesort and a tuned quicksort depending on the datatypes.
+however, this approach can be expensive in time and space if the received pieces are small compared to the sorted list — a better approach in this case is to store the list in a self-balancing binary search tree and add elements to it as they are received.
+however, iterative, non-recursive, implementations of merge sort, avoiding method call overhead, are not difficult to code.
+[edit] ada ada implementation uses type data_t for the data array.
+function mergesort (data : in data_t) return data_t is begin if data'length  merge_sort(vector& vec) { // termination condition: list is completely sorted if it // only contains a single element.
+in some sense, main ram can be seen as a fast tape drive, level 3 cache memory as a slightly faster one, level 2 cache memory as faster still, and so on.
+in this application, we sort each new piece that is received using any sorting algorithm, and then merge it into our sorted list so far using the merge operation.
+ada implementation uses type data_t for the data array.
+as of perl 5.8, merge sort is its default sorting algorithm (it was quicksort in previous versions of perl).
+in the worst case, merge sort does exactly (n ⌈log n⌉ - 2⌈log n⌉ + 1) comparisons, which is between (n log n - n + 1) and (n log n - 0.9139·n + 1)
+sorting in-place is possible but requires an extremely complicated implementation and hurts performance.
+in the worst case, merge sort does about 39% fewer comparisons than quicksort does in the average case; merge sort always makes fewer comparisons than quicksort, except in extremely rare cases, when they tie, where merge sort's worst case is found simultaneously with quicksort's best case.
+[edit] perl fyi as of perl's built-in sort is merge sort by default.
+recursive implementations of merge sort make 2n - 1 method calls in the worst case, compared to quicksort's n, thus has roughly twice as much recursive overhead as quicksort.
+in some circumstances, cache reloading might impose unacceptable overhead and a carefully crafted merge sort might result in a significant improvement in running time.
+however, iterative, non-recursive, implementations of merge sort, avoiding method call overhead, are not difficult to code.
+merge sort is much more efficient than quicksort if the data to be sorted can only be efficiently accessed sequentially, and is thus popular in languages such as lisp, where sequentially accessed data structures are very common.
+this opportunity might change if fast memory becomes very cheap again, or if exotic architectures like the tera mta become commonplace.
+although heap sort has the same time bounds as merge sort, it requires only ω(1) auxiliary space instead of merge sort's ω(n), and is consequently often faster in practical implementations.
+[edit] optimizing merge sort this might seem to be of historical interest only, but on modern computers, locality of reference is of paramount importance in software optimization, because multi-level memory hierarchies are used.
+merge sort is often the best choice for sorting a linked list: in this situation it is relatively easy to implement a merge sort in such a way that it does not require ω(n) auxiliary space (instead only ω(1)), and the slow random-access performance of a linked list makes some other algorithms (such as quick sort) perform poorly, and others (such as heapsort) completely impossible.
+merge sort's most common implementation does not sort in place, meaning memory the size of the input must be allocated for the sorted output to be stored in.
+on the plus side, merge sort is a stable sort, parallelizes better, and is more efficient at handling slow-to-access sequential media.
+in the worst case, merge sort does about 39% fewer comparisons than quicksort does in the average case; merge sort always makes fewer comparisons than quicksort, except in extremely rare cases, when they tie, where merge sort's worst case is found simultaneously with quicksort's best case.
+function mergesort (data : in data_t) return data_t is begin if data'length merge_sort(vector& vec) { // termination condition: list is completely sorted if it // only contains a single element.
+in the worst case, merge sort does exactly (n ⌈log n⌉ - 2⌈log n⌉ + 1) comparisons, which is between (n log n - n + 1) and (n log n - 0.9139·n + 1)
+however, this approach can be expensive in time and space if the received pieces are small compared to the sorted list — a better approach in this case is to store the list in a self-balancing binary search tree and add elements to it as they are received.
+designing a merge sort to perform optimally often requires adjustment to available hardware, eg. number of tape drives, or size and speed of the relevant cache memory levels.
+merge sort's most common implementation does not sort in place, meaning memory the size of the input must be allocated for the sorted output to be stored in.
+although heap sort has the same time bounds as merge sort, it requires only ω(1) auxiliary space instead of merge sort's ω(n), and is consequently often faster in practical implementations.
+in java, the arrays.sort() methods use mergesort and a tuned quicksort depending on the datatypes.
+in some circumstances, cache reloading might impose unacceptable overhead and a carefully crafted merge sort might result in a significant improvement in running time.
+mergesort's merge operation is useful in online sorting, where the list to be sorted is received a piece at a time, instead of all at the beginning.
+merge sort is often the best choice for sorting a linked list: in this situation it is relatively easy to implement a merge sort in such a way that it does not require ω(n) auxiliary space (instead only ω(1)), and the slow random-access performance of a linked list makes some other algorithms (such as quick sort) perform poorly, and others (such as heapsort) completely impossible.
+if x<y then x::merge (xs,y::ys) else y::merge (x::xs,ys) ; val half = length(lst) div 2; in merge (mergesort (list.take (lst, half)),mergesort (list.drop (lst, half))) end ; in sorting n items, merge sort has an average and worst-case performance of o(n log n).
+on the plus side, merge sort is a stable sort, parallelizes better, and is more efficient at handling slow-to-access sequential media.
+[edit] utility in online sorting mergesort's merge operation is useful in online sorting, where the list to be sorted is received a piece at a time, instead of all at the beginning.
+as of perl 5.8, merge sort is its default sorting algorithm (it was quicksort in previous versions of perl).
+merge sort is much more efficient than quicksort if the data to be sorted can only be efficiently accessed sequentially, and is thus popular in languages such as lisp, where sequentially accessed data structures are very common.
+this opportunity might change if fast memory becomes very cheap again, or if exotic architectures like the tera mta become commonplace.
+if x<y then x::merge (xs,y::ys) else y::merge (x::xs,ys)  ; val half = length(lst) div 2; in merge (mergesort (list.take (lst, half)),mergesort (list.drop (lst, half))) end ; [edit] analysis in sorting n items, merge sort has an average and worst-case performance of o(n log n).
+this might seem to be of historical interest only, but on modern computers, locality of reference is of paramount importance in software optimization, because multi-level memory hierarchies are used.
+sorting in-place is possible but requires an extremely complicated implementation and hurts performance.
+designing a merge sort to perform optimally often requires adjustment to available hardware, eg. number of tape drives, or size and speed of the relevant cache memory levels.

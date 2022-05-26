@@ -1,0 +1,1314 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Google Summer of Code 2011 Ideas - Globus</title>
+<body>
+<br>
+FAQ <br>
+Site Map <br>
+Contact Us <br>
+<br>
+
+<ul> 
+<li>Home</li> 
+<li>Globus Alliance</li> 
+<li>Globus Toolkit</li> 
+<li>Grid Software</li> 
+<li>Grid Solutions</li> 
+<li>dev.globus</li> </ul> 
+<h1> Google Summer of Code 2011 Ideas </h1> 
+<h3> From Globus </h3> <br>
+
+<p>Globus has been accepted as a Google Summer of Code 2011 mentoring 
+organization. This page lists our proposed GSoC project ideas. The project 
+ideas are grouped according to the Globus projects that proposed them, but this 
+is by no means an exclusive list of ideas; if you have a cool idea for a 
+Globus-related project, please contact one of theGSoC mentors. There are also  
+additional pages where you may be able to find inspiration for interesting 
+summer projects.</p> 
+<p>Before submitting an application to GSoC with Globus as your mentoring 
+organization, make sure you read ourGSoC FAQ, which provides some pointers on 
+how to write a successful application.</p> 
+<p>Once you are ready to submit an application, remember that you must do so 
+<b>before April 8th</b> through the GSoC webapp. </p> 
+<h2>Contents</h2> 
+<ul> 
+<li>1 Globus Toolkit projects 
+<ul> 
+<li>1.1 Connection Management in GridFTP</li> 
+<li>1.2 GridFTP Server Windows Port</li> 
+<li>1.3 DemoGrid Web Console</li> 
+<li>1.4 Add more Chef recipes to DemoGrid</li> </ul> </li> 
+<li>2 Globus Online projects 
+<ul> 
+<li>2.1 Adaptive Tuning in Globus Online</li> 
+<li>2.2 JGlobus GridFTP/GlobusOnline bridge</li> 
+<li>2.3 Graph based Cassandra Partitioner</li> 
+<li>2.4 iOS application for Globus Online</li> 
+<li>2.5 Android App for Globus Online</li> </ul> </li> 
+<li>3 Nimbus projects 
+<ul> 
+<li>3.1 Automatic User Management</li> 
+<li>3.2 Multipart Uploads in Cumulus (S3)</li> 
+<li>3.3 LanTorrent Compression</li> 
+<li>3.4 Dead VM Reaper</li> 
+<li>3.5 EPU REST Interfaces</li> 
+<li>3.6 virtio Support in Generated libvirt XML</li> 
+<li>3.7 Make KVM First Class Functionality</li> 
+<li>3.8 Improved Admin Tools</li> 
+<li>3.9 VM Console Output</li> 
+<li>3.10 Replace ssh communication to cluster VMMs with AMQP</li> 
+<li>3.11 Context Broker Improvements</li> </ul> </li> 
+<li>4 Swift projects 
+<ul> 
+<li>4.1 Develop data management provider (driver) for Globus Online</li> 
+<li>4.2 Integrate Swift into Globus Online to provide an application execution 
+and scripting service</li> 
+<li>4.3 SwiftScript functional iteration constructs</li> 
+<li>4.4 Enhance Swift app() functions with run-time specifications</li> 
+<li>4.5 Implementing efficient Map-Reduce models using the Swift parallel 
+scripting language</li> 
+<li>4.6 Integrating Swift parallel scripting semantics into Python, R, Octave, 
+and MATLAB</li> 
+<li>4.7 Integrating service access capabilities in the Swift parallel 
+scripting language</li> 
+<li>4.8 Integrating in-RAM function calls and data passing</li> 
+<li>4.9 Adding associative array operators to Swift</li> 
+<li>4.10 Measuring and enhancing multi-site parallel scheduling in Swift</li> 
+<li>4.11 Enabling distributed, interactive debugging and status 
+monitoring/reporting of Swift parallel and distributed scripts</li> 
+<li>4.12 Multi-level workflow programming models</li> 
+<li>4.13 Flexible cloud and volunteer resource management for the Swift 
+parallel scripting language</li> 
+<li>4.14 Reworking the Swift parallel scripting dataset mapper model and 
+toolset</li> 
+<li>4.15 Enabling large-scale distributed application build and deployment 
+under Swift</li> 
+<li>4.16 Making the Swift parallel scripting system easy to install, evaluate 
+and learn on readily available computing resources</li> 
+<li>4.17 Enhancing Swift accessibility and usability on the Open Science Grid 
+and TeraGrid</li> 
+<li>4.18 Enhancing a Gadget-based portal interface for the execution of 
+scientific workflows</li> 
+<li>4.19 Enhancing the Swift parallel scripting Library</li> </ul> </li> 
+<li>5 Scientific Services 
+<ul> 
+<li>5.1 Semantics-Oriented Behavior-Empowered Scientific Service Search Engine
+</li> </ul> </li> 
+<li>6 &quot;Blue sky&quot; ideas</li> 
+<li>7 Other sources of project ideas</li> 
+<li>8 Mentors</li> 
+<li>9 Project idea guidelines 
+<ul> 
+<li>9.1 Increase Awesomeness of Globus</li> </ul> </li> </ul> <br>
+<br>
+
+<h2> Globus Toolkit projects</h2> 
+<h3> Connection Management in GridFTP</h3> 
+<p><b>Globus project</b>: Globus Toolkit </p> 
+<p><b>Mentor</b>: Raj Kettimuthu </p> 
+<p><b>Programming Language/s</b>: C </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: The GridFTP protocol is a backward compatible extension 
+of the legacy RFC959 FTP protocol. Globus implementation of GridFTP is widely 
+used for data movement in the Grid community. To access the server, a user must 
+be authenticated, have appropriate read and write permissions, and respect the 
+total connection limit, but beyond that, there is no management or control. A 
+user can hold a connection open indefinitely and move an unlimited number of 
+files (barring disk space or system quota constraints). We need more flexible 
+management to limit the length of time a user can hold a connection, address 
+prioritization and responses to overburdened services, and prevent starvation. 
+Globus Fork (GFork) - a user-configurable super-server daemon very similar to 
+xinetd that enables sharing of state across client connections for a service, 
+user-defined master programs that co-ordinate resource sharing. Associated with 
+a GFork instance is a master process. When GFork starts, it runs a user-defined 
+master program and opens up bi-directional pipes to it. The master program runs 
+for the lifetime of the GFork daemon. The master is free to do whatever it 
+wants; it is a user-defined program. For example, it can monitor system 
+resources and implement algorithm to manage the connection requests to GridFTP 
+server and/or manage the memory usage of GridFTP server processes. The goal of 
+this project is to develop a GFork plugin for connection management to the 
+GridFTP server. For example, limit low priority user to one concurrent 
+connection, but a high priority user to 10 connections.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> A command of UNIX environments </li> 
+<li> C programming </li> 
+<li> Good operating systems background </li> 
+<li> A basic understanding of FTP </li> </ul> 
+<p><br>
+</p> 
+<h3> GridFTP Server Windows Port</h3> 
+<p><b>Globus project</b>: Globus Toolkit </p> 
+<p><b>Mentor</b>: Mike Link </p> 
+<p><b>Programming Language/s</b>: C </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: Port the GridFTP Server code to Windows 7. This should 
+be done natively (e.g. Not CYGWIN). The majority of the server code is already 
+portable. User and file accounting, and process management will need to be 
+written using native Windows APIs. This should include an installer as well as 
+service management support. The modified code should be able to be compiled 
+using MinGW or cross-compiled using gcc on linux.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Familiar with C Windows APIs </li> 
+<li> General UNIX/POSIX knowledge </li> </ul> 
+<p><br>
+</p> 
+<h3> DemoGrid Web Console</h3> 
+<p><b>Globus project</b>: DemoGrid </p> 
+<p><b>Mentor</b>: Borja Sotomayor </p> 
+<p><b>Programming Language/s</b>: Python </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: Globus DemoGrid is a tool that will build an 
+instructional grid environment that you can then deploy, using virtual 
+machines, on a cloud (such as Amazon EC2) or on your own physical resources. 
+The current interface is console-based, but a web-based interface would make 
+DemoGrid even easier to use by beginners. This web console could be either used 
+locally (by a single user), or installed on a site for several users to access 
+(e.g., if DemoGrid uses local resources instead of Amazon EC2).</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> DemoGrid is written in Python, although the Web Console can be written in 
+your language of choice. So, some knowledge of Python is required.</li> 
+<li> Should already be familiar with building web applications, AJAX, and all 
+that jazz.</li> </ul> 
+<p><br>
+</p> 
+<h3> Add more Chef recipes to DemoGrid</h3> 
+<p><b>Globus project</b>: DemoGrid </p> 
+<p><b>Mentor</b>: Borja Sotomayor </p> 
+<p><b>Programming Language/s</b>: Python </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: Globus DemoGrid is a tool that will build an 
+instructional grid environment that you can then deploy, using virtual 
+machines, on a cloud (such as Amazon EC2) or on your own physical resources. 
+DemoGrid currently supports a limited number of Grid technologies (see 
+&quot;Supported Grid technologies&quot; in
+http://confluence.globus.org/display/DEMOGRID/Introduction+to+DemoGrid). In 
+this project, the student will write Chef recipes that will allow DemoGrid to 
+automatically deploy new Grid software.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Familiar with Chef (http://www.opscode.com/chef/) </li> 
+<li> DemoGrid is written in Python and, although most of the work will involve 
+writing Chef recipes and various scripts, some familiarity with Python will 
+come in handy.</li> 
+<li> This project is meant for students who are already familiar with a 
+particular Grid technology, and would like to add support for it in DemoGrid.
+</li> </ul> 
+<h2> Globus Online projects</h2> 
+<h3> Adaptive Tuning in Globus Online</h3> 
+<p><b>Globus project</b>: Globus Online </p> 
+<p><b>Mentor</b>: Tanu Malik </p> 
+<p><b>Programming Language/s</b>: C </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: The goal of this project is to design an automatic 
+tuning framework within Globus Online. GridFTP is the primary protocol used 
+within Globus Online for performing bulk data transfers. In GridFTP, the 
+efficiency of a data transfer operation depends upon correctly predicting the 
+number of streams for performing the data transfer. Parallel streams often 
+achieve high throughput by reducing bandwidth delay product. However, 
+efficiency drops when all streams experience packet loss. Thus, correctly 
+predicting the value of this parameter is often a challenge and depends on a 
+variety of factors such bandwidth, RTT, packet loss rate, etc. While GridFTP 
+employs models to predict the thread level, it also discourages changing the 
+thread level arbitrarily as it hurts overall performance. We will implement a 
+&quot;decision framework&quot; that will determine for GridFTP if its 
+profitable to change its current thread level. The framework will consist of a) 
+predicting the value of this parameter under given number of threads, (b) 
+estimating overheads within GridFTP in changing its current number of streams, 
+and (c) adaptively deciding whether to change its current stream level. The 
+project will require an intimate knowledge of GridFTP, and understanding of 
+throughput prediction models as described in the following papers [1,2,3]. The 
+deliverables of the project will be:</p> 
+<ul> 
+<li> Implement the decision framework, </li> 
+<li> Test it using real workloads from past GridFTP usage, and </li> 
+<li> Measure performance with and without the decision framework. </li> </ul> 
+<p>References: </p> 
+<ul> 
+<li> [1] W. Liu, B. Tieman, R. Kettimuthu, I. Foster, &quot;A Data Transfer 
+Framework for Large-Scale Science Experiments&quot;, in International Workshop 
+on Data Intensive Distributed Computing (DIDC 2010), 2010.</li> 
+<li> [2] J. Lee, D. Gunter, B. Tierney, B. Allcock, J. Bester, J. Bresnahan, 
+and S. Tuecke, &ldquo;Applied techniques for high bandwidth data transfers 
+across wide area networks,&rdquo; in Proc. International Conference on 
+Computing in High Energy and Nuclear Physics (CHEP01), 2001.</li> 
+<li> [3] E. Yildirim, D. Yin, T. Kosar, &quot;Prediction of Optimal 
+Parallelism Level in Wide Area Data Transfers&quot;, in IEEE Transactions on 
+Parallel and Distributed Systems, 2010.</li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> A basic understanding of FTP </li> 
+<li> C programming </li> 
+<li> Understanding of network fundamentals </li> </ul> 
+<h3> JGlobus GridFTP/GlobusOnline bridge</h3> 
+<p><b>Globus project</b>: Globus Online </p> 
+<p><b>Mentor</b>: Vijay Anand </p> 
+<p><b>Programming Language/s</b>: Java </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: The current JGlobus client for GridFTP is used 
+extensively to connect to GridFTP servers from Java. As the features supported 
+by Globus Online expand, many JGlobus users may want to connect to Globus 
+Online instead of using GridFTP directly. To support this in a seamless way, 
+this project proposed to implement the JGlobus api for the GridFTP client using 
+the REST interfaces provided by Globus Online. This will allow existing users 
+of the JGlobus client to migrate to using Globus Online with few (or, ideally, 
+no) changes to their existing code. The project will require the following 
+steps:</p> 
+<ul> 
+<li> Conduct a gap analysis between the RESTful API for Globus Online and what 
+JGlobus provides. This should yield suggestions for changes to the Globus 
+Online apis.</li> 
+<li> Implement all appropriate JGlobus GridFTP client methods using the Globus 
+Online RESTful API</li> 
+<li> Document the usage of the client. </li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> A basic understanding of REST principals </li> 
+<li> Java programming </li> 
+<li> Basic understanding of JGlobus </li> </ul> 
+<h3> Graph based Cassandra Partitioner</h3> 
+<p><b>Globus project</b>: Globus Online </p> 
+<p><b>Mentor</b>: Tom Howe </p> 
+<p><b>Programming Language/s</b>: Python </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: Globus Online uses the Cassandra[1] datastore for 
+persisting it's information. To facilitate using Cassandra, we developed a 
+graph database called Agamemnon[2], which runs on top of Cassandra. This allows 
+us to use graph semantics for modeling our data. When data is stored in 
+Cassandra, it is distributed via a Partitioner, which determines which data 
+should go to which backend datastore. In order to optimize the storage and 
+retrieval of data, this project would implement a new Partitioner which uses a 
+standard graph visualization algorithm to distribute the data. One such 
+algorithm is the Fruchterman-Reingold algorithm[3] This way, information that 
+is closely related can be stored near each other. This project will require the 
+following steps:</p> 
+<ul> 
+<li> Identify the best graph visualization algorithms for partitioning the data
+</li> 
+<li> Implement the partitioner </li> 
+<li> Fully test and document the code. </li> </ul> 
+<p>References: </p> 
+<ul> 
+<li> [1] http://cassandra.apache.org </li> 
+<li> [2] https://github.com/turtlebender/agamemnon </li> 
+<li> [3] Fruchterman, Thomas M. J.; Reingold, Edward M. (1991). &quot;Graph 
+Drawing by Force-Directed Placement&quot;. Software &ndash; Practice &amp; 
+Experience (Wiley) 21 (11): 1129&ndash;1164.</li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> An understanding of graph algorithms </li> 
+<li> Python Programming </li> 
+<li> A familiarity with Cassandra and how Cassandra distributes data </li> 
+</ul> 
+<h3> iOS application for Globus Online</h3> 
+<p><b>Globus project</b>: Globus Online </p> 
+<p><b>Mentor</b>: Tom Howe </p> 
+<p><b>Programming Language/s</b>: Objective C </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: To support users who have mobile devices produced by 
+Apple, we propose a project to develop an iPhone/iPad application which will 
+give access to the core services provided by GlobusOnline. This will include 
+credential management and file transfer capabilities. The app should replicate 
+most of the functionality of the current site and provide a secure experience 
+for users who want to interact with Globus Online. The project will require the 
+following steps:</p> 
+<ul> 
+<li> Wireframe the application </li> 
+<li> Build the application according to the specifications </li> 
+<li> Document the usage of the application. </li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> An understanding of how to develop applications in iOS </li> 
+<li> Objective C programming (or C) </li> 
+<li> Basic understanding of Globus Online </li> </ul> 
+<h3> Android App for Globus Online</h3> 
+<p><b>Globus project</b>: Globus Online </p> 
+<p><b>Mentor</b>: Bryce Allen </p> 
+<p><b>Programming Language/s</b>: Java </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: We propose a project to develop an Android application 
+which will give access to the core services provided by GlobusOnline. This will 
+include credential management and file transfer capabilities. The app should 
+replicate most of the functionality of the current site and provide a secure 
+experience for users who want to interact with Globus Online.</p> 
+<p>The Globus Online File Transfer (REST) API documentation is here: 
+http://transfer.api.globusonline.org </p> 
+<p>The project will require the following steps: </p> 
+<ul> 
+<li> Wireframe the application </li> 
+<li> Build the application according to the specifications </li> 
+<li> Document the usage of the application. </li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> An understanding of how to develop Android applications </li> 
+<li> Experience using Linux systems </li> </ul> 
+<h2> Nimbus projects</h2> 
+<h3> Automatic User Management</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: John Bresnahan </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: Currently in Nimbus all of our user management tools 
+are run by the Nimbus administrator. While often appropriate, this is 
+inconvenient for (among other things) tutorials. We are interested in providing 
+a solution that will allow an easier process for automatically creating users.
+</p> 
+<p>The service would allow a user to request access to a Nimbus cloud via a 
+REST API. The user would provide an email address with their request. This 
+request would trigger some configurable logic that would either automatically 
+approve the request, reject the request, or put the request in a queue awaiting 
+the admins approval. The decision would be made based on the provided email 
+address and a set of configurable rules (ex: accept all .edu, all uchicago.edu, 
+etc).</p> 
+<p>Once the account is approved (either automatically or via the sysadmin) the 
+user will be sent email with a link to a web page. The web page is only 
+available for a short period of time. When the user visits that web page they 
+can download their credentials and will then have access to the Nimbus cloud.
+</p> 
+<p>If there is time in the project we will also modify the cloud client to 
+take the approval url (described above) as a parameter and use it to 
+automatically download the needed credentials from the REST service and install 
+them into the users cloud-client installation.</p> 
+<p>We currently have a web application that allows for delivery of credentials 
+to users. The current application does not solve the entirety of the problem. 
+It is meant to handle the delivery of credentials, not the request. A user 
+still needs to contact a cloud admin and request an account, that cloud admin 
+then needs to run the nimbus-new-user program and then send the new user back a 
+url contained in the current web app. At that point the user can retrieve their 
+credentials.</p> 
+<p>We need to add to this a means for account requesting. A web page, or 
+preferably, a web API will be created that allows a user to request an account 
+given their email address (and some other set of information). The user will 
+receive an email at the given address indicating if the request was accepted 
+and if so, a url like the one provided in current web app.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> Java </li> 
+<li> General UNIX skills </li> 
+<li> Experience with django a plus </li> </ul> 
+<h3> Multipart Uploads in Cumulus (S3)</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: John Bresnahan </p> 
+<p><b>Programming Language/s</b>: Python </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: Cumulus is an S3 look a like service. 
+http://www.nimbusproject.org/docs/2.7/faq.html#cumulus. Since the release of 
+Cumulus Amazon has added support for multi-part uploads to their protocol. More 
+information about this can be found here:
+http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?uploadobjusingmpu.html
+.</p> 
+<p>In this project we will add support for multi-part upload to the Cumulus 
+service.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> General UNIX skills </li> 
+<li> Understanding of networks and data transfer </li> </ul> 
+<p><br>
+</p> 
+<h3> LanTorrent Compression</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: John Bresnahan </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: LANTorrent is a multicast network protocol in the 
+Nimbus toolkit that is used to propagate VM images to backend nodes for 
+execution. Often times VM images have 'blank space' in them. Because of this 
+they are sparsely populated files and the compress very well.</p> 
+<p>In this project we will modify LANTorrent in 3 ways: First we will make it 
+compress files as it sends them and uncompress them as they arrive. Two, make 
+an association of file extension to compression algorithm allowing LANTorrent 
+to send already compressed files to a receiver that will unzip them as they 
+flow in. Three, add support for sparse files so that the compression is not 
+needed.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> General understanding of UNIX </li> 
+<li> Understanding of sparse files </li> 
+<li> Understanding of basic network architecture </li> 
+<li> Understanding of network protocols and TCP communication </li> </ul> 
+<h3> Dead VM Reaper</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: Dave LaBissoniere </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Beginner </p> 
+<p><b>Description</b>: In the Nimbus IaaS platform Virtual Machines are 
+remotely executed and managed via libvirt. When a machine is launched its 
+existence is recorded in a database associated with the frontend service. When 
+it is killed the record of that instance is removed. A problem comes up when a 
+VM unexpectedly dies. The frontend will not know it has died until the time 
+allocation for that VM expires, or until a user manually kills it. This leaves 
+the frontend thinking it has resources in use that are not and could actually 
+be freed up for us with other VMs.</p> 
+<p>In this project we will add functionality to Nimbus to periodically check 
+the backend nodes for running VMs. When we find that a VM no longer exists this 
+new functionality will remove it from the frontend's database.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> Java </li> 
+<li> libvirt a plus </li> </ul> 
+<h3> EPU REST Interfaces</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: Dave LaBissoniere </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Beginner </p> 
+<p><b>Description</b>: Currently the Elastic Processing Unit is using AMQP to 
+communicate messages between components. The system is distributed and relies 
+heavily on messaging for incoming sensor data as well as control channel 
+messages.</p> 
+<p>The project is to convert this messaging to REST or HTTP RPC based 
+mechanisms and to ensure that there is a retry mechanism in place that fits 
+with the reliability design. After some experimentation, the first half of the 
+project will be replacing the marshalling layers and configuration files. The 
+second half of the project will be security work and polishing.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> General UNIX skills </li> 
+<li> Strong security mindset </li> 
+<li> Experience with Twisted a plus </li> 
+<li> Experience with REST/HTTP in Python a plus </li> </ul> 
+<h3> virtio Support in Generated libvirt XML</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: Dave LaBissoniere </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: Right now the xml file created for launching VMs with 
+libvirt is generated in python code. We would like to separate this out into a 
+template with the initial goal of having support for virtio, but also for a 
+more configurable service for cloud experimentation. More information can be 
+found here:https://github.com/nimbusproject/nimbus/issues#issue/33 </p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> libvirt a plus </li> 
+<li> KVM or Xen a plus </li> </ul> 
+<h3> Make KVM First Class Functionality</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: Dave LaBissoniere </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: Currently the Nimbus toolkit is geared towards Xen. 
+While it works with KVM it requires some modifications and alternative set of 
+instructions. Further we do not fully take advantage of some KVM features. The 
+main task here will be adding support for KVM image formats (qcow2, QED, 
+raw...) and device drivers (ide, scsi, virtio).</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> General UNIX knowledge </li> 
+<li> KVM knowledge </li> </ul> 
+<h3> Improved Admin Tools</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: Patrick Armstrong </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Beginner </p> 
+<p><b>Description</b>: Provide API and command line tools for administrator 
+operations on Nimbus clouds. For example, terminating a running VM, listing VMs 
+by user, node, etc. The task is to provide a clean API and implementation which 
+takes requests and makes necessary calls in the service, then provide polished 
+and well-documented command line tools which communicate with these APIs.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> General UNIX knowledge </li> </ul> 
+<h3> VM Console Output</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: John Bresnahan </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: When a system is booted, be it a VM or a real machine, 
+is very useful to read both for diagnostic information and debugging. The 
+Nimbus IaaS platform currently does not provide a way for users to see this 
+output, this when a VM image fails to boot on Nimbus it can be hard to figure 
+out why. Often times the cloud admin who has access to the node it is started 
+on needs to get involved. This makes the creation of new VM images all the 
+harder for users.</p> 
+<p>EC2 and other IaaS platforms allow the user to fetch the console output for 
+inspection and debugging. The task is to add support to for fetching the 
+console output of a booted VM Nimbus. This task touches most layers of the 
+stack: cloud client, web services, service&lt;-&gt;node communication, libvirt 
+integration.</p> 
+<p><br>
+ The deliverables for this project would be: </p> 
+<ul> 
+<li> A modified cloud client that remotely calls the fetch console method </li>
+<li> An additional operation on the service to fetch the console output </li> 
+<li> Modification to VM management code to capture the console output and 
+store it for fetching</li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> Java </li> 
+<li> Experience with Virtual Machines </li> 
+<li> Experience with an IaaS platform (EC is fine) a plus </li> </ul> 
+<h3> Replace ssh communication to cluster VMMs with AMQP</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: John Bresnahan </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Advanced </p> 
+<p><b>Description</b>: Nimbus uses ssh to communicate with the VMM in the 
+Nimbus cluster. This can cause some scalability issues in the case of highly 
+loaded Nimbus clusters. In order to increase the scalability of Nimbus 
+deployments the development project would involve replacement of ssh messaging 
+withAMQP, probably using RabbitMQ. This would be a good project to learn about 
+AMQP and scalability of services.</p> 
+<p>The deliverables for this project would be: </p> 
+<ul> 
+<li> A messaging framework using AMQP that the Nimbus IaaS service can use. 
+</li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Python </li> 
+<li> Java </li> 
+<li> Experience with rabbitmq </li> 
+<li> Familiarity with AMQP </li> </ul> 
+<h3> Context Broker Improvements</h3> 
+<p><b>Globus project</b>: Nimbus </p> 
+<p><b>Mentor</b>: Dave LaBissoniere </p> 
+<p><b>Programming Language/s</b>: Python and Java </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: The Nimbus Context Broker provides a facility for 
+coordinating the launch of many VMs and securely exchanging information. A 
+common use is to set up a virtual compute cluster (PBS for example) composed of 
+VMs. The broker is the central service which is contacted by each node. 
+Currently it lacks persistence, so any service failure or restart causes 
+failure of incomplete contexts. It also is too precise about its requirements 
+for success: for example if launching a cluster with 1000 workers and only 999 
+check in, currently this means failure for the whole run. It should be possible 
+to allow it to proceed in these situations.</p> 
+<p>The deliverables for this project would be: </p> 
+<ul> 
+<li> An implementation of persistence to a database for the state of the 
+Context Broker</li> 
+<li> A design and implementation of a scheme allowing &quot;partial 
+success&quot; of launches, either by some timeout or a manual operation saying 
+to proceed with contextualization</li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Java </li> 
+<li> Python (potentially) </li> </ul> 
+<h2> Swift projects</h2> 
+<h3> Develop data management provider (driver) for Globus Online</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Programming Language/s</b>: Java </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: Enable Swift to move large datasets using Globus Online 
+by developing a &quot;data provider&quot; interface for the Java &quot;CoG 
+Kit&quot; layer that Swift uses to move data and execute remote tasks.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Java </li> 
+<li> REST </li> </ul> 
+<p><br>
+</p> 
+<h3> Integrate Swift into Globus Online to provide an application execution 
+and scripting service</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Programming Language/s</b>: shell, Python </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: Embed the Swift scripting engine into Globus Online to 
+enable GO users to define and execute parallel application scripts as a 
+cloud-hosted service.</p> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Scripting via shell and/or Python </li> 
+<li> REST </li> </ul> 
+<p><br>
+</p> 
+<h3> SwiftScript functional iteration constructs</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: SwiftScript, the language of Swift, has a feel quite 
+like a functional programming language. Some difficulties arise where it does 
+not (for example in its<code>foreach</code> and <code>iterate</code> control 
+constructs). I would be interested to see constructs that more like<code>map
+</code>, <code>fold</code> and <code>scan</code> as found in (for example) 
+Haskell or other functional languages. I have a fairly good idea what this 
+should look like, so there is not a huge amount of design work involved. 
+Initially we'd want to develop constructs which can replicate the present 
+iteration constructs, but more nicely expressed - and then attempt to see how 
+easy they are for people to use compared to the existing ones.</p> 
+<p><b>Mentor</b>: Mike Wilde </p> 
+<h3> Enhance Swift app() functions with run-time specifications</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: Add the ability to specify things like MPI width, RAM 
+and walltime needs, disk space needs, etc. calculated by Swift expressions from 
+variable info available in the script. This would feed into the existing rich 
+Swift &quot;profile&quot; framework that is currently only statically settable 
+at workflow start time. More details TBD.</p> 
+<p><b>Mentor</b>: Mike Wilde </p> 
+<h3>  Implementing efficient Map-Reduce models using the Swift parallel 
+scripting language</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: The Swift parallel scripting language ( 
+www.ci.uchicago.edu/swift ) enables you to run many (tens of thousands and 
+more) application programs in parallel on clusters, grids, clouds, and 
+supercomputers, as well on on multicore workstations. While Swift, as a 
+functional-inspired programming language, makes it easy to specify a map-reduce 
+style of scripting, as a general functional language it operates on typed data 
+objects and does not intrinsically use the key-value data model of Google and 
+Hadoop MapReduce. Hence it lacks the ability to automatically sort, partition, 
+merge, and reduce results. This project will focus on creating a map-reduce 
+library tailored for Swift execution. It will enable key-value-style problems 
+to be expressed in Swift, as well as efficiently applying map-reduce to 
+problems where keys and values can be implicitly derived from the data types 
+being processed. The result will be a pleasing and highly productive style of 
+specifying map-reduce problems in a simple functional notation. You could 
+support MapReduce style applications without explicit support from Swift. I 
+think all is needed are some applications that Swift would call. For example, 
+if you wanted to do sort via MapReduce, all you need is a Map to break up a 
+file into buckets by key, and a Merge that needs to take some buckets and put 
+them back into a single file. The data-flow of this application can be 
+expressed simply by two subsequent for loops. Depending at what level you were 
+thinking of addressing MapReduce applications, I might be interested in 
+co-mentoring students on this project as well.</p> 
+<p><b>Mentors</b>: Michael Wilde </p> 
+<p><b>Level:</b> Advanced </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Familiarity with map-reduce and other parallel programming concepts </li> 
+<li> Skills in scripting in Python or similar languages </li> 
+<li> Moderate Java skills to write and run Hadoop program </li> </ul> 
+<p><br>
+</p> 
+<h3>  Integrating Swift parallel scripting semantics into Python, R, Octave, 
+and MATLAB</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: The power of Swift parallel distributed scripting model 
+could be more widely leveraged if it its execution semantics could be expressed 
+in other popular scripting languages. Preliminary work in embedding and calling 
+Swift from the R data analysis language indicates that this approach may yield 
+new and highly-productive methods for easily writing parallel and distributed 
+scripts. (Seehttp://www.ci.uchicago.edu/wiki/bin/view/SWFT/SwiftR) </p> 
+<p>Python is the preferred implementation we'd like to focus on next. R is 
+pretty well underway. Octave/MATLAB would be of interest.</p> 
+<p>There are many alternative models to explore for this, including 
+&quot;co-routine&quot; styles of programming; methods for passing arguments and 
+results between language interpreters executing in parallel; expressing the 
+Swift task graph in an efficient, scalable, but easy-to-program-with data 
+structure using the native language; conventions for mapping datasets and 
+wrapping external application programs; and conventions for embedding simple 
+snippets of Swift code into scripts in other languages. This project will 
+entail selecting one language to experiment with (Python is preferred), 
+implementing an experimental library interface to swift, and evaluating its 
+usability, expressiveness, and performance on simple test cases and on a set of 
+scientific applications.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Familiarity with parallel and distributed computing models </li> 
+<li> Advanced scripting skills in the chosen scripting language (Python 
+preferred)</li> </ul> 
+<p><br>
+</p> 
+<h3>  Integrating service access capabilities in the Swift parallel scripting 
+language</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: Swift provides a uniform, general, and flexible model 
+for expressing the inputs and outputs of application programs, including how 
+large and possible complex structured datasets are passed to the application. 
+This project will extend that model to applications expressed as REST, JSON, 
+and SOAP services, so that standard Linux/POSIX applications can be freely 
+intermixed with service-based applications in Swift scripts to compose powerful 
+scientific workflows. Case studies will be drawn from applications in biology 
+and astronomy where such service-oriented applications are abundant and the 
+need for this integration is high. As an extension, this project could explore
+</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Familiarity with SOAP, REST and/or JSON </li> 
+<li> Scripting skills in Python or similar language </li> 
+<li> Familiarity with XML </li> </ul> 
+<p><br>
+</p> 
+<h3>  Integrating in-RAM function calls and data passing </h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: Swift's &quot;leaf&quot; or lowet-level functions are 
+current application programs wrapped into a Swift function interface. This 
+project will explore the ability to apply the Swift implicitly-prallel data 
+flow programming model to calling in-memory functions such as long-running math 
+library routines, etc. Also Java methods. For calling C and FOrtran, we expect 
+to model this capability on MPI data-passing conventions.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Advanced Java programming skills </li> 
+<li> Knowledge of MPI helpful </li> </ul> 
+<p><br>
+</p> 
+<h3>  Adding associative array operators to Swift </h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: Swift provides a nicely powerful dynamic array 
+construct, but at the moment these arrays permit only integer indexing. But the 
+underlying array mechanism is in fact implemented as a hash table. This project 
+will add syntax and semantics to the language to permit indexing arrays by 
+using string keys and perhaps arbitrary objects as keys.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Advanced Java programming skills </li> 
+<li> Familiarity with compiler technqiues </li> </ul> 
+<p><br>
+</p> 
+<h3>  Measuring and enhancing multi-site parallel scheduling in Swift </h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: Swift provides a powerful task execution site selector 
+and scheduler which can sense the responsiveness and load level of computing 
+sites and can throttle the volume of work that Swift sends to the site up and 
+down. This algorithm needs to be extensively tested, measured, and enhanced, 
+and its performance and capabilities should be documented in academic papers. 
+We want to make its many parameters as self-tuning as possible, we want to 
+determine what necessary controls to provide to the Swift end-user and make 
+these as simple and usable as possible. This project will involved extensive 
+experimentation with the scheduler on large-scale distributed resources such as 
+Open Science Grid and TeraGrid, and possibly the Amazon EC2 cloud computing 
+service and petascale supercomputers at DOE and TeraGrid sites as well.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Advanced </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Familiarity with parallel and distributed computing models </li> 
+<li> Performance measurement and evaluation skills </li> 
+<li> Plotting and data analysis skills </li> 
+<li> Scripting skills in shell, Python, or similar languages </li> </ul> 
+<p><br>
+</p> 
+<h3>  Enabling distributed, interactive debugging and status 
+monitoring/reporting of Swift parallel and distributed scripts</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: In this project we propose to enhance both the display 
+and control of running parallel workflows, adding capabilities to probe down to 
+individual remote worker nodes to gain detailed insight on application 
+performance, and generate an informative set of dynamic plots by which users 
+can fully understand all aspects of their script's and application's behavior 
+and performance</p> 
+<p>This will be a good project for students with a strong interest in 
+distributed computing, performance analysis and modeling, and graphical display 
+of information.</p> 
+<p>There are 3 possible sub-projects here: </p> 
+<ul> 
+<li> Developing the ability to connect to remote compute nodes and probe the 
+performance of a running application using a shell. A rudimentary prototype of 
+this exists and needs many enhancements</li> 
+<li> Display the overall status of a Swift script in progress. Similarly, a 
+curses-based version of this exists, but many enhancements and improvements are 
+needed</li> 
+<li> Create reports and plots of Swift script performance </li> </ul> 
+<p>Additional details on the third sub-project are: </p> 
+<p>We have an older version of a plotting capability that suffers from 
+terrible performance (in parsing the log and organizing its data) and bugs, and 
+which produces many informative but rather confusing logs that are hard to 
+select, control, and interpret.</p> 
+<p>This is a fascinating project if you enjoy (or want to learn) performance 
+analysis of distributed and parallel systems.</p> 
+<p>The project will involve: </p> 
+<ul> 
+<li> normalizing the Swift log records (log4j) from its Java execution engine 
+so that the events of interest are formatted in a unified fashion</li> 
+<li> adding more log records and information fields </li> 
+<li> adding easier control by the user to enable logging by function and/or 
+logging level rather than by log4j class names.</li> 
+<li> create a few useful event streams out of the logging info </li> 
+<li> creating multiple reporting and display options including summaries, 
+tables, and plots that show various dimensions of a Swift application's 
+activities</li> 
+<li> basic plots to be produced by an integrated Java plot library such as 
+JFreeChart (http://www.jfree.org/jfreechart/samples.html) </li> 
+<li> creating convenient R datasets and plot routines to enable the user to 
+explore performance data (&quot;slice and dice&quot;) and compare and plot one 
+or more Swift runs</li> 
+<li> creating documentation to enable the user to generate and interpret 
+activity plots and use them to understand and tune the performance of their 
+application scripts and identify performance problems and bottlenecks.</li> 
+</ul> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Familiarity with parallel and distributed computing models </li> 
+<li> Performance measurement and evaluation skills </li> 
+<li> Plotting and data analysis skills </li> 
+<li> Advanced scripting skills in shell, Python, and/or Perl </li> 
+<li> Intermediate Java programming skills </li> </ul> 
+<p><br>
+</p> 
+<h3>  Multi-level workflow programming models </h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: This project will involve experimentation with the 
+Swift parallel scripting programming model and its implementation, to create 
+execution mechanisms that can partition a Swift program's execution graph 
+across multiple, distributed, asynchronous executors. MORE TBD.... Once the 
+execution graph is partitioned, mechanisms need to be in place to coordinate 
+the execution graph, and to ensure that performance (e.g. throughput of 
+tasks/sec) is not impacted significantly. Experiments are expected to be 
+carried out to test the new upper bound on scalability of Swift, using this 
+partitioned approach, and to test throughput of the Swift system to ensure 
+comparable performance.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level</b>: Advanced </p> 
+<p><br>
+</p> 
+<h3>  Flexible cloud and volunteer resource management for the Swift parallel 
+scripting language</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: Preliminary work to date indicates that Swift runs well 
+on cloud and volunteer computing resources. In this project, we propose to 
+experiment with and adapt Swift's resource management and scheduling mechanisms 
+to make it easy to run swift scripts in Amazon EC2, DOE Magellan, and BOINC 
+volunteer clouds, with both automated and user-driven control over resource 
+levels, types, and costs. The project will deal with issues of usability, 
+evaluating scientific workloads in cloud contexts, making it easy to grow and 
+shrink resource clouds, and managing long-running workloads.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Java </li> 
+<li> Scripting in shell and/or Python or similar </li> 
+<li> Prior experience with EC2 or BOINC desirable </li> </ul> 
+<p><br>
+</p> 
+<h3>  Reworking the Swift parallel scripting dataset mapper model and toolset 
+</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: The Swift parallel scripting model implements a dataset 
+typing model in which directory structures of scientific data can be described 
+as structure and array objects, and can be mapped from their on-disk structure 
+to an in-memory representation of that structure. This enables complex 
+directory trees of data to be processed using simple scripts. This project will 
+involved refining the mapping model, and designing a new set of mappers and 
+mapping conventions, based on user experience with the current mapping model, 
+to make this style of script-writing even easier, more natural, and more robust 
+and reusable. This project will deal with many file naming conventions and data 
+access services, and will provide mechanisms to maintain and access large-scale 
+collaboration-wide data catalogs. The project will involve the use of the 
+Globus Replica Location Service (RLS) and other highly-scalable file / dataset 
+catalogs.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Scripting in shell and/or Python or similar </li> 
+<li> Solid experience using Linux systems </li> </ul> 
+<p><br>
+</p> 
+<h3>  Enabling large-scale distributed application build and deployment under 
+Swift</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: Using distributed grid resources on the Open Science 
+Grid ( www.opensciencegrid.org ) and TeraGrid ( www.teragrid.org ) requires 
+that application programs used by a user workload be installed on each 
+computing site that will be used on a given grid. This project will build on 
+one of the many systems that attempt to automate this process, and will refine, 
+improve and test this mechanism, focusing on reliability and usability. The 
+result will have great value for numerous scientific collaborations that 
+wrestle with this difficult problem.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Software building skills </li> 
+<li> Familiarity with Make and Configure </li> </ul> 
+<p><br>
+</p> 
+<h3>  Making the Swift parallel scripting system easy to install, evaluate and 
+learn on readily available computing resources</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: While the Swift parallel scripting system is meant 
+primarily for users on large-scale clusters, grid, and supercomputers, its also 
+quite usable on multi-core workstations, and it can readily federate small 
+networks of such workstations or servers into a valuable parallel computing 
+resource. At the same time, the ability to do this make such an approach an 
+attractive vehicle by which new and prospective Swift users can evaluate and 
+learn the system. This project entails creating an attractive Swift 
+&quot;starter kit&quot; with tested and documented demos, on a set of 
+interesting but easy-to-install application problems. This is an ideal project 
+for junior programmers who seek an introduction to parallel computing and to 
+scientific applications.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Introductory </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Familiarity with ssh and scp </li> 
+<li> Knowledge of Linux systems and shell scripting </li> 
+<li> Familiarity with Python or similar scripting languages </li> 
+<li> Ability to experiment with simple scientific applications and graphical 
+tools</li> </ul> 
+<p><br>
+</p> 
+<h3>  Enhancing Swift accessibility and usability on the Open Science Grid and 
+TeraGrid</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: The Swift parallel scripting system can be an ideal 
+tool to enable new users of TeraGrid and OpenScienceGrid to rapidly achieve the 
+ability to transition and scale up from a local sever or cluster environment to 
+a more powerful Grid environment with far greater computing resources. This 
+project will help to build a starter kit for such users that pre-configures 
+Swift for their use on these large-scale Grid infrastructures, and which 
+automates and hides many of the complexities in executing at such as large and 
+highly distributed scale.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Introductory </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Familiarity with ssh and scp </li> 
+<li> Knowledge of Linux systems and shell scripting </li> 
+<li> Familiarity with Python or similar scripting languages </li> 
+<li> Ability to experiment with simple scientific applications and graphical 
+tools</li> </ul> 
+<p><br>
+</p> 
+<h3>  Enhancing a Gadget-based portal interface for the execution of 
+scientific workflows</h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: Our new scientific workflow portal mechanisms enable 
+users to create customized &quot;workspace&quot; environments in which they can 
+execute parallel, distributed scientific workflow scripts on a variety of grid 
+and supercomputer resources. The portal provides the means to integrate 
+distributed data management, workflow launch and status monitoring, result 
+tracking, analysis and visualization. This project will involve working on a 
+set of innovative enhancements to the portal in the areas of tagging and 
+metadata management, workflow status display, interactive distributed 
+debugging, and visualization and analysis of scientific results.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Web 2.0 programming with DHTML, CSS, Google Gadgets </li> 
+<li> Data analysis and visualization in MATLAB, Octave, or R </li> 
+<li> User interface usability analysis and enhancement skills </li> </ul> 
+<h3>  Enhancing the Swift parallel scripting Library </h3> 
+<p><b>Globus project</b>: Swift </p> 
+<p><b>Description</b>: As a relatively young language, Swift does not yet have 
+a rich set of library functions to perform many of the common tasks needed in 
+typical scientific scripts. This project will involve building such initial 
+libraries for string and text manipulation, network access, file data 
+management, and elementary mathematical functions. Requirements will be 
+gathered from discussion with Swift users, analysis of existing Swift scripts, 
+and from a set of exploratory Swift scripts to be written by the student. The 
+project will involve enhancing the initial, primitive library 
+&quot;import&quot; capability of Swift, and will explore how to add 
+&quot;namespaces&quot; and library search mechanism to the language.</p> 
+<p><b>Mentor</b>: Michael Wilde </p> 
+<p><b>Level:</b> Introductory to intermediate </p> 
+<p><b>Requirements:</b> </p> 
+<ul> 
+<li> Scripting in shell and python or similar languages </li> 
+<li> Elementary Java programming skills </li> </ul> 
+<h2> Scientific Services</h2> 
+<h3> Semantics-Oriented Behavior-Empowered Scientific Service Search Engine
+</h3> 
+<p><b>Globus project</b>: [ None.] </p> 
+<p><b>Mentor</b>: Jia Zhang </p> 
+<p><b>Programming Language/s</b>: Java </p> 
+<p><b>Level of Expertise</b>: TBD </p> 
+<p><b>Description</b>: The Internet, the Grid and the newly emerging cloud 
+environment have provided a community platform for scientists to share various 
+kinds of resources (e.g., experimental data and analytical applications) in the 
+form of services. However, our recent analysis revealed that the reusability of 
+scientific services is very low. How to effectively and efficiently help 
+scientists find suitable services and help them construct new workflows 
+(experimental process) with existing services remains a big challenge. This 
+project proposes to tackle this issue by intelligently extracting information 
+from the shared computing environment, leveraging the power of social network 
+analysis and complex network theories. Such a heuristic approach may complement 
+the existing syntax and semantics-oriented services discovery research, and 
+provide guidance to the construction of the next-generation of service search 
+engine. The driving factor of the research is our hypothesis that there is much 
+useful information implicit in the past use of scientific services. This 
+project aims to answer two fundamental questions: What implicit information may 
+be extracted to help scientists better understand existing artifacts? and How 
+can such implicit information be used to facilitate service-based artifact 
+reuse? To this end, the project will build models and techniques to study the 
+past behaviors of scientific services in the context of scientific experimental 
+processes. As a proof of concept, this project will build a prototyping search 
+engine, as a plugin to Taverna, a known life science scientific workflow 
+management workbench.</p> 
+<p>The deliverables for this project would be: </p> 
+<ul> 
+<li> TBD </li> </ul> 
+<p>References: </p> 
+<ul> 
+<li> Wei Tan, Jia Zhang, and Ian Foster, &quot;Network Analysis of Scientific 
+Workflows: a Gateway to Reuse&quot;, IEEE Computer, Sep., 2010, 43: pp. 54-61.
+</li> 
+<li> Jia Zhang, Daniel Kuc, and Shiyong Lu, &quot;Confucius: A Scientific 
+Collaboration System Using collaborative Scientific Workflows&quot;, in 
+Proceedings of IEEE International Conference on Web Services (ICWS), 2010, 
+Miami, FL, USA, Jul. 5-10, pp. 567-575.</li> 
+<li> T. Oinn, M. Greenwood, M. Addis, M.N. Alpdemir, J. Ferris, K. Glover, C. 
+Goble, A. Goderis, D. Hull, D. Marvin, P. Li, P. Lord, M.R. Pocock, M. Senger, 
+R. Stevens, A. Wipat, and C. Wroe, &quot;Taverna: Lessons in Creating a 
+Workflow Environment for the Life Sciences&quot;, Concurrency and Computation: 
+Practice &amp; Experience, 2006, 18(10): pp. 1067&ndash;1100.</li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Experienced with Java programming </li> 
+<li> Basic knowledge about XML, Web services and scientific workflow (highly 
+preferred)</li> </ul> 
+<h2> &quot;Blue sky&quot; ideas</h2> 
+<p>The following are &quot;blue sky&quot; project ideas. They are not as 
+detailed as the above project proposals, and some of them might not even be 
+feasible during a single summer. However, they could end up being the seed from 
+which a really cool project springs.</p> 
+<ul> 
+<li> No &quot;Blue sky&quot; ideas yet. </li> </ul> 
+<h2> Other sources of project ideas</h2> 
+<p>The above list of project ideas is by no means exclusive. You may find 
+inspiration for other cool ideas in the following places:</p> 
+<ul> 
+<li> Our mentors. Feel free to contact any mentor whose field of interest 
+matches your own. If you are unsure of who to contact, or no mentor seems like 
+a good match, please contactBorja Sotomayor (our GSoC org admin), and he will 
+put you in touch with the right person.</li> 
+<li>  2010 project ideas,  2009 project ideas and  2008 project ideas. Some of 
+these ideas were already picked up and implemented by students, or may be 
+outdated at this point. However, some mentors might be interested in reviving 
+an old idea if you have an interesting proposal in mind.</li> 
+<li> 2009 projects and 2008 projects. Our students in 2008 and 2009 developed 
+some really cool projects, and some of them might be able to use an extra 
+summer of work to add new features, take the project in a new direction, etc. 
+If one of our past projects looks interesting, you can try contacting the 
+student and his/her mentor to see if they'd be willing to mentor a similar 
+project.</li> </ul> 
+<h2> Mentors</h2> 
+<p>Our GSoC mentors (and their areas of expertise) are: </p> 
+<ul> 
+<li> Bryce Allen: Globus Online </li> 
+<li> Vijay Anand </li> 
+<li> Patrick Armstrong: Nimbus </li> 
+<li> John Bresnahan: Nimbus, GridFTP, Globus XIO </li> 
+<li> Tim Freeman: Nimbus </li> 
+<li> Tom Howe: Globus Online </li> 
+<li> Raj Kettimuthu: GridFTP </li> 
+<li> David LaBissoniere: Nimbus </li> 
+<li> Mike Link: GridFTP </li> 
+<li> Ravi Madduri </li> 
+<li> Tanu Malik </li> 
+<li> Stuart Martin: Globus Online </li> 
+<li> Borja Sotomayor: Globus DemoGrid </li> 
+<li> Michael Wilde: Swift, scientific workflows </li> 
+<li> Jia Zhang: Scientific workflows </li> </ul> 
+<p>If you have an idea for a project, but none of the above mentors seem like 
+a good match, please contactBorja Sotomayor (our GSoC org admin) and he will 
+try to match you to an adequate mentor.</p> 
+<h2> Project idea guidelines</h2> 
+<p>This section is intended only for mentors who want to propose new project 
+ideas for students.</p> 
+<p>We have created a Mediawiki Template to add new ideas to the list. Please 
+use it when adding new ideas:</p> 
+<pre> {{GSoCproject| idea_title=Example Idea: Increase Awesomeness of Globus | 
+globus_project=Globus Toolkit at-large | 
+globus_project_url=http://www.globus.org/ | mentor_name=John Q. Globus | 
+mentor_email=john.q.globus@example.org | programming_languages=Java and C | 
+expertise=Intermediate | description=We already know Globus is awesome, but 
+there's no upper bound on awesomeness. In this project, we propose that you 
+make Globus more awesome. The deliverables for this project would be: * Develop 
+a metric of awesomeness. * Measure current awesomeness of Globus. * Improve 
+Globus to make it more awesome, according to the provided metric. * Measure new 
+awesomeness of Globus. | requirements= * Must already be familiar with the 
+Globus Toolkit. * Must be an awesome student. }}</pre> 
+<p>This is the information you should include in each idea: </p> 
+<ul> 
+<li> <b>idea_title</b>: The title of your idea </li> 
+<li> <b>globus_project</b> and <b>globus_project_url</b>: What project (in the 
+dev.globus sense of the word) does this idea relate to? (include the name and 
+its URL)</li> 
+<li> <b>mentor_name</b> and <b>mentor_email</b>: Each project must have a 
+mentor. The mentor is in charge of supervising students, tracking their 
+progress, answering questions about the project, etc. If you would like to be 
+the mentor for this project, please include your name and e-mail address here. 
+If not, please leave this field blank, and we will assign a mentor from the 
+mentor pool.</li> 
+<li> <b>programming_languages</b>: What programming languages will be used in 
+the project?</li> 
+<li> <b>expertise</b>: What level of expertise do you expect from the student? 
+You should specify<i>just one</i> of the following three words. If you need to 
+elaborate on the level of expertise or the prerequisites of your project, you 
+should do so in the<i>requirements</i> field. 
+<ul> 
+<li> <i>Beginner</i>: You don't assume any prerequisite knowledge about Globus 
+or Grid Computing. In other words, the project can be done by any student who 
+is somewhat fluent in the programming languages listed in the project idea. For 
+example, adequate for sophomore, or even freshmen, students in Computer Science 
+or Engineering.</li> 
+<li> <i>Intermediate</i>: You assume some advanced knowledge in Computer 
+Science, but not specifically on Globus (e.g., the student may have to know 
+about networks and distributed systems). Should be adequate for juniors or 
+seniors majoring in Computer Science or Engineering who have taken upper-level 
+courses.</li> 
+<li> <i>Advanced</i>: You assume the student is already familiar with Globus. 
+</li> </ul> </li> 
+<li> <b>description</b>: Include a 1-2 paragraph description of what has to be 
+accomplished in this project. You do not need to completely specify the 
+project, just give prospective students a good idea of what work is required 
+(is it mainly development? will it involve a lot of independent research? is it 
+easy or hard? etc.). Also, note that ideas don't necessarily have to be 
+concrete tasks (&quot;Add support for protocol FOO in component BAR&quot;) but 
+can also be &quot;blue-sky&quot; ideas (e.g., &quot;GridFTP is not currently 
+capable of dealing with the latencies involved in transferring large files to 
+Mars. Solve this.&quot;). In fact, Google encourages that we include a couple 
+of these since they usually lead to the most interesting projects. If possible, 
+include websites or papers related to this project. For example, if you want a 
+student to implement an idea you proposed in a paper, include a link to that 
+paper.</li> 
+<li> <b>requirements</b>: What specific skills are required to do this 
+project. (languages, knowledge of protocols, should they already be familiar 
+with GT4/GT5 or is on-the-job training ok?, etc.)</li> </ul> 
+<p><br>
+ Right now, the template is rendered like an idea from last year's 
+list of ideas. We want to change this to make the idea list more navigable, so 
+please make sure you use the above template so it will be easier to switch to a 
+new format. For now, the above would render like this:</p> 
+<h3> Increase Awesomeness of Globus</h3> 
+<p><b>Globus project</b>: Globus Toolkit at-large </p> 
+<p><b>Mentor</b>: John Q. Globus </p> 
+<p><b>Programming Language/s</b>: Java and C </p> 
+<p><b>Level of Expertise</b>: Intermediate </p> 
+<p><b>Description</b>: We already know Globus is awesome, but there's no upper 
+bound on awesomeness. In this project, we propose that you make Globus more 
+awesome.</p> 
+<p>The deliverables for this project would be: </p> 
+<ul> 
+<li> Develop a metric of awesomeness. </li> 
+<li> Measure current awesomeness of Globus. </li> 
+<li> Improve Globus to make it more awesome, according to the provided metric. 
+</li> 
+<li> Measure new awesomeness of Globus. </li> </ul> 
+<p><b>Requirements</b>: </p> 
+<ul> 
+<li> Must already be familiar with the Globus Toolkit. </li> 
+<li> Must be an awesome student. </li> </ul> 
+<p><br>
+ If you need additional inspiration on how to write up your idea, take 
+a look at last year's project ideas,  2009's list of ideas, or  2008's list of 
+ideas. </p>  Retrieved from &quot; 
+http://dev.globus.org/wiki/Google_Summer_of_Code_2011_Ideas&quot; <br>
+<br>
+
+<h5> Views </h5> 
+<ul> 
+<li> Page </li> 
+<li> Discussion </li> 
+<li> View source </li> 
+<li> History </li> </ul> 
+<h5> Personal tools </h5> 
+<ul> 
+<li> Log in </li> </ul> <br>
+
+<h5> </h5> 
+<ul> 
+<li>Welcome</li> 
+<li>List of projects</li> 
+<li>Guidelines</li> 
+<li>Infrastructure</li> 
+<li>How to contribute</li> 
+<li>Project ideas</li> 
+<li>Mailing lists</li> 
+<li>Globus events</li> 
+<li>Recent changes</li> 
+<li>dev.globus FAQ</li> </ul> 
+<h5> Common Runtime projects </h5> 
+<ul> 
+<li>C Core Utilities</li> 
+<li>C WS Core</li> 
+<li>CoG jglobus</li> 
+<li>Core WS Schema</li> 
+<li>Java WS Core</li> 
+<li>Python Core</li> 
+<li>XIO</li> </ul> 
+<h5> Data projects </h5> 
+<ul> 
+<li>Data Replication</li> 
+<li>GridFTP</li> 
+<li>OGSA-DAI</li> 
+<li>Reliable File Transfer</li> 
+<li>Replica Location</li> </ul> 
+<h5> Execution Projects </h5> 
+<ul> 
+<li>GRAM</li> 
+<li>GridWay</li> 
+<li>MPICH-G2</li> </ul> 
+<h5> Information projects </h5> 
+<ul> 
+<li>MDS4</li> </ul> 
+<h5> Security Projects </h5> 
+<ul> 
+<li>C Security</li> 
+<li>CAS/SAML Utilities</li> 
+<li>Delegation Service</li> 
+<li>GSI-OpenSSH</li> 
+<li>MyProxy</li> </ul> 
+<h5> Distribution Projects </h5> 
+<ul> 
+<li>Globus Toolkit</li> </ul> 
+<h5> Documentation Projects </h5> 
+<ul> 
+<li>GT Release Manuals</li> </ul> 
+<h5> Incubator Projects </h5> 
+<ul> 
+<li>Incubator Management</li> 
+<li>Falkon</li> 
+<li>Fireblade</li> 
+<li>GAARDS</li> 
+<li>GARS</li> 
+<li>Gavia-MS</li> 
+<li>Gavia-JSC</li> 
+<li>GDTE</li> 
+<li>GEMLCA</li> 
+<li>gRAVI</li> 
+<li>GridShib</li> 
+<li>GT Auto Install</li> 
+<li>HOC-SA</li> 
+<li>HPSS-GridFTP</li> 
+<li>Introduce</li> 
+<li>Metrics</li> 
+<li>MonMan</li> 
+<li>NetLogger</li> 
+<li>Paryavekshanam</li> 
+<li>Proxy-Audit</li> 
+<li>PURSe</li> 
+<li>SGGC</li> 
+<li>Swift</li> 
+<li>UGP</li> 
+<li>Virtual Workspaces</li> 
+<li>VOMS</li> 
+<li>WEEP</li> 
+<li>CoG_Workflow (Hibernating)</li> 
+<li>DDM (Hibernating)</li> 
+<li>Dynamic_Accounts (Hibernating)</li> 
+<li>LRMA (Hibernating)</li> 
+<li>MEDICUS (Hibernating)</li> 
+<li>OGRO (Hibernating)</li> 
+<li>ServMark (Hibernating)</li> </ul> 
+<h5> Deprecated </h5> 
+<ul> 
+<li>Pre-WS MDS (MDS2)</li> </ul> 
+<h5>  Search </h5>  &nbsp; <br>
+
+<h5> Toolbox </h5> 
+<ul> 
+<li>What links here</li> 
+<li>Related changes</li> 
+<li> Special pages </li> 
+<li>Printable version</li> </ul> <br>
+<br>
+
+<ul> 
+<li> This page was last modified on 30 March 2011, at 16:35. </li> 
+<li> This page has been accessed 9,165 times. </li> 
+<li> About Globus </li> 
+<li> Disclaimers </li> 
+<li> For our privacy statement, see: http://www.globus.org/privacy </li> </ul> 
+</body>

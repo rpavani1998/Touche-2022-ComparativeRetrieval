@@ -1,0 +1,239 @@
+you should now see a warning displayed near the bottom of the window and the option to fix it.
+installing nbstruts2support plugin in netbeans ide go through the wizard clicking the button next and accepting the license agreement and ignoring any errors about invalid signature.
+based on the java based technology/framework you want to use, you may need  to install further dependencies.
+struts 2 plugin for netbeans ide – nbstruts2support 18 1313 days by tabrez  in java, netbeans, struts 2
+assuming you have downloaded sun jdk binary and saved it in your home  directory under a name likejdk-6u7-linux-i586.bin, run the following  commands to complete the installation: # yum remove java-1.6.0-openjdk  java-1.6.0-openjdk-plugin # yum install compat-libstdc++-33  compat-libstdc++-296 # cd ~ & chmod +x jdk-6u7-linux-i586.bin # javac -version javac 1.6.0_07 as a final step, add the following line to your profile file(e.g.
+[/xml] (ignore the error shown by  intellij idea instruts.xml file if it says it is not able to resolve struts-default package.)
+click the + button at the top of the window and select tomcat -> local (or other application server of your choice; i use tomcat server as example in this post) from the pop-up menu.
+create run/debug configuration in intellij idea and run the struts 2  project
+you should finally see the project structure created as shown below(expand the directories as needed).
+you should see the run configuration window which allows you to make  any further configuration changes before the application is run.
+jetbrains released intellij idea 8 milestone release 1 a week ago and the  milestone version includes support for struts 2 out-of-the-box(no plugins need  to be installed) so that we can test the functionality right away.
+click the run button to run the application.
+first read the summary of its current feature list(and what is planned for the future) and have a look at some screenshots.
+to test the above installation, see my next post(to be published), “hello, world” java web application using java se 6 + tomcat 5.5 + maven 2.”
+at last we have a java ide that ships with struts 2 support built-in: no manual configuring the web applications to add struts 2 support and no more hassles of finding and installing struts 2 plugins.
+secondly, it helps in auto-completion: more information on  auto-completion.
+install sun’s latest jdk by manually downloading the binaries from  sun’s website.
+let us create an example action class in java and a jsp result page to go with it.
+when you click finish, intellij idea will start  downloading the required struts 2 jar library files to your project’s lib directory, which may take a few minutes.
+download and install apache tomcat web application server: apache tomcat  5.5.
+it is at least slightly better than creating and developing struts 2 applications completely manually.
+for more details, refer to sun’s instructions on how to install java se.
+a java application server/container like tomcat, glassfish, jboss etc.
+click the fix button on the far right corner and then click ok.
+any loose ends should be tied up by the time the final version is released.
+for one thing, the plugin helps in creating template files for struts 2  actions, interceptors, results etc.
+c:\programming files\java).
+the version of the netbeans ide that will be released next, version 6.5, talks nothing about the support for struts 2 framework(you can see support for struts 1.2.9 proudly displayed onnetbeans 6.5
+filterdispatcher struts 2 filter /* 30 [/xml] you can enter the same data in filters tab also: public class hellostruts2world extends actionsupport { private string username; public string getusername() { return username; } public void setusername(string username) { this.username =
+any other version of your choice) and extract  the package in a directory(sayc:\tomcat).
+edit the file so that it contains the following code.
+for more details, refer to sun’s instructions on how to install java  se.
+[image from  nbstruts2support website] end notes: the current state of struts 2 support in  the netbeans ide is hardly satisfying.
+[/java] [html]   struts 2 message: enter your name: [/html] [xml] "-//apache software foundation//dtd struts configuration 2.0//en" "http://struts.apache.org/dtds/struts-2.0.dtd"> this maps the requests sent to the “/helloworld.action” url tohelloworld.java struts 2 action class, and after the successful execution of the request, it directs to theindex.jsp result page.
+(did you notice how struts.xml was automatically moved to our hello package?
+“hello, ” + username + “.”; return success; } }
+.bash_profile) to set the java_home environment variable to the path where  you have installed sun jdk: export java_home /opt/jre/jdk make java_home point to openjdk installation path if you are using openjdk.
+as mentioned in my previous post about creating struts 2 web applications  in netbeans ide, there is a struts 2 plugin available for the netbeans ide but  it is still under development.
+create struts 2 action java class and jsp result page and configure  struts.xml file right-click on the src folder, select new -> class and enter hello.
+if you get an error saying that the ‘java’ command is not recognised or is not available, then you need to check the values the above environment variables were set to once again.
+i hope that intellij idea’s out-of-the-box  struts 2 support will encourage the teams/communities of other popular ides to  follow the suit.
+the struts 2 plugin is now installed in netbeans.
+in the add jar/folder file chooser dialog box, browse to  the extracted struts 2 directory, go tolib directory in it and select  all the jar files that you want to add to the project.
+you can accept the default settings for everything else in the wizard.
+but it is at least more beginner friendly than working from the command line using just themaven build tool.
+i have tried to make this more beginner friendly by including a lot  of screenshots.
+don’t select any frameworks, especially struts 1.2.9, to be  added to the project.
+add the struts 2 library files to the web application project:
+download/install java se, netbeans and struts 2 download and install the latest version of sun jdk: sun java se 6 update 7 .
+verify tomcat’s installation by running the following commands in the windows command prompt:$ echo %java_home% you will need to start and stop the tomcat service from the command line manually(or tools from other java frameworks may do that for you automatically).
+if we do all this manually, then what does  the plugin do?
+create maven 2 environment variables create a new m2_home environment variable.
+you can also opt for the smaller “essential  dependencies only” package if you want to later incrementally add  additional packages as and when the need arises.
+“hello, world” web application using struts 2 in netbeans ide  6.1 39 1318 days by tabrez  in java, netbeans, struts 2
+[image from nbstruts2support website] end notes: the current state of struts 2 support in the netbeans ide is hardly satisfying.
+username; } private string message; public string getmessage() { return message; } @override public string execute() { message =
+the installation procedure on other gnu/linux distributions should be on  similar lines using their respective package managers and i will try to post  the procedure for ubuntu, gentoo, opensuse and mandriva distributions in the  near future.
+this is far cry from the experience with netbeans or eclipse ides even with the help of the plugins: see my previous postsâ€œhello, worldâ€ web application using struts 2 in netbeans ide 6.1 and struts 2 plugin for netbeans ide – nbstruts2support for example.
+below i take you through the installation process of nbstruts2support struts 2 plugin for netbeans 6.1 ide showing a few screenshots along the way.
+then follow theinstallation instructions and try it on your system.
+below i explain how to install java se 6, apache maven 2 and apache tomcat 5.5 software.
+expand the  web application project structure in theproject pane if not  already expanded; right-click on thelibraries folder and click  theadd jar/folder… menu item.
+this is the manual way to develop struts 2 web applications in the netbeans ide
+this is far cry from the experience with netbeans or eclipse ides even with the  help of the plugins: see my previous postsâ€œhello,  worldâ€ web application using struts 2 in netbeans ide 6.1 and  struts 2 plugin for netbeans ide – nbstruts2support for example.
+first read the summary of its current feature list(and what is planned for  the future) and have a look at some screenshots.
+installing nbstruts2support plugin in netbeans ide go to the nbstruts2support download page and download the two nbm files and save them in a directory.
+this tutorial guides you through the process of creating and running a basic “hello, world” struts 2 web application using the netbeans ide 6.1.
+there is a struts 2 plugin called nbstruts available for netbeans; its functionality is currently limited but it is under active development.
+note the installation  directory where the wizard installs the java package(default will be c:\program files\java).
+installing sun java se 6, apache maven 2 and tomcat 5.5 on windows os 6 1295 days by tabrez  in java, struts 2 for using most of the enterprise technologies based on java, you generally  need at least the following components installed and configured on your system: java se or ee sdk a command line build tool
+edit the path environment variable and add the path to tomcat’s bin directory to it.
+the state is different if we look at other ides like eclipse and intellij idea.
+start the netbeans ide if not already running and go to tools -> plugins and select the downloaded tab.
+hope they add it in the final  version.]
+it’s a shame that after  such a long period since the release of struts 2 web framework, its support in  all the popular ides is next to zero.
+create a new m2_home environment variable.
+download apache tomcat 5.5(or any other version of your choice) and extract the package in a directory(sayc:\tomcat).
+[the annoying thing is that intellij downloads these struts 2 library files  for every struts 2 application you create.
+you then need to set the two environment variables java_home and path.
+in run/debug configurations window, click the configure button and in the popped-up application servers window click the [+ add] button and select the  directory where apache tomcat is installed on your system intomcat home andtomcat base directory fields.
+but it is still under development.
+installing intellij idea 8 m1 and other required components download and install the latest version of sun jdk:
+the following jar library files are essential for most struts 2  projects(and for this tutorial) but you can select more if you know that you  need them(you can add additional libraries later also): commons-logging
+i have tried to make this more beginner friendly by including a lot of screenshots.
+editstruts.xml file such that it has the  following content: [xml] "-//apache software foundation//dtd struts configuration  2.0//en" "http://struts.apache.org/dtds/struts-2.0.dtd"> /index.jsp
+you can also see that the intellij idea ide has created and placed the struts.xml configuration file(containing basic template text)
+this tutorial guides you through the process of creating and running a basic “hello, world” struts 2 web application using the  netbeans ide 6.1.
+you can try it out right away if you are  interested; the name of the plugin isnbstruts2support.
+click the add plugins… button and select  the two plugin files(.nbm files) downloaded in the earlier step.
+intellij idea may then parse  all the files in the project to be able to help you later when you start  editing/browsing the files.
+to manually download and extract maven 2 archive on fedora 9, follow these instructions: export path=$path:$home/maven2/bin installing tomcat 5 and jetty you can finally install tomcat and jetty servers using yum command: the installation procedure on other gnu/linux distributions should be on similar lines using their respective package managers and i will try to post the procedure for ubuntu, gentoo, opensuse and mandriva distributions in the near future.
+let us wait and see how much time it  takes to complete at least the basic features innbstruts2support.
+.bash_profile or /etc/profile) to set maven2 executables in system path: export path=$path:$home/maven2/bin confirm if maven 2 is installed and configured correctly:  # source  .bash_profile # mvn ––version installing tomcat 5 and jetty you can finally install  tomcat and jetty servers using yum command: # yum install tomcat5 jetty
+let us create an example action class in java and a jsp result page to go  with it.
+we also need to create  struts configuration files(struts.xml and struts.properties)  and modify theweb.xml file.
+installing apache tomcat on microsoft windows download tomcat 5.5 download apache tomcat 5.5(or
+click the + button at the top of the window and select tomcat -> local (or other application  server of your choice; i use tomcat server as example in this post) from the  pop-up menu.
+run the following commands in it(doesn’t matter what your current  directory is): $ echo %java_home% c:\program files  (x86)\java\jdk1.6.0_06 $ javac -version javac 1.6.0_06
+i had extracted the  tomcat package toc:\tomcat directory in earlier step, so i would set  catalina_home toc:\tomcat.
+then follow theinstallation  instructions and try it on your system.
+the plugins dialog box should show you the details about  the plugin.
+based on which java based technology/framework you want to use, you may  need to install further dependencies.
+included in the build path) by the ide.
+the state is different if we look at other ides like eclipse and intellij  idea.
+but if you want to the tomcat server to start automatically when the operating service, you can install it as a windows service.
+“hello, world” web application using struts 2 in intellij idea  8.0 m1 4 1298 days by tabrez  in java, struts 2
+even though you may not need all the three components mentioned above to work with every java technology, i found myself installing them way too many times when compared to any other java component that i wanted a place to document the installation process of these three components specifically, if only to refer to this post from other java tutorials.
+below i explain how to install java se 6, apache  maven 2 and apache tomcat 5.5 software.
+installing openjdk/sun java se 6, apache maven 2 and tomcat 5 on fedora  gnu/linux installing java se 6 you can’t install  sun’s jdk directly from the fedora repositories, you have the following  two choices: use openjdk that comes installed by default in fedora 9(if not, you can  install it with a simple ‘yum install java-1.6.0-openjdk’ command;  or first search for the exact package name using ‘yum search jdk’).
+select the path variable in system variables pane and add the path to java bin directory to it.
+check maven 2 version and confirm install to check if maven is properly configured or not, start a command prompt and  check its version: $ echo %java_home% c:\program files  (x86)\java\jdk1.6.0_06 $ mvn –version maven version: 2.0.9 java version: 1.6.0_06 for more details, refer to instructions on maven’s website on how to  install maven 2.
+select thehelloworld project in  the left pane and go torun -> edit configuration .
+don’t select any frameworks, especially struts 1.2.9, to be added to the project.
+add struts 2 libraries to web application project in netbeans and  configure web.xml file
+username; } private string message; public string getmessage() { return message; } public string execute() { message =
+(download the java ee sdk if you want to install the enterprise  edition.)
+(see all the tabs at the  top of the page: analysis, phase i, phase ii, phase iii.)
+you can see the result in the following screenshots: happy developing with struts 2 in intellij idea 8!
+[java] return “success”; [/java] let us access the message property set by helloworld action and display it in theindex.jsp page.
+extract it to a directory and rename the installation directory tomaven.
+i assume maven is now located in c:\maven.
+jetbrains released intellij idea 8 milestone release 1 a week ago and the milestone version includes support for struts 2 out-of-the-box(no plugins need to be installed) so that we can test the functionality right away.
+i will talk more about struts 2 support for eclipse ide in my next post.
+to check if maven is properly configured or not, start a command prompt and check its version:$ echo %java_home% for more details, refer to instructions on maven’s website on how to install maven 2.
+just run the installer and follow the wizard.
+i am not including those instructions here because i don’t run and don’t recommend running it as a service; ymmv.
+go through the wizard clicking the button next and  accepting the license agreement and ignoring any errors about invalid signature.
+leave the struts.properties file empty for now.
+if you get an error saying that the ‘java’ command is not  recognised or is not available, then you need to check the values the above  environment variables were set to once again.
+installing apache maven 2 on microsoft windows download maven 2 download the latest stable version of maven from apache  maven project website.
+download the struts 2 “full distribution” package(~90mb) and  extract it in a directory.
+close all the open dialog boxes and start a new command prompt( start/all programs -> accessories -> command prompt ).
+the helloworld web application project structure, when  relevant folders are expanded, should now look like this: (did you notice how struts.xml was automatically moved to our hello package?
+create tomcat environment variables next we need to add the required environment variables.
+extract it to a directory and rename the installation  directory tomaven.
+you should now see a warning displayed near the bottom of the window and  the option to fix it.
+all we need to do now is to write our own application logic.
+in run/debug configurations window, click the configure button and in the popped-up application servers window click the [+ add] button and select the directory where apache tomcat is installed on your system intomcat home andtomcat base directory fields.
+download and install the latest version of java se(currently jdk 6 update 7).
+[the annoying thing is that intellij downloads these struts 2 library files for every struts 2 application you create.
+click the new… button below the system  variables pane and add a new environment variable called java_home and set it to the path to your java installation  directory(e.g.
+for more  details, refer to instructions on tomcat website onhow to run tomcat as a  windows service.
+if you are very specific about using sun’s official  jdk only, then you first have to un-install openjdk that is installed by  default in fedora 9.
+check java version and confirm install let us confirm the correct configuration of java installation from the  command line.
+you should finally see the project structure created as shown below(expand  the directories as needed).
+installing apache maven2 apache maven 2 can be  installed using yum command: # yum install maven2 maven version 2.0.4 # yum remove maven2 installing maven 2 on fedora 9 using the yum package manager gave me the  old 2.0.4 version, so i removed it and decided to install maven manually.
+this is a big moment for the struts 2 users.
+this maps the requests sent to the “/helloworld.action” url tohelloworld.java struts 2 action class, and after the successful  execution of the request, it directs to theindex.jsp result page.
+to  manually download and extract maven 2 archive on fedora 9, follow these  instructions: download the latest stable version of apache maven 2 archive from its  download page.
+before we can run the application, we first need to create/edit the run  configuration for our project.
+it is not yet completely bug free though: it also helps in easy navigation using hyperlinks.
+select the helloworld project in the left pane and go to run -> run… .
+also see: more details on struts 2 support in intellij idea 8.0.
+if you find any problems following it, then come back to my  tutorial.
+you can see  the result in the following screenshots: happy developing with struts 2 in intellij idea 8!
+as you can see, the required struts 2 libraries are  automatically downloaded and installed in thelib directory(and
+if the left pane is empty, it means that we need to create a new  configuration which is a one-time job; after creating it the first time, we can  use the same configuration for all our future projects.
+it  is at least slightly better than creating and developing struts 2 applications  completely manually.
+then you need todownload sun’s jdk and run the  installer.
+run the netbeans ide and create a new web application project in it.
+let us wait and see how much time it takes to complete at least the basic features innbstruts2support.
+the basic structure needed for a struts 2 web application project is now in place and we only ran thenew project wizard in intellij
+at last we have a java ide that ships with struts 2 support built-in: no  manual configuring the web applications to add struts 2 support and no more  hassles of finding and installing struts 2 plugins.
+beta release page); all hopes are now pinned up on the nbstruts2support netbeans plugin i guess.
+also see: as mentioned in my previous post about creating struts 2 web applications in netbeans ide, there is a struts 2 plugin available for the netbeans
+it’s a shame that after such a long period since the release of struts 2 web framework, its support in all the popular ides is next to zero.
+if you find any problems following it, then come back to my tutorial.
+as you can see, the required struts 2 libraries are automatically downloaded and installed in thelib directory(and included in the build path) by the ide.
+installing sun java se 6 on microsoft windows download java se 6 download and install the latest version of java se(currently jdk 6 update  7).
+for using most of the enterprise technologies based on java, you generally need at least the following components installed and configured on your system: based on the java based technology/framework you want to use, you may need to install further dependencies.
+–lewis carroll(‘the walrus and the  carpenter’) home installing sun java se 6, maven 2 and tomcat 5.5 on fedora gnu/linux 3 1252 days by tabrez  in java, struts 2 for using most of the enterprise technologies based on java, you generally  need at least the following components installed and configured on your system: sun java se (or ee)
+all we  need to do now is to write our own application logic.
+edit index.jsp so that it looks like this: [html]   struts 2 message: enter your name: [/html] we now need to configure the java class(helloworld.java) as a  struts 2 action and map it to the struts 2 result page(index.jsp)  created in the above steps.
+restart the netbeans ide when prompted.
+for using most of the enterprise technologies based on java, you generally need at least the following components installed and configured on your system: based on which java based technology/framework you want to use, you may need to install further dependencies.
+create a new environment variable called catalina_home and set it to the directory where tomcat is installed.
+even though you may not need all the three components mentioned above to be able to work with all java technologies, i found myself installing them way too many times when compared to any other java component that i wanted a place to document the installation process of these three components specifically, if only to refer to this post from other java tutorials in future.
+below i take you through the installation process of nbstruts2support struts 2 plugin for netbeans 6.1 ide showing a few screenshots along the  way.
+hope they add it in the final version.]
+extract it to your home directory and rename the directory to  ‘maven2′ # tar xjvf apache-maven-2.0.9-bin.tar.bz2 # mv  apache-maven-2.0.9-bin maven2
+let us confirm the correct configuration of java installation from the command line.
+“hello, ” + username + “.”; return “success”; } }
+i  show the screenshots from windows vista operating system in this post but it  should work similarly for mac and gnu/linux too.
+using nbstruts2support in netbeans ide the plugin doesn’t allow a struts 2 project template to be created  in netbeans, which means that we need to manually create a basic web  application and add struts 2 libraries to it manually.
+download the latest stable version of maven from apache maven project website.
+i recommend trying to follow the netbeans tutorial on the struts 2  website first.
+[/java] edit struts.xml file such that it has the following content: [xml] "-//apache software foundation//dtd struts configuration 2.0//en" "http://struts.apache.org/dtds/struts-2.0.dtd"> this maps the requests sent to the “/hellostruts2world.action” url to hellostruts2world.java struts 2 action and after the successful execution of the request, it gets directed to theindex.jsp result page.
+go to control panel -> system -> advanced system settings and click the “environment variables” button.
+i recommend trying to follow the netbeans tutorial on the struts 2 website first.
+even though you may not need all the  three components mentioned above to be able to work with all java technologies,  i found myself installing them way too many times when compared to any other  java component that i wanted a place to document the installation process of  these three components specifically, if only to refer to this post from other  java tutorials in future.
+creating a new struts 2 web application project in intellij idea 8 m1 run intellij idea 8 m1 ide and create a new project by going to file -> new project… and following the  wizard: enter a name for the application(say“helloworld” ) when prompted and make sure you select web application and struts 2 checkboxes on the technologies page.
+currently there is no option to reuse the previously downloaded library files.
+run the following commands in it(doesn’t matter what your current directory is):$ echo %java_home%
+note the installation directory where the wizard installs the java package(default will be c:\program files\java).
+using nbstruts2support in netbeans ide
+(if you  don’t want to see the configuration window every time you run the  application, uncheck the“display settings before launching” checkbox.)
+in thesrc directory.
+helloworld in the new  class dialog box.
+last words this is a big moment for the struts 2 users.
+the version of the netbeans ide that will  be released next, version 6.5, talks nothing about the support for struts 2  framework(you can see support for struts 1.2.9 proudly displayed onnetbeans 6.5  beta release page); all hopes are now pinned up on the nbstruts2support netbeans plugin i guess.
+secondly, it helps in auto-completion: more information on auto-completion.
+other popular alternative ides for developing web applications using struts 2 areeclipse and intellij idea.
+i am not including those instructions here because i  don’t run and don’t recommend running it as a service; ymmv.
+if you want to go with fedora’s openjdk then you don’t have to do  anything else, except perhaps set java_home environment variable to openjdk  installation path in your profile file.
+check tomcat version and confirm install verify tomcat’s installation by running the following commands in the  windows command prompt: $ echo %java_home% c:\program files  (x86)\java\jdk1.6.0_06 $ echo %catalina_home% c:\tomcat $  version.bat you will need to start and stop the tomcat service from the command line  manually(or tools from other java frameworks may do that for you  automatically).
+we are now ready to run the application.
+download and install the latest version of netbeans ide: netbeans ide 6.1.
+you can try it out right away if you are interested; the name of the plugin isnbstruts2support.
+name it “hellostruts2world” or something like that.
+click the new… button(below system variables pane) and enter the details as follows: similarly create another environment variable called m2 and set it to the value%m2_home%\bin add %m2% to the path variable.
+even though you may not need all the three  components mentioned above to work with every java technology, i found myself  installing them way too many times when compared to any other java component  that i wanted a place to document the installation process of these three  components specifically, if only to refer to this post from other java  tutorials.
+.bash_profile) to set the java_home environment variable to the path where you have installed sun jdk: export java_home /opt/jre/jdk make java_home point to openjdk installation path if you are using openjdk.
+or control panel -> system, select the advanced tab and click the “environment variables” button if you are using windows xp.
+(see all the tabs at the top of the page: analysis, phase i, phase ii, phase iii.)
+add the following line to your profile file(e.g.
+hold down thectrl button to select multiple files.
+the following jar library files are essential for most struts 2 projects(and for this tutorial) but you can select more if you know that you need them(you can add additional libraries later also): libraries folder in your project will now look like this: [xml] struts 2 filter org.apache.struts2.dispatcher.
+but if you want to the tomcat server to start automatically  when the operating service, you can install it as a windows service.
+the generated web.xml file  includes the following configuration elements needed by the struts 2 framework  so that you don’t have to type or copy/paste it manually in every struts  2 web application:
+testing the installation to test the above installation, see my next post(to be published),  “hello, world” java web application using java se 6 + tomcat 5.5 +  maven 2.”
+[html]   "http://www.w3.org/tr/html4/loose.dtd"> struts 2 message: enter your name: [/html]
+the full list of features introduced in intellij idea 8.0 milestone 1 and  what is planned for the final release.
+i hope that intellij idea’s out-of-the-box struts 2 support will encourage the teams/communities of other popular ides to follow the suit.
+sdk a command line build tool like ant or maven a java application server/container like tomcat, jetty, glassfish, jboss  etc.
+installing java se 6 you can’t install sun’s jdk directly from the fedora repositories, you have the following two choices: as a final step, add the following line to your profile file(e.g.
+[java] package hello; public class helloworld { private string username; public string getusername() { return username; } public void setusername(string username) { this.username =
+any loose  ends should be tied up by the time the final version is released.
+for more details, refer to instructions on tomcat website onhow to run tomcat as a windows service.
+for one thing, the plugin helps in creating template files for struts 2 actions, interceptors, results etc.
+[xml] [/xml] you can add additional configuration elements to the  file.
+currently there is no option to  reuse the previously downloaded library files.
+installing apache maven2 apache maven 2 can be installed using yum command: installing maven 2 on fedora 9 using the yum package manager gave me the old 2.0.4 version, so i removed it and decided to install maven manually.
+in the add jar/folder file chooser dialog box, browse to the extracted struts 2 directory, go tolib directory in it and select all the jar files that you want to add to the project.
+the basic structure needed for a struts 2 web application project is now in  place and we only ran thenew project wizard in intellij
+create java environment variables go to control panel -> system -> advanced  system settings and click the “environment variables” button.
+next we need to add the required environment variables.
+click the new… button(below system variables pane) and enter the  details as follows: similarly create another environment variable called m2 and set it to the value%m2_home%\bin add %m2% to the path variable.
+every flavour beans “the time has come…to talk of many  [technologies].”
+download and install the 30-day trial version of the latest intellij idea  8 version; currently milestone 1 is available, but when you read this, probably  another milestone, or beta, or even the final version may have been released,  so make sure that you download the most recent release of intellij idea 8.

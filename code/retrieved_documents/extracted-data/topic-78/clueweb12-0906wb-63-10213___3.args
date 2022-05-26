@@ -1,0 +1,18 @@
+however, with a comparison such as { substr($a, 0, 3) cmp substr($b, 0, 3) } stability might matter because elements that compare equal on the first 3 characters may be distinguished based on subsequent characters.
+on the other hand, quicksort is often faster for small arrays, and on platforms with small memory caches that are much faster than main memory.
+mergesort also takes advantage of pre-existing order, so it would be favored for using sort to merge several sorted arrays.
+on average, mergesort does fewer comparisons than quicksort, so it may be better when complicated comparison routines are used.
+a stable sort means that for records that compare equal, the original input ordering is preserved.
+mergesort also takes advantage of pre-existing order, so it would be favored for using sort to merge several sorted arrays.
+you can force the choice of algorithm with this pragma, but this feels heavy-handed, so the subpragmas beginning with a _ may not persist beyond perl 5.8.
+that means that simple numerical and lexical sorts do not profit from stability, since equal elements are indistinguishable.
+with the sort pragma you can control the behaviour of the builtin sort() function.
+in perl 5.8 and later, quicksort can be stabilized, but doing so will add overhead, so it should only be done if it matters.
+a stable sort means that for records that compare equal, the original input ordering is preserved.
+in perl 5.8 and later, quicksort can be stabilized, but doing so will add overhead, so it should only be done if it matters.
+that means that simple numerical and lexical sorts do not profit from stability, since equal elements are indistinguishable.
+with the sort pragma you can control the behaviour of the builtin sort() function.
+however, with a comparison such as { substr($a, 0, 3) cmp substr($b, 0, 3) } stability might matter because elements that compare equal on the first 3 characters may be distinguished based on subsequent characters.
+on the other hand, quicksort is often faster for small arrays, and on platforms with small memory caches that are much faster than main memory.
+you can force the choice of algorithm with this pragma, but this feels heavy-handed, so the subpragmas beginning with a_ may not persist beyond perl 5.8.
+on average, mergesort does fewer comparisons than quicksort, so it may be better when complicated comparison routines are used.

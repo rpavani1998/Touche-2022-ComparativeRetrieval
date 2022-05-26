@@ -1,0 +1,45 @@
+in simple cases an array of handles could be used, but threadqueue is  easier to use with recursive functions.
+the easiest solution would be to divide the array into chunks that can fit in spu memory and then merge them on the ppu.
+// nothing to sort if(count 20k arrays using merge sort (the speed-ups with quicksort are not as good).
+in addition, we will show how to parallelize merge to run on any number of spus which will improve performance even further.
+but we still need to address  the array size limitation on the spu.
+builtin_memcpy(data +  start, temp + start,(end - start + 1) * sizeof(t)); } template void parallelsort(t *data, size_t count) {
+// nothing to sort if(count  < 2) return; threadqueue queue; t *temp =
+for example, sorting transparent objects before rendering or sorting objects by state attribute (e.g. texture) to improve batching.
+sorting is a simple but important concept for implementing games.
+doing two sorting operations on different spus at the same time is then  quite easy: t *array1, array2; size_t size1, size2;
+doing two sorting operations on different spus at the same time is then quite easy: t *array1, array2; size_t size1, size2; threadqueue queue; sortqueued(array1, 0, size1 - 1, &queue); sortqueued(array2, 0, size2 - 1, &queue); queue.joinallthreads(); now that we can execute code on multiple spus at the same time, we can start designing our parallel sort implementation.
+= count * sizeof(t); if(count enqueue(handle); } executing an __offload block returns a handle which can be used to wait  until the block has been executed.
+this can be done  with the __offload keyword and a simple queue: template void sortchunkqueued(t *data, size_t start,  size_t end, threadqueue *queue) { size_t count = (end - start + 1); if(count  waitforslot(); // execute the block on a spu and immediately  return an execution handle offloadthread_t handle = __offload(data, start, end,  count) { size_t size
+in that case waitforslot() should be called before enqueueing a block).
+because of the way most algorithms work (comparing and swapping pairs of items) sorting often takes precious time.
+this can be done with the __offload keyword and a simple queue: template void sortchunkqueued(t *data, size_t start, size_t end, threadqueue *queue) { size_t count = (end - start + 1); if(count waitforslot(); // execute the block on a spu and immediately return an execution handle offloadthread_t handle = __offload(data, start, end, count) { size_t size = count * sizeof(t); if(count enqueue(handle); } executing an __offload block returns a handle which can be used to wait until the block has been executed.
+recall how recursive merge sort is implemented: template void mergesort(t *data, t *temp, size_t start, size_t end) { size_t count = end - start + 1; if(count  void parallelsort(t *data, t *temp, size_t start, size_t end, threadqueue *queue) { size_t count = end - start + 1; if(count joinallthreads(); // merge two parts (data) into one (temp) merge(temp + start, data, start, mid, data, mid + 1, end); // copy one part from temp to data __
+we have to change this function if we want to use it in a parallel  merge, because we need multiple spus to work at the same time.
+the entire series is also available as a single pdf document.
+in simple cases an array of handles could be used, but threadqueue is easier to use with recursive functions.
+the threadqueue class (not part of offload)
+the number of concurrent blocks can be specified in the  constructor.
+with multi-core architectures like the ps3 it makes sense to parallelize this operation to maximize the use of these cores.
+(t *)memalign(16, count *  sizeof(t)); if(!temp) { failed_malloc("temp"); return; }  parallelsort(data, temp, 0, count - 1, &queue); free(temp); } this implementation behaves identically to the sequential one, except that  when the size of the array gets small enough, sorting is offloaded on a spu.
+part 1 (quicksort) part 2 (merge) part 3 (merge sort) part 4 (offloading on 1 spu) part 5 (parallel sort on 2 spus) part 6 (final optimizations) the entire series is also available as a single pdf document.
+in the next and last post in the series we will see how to improve our parallel sort so that it can run on 4 spus instead of 2.
+recall how recursive merge sort is implemented: template void mergesort(t *data, t *temp, size_t start,  size_t end) { size_t count = end - start + 1; if(count  void parallelsort(t *data, t *temp, size_t  start, size_t end, threadqueue *queue) { size_t count = end - start + 1;  if(count joinallthreads(); //  merge two parts (data) into one (temp) merge(temp + start, data, start, mid,  data, mid + 1, end); // copy one part from temp to data __
+part 4 (offloading on 1 spu) part 5 (parallel sort on 2 spus) part 6 (final optimizations)
+in addition, despite using the vectorized merge function presented earlier in the series, we do not see any significant difference in performance between sorting floats on integers on the spu.
+but we still need to address the array size limitation on the spu.
+builtin_memcpy(data + start, temp + start,(end - start + 1) * sizeof(t)); } template void parallelsort(t *data, size_t count) {
+since there are two recursive calls in parallelsort and the blocks have to be  joined right after that, at most two blocks will be executing in parallel on  spus.
+the easiest solution would be to divide  the array into chunks that can fit in spu memory and then merge them on the  ppu.
+however we will have to address the array size limitation.
+can be used to enqueue multiple blocks and join (i.e. wait for) them  afterwards.
+the number of concurrent blocks can be specified in the constructor.
+in this part we will run our sort functions on multiple spus and create a parallel sort implementation.
+in that case waitforslot() should be called before enqueueing a  block).
+blocks the function we use to offload sorting on 1 spu (sortoffloadedlocalmem) is  blocking, which means that the ppu is blocked while the spu is sorting the  array.
+this effectively limits this implementation to use at most 2 spus.
+we have to change this function if we want to use it in a parallel merge, because we need multiple spus to work at the same time.
+the function we use to offload sorting on 1 spu (sortoffloadedlocalmem) is blocking, which means that the ppu is blocked while the spu is sorting the array.
+threadqueue queue;  sortqueued(array1, 0, size1 - 1, &queue); sortqueued(array2, 0, size2 - 1,  &queue); queue.joinallthreads(); parallel sort on 2 spus now that we can execute code on multiple spus at the same time, we can  start designing our parallel sort implementation.
+in the previous part we have started running these implementations on a spu to improve performance even further.
+the threadqueue class (not part of offload) can be used to enqueue multiple blocks and join (i.e. wait for) them afterwards.

@@ -1,0 +1,45 @@
+testing it is very easy to make errors when programming quick sort.
+quick sort partitions the array into two sections, the first of "small" elements and the second of "large" elements.
+partitioning has other applications, e.g. to find the kth largest or  smallest element of an array (e.g. median when k=n/2) without completely  sorting the array.
+right=hi; median=a[lo]; /* nb.
+it is very easy to make errors when programming quick sort.
+use a better estimate for the median, e.g. median of three.
+the worst case time complexity is o(n2).
+* i.e. at least 2 elements, then */ { left=lo;
+as coded above the best- and average-case space-complexity is o(log(n)),  for the stack-space used.
+in that case the two partitions would be of equal size; in the simplest versions of quick sort an arbitrary element, typically the first element is used as an estimate (guess) of the median.
+the whole array is scanned at eachlevel of calls, so the total work done is o(n*log(n)).
+the  basic idea is simple but the details of the manipulation of the  "pointers" hi, lo, left, right, are very easily messed up - this is  the voice of bitter experience!
+quicksort(int a[], int lo, int hi) /* sort a[lo..hi] */ { int left, right, median, temp; if( hi > lo ) /
+the average time complexity is also o(n*log(n)).
+median */ while(a[right] > median) right--; /* a[left] >= median >=
+in this case  push thelarger partition on the stack while the smaller section is  sorted, because this limits the stack requirements to o(log2(n)).
+this occurs when the estimate of the median is systematically always poor, e.g. on already sorted data, but this is very unlikely to happen by chance.
+a[right] */ if(left > right) break; //swap:
+this occurs when the  estimate of the median is systematically always poor, e.g. on already sorted  data, but this is very unlikely to happen by chance.
+notes c. a. r. hoare, algorithm 63, partition; algorithm 64,  quicksort, p321; algorithm 65: find, comm. of the acm, 4 p321-322, 1961.
+see the dutch national flag problem for the possibilities of a 3-way  partition and quick-sort.
+temp=a[left]; a[left]=a[right]; a[right]=temp; left++; right-- } /* a[lo..left-1]=median and left > right */ quicksort(a, lo, right);// divide and conquer quicksort(a, left, hi); } }/*quicksort*/ function quick(a, n) /* sort a[1..n], n.b. 1 to n */ { quicksort(a, 1, n); } [you need a javascript enabled browser.]
+the particular coding above is after  n. wirth , algorithms and data  structures,  prentice-hall 1986 .
+in that case, the best-case space-complexity becomes o(1)
+c. a. r. hoare, quicksort, comp.
+l in the best case, the partitions are of equal size at each recursive call, and there are then log2(n) levels of recursive calls.
+*/ while(right >= left) /* partition a[lo..hi] */ /* a[lo..left-1]=median */ { while(a[left] =
+" stability quick sort is not stable.
+in the best case, the partitions are of equal size at each  recursive call, and there are then log2(n) levels of recursive calls.
+ideally, partitioning would use the median of the given values, but the median can only be found by scanning the whole array and this would slow the algorithm down.
+quick sort can be made faster, i.e. its constant of proportionality  reduced, by various techniques: use a simpler sort, e.g. insertion sort, when the section of the array to  be sorted is "small".
+as coded above the best- and average-case space-complexity is o(log(n)), for the stack-space used.
+in that case, the best-case space-complexity becomes o(1)  [-- andrew  clausen '05],  " gcc -o2 does tail-recursion optimization,  but-o1 doesn't.
+the basic idea is simple but the details of the manipulation of the "pointers" hi, lo, left, right, are very easily messed up - this is the voice of bitter experience!
+© l. a. the c++ cookbook   mastering the language free:
+tony hoare published quick sort in 1961.
+the worst-case space-complexity is o(n), but it can be limited to o(log(n))
+change the data in the html form below, click `go', and experiment:
+implement a non-recursive version with an explicit stack.
+if the code is modified so that thesmaller half of the array is sorted  first (and an explicit stack, or the tail-recursion optimisation, used).
+[-- andrew clausen '05], " gcc -o2 does tail-recursion optimization, but -o1
+the whole array is scanned at eachlevel of calls, so the total work  done is o(n*log(n)).
+the worst-case space-complexity is o(n), but it can be limited to o(log(n)) if the code is modified so that thesmaller half of the array is sorted first (and an explicit stack, or the tail-recursion optimisation, used).
+" quick sort is not stable.
+it then sorts the small and large elements separately.

@@ -1,0 +1,388 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Algorithm of the Week: Quicksort | PHP Zone</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>Cloud Zone</li> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Enterprise Integration</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Python 
+Zone <br>
+<strong>Did you know? DZone has great portals for Python, Cloud, NoSQL
+, andHTML5!</strong> Python Zone is brought to you in partnership with: <br>
+
+<br> <b>Stoimen Popov</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> 
+<li>@stoimenpopov </li> 
+<li> </li> 
+<li> </li> </ul> 
+<p> I've been working on web based projects built mainly with PHP and 
+JavaScript, where I mostly use Zend Framework and jQuery. I am interested in 
+any webpage optimizations techniques - for a faster web! Stoimen is a DZone MVB 
+and is not an employee of DZone and has posted 61 posts at DZone. You can read 
+more from them attheir website. View Full User Profile</p> 
+<h1>Algorithm of the Week: Quicksort</h1>  03.13.2012  Email <br>
+ Views: 4909 
+<br> 
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> <em>This content is part of the Python Zone, which is 
+presented to you by DZone andNew Relic. Visit the Python Zone for news, tips, 
+and tutorials on the Python programming language.&nbsp; New Relic provides the 
+resources and best practices to help you monitor these applications. </em> 
+<h3>Recommended Links</h3> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<p>Like this piece? Share it with your friends:</p> | More <br>
+<br>
+
+<p>When it comes to sorting items by comparing them, merge sort is one very 
+natural approach. It is natural because it simply divides the list into two 
+equal sub-lists then sorts these two partitions applying the same rule. That is 
+a typical divide and conquer algorithm and it follows the intuitive approach of 
+speeding up the sorting process by reducing the number of comparisons. However 
+there are other &ldquo;divide and conquer&rdquo; sorting algorithms that do not 
+follow the merge sort scheme, while maintaining a similar level of success. 
+Such an algorithm is quicksort.</p> 
+<h2>Overview</h2> 
+<p>Back in 1960 C. A. R. Hoare came up with a brilliant sorting algorithm. In 
+general quicksort consists of some very simple steps. First we have to choose 
+an element from the list (called a pivot) then we must put all the elements 
+with a value less than the pivot on the left side of the pivot and all the 
+items with value greater than the pivot on its right side. After that we must 
+repeat these steps for the left and the right sub-lists. That is quicksort! 
+Simple and elegant!</p> 
+<p>&nbsp;</p> 
+<p>It is a pure divide and conquer approach like merge sort, but while merge 
+sort&rsquo;s tricky part was merging the sorted sub-lists, in quicksort there 
+are other things to consider.</p> 
+<p>First of all, the best choice for a pivot is the bottleneck. Indeed it all 
+depends on that pivot. Imagine that you choose the greatest value from the list 
+&ndash; then you have to put all the other items of the list into the 
+&ldquo;left&rdquo; sub-list. If you do that on each step you&rsquo;ll 
+practically go into the worst scenario and that is no good. The thing is that 
+in the worst case quicksort is not so effective and it&rsquo;s practically as 
+slow as bubble sort and insertion sort. The good thing is that in practice with 
+randomly generated lists there is not a high possibility to go into the worst 
+case of quicksort.</p> 
+<h3>Choosing a pivot</h3> 
+<p>Of course the best pivot is the middle element from the list, leaving the 
+list divided into two fairly equal sub-lists. The problem is that there&rsquo;s 
+not an easy way to get the middle element from a list and this will slow down 
+the algorithm. So typically we can get for a pivot the first or the last item 
+of the list.</p> 
+<p>After choosing a pivot the rest is simple. Put every item with a greater 
+value on the right and every item with a lesser value on the left. Then we must 
+sort the left and right sub-lists just as we did with the initial list.</p> 
+<p></p> 
+<p>It&rsquo;s clear that with this algorithm we&rsquo;re naturally going into 
+a recursive solution. Typically every divide and conquer approach is easy to 
+implement with recursion. But because recursion can be heavy, there is an 
+iterative approach.</p> 
+<h2>Implementation</h2> 
+<p>As I said above, the recursive approach is something very natural for 
+quicksort as it follows the divide and conquer principles. On each step we 
+divide the list in two and we pass those sub-lists to our recursive function. 
+But recursion is dangerous sometimes, so an iterative approach is also 
+available. Typically iterative approaches &ldquo;model&rdquo; recursion with 
+extra memory and a model of a stack, which is our case. Here we have two 
+examples of quicksort &ndash; recursive and iterative in PHP. Let&rsquo;s see 
+the recursion on first:</p> 
+<h3>Recursive Quicksort<br>
+<br>
+</h3> 
+<pre>$list = array(5,3,9,8,7,2,4,1,6,5); // recursive function 
+quicksort($array) { if (count($array) == 0) { return array(); } $pivot = 
+$array[0]; $left = $right = array(); for ($i = 1; $i &lt; count($array); $i++) 
+{ if ($array[$i] &lt; $pivot) { $left[] = $array[$i]; } else { $right[] = 
+$array[$i]; } } return array_merge(quicksort($left), array($pivot), 
+quicksort($right)); } // 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 print_r(quicksort($list));
+</pre> 
+<p>&nbsp;</p> 
+<h3>Iterative Quicksort<br>
+<br>
+</h3> 
+<pre>$list = array(5,3,9,8,7,2,4,1,6,5); // iterative function 
+quicksort_iterative($array) { $stack = array($array); $sorted = array(); while 
+(count($stack) &gt; 0) { $temp = array_pop($stack); if (count($temp) == 1) { 
+$sorted[] = $temp[0]; continue; } $pivot = $temp[0]; $left = $right = array(); 
+for ($i = 1; $i &lt; count($temp); $i++) { if ($pivot &gt; $temp[$i]) { $left[] 
+= $temp[$i]; } else { $right[] = $temp[$i]; } } $left[] = $pivot; if 
+(count($right)) array_push($stack, $right); if (count($left)) 
+array_push($stack, $left); } return $sorted; } // 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 
+print_r(quicksort_iterative($list));</pre> 
+<p>&nbsp;</p> 
+<h2>Complexity</h2> 
+<p>The complexity of quicksort in the average case is O(n*log(n)) &ndash; same 
+as Merge sort. The problem is that in the worst case it is O(n2) &ndash; same 
+as bubble sort. Obviously the worst case is when we have an already sorted 
+list, and we constantly take for a pivot the last element of the list. But we 
+should consider that in practice we don&rsquo;t quite use sorted lists that we 
+have to sort again, right?</p> 
+<p></p> 
+<h2>Application</h2> 
+<p>Quicksort is a great sorting algorithm and developers often go for it, but 
+let&rsquo;s see some pros and cons of it.</p> 
+<h3>Why using quicksort</h3> 
+<ul> 
+<li>Recursive implementation is easy</li> 
+<li>In general its speed is same as merge sort &ndash; O(n*log(n))</li> 
+<li>Elegant solution with no tricky merging as merge sort</li> </ul> 
+<h3><br>
+Why not using quicksort</h3> 
+<ul> 
+<li>As slow as bubble sort in the worst case!</li> 
+<li>Iterative implementation isn&rsquo;t easy</li> 
+<li>There are faster algorithms for some sets of data types</li> </ul> 
+<p><br>
+Quicksort is beautiful because of the elegant idea behind its 
+principles. If you have two sorted lists, one with items with a greater value 
+from a given value and the other with items smaller form that given value, you 
+can simply concatenate them and you can be sure that the resulting list will be 
+sorted with no need of special merge.</p> 
+<p>In fact quicksort is a very elegant general purpose sorting algorithm and 
+every developer should be familiar with its principles.</p>  Tags: 
+<ul> 
+<li>Algorithms</li> 
+<li>Python</li> 
+<li>PHP</li> </ul> Published at DZone with permission of Stoimen Popov, author 
+and DZone MVB (source). <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> 
+Python is a fast, powerful, dynamic, and versatile programming language that is 
+being used in a variety ofapplication domains. It has flourished as a 
+beginner-friendly language that is penetrating more and more industries. The
+Python Zoneis a community that features a diverse collection of news, 
+tutorials, advice, and opinions about Python and Django. The Python Zone is 
+sponsored byNew Relic, the all-in-one web application performance tool that 
+lets yousee performance from the end user experience, through servers, and down 
+to the line of application code.<br>
+
+<h2>Comments</h2> <br>
+
+<h3>Milos Silhanek replied on Wed, 2012/03/14 - 3:51am</h3> Hi, great serie! 
+If you want watch these algorithm running see into JDK Sort Demo in<b>
+jdk-install-dir\demo\applets\SortDemo\example1.html</b> <br>
+ or 
+http://www.cs.ubc.ca/~harrison/Java/index.html and <br>
+
+http://people.cs.ubc.ca/~harrison/Java/sorting-demo.html <br>
+ originally 
+created by James Gosling and modified by Jason Harrison and Jim Boritz. Soon 
+will be available some example application :-). 
+<ul> 
+<li>Login or register to post comments</li> </ul> 
+<h2>Comment viewing options</h2> Flat list - collapsedFlat list - expanded
+Threaded list - collapsedThreaded list - expanded <br>
+Date - newest firstDate 
+- oldest first <br>
+10 comments per page30 comments per page50 comments per page
+70 comments per page90 comments per page150 comments per page200 comments per 
+page250 comments per page300 comments per page <br>
+<br>
+ Select your preferred 
+way to display the comments and click &quot;Save settings&quot; to activate 
+your changes. 
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Links</h3> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<h4>What Browser Really is The Fastest?</h4> <br>
+<br>
+
+<h2>Spotlight Features</h2> 
+<h2>Cretaceous COBOL Can Spawn Jurassic Java</h2> 
+<h2>How Twitter Does MySQL - Get Their Fork</h2> 
+<h2>BIRT 3.7 Report Design Refcard - Meet the Author: Michael Williams</h2> 
+<h2>Heterogeneous Computing Is Here, Now</h2> 
+<ul> 
+<h2>Popular at DZone</h2> 
+<li>1:The PHP Hammer (if PHP were a hammer...)</li> 
+<li>2:Limit Wordpress Search To Post Titles</li> 
+<li>3:Eliminar &iacute;tems vac&iacute;os de un array multidimensional en PHP
+</li> 
+<li>4:Overloading - The PHP Way</li> 
+<li>5:An Intro to Virtual Proxies, Part 1</li> 
+<li>6:Top 10 Useful Debugging Tips in eZ Publish</li> 
+<li>7:Maintaining your Server with Command Line PHP</li> See more popular at 
+DZone <br>
+Subscribe to the RSS feed </ul> Around the DZone Network WEB BUILDER 
+<br><br>
+Newly Hatched Python Tools for You <br>
+.NET <br>
+<br>
+How Content 
+Negotiation Works in ASP.NET Web A... <br>
+MOBILE <br>
+<br>
+EvenTiles from 
+Start to Finish: 256-MB Windows Pho... <br>
+JAVALOBBY <br>
+<br>
+Implementing 
+Your Own &quot;SOA&quot; Registry: the Maven Wa... <br>
+JAVALOBBY <br>
+<br>
+
+Beer and Pizza with Facebook: Learning Their Secre... <br>
+WEB BUILDER <br>
+<br>
+The Developer&rsquo;s Guide to HTML5 Canvas <br>
+You Might Also Like 
+<ul> 
+<li>What Happened When We Loaded Every Music CD in Existence into RavenDB</li> 
+<li>An Introduction to NoSQL Patterns</li> 
+<li>Is This The IDE You've Been Looking For? </li> 
+<li>Java Based Startups - We Want To Hear From You</li> 
+<li>Algorithm of the Week: Boyer-Moore String Searching</li> 
+<li>Integrate Your Enterprise Apps 'Like a Boss'</li> 
+<li>Developer Productivity is Important - Reality or Myth?</li> 
+<li>Oracle v Google Trial Day 2: Ellison Testifies</li> 
+<li>The Visitor Pattern Re-visited</li> 
+<li>Beer and Pizza with Facebook: Learning Their Secrets...</li> 
+<li>Our Simple Jenkins Configuration and Deployment</li> 
+<li>Heterogeneous Computing Is Here, Now</li> 
+<li>Spring Integration Project Creation VS. Apache Camel Project Creation</li> 
+<li>How to Use Three.js, a Lightweight 3D Library, with Neo4j</li> 
+<li>Cretaceous COBOL Can Spawn Jurassic Java</li> </ul> Popular on PHP Zone 
+<ul> 
+<li>PHP Redirect Function</li> 
+<li>Execute a HTTP POST Using PHP CURL</li> 
+<li>Top 10 PHP Frameworks</li> 
+<li>The Architecture of Flex and PHP Applications</li> 
+<li>PHP Email Validator - Email MX DNS Record Check</li> 
+<li>PHP Code: Top Ten Security Vulnerabilities</li> 
+<li>Setting Up A WAMP,phpMyAdmin, Wordpress development environment</li> 
+<li>PHP Force Download - Keep Up With What's Going Down</li> </ul> Latest 
+Articles 
+<ul> 
+<li>Improbing the RavenDB Indexing Process</li> 
+<li>A Custom Property in Spring</li> 
+<li>jDBI: A Simple Convenience Layer on Top of JDBC</li> 
+<li>Get You Some Azure, Windows Phone, and Windows 8 Sample Apps </li> 
+<li>Python Screencast: Install/Setup &quot;SST Web Test Framework&quot; on 
+Ubuntu 12.04</li> 
+<li>10 Quick Real-World Windows Phone Developer Performance Tuning Tips</li> 
+<li>Demo of Handlebars, and Why You Should Consider a Templating Engine</li> 
+<li>LWE 2.1 Adds Support for Drools + Crawler Scheduling</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>Google App Engine for Java</h3> 
+<p>This DZone Refcard provides an in depth introduction to the cloud computing 
+technology, Google App Engine. Covering everything from the basics...</p> <br>
+
+<h3>BIRT 3.7 Report Design: Eclipse-Based BI and Big Data Visualization</h3>  
+Eclipse Business Intelligence and Reporting Tools (BIRT) is an open source, 
+Eclipse-based reporting system that integrates with your Java/J2EE... <br>
+
+<h3>Getting Started with Cloud Computing</h3> 
+<p>If you are looking for more information on Cloud Computing then this DZone 
+Refcard is for you. Get an in depth comparison on three different Cloud...</p> 
+<br> <br>
+<br>
+<br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

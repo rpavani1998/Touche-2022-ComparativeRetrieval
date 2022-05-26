@@ -1,0 +1,410 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Algorithm of the Week: Bubble Sort | Python Zone</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>Cloud Zone</li> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Enterprise Integration</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Python 
+Zone <br>
+<strong>Did you know? DZone has great portals for Python, Cloud, NoSQL
+, andHTML5!</strong> Python Zone is brought to you in partnership with: <br>
+
+<br> <b>Stoimen Popov</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> 
+<li>@stoimenpopov </li> 
+<li> </li> 
+<li> </li> </ul> 
+<p> I've been working on web based projects built mainly with PHP and 
+JavaScript, where I mostly use Zend Framework and jQuery. I am interested in 
+any webpage optimizations techniques - for a faster web! Stoimen is a DZone MVB 
+and is not an employee of DZone and has posted 61 posts at DZone. You can read 
+more from them attheir website. View Full User Profile</p> 
+<h1>Algorithm of the Week: Bubble Sort</h1>  02.21.2012  Email <br>
+ Views: 
+6493 <br>
+
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> <em>This content is part of the Python Zone, which is 
+presented to you by DZone andNew Relic. Visit the Python Zone for news, tips, 
+and tutorials on the Python programming language.&nbsp; New Relic provides the 
+resources and best practices to help you monitor these applications. </em> 
+<h3>Recommended Links</h3> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<p>Like this piece? Share it with your friends:</p> | More <br>
+<br>
+
+<p>It&rsquo;s weird that bubble sort is the most famous sorting algorithm in 
+practice since it is one of the worst approaches for data sorting. Why is 
+bubble sort so famous? Perhaps because of its exotic name or because it is so 
+easy to implement. First let&rsquo;s take a look on its nature.</p> 
+<p>Bubble sort consists of comparing each pair of adjacent items. Then one of 
+those two items is considered smaller (lighter) and if the lighter element is 
+on the right side of its neighbour, they swap places. Thus the lightest element 
+bubbles to the surface and at the end of each iteration it appears on the top. 
+I&rsquo;ll try to explain this simple principle with some pictures.<br>
+</p> 
+<h3>1. Each two adjacent elements are compared</h3> 
+<p><br>
+In bubble sort we've to compare each two adjacent elements</p> 
+<p>Here &ldquo;2&Prime; appears to be less than &ldquo;4&Prime;, so it is 
+considered lighter and it continues to bubble to the surface (the front of the 
+array).<br>
+<br>
+</p> 
+<h3>2. Swap with heavier elements<br>
+<br>
+</h3> 
+<p><br>
+If heavier elements appear on the way we should swap them</p> 
+<p>On his way to the surface the currently lightest item meets a heavier 
+element. Then they swap places.<br>
+</p> 
+<h3>3. Move forward and swap with each heavier item<br>
+<br>
+</h3> 
+<p><br>
+Swapping is slow and that is the main reason not to use bubble sort</p>
+<p>The problem with bubble sort is that you may have to swap a lot of elements.
+<br></p> 
+<h3>4. If there is a lighter element, then this item begins to bubble to the 
+surface<br>
+<br>
+</h3> 
+<p><br>
+We can be sure that on each step the algorithm bubbles the lightest 
+element so far</p> 
+<p>If the currently lightest element meets another item that is lighter, then 
+the newest currently lightest element starts to bubble to the top.<br>
+</p> 
+<h3>5. Finally the lightest element is on its place<br>
+<br>
+</h3> 
+<p><br>
+Finally the list begins to look sorted</p> 
+<p>At the end of each iteration we can be sure that the lightest element is on 
+the right place &ndash; at the beginning of the list.</p> 
+<p>The problem is that this algorithm needs a tremendous number of comaprisons 
+and as we know already this can be slow.<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+We can 
+easily see how ineffective bubble sort is. Now the question remains &ndash; why 
+is it so famous? Maybe indeed the answer lies in the simplicity of its 
+implementation. Let&rsquo;s see how to implement bubble sort.<br>
+</p> 
+<h2>Implementation</h2> 
+<p>Implementing bubble sort is easy. The question is how easy? Well, obviously 
+after understanding the principles of this algorithm every developer, even a 
+beginner, can implement it. Here&rsquo;s a PHP implementation of bubble sort.
+<br></p> 
+<pre>$input = array(6, 5, 3, 1, 8, 7, 2, 4); function bubble_sort($arr) { 
+$length = count($arr); for ($i = 0; $i &lt; $length; $i++) { for ($j = 
+$length-1; $j &gt; $i; $j--) { if ($arr[$j] &lt; $arr[$j-1]) { $t = $arr[$j]; 
+$arr[$j] = $arr[$j-1]; $arr[$j-1] = $t; } } } return $arr; } // 1, 2, 3, 4, 5, 
+6, 7, 8 $output = bubble_sort($input);</pre> 
+<p><br>
+Clearly the implementation consists of few lines of code and two 
+nested loops.<br>
+</p> 
+<h2>Complexity: Where&rsquo;s Bubble Sort Compared to Other Sorting Algorithms
+<br></h2> 
+<p>Compared to other sorting algorithm, bubble sort is really slow. Indeed the 
+complexity of this algoritm is O(n2) which can&rsquo;t be worse. It&rsquo;s 
+weird that the most well known sorting algorithm is the slowest one.</p> 
+<p><br>
+Bubble sort compared to quicksort, merge sort and heapsort in the 
+average case</p> 
+<p>Even for small values of n, the number of comparisons and swaps can be 
+tremendous.<br>
+</p> 
+<p><br>
+Bubble sort is three times slower than quicksort even for n = 100, but 
+it's easier to impelemnt</p> 
+<p>Another problem is that most of the languages (libraries) have built-in 
+sorting functions, that they don&rsquo;t make use of bubble sort and are faster 
+for sure. So why a developer should implement bubble sort at all?<br>
+</p> 
+<h2>Application: 3 Cool Reasons To Use Bubble Sort</h2> 
+<p>We saw that bubble sort is slow and ineffective, yet it is used in 
+practice. Why? Is there any reason to use this slow, ineffective algorithm with 
+weird name? Yes and here are some of them that might be helpful for any 
+developer.<br>
+</p> 
+<h3>1. It is easy to implement</h3> 
+<p>Definitely bubble sort is easier to implement than other 
+&ldquo;complex&rdquo; sorting algorithms as quicksort. Bubble sort is easy to 
+remember and easy to code and that&rsquo;s great instead of learning and 
+remembering tons of code.<br>
+</p> 
+<h3>2. Because the library can&rsquo;t help</h3> 
+<p>Let&rsquo;s say you work with JavaScript. Great, there you get array.sort() 
+which can help for this: [3, 1, 2].sort(). But what would happen if you&rsquo;d 
+rather like to sort more &ldquo;complex&rdquo; structures like &hellip; some 
+DOM nodes. Here we have three LI nodes and we want to sort them in some order. 
+Obviously you can&rsquo;t compare them with the &ldquo;&lt;&quot; operator, so 
+we've to come up with some custom solution.<br>
+</p> 
+<pre>&lt;a href=&quot;#&quot;&gt;Click here to sort the list&lt;/a&gt; 
+&lt;li&gt;node 3&lt;/li&gt; &lt;li&gt;node 1&lt;/li&gt; &lt;li&gt;node 
+2&lt;/li&gt;</pre> 
+<p><br>
+Here sort() can&rsquo;t help us and we&rsquo;ve to code our own 
+function. However we have only few elements (three in our case). Why not using 
+bubble sort?<br>
+</p> 
+<h3>3. The list is almost sorted</h3> 
+<p>One of the problems with bubble sort is that it consists of too much 
+swapping, but what if we know that the list is almost sorted?<br>
+</p> 
+<pre>// almost sorted [1, 2, 4, 3, 5]</pre> 
+<p><br>
+We have to swap only 3 with 4. </p> 
+<p>Note that in the best case bubble sort&rsquo;s complexity is O(n) &ndash; 
+faster than quicksort&rsquo;s best case!<br>
+<br>
+<i><br>
+Source: 
+http://www.stoimen.com/blog/2012/02/20/computer-algorithms-bubble-sort/<br>
+<br>
+</i></p>  Tags: 
+<ul> 
+<li>algorithms</li> 
+<li>PHP</li> </ul> Published at DZone with permission of Stoimen Popov, author 
+and DZone MVB. <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> 
+Python is a fast, powerful, dynamic, and versatile programming language that is 
+being used in a variety ofapplication domains. It has flourished as a 
+beginner-friendly language that is penetrating more and more industries. The
+Python Zoneis a community that features a diverse collection of news, 
+tutorials, advice, and opinions about Python and Django. The Python Zone is 
+sponsored byNew Relic, the all-in-one web application performance tool that 
+lets yousee performance from the end user experience, through servers, and down 
+to the line of application code.<br>
+
+<h2>Comments</h2> <br>
+
+<h3>Oliver Weiler replied on Wed, 2012/02/22 - 5:52am</h3> Really, stop 
+teaching BubbleSort. Instead, focus on InsertionSort, which performs better in 
+almost all situations, is faster than any sort for very small datasets and can 
+be used e.g. in MergeSort to optimize it for small datasets. And, on top of 
+that, I'd say it's as easy (if not easier) to grasp than BubbleSort. 
+<ul> 
+<li>Login or register to post comments</li> </ul> <br>
+
+<h3>Stoimen Popov replied on Wed, 2012/02/22 - 7:15am</h3> Actually both 
+bubble sort and insertion sort have the same complexity - O(n*n) in the average 
+case and O(n) in the best case. Which of them both are easier to implement, 
+well it depends on the developer, but for sure both are quite easy. 
+<ul> 
+<li>Login or register to post comments</li> </ul> 
+<h2>Comment viewing options</h2> Flat list - collapsedFlat list - expanded
+Threaded list - collapsedThreaded list - expanded <br>
+Date - newest firstDate 
+- oldest first <br>
+10 comments per page30 comments per page50 comments per page
+70 comments per page90 comments per page150 comments per page200 comments per 
+page250 comments per page300 comments per page <br>
+<br>
+ Select your preferred 
+way to display the comments and click &quot;Save settings&quot; to activate 
+your changes. 
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Links</h3> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> <br>
+<br>
+
+<h2>Spotlight Features</h2> 
+<h2>How Twitter Does MySQL - Get Their Fork</h2> 
+<h2>BIRT 3.7 Report Design Refcard - Meet the Author: Michael Williams</h2> 
+<h2>Heterogeneous Computing Is Here, Now</h2> 
+<h2>Cretaceous COBOL Can Spawn Jurassic Java</h2> Around the DZone Network WEB 
+BUILDER <br>
+<br>
+Newly Hatched Python Tools for You <br>
+.NET <br>
+<br>
+How 
+Content Negotiation Works in ASP.NET Web A... <br>
+MOBILE <br>
+<br>
+EvenTiles 
+from Start to Finish: 256-MB Windows Pho... <br>
+JAVALOBBY <br>
+<br>
+
+Implementing Your Own &quot;SOA&quot; Registry: the Maven Wa... <br>
+JAVALOBBY 
+<br><br>
+Beer and Pizza with Facebook: Learning Their Secre... <br>
+WEB BUILDER 
+<br><br>
+The Developer&rsquo;s Guide to HTML5 Canvas <br>
+You Might Also Like 
+<ul> 
+<li>What Happened When We Loaded Every Music CD in Existence into RavenDB</li> 
+<li>An Introduction to NoSQL Patterns</li> 
+<li>Is This The IDE You've Been Looking For? </li> 
+<li>Algorithm of the Week: Boyer-Moore String Searching</li> 
+<li>Java Based Startups - We Want To Hear From You</li> 
+<li>Integrate Your Enterprise Apps 'Like a Boss'</li> 
+<li>Developer Productivity is Important - Reality or Myth?</li> 
+<li>Oracle v Google Trial Day 2: Ellison Testifies</li> 
+<li>The Visitor Pattern Re-visited</li> 
+<li>Beer and Pizza with Facebook: Learning Their Secrets...</li> 
+<li>Our Simple Jenkins Configuration and Deployment</li> 
+<li>Spring Integration Project Creation VS. Apache Camel Project Creation</li> 
+<li>Heterogeneous Computing Is Here, Now</li> 
+<li>How to Use Three.js, a Lightweight 3D Library, with Neo4j</li> 
+<li>Cretaceous COBOL Can Spawn Jurassic Java</li> </ul> Popular on Python Zone 
+<ul> 
+<li>IDEA and TeamCity Updated, PyCharm Beta Released</li> 
+<li>Track your home's live electricity usage with Python </li> 
+<li>Wake Me Up Before Google's Go Goes </li> 
+<li>&quot;Strict&quot; Unit Testing -- Everything In Isolation Is Too Much Work
+</li> 
+<li>HTML5 and CSS3 Support in Komodo IDE 6</li> 
+<li>DZone's Bringing You More Python Awesomeness</li> 
+<li>PyPy Opens Up a &quot;Blackhole&quot;</li> 
+<li>Django Performance Patterns 1: Measuring Performance </li> </ul> Latest 
+Articles 
+<ul> 
+<li>Improbing the RavenDB Indexing Process</li> 
+<li>A Custom Property in Spring</li> 
+<li>jDBI: A Simple Convenience Layer on Top of JDBC</li> 
+<li>Get You Some Azure, Windows Phone, and Windows 8 Sample Apps </li> 
+<li>Python Screencast: Install/Setup &quot;SST Web Test Framework&quot; on 
+Ubuntu 12.04</li> 
+<li>10 Quick Real-World Windows Phone Developer Performance Tuning Tips</li> 
+<li>Demo of Handlebars, and Why You Should Consider a Templating Engine</li> 
+<li>LWE 2.1 Adds Support for Drools + Crawler Scheduling</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>Getting Started with Cloud Computing</h3> 
+<p>If you are looking for more information on Cloud Computing then this DZone 
+Refcard is for you. Get an in depth comparison on three different Cloud...</p> 
+<br> 
+<h3>Google App Engine for Java</h3> 
+<p>This DZone Refcard provides an in depth introduction to the cloud computing 
+technology, Google App Engine. Covering everything from the basics...</p> <br>
+
+<h3>BIRT 3.7 Report Design: Eclipse-Based BI and Big Data Visualization</h3>  
+Eclipse Business Intelligence and Reporting Tools (BIRT) is an open source, 
+Eclipse-based reporting system that integrates with your Java/J2EE... <br>
+<br>
+
+<br> <br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

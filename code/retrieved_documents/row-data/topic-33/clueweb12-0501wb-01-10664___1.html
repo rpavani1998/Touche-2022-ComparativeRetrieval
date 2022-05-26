@@ -1,0 +1,362 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Page 2 - A Few Tips for Speeding Up PHP Code</title>
+<body>
+
+<ul> 
+<li> Web Development Tutorials 
+<ul> 
+<li> Topics 
+<p>Loading Dev Articles Topics...</p> </li> 
+<li> Forums 
+<p>Loading Forum Links...</p> </li> </ul> </li> 
+<li> Dev Shed 
+<p>Loading Dev Shed Topics...</p> </li> 
+<li> ASP Free 
+<p>Loading ASP Free Topics...</p> </li> 
+<li> SEO Chat 
+<p>Loading SEO Topics...</p> </li> 
+<li> The Devshed Network 
+<ul> 
+<li> Dev Hardware 
+<p>...</p> </li> 
+<li> Scripts 
+<p>...</p> </li> 
+<li> Tutorialized 
+<p>...</p> </li> 
+<li>Web Hosters</li> 
+<li>Codewalkers</li> 
+<li>Dev Shed Tools</li> </ul> </li> 
+<li> Login/Sign-up 
+<ul> 
+<li> username </li> 
+<li> password </li> 
+<li> </li> 
+<li> sign up! </li> 
+<li> Lost Password? </li> </ul> </li> </ul> 
+<h4>Dev Articles</h4> 
+<h2>PHP</h2> <strong>Programming Tutorials &amp; Information</strong> <br>
+Home
+PHP  Page 2 - A Few Tips for Speeding Up PHP Code <br>
+<br>
+<br>
+<br>
+PHP RSS 
+<br> <br>
+<br>
+<br>
+<br>
+<br>
+
+<h1>A Few Tips for Speeding Up PHP Code</h1> <br>
+
+<p><strong>Ever wondered how to improve your code's execution time? Daryl 
+reveals some of his secrets and shows us how to do just that.</strong></p> 
+Author Info: <br>
+By: Daryl Houston <br>
+ Poor  Best <br>
+<br>
+<br>
+<br>
+ 
+Rating:&nbsp;/&nbsp;46 <br>
+ October 02, 2003 <br>
+<br>
+TABLE OF CONTENTS: <br>
+
+<ol> 
+<li>&middot; A Few Tips for Speeding Up PHP Code</li> 
+<li>&middot; Filter Database Results</li> 
+<li>&middot; Consolidate Queries</li> 
+<li>&middot; Pattern Matching Metrics</li> 
+<li>&middot; Conclusion</li> </ol> <br>
+<br>
+<br>
+
+<h5>See Also:</h5> 
+<ol> 
+<li> Developing A Site Search Engine With PHP And MySQL</li> 
+<li> An Introduction to PEAR</li> 
+<li> Sample Chapter: PHP Pocket Reference</li> </ol> print this article <br>
+
+<br>  SEARCH DEVARTICLES 
+<ul> <br>
+</ul> <br>
+<br>
+<br>
+TOOLS YOU CAN USE <br>
+
+<p> </p>  advertisement <br>
+<br>
+<br>
+<br>
+<br>
+<b>A Few Tips for Speeding Up 
+PHP Code - Filter Database Results</b> <br>
+(Page 2 of 5 ) <br>
+<br>
+
+<p></p> 
+<p>There are several ways to fetch database results, depending on your 
+database server type and your PHP configuration. For example, using the sybase 
+drivers to connect to an MS SQL server, my PHP version will let me use the 
+sybase_fetch_array() function but not the sybase_fetch_assoc() function. 
+Sybase_fetch_array() returns both text and numeric indices for each row 
+returned, however, effectively doubling the data I have to pass around when 
+processing the results. In order to reduce the amount of data I have to work 
+with, I added a function to my database library that lets me choose which type 
+of index I wish to use -- text, numeric, or both. Consider the following code:
+</p> 
+<p>&nbsp;$db=new 
+DB(&quot;server&quot;,&quot;username&quot;,&quot;password&quot;,&quot;database&quot;,&quot;sybase&quot;);
+<br>&nbsp;$db-&gt;connect();<br>
+&nbsp;$db-&gt;usedb(&quot;database&quot;);<br>
+
+&nbsp;$db-&gt;set_return(&quot;both&quot;);</p> 
+<p>&nbsp;foreach($db-&gt;fetch(&quot;SELECT TOP 200 * FROM [mainview]&quot;) 
+as $row){<br>
+&nbsp;&nbsp; &nbsp;&nbsp;print_r($row);<br>
+&nbsp;&nbsp;print 
+&quot;&lt;br&gt;&lt;hr&gt;&lt;br&gt;\n&quot;;<br>
+&nbsp;}<br>
+
+&nbsp;$db-&gt;disconnect();</p> 
+<p>Forget for a moment that I'm using a database library you don't have access 
+to.&nbsp; It's plain enough that I'm connecting to a database, invoking the 
+&quot;set_return()&quot; function, and then looping through an array of row 
+arrays to print the results. My [mainview] happens to be a view containing some 
+300 columns. Multiply that times 200 and we're working with a fair amount of 
+data. Now the default behavior of my database class is to return both numeric 
+and text indices, and it consistently takes about 55,000 milliseconds to run 
+this query. Only about 8% of that time is spent actually pulling results from 
+the database; the remaining 92% is devoted to processing the results. But when 
+I invoke 'set_return(&quot;text&quot;)', the results are somewhat 
+improved.&nbsp; Total runtime is about 41,000 milliseconds, with 40% of the 
+time spent in retrieving results and 60% processing them; and when I set the 
+return to &quot;numeric,&quot; the results are even better: 31,000 milliseconds 
+with a 20/80 split. So what did I do to increase performance?</p> 
+<p>I wrote a function within my database library that checks the value of the 
+member variable &quot;return_type,&quot; runs through the row results, and 
+returns all numeric or text indices based on the value of that member variable:
+</p> 
+<p>&nbsp;function format_results($rows){<br>
+&nbsp;&nbsp;//$rows is assumed to 
+be a multi-dimensional<br>
+&nbsp;&nbsp;//array composed of arrays of row 
+results.<br>
+&nbsp;&nbsp;if($this-&gt;return_type==&quot;both&quot; || 
+!$this-&gt;return_type){ return $rows; }<br>
+&nbsp;&nbsp;&nbsp;$newrows=array();
+<br>&nbsp;&nbsp;&nbsp;foreach($rows as $r){<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;$vals=array();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;//Get all 
+array keys from the row of row arrays passed to function.<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;$keys=array_keys($r);</p> 
+<p>&nbsp;&nbsp;&nbsp;&nbsp;//For each key, check return type and set 
+vals[$key] to the appropriate modulo value.<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;for($i=0; $i&lt;sizeof($keys); $i++){<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch($this-&gt;return_type){<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case &quot;numeric&quot;:<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if($i%2==0){<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$vals[$keys[$i]]=$r[$keys[$i]];
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case &quot;text&quot;:<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if($i%2==1){<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$vals[$keys[$i]]=$r[$keys[$i]];
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;//Default case, just return $rows as it 
+was passed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$i=sizeof($keys) + 5;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return $rows;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;//Push reformatted single row array onto array of row 
+arrays.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;array_push($newrows,$vals);<br>
+
+&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;return $newrows;<br>
+&nbsp;}</p> 
+<p>The result of adding this function is of course that we spend more time 
+formatting the results before returning them to the calling function, but we 
+spend less time processing the results after the fact. In other words, by 
+weeding out duplicate values once up front, we dodge working with twice the 
+data in any loops in our calling script and we stand to save significant time. 
+If your PHP config is such that you can opt to use functions that will return 
+only numeric or text indices, you may not need to write such a function. The 
+lesson, though, is that you should get only the type of results you'll actually 
+be working with. So if you're using text indices only in your code and you 
+happen to be able to use sybase_fetch_assoc(), be sure you use it rather than 
+using the more top-heavy sybase_fetch_array(). I also benchmarked this on a 
+mysql database with similar results.</p>  Next: Consolidate Queries &gt;&gt; 
+<br> <br>
+ Please enable JavaScript to view the comments powered by Disqus. 
+blog comments powered byDisqus <br>
+<br>
+<br>
+<br>
+<br>
+PHP ARTICLES <br>
+<br>
+
+- Removing Singletons in PHP<br>
+- Singletons in PHP<br>
+- Implement Facebook 
+Javascript SDK with PHP<br>
+- Making Usage Statistics in PHP<br>
+- Installing 
+PHP under Windows: Further Config...<br>
+- File Version Management in PHP<br>
+- 
+Statistical View of Data in a Clustered Bar ...<br>
+- Creating a Multi-File 
+Upload Script in PHP<br>
+- Executing Microsoft SQL Server Stored Proced...<br>
+
+- Code 10x More Efficiently Using Data Access ...<br>
+- A Few Tips for Speeding 
+Up PHP Code<br>
+- The Modular Web Page<br>
+- Quick E-Commerce with PHP and 
+PayPal<br>
+- Regression Testing With JMeter<br>
+- Building an Iterator with PHP
+<br> <br>
+<br>
+Find More PHP Tutorials <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Dev Articles Forums 
+&nbsp; <br>
+<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;Articles <br>
+<br>
+<br>
+&nbsp;
+&nbsp;&nbsp;Forums <br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;All Feeds <br>
+<br>
+<br>
+
+<br> <br>
+<br>
+<br>
+<br>
+<strong>Weekly Newsletter</strong> <br>
+&nbsp; <br>
+
+Developer Updates &nbsp; <br>
+Free Website Content &nbsp; <br>
+<br>
+<br>
+<br>
+
+Contact Us &nbsp; <br>
+<br>
+<br>
+<br>
+Site Map &nbsp; <br>
+<br>
+<br>
+<br>
+
+Privacy Policy &nbsp; <br>
+Support &nbsp; <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br> <br>
+<br>
+&copy; 2003-2012 by Developer Shed. All rights reserved. DS 
+Cluster 7 - Follow ourSitemap <br>
+
+<h5>Popular Web Development Topics</h5> 
+<ul> 
+<li>DHTML</li> 
+<li>HTML</li> 
+<li>JavaScript</li> 
+<li>Ruby-on-Rails</li> 
+<li>Style Sheets</li> 
+<li>Web Authoring</li> 
+<li>Flash</li> 
+<li>XML</li> 
+<li>C#</li> </ul> 
+<ul> 
+<li>ASP.NET</li> 
+<li>Java</li> 
+<li>MySQL</li> 
+<li>Oracle</li> 
+<li>Photoshop</li> 
+<li>PHP</li> 
+<li>Reviews</li> 
+<li>SQL</li> 
+<li>SQL Server</li> </ul> 
+<h5>All Web Development Tutorials</h5> 
+<ul> 
+<li>ADO.NET</li> 
+<li>Apache</li> 
+<li>ASP</li> 
+<li>C++</li> 
+<li>ColdFusion</li> 
+<li>COM/COM+</li> </ul> 
+<ul> 
+<li>Delphi-Kylix</li> 
+<li>Design Usability</li> 
+<li>Development Cycles</li> 
+<li>Embedded Tools</li> 
+<li>Graphic Design</li> 
+<li>IIS</li> 
+<li>Interviews</li> </ul> 
+<ul> 
+<li>VB.Net</li> 
+<li>Visual Basic</li> 
+<li>Web Services</li> 
+<li>Web Standards</li> </ul> <br>
+ [-X-]  Download a FREE trial and enter to 
+win FREE software licenses.<br>
+
+</body>

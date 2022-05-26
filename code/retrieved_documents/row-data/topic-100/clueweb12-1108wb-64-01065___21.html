@@ -1,0 +1,682 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Schneide Blog</title>
+<body>
+
+<h1>Schneide Blog</h1>  public business secrets 
+<ul> 
+<li>Home</li> 
+<li>About</li> </ul>  &nbsp; 
+<h2>Separate Master Data and Variable&nbsp;Data</h2> January 10, 2012 <br>
+
+<p>In the design of data structures or objects, there are two different kinds 
+of data, namely &ldquo;Master Data&rdquo; (german: Stammdaten) and 
+&ldquo;Variable Data&rdquo; (german: Bewegungsdaten). The first kind, master 
+data, are data fields that will change seldom over time and can sometimes be 
+used to &ldquo;identify&rdquo; an object. The second kind are data fields that 
+capture the current value of an object&rsquo;s aspect, but are expected to 
+change in the future. If you can categorize your data fields in this manner, 
+think about separating them into different objects.</p> 
+<p>Let me make an actual example. An application we develop has a central 
+instance (the &ldquo;center&rdquo;) that distributes situational data to 
+several operation desks, powered by client applications, named the 
+&ldquo;clients&rdquo;. Each client instance is registered in the center to 
+enable the supervision and administration of clients. The data for each client 
+is stored in a ClientInformation object that is mapped to a database relation. 
+Let&rsquo;s have a look at some of the data fields of ClientInformation:</p> 
+<ul> 
+<li><strong>int internalIdentifier</strong> &ndash; the database primary key 
+for the record</li> 
+<li><strong>String type</strong> &ndash; some type of the client application
+</li> 
+<li><strong>String instanceName</strong> &ndash; the given readable denotation 
+of the operation desk</li> 
+<li><strong>String version</strong> &ndash; the currently installed version of 
+the client application</li> 
+<li><strong>Date connectionDate</strong> &ndash; the last time this client 
+application established a connection</li> 
+<li><strong>Date lastActionDate</strong> &ndash; the last time this client 
+application issued an action command (&ldquo;was active&rdquo;)</li> </ul> 
+<p>We can start all kinds of (justified) discussion about primitive obsession, 
+too much information at one place and so on, but for this blog entry, only the 
+categorization in master data and variable data is of interest. My opinion on 
+the example is that the first three data fields (internalIdentifier, type and 
+instanceName) are definitely in the master data category. The last two data 
+fields are clearly variable data, while the version field is something in 
+between. My guts tell me to categorize the version as master data, because it 
+won&rsquo;t change on a daily schedule.</p> 
+<p>When separating the two categories of data, the ClientInformation object 
+may turn into a reference holder object only. In this case, the 
+ClientInformation holds two references, one to a new ClientMasterData object 
+(holding internalIdentifier, type, instanceName and version) and another one to 
+a new ClientVariableData object (holding connectionDate and lastActionDate).</p>
+<p>A less radical modification would be to let the master data remain in the 
+ClientInformation object and only extract the variable data into a new 
+ClientConnectionData object. If a client connects, only the referenced 
+ClientConnectionData object has to change.</p> 
+<p>If you separate your master data from the variable data, you can very 
+easily concentrate on the variable data for performance optimizations. This is 
+where the data changes will happen and a tuned storage strategy will pay off. 
+The master data should be designed more carefully concerning the type 
+information, so if we really start the discussion about primitive obsession, I 
+would first tend to the master data fields and argue that the type 
+shouldn&rsquo;t be a String but an Enum and the version should be a more 
+sophisticated Version type. This could be modelled even with a slow 
+object/relational mapper because the data is only written/read once.</p> 
+<p>The next time you come across one of your data model objects that contain 
+more than two data fields, have a look at their categorization in master and 
+variable data. Perhaps you can see a good reason to split the object.</p> 
+<p> Leave a Comment &raquo; | 2012, Author: Daniel Lindner, Principles | 
+Tagged:categorization, data model, master data, variable data | Permalink <br>
+ 
+Posted by daniel.lindner</p> 
+<h2>Depth-first&nbsp;programmers</h2> January 2, 2012 <br>
+
+<p>Just as there are at least two fundamentally different approaches for 
+searching, namelydepth-first and breadth-first search, there are also different 
+types of programmers. The depth-first programmer is a dangerous type, as he is 
+prone to yak shaving and reinvention of the wheel.</p> 
+<h4>The depth-first programmer</h4> 
+<p>Let me try to define the term of a &ldquo;depth-first programmer&rdquo; by 
+a little (true) story. A novice java programmer should make some changes to an 
+existing code. To secure his work, he should and wanted to write unit tests in 
+JUnit. He started the work and soon enough, first results could be seen. But 
+when he started to write his tests, the progress notifications stopped. The 
+programmer worked frantically for hours and then days to write what appeared to 
+be some simple data-driven tests.</p> 
+<p>Finally, the novice java programmer reported success and showed his 
+results. He wrote his tests and &ldquo;had to extend JUnit a bit to do it 
+right&rdquo;. Wait, what? Well, in JUnit, the test methods cannot have 
+parameters, but the programmer&rsquo;s tests needed to be parametrized. So he 
+replaced the part of JUnit that calls the test methods by reflection with an 
+&ldquo;improved&rdquo; algorithm that could also inject parameters. His 
+implementation relied on obscure data structures that provided the actual 
+parameter values and only really worked for his needs. The whole mess was 
+nearly intangible, a big bloat and needed most of the development time for the 
+unit tests.</p> 
+<p>And it was totally unnecessary once you learn about 
+&ldquo;Parameterized&rdquo; JUnit4 tests or build light-weight data drivers 
+instead of changing the signature of the test method itself. But this 
+programmer dove deep into JUnit to adjust the framework itself to his needs. 
+When asked about it, he stated that &ldquo;he needed to pass the parameters 
+somehow&rdquo;. That&rsquo;s right, but he choose the most expensive way to do 
+so.</p> 
+<p>He exhibited the general behaviour of a depth-first programmer: whenever 
+you face a problem, take the first possible solution to a problem you can come 
+up with and work on it without evaluation against other possibilities. And 
+continue on the path without looking back, no matter how long it takes.</p> 
+<h4>Stuck in activism</h4> 
+<p>The problem with this approach should be common sense. The obvious option 
+isn&rsquo;t always the best or even a good one. You have to evaluate the 
+different possible solutions by their advantages and drawbacks. A less obvious 
+solution might be far better in every aspect but obviousness. Another problem 
+with this approach is the absence of internal warning signs.</p> 
+<p>Getting stuck is an internal warning sign every programmer understands. 
+You&rsquo;ve worked your way in a certain direction and suddenly, you cannot 
+advance further. Something blocks your anticipated way of solving the problem 
+and you cannot think of an acceptable way past it. A depth-first programmer 
+never gets stuck this way. No matter how expensive, he will pursue the first 
+thing that brings him closer to the target. A depth-first programmer always 
+churns out code at full speed. Most of it isn&rsquo;t needed on second thought 
+and can be plain harmful when left in the project. The depth-first programmer 
+will always report progress even when he needs days for a task of minutes. He 
+is stuck in activism.</p> 
+<h4>Progress without guidance</h4> 
+<p>This isn&rsquo;t a rant about incompetent programmers. Every good 
+programmer knows the situation when you suddenly realize that you&rsquo;re
+shaving a yak when all you wanted to do is to add a feature to the code base. 
+This is your self-guidance system regaining consciousness after a period of 
+auto-piloting in depth-first mode. Every programmer behaves depth-first 
+sometimes.</p> 
+<p>This can be explained with the Dreyfus Model of Skill Acquisition. On the 
+first stage, called &ldquo;Beginner&rdquo;, you are simply not capable of 
+proper self-evaluation. You cannot distinguish between good and not so good 
+approaches beforehands or even afterwards. Your expertise in the narrow field 
+of the problem at hand isn&rsquo;t broad enough to recognize an error even when 
+you are working on the error yourself for prolonged times.</p> 
+<p>In the Dreyfus Model, a beginner needs external guidance. Somebody with 
+more experience has to point out errors for you and formulate alternatives as 
+clearly and specific as possible. Without external guidance, a beginner will 
+become a depth-first programmer. We&rsquo;ve all been there.</p> 
+<h4>&nbsp;Be a guide</h4> 
+<p>The real failure in the story above was done by me. Instead of interacting 
+with the novice java programmer after a few hours when I thought he should be 
+done by now, I let him &ldquo;advance&rdquo;. I could have avoided the 
+resulting mess by providing guidance and a few alternate solutions for the 
+immediate problem. I would give an overview of the problem&rsquo;s context and 
+some hints about the general direction this task should be solved.</p> 
+<p>Every depth-first programmer works in a suboptimal environment. The 
+programmer tries his best, it&rsquo;s really the environment that could do 
+better.</p> 
+<p>So, the next time you see somebody working frantically on a problem that 
+should be rather easy to solve, lend him a hand. Be gentle and empathic about 
+his attempt and work with proposals, not with instructions. Perhaps 
+you&rsquo;ve spared yourself a mess like an unnecessarily extended JUnit 
+library and the depth-first programmer the frustration when his hard work of 
+several days is silently discarded.</p> 
+<p> 3 Comments | 2012, Author: Daniel Lindner, Continuous Learning, Management 
+| Tagged:depth first, dreyfus model of skill acquisition, yak shaving | 
+Permalink <br>
+ Posted by daniel.lindner </p> 
+<h2>A review of the year 2011 at&nbsp;Softwareschneiderei</h2> December 27, 
+2011 <br>
+
+<p>The current year 2011 is coming to an end. This is the traditional time to 
+pause and reflect on what has happened. This blogpost tries to sum up our year 
+in software development at Softwareschneiderei. It was an interesting, 
+entertaining and successful year for us, that&rsquo;s for sure.</p> 
+<h4>The official parts</h4> 
+<p>Our developer blog was alive throughout the hardest times of the year, when 
+everyone was under full project load. Every week, one of our developer shares a 
+little posting with the world. The blog is stillmanaged by token only. Looking 
+at the visitor statistics, we fully appreciate your attention. The first blog 
+post of this year looked at the remainder of a failed project.&ldquo;A tale of 
+scrap metal code&rdquo; was a detailed vivisection in three parts. Over the 
+course of the year, we wrote about bogus error messages, Groovy, Grails, GORM 
+and some confessions about coding style and multithreading. If you have the 
+time, spend a few minutes tobrowse our blog post archive for this year.</p> 
+<p>Our &ldquo;official&rdquo; company blog, written in german language, had no 
+activity this year. We can certainly do better than this and take it on the 
+list for 2012.</p> 
+<p>The company homepage, written in german language, had continuous updates 
+and extensions this year. We coupled the&ldquo;Open Source Love Day&rdquo; 
+(OSLD) with our &ldquo;Homepage Comittee&rdquo;, when every employee has to 
+improve the homepage in some aspects and present the change to the 
+&ldquo;comittee&rdquo;. Unfortunately, this somehow lead to fewer OSLDs this 
+year.</p> 
+<p>The ongoing Dev Brunch sessions thinned out a bit in the second half of the 
+year. This was a concession to the ever-growing workload. We strive to 
+establish a tighter schedule with accompanying blog posts in the next year.</p> 
+<h4>The internal parts</h4> 
+<p>We were under heavy development load this year. This isn&rsquo;t a bad 
+thing, but impacts the internal communication and team building process. We 
+tried to cope a bit by restructuring the Open Source Love Day to a &ldquo;Team 
+Day&rdquo;, when the whole team meets and works on various internal or hobby 
+projects. Some of these days were spend on Code Camps and other training 
+events. This means less love for the open source community, but crucial 
+together time for us.</p> 
+<p>We picked up several &ldquo;new&rdquo; programming languages this year. You 
+can tell by the blog posts that we worked with Python, Ruby, Flex/ActionScript 
+and even VisualBasic on real projects. The VisualBasic experience was a little 
+epiphany that it&rsquo;s really the developer and not the language that leads 
+to shitty software.</p> 
+<p>One method of continuous improvement is our &ldquo;creativity 
+budget&rdquo;. Basically, it&rsquo;s money every developer can spend to improve 
+his workplace. This budget wasn&rsquo;t used at all this year, as the 
+workplaces seem to be optimal. This cannot be true, so we bought brand new 
+computers or a big RAM upgrade for everyone. And every computer has a big 
+enough SSD now. We took our own advice seriously and invested in our 
+productivity.</p> 
+<p>Our developer crew grew again this year. We are beginning to think about 
+the remaining space in the new office again. But as usual, we grow slowly and 
+deliberately. There&rsquo;s nothing worse than a team of strangers.</p> 
+<h4>Conclusion</h4> 
+<p>The year 2011 was great! We&rsquo;re looking forward to the year 2012, with 
+our motto of christmas 2011: &ldquo;cheery and spry&rdquo; (the original motto 
+is in german language &ldquo;froh und munter&rdquo;, I hope the translation 
+caught the original spirit).</p> 
+<p><em>Have a great turn of the year, everyone. We&rsquo;d love to see you 
+again next year.</em></p> 
+<p> Leave a Comment &raquo; | 2011, Author: Daniel Lindner, General | Tagged: 
+2011, conclusion, daniel lindner, year's review | Permalink <br>
+ Posted by 
+daniel.lindner</p> 
+<h2>Python in C++: Rerouting Python&rsquo;s&nbsp;stdout</h2> December 19, 2011 
+<br> 
+<p>A few weeks ago I published a post that showed how to embedd Python into C++
+ and how to exchange data between the two languages. Today, I want to present a 
+simple practice that comes in handy when embedding Python into C++: Rerouting 
+Python&rsquo;s standard output using CPython.</p> 
+<p>After initializing Python, the new destination of the output stream needs 
+to be created<em></em>using PyFile_FromString(&hellip;) and set to be the new 
+standard output:</p> 
+<p></p> 
+<pre> PyObject* pyStdOut = PyFile_FromString(&quot;CONOUT$&quot;, 
+&quot;w+&quot;); PyObject* sys = PyImport_ImportModule(&quot;sys&quot;); 
+PyObject_SetAttrString(sys, &quot;stdout&quot;, pyStdOut);</pre> 
+<p></p> 
+<p>Basically that&rsquo;s all it needs. When executing Python script via 
+PyRun_String(&hellip;), all calls to <em>print(&hellip;)</em> will write the 
+data directly to<em>pyStdOut</em>.</p> 
+<p>Ater the Python script is finished, the data in <em>pyStdOut</em> can be 
+retrieved and further processed with C++ by converting it using
+PyFile_AsFile(&hellip;):</p> 
+<p></p> 
+<pre> FILE* pythonOutput = PyFile_AsFile(pyStdOut); </pre> 
+<p></p> 
+<p> Leave a Comment &raquo; | 2011, Author: Nico Hochberger, C/C++, Python | 
+Permalink <br>
+ Posted by Nico Hochberger </p> 
+<h2>Breakpad and Your CI &ndash; A Strong&nbsp;Team</h2> December 12, 2011 <br>
+<p>If your <strong>C++</strong> software has to run <strong>24/7</strong> on 
+some server rack at your customer&rsquo;s data center, it has to meet not only 
+all the user requirements, but also requirements that come from you as 
+developer. When your customer calls you about some &ldquo;problems&rdquo;, 
+&ldquo;strange behaviours&rdquo;, or even<strong>crashes</strong>, you must be 
+able to detect what went wrong.<strong>Fast!</strong></p> 
+<p>One means to this end is of course <strong>logging</strong>. But if your 
+application crashes, nothing beats a decent<strong>stacktrace</strong> </p> 
+<p>Google&rsquo;s breakpad library comes in very handy here because it 
+provides very easy<strong>crash reporting</strong>. Even if your process 
+has&nbsp;2 gigs of virtual memory, breakpad shrinks that &lsquo;core 
+dump&rsquo; down to a couple of megs.</p> 
+<p>Breakpad pulls that trick off by using so-called symbol files that you have 
+to generate for each compiled binary (executable or shared library). These 
+symbol files together with the<strong>breakpad dump file</strong> that is 
+created at crash time are then used to recreate the stacktrace.</p> 
+<p>Because every compilation creates different binaries, dump file and symbol 
+files need to be &lsquo;based on&rsquo;<strong>exactly the same binaries
+</strong>.</p> 
+<p>This is where you can let your <strong>CI system</strong> do some work for 
+you. At one of our customers we useJenkins not only for the usual automatic 
+builds and tests after each check-in but also for release builds that go into 
+production.</p> 
+<p>At the end of each build, breakpad&rsquo;s symbol dumper runs over all 
+compiled executables and libraries and<strong>generates</strong> the symbol 
+files. These are then<strong>archived</strong> together with the compiled 
+binaries.</p> 
+<p>Now we are <strong>prepared</strong>. Whenever some customer sends us a 
+dump file, we can just easily pull out the symbol files corresponding to the 
+software version that runs at this customer and let breakpad do its 
+magic&hellip;</p> 
+<p>&nbsp;</p> 
+<p> 2 Comments | 2011, Author: Volker Kaiser, C/C++, Continuous Integration, 
+Hudson, Programming Language, Uncategorized | Tagged: breakpad, C/C++, hudson, 
+jenkins, volkerkaiser | Permalink <br>
+ Posted by volkerkaiser </p> 
+<h2>Deployment with the Play!&nbsp;framework</h2> December 5, 2011 <br>
+
+<p>Play! is a great framework for java-base development of modern web 
+applications. Unfortunately, thedocumentation about deployment options is not 
+really that extensive in certain details. I want to describe a way to 
+automatically build a self-contained zip archive without the source code. The 
+documentation<strong>does</strong> state that using the standalone web server 
+is preferred so we will use that option.</p> 
+<p>Our goal is:</p> 
+<ul> 
+<li>an artifact with the executable application</li> 
+<li>no sources in the artifact</li> 
+<li>startup script for different platform and environments</li> 
+<li>CI integration with execution of the tests</li> </ul> 
+<p>Fortunately, the play framework makes most of this quite easy if you know 
+some small tricks.</p> 
+<p>The first very important step towards our goal is embedding the whole Play! 
+framework somewhere in your project directory. I like to put it into<code>
+lib/play-x.y.z</code> (<code>x.y.z</code> being the framework version). That 
+way you can do perform all neccessary calls to play scripts using relative 
+paths and provide a self-contained artifact which developers or clients may 
+download and execute on their machine. You can also be sure everyone is using 
+the correct (read &ldquo;same&rdquo;) framework version.</p> 
+<p>The next important thing is to write some small start-scripts so you can 
+demo the software easily on any machine with Java installed. Your clients may 
+try it out theirselves if the project policy is open enough. Here are small 
+examples for linux</p> 
+<p></p> 
+<pre> #!/bin/sh python lib/play-1.2.3/play run --%demo -Dprecompiled=true 
+</pre> 
+<p></p> 
+<p>and windows</p> 
+<p></p> 
+<pre> REM start our app in the &quot;demo&quot; environment 
+lib\play-1.2.3\play run --%%demo -Dprecompiled=true</pre> 
+<p></p> 
+<p>The last ingredient to a great deployment and demoing experience is the 
+build script which builds, tests and packages the software together. We do not 
+want to include the sources in the artifact, so there is a bit of work to do. 
+We perform following steps in the script:</p> 
+<ol> 
+<li>delete old artifacts to ensure a clean build</li> 
+<li>call play to precompile our application</li> 
+<li>call play to execute all our automatic tests</li> 
+<li>copy all needed files into our distribution directory ready to be packed 
+together</li> 
+<li>pack the artifacts into a zip archive</li> </ol> 
+<p>Our sample build script is for the linux shell but you can easily translate 
+it to the scripting environment of your choice, be itapache ant, gradle, 
+windows batch depending on your needs and preference:</p> 
+<p></p> 
+<pre> #!/bin/sh rm -r dist rm -r test-result rm -r precompiled python 
+lib/play-1.2.3/play precompile python lib/play-1.2.3/play auto-test 
+TARGET=dist/my_project mkdir -p $TARGET/app cp -r app/views $TARGET/app cp -r 
+conf lib modules precompiled public $TARGET cp programs/my_project* $TARGET cd 
+dist &amp;&amp; zip -r my_project.zip my_project</pre> 
+<p></p> 
+<p>Now we can hook the project into a continuous integration server like 
+Jenkins and let it archive the build artifact containing an executable 
+installation of our web application. You could grant your client direct access 
+to the artifact, use it for demos and further deployment steps like triggered 
+upload to a staging server or the like.</p> 
+<p> Leave a Comment &raquo; | 2011, Author: Mihael Vrbanec, Continuous 
+Integration, Deployment, Hudson, Principles, Software Development, Uncategorized
+,Web Applications | Tagged: Miq, play framework | Permalink <br>
+ Posted by Miq 
+</p> 
+<h2>HTTP Get: The problem with Percent Encoded&nbsp;Parameters</h2> November 
+28, 2011 <br>
+
+<p>Encoding problems are common place in software development but sometimes 
+you get them in unexpected places.<br>
+ About the setup: we have a web 
+application written in Grails (though the choice of framework here 
+doesn&rsquo;t really matter) running on Tomcat. A flash application sends a 
+HTTP Get request to this web application.<br>
+ As you might know parameters in 
+Get request are encoded in the URL with the so called<i>percent encoding</i> 
+for example: %20 for space. But how are they encoded? UTF8?<br>
+ Looking at our 
+tomcat configuration all Get parameters are decoded with UTF8. Great. But 
+looking at the output of what the flash app sends us we see scrambled Umlauts. 
+Hmmm clearly the flash app does not use UTF8. But wait! There&rsquo;s another 
+option in Tomcat for decoding Get parameters: look into the header and use the 
+encoding specified there. A restart later nothing changed. So flash does not 
+send its encoding in the HTTP header. Well, let&rsquo;s take a look at theHTTP 
+standard:</p> 
+<pre> If a reserved character is found in a URI component and no delimiting 
+role is known for that character, then it must be interpreted as representing 
+the data octet corresponding to that character's encoding in US-ASCII.</pre> 
+<p>Ah.. US-ASCII and what about non ASCII ones? Wikipedia states:</p> 
+<pre> For a non-ASCII character, it is typically converted to its byte 
+sequence in UTF-8, and then each byte value is represented as above.</pre> 
+<p>Typically? Not in our case, so we tried ISO-8859-1 and finally the umlauts 
+are correct! But currency signs like the euro are again garbage. So which 
+encoding is similar to Latin-1 but not quite the same?<br>
+ Yes, guess what: 
+cp1252, the Windows native encoding.<br>
+ And we tested all this on a Mac?!</p> 
+<p> 3 Comments | 2011, Author: Jens Lukowski, Grails, Java, Web Applications | 
+Tagged:Flash, Get, grails, HTTP, java, Web | Permalink <br>
+ Posted by 
+jenslukowski</p> 
+<h2>The Story of a Multithreading&nbsp;Sin</h2> November 21, 2011 <br>
+
+<p>In my last blog entry, I wrote about multithreading pitfalls (in Java), and 
+ironically, this was the week when we got a strange bug report from one of our 
+customers. This blog entry tells the story of the bug and adds another 
+multithreading pitfall to the five I&rsquo;ve already listed in my blog entry
+&ldquo;When it comes to multithreading, better be safe than&nbsp;sorry&rdquo;.
+</p> 
+<h4>The premise</h4> 
+<p>We developed a software that runs on several geographically distant 
+independent &ldquo;stations&rdquo; that collect a multitude of environmental 
+measurement data. This data is preprocessed and stuffed into data packages, 
+which are periodically transferred to a control center. The software of this 
+control center, also developed by us, receives the data packages, stores them 
+on disk and in a huge database and extracts the overall state of the 
+measurement network from raw data. If you describe the main task of the network 
+on this level, it sounds nearly trivial. But the real functionality 
+requirements are manifold and the project grew large.</p> 
+<p>We kept the whole system as modular as necessary to maintain an overall 
+grasp of what is going on where in the system and installed a sufficient 
+automatic test coverage for the most important parts. The system is still under 
+active development, but the main parts of the network are in production usage 
+without real changes for years now.</p> 
+<h4>The symptoms</h4> 
+<p>This might explain that we were very surprised when our customer told us 
+that the control center had lost some data packages. Very soon, it turned out 
+that the control center would randomly enter a state of &ldquo;denial&rdquo;. 
+In this state, it would still accept data packages from the stations and even 
+acknowledge their arrival (so the stations wouldn&rsquo;t retry the 
+transmission), but only write parts of the package or nothing at all to the 
+disk and database. When the control center entered this state, it would never 
+recover from it. But when we restarted the software manually, everything would 
+run perfectly fine for several days and then revert back into denial without 
+apparent trigger.</p> 
+<p>We monitored the control center with every means on our disposal, but its 
+memory consumption, CPU footprint and threading behaviour was without 
+noticeable problem even when the instance was in its degraded state. There was 
+no exception or uncommon entry logged in the logfiles. As the symptom happened 
+randomly, without external cause and with no chance of reversal once it 
+happened, we soon suspected some kind of threading issue.</p> 
+<h4>The bug</h4> 
+<p>The problem with a threading issue is that you can&rsquo;t just reproduce 
+the bug with an unit or system test. We performed several code reviews until we 
+finally had a trace. When a data package arrives, a global data processing lock 
+is acquired (so that no two data packages can be processed in parallel) and the 
+content of the package is inspected. This might trigger several network status 
+changes. These change events are propagated through the system with classic 
+observer/listener structures, using synchronous calls (normal delegation). The 
+overall status of the network is translated in a human readable status message 
+and again forwarded to a group of status message listeners. This is a 
+synchronous call again. One of the status message listeners was the software 
+driver for a LED ticker display. This module was a recent addition to the 
+control center&rsquo;s hardware outfit and used to display the status message 
+prominently to the operators. Inside this LED software driver, some bytes are 
+written to a socket stream and then the driver awaits an answer of the hardware 
+device. To avoid the situation that two messages are sent to the device at the 
+same time, a lock is acquired just before the message is sent. This code 
+attracted our attention. Lets have a look at it:</p> 
+<p></p> 
+<pre> private Message lastMessage = new Message(); public void show(Message 
+message) { synchronized (this.lastMessage) { 
+writeCommandAndWaitForResponse(Command.SHOW_TEXT, message.asBytes()); 
+this.lastMessage = message; } }</pre> 
+<p></p> 
+<p>The main problem here is the object the lock is acquired upon: the 
+reference of lastMessage is mutable! We call this a<strong>liquid lock</strong>
+, because the lock isn&rsquo;t as solid as it should be. It&rsquo;s one of the 
+more hideous multithreading pitfalls as it looks like everything&rsquo;s fine 
+at first glance. But this lock doesn&rsquo;t have a complete 
+&ldquo;locking&rdquo; effect because each caller may acquire the lock of a 
+different instance. And a lock with a flawed locking behaviour is guaranteed to 
+fail (in production). The liquid lock is like the bigger brother of the local 
+lock. It isn&rsquo;t local, but its mutability cause the same problems.</p> 
+<p>The bug finally turned out to be caused by the liquid lock in the LED 
+display driver that got notified of system message changes when a data package 
+arrived. But only if multiple messages were sent at once to the device, 
+discarding some of the necessary answers in this circumstance or if the 
+connection to the LED hardware would fail in the midst of a transmission, the 
+system would not return from the write attempt. If one thread wouldn&rsquo;t 
+return to the data package processor, the global data processing lock would not 
+be freed (read the start of this chapter again, this is the most important lock 
+in the system!). And while the data processing lock was still held, all other 
+data packages would be received, but piling up to obtain the lock. But the lock 
+would never be returned from the thread waiting on an answer from a hardware 
+device that had no intention to send another answer. This was when the control 
+center appeared to be healthy but didn&rsquo;t process any data packages 
+anymore.</p> 
+<h4>The conclusion</h4> 
+<p>If you want to avoid the category of <strong>liquid lock</strong> 
+multithreading bugs, make sure that all your lock instance references are 
+immutable. Being<strong>final</strong> is an important property of lock 
+instance references. Avoid to retrieve your locks from notoriously muteable 
+data structures like collections or arrays. The best thing you can do to avoid 
+liquid locks is to &ldquo;freeze&rdquo; all your lock instances.</p> 
+<p>Another insight from this story is that software modules have to be 
+separated threadwise, too. It was a major design flaw to let the data 
+processing thread, while holding the main processing lock, descend down into 
+the deep ends of the LED driver, eventually getting stuck there for infinity. 
+Some simple mechanisms like asynchronous listener notification or 
+producer/consumer queues for pending transmission requests would have helped to 
+confine the effects of the liquid lock bug inside the LED module. Without 
+proper thread separation, it took down the whole software instance.</p> 
+<p> 3 Comments | 2011, Java, Programming Language | Tagged: bug, degradation, 
+java, liquid lock, multithreading | Permalink <br>
+ Posted by daniel.lindner 
+</p> 
+<h2>Debug&nbsp;Output</h2> November 14, 2011 <br>
+
+<p>Writing a blog post sometimes can be useful to get some face-palm kind of 
+programming error out of one&rsquo;s system.</p> 
+<p>Putting such an error into written words then serves a couple of purposes:
+</p> 
+<ul> 
+<li>it helps oneself remembering</li> 
+<li>it helps others who read it not to do the same thing</li> 
+<li>it serves as error log for future reference</li> </ul> 
+<p>So here it comes:</p> 
+<p>In one project we use JSON to serialize objects in order to send them over 
+HTTP (we use the very niceJSON Spirit library, btw).</p> 
+<p>For each object we have serialize/deserialize methods which do the heavy 
+lifting. After having developed a new deserialize method I wanted to test it 
+together with the HTTP request handling. Usingcurl for this I issued a command 
+like this:</p> 
+<p></p> 
+<pre> curl -X PUT http://localhost:30222/some/url -d @datafile </pre> 
+<p></p> 
+<p>This command issues a PUT request to the given URL and uses data in <em>
+./datafile</em>, which contains the JSON, as request data.</p> 
+<p>The request came through but the deserializer wouldn&rsquo;t do its work. 
+WTF? Let&rsquo;s see what goes on &ndash; let&rsquo;s put some debug output in:
+</p> 
+<p></p> 
+<pre> MyObject MyObjectSerializer::deserialize(std::istream&amp; jsonIn) { // 
+debug output starts here std::string stringToDeserialize; 
+Poco::StreamCopier::copyToString(jsonIn, stringToDeserialize); std::cout 
+&lt;&lt; &quot;The String: &quot; &lt;&lt; stringToDeserialize &lt;&lt; 
+std::endl; // debug output ends here json_spirit::Value value; 
+json_spirit::read(jsonIn, value); ... }</pre> 
+<p></p> 
+<p>I&rsquo;ll give you some time to spot the bug&hellip;. 3..2..1..got it? 
+Please checkPoco::StreamCopier documentation if you are not familiar with POCO 
+libraries.<br>
+ What&rsquo;s particularly misleading is the 
+&ldquo;Copier&rdquo; part of the name<em>StreamCopier</em>, because it does not 
+exactly<em>copy</em> the bytes from the stream into the string &ndash; it <em>
+moves</em> them. This means that after the debug output code, <strong>the 
+istream is empty</strong>.</p> 
+<p>Unfortunately, I did not immediately recognize the change in the error 
+outputs of the JSON parser. This might have given me a hint to the real 
+problem. Instead, during the next half hour I searched for errors in the JSON I 
+was sending.</p> 
+<p>When I finally realized it &hellip;</p> 
+<p></p> 
+<p> Leave a Comment &raquo; | 2011, Author: Volker Kaiser, C/C++, POCO, 
+Software Development, Testing, Uncategorized | Tagged: c++, poco, volkerkaiser |
+Permalink <br>
+ Posted by volkerkaiser </p> 
+<h2>Inconsistent usage of type definitions kills portability in&nbsp;C/C++</h2>
+November 8, 2011 <br>
+
+<p>C/C++ are nice low level, high-performance languages if you need to be 
+&ldquo;close to the metal&rdquo; due to performance or memory constraints. 
+Nevertheless, C/C++ are portable languages because they provide datatypes to 
+abstract from the underlying hardware and compilers for virtually every 
+hardware platform. It is very easy to kill portability because the 
+specification allows certain platform-dependent sizes for the built-in 
+datatypes. An<code>int</code> can be 16 bits or 32 bits, a <code>long</code> 32 
+bits or 64 bit and so on. Many programmers mitigate the issue by defining own 
+datatypes like<code>WORD</code> or <code>uint32</code>. If you are using some 
+libraries it is very likely that several such type definitions are available 
+and often times interchangeable.</p> 
+<p>It is absolutely crucial to be consistent when using the type definitions 
+and usually a good advice not to use the built-in types like int or long 
+because they will change in size on different platforms.</p> 
+<p>In one of our projects we are working on Tango device servers written in 
+C++ and use the YAT (Yet Another Toolbox) library. There are at least 3 
+possible ways in this small project to define a (most of the time) unsigned 32 
+bit word:</p> 
+<ul> 
+<li>yat::uint32</li> 
+<li>unsigned long</li> 
+<li>tango::DevUlong</li> </ul> 
+<p>To make matters a bit more interesting the tango::DevUlong is defined by 
+the CORBA C++ mapping. Code using all of these definitions may work on a 
+certain platform so you will not notice the problem right away, but we had 
+several compilation problems and even program crashes when compiling or running 
+on Linux/x86, Linux/AMD64, Windows 7 32bit and Windows 7 64bit. Using types 
+that guarantee their size on all platforms and consistent usage of them will 
+make your code compile and run on many platforms flawlessly.</p> 
+<p> 1 Comment | 2011, Uncategorized | Permalink <br>
+ Posted by Miq </p> 
+&laquo; Previous Entries <br>
+Next Entries &raquo; <br>
+
+<ul> 
+<li> </li> 
+<li>
+<h2>Schneide Blog</h2>  This weblog contains public wisdom of a company called 
+Softwareschneiderei GmbH located in Karlsruhe, Germany. <br>
+</li> 
+<li>
+<h2> Our latest publications</h2> 
+<ul> 
+<li>Clean Code Developer at your fingertips</li> 
+<li>Dependencies: Let&rsquo;s have just one more</li> 
+<li>Clang, The Friendly Compiler</li> 
+<li>Different view on Apache Maven</li> 
+<li>Refactor now</li> </ul></li> 
+<li>
+<h2>Our archive</h2> Select Month  March 2012 &nbsp;(3)  February 2012 
+&nbsp;(4)  January 2012 &nbsp;(5)  December 2011 &nbsp;(4)  November 2011 
+&nbsp;(5)  October 2011 &nbsp;(4)  September 2011 &nbsp;(4)  August 2011 
+&nbsp;(5)  July 2011 &nbsp;(4)  June 2011 &nbsp;(4)  May 2011 &nbsp;(5)  April 
+2011 &nbsp;(4)  March 2011 &nbsp;(4)  February 2011 &nbsp;(5)  January 2011 
+&nbsp;(4)  December 2010 &nbsp;(4)  November 2010 &nbsp;(6)  October 2010 
+&nbsp;(5)  September 2010 &nbsp;(5)  August 2010 &nbsp;(7)  July 2010 &nbsp;(6) 
+ June 2010 &nbsp;(5)  May 2010 &nbsp;(8)  April 2010 &nbsp;(7)  March 2010 
+&nbsp;(7)  February 2010 &nbsp;(5)  January 2010 &nbsp;(7)  December 2009 
+&nbsp;(8)  November 2009 &nbsp;(8)  October 2009 &nbsp;(7)  September 2009 
+&nbsp;(4)  August 2009 &nbsp;(5)  July 2009 &nbsp;(4)  June 2009 &nbsp;(5)  May 
+2009 &nbsp;(4)  April 2009 &nbsp;(5)  March 2009 &nbsp;(5)  February 2009 
+&nbsp;(4)  January 2009 &nbsp;(4)  December 2008 &nbsp;(5)  November 2008 
+&nbsp;(4)  October 2008 &nbsp;(4)  September 2008 &nbsp;(9)  April 2008 
+&nbsp;(1)  January 2008 &nbsp;(2)  November 2007 &nbsp;(1)  October 2007 
+&nbsp;(2)  September 2007 &nbsp;(1)  August 2007 &nbsp;(1)  June 2007 &nbsp;(2) 
+ May 2007 &nbsp;(2)  March 2007 &nbsp;(3)  February 2007 &nbsp;(2) </li> 
+<li>
+<h2>Our topics</h2> Select Category Authors&nbsp;&nbsp;(76) 
+&nbsp;&nbsp;&nbsp;Author: Daniel Lindner&nbsp;&nbsp;(23) 
+&nbsp;&nbsp;&nbsp;Author: Jens Lukowski&nbsp;&nbsp;(3) 
+&nbsp;&nbsp;&nbsp;Author: Mihael Vrbanec&nbsp;&nbsp;(2) 
+&nbsp;&nbsp;&nbsp;Author: Nico Hochberger&nbsp;&nbsp;(7) 
+&nbsp;&nbsp;&nbsp;Author: Volker Kaiser&nbsp;&nbsp;(41) Blogroll&nbsp;&nbsp;(1) 
+Continuous Integration&nbsp;&nbsp;(29) &nbsp;&nbsp;&nbsp;Hudson&nbsp;&nbsp;(23) 
+Continuous Learning&nbsp;&nbsp;(54) &nbsp;&nbsp;&nbsp;Blog 
+harvest&nbsp;&nbsp;(8) &nbsp;&nbsp;&nbsp;Book review&nbsp;&nbsp;(2) 
+Database&nbsp;&nbsp;(4) &nbsp;&nbsp;&nbsp;Oracle&nbsp;&nbsp;(2) 
+Deployment&nbsp;&nbsp;(7) ergonomics&nbsp;&nbsp;(3) Events&nbsp;&nbsp;(33) 
+&nbsp;&nbsp;&nbsp;Code Camp&nbsp;&nbsp;(2) &nbsp;&nbsp;&nbsp;Dev 
+Brunch&nbsp;&nbsp;(12) &nbsp;&nbsp;&nbsp;Open Source Love Day&nbsp;&nbsp;(12) 
+Extreme Feedback&nbsp;&nbsp;(11) General&nbsp;&nbsp;(10) Hardware&nbsp;&nbsp;(6)
+Management&nbsp;&nbsp;(7) Open Source&nbsp;&nbsp;(13) Performance&nbsp;&nbsp;(8)
+Software Development&nbsp;&nbsp;(148) &nbsp;&nbsp;&nbsp;Build 
+Process&nbsp;&nbsp;(11) &nbsp;&nbsp;&nbsp;Code Analysis&nbsp;&nbsp;(10) 
+&nbsp;&nbsp;&nbsp;Coding style&nbsp;&nbsp;(6) &nbsp;&nbsp;&nbsp;Issue 
+Tracking&nbsp;&nbsp;(1) &nbsp;&nbsp;&nbsp;POCO&nbsp;&nbsp;(4) 
+&nbsp;&nbsp;&nbsp;Principles&nbsp;&nbsp;(16) &nbsp;&nbsp;&nbsp;Programming 
+Language&nbsp;&nbsp;(101) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ActionScript&nbsp;&nbsp;(1) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C/C++&nbsp;&nbsp;(28) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grails&nbsp;&nbsp;(19) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Groovy&nbsp;&nbsp;(16) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;(49) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Python&nbsp;&nbsp;(2) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ruby&nbsp;&nbsp;(1) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scala&nbsp;&nbsp;(2) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VisualBasic&nbsp;&nbsp;(1) 
+&nbsp;&nbsp;&nbsp;Qt&nbsp;&nbsp;(5) &nbsp;&nbsp;&nbsp;Testing&nbsp;&nbsp;(11) 
+&nbsp;&nbsp;&nbsp;Web Applications&nbsp;&nbsp;(17) Uncategorized&nbsp;&nbsp;(61)
+Year&nbsp;&nbsp;(234) &nbsp;&nbsp;&nbsp;2007&nbsp;&nbsp;(14) 
+&nbsp;&nbsp;&nbsp;2008&nbsp;&nbsp;(25) &nbsp;&nbsp;&nbsp;2009&nbsp;&nbsp;(63) 
+&nbsp;&nbsp;&nbsp;2010&nbsp;&nbsp;(72) &nbsp;&nbsp;&nbsp;2011&nbsp;&nbsp;(52) 
+&nbsp;&nbsp;&nbsp;2012&nbsp;&nbsp;(8) </li> 
+<li> 
+<h2>Most popular today</h2> 
+<ul> 
+<li>Clean Code Developer at your fingertips</li> 
+<li>== or equals with Java enum</li> 
+<li>Using Hudson for C++/CMake/CppUnit</li> </ul> </li> 
+<li> 
+<h2>Recent Comments</h2> Nico Hochberger on Dependencies: Let&rsquo;s 
+have&hellip; <br>
+Who Am I on Dependencies: Let&rsquo;s have&hellip; <br>
+Armen 
+Polischuk on Different view on Apache&nbsp;&hellip; <br>
+Miq on Different view 
+on Apache&nbsp;&hellip; <br>
+deadalnix on Different view on Apache&nbsp;&hellip;
+<br> <br>
+</li> </ul> 
+<p> Theme: Contempt by Vault9.<br>
+Blog at WordPress.com. </p> <br>
+<br>
+Follow
+<h3>Follow &ldquo;Schneide Blog&rdquo;</h3> 
+<p>Get every new post delivered to your Inbox.</p> 
+<p></p> 
+<p></p> 
+<p></p> Powered by WordPress.com <br>
+<br>
+
+<p></p> 
+</body>

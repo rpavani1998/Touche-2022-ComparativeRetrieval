@@ -1,0 +1,375 @@
+the aid number may be used as the search criterion.
+though the first two of these problems are not solvable by this research, it is still important that these problems are pointed out to researchers of virtual screening.
+acknowledgements i would like to thank the national center for biotechnology information for creating and maintaining the pubchem resource.
+the major challenge of using machine learning techniques for this type of problem is that the data is highly imbalanced: on average the ratio is 1 active compound to 1000 inactive compounds[3].
+unfortunately due to computer memory limitations (weka can only utilise 2 gigabytes of heap space for windows systems), only small to medium datasets have been selected.
+aid688 is the result of a primary screen for yeast eif2b from the penn center for molecular discovery and contains activity information of 27,198 compounds with a ratio of 1 active compound to 108 inactive compounds (0.91% minority).
+as a random forest classifier is a bagged classifier, more computer memory is required to run them than for the other base classifiers used.
+format: zip size: 7mb download file additional file 3: training and testing primary screen datasets in csv format.
+for the cost-sensitive classification, weka's implementations of the support vector machine and c4.5 decision tree learner have performed relatively well.
+the results of the two types of confirmatory bioassay datasets are then analysed and finally a comparison is made of the results of the datasets that have mixed primary and confirmatory data.
+from a bioassay point of view, it is questionable how helpful these models are: primary screening usually involves a large amount of false positives.
+though these types of datasets are relatively small with only a small imbalance of actives and inactives, the classifiers have not been very successful at predicting the bioassay's active compounds.
+the first is access to freely-available curated data, the second is the number of false positives that occur in the physical primary screening process, and finally the data is highly-imbalanced with a low ratio of active compounds to inactive compounds.
+most classifiers assume equal weighting of the classes in terms of both the number of instances and the level of importance - misclassifying class a has the same importance as misclassifying class b. however, when trying to predict a minority class in an imbalanced dataset or when a false negative is deemed more important than a false positive, standard data mining techniques are not successful.
+j48 was used for these experiments as it is not a black box approach and may provide added value to the classification tasks.
+one of the problems of the primary-screening process is the number offalse positives (a compound that has been deemed as active but subsequently turned out to be inactive) that occur.
+57,546 of the compounds screened had known drug-like properties.
+pubmed abstract | publisher full text |pubmed central full text pubchem help: sometime i see errors in the substance record, where i should report?[http://pubchem.ncbi.nlm.nih.gov/help.html] webcite liu k, feng j, young ss: powermv: a software environment for molecular viewing, descriptor generation, data analysis and hit evaluation.
+the first is access to freely-available curated data, the second is the number of false positives that occur in the physical primary screening process, and finally the data is highly-imbalanced with a low ratio of active compounds to inactive compounds.
+our preliminary experiments, not documented here, showed that the standard costsensitiveclassifierproduced better results for these base classifiers than the meta-learnersadaboost and metacost.
+however, when using weka the differing data mining algorithms utilise costs differently depending on the underlying probability handling of the algorithm.
+when it could be run, the random forest classifier requires a large cost setting to achieve the same results as the others.
+the screen is a reporter-gene assay and 25,656 of the compounds have known drug-like properties.
+one of the problems of using the bioassay data from pubchem is that the data is not curated and is potentially erroneous[3,10].
+• metacost combines the predictive benefits of bagging (combining the decisions of different models) with a minimized expected cost model for cost-sensitive prediction.
+this type of protocol is common in the bioassay data so a lot of data pre-processing has to be carried out to retrieve the relevant compounds from the bioassays.
+the screen is a reporter-gene assay and 25,656 of the compounds have known drug-like properties.
+structuring the data this way also hinders the investigation in to why so many compounds end up as being false positives in the primary screening process.
+the standard cost-sensitive classifier was used for naive bayes, smo and random forest.
+in both cases, the resulting model from the cross-validation was applied to the test set.
+these results were quite surprising - in two cases the metacost j48 classified all the active compounds correctly in the independent test set with fewer than 20% false positives.
+data pre-processing the chemical structures from pubchem were downloaded in structure data format (sdf) and imported into the molecular descriptor generator powermv[11].
+however, in their analysis, the number of compounds in the bioassay datasets was reduced so that there was a 1:1 ratio of active to inactive compounds.
+finding corresponding confirmatory bioassays is only achieved by manually going through each primary screen webpage and see if there is one in therelated bioassays section.
+the process of discovering a new drug for a particular disease usually involves high-throughput screening (hts), a mixture of robotics, control software, liquid-handlers and optical readers.
+overall, weka's implementation of the cost-sensitive support vector machine, the smo, has performed consistently well.
+the chemical structures from pubchem were downloaded in structure data format (sdf) and imported into the molecular descriptor generator powermv[11].
+however, for the differing classifiers they have used across-the-board costs of 2, 5, 10 etc.
+as the costs we are discussing are the actual settings of the weka cost matrix rather than class ratios, the comparison of classifiers cannot be compared using cost curves[13].
+considering the minority classes were less than 1%, this is very promising.
+if this hit is amenable to medicinal chemistry optimization and can be proved to be non-toxic then it may be developed further and become alead for a specific target.
+out of 250 manually searched confirmatory screening bioassays, only six had good links to the primary screen.
+confirmatory screen bioassay datasets the independent test performance of each classifier has been harder to compare as some classifiers could not achieve fewer than 20% false positives.
+however, in their analysis, the number of compounds in the bioassay datasets was reduced so that there was a 1:1 ratio of active to inactive compounds.
+protein-based methods are employed when the 3d structure of the bioassay target is known and computational techniques involve the docking (virtual binding), and subsequent scoring, of candidate ligands (the part of the compound that is capable of binding) to the protein target.
+even reading the bioassay protocols does not provide all the necessary information.
+as mentioned previously, one of the advantages of using cost-sensitive classifiers is that the false positive rate may be controlled.
+those compounds that were deemed active in the primary screen) are, in general, quite similar in terms of unique attributes.
+30,353 of the compounds screened had known drug-like properties.
+virtual screening of imbalanced pharmaceutical data has been carried out before: in one study the classifiers used did not use misclassification costs[4 ], and in another, the datasets were very small with only a slight imbalance[5 ].
+in all instances, the performance of the classifiers would have been reduced if minority class ratios had been used as the weka misclassification cost - there are significant differences between the optimal cost and the class ratio cost.
+this could be due to the fact that the compounds in a confirmatory screen are usually closer in structure and physicochemical properties.
+• 147 bit-string structural descriptors known as pharmacophore fingerprints based on bioisosteric principles - two atoms or functional groups that have approximately the same biological activity are assigned the same class.
+occasionally there are also errors or missing information in the bioassay protocols.
+the true positive rate achieved by each type of classifier for the mixed primary screen/confirmatory screen datasets.
+lo hl, chang c, chiang t, hsiao c, huang a, kuo t, lai w, yang m, yeh j, yen c, lin s: learning to improve area-under-froc for imbalanced medical data classification using an ensemble method.
+• smo is weka's implementation of the support vector machine where the sequential minimal optimisation algorithm is used to train a support vector classifier.
+one of the advantages of using cost-sensitive classifiers is that the number of false positives may be controlled - increasing the misclassification cost of the false negatives will potentially increase both the number of false positives and the number of true positives.
+even reading the bioassay protocols does not provide all the necessary information.
+the main resource for obtaining freely-available bioassay data is the pubchem repository provided by the national center for biotechnology information
+see additional files additional file2: training and testing primary screen datasets in csv format.
+in the experimental section, we give descriptions of the datasets, classifiers and data representation.
+metacost works well with unstable models and our preliminary experiments found that usingmetacost with the j48 unpruned tree produced better results thanadaboost and costsensitiveclassifier.
+this research has shown that the bioassay data at pubchem is not recorded in a standard and consistent way and some entries contain erroneous information.
+however, there is a lack of publicly-available bioassay data due to the fact that most hts technology is held at private commercial organisations.
+training and testing primary/confirmatory screen datasets in csv format.
+however, the datasets are from the differing types of screening that can be performed using hts technology (both primary and confirmatory screening) and they have varying sizes and minority classes.
+in all instances, the performance of the classifiers would have been reduced if minority class ratios had been used as the weka misclassification cost - there are significant differences between the optimal cost and the class ratio cost.
+for a secondary analysis, 735 additional fragment-pair fingerprint descriptors were generated for the confirmatory bioassay datasets.
+the misclassification cost was incremented until a 20% false positive rate was reached - a 20% false positive rate seemed an appropriate place to stop.
+for our set of experiments, we used incremental costing where the cost was increased in stages from 2 to 1000000.
+j48 was used for these experiments as it is not a black box approach and may provide added value to the classification tasks.
+according to the main bioassay description, 10,014 compounds were screened with 34 actives, 9066 inactives and 1136 inconclusive compounds.
+table4 shows the weka cost matrix misclassification costs for the false negatives in order to achieve the maximum number of true positives with a false positive rate of fewer than 20% for each classifier.
+though a detailed analysis could not be carried out due to the lack of information provided, these false positive rates are quite high (average 64%) and possibly suggest that primary screening data should not be used for virtual screening.
+previous research has used across-the-board cost settings for differing classifiers and this research has shown that this is not the best way to implement cost-sensitivity in weka.
+for example, in sheng and ling[16] they have used weka's cost-sensitive classifiers to evaluate their novel method.
+in both cases, the resulting model from the cross-validation was applied to the test set.
+the number of false positives from the hts primary screen process is very high and maybe virtual screening techniques should be applied to the bioassays where there is corresponding confirmatory data.
+the bit-string fingerprint descriptor values that only had one value throughout the dataset (for example, all 0 s or all 1 s) were removed.
+conclusions understandably, pharmaceutical data is hard to obtain.
+if a few active compounds are known then structure-similarity techniques may be used; if the activity of several compounds is known then discriminant analysis techniques, such as machine learning approaches, may be applied.
+as a random forest classifier is an ensemble classifier (an ensemble of random trees), it requires more computational memory than the other classifiers.
+for example, for bioassay aid1919 the protocol overview states: the purpose of this assay is to determine dose response curves for compounds identified as active in a previous set of experiments entitled, "primary biochemical high throughput screening assay to identify inhibitors of vim-2 metallo-beta-lactamase" (pubchem aid 1527), and inactive in a set of experiments entitled, "epi-absorbance primary biochemical high throughput screening assay to identify inhibitors of imp-1 metallo-beta-lactamase" (pubchem aid 1556).
+the confirmatory-screening process uses the exact technology as for primary screening but the number of compounds screened is usually significantly smaller: it is usually only the actives from the primary screening process that are used for confirmatory screening.
+the compounds that prevent a release of a certain chemical into the growth medium are labelled as active and the remaining compounds are labelled as having inconclusive activity.
+results pharmaceutical bioassay data is not readily available to the academic community.
+the former was used for this research and therefore theminimizeexpectedcost option was set to false.
+care when using weka's cost-sensitive classifiers is needed - across the board misclassification costs based on class ratios should not be used when comparing differing classifiers for the same dataset.
+other bioassays also contain incorrect information.
+the datasets were randomly split into an 80% training and validation set and a 20% independent test set.
+however, it would be beneficial to both the pharmaceutical industry and to academics for curated primary screening and corresponding confirmatory data to be provided.
+this type of protocol is common in the bioassay data so a lot of data pre-processing has to be carried out to retrieve the relevant compounds from the bioassays.
+powermv [11] was used to generate descriptors for the bioassay sdf files from pubchem.
+the true positive rate achieved by each type of classifier for the primary screen datasets.
+an ensemble classifier is built using bagging and it is used to relabel the training data based on the minimised expected costs[6].
+as a random forest classifier is an ensemble classifier (an ensemble of random trees), it requires more computational memory than the other classifiers.
+training and testing confirmatory screen datasets in csv format.
+this means that standard techniques, which assume equality, are not very effective at building predictive models when there is a low minority class ratio.
+format: zip size: 460kb download file additional file 5: training and testing primary/confirmatory screen datasets in csv format.
+the bioassay contains activity information of 59,788 compounds with a ratio of 1 active compound to 281 inactive compounds (1.4%).
+this research shows that setting the weka cost matrix is dependent on the base classifier used.
+for a secondary analysis, 735 additional fragment-pair fingerprint descriptors were generated for the confirmatory bioassay datasets.
+as mentioned previously, one of the advantages of using cost-sensitive classifiers is that the false positive rate may be controlled.
+see additional files additional file2: training and testing primary screen datasets in csv format.
+a maximum limit of 20% false positives were allowed.
+table7 shows the bioassay datasets with the results of the best classification model highlighted.
+it is unfortunate that there is no direct search facility where related primary and confirmatory bioassays may be retrieved together - the classification models that have been the most successful are based on the hardest to obtain data from pubchem.
+a random forest classifier requires more memory than the other classifiers, though this will be due to the fact it utilises bagging.
+when looking at the data activity table, the figures are 34 actives, 9066 inactives and 222 discrepant compounds.
+from the survey of cost-sensitive classifiers carried out, the support vector machine (smo) and c4.5 decision tree learner (j48) have performed quite well considering the sizes of the minority classes.
+the problem is complicated further as sometimes several primary screen bioassay data is used for the one confirmatory screen and vice versa.
+those compounds that were deemed active in the primary screen) are, in general, quite similar in terms of unique attributes.
+understandably, pharmaceutical data is hard to obtain.
+if this hit is amenable to medicinal chemistry optimization and can be proved to be non-toxic then it may be developed further and become alead for a specific target.
+21 datasets were created from the screening data.
+however, it would be beneficial to both the pharmaceutical industry and to academics for curated primary screening and corresponding confirmatory data to be provided.
+for example, aid688 had a 100% false positive rate and aid373 had a 90% false positive rate.
+virtual screening of imbalanced pharmaceutical data has been carried out before: in one study the classifiers used did not use misclassification costs[4 ], and in another, the datasets were very small with only a slight imbalance[5 ].
+for bioassay data and more importantly for screening compound selection, it is better to minimise the false negatives at the expense of increasing the number of false positives.
+for example, in sheng and ling[16] they have used weka's cost-sensitive classifiers to evaluate their novel method.
+a random forest classifier requires more memory than the other classifiers, though this will be due to the fact it utilises bagging.
+training and testing primary screen datasets in csv format.
+the output of the randomforest is the class that is the statistical mode of the class's output by the individual trees.
+occasionally there are also errors or missing information in the bioassay protocols.
+one of the advantages of using cost-sensitive classifiers is that the number of false positives may be controlled - increasing the misclassification cost of the false negatives will potentially increase both the number of false positives and the number of true positives.
+we then look at the performance results of the primary screen bioassay datasets when constrained to a maximum false positive limit of approximately 20%.
+training and testing confirmatory screen datasets in csv format.
+for example, aid688 had a 100% false positive rate and aid373 had a 90% false positive rate.
+confirmatory bioassay data tend to be smaller and less imbalanced (smaller inactive/active ratios) than primary bioassay data.
+the number in brackets after the dataset name is the misclassification cost if the ratio of active compounds to inactive compounds (inactives/actives) had been used.
+table5 shows the misclassification costs, if any, used for the confirmatory datasets.
+for aid688, mentioned above for the cross-referencing error, there was a 100% false positive rate according to the confirmatory screen aid792.
+weka is a tool that is used by the academic community for both primary and comparative studies and it is important to explain how the cost-sensitive classifiers handle misclassification costs.
+to train the models cross-validation was employed.
+though the first two of these problems are not solvable by this research, it is still important that these problems are pointed out to researchers of virtual screening.
+all reported results are based on the independent testing and not on the training.
+the number in brackets after the dataset name is the misclassification cost if the ratio of active compounds to inactive compounds (inactives/actives) had been used.
+• smo is weka's implementation of the support vector machine where the sequential minimal optimisation algorithm is used to train a support vector classifier.
+this means that it is more costly misclassifying the positives than misclassifying the negatives.
+for example, for bioassay aid1919 the protocol overview states: the purpose of this assay is to determine dose response curves for compounds identified as active in a previous set of experiments entitled, "primary biochemical high throughput screening assay to identify inhibitors of vim-2 metallo-beta-lactamase" (pubchem aid 1527), and inactive in a set of experiments entitled, "epi-absorbance primary biochemical high throughput screening assay to identify inhibitors of imp-1 metallo-beta-lactamase" (pubchem aid 1556).
+the problem is complicated further as sometimes several primary screen bioassay data is used for the one confirmatory screen and vice versa.
+all reported results are based on the independent testing and not on the training.
+a typical cost matrix which shows the misclassification cost for positives and negatives one of the problems of cost-sensitive classifiers is that there are no standards or guidelines for setting the misclassification costs.
+with regard to the number of false positives that occur in the primary screening process, the analysis carried out has been shallow due to the lack of cross-referencing mentioned above.
+the datasets are generally the same size as for the primary screen datasets but have a smaller minority class.
+format: zip size: 7mb download file additional file 3: training and testing primary screen datasets in csv format.
+overall, weka's implementation of the cost-sensitive support vector machine, the smo, has performed consistently well.
+for j48, a bagged (bootstrap aggregating) meta-learner metacost was used as it works more efficiently for unstable, unpruned decision trees[18].
+we then look at the performance results of the primary screen bioassay datasets when constrained to a maximum false positive limit of approximately 20%.
+the compounds were selected on the basis of preliminary virtual screening of approximately 480,000 drug-like small molecules from chemical diversity laboratories.
+a typical cost matrix which shows the misclassification cost for positives and negatives one of the problems of cost-sensitive classifiers is that there are no standards or guidelines for setting the misclassification costs.
+virtual screening data confirmatory.
+the table shows the number of actives founds in the primary screen (ps), the number of compounds tested in the confirmatory screen (cs), the number of actives in the confirmatory screen and the percentage of false positives from the primary screen.
+unfortunately due to computer memory limitations (weka can only utilise 2 gigabytes of heap space for windows systems), only small to medium datasets have been selected.
+the table shows the number of actives founds in the primary screen (ps), the number of compounds tested in the confirmatory screen (cs), the number of actives in the confirmatory screen and the percentage of false positives from the primary screen.
+in some cases, there has been a 50% reduction in the fingerprint data representation when these attributes are removed.
+our preliminary experiments, not documented here, showed that the standard costsensitiveclassifierproduced better results for these base classifiers than the meta-learnersadaboost and metacost. • metacost combines the predictive benefits of bagging (combining the decisions of different models) with a minimized expected cost model for cost-sensitive prediction.
+21 datasets were created from the screening data.
+the misclassification cost was incremented until a 20% false positive rate was reached - a 20% false positive rate seemed an appropriate place to stop.
+the bioassay contains activity information of 59,788 compounds with a ratio of 1 active compound to 281 inactive compounds (1.4%).
+in some cases, there has been a 50% reduction in the fingerprint data representation when these attributes are removed.
+these experiments are more of a survey of the classifiers rather than an experiment to gain insightful information about potential drugs for the particular targets.
+the confirmatory datasets represented with significantly more descriptors have only produced slightly better results than the smaller datasets.
+this could be due to the fact that the compounds in a confirmatory screen are usually closer in structure and physicochemical properties.
+the results have been disappointing and the best true positive rate that can be achieved with under a 20% false positive rate is approximately 55% - this is worse than for the large, highly imbalanced data.
+however, when using weka the differing data mining algorithms utilise costs differently depending on the underlying probability handling of the algorithm.
+the compounds that prevent a release of a certain chemical into the growth medium are labelled as active and the remaining compounds are labelled as having inconclusive activity.
+the results of the mixed bioassay data were compared to the classification results of the corresponding primary and confirmatory data.
+for the confirmatory datasets, fragment pair fingerprints were also generated using powermv.
+for these datasets, standard classifiers were applied first (no misclassification costs) and if there was less than a 20% false positive rate then cost-sensitive classifiers were used.
+from a cost-sensitive classifier point of view, the experiments show that these types of classifiers are capable of producing some good true positive rates with a controllable false positive rate for highly imbalanced data.
+format: zip size: 17.1mb download file additional file 4: training and testing confirmatory screen datasets in csv format.
+for our set of experiments, we used incremental costing where the cost was increased in stages from 2 to 1000000.
+figure1 shows the true positive rate achieved by each classifier with under a 20% false positive rate when the training models were applied to the independent test set.
+aid1608 is a small dataset with 1,033 compounds and a ratio of 1 active to 14 inconclusive compounds (6.58% minority class).
+for example, in primary screening bioassay aid1663 there are 661 bioactive compounds.
+the number of compounds correctly classified as active could have been improved if the false positive rate was increased, but it was decided that the same benchmark as the larger datasets should be used.
+the datasets are generally the same size as for the primary screen datasets but have a smaller minority class.
+however, the datasets are from the differing types of screening that can be performed using hts technology (both primary and confirmatory screening) and they have varying sizes and minority classes.
+the true positive rate achieved by each type of classifier for the mixed primary screen/confirmatory screen datasets.
+• aid687 is the result of a primary screen for coagulation factor xi from the penn center for molecular discovery and contains activity information of 33,067 compounds with a ratio of 1 active compound to 350 inactive compounds (0.28% minority).
+best classification models for the bioassays with mixed, primary and confirmatory data interestingly, in all cases the best model, in terms of correctly classified active compounds, has been the mixed datasets that have the smallest minority classes.
+for j48, a bagged (bootstrap aggregating) meta-learner metacost was used as it works more efficiently for unstable, unpruned decision trees[18].
+weka is a tool that is used by the academic community for both primary and comparative studies and it is important to explain how the cost-sensitive classifiers handle misclassification costs.
+virtual screening data primary .
+59,788 compounds were screened with a ratio of 1 active compound to 162 inactive compounds (0.61%).
+however, when trying to predict a minority class in an imbalanced dataset or when a false negative is deemed more important than a false positive, standard data mining techniques are not successful.
+• 147 bit-string structural descriptors known as pharmacophore fingerprints based on bioisosteric principles - two atoms or functional groups that have approximately the same biological activity are assigned the same class.
+it is a relatively small dataset with 4279 compounds and with a ratio of 1 active to 70 inactive compounds (1.4% minority class).
+cost-sensitive classifiers most classifiers assume equal weighting of the classes in terms of both the number of instances and the level of importance - misclassifying class a has the same importance as misclassifying class b.
+primary/confirmatory screen bioassay datasets these datasets are a mixture of primary and confirmatory bioassay data - all the false positives from the primary screen are relabelled as inactive.
+this meant over 5000 classifiers were built for this study so that we could find an optimal weka misclassification cost setting for a specific base classifier when applied to a specific type of dataset.
+summary of bioassay datasets used in the predictive models further information on these assays may be found in the experimental section and on the pubchem website.
+in confirmatory screen aid1891 the protocol states: counter screen for luciferase inhibitors of dense granule secretion.
+in 10 out of 11 experiments, naive bayes has the smallest cost setting, then the smo and finally the j48.
+these experiments are more of a survey of the classifiers rather than an experiment to gain insightful information about potential drugs for the particular targets.
+training and testing primary/confirmatory screen datasets in csv format.
+the output of the randomforest is the class that is the statistical mode of the class's output by the individual trees.
+as a random forest classifier is a bagged classifier, more computer memory is required to run them than for the other base classifiers used.
+i would like to thank the national center for biotechnology information for creating and maintaining the pubchem resource.
+figure2 shows the true positive rate achieved by each classifier with under a 20% false positive rate when the training models were applied to the independent test set.
+the number of false positives from the hts primary screen process is very high and maybe virtual screening techniques should be applied to the bioassays where there is corresponding confirmatory data.
+according to the main bioassay description, 10,014 compounds were screened with 34 actives, 9066 inactives and 1136 inconclusive compounds.
+the bit-string fingerprint descriptor values that only had one value throughout the dataset (for example, all 0 s or all 1 s) were removed.
+for the cost-sensitive classification, weka's implementations of the support vector machine and c4.5 decision tree learner have performed relatively well.
+table4 shows the weka cost matrix misclassification costs for the false negatives in order to achieve the maximum number of true positives with a false positive rate of fewer than 20% for each classifier.
+the main resource for obtaining freely-available bioassay data is the pubchem repository provided by the national center for biotechnology information [8,9].
+one of the problems of using the bioassay data from pubchem is that the data is not curated and is potentially erroneous[3,10].
+though a detailed analysis could not be carried out due to the lack of information provided, these false positive rates are quite high (average 64%) and possibly suggest that primary screening data should not be used for virtual screening.
+this could not be done with the primary screening datasets because of computational memory limitations.
+this could not be done with the primary screening datasets because of computational memory limitations.
+from a bioassay point of view, it is questionable how helpful these models are: primary screening usually involves a large amount of false positives.
+the naive bayes classifier has not needed any misclassification costs for 90% of the datasets, however in 60% of the datasets there are greater than 20% false positives.
+with regard to the number of false positives that occur in the primary screening process, the analysis carried out has been shallow due to the lack of cross-referencing mentioned above.
+the true positive and false positive rates for the confirmatory bioassay datasets
+the results of the two types of confirmatory bioassay datasets are then analysed and finally a comparison is made of the results of the datasets that have mixed primary and confirmatory data.
+the independent test performance of each classifier was compared by the maximum number of true positives that could be attained with approximately a 20% false positive rate.
+in hts, batches of compounds are screened against a biological target (bioassay) to test the compound's ability to bind to the target - if the compound binds then it is an active for that target and known as ahit.
+sometimes finding the relevant confirmed actives involves manually going through more than one bioassay, for example aid1509 leads to aid1523 which in turn leads to aid1701.
+however, there is no search facility to retrieve the primary screening results together with its corresponding confirmatory screen (if there is one).
+this adds up to 9322 compounds even though it states that 10,014 compounds were tested.
+even though we do not recommend using primary screening data, we have included this type of data as it tends to be larger and more imbalanced than some confirmatory screening data.
+for these datasets, standard classifiers were applied first (no misclassification costs) and if there was less than a 20% false positive rate then cost-sensitive classifiers were used.
+previous research has used across-the-board cost settings for differing classifiers and this research has shown that this is not the best way to implement cost-sensitivity in weka.
+for the rest of this section, we describe the background to this research: the drug-discovery process, bioassay data and cost-sensitive classifiers.
+20 ul of 1.5 um atp (sigma, #a1852) in pbs is plated in 384-well white assay plates (aurora, 00030721) and was exposed to the 1584 cherry-picked compounds chosen based on activity of the platelet dense granule release primary screen (aid1663) and structure to compounds with the highest activity, to provide some sar data.
+59,788 compounds were screened with a ratio of 1 active compound to 963 inactive compounds (0.1%).
+considering the minority classes were less than 1%, this is very promising.
+when it could be run, the random forest classifier requires a large cost setting to achieve the same results as the others.
+though classifier accuracy and precision are not the best statistical evaluation methods for imbalanced datasets, the results of these may be found in the supplementary excel results file.
+for bioassay data and more importantly for screening compound selection, it is better to minimise the false negatives at the expense of increasing the number of false positives.
+as the costs we are discussing are the actual settings of the weka cost matrix rather than class ratios, the comparison of classifiers cannot be compared using cost curves[13].
+excel spreadsheet containing all the results of the classification experiments.
+this means that it is more costly misclassifying the positives than misclassifying the negatives.
+it is a relatively small dataset with 4279 compounds and with a ratio of 1 active to 70 inactive compounds (1.4% minority class).
+default weka options were used for the naive bayes and random forest but for the smo "build logistic models" was set to true and for the j48 tree "pruning" was disabled.
+adding approximately 800 more attributes to the larger 'b' datasets has not had an effect on the setting of the misclassification costs.
+however, there is no search facility to retrieve the primary screening results together with its corresponding confirmatory screen (if there is one).
+these datasets are a mixture of primary and confirmatory bioassay data - all the false positives from the primary screen are relabelled as inactive.
+misclassification costs for false negatives per confirmatory dataset once again, it seems that there is no connection between the ratios of inactives:actives to the weka cost matrix setting.
+manually going through each bioassay looking for related bioassays still does not give the complete picture - the bioassay protocol also has to be read.
+the independent test performance of each classifier has been harder to compare as some classifiers could not achieve fewer than 20% false positives.
+though these types of datasets are relatively small with only a small imbalance of actives and inactives, the classifiers have not been very successful at predicting the bioassay's active compounds.
+the datasets were randomly split into an 80% training and validation set and a 20% independent test set.
+59,788 compounds were screened with a ratio of 1 active compound to 162 inactive compounds (0.61%).
+virtual screening data confirmatory.
+in hts, batches of compounds are screened against a biological target (bioassay) to test the compound's ability to bind to the target - if the compound binds then it is an active for that target and known as ahit.
+bolton ee, wang y, thiessen pa, bryant sh: pubchem: integrated platform of small molecules and biological activities.
+weka cost matrix the set of experiments carried out show that there is a large variability in how the differing classifiers respond to the misclassification costs in the weka cost matrix.
+57,546 of the compounds screened had known drug-like properties.
+from a cost-sensitive classifier point of view, the experiments show that these types of classifiers are capable of producing some good true positive rates with a controllable false positive rate for highly imbalanced data.
+weka defaults were used for the classifier.
+this research shows that setting the weka cost matrix is dependent on the base classifier used.
+sometimes finding the relevant confirmed actives involves manually going through more than one bioassay, for example aid1509 leads to aid1523 which in turn leads to aid1701.
+30,353 of the compounds screened had known drug-like properties.
+in six cases found, the average percentage of false positives from the high-throughput primary screen is quite high at 64%.
+here we report the follow-up dose-response testing on the 448 compounds identified as hits in the hts.
+these figures are quite promising considering the degree of imbalance in the bioassay data.
+these figures are quite promising considering the degree of imbalance in the bioassay data.
+this research has shown that the bioassay data at pubchem is not recorded in a standard and consistent way and some entries contain erroneous information.
+national institute of neurological disorders and stroke approved drug program.
+this adds up to 9322 compounds even though it states that 10,014 compounds were tested.
+this illustrates that the setting of the weka misclassification cost is arbitrary and more closely linked to the base classifier used than the class ratios or the number of attributes.
+the results have been disappointing and the best true positive rate that can be achieved with under a 20% false positive rate is approximately 55% - this is worse than for the large, highly imbalanced data.
+it is unfortunate that the models that have been the most successful are based on the hardest to obtain data from pubchem.
+default weka options were used for the naive bayes and random forest but for the smo "build logistic models" was set to true and for the j48 tree "pruning" was disabled.
+the process of discovering a new drug for a particular disease usually involves high-throughput screening (hts), a mixture of robotics, control software, liquid-handlers and optical readers.
+to train the models cross-validation was employed.
+pubmed abstract | publisher full text |pubmed central full text pubchem help: sometime i see errors in the substance record, where i should report?[http://pubchem.ncbi.nlm.nih.gov/help.html] webcite liu k, feng j, young ss: powermv: a software environment for molecular viewing, descriptor generation, data analysis and hit evaluation.
+it was also found, that the setting of the weka cost matrix is dependent on the base classifier used and not solely on the ratio of class imbalance.
+an ensemble classifier is built using bagging and it is used to relabel the training data based on the minimised expected costs[6].
+the true positive and false positive rates for the confirmatory bioassay datasets
+the number in brackets after the dataset name is the misclassification cost if the ratio of active compounds to inactive compounds (inactives/actives) had been used.
+figure1 shows the true positive rate achieved by each classifier with under a 20% false positive rate when the training models were applied to the independent test set.
+as the meta-learnercostsensitiveclassifier works better with probability estimates, the smo option buildlogisticmodelswas set to true.
+even though we do not recommend using primary screening data, we have included this type of data as it tends to be larger and more imbalanced than some confirmatory screening data.
+it was also found, that the setting of the weka cost matrix is dependent on the base classifier used and not solely on the ratio of class imbalance.
+for example, in primary screening bioassay aid1663 there are 661 bioactive compounds.
+lo hl, chang c, chiang t, hsiao c, huang a, kuo t, lai w, yang m, yeh j, yen c, lin s: learning to improve area-under-froc for imbalanced medical data classification using an ensemble method.
+for this reason, another set of experiments was carried out where more descriptors were generated.
+results this section first looks at the setting of the weka cost matrix and compares the misclassification costs needed for each classifier for each dataset.
+these results were quite surprising - in two cases the metacost j48 classified all the active compounds correctly in the independent test set with fewer than 20% false positives.
+for four of the primary screening bioassays where there are corresponding confirmatory results, datasets have been created where the false positives from the primary screen are relabelled as inactive.
+59,788 compounds were screened with a ratio of 1 active compound to 963 inactive compounds (0.1%).
+the set of experiments carried out show that there is a large variability in how the differing classifiers respond to the misclassification costs in the weka cost matrix.
+20 ul of 1.5 um atp (sigma, #a1852) in pbs is plated in 384-well white assay plates (aurora, 00030721) and was exposed to the 1584 cherry-picked compounds chosen based on activity of the platelet dense granule release primary screen (aid1663) and structure to compounds with the highest activity, to provide some sar data.
+confirmatory bioassay data tend to be smaller and less imbalanced (smaller inactive/active ratios) than primary bioassay data.
+manually going through each bioassay looking for related bioassays still does not give the complete picture - the bioassay protocol also has to be read.
+• aid687 is the result of a primary screen for coagulation factor xi from the penn center for molecular discovery and contains activity information of 33,067 compounds with a ratio of 1 active compound to 350 inactive compounds (0.28% minority).
+out of 250 manually searched confirmatory screening bioassays, only six had good links to the primary screen.
+summary of bioassay datasets used in the predictive models further information on these assays may be found in the experimental section and on the pubchem website.
+the major challenge of using machine learning techniques for this type of problem is that the data is highly imbalanced: on average the ratio is 1 active compound to 1000 inactive compounds[3].
+for each run of the classifier, 10% of the data is excluded from the training set and put in a corresponding validation set.
+for the smaller confirmatory bioassay datasets, two types of data representation are used in order to see if adding more information improves the classification results.
+a 5 fold cross-validation was used for the training and validation of the larger datasets and a 10 fold classification for the smaller confirmatory datasets.
+virtual screening can utilise several computational techniques depending on the amount and type of information available about the compounds and the target.
+this illustrates that the setting of the weka misclassification cost is arbitrary and more closely linked to the base classifier used than the class ratios or the number of attributes.
+in all cases, the datasets were too large for a cost-sensitive random forest to be run.
+a 5 fold cross-validation was used for the training and validation of the larger datasets and a 10 fold classification for the smaller confirmatory datasets.
+virtual screening can utilise several computational techniques depending on the amount and type of information available about the compounds and the target.
+57,546 of the compounds screened had known drug-like properties.
+the compounds in confirmatory bioassay data (ie.
+primary screen bioassay datasets the independent test performance of each classifier was compared by the maximum number of true positives that could be attained with approximately a 20% false positive rate.
+finding corresponding confirmatory bioassays is only achieved by manually going through each primary screen webpage and see if there is one in therelated bioassays section.
+powermv [11] was used to generate descriptors for the bioassay sdf files from pubchem.
+the true positive rate achieved by each type of classifier for the primary screen datasets.
+though classifier accuracy and precision are not the best statistical evaluation methods for imbalanced datasets, the results of these may be found in the supplementary excel results file.
+adding approximately 800 more attributes to the larger 'b' datasets has not had an effect on the setting of the misclassification costs.
+in aid530, the data activity table is contradictory.
+first, by reducing the search space of compounds to be screened and secondly, by analysing the false positives that occur in the primary screening process, the technology may be improved.
+for the confirmatory datasets, fragment pair fingerprints were also generated using powermv.
+pharmaceutical bioassay data is not readily available to the academic community.
+this is achieved by choosing several compounds that have known activity for a specific biological target and building predictive models that can discriminate between the active and inactive compounds.
+it is unfortunate that there is no direct search facility where related primary and confirmatory bioassays may be retrieved together - the classification models that have been the most successful are based on the hardest to obtain data from pubchem.
+if a few active compounds are known then structure-similarity techniques may be used; if the activity of several compounds is known then discriminant analysis techniques, such as machine learning approaches, may be applied.
+the aid number may be used as the search criterion.
+a maximum limit of 20% false positives were allowed.
+care when using weka's cost-sensitive classifiers is needed - across the board misclassification costs based on class ratios should not be used when comparing differing classifiers for the same dataset.
+the compounds were selected on the basis of preliminary virtual screening of approximately 480,000 drug-like small molecules from chemical diversity laboratories.
+the cost-sensitive naive bayes models were the quickest to build and the j48 and random forest models took, on average, about 1 hour per cost-setting to build.
+in aid530, the data activity table is contradictory.
+however, there is a lack of publicly-available bioassay data due to the fact that most hts technology is held at private commercial organisations.
+format: zip size: 460kb download file additional file 5: training and testing primary/confirmatory screen datasets in csv format.
+for each run of the classifier, 10% of the data is excluded from the training set and put in a corresponding validation set.
+the data held at pubchem is not curated and there is a lack of detailed cross-referencing between primary and confirmatory screening assays.
+table7 shows the bioassay datasets with the results of the best classification model highlighted.
+for the smaller confirmatory bioassay datasets, two types of data representation are used in order to see if adding more information improves the classification results.
+excel spreadsheet containing all the results of the classification experiments.
+the data held at pubchem is not curated and there is a lack of detailed cross-referencing between primary and confirmatory screening assays.
+one of the problems of the primary-screening process is the number offalse positives (a compound that has been deemed as active but subsequently turned out to be inactive) that occur.
+for aid688, mentioned above for the cross-referencing error, there was a 100% false positive rate according to the confirmatory screen aid792.
+in 10 out of 11 experiments, naive bayes has the smallest cost setting, then the smo and finally the j48.
+it is unfortunate that the models that have been the most successful are based on the hardest to obtain data from pubchem.
+however, for the differing classifiers they have used across-the-board costs of 2, 5, 10 etc.
+virtual screening data mixed .
+the standard cost-sensitive classifier was used for naive bayes, smo and random forest.
+best classification models for the bioassays with mixed, primary and confirmatory data interestingly, in all cases the best model, in terms of correctly classified active compounds, has been the mixed datasets that have the smallest minority classes.
+these include xlogp (the propensity of a molecule to partition into water or oil), the number of hydrogen bond donors and acceptors, molecular weight, polar surface area, the number of rotatable bonds, a descriptor to indicate if the compound penetrates the blood-brain barrier and a descriptor for the number of reactive or toxic functional groups in the compound.
+aid1608 is a small dataset with 1,033 compounds and a ratio of 1 active to 14 inconclusive compounds (6.58% minority class).
+the confirmatory-screening process uses the exact technology as for primary screening but the number of compounds screened is usually significantly smaller: it is usually only the actives from the primary screening process that are used for confirmatory screening.
+this means that standard techniques, which assume equality, are not very effective at building predictive models when there is a low minority class ratio.
+these include xlogp (the propensity of a molecule to partition into water or oil), the number of hydrogen bond donors and acceptors, molecular weight, polar surface area, the number of rotatable bonds, a descriptor to indicate if the compound penetrates the blood-brain barrier and a descriptor for the number of reactive or toxic functional groups in the compound.
+metacost works better with unstable data and therefore the j48 option unprunedwas set to true.
+format: xls size: 76kb download file this file can be viewed with: microsoft excel viewer some observations from the experiments are detailed below: • even though all the datasets are from primary screening bioassays, there is a big difference in classifier performance.
+in all cases, the datasets were too large for a cost-sensitive random forest to be run.
+pubmed abstract | publisher full text chen b, wild dj: pubchem bioassays as a data source for predictive models.
+metacost works well with unstable models and our preliminary experiments found that usingmetacost with the j48 unpruned tree produced better results thanadaboost and costsensitiveclassifier.
+the naive bayes classifier has not needed any misclassification costs for 90% of the datasets, however in 60% of the datasets there are greater than 20% false positives.
+figure2 shows the true positive rate achieved by each classifier with under a 20% false positive rate when the training models were applied to the independent test set.
+bolton ee, wang y, thiessen pa, bryant sh: pubchem: integrated platform of small molecules and biological activities.
+for four of the primary screening bioassays where there are corresponding confirmatory results, datasets have been created where the false positives from the primary screen are relabelled as inactive.
+in confirmatory screen aid1891 the protocol states: counter screen for luciferase inhibitors of dense granule secretion.
+the former was used for this research and therefore theminimizeexpectedcost option was set to false.
+format: zip size: 17.1mb download file additional file 4: training and testing confirmatory screen datasets in csv format.
+this meant over 5000 classifiers were built for this study so that we could find an optimal weka misclassification cost setting for a specific base classifier when applied to a specific type of dataset.
+this is achieved by choosing several compounds that have known activity for a specific biological target and building predictive models that can discriminate between the active and inactive compounds.
+in the experimental section, we give descriptions of the datasets, classifiers and data representation.
+protein-based methods are employed when the 3d structure of the bioassay target is known and computational techniques involve the docking (virtual binding), and subsequent scoring, of candidate ligands (the part of the compound that is capable of binding) to the protein target.
+aid688 is the result of a primary screen for yeast eif2b from the penn center for molecular discovery and contains activity information of 27,198 compounds with a ratio of 1 active compound to 108 inactive compounds (0.91% minority).
+structuring the data this way also hinders the investigation in to why so many compounds end up as being false positives in the primary screening process.
+the confirmatory datasets represented with significantly more descriptors have only produced slightly better results than the smaller datasets.
+the number of compounds correctly classified as active could have been improved if the false positive rate was increased, but it was decided that the same benchmark as the larger datasets should be used.
+for the rest of this section, we describe the background to this research: the drug-discovery process, bioassay data and cost-sensitive classifiers.
+here we report the follow-up dose-response testing on the 448 compounds identified as hits in the hts.
+in six cases found, the average percentage of false positives from the high-throughput primary screen is quite high at 64%.
+pubmed abstract | publisher full text chen b, wild dj: pubchem bioassays as a data source for predictive models.
+format: xls size: 76kb download file this file can be viewed with: microsoft excel viewer some observations from the experiments are detailed below: • even though all the datasets are from primary screening bioassays, there is a big difference in classifier performance.
+for this reason, another set of experiments was carried out where more descriptors were generated.
+the results of the mixed bioassay data were compared to the classification results of the corresponding primary and confirmatory data.
+when looking at the data activity table, the figures are 34 actives, 9066 inactives and 222 discrepant compounds.
+table5 shows the misclassification costs, if any, used for the confirmatory datasets.
+first, by reducing the search space of compounds to be screened and secondly, by analysing the false positives that occur in the primary screening process, the technology may be improved.
+from the survey of cost-sensitive classifiers carried out, the support vector machine (smo) and c4.5 decision tree learner (j48) have performed quite well considering the sizes of the minority classes.
+the cost-sensitive naive bayes models were the quickest to build and the j48 and random forest models took, on average, about 1 hour per cost-setting to build.

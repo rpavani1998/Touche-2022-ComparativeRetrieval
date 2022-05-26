@@ -1,0 +1,275 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>PHP, ASP and Whitebeam</title>
+<body>
+PHP, ASP and Whitebeam <br>
+<b>Site Map</b> <br>
+&nbsp; <br>
+Home <br>
+&nbsp; 
+<br> Application Guide <br>
+&nbsp; Quick Start <br>
+&nbsp; PHP and ASP <br>
+
+&nbsp; Writing Apps <br>
+&nbsp; Applications <br>
+&nbsp; Tutorials <br>
+&nbsp; 
+Samples <br>
+Reference <br>
+Community <br>
+Contact Whitebeam <br>
+To-Do <br>
+
+Download <br>
+Credits <br>
+Licence <br>
+Whitebeam Users <br>
+&nbsp; <br>
+<br>
+
+&nbsp; <br>
+<br>
+<br>
+ &nbsp; 
+<h1>PHP, ASP and Whitebeam</h1> <br>
+
+<p>This page provides some comparison between PHP, ASP and Whitebeam in order 
+to introduce Whitebeam to people familiar with those technologies. If you 
+haven't used these technologies then you may be better placed reading the full
+tutorial on writing Whitebeam applications.</p>
+<p>The subjects covered are:</p> 
+<ul> 
+<li>The layout of pages - comparing Whitebeam against PHP and ASP</li> 
+<li>Markup - How Whitebeam uses XML to move beyond scripting</li> 
+<li>Libraries - Interfaces to backend technologies</li> 
+<li>Scaleability - What happens when your application outgrows your current 
+server - or the currently available fastest serer?</li> 
+<li>...and finally a Summary</li> </ul> 
+<h1>Page structure</h1>
+<p>ASP, PHP and Whitebeam all store programs in text files, and each of those 
+files contain special markers that highlight where to insert dynamically 
+generated content. In the Whitebeam environment these files generally have the 
+extension '.rhtm' or '.whtm' but of course you can use any extension. The 
+following shows two similar pages - one for PHP and one for Whitebeam</p> PHP 
+Whitebeam <br>
+<code>
+<pre> &lt;html&gt; &lt;head&gt;&lt;title&gt;Hello 
+World&lt;/title&gt;&lt;/Head&gt; &lt;body&gt; &lt;?php // Server-side PHP $msg 
+= &quot;Hello World&quot;; echo(); ?&gt; &lt;?= &quot;The message 
+is'$msg'&quot; ?&gt; &lt;/body&gt; &lt;/html&gt;</pre></code> <code>
+<pre> &lt;html&gt; &lt;head&gt;&lt;title&gt;Hello 
+World&lt;/title&gt;&lt;/Head&gt; &lt;body&gt; &lt;?rbscript // Server-side 
+JavaScript var msg = &quot;Hello World&quot;; ?&gt; &lt;?= &quot;The message is 
+'&quot;+msg+&quot;'&quot; ?&gt; &lt;/body&gt; &lt;/html&gt;</pre></code> <br>
+
+<br>
+<p>The major difference between the structure of Whitebeam pages and those of 
+the other two technologies is that Whitebeam files<b>must</b> be <strong>valid
+</strong> XML markup. Whitebeam is an <b>XML Application</b>, while the other 
+two are more simply text substitution processors. XML is an inherent feature of 
+Whitebeam. Although PHP uses XML 'friendly' syntax - the files are<strong>not
+</strong> XML. This is illustrated by the perfectly valid PHP file:</p><code>
+<pre> &lt;html&gt; &lt;head&gt;&lt;title&gt;Hello 
+World&lt;/title&gt;&lt;/Head&gt; &lt;body&gt; &lt;?php $aValue = 22 ?&gt; 
+&lt;table border=&quot;&lt;?php echo($aValue)?&gt;&quot;&gt; ...</pre></code>
+<p>As far as PHP or ASP are concerned - a program file has no structure - it 
+is a text file on which simple text substitution is performed.</p> 
+<ul> 
+<li>Whitebeam is an XML engine that invokes a script engine as necessary. A 
+Whitebeam file is an XML file and can be manipulated as such and used with 
+existing XML editing tools.</li> 
+<li>ASP, PHP are text based technologies - they have no intrinsic awareness of 
+XML or document structure</li> </ul>
+<p>This difference may seem rather subtle - and if all you do with Whitebeam 
+is to write PHP like applications but using JavaScript then the differences 
+will probably not be apparent. However by making Whitebeam an XML application - 
+and having the programs structured using valid XML unleashes a whole set of 
+additional facilities such as:</p> 
+<ul> 
+<li><b>Use XML and HTML editors to see document structure</b><br>
+ Many PHP 
+and ASP applications hide all their output in streams of print statements. The 
+only way you can see the output structure is by running the application and 
+looking at the output. A Whitebeam page allows you to represent the application 
+structure in XML, which can be modified using commercial XML/HTML editors such 
+as dreamweaver.</li> 
+<li><b>Attach JavaScript behaviour to XML tags</b><br>
+ Whitebeam allows you 
+to create your own new tags and attach JavaScript behaviour to them. For 
+example - create a tag for a menu item. Whenever the engine encounters that tag 
+when it executes the page it runs the associated JavaScript - the outoput from 
+the script replaces the tag in the output document sent to the client.<br>
+<br>
+
+ You can also use this behaviour to 'transform' existing tags. I could for 
+example redfine &lt;h1&gt; tag to automatically insert a link at the start of a 
+page whenever it is encounrtered, providing an automatic table of contents.</li>
+<li><strong>DOM manipulation of the source</strong><br>
+ Because a Whitebeam 
+page is an XML document at the lowest level - Whitebeam provides a DOM like 
+access to that document structure at run time. You can included a number of XML 
+sub-structures within your doucment - then select the appropriate on for 
+output, maybe based on browser or current section number or type of person 
+logged into the site.</li> </ul> 
+<h1>Beyond Scripts</h1>
+<p>ASP and PHP provide mechanisms that can substitute 'output' in place of 
+'script'. In the ASP and PHP the<strong>only</strong> way of achieving this is 
+through script, which can make the pages being generated look very clumsy, 
+which in turn makes maintainance and development more difficult and costly.</p>
+<p>In a Whitebeam application, JavaScript is primarily a technology for adding 
+procedural functionality to pages. Page structure on the other hand is best 
+described in an XML markup language, which Whitebeam provides as a set ofXML 
+markup that is embedded in application pages.</p>
+<p>To illustrate how this improves the structure of a page consider the 
+following simple example of repeating a block of output for rows in a table:</p>
+PHP Whitebeam <br>
+<code>
+<pre> &lt;html&gt; &lt;head&gt;&lt;title&gt;Hello 
+World&lt;/title&gt;&lt;/Head&gt; &lt;body&gt; &lt;table&gt; &lt;?php for 
+($i=0;$i&lt;count($rows);$i++) ?&gt; &lt;tr&gt; &lt;td&gt;Row &lt;?= $i 
+?&gt;&lt;/td&gt; &lt;td&gt;&lt;?= $rows[$i] ?&gt;&lt;/td&gt; &lt;/tr&gt; 
+&lt;?php&gt; endfor; ?&gt; &lt;/table&gt; &lt;/body&gt; &lt;/html&gt;</pre>
+</code> <code>
+<pre> &lt;html&gt; &lt;head&gt;&lt;title&gt;Hello 
+World&lt;/title&gt;&lt;/Head&gt; &lt;body&gt; &lt;table&gt; &lt;rb:repeatfor 
+expr=&quot;var i=0;i&lt;rows.length;i++)&quot;&gt; &lt;tr&gt; &lt;td&gt;Row 
+&lt;?= i ?&gt;&lt;/td&gt; &lt;td&gt;&lt;?= rows[i] ?&gt;&lt;/td&gt; &lt;/tr&gt; 
+&lt;/rb:repeatfor&gt; &lt;/table&gt; &lt;/body&gt; &lt;/html&gt;</pre></code> 
+<br> <br>
+
+<p>Or an even simpler example - conditionally including a block of text if a 
+user is logged into the system</p> PHP Whitebeam <br>
+<code>
+<pre> &lt;html&gt; &lt;head&gt;&lt;title&gt;Hello 
+World&lt;/title&gt;&lt;/Head&gt; &lt;body&gt; &lt;?php if ($isLoggedIn) ?&gt; 
+&lt;p&gt;Welcome back to our application!&lt;/p&gt; &lt;?php&gt; endif; ?&gt; 
+&lt;/body&gt; &lt;/html&gt;</pre></code> <code>
+<pre> &lt;html&gt; &lt;head&gt;&lt;title&gt;Hello 
+World&lt;/title&gt;&lt;/Head&gt; &lt;body&gt; &lt;p 
+rb:test=&quot;isLoggedIn&quot;&gt; Welcome back to our application &lt;/p&gt; 
+&lt;/body&gt; &lt;/html&gt;</pre></code> <br>
+<br>
+
+<p>This latter example also illustrates the power of a system that understands 
+the XML hierarchy. An entire block of XML can be conditionally included simply 
+by making the parent tag conditional (rb:test) on the result of a JavaScript 
+expression.</p>
+<p>Whitebeam provides a rich set of XML markup to allow you to define your pae 
+structure rather than having to use PHP control constructs.</p> 
+<h1>Libraries</h1>
+<p>We've covered the basic syntax of Whitebeam and how JavaScript and XML 
+markup combne to provide a powerful development framework. We've shown the 
+syntactical similarities between Whitebeam, ASP and PHP. The XML structure of a 
+Whitebeam page makes it very easy to build XML based applications. By itself 
+this functionality has little practical use. It could for example be used as a 
+more understandable translation language than XSLT, for those familiar with 
+standard procedural languages, but that's about it!</p>
+<p>To write an application requires access to a number of underlying 
+functional technologies. Obvious among these are the ability to store 
+persistent data between page access, recognise client sessions and associated 
+data, implement a robust security model etc. Each development environment 
+provides these in a different way, but in each as an underlying application 
+programming interface (API).</p>
+<h2>The PHP approach</h2>
+<p>PHP provides a very rich API built as a set of function calls to underlying 
+modular interfaces. As PHP has developed and grown a larger following so more 
+effort has been placed into adding interfaces to just about any kind of 
+function you could need for a web application. This is perhaps one of the 
+strengths, and weaknesses of the PHP environment. The libraries cover a lot of 
+functionality, but has been implemented by a wide variety of organisations and 
+individuals. The result is a feature rich environment, but one that can be 
+daunting to new users of the environment.</p>
+<p>The APIs provided to PHP developers also tend to be very <i>thin</i>, in 
+that they map almost directly down to an underlying applications interface. The 
+result is very little consistency and very little abstraction, leading to a 
+different API to talk to, for example, Postgres, mySql and DB2, despite the 
+fact that they are all SQL databases. To see the breadth of coveragevisit the 
+PHP documentation library</p>
+<p>The philosophy followed by the PHP libraries tends to mean that you have to 
+know a lot about the underlying technology before you can use an API.</p>
+<p>PHP effectively provides a procedural interface allowing direct access to 
+underlying software, but to use that technology you must learn both PHP - and 
+how to use that technology. To write a database driven application using
+PostgreSQL for example you to learn PHP, HTML <i>and</i>SQL.</p>
+<h2>Whitebeam Libraries</h2>
+<p>Whitebeam provides an intuitive, well documented object orientated set of 
+APIs that abstract away the underlying complexity in order to reduce barriers 
+to entry for new users. While developers<i>can</i> get down to the underlying 
+functionality, it is perfectly possible to build a feature rich database driven 
+application without ever having to learn SQL. Even where the user wishes to get 
+to the underlying functionality the Whitebeam aim is to provide a consistent 
+interface to similar techologies. You really shouldn't have to change your code 
+substantially to move from one database technology to another!</p>
+<p>Whitebeam library functionality falls into two main categories:</p> 
+<ol> 
+<li><strong>Session/request related functions</strong><br>
+ For example 
+sending text to the browser, reading data from a form, accessing session 
+information associated with this request.</li> 
+<li><strong>Other associated objects</strong><br>
+ Covering making HTTP 
+requests, sending emails, making database connections etc. These are generally 
+objects that are transient and last for a single browser page request only.</li>
+</ol>
+<p>The first of these is represented as an object called 'rb'. This object 
+contains a set of objects representing different aspects of the current 
+operating environment, for example sessions, catalogues, sessions and the page 
+generation itself. You'll find alist of all the Whitebeam classes here.</p>
+<p>The second, transient objects, are represented by a number of classes 
+within the system. So an HTTP request is represented by an instance of the 
+'HttpRequest' class.</p> 
+<h1>Scaleability</h1>
+<p>PHP has evolved over time from a fairly basic origins - the system 
+developed from the scripting language. Most of the functionality available to 
+developers is in the form of added libraries. Most of these have been developed 
+to for the most common 'single-server' web application environment. 
+Scaleability has never been a major issue addressed by the developers of PHP. 
+There is no doubt that you can develop reliable, scaleable applications, but in 
+that case you have to write your own framework to make it happen.</p>
+<p>The core libraries provided with PHP lend themselves to single server 
+applications. The standard session management functions store session 
+information in a file on the local file-system. If you have a vedry successful 
+site and your server can't cope, your general solution is to get a bigger 
+server. If you have the biggest server you can afford then your only options 
+are to replace the core functionality with your own session tracking code, 
+using for example a database to store session information.</p>
+<p>Whitebeam luckily inherited a very mature, industry standard scripting 
+environment (ECMAScript/JavaScript thanks to the guys atMozilla). Our interest 
+was not in providing the language but rather in how to harness that language to 
+develop scaleable applications. All of the standard libraries in Whitebeam have 
+been developed with scaleability in mind. Using standard libraries, if you have 
+performance issues, you can make use of industry stanard load balancers to run 
+your application on two servers concurrently. None of your code has to change 
+because the Whitebeam architecture separates session data into a separate 
+service accessible by all servers.</p> 
+<h1>Summary</h1>
+<p>Whitebeam has a number of similarities with PHP and ASP. Page layout can 
+look very similar and you can do very similar things with each of these 
+technologies.</p>
+<p>Whitebeam very much builds on these architectures using internationally 
+standardised building blocks of XML and ECMAscript. Where PHP and ASP process a 
+text page for embedded script, Whitebeam introduces a two-parse approach, 
+processing an properly formatted XML file and then executing behaviours 
+associated with specific XML markup within those pages. Whitebeams knowledge of 
+the structure of the page as a hierachy of tags allows some very sophisticated 
+manipulations to be achieved very easily.</p>
+<p>Alongside the core page structure, Whitebeam provides a rich set of data 
+storage and manipulation allowing sophisticated database driven applications to 
+be written with no knowledge of the underlying technologies. Whitebeam 
+abstracts away the need to learn SQL or other technologies. At the same time it 
+provides those interfaces if required for specialist applications.</p>
+<p>Finally Whitebeam addresses in a transparent manner the issue of 
+scaleability and reliability, allowing a developer to take an application 
+initially running on a single server and to run that same application unchanged 
+on multiple servers using standard load-balancing products.</p> 
+<p>The quickstart guide will give you more details about Whitebeam</p> <br>
+
+<br> <br>
+Whitebeam release 1.3.8 <br>
+View XML source of this page <br>
+ 
+(loadtime : 12ms) <br>
+<br>
+
+</body>

@@ -1,0 +1,385 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Algorithm of the Week: Quicksort | Javalobby</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone 7</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Cloud Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+Python Zone <br>
+<strong>Did you 
+know? DZone has great portals forPython, Cloud, NoSQL, and HTML5!</strong> 
+Python Zone is brought to you in partnership with:  &amp;lt;A 
+href=&quot;http://avpa.dzone.com/servlet/click/zone?zid=183&amp;amp;pid=0&amp;amp;lookup=true&amp;amp;custom1=textad&amp;amp;position=1&quot; 
+rel=&quot;nofollow&quot; target=&quot;_blank&quot;&amp;gt; &amp;lt;IMG 
+src=&quot;http://avpa.dzone.com/servlet/view/banner/image/zone?zid=183&amp;amp;pid=0&amp;amp;custom1=textad&amp;amp;position=1&quot; 
+height=&quot;60&quot; width=&quot;468&quot; hspace=&quot;0&quot; 
+vspace=&quot;0&quot; border=&quot;0&quot; alt=&quot;Click Here!&quot;&amp;gt; 
+&amp;lt;/A&amp;gt; <br>
+<b>Stoimen Popov</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> 
+<li>@stoimenpopov </li> 
+<li> </li> 
+<li> </li> </ul> 
+<p> I've been working on web based projects built mainly with PHP and 
+JavaScript, where I mostly use Zend Framework and jQuery. I am interested in 
+any webpage optimizations techniques - for a faster web! Stoimen is a DZone MVB 
+and is not an employee of DZone and has posted 55 posts at DZone. You can read 
+more from them attheir website. View Full User Profile</p> 
+<h1>Algorithm of the Week: Quicksort</h1>  03.13.2012  Email <br>
+ Views: 2757 
+<br> 
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> <em>This content is part of the Python Zone, which is 
+presented to you by DZone andNew Relic. Visit the Python Zone for news, tips, 
+and tutorials on the Python programming language.&nbsp; provides the resources 
+andbest practices to help you monitor these applications. </em> 
+<h3>Recommended Links</h3> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<p>Like this piece? Share it with your friends:</p> | More <br>
+
+<p>This section is brought to you in partnership with:<br>
+</p> 
+<p>When it comes to sorting items by comparing them, merge sort is one very 
+natural approach. It is natural because it simply divides the list into two 
+equal sub-lists then sorts these two partitions applying the same rule. That is 
+a typical divide and conquer algorithm and it follows the intuitive approach of 
+speeding up the sorting process by reducing the number of comparisons. However 
+there are other &ldquo;divide and conquer&rdquo; sorting algorithms that do not 
+follow the merge sort scheme, while maintaining a similar level of success. 
+Such an algorithm is quicksort.</p> 
+<h2>Overview</h2> 
+<p>Back in 1960 C. A. R. Hoare came up with a brilliant sorting algorithm. In 
+general quicksort consists of some very simple steps. First we have to choose 
+an element from the list (called a pivot) then we must put all the elements 
+with a value less than the pivot on the left side of the pivot and all the 
+items with value greater than the pivot on its right side. After that we must 
+repeat these steps for the left and the right sub-lists. That is quicksort! 
+Simple and elegant!</p> 
+<p>&nbsp;</p> 
+<p>It is a pure divide and conquer approach like merge sort, but while merge 
+sort&rsquo;s tricky part was merging the sorted sub-lists, in quicksort there 
+are other things to consider.</p> 
+<p>First of all, the best choice for a pivot is the bottleneck. Indeed it all 
+depends on that pivot. Imagine that you choose the greatest value from the list 
+&ndash; then you have to put all the other items of the list into the 
+&ldquo;left&rdquo; sub-list. If you do that on each step you&rsquo;ll 
+practically go into the worst scenario and that is no good. The thing is that 
+in the worst case quicksort is not so effective and it&rsquo;s practically as 
+slow as bubble sort and insertion sort. The good thing is that in practice with 
+randomly generated lists there is not a high possibility to go into the worst 
+case of quicksort.</p> 
+<h3>Choosing a pivot</h3> 
+<p>Of course the best pivot is the middle element from the list, leaving the 
+list divided into two fairly equal sub-lists. The problem is that there&rsquo;s 
+not an easy way to get the middle element from a list and this will slow down 
+the algorithm. So typically we can get for a pivot the first or the last item 
+of the list.</p> 
+<p>After choosing a pivot the rest is simple. Put every item with a greater 
+value on the right and every item with a lesser value on the left. Then we must 
+sort the left and right sub-lists just as we did with the initial list.</p> 
+<p></p> 
+<p>It&rsquo;s clear that with this algorithm we&rsquo;re naturally going into 
+a recursive solution. Typically every divide and conquer approach is easy to 
+implement with recursion. But because recursion can be heavy, there is an 
+iterative approach.</p> 
+<h2>Implementation</h2> 
+<p>As I said above, the recursive approach is something very natural for 
+quicksort as it follows the divide and conquer principles. On each step we 
+divide the list in two and we pass those sub-lists to our recursive function. 
+But recursion is dangerous sometimes, so an iterative approach is also 
+available. Typically iterative approaches &ldquo;model&rdquo; recursion with 
+extra memory and a model of a stack, which is our case. Here we have two 
+examples of quicksort &ndash; recursive and iterative in PHP. Let&rsquo;s see 
+the recursion on first:</p> 
+<h3>Recursive Quicksort<br>
+<br>
+</h3> 
+<pre>$list = array(5,3,9,8,7,2,4,1,6,5); // recursive function 
+quicksort($array) { if (count($array) == 0) { return array(); } $pivot = 
+$array[0]; $left = $right = array(); for ($i = 1; $i &lt; count($array); $i++) 
+{ if ($array[$i] &lt; $pivot) { $left[] = $array[$i]; } else { $right[] = 
+$array[$i]; } } return array_merge(quicksort($left), array($pivot), 
+quicksort($right)); } // 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 print_r(quicksort($list));
+</pre> 
+<p>&nbsp;</p> 
+<h3>Iterative Quicksort<br>
+<br>
+</h3> 
+<pre>$list = array(5,3,9,8,7,2,4,1,6,5); // iterative function 
+quicksort_iterative($array) { $stack = array($array); $sorted = array(); while 
+(count($stack) &gt; 0) { $temp = array_pop($stack); if (count($temp) == 1) { 
+$sorted[] = $temp[0]; continue; } $pivot = $temp[0]; $left = $right = array(); 
+for ($i = 1; $i &lt; count($temp); $i++) { if ($pivot &gt; $temp[$i]) { $left[] 
+= $temp[$i]; } else { $right[] = $temp[$i]; } } $left[] = $pivot; if 
+(count($right)) array_push($stack, $right); if (count($left)) 
+array_push($stack, $left); } return $sorted; } // 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 
+print_r(quicksort_iterative($list));</pre> 
+<p>&nbsp;</p> 
+<h2>Complexity</h2> 
+<p>The complexity of quicksort in the average case is O(n*log(n)) &ndash; same 
+as Merge sort. The problem is that in the worst case it is O(n2) &ndash; same 
+as bubble sort. Obviously the worst case is when we have an already sorted 
+list, and we constantly take for a pivot the last element of the list. But we 
+should consider that in practice we don&rsquo;t quite use sorted lists that we 
+have to sort again, right?</p> 
+<p></p> 
+<h2>Application</h2> 
+<p>Quicksort is a great sorting algorithm and developers often go for it, but 
+let&rsquo;s see some pros and cons of it.</p> 
+<h3>Why using quicksort</h3> 
+<ul> 
+<li>Recursive implementation is easy</li> 
+<li>In general its speed is same as merge sort &ndash; O(n*log(n))</li> 
+<li>Elegant solution with no tricky merging as merge sort</li> </ul> 
+<h3><br>
+Why not using quicksort</h3> 
+<ul> 
+<li>As slow as bubble sort in the worst case!</li> 
+<li>Iterative implementation isn&rsquo;t easy</li> 
+<li>There are faster algorithms for some sets of data types</li> </ul> 
+<p><br>
+Quicksort is beautiful because of the elegant idea behind its 
+principles. If you have two sorted lists, one with items with a greater value 
+from a given value and the other with items smaller form that given value, you 
+can simply concatenate them and you can be sure that the resulting list will be 
+sorted with no need of special merge.</p> 
+<p>In fact quicksort is a very elegant general purpose sorting algorithm and 
+every developer should be familiar with its principles.</p>  Tags: 
+<ul> 
+<li>Algorithms</li> 
+<li>Python</li> 
+<li>PHP</li> </ul> Published at DZone with permission of Stoimen Popov, author 
+and DZone MVB (source). <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> <br>
+Python is a fast, powerful, dynamic, and versatile programming language that is 
+being used in a variety ofapplication domains. It has flourished as a 
+beginner-friendly language that is penetrating more and more industries. The
+Python Zoneis a community that features a diverse collection of news, 
+tutorials, advice, and opinions about Python and Django. The Python Zone is 
+sponsored byNew Relic, the all-in-one web application performance tool that 
+lets yousee performance from the end user experience, through servers, and down 
+to the line of application code. <br>
+<br>
+
+<h2>Comments</h2> <br>
+
+<h3>Milos Silhanek replied on Wed, 2012/03/14 - 3:51am</h3> Hi, great serie! 
+If you want watch these algorithm running see into JDK Sort Demo in<b>
+jdk-install-dir\demo\applets\SortDemo\example1.html</b> <br>
+ or 
+http://www.cs.ubc.ca/~harrison/Java/index.html and <br>
+
+http://people.cs.ubc.ca/~harrison/Java/sorting-demo.html <br>
+ originally 
+created by James Gosling and modified by Jason Harrison and Jim Boritz. Soon 
+will be available some example application :-). 
+<ul> 
+<li>Login or register to post comments</li> </ul> 
+<h2>Comment viewing options</h2> Flat list - collapsedFlat list - expanded
+Threaded list - collapsedThreaded list - expanded <br>
+Date - newest firstDate 
+- oldest first <br>
+10 comments per page30 comments per page50 comments per page
+70 comments per page90 comments per page150 comments per page200 comments per 
+page250 comments per page300 comments per page <br>
+<br>
+ Select your preferred 
+way to display the comments and click &quot;Save settings&quot; to activate 
+your changes. 
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Links</h3> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<p>This section is brought to you in partnership with:<br>
+</p> <br>
+
+<h2>Spotlight Features</h2> 
+<h2>Hadoop in Practice</h2> 
+<p></p> 
+<h2>Netflix's &quot;Priam&quot;: Improving Cassandra Usability</h2> 
+<p></p> 
+<h2>Commandments of Good Source Control </h2> 
+<p></p> 
+<ul> 
+<h2>Popular at DZone</h2> 
+<li>1:Word Count MapReduce with Akka</li> 
+<li>2:Test-driven Development: why to use it</li> 
+<li>3:FindBugs and JSR-305</li> 
+<li>4:Scala Macros: &quot;Oh God Why?&quot;</li> 
+<li>5:New index statistics in Lucene 4.0</li> 
+<li>6:The several flavors of random in Java</li> 
+<li>7:Selenium Walkthrough</li> See more popular at DZone <br>
+Subscribe to 
+the RSS feed </ul> Around the DZone Network WEB BUILDER <br>
+<br>
+3D Tetris 
+with Three.js Tutorial - Part 1 <br>
+SERVER <br>
+<br>
+Monitoring with Sensu and 
+Graphite <br>
+JAVALOBBY <br>
+<br>
+New Index Statistics in Lucene 4.0 <br>
+MOBILE
+<br><br>
+Working Around Pivot SelectedIndex Limitations in ... <br>
+CLOUD <br>
+
+<br>Cloudbees &lt;3's Erlang <br>
+WEB BUILDER <br>
+<br>
+Can Arrays Be Used as 
+Domain Objects? <br>
+You Might Also Like 
+<ul> 
+<li>JSON.org License Literally Says it &quot;shall be used for Good, not 
+Evil&quot;</li> 
+<li>Tweaking Bayes&rsquo; Theorem</li> 
+<li>Must-have Tools for Developers on Windows: Part 2</li> 
+<li>Algorithm of the Week: Merge Sort</li> 
+<li>How Badly Do We Want a New Java Date/Time API? </li> 
+<li>Groovy, A Reasonable JVM Language for DevOps</li> 
+<li>All the mouse events in JavaScript</li> 
+<li>Circos: An Amazing Tool for Visualizing Big Data</li> 
+<li>On Useless Testing...</li> 
+<li>Dare to Show Your Code</li> 
+<li>An Introduction to 6 Machine Learning Models</li> 
+<li>Why You Should Leave Microsoft - Or Any Other Big Company</li> 
+<li>Test Driven Development without Tears</li> 
+<li>Hibernate &ndash; Please Don't Deprecate Yourself</li> 
+<li>Prostitutes Appeal to the Pope: NLP Text Analytics Applied to Search</li> 
+</ul> Popular on Javalobby 
+<ul> 
+<li>Spring Batch - Hello World</li> 
+<li>How to Fix Memory Leaks in Java</li> 
+<li>Lucene's FuzzyQuery is 100 times faster in 4.0 </li> 
+<li>9 Programming Languages To Watch In 2011</li> 
+<li>Is Hibernate the best choice?</li> 
+<li>How to Create Visual Applications in Java?</li> 
+<li>Introduction to Oracle's ADF Faces Rich Client Framework</li> 
+<li>Time Slider: OpenSolaris 2008.11 Killer Feature </li> </ul> Latest Articles
+<ul> 
+<li>Accounting Software on NetBeans</li> 
+<li>NetBeans Weekly News (Issue #528 - Mar 12, 2012) </li> 
+<li>Paint Store Price List Generator on NetBeans</li> 
+<li>NetBeans Weekly News (Issue #527 - Mar 5, 2012) </li> 
+<li>NUnit&rsquo;s New 'Action Attributes' Feature is AOP to Your Unit Tests
+</li> 
+<li>Introduction to Log Parser Studio</li> 
+<li>Visual Studio Installer Projects: Life After Visual Studio 2010</li> 
+<li>Final thoughts on S#arp Lite</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>Groovy</h3> 
+<p>Programming Groovy is easy to start with. This reference of best practices 
+and idiomatic solutions smoothly guides you to the next step of...</p> <br>
+
+<h3>HTML5 Canvas: A Web Standard for Dynamic Graphics</h3> <br>
+<br>
+<br>
+<br>
+
+<br> 
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

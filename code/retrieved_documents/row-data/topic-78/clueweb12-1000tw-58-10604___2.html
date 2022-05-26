@@ -1,0 +1,195 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Computer Algorithms: Quicksort</title>
+<body>
+stoimen's web log <br>
+ about web development <br>
+Skip to content <br>
+
+<ul> 
+<li>Home</li> 
+<li>About</li> 
+<li>Download</li> </ul> <br>
+<br>
+<br>
+&larr; Algorithm cheatsheet: Quicksort 
+<br> You think you know PHP. Quiz Results! &rarr; <br>
+
+<h1>Computer Algorithms: Quicksort</h1> Posted on March 13, 2012 by Stoimen 
+<br> <br>
+<br>
+
+<h2>Introduction</h2> 
+<p>When it comes to sorting items by comparing them merge sort is one very 
+natural approach. It is natural, because simply divides the list into two equal 
+sub-lists then sort these two partitions applying the same rule. That is a 
+typical divide and conquer algorithm and it just follows the intuitive approach 
+of speeding up the sorting process by reducing the number of comparisons. 
+However there are other &ldquo;divide and conquer&rdquo; sorting algorithms 
+that do not follow the merge sort scheme, while they have practically the same 
+success. Such an algorithm is quicksort.</p> 
+<h2>Overview</h2> 
+<p>Back in 1960 C. A. R. Hoare comes with a brilliant sorting algorithm. In 
+general quicksort consists of some very simple steps. First we&rsquo;ve to 
+choose an element from the list (called a pivot) then we must put all the 
+elements with value less than the pivot on the left side of the pivot and all 
+the items with value greater than the pivot on its right side. After that we 
+must repeat these steps for the left and the right sub-lists. That is 
+quicksort! Simple and elegant!</p> 
+<p></p> 
+<p> </p> 
+<p></p> 
+<p>It is a pure divide and conquer approach as merge sort, but while merge 
+sort&rsquo;s tricky part was merging the sorted sub-lists, in quicksort there 
+are other things to consider.</p> 
+<p>First of all obviously the choice of a pivot is the bottleneck. Indeed it 
+all depends on that pivot. Imagine that you choose the greatest value from the 
+list &ndash; than you&rsquo;ve to put all the other items of the list into the 
+&ldquo;left&rdquo; sub-list. If you do that on each step you&rsquo;ll 
+practically go into the worst scenario and that is no good. The thing is that 
+in the worst case quicksort is not so effective and it&rsquo;s practically as 
+slow as bubble sort and insertion sort. The good thing is that in practice with 
+randomly generated lists there is not a high possibility to go into the worst 
+case of quicksort.</p> 
+<h3>Choosing a pivot</h3> 
+<p>Of course the best pivot is the middle element from the list. Thus the list 
+will be divided into two fairly equal sub-lists. The problem is that 
+there&rsquo;s not an easy way to get the middle element from a list and this 
+will slow down the algorithm. So typically we can get for a pivot the first or 
+the last item of the list.</p> 
+<p>After choosing a pivot the rest is simple. Put every item with a greater 
+value on the right and every item with a lesser value on the left. Then we must 
+sort the left and right sub-lists just as we did with the initial list.</p> 
+<p></p> 
+<p>It&rsquo;s clear that with this algorithm naturally we&rsquo;re going into 
+a recursive solution. Typically every divide and conquer approach is easy to 
+implement with recursion. But because recursion can be heavy, there is an 
+iterative approach.</p> 
+<h2>Implementation</h2> 
+<p>As I said above recursive approach is something very natural for quicksort 
+as it follows the divide and conquer principles. On each step we divide the 
+list in two and we pass those sub-lists to our recursive function. But 
+recursion is dangerous sometimes, so an iterative approach is also available. 
+Typically iterative approaches &ldquo;model&rdquo; recursion with extra memory 
+and a model of a stack, which is our case. Here we have two examples of 
+quicksort &ndash; recursive and iterative in PHP. Let&rsquo;s go first with the 
+recursion.</p> 
+<h3>Recursive Quicksort</h3> 
+<pre>$list = array(5,3,9,8,7,2,4,1,6,5); &nbsp; // recursive function quicksort
+($array) { if (count($array) == 0) { return array(); } &nbsp; $pivot = $array[0]
+; $left = $right = array(); &nbsp; for ($i = 1; $i &lt; count($array); $i++) { 
+if ($array[$i] &lt; $pivot) { $left[] = $array[$i]; } else { $right[] = $array[
+$i]; } } &nbsp; return array_merge(quicksort($left), array($pivot), quicksort(
+$right)); } &nbsp; // 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 print_r(quicksort($list));
+</pre> 
+<h3>Iterative Quicksort</h3> 
+<pre>$list = array(5,3,9,8,7,2,4,1,6,5); &nbsp; // iterative function 
+quicksort_iterative($array) { $stack = array($array); $sorted = array(); &nbsp; 
+while (count($stack) &gt; 0) { &nbsp; $temp = array_pop($stack); &nbsp; if (
+count($temp) == 1) { $sorted[] = $temp[0]; continue; } &nbsp; $pivot = $temp[0];
+$left = $right = array(); &nbsp; for ($i = 1; $i &lt; count($temp); $i++) { if (
+$pivot &gt; $temp[$i]) { $left[] = $temp[$i]; } else { $right[] = $temp[$i]; } }
+ &nbsp;$left[] = $pivot; &nbsp; if (count($right)) array_push($stack, $right); 
+if (count($left)) array_push($stack, $left); } &nbsp; return $sorted; } &nbsp; 
+// 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 print_r(quicksort_iterative($list));</pre> 
+<h2>Complexity</h2> 
+<p>The complexity of quicksort in the average case is O(n*log(n)) &ndash; same 
+as Merge sort. The problem is that in the worst case it is O(n2) &ndash; same 
+as bubble sort. Obviously the worst case is when we have an already sorted 
+list, and we constantly take for a pivot the last element of the list. But we 
+should consider that in practice we don&rsquo;t quite use sorted lists that we 
+have to sort again, right?</p> 
+<p></p> 
+<h2>Application</h2> 
+<p>Quicksort is a great sorting algorithm and developers often go for it, but 
+let&rsquo;s see some pros and cons of it.</p> 
+<h3>Why using quicksort</h3> 
+<ol> 
+<li>Recursive implementation is easy</li> 
+<li>In general its speed is same as merge sort &ndash; O(n*log(n))</li> 
+<li>Elegant solution with no tricky merging as merge sort</li> </ol> 
+<h3>Why not using quicksort</h3> 
+<ol> 
+<li>As slow as bubble sort in the worst case!</li> 
+<li>Iterative implementation isn&rsquo;t easy</li> 
+<li>There are faster algorithms for some sets of data types</li> </ol> 
+<p>Quicksort is beautiful because of the elegant idea behind its principles. 
+Indeed if you have two sorted lists one with items with a greater value from a 
+given value and the other with items smaller form that given value you can 
+simply concatenate them and you can be sure that the resulting list will be 
+sorted with no need of special merge.</p> 
+<p>In fact quicksort is a very elegant general purpose sorting algorithm and 
+every developer should be familiar with its principles.</p> 
+<p>Related posts:</p> 
+<ol> 
+<li>Friday Algorithms: Quicksort &ndash; Difference Between PHP and JavaScript
+</li> 
+<li>Computer Algorithms: Merge Sort</li> 
+<li>Computer Algorithms: Insertion Sort</li> </ol> 
+<h3>You are a GREAT developer? Click here to answer the weekly quiz!</h3>  
+This entry was posted inalgorithms and tagged Algorithm, brilliant sorting 
+algorithm, Bubble sort, Divide and conquer algorithm, elegant general purpose 
+sorting algorithm, elegant solution, faster algorithms, Insertion sort, Merge 
+sort, PHP, purpose sorting algorithm, Quicksort, Recursion, recursive solution, 
+Selection algorithm, Sort, Sorting algorithms, Spreadsort. Bookmark the 
+permalink. <br>
+<br>
+&larr; Algorithm cheatsheet: Quicksort <br>
+You think you 
+know PHP. Quiz Results!&rarr; <br>
+
+<h3>Leave a Reply Cancel reply</h3> 
+<p>Your email address will not be published. Required fields are marked *</p> 
+<p>Name *</p> 
+<p>Email *</p> 
+<p>Website</p> 
+<p>Comment</p> 
+<p>You may use these HTML tags and attributes: <code>&lt;a href=&quot;&quot; 
+title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym 
+title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; 
+&lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; 
+&lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; &lt;pre 
+lang=&quot;&quot; line=&quot;&quot; escaped=&quot;&quot; 
+highlight=&quot;&quot;&gt;</code></p> 
+<p> </p> 
+<p></p> 
+<p> Notify me of followup comments via e-mail </p> <br>
+<br>
+<br>
+
+<ul> 
+<li> Search for: <br>
+</li> 
+<li>
+<h3>Related Posts</h3> 
+<ol> 
+<li>Friday Algorithms: Quicksort &ndash; Difference Between PHP and JavaScript
+</li> 
+<li>Computer Algorithms: Merge Sort</li> 
+<li>Computer Algorithms: Insertion Sort</li> </ol></li> 
+<li>
+<h3>Categories</h3> 
+<ul> 
+<li>agile (3) </li> 
+<li>algorithms (23) </li> 
+<li>css (29) </li> 
+<li>download (3) </li> 
+<li>featured (46) </li> 
+<li>flex 3 (25) </li> 
+<li>javascript (139) </li> 
+<li>micro tutorial (203) </li> 
+<li>PHP (110) </li> 
+<li>portfolio (5) </li> 
+<li>quiz (5) </li> 
+<li>snippets (7) </li> 
+<li>video (1) </li> 
+<li>web development (168) </li> 
+<li>zend framework (81) </li> </ul> </li> </ul> <br>
+ stoimen's web log <br>
+
+Proudly powered by WordPress. <br>
+<br>
+<br>
+<br>
+
+</body>

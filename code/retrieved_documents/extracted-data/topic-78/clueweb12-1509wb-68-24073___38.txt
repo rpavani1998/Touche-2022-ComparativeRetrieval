@@ -1,0 +1,255 @@
+the resulting  running time is(n lg n).
+8.4-1 show that quicksort's best-case running time is (n1gn).
+r], respectively, such that every element in a
+8-5 median-of-3 partition one way to improve the randomized-quicksort procedure is to partition around an elementx that is chosen more carefully than by picking a random element from the subarray.
+8.4-6 consider modifying the partition procedure by randomly picking three elements from arraya and partitioning about their median.
+8.4-4 the running time of quicksort can be improved in practice by taking advantage of the fast running time of insertion sort when its input is "nearly" sorted.
+exercises 8.2-1 show that the running time of quicksort is (n lg n) when all  elements of arraya have the same value.
+there are technicalities that  make the pseudocode ofpartition a little tricky, however.
+n] are distinct and thatn 3.
+figure 8.2 a recursion tree for quicksort in which the partition procedure  always puts only a single element on one side of the partition (the worst  case).
+this modification ensures that the pivot element x = a[p ] is equally likely to be any of the r - p + 1 elements in  the subarray.
+certainly, this situation is no worse than that  in figure 8.
+their average-case running time is good, and no particular input elicits their worst-case behavior.
+e. define a procedure randomized-lomuto-partition that exchangesa[r] with a randomly chosen element in a[p .
+(n), which by case 2 of the master theorem (theorem 4.1) has solution t(n ) =(n lg n).
+this modification does not improve the worst-case running time of the  algorithm, but it does make the running time independent of the input ordering.
+8.1-2 what value of q does partition return when all elements in the array a[p . .
+8.2-4 suppose that the splits at every level of quicksort are in the proportion  1 - to , where 0 <  1/2 is a constant.
+since each term is at most n lg n, we have the bound which is tight to within a constant factor.
+(if the inequalities are not strict, the exchange can be performed  anyway.)
+this bound is not strong enough to solve the recurrence ast(n) =
+we can get this bound on the summation by splitting it into two parts, as discussed in section 3.2 on page 48.
+8.3 randomized versions of quicksort
+the randomized algorithm based on randomly permuting  the input array also works well on average, but it is somewhat more difficult  to analyze than this version.
+it remains to prove the bound (8.5) on the summation
+5 do repeat j j - 1 6 until a[j] x 7 repeat i i + 1 8 until a[i] x 9 if i < j 10 then exchange a[i] a[j] 11 else return j figure 8.1 shows how partition works.
+(see section 4.2 for a discussion of recursion trees.)
+intuition for the average case to develop a clear notion of the average case for quicksort, we must make  an assumption about how frequently we expect to encounter the various inputs.
+for example, exercise 8.2-5  asks to you show that about 80 percent of the timepartition produces a split  that is more balanced than 9 to 1, and about 20 percent of the time it produces  a split that is less balanced than 9 to 1.
+returned on previous calls.
+when we run quicksort on a random input array, it is unlikely that the  partitioning always happens in the same way at every level, as our informal  analysis has assumed.
+figure 8.5 (a) two levels of a recursion tree for quicksort.
+figure 8.3 a recursion tree for quicksort in which partition always  balances the two sides of the partition equally (the best case).
+intuitively, the(n) cost of the bad split can be  absorbed into the(n) cost of the good split, and the resulting split is  good.
+r] as a "pivot"  element around which to partitiona[p . .
+one common approach is themedian-of-3 method: choose x as the median (middle element) of a set of 3 elements randomly selected from the subarray.
+the partitioning of the subarray of size n - 1  costs n - 1 and produces a "good" split: two subarrays of size (n -  1)/2.
+the resulting running time is(n2).
+for what value of  are the odds even that the split is more  balanced than less balanced?
+thus, we expect the split of the input array to be reasonably  well balanced on average.
+8.2-2 show that the running time of quicksort is (n2) when the array a is sorted in nonincreasing order.
+r] and then calls lomuto-partition.
+figure 8.2 shows a recursion tree for this worst-case execution of quicksort.
+the positions of i and j at line 9 of the second  iteration of the while loop.
+suppose for the sake of intuition, however, that the good and bad splits  alternate levels in the tree, and that the good splits are best-case splits and  the bad splits are worst-case splits.
+when quicksort is called on a subarray with fewer thank elements, let it simply return without sorting the subarray.
+j is returned at the end of the procedure.
+if the partitioning procedure produces two regions of size n/2,  quicksort runs much faster.
+8-3 stooge sort professors howard, fine, and howard have proposed the following "elegan" sorting algorithm: a. argue that stooge-sort(a, 1, length[a ]) correctly sorts the input arraya[1 . .
+the positions of i and j at line 9 of the  third and last iteration of the while loop.
+we then  obtain the recurrence t(n) =
+r] is (n ), where n = r - p + 1 (see exercise 8.1-3).
+let us assume that this unbalanced  partitioning arises at every step of the algorithm.
+(see exercise 8.2-3.)
+instead, its worst case depends on the  random-number generator.
+how does replacing partition by lomuto-partition affect the running time ofquicksort when all input values are equal?
+the total cost of quicksort is therefore (n lg n ).
+lightly shaded  array elements have been placed into the correct partitions, and heavily shaded  elements are not yet in their partitions.
+n ], compared to the ordinary implementation?
+this is the bound (8.5).
+a  common assumption is that all permutations of the input numbers are equally  likely.
+the running time of quicksort depends on whether the partitioning is  balanced or unbalanced, and this in turn depends on which elements are used for  partitioning.
+since partitioning costs( n) time and t(1) = (1), the recurrence for the running time is t(n) =
+r],  wherep q < r, such that no element of a[p . .
+we conclude that quicksort's average running time is o(n lgn).
+the recurrence is then t(n) = 2t(n/2)
+the reason is that any split ofconstant proportionality yields a  recursion tree of depth(lg n), where the cost at each level is o( n).
+best-case partitioning
+we can picka and b sufficiently large so that an 1g n + b is greater than t(1).
+show that the minimum depth of a leaf  in the recursion tree is approximately ep1gn/lg  and the maximum depth  is approximately - lgn/lg(1 - ).
+since we assume that array parameters are actually represented by pointers, the information for each procedure call on the stack requireso(1) stack space.
+show that the probability that a given valueq is returned by randomized-lomuto-partition is equal to the probability thatp + r - q is returned by randomized- partition.
+the operation of partition on a sample array.
+the information for the most recent call is at the top of the stack, and the information for the initial call is at the bottom.
+in the new partition  procedure, we simply implement the swap before actually partitioning: randomized-partition(a,p,r) 2 exchange a[p] a[i] 3 return partition(a,p,r) we now make the new quicksort call randomized-partition in place of  partition:
+in the average case, partition produces a mix of "good" and  "bad" splits.
+the running time is therefore (n lg n) whenever the  split has constant proportionality.
+the running time of partition on an array a[p . .
+the positions of i and j at line 9 of the first  iteration of the while loop.
+8.4-3 show that randomized-quicksort's expected running time is (n 1g n ).
+n], where n = length[a].
+after the top-level call to quicksort returns, run insertion sort on the entire array to finish the sorting process.
+we expect that some of the splits will be reasonably well  balanced and that some will be fairly unbalanced.
+8.2-3 banks often record transactions on an account in order of the times of the  transactions, but many people like to receive their bank statements with checks  listed in order by check number.
+n on the running time of quicksort, where we have replaced (n) by n for convenience.
+if the benefits of good choices outweigh the  costs of bad choices, a random selection of good and bad choices can yield an  efficient algorithm.
+j] is less than or equal to every element ofa[j+ 1 . .
+one of the randomized versions of quicksort is analyzed in section 8.4, where it is shown to run ino(n2) time in the worst case and ino(n lg n) time on average.
+(don't worry about integer round-off.)
+(b) a single level of a recursion tree that is worse than the combined  levels in (a), yet very well balanced.
+by modifying the partition procedure, we can design another randomized  version of quicksort that uses this random-choice strategy.
+here is the three-step divide-and-conquer process for sorting a typical subarraya[p . .
+if we define a "good" split to mean choosingx =
+the recursion terminates at depth log10/9 n = (lg n).
+prove the following: a.
+it first selects an element x =a[p] from a[p . .
+exercise 13.4-4 shows  that almost all permutations cause quicksort to perform nearly as well as the  average case: there arevery few permutations that cause near-worst-case  behavior.
+8.1-3 give a brief argument that the running time of partition on a subarray of  sizen is (n).
+c. argue that lomuto-partition, like partition, runs in(n) time on an n-element subarray.
+q] is larger than any element of a[q + 1. .
+the second recursive call in quicksort is not really necessary; it can be avoided by using an iterative control structure.
+a. give an exact formula for pi as a function ofn and i for i = 2, 3, . . .
+quicksort'(a,p,r) 1 while p < r 2 do partition and sort left subarray 3 q partition(a,p,r) 4 quicksort'(a,p,q) 5 p q + 1 a. argue that quicksort'(a, 1, length[ a]) correctly sorts the array a. compilers usually execute recursive procedures by using a stack that contains pertinent information, including the parameter values, for each recursive call.
+the advantages of randomized algorithms were articulated by rabin [165].
+r] have the same value?
+we partition  around x = a[p] = 5.
+section 8.3 presents two versions of quicksort that use a random-number generator.
+suppose, for example, that the partitioning algorithm always produces a  9-to-1 proportional split, which at first blush seems quite unbalanced.
+using the median-of-3 method to choose the pivot elementx, define p i = pr{x
+every element of a[p . .
+figure 8.3 shows the recursion tree for this best-case  execution of quicksort.
+a call to random(a,b) returns an integer  betweena and b, inclusive, with each such integer being equally  likely.
+if the partitioning is balanced, the algorithm runs  asymptotically as fast as merge sort.
+in a recursion tree for an average-case execution of partition, the good and bad splits are distributed randomly throughout the  tree.
+we noted in section 8.2 that a mixture of good and bad  splits yields a good running time for quicksort, and thus it makes sense that  randomized versions of the algorithm should perform well.
+a'[(n + 1)/2], the median of a[1 . .
+we shall give a rigorous analysis of the average case in section  8.4.2.
+in  fact, even a 99-to-1 split yields ano(n lg n) running  time.
+5 (b), namely a single level of partitioning that produces two  subarrays of sizes (n - 1)/2 + 1 and (n - 1)/2 at a cost of n = (n).
+the procedure terminates because i  j, and the value q = j is returned.
+assume thatn , and give the limiting ratio of these probabilities.
+worst-case partitioning
+thus, with a 9-to-1 proportional split at every level of recursion,  which intuitively seems quite unbalanced, quicksort runs in(n lg n ) time--asymptotically the same as if the split were right down the middle.
+the indices i and j never reference an element ofa outside the interval
+we show below that the summation in the last line can be bounded by using this bound, we obtain since we can choose a large enough so that dominates (n) + b.
+what are the maximum numbers of times that an element can be moved bypartition and by lomuto-partition?
+often, an algorithm must make many  choices during its execution.
+within the body of the while loop, the index j is  decremented and the indexi is incremented, in lines 5-8, until a[ i] x a[j].
+assuming that these inequalities are  strict,a[i] is too large to belong to the bottom region and a [j] is too small to belong to the top region.
+you may imagine random as rolling a (b - a + 1 )-sided die to obtain its output.
+in spite of this slow worst-case running time, quicksort is often the best practical choice for sorting because it is remarkably efficient on the average: its expected running time is(n lgn), and the constant factors hidden in the (n lg n) notation are quite small.
+= (1) and then  iterate: we obtain the last line by observing that  is the arithmetic series (3.2).
+quicksort, like merge sort, is based on the divide-and-conquer paradigm introduced in section 1.3.1.
+r] such that each element of a[p . .
+in exploring the average-case behavior of quicksort, we have made an  assumption that all permutations of the input numbers are equally likely.
+if many of the alternatives are good, simply choosing  one randomly can yield a good strategy.
+r], then partition returns to quicksort the value q = r, and quicksort  loops forever.
+thus, by exchanging a[i] and a[j] as is done in line 10, we can extend the  two regions.
+if the partitioning is unbalanced,  however, it can run asymptotically as slow as insertion sort.
+to evaluate this recurrence, we observe that t(1)
+r] are sorted by recursive calls to quicksort.
+the combination of the bad split followed by the good split produces three  subarrays of sizes 1, (n -1)/2, and (n - 1)/2 at a combined cost  of 2n - 1 = (n).
+if a[r] is used instead and it happens that a[r ] is also the largest element in the subarray a[p . .
+do the professors deserve tenure?
+each integer returned byrandom is independent of the integers
+r] when partition terminates.
+argue that this sorting algorithm runs ino (nk + n 1g(n/k)) expected time.
+approximate the probability of getting at worst an-to-(1 - ) split, as a function of in the range 0 < < 1.
+then for n > 1, we have by substitution
+the problem  of converting time-of-transaction ordering to check-number ordering is  therefore the problem of sorting almost-sorted input.
+at the root of the tree, the cost is n for partitioning and the subarrays produced have sizes n - 1  and 1: the worst case.
+the index j is not equal to r when partition terminates (so that the split is always nontrivial).
+this technique, called tail recursion, is provided automatically by good compilers.
+we shall assume that we have at our disposal a  random-number generatorrandom.
+in this section,  we shall informally investigate how quicksort performs under the assumptions of  balanced versus unbalanced partitioning.
+the worst-case behavior for quicksort occurs when the partitioning routine  produces one region withn - 1 elements and one with only l element.
+moreover,  the(n2) running time occurs when the input array is already completely  sorted--a common situation in which insertion sort runs ino(n)
+for example,random(0, 1) produces a 0 with probability 1/2 and a 1 with  probability 1/2.
+specifically, we need a bound of for the solution of the recurrence to work out.
+r + 1, so the two regions are empty.
+randomized-quicksort(a,p,r)
+how should k be picked, both in theory and in practice?
+for this problem, let us assume that the elements in the input arraya[1 . .
+, n - 1 when q = 1 or q = n - 1.
+the quicksort procedure was invented by hoare [98].
+i p - 1 3 for j p to r 4 do if a[j] x 5 then i i + 1 6 exchange a[i] a[j] 7 if i < r 8 then return i 9 else return i - 1 a. argue that lomuto-partition is correct.
+a [ r] and every element in the second region is greater than x. lomuto-partition(a, p, r) 1 x a[r] 2
+we denote the sorted output array by a'[1 . .
+quicksort is a sorting algorithm whose worst-case running time is (n 2) on an input array of n numbers.
+r] is greater than or equal to x. initially, i = p - 1 and j =
+i] is less than or equal to x and every element in a [j . .
+even intentionally, you cannot produce a bad input  array for quicksort, since the random permutation makes the input order  irrelevant.
+figure 8.4 a recursion tree for quicksort in which partition always  produces a 9-to-1 split, yielding a running time of(n lg n).
+notice that every level of the tree has costn, until a boundary  condition is reached at depth log10 n = (lg n), and then the  levels have cost at mostn.
+by what amount have we increased the likelihood of choosingx =
+8.4-5 prove the identity and then use the integral approximation method to give a tighter upper bound than (8.5) on the summation.
+at the next level, the subarray of sizen - 1 is  best-case partitioned into two subarrays of size (n - 1)/2.
+the lg k in the second summation is bounded above by lgn.
+combine: since the subarrays are sorted in place, no work is needed to combine them: the entire arraya[p . .
+(exercise 8.3-4 asks for an algorithm that  randomly permutes the elements of an array of sizen in time o(n ).)
+the  partitioning at the root costs n and produces a "bad" split: two  subarrays of sizes 1 and n - 1.
+problem 8-1 asks you to provepartition correct.
+8-2 lomuto's partitioning algorithm
+figure 8.5(a) shows the splits at two  consecutive levels in the recursion tree.
+because the behavior of quicksort is complex, we start with an intuitive discussion of its performance in section 8.2 and postpone its precise analysis to the end of the chapter.
+8-1 partition correctness give a careful argument that the procedure partition in section 8.1 is correct.
+yet this latter situation is very nearly balanced, certainly  better than 9 to 1.
+thus, if the partitioning is maximally unbalanced at every recursive step  of the algorithm, the running time is(n2).
+for example, suppose that before sorting the input array,  quicksort randomly permutes the elements to enforce the property that every  permutation is equally likely.
+(in practice, most programming  environments offer apseudorandom-number generator: a  deterministic algorithm that returns numbers that "look"  statistically random.)
+the result of exchanging the elements pointed  to by i and j in line 10.
+thus, this best-case partitioning produces a much  faster algorithm.
+consider the following variation of partition, due to n. lomuto.
+8.4-2 show that q2 + (n - q)2 achieves a maximum over q = 1, 2, . . .
+this section introduces the notion of a randomized algorithm and presents two  randomized versions of quicksort that overcome the assumption that all  permutations of the input numbers are equally likely.
+the following procedure implements quicksort.
+the indexq is computed as part of this partitioning procedure.
+d. argue that the median-of-3 method affects only the constant factor in the(n 1g n) running time of quicksort.
+[p] with an element chosen at random from a[p . .
+the body of the while loop repeats until i j, at  which point the entire arraya[p . .
+we shall discuss this assumption in the next section, but first let's  explore its ramifications.
+(a) the input array, with the initial  values of i and j just off the left and right ends of the array.
+thus, the running time of quicksort, when levels alternate between good  and bad splits, is like the running time for good splits alone: stillo( n lg n), but with a slightly larger constant hidden by the o -notation.
+for example, the  indicesi and j never index the subarray a[p . .
+8.2 performance of quicksort
+go to chapter 9 back to table of contentsgo to chapter 9 back to table of contents
+these "randomized" algorithms have many desirable properties.
+a randomized strategy is typically useful when there are many ways in  which an algorithm can proceed but it is difficult to determine a way that is  guaranteed to be good.
+r] is partitioned (rearranged) into two nonempty subarraysa[p . .
+therefore the worstcase  running time of quicksort is no better than that of insertion sort.
+compare the worst-case running time of stooge-sort with that of insertion sort, merge sort, heapsort, and quicksort.
+r] has been partitioned into  two subarraysa[p . .
+we obtain the lg k in the first summation on the right is bounded above by 1g( n/2) =
+j], such that every element in the first region is less than or equal tox =
+it then grows two  regionsa[p . .
+as another  example, it is important thata[p] be used as the pivot element x.
+the randomized algorithm performs badly only if the random-number  generator produces an unlucky permutation to be sorted.
+when  this assumption on the distribution of the inputs is valid, many people regard  quicksort as the algorithm of choice for large enough inputs.
+we call an algorithm randomized if its behavior is  determined not only by the input but also by values produced by a random-number generator.
+(this claim is proved in section 8.4.1.)
+argue that the procedure insertion-sort would tend to beat the procedure quicksort on this problem.
+array elements up to and including a[j] are  less than or equal to x = 5, and array elements after a[j] are greater than or  equal to x = 5.
+the changes to partition and quicksort are small.
+c. modify the code for quicksort' so that the worst-case stack depth is(1g n).
+r], this version grows two regions, a [p . .
+section 8.1 describes the algorithm and an important subroutine used by quicksort for partitioning.
+people usually write checks in order by check  number, and merchants usually cash them with reasonable dispatch.
+8-4 stack depth for quicksort the quicksort algorithm of section 8.1 contains two recursive calls to itself.
+b. describe a scenario in which the stack depth of quicksort' is(n) on an n-element input array.
+quicksort(a,p,r) 1 if p  0 and b > 0 to be determined.
+(hint: approximate the sum by an integral.)
+8.2-5 argue that for any constant 0 <  1/2, the probability is approximately  1 - 2 that on a random input array, partition produces a split more balanced  than 1 - to .
+q] is less than or equal to each element ofa[q + 1 . .
+after the call topartition, the left subarray is recursively sorted and then the right subarray is recursively sorted.
+figure 8.4 shows the recursion tree for this recurrence.
+it also has the advantage of sorting in place (see page 3), and it works well even in virtual memory environments.
+r] from the top and  bottom ofa[p . .
+the stack depth is the maximum amount of stack space used at any time during a computation.
+[174] provides a good reference on the details of implementation and how they matter.
+let's assume  that the boundary-condition cost is 1 for the subarray of size 1.
+in an engineering  situation, however, we cannot always expect it to hold.
+exercises 8.1-1 using figure 8.1 as a model, illustrate the operation of partition on the  arraya = 13, 19, 9, 5, 12, 8, 7, 4, 11, 2, 6, 21.
+conceptually, the partitioning procedure performs a simple function: it  puts elements smaller thanx into the bottom region of the array and  elements larger thanx into the top region.
+balanced partitioning the average-case running time of quicksort is much closer to the best case  than to the worst case, as the analyses in section 8.4 will show.
+the key to  understanding why this might be true is to understand how the balance of the  partitioning is reflected in the recurrence that describes the running time.
+consider the following version of quicksort, which simulates tail recursion.
+a'[i], where n/3 i 2n/3, by what amount have we increased the likelihood of getting a good split compared to the ordinary implementation?
+r]  out of bounds, but this isn't entirely apparent from the code.
+an alternative to assuming a distribution of inputs is to impose a distribution.
+this randomized version of quicksort has an interesting property that is  also possessed by many other randomized algorithms:no particular input  elicits its worst-case behavior.
+b. give a recurrence for the worst-case running time ofstooge-sort and a tight asymptotic (-notation) bound on the worst-case running time.
+the two subarrays a[p . .
+when a procedure is invoked, its information ispushed onto the stack; when it terminates, its information ispopped.
+8.1-4 how would you modify quicksort to sort in nonincreasing order?
+at each step of the  quicksort algorithm, before the array is partitioned, we exchange elementa

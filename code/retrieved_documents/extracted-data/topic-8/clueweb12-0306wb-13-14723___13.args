@@ -1,0 +1,253 @@
+one of these servers is ``flup``, which supports fastcgi and scgi, as well as `ajp `_.
+seealso:: * `persistence tools `_ lists possibilities on how to save data in the file system.
+these bridges, or rather interfaces, define how programs interact with the server.
+there are many servers already available, so a python web application can be deployed nearly anywhere.
+apache can be easily installed on nearly every system using the system's package management tool.
+many web servers only support old, now-obsolete interfaces; however, they can often be extended using third-party modules to support newer ones.
+while convenient at first, it leads to horribly unmaintainable code.
+developers are not forced to use these tools, and often there is no "best" tool.
+python programmers in general do not like sql too much, as they prefer to work with objects.
+their first thought is mostly `mod_python`_\ , because they think that this is the equivalent to ``mod_php``.
+web development in python is rapidly moving forward, so the wiki page on `web programming `_ may be more in sync with recent development.
+when your program is compatible with wsgi -- which at the outer level means that the framework you are using has support for wsgi -- your program can be deployed via any web server interface for which there are wsgi wrappers.
+turbogears takes the approach of using already existing components and combining them with glue code to create a seamless experience.
+it gets easily confused by windows line endings (carriage return & line feed, also called crlf), so you have to convert the file to unix line endings (only line feed, lf).
+this is one big advantage that python has compared with other web technologies. ..
+the code that is used to connect to various low level gateways like cgi or mod_python is called a *wsgi server*.
+it gets easily confused by windows line endings (carriage return & line feed, also called crlf), so you have to convert the file to unix line endings (only line feed, lf).
+a really great wsgi feature is middleware.
+unlike the php interpreter, the python interpreter uses caching when executing files, so changes to a file will require the web server to be restarted.
+for example the orm and template engine can be changed to use packages different from those used by default.
+* lighttpd ships its own `fastcgi module `_ as well as an `scgi module `_.
+abstracting these common solutions into reusable code produces what are called "frameworks" for web development.
+this line calls ``/usr/bin/env`` to find python, but it will fail if there is no ``/usr/bin/env``, or if python is not in the web server's path.
+if it is a big host, you can try filing a ticket asking for python support.
+pylons builds upon `paste`_, an extensive set of tools which are handy for wsgi.
+as the web server support for scgi is limited, most people use fastcgi instead, which works the same way.
+it includes an orm which is quite powerful while being simple to use, and has a great online administration interface which makes it possible to edit the data in the database with a browser.
+this component's job is to display the data of the model to the user.
+most http servers are written in c or c++, so they cannot execute python code directly -- a bridge is needed between the server and the program.
+* your web server must be able to read the file, and you need to make sure the permissions are correct.
+the upside of cgi is that it is simple -- writing a python program which uses cgi is a matter of about three lines of code.
+you do not need to care about whether the application user uses mod_python or fastcgi or mod_wsgi -- with wsgi your application will work on any gateway interface.
+most frameworks also have their own mailing lists and irc channels, look out for these on the projects' web sites.
+django has many handy features bundled, such as creation of rss feeds or generic views, which make it possible to create web sites almost without writing any python code.
+the html is sent to the user's browser after filling in the placeholders.
+unlike the php interpreter, the python interpreter uses caching when executing files, so changes to a file will require the web server to be restarted.
+if you don't have your own web server, this does not apply to you.
+pylons is much like turbogears, but with an even stronger emphasis on flexibility, which comes at the cost of being more difficult to use.
+nearly every component can be exchanged, which makes it necessary to use the documentation of every single component, of which there are many.
+you can check whether it works as-is, and if not you will need to talk to the administrator of your web server.
+are used because of their good performance when handling very large databases consisting of millions of entries.
+middleware is a layer around your program which can add various functionality to it.
+seealso:: while this howto tries to give an overview of python in the web, it cannot always be as up to date as desired.
+one of these servers is ``flup``, which supports fastcgi and scgi, as well as `ajp `_.
+they can do all sorts of useful things, like display the postings of a bulletin board, show your email, configure software, or just display the current time.
+to test whether your web server works with cgi, you can use this short and simple cgi program:: #!/usr/bin/env python # -*- coding: utf-8 -*- # enable debugging import cgitb cgitb.enable() print "content-type: text/plain;charset=utf-8" print print "hello world!"
+the downside is that mod_wsgi is limited to the apache web server; other servers would need their own implementations of mod_wsgi.
+if you don't have your own web server, this does not apply to you.
+you should *always* catch exceptions, and display proper error pages -- end-users don't like to see nondescript "internal server errors" in their browsers.
+the language just needs to have a library which handles the communication with the webserver.
+``mod_python`` itself is much more powerful and provides more access to apache internals.
+additionally, this file may also need to be in a ``cgi-bin`` folder, for security reasons.
+templates are, in the simplest case, just html files with placeholders.
+mixing of html and python code is made possible by a few libraries.
+while it is great for programmers writing frameworks, a normal web developer does not need to get in direct contact with it.
+therefore, many frameworks and helper tools have been created to assist developers in creating faster and more robust sites.
+bigger web applications can have lots of code, so it is a good idea to have an effective structure right from the beginning.
+the process of creating code to run web sites involves writing code to provide various services.
+these bridges, or rather interfaces, define how programs interact with the server.
+to test whether your web server works with cgi, you can use this short and simple cgi program:: #!/usr/bin/env python # -*- coding: utf-8 -*- # enable debugging import cgitb cgitb.enable() print "content-type: text/plain;charset=utf-8" print print "hello world!"
+the code that is used to connect to various low level gateways like cgi or mod_python is called a *wsgi server*.
+abstract this document shows how python fits into the web.
+the server looks up the file in the file system and sends it back to the user's browser, which displays it (this is the *response*).
+`lighttpd `_ is another alternative and is said to have better performance.
+sometimes a seemingly correct script does not work as expected, the cause being some small hidden problem that's difficult to spot.
+this can be done automatically by uploading the file via ftp in text mode instead of binary mode, but the preferred way is just telling your editor to save the files with unix line endings.
+so, every request starts a new python interpreter -- which takes some time to start up -- thus making the whole interface only usable for low load situations.
+orm translates all object-oriented access into sql code under the hood, so the developer does not need to think about it.
+unlike fastcgi, mod_wsgi handles the worker-processes by itself, which makes administration easier. ..
+another problem is the basic concept -- apache starts child processes to handle the requests, and unfortunately every child process needs to load the whole python interpreter even if it does not use it.
+zope 3 re-engineers zope as a set of more cleanly isolated components.
+on the other hand, it is not "python intermixed with html" in the way that php is often intermixed with html.
+because of its highly integrated nature, zope wound up in a somewhat isolated ecosystem: code written for zope wasn't very usable outside of zope, and
+developers are not forced to use these tools, and often there is no "best" tool.
+the controller reacts to user actions (like opening some specific url), tells the model to modify the data if necessary, and tells the view code what to display, while one might think that mvc is a complex design pattern, in fact it is not.
+this is useful for debugging, but it might risk exposing some confidential data to the user.
+this is a simple wsgi application, but you need to install `flup `_ first, as flup handles the low level fastcgi access.
+programs using cgi to communicate with their web server need to be started by the server for every request.
+while it is great for programmers writing frameworks, a normal web developer does not need to get in direct contact with it.
+* if the web server is using :ref:`mod-python`, ``mod_python`` may be having problems.
+this can be done automatically by uploading the file via ftp in text mode instead of binary mode, but the preferred way is just telling your editor to save the files with unix line endings.
+although wsgi may seem complex, the initial phase of learning can be very rewarding because wsgi and the associated middleware already have solutions to many problems that might arise while developing web sites.
+there are also a lot of add-on projects which extend django's normal functionality.
+it makes the deployment of wsgi applications much easier than deployment using other low level methods, which need glue code.
+it has a big, international community, the members of which have created many web sites.
+unlike fastcgi, mod_wsgi handles the worker-processes by itself, which makes administration easier. ..
+the documentation can be found in the `turbogears wiki`_, where links to screencasts can be found.
+the downside is that mod_wsgi is limited to the apache web server; other servers would need their own implementations of mod_wsgi.
+(by contrast, orms store the object data as rows of data in tables and relations between those rows.)
+another problem is that, because ``mod_python`` is linked against a specific version of ``libpython``, it is not possible to switch from an older version to a newer (e.g. 2.4 to 2.5) without recompiling ``mod_python``.
+this is a simple wsgi application, but you need to install `flup `_ first, as flup handles the low level fastcgi access. ..
+a third possibility are object oriented databases (also called "object databases").
+`lighttpd `_ is another alternative and is said to have better performance.
+as the background process is independent of the server, it can be written in any language, including python.
+seealso:: the python standard library includes some modules that are helpful for creating plain cgi programs: * :mod:`cgi` -- handling of user input in cgi scripts * :mod:`cgitb` -- displays nice tracebacks when errors happen in cgi applications, instead of presenting a "500 internal server error" message the python wiki features a page on `cgi scripts `_ with some additional information about cgi in python.
+what ``mod_python`` does is embed the interpreter into the apache process, thus speeding up requests by not having to start a python interpreter for each request.
+when cgi scripts are not executable most web servers will let the user download it, instead of running it and sending the output to the user.
+using wsgi, it is possible to deploy moinmoin on any wsgi compliant server, with no additional glue code.
+* the file must not contain a bom (byte order mark).
+using cgi sometimes leads to small annoyances while trying to get these scripts to run.
+on the other hand, it is not "python intermixed with html" in the way that php is often intermixed with html.
+since most servers support python, it is easy to use python to create dynamic web sites.
+that's why it is important not to write unnecessary python code in the templates -- it works against the mvc model and creates chaos in the code base, making it harder to understand and modify. ..
+when a user enters a web site, their browser makes a connection to the site's web server (this is called the *request*).
+using wsgi, it is possible to deploy moinmoin on any wsgi compliant server, with no additional glue code.
+there is no single way to configure cgi, as there are many web servers with different configuration options.
+another problem is that, because ``mod_python`` is linked against a specific version of ``libpython``, it is not possible to switch from an older version to a newer (e.g. 2.4 to 2.5) without recompiling ``mod_python``.
+additionally, this file may also need to be in a ``cgi-bin`` folder, for security reasons.
+`database programming `_ helps with choosing a method for saving data * `sqlalchemy`_, the most powerful or-mapper for python, and `elixir`_, which makes sqlalchemy easier to use * `sqlobject `_, another popular or-mapper * `zodb
+one of its most interesting feature is its tight integration with a powerful object database called the `zodb `_ (zope object database).
+once you have installed and configured the module, you can test it with the following wsgi-application:: #!/usr/bin/env python # -*- coding: utf-8 -*- from cgi import escape import sys, os from flup.server.fcgi import wsgiserver def app(environ, start_response): start_response('200 ok',
+``mod_python`` is able to handle cgi scripts by itself, but it can also be a source of issues.
+* if the web server is using :ref:`mod-python`, ``mod_python`` may be having problems.
+the language just needs to have a library which handles the communication with the webserver.
+while convenient at first, it leads to horribly unmaintainable code.
+this is the layer between the user and the model.
+there is still a module in the web server which makes it possible for the web server to "speak" with the background process.
+this makes the whole web server slower.
+the template engine is text-based and is designed to be usable for page designers who cannot write python.
+zope is also the infrastructure used by the `plone`_ content management system, one of the most powerful and popular content management systems available.
+dynamic web sites are not based on files in the file system, but rather on programs which are run by the web server when a request comes in, and which *generate* the content that is returned to the user.
+if you know where your python is installed, you can also use that full path.
+this simplicity comes at a price: it does very few things to help the developer.
+if you are your own administrator or want to set up cgi for testing purposes on your own computers, you have to configure it by yourself.
+the tutorial also describes the most common gotchas that might arise.
+instead of embedding the interpreter into the web server, they create long-running background processes.
+on unix-like systems, the server often runs as user and group ``www-data``, so it might be worth a try to change the file ownership, or making the file world readable by using ``chmod a+r your_script.py``.
+* lighttpd ships its own `fastcgi module `_ as well as an `scgi module `_.
+* :mod:`cgi` -- handling of user input in cgi scripts * :mod:`cgitb` -- displays nice tracebacks when errors happen in cgi applications, instead of presenting a "500 internal server error" message the python wiki features a page on `cgi scripts `_ with some additional information about cgi in python.
+most http servers are written in c or c++, so they cannot execute python code directly -- a bridge is needed between the server and the program.
+middleware is a layer around your program which can add various functionality to it.
+when a user enters a web site, their browser makes a connection to the site's web server (this is called the *request*).
+these programs can be written in any programming language the server supports.
+it can emulate cgi, work in a "python server pages" mode (similar to jsp) which is "html intermingled with python", and it has a "publisher" which designates one file to accept all requests and decide what to do with them.
+in some circumstances it still might be a good idea to use ``mod_python`` for deployment, but wsgi makes it possible to run wsgi programs under ``mod_python`` as well.
+with :ref:`wsgi `, a topic covered later in this document, it is possible to write programs that emulate cgi, so they can be run as cgi if no better option is available. ..
+the server looks up the file in the file system and sends it back to the user's browser, which displays it (this is the *response*).
+you do not need to care about whether the application user uses mod_python or fastcgi or mod_wsgi -- with wsgi your application will work on any gateway interface.
+for smaller sites sqlite is just enough.
+the commands ``whereis python`` and ``type -p python`` could help you find where it is installed.
+the big benefit of wsgi is the unification of the application programming interface.
+* on apache you can take a look at the `dynamic content with cgi `_ tutorial, where everything is described.
+* the web server must know that the file you're trying to access is a cgi script.
+what ``mod_python`` does is embed the interpreter into the apache process, thus speeding up requests by not having to start a python interpreter for each request.
+this is the layer between the user and the model.
+just like ``mod_python``, it is only used for the deployment of wsgi applications.
+* your web server must be able to read the file, and you need to make sure the permissions are correct.
+apache can be easily installed on nearly every system using the system's package management tool.
+as the background process is independent of the server, it can be written in any language, including python.
+once you know the path, you can change the shebang accordingly:
+this line makes it possible to display a nice traceback instead of just crashing and displaying an "internal server error" in the user's browser.
+on many systems this server can also be installed using the package management tool, so manually compiling the web server may not be needed.
+if you are your own administrator or want to set up cgi for testing purposes on your own computers, you have to configure it by yourself.
+the same thing with compression -- there is existing middleware which handles compressing your html using gzip to save on your server's bandwidth.
+instead we will briefly touch on some of the most popular.
+no two web frameworks were interoperable: a program developed for one could not be deployed on a different one without considerable re-engineering work.
+* `jinja `_ .. seealso:: there are many template engines competing for attention, because it is pretty easy to create them in python.
+on many systems this server can also be installed using the package management tool, so manually compiling the web server may not be needed.
+if it is a big host, you can try filing a ticket asking for python support.
+this document shows how python fits into the web.
+there is also a small database engine called `sqlite`_, which is bundled with python in the :mod:`sqlite3` module, and which uses only one file.
+a second possibility is storing data in normal, plain text files (some times called "flat files").
+unlike the pre-wsgi versions, this could include wsgi servers that the authors of moinmoin know nothing about.
+programs using cgi to communicate with their web server need to be started by the server for every request.
+the big benefit of wsgi is the unification of the application programming interface.
+when cgi scripts are not executable most web servers will let the user download it, instead of running it and sending the output to the user.
+with :ref:`wsgi `, a topic covered later in this document, it is possible to write programs that emulate cgi, so they can be run as cgi if no better option is available. ..
+once you know the path, you can change the shebang accordingly: ``#!/usr/bin/python``.
+given that fastcgi, scgi, and mod_python are mostly used to deploy wsgi applications, mod_wsgi was started to directly embed wsgi applications into the apache web server.
+these programs can be written in any programming language the server supports.
+it presents some ways to integrate python with a web server, and general practices useful for developing web sites.
+for example, instead of writing your own session management (http is a stateless protocol, so to associate multiple http requests with a single user your application must create and manage such state via a session), you can just download middleware which does that, plug it in, and get on with coding the unique parts of your application.
+it presents some ways to integrate python with a web server, and general practices useful for developing web sites.
+``mod_python`` is also bound to the apache web server, so programs written for ``mod_python`` cannot easily run on other web servers.
+although wsgi may seem complex, the initial phase of learning can be very rewarding because wsgi and the associated middleware already have solutions to many problems that might arise while developing web sites.
+``mod_python`` is also bound to the apache web server, so programs written for ``mod_python`` cannot easily run on other web servers.
+on unix-like systems, the server often runs as user and group ``www-data``, so it might be worth a try to change the file ownership, or making the file world readable by using ``chmod a+r your_script.py``.
+the tutorial also describes the most common gotchas that might arise.
+if you know where your python is installed, you can also use that full path.
+you should *always* catch exceptions, and display proper error pages -- end-users don't like to see nondescript "internal server errors" in their browsers.
+as the web server support for scgi is limited, most people use fastcgi instead, which works the same way.
+* on lighttpd you need to use the `cgi module `_\ , which can be configured in a straightforward way.
+their first thought is mostly `mod_python`_\ , because they think that this is the equivalent to ``mod_php``.
+turbogears gives the user flexibility in choosing components.
+web development in python is rapidly moving forward, so the wiki page on `web programming `_ may be more in sync with recent development.
+* on apache you can take a look at the `dynamic content with cgi `_ tutorial, where everything is described.
+``mod_python`` itself is much more powerful and provides more access to apache internals.
+a really great wsgi feature is middleware.
+it is worth learning about the available tools because they can greatly simplify the process of developing a web site. ..
+check the configuration of your web server, as it may be configured to expect a specific file extension for cgi scripts.
+using cgi sometimes leads to small annoyances while trying to get these scripts to run.
+the three listed above are considered "second generation" template engines and are a good place to start.
+the html is sent to the user's browser after filling in the placeholders.
+the bom interferes with the shebang line, so be sure to tell your editor not to write the bom.
+the commands ``whereis python`` and ``type -p python`` could help you find where it is installed.
+relational databases are *queried* using a language called `sql `_.
+this is useful for debugging, but it might risk exposing some confidential data to the user.
+*data persistence*, while sounding very complicated, is just about storing data.
+for cgi scripts to run properly on unix-like operating systems, the ``+x`` bit needs to be set.
+this is important because the web server checks the first line of the script (called shebang) and tries to run the program specified there.
+there is still a module in the web server which makes it possible for the web server to "speak" with the background process.
+templates are, in the simplest case, just html files with placeholders.
+* the web server must know that the file you're trying to access is a cgi script.
+the same thing with compression -- there is existing middleware which handles compressing your html using gzip to save on your server's bandwidth.
+unlike the pre-wsgi versions, this could include wsgi servers that the authors of moinmoin know nothing about.
+this data might be the text of blog entries, the postings on a bulletin board or the text of a wiki page.
+you can check whether it works as-is, and if not you will need to talk to the administrator of your web server.
+in some circumstances it still might be a good idea to use ``mod_python`` for deployment, but wsgi makes it possible to run wsgi programs under ``mod_python`` as well.
+the controller reacts to user actions (like opening some specific url), tells the model to modify the data if necessary, and tells the view code what to display, while one might think that mvc is a complex design pattern, in fact it is not.
+the code to provide a particular service often works the same way regardless of the complexity or purpose of the web site in question.
+it supports template inheritance and filters (which work like unix pipes).
+just like ``mod_python``, it is only used for the deployment of wsgi applications. ..
+given that fastcgi, scgi, and mod_python are mostly used to deploy wsgi applications, mod_wsgi was started to directly embed wsgi applications into the apache web server.
+seealso:: while this howto tries to give an overview of python in the web, it cannot always be as up to date as desired.
+instead of embedding the interpreter into the web server, they create long-running background processes.
+it can emulate cgi, work in a "python server pages" mode (similar to jsp) which is "html intermingled with python", and it has a "publisher" which designates one file to accept all requests and decide what to do with them.
+there is no single way to configure cgi, as there are many web servers with different configuration options.
+when your program is compatible with wsgi -- which at the outer level means that the framework you are using has support for wsgi -- your program can be deployed via any web server interface for which there are wsgi wrappers.
+the bom interferes with the shebang line, so be sure to tell your editor not to write the bom.
+check the configuration of your web server, as it may be configured to expect a specific file extension for cgi scripts.
+this is one big advantage that python has compared with other web technologies. ..
+they can do all sorts of useful things, like display the postings of a bulletin board, show your email, configure software, or just display the current time.
+these databases store the object data in a form that closely parallels the way the objects are structured in memory during program execution.
+there is also a `turbogears book`_ published, which is a good starting point.
+another problem is the basic concept -- apache starts child processes to handle the requests, and unfortunately every child process needs to load the whole python interpreter even if it does not use it.
+this line makes it possible to display a nice traceback instead of just crashing and displaying an "internal server error" in the user's browser.
+* on lighttpd you need to use the `cgi module `_\ , which can be configured in a straightforward way.
+this simplicity comes at a price: it does very few things to help the developer.
+this is very easy for simple sites, but can be difficult to get right if the web site is performing many updates to the stored data.
+that way, even users of other frameworks (or even other languages, since mvc is not python-specific) can easily understand the code, given that they are already familiar with the mvc structure.
+so, every request starts a new python interpreter -- which takes some time to start up -- thus making the whole interface only usable for low load situations.
+it makes the deployment of wsgi applications much easier than deployment using other low level methods, which need glue code.
+mixing of html and python code is made possible by a few libraries.
+for cgi scripts to run properly on unix-like operating systems, the ``+x`` bit needs to be set.
+the majority of users will probably want to select a "full stack" framework that has an active community.
+that's why it is important not to write unnecessary python code in the templates -- it works against the mvc model and creates chaos in the code base, making it harder to understand and modify. ..
+therefore, many frameworks and helper tools have been created to assist developers in creating faster and more robust sites.
+sometimes a seemingly correct script does not work as expected, the cause being some small hidden problem that's difficult to spot.
+it is worth learning about the available tools because they can greatly simplify the process of developing a web site. ..
+this line calls ``/usr/bin/env`` to find python, but it will fail if there is no ``/usr/bin/env``, or if python is not in the web server's path.
+``mod_python`` is able to handle cgi scripts by itself, but it can also be a source of issues.
+dynamic web sites are not based on files in the file system, but rather on programs which are run by the web server when a request comes in, and which *generate* the content that is returned to the user.
+since most servers support python, it is easy to use python to create dynamic web sites.
+bigger web applications can have lots of code, so it is a good idea to have an effective structure right from the beginning.
+many web servers only support old, now-obsolete interfaces; however, they can often be extended using third-party modules to support newer ones.
+there are many servers already available, so a python web application can be deployed nearly anywhere.
+storing the objects directly has the advantage that nearly all objects can be saved in a straightforward way, unlike in relational databases where some objects are very hard to represent.
+for example, instead of writing your own session management (http is a stateless protocol, so to associate multiple http requests with a single user your application must create and manage such state via a session), you can just download middleware which does that, plug it in, and get on with coding the unique parts of your application.
+once you have installed and configured the module, you can test it with the following wsgi-application:: #!/usr/bin/env python # -*- coding: utf-8 -*- from cgi import escape import sys, os from flup.server.fcgi import wsgiserver def app(environ, start_response): start_response('200 ok',
+the upside of cgi is that it is simple -- writing a python program which uses cgi is a matter of about three lines of code.
+that way, even users of other frameworks (or even other languages, since mvc is not python-specific) can easily understand the code, given that they are already familiar with the mvc structure.
+it is possible to save python objects into a database using a technology called `orm `_
+this is important because the web server checks the first line of the script (called shebang) and tries to run the program specified there.

@@ -1,0 +1,349 @@
+i do however understand there can be problems associated with writing to ntfs from linux with some of the apps that are working toward that end, but i've never tried any of these.
+to achieve this, in addition to # permitting vanilla dns responses from the isp dns serves, you also need # to allow tcp connections from the isp master dns server: # allow dns zone transfers via tcp from isp master dns server: # iptables -a input -p tcp -s /32 -d 0/0 --destination-port 53 --syn -j accept # for some other custom server running here listening on port : iptables -a input -p tcp -s 0/0 -d 0/0
+we recommend # that you use an iptables firewall, which is able to audit connections # more completely.
+of course, the basic sendmail/fetchmail-couple will not filter anything (but it would forward mails to the right accounts, given that a lot of things are set up properly (likealiases, permissions etc.)).
+or it could be # itself assigned a dynamic ip number from your own dhcp server running # on the firewall, or it could even have a public static ip number.
+i agree with the going back to xp to play games part.
+the network runs both ethernet and wireless.
+but i hate to admit it stay with xp it isnt as stable but none the less its familiar ground and you dont want something your not familiar with to take over now do you id recommend checking out some linux help sites
+i run a few web servers on # x.y.z.w, a dns server on x.y.z.n, and qmail on x.y.z.m.
+defaults are to drop anything sent to firewall or internal # network, permit anything going out.
+important: # ipchains is less powerful than iptables since iptables, introduced # in linux kernel 2.4 provides for stateful packet inspection.
+it was neat #since my cable modem had higher inbound bandwidth
+accept # running a caching dns server # we need to permit querying a remote dns server.
+provide a way for the iptables firewall to modify the # destination or source ip addresses of a packet and, in this way, interact # with routing decisions.
+since i am running # a caching dns server on x.y.z.d that makes requests for dns lookups # to external dns servers, those servers send back responses via udp to # the high numbered client port on x.y.z.d where the caching server listens.
+for example, if you # are doing dnat to send any connections to 1.2.3.4 port 80 through # to 10.1.1.1 port 8080, the packet filter would see packets going # to 10.1.1.1 port 8080 (the real destination), not 1.2.3.4 port 80.
+perhaps it is much easier to set up a router and dual boot your sytem with linux so when you are online you can always use linux and when you play games use windows....
+if you query remote dns servers, permit udp responses from it # -a input -s 53 -d 0/0 -p
+if your firewall has a dynamic ip number because it connects to the # internet itself via dhcp, then you probably cannot predict what the ip # number is of your firewall's interface connected to the internet.
+i downloaded and installed smoothwall and am so far very impressed.
+hence, use of # deny causes udp connection requests to time out and tcp connection # requests to hang.
+apply forward rules to packets having a destination ip elsewhere # 4.
+and, i couldn't find any gui tool # in either gnome or kde to reconfigure the firewall.
+i've been using linux for about 3 years ... seriously for the last year, and, there is no way that i would use linux for my main system at this point in time.
+:-) # running this script # ------------------- # # red hat 7.1 runs /etc/rc.d/init.d/ipchains at system # startup, which uses this file as input.
+as you can see there are a lot of apps and things involved and most definitely an even basic setup with minimum-functionality will take you up to several days if you haven't laid hands on linux so far.
+on the # other hand dnat is applied by a prerouting rule and snat by a postrouting # rule.
+(in # fact, dnat could also map public to public or private to private or # private to public, but that is left as an exercise for the reader).
+# # input or forward would be needed purely depending on whether your # routing would cause the packet to stay on the machine where the # firewall is installed or be forwarded to another machine.
+mandrake and suse are not bad as well.
+an attacker will not # be able to immediately tell if udp connection requests are simply # taking a long time, if there is a problem with connectivity between # the attacking client and the server, or if the packets are being # ignored.
+its just not worth the trouble and u shld just use a windows os to do so.
+-j accept # # running a dns server (tinydns) # # when we run a dns server, we have to accept udp from anywhere to port
+but the gain is indeed immense: if you decide to go all the way and maybe even tweak/harden your box you will have a halluva bullet-proof and reliable machine that will let you forget about things like "reboot" and which will be "99% immortal" (unless you pull the plug)
+its just not worth the trouble and u shld just use a windows os to do so.
+# although such packets will not normally be processed by an application, # they can be used as part of a denial of service attack.
+# the firewall that the red hat 7.1 installer set up for me # in response to my request for a high level of security # was too restrictive.
+before, with windows, i felt like a slave in comparison.
+the rest of this file is derived from my old ipchains script.
+note that certain services can be # further filtered by xinetd.
+the rest of this file is derived from my old ipchains script.
+if you prevail, you will be greatly rewarded in the end!
+to make spam- and virus-filtering happen you have to "daisy-chain" multiple apps.
+there's literally no tcp/ip-issue that you could not catch with a specific iptables-rule.
+apply input rules to packets having a destination ip on this machine # 3b.
+# # configure default policies (-p), meaning default rule to apply if no # more specific rule below is applicable.
+and it permitted #me to do downloads without impacting my dsl inbound bandwidth.
+hence, use of # deny causes udp connection requests to time out and tcp connection # requests to hang.
+it's common to want to do network address translation (see the # nat howto) and packet filtering.
+using deny instead of reject means that no 'icmp port # unreachable' response is sent back to the client attempting to # connect.
+posted 30 april 2004 - 01:15 pm linux will definitely be more stable and safe than windows xp.
+:-) # preliminaries # to permit machines internal to the network to be able to # send ip packets to the outside world, enable ip forwarding: # echo 1 > /proc/sys/net/ipv4/ip_forward # prevent syn floods from consuming memory resources: # echo 1 > /proc/sys/net/ipv4/tcp_syncookies # i place the above echo commands into /etc/rc.d/rc.local # so that they will be executed at boot time.
+finally, the script is just for a single server ip, # hence all of the "/32" network masks below.
+this specific thing is also handled by iptables (the nat-capabilities of this module respectively).
+it is also still an 'expert' system.
+the network # ----------- # # this firewall is running on a gateway machine having multiple ethernet # interfaces, a public one, eth0, which is a dsl connection to an isp, # and one or more internal ones, including eth1, which is assigned to # 192.168.0.1, an ip number on my internal private network.
+my current network # does not require me to make use of forward rules, since i run all # publicly accessible servers directly on my firewall machine.
+the very first tcp packet # is sent by the client to the server and is called a syn packet, # because it has the syn flag set to 1 in the tcp packet header.
+i've been using linux for about 3 years ... seriously for the last year, and, there is no way that i would use linux for my main system at this point in time.
+if you want to e.g. add a proxie too you may want to check outsquid, to just name a polular one.
+forward -i eth1 -o eth0 -j accept # forward packets that are part of existing and related connections from eth0 to eth1.
+had a bit of a problem updating the firmware in my adsl modem, but got that sorted eventually.
+ipchains # will allow packets in that are not part of an existing tcp connection.
+--destination-port 137 -j accept #special cable modem rules.
+i do however understand there can be problems associated with writing to ntfs from linux with some of the apps that are working toward that end, but i've never tried any of these.
+given the considerable rise in the number of virus and trojan attacks on windows that are happening lately, i am wondering if the primary machine would be safer running under linux.
+using deny instead of reject means that no 'icmp port # unreachable' response is sent back to the client attempting to # connect.
+you really have to have more than average experience, understanding and ability to deal with hardware and os in general.
+the network runs both ethernet and wireless.
+routing # (see the 'ifconfig' and 'route' commands) decides which interface an # incoming packet will be delivered to, i.e. if a given packet will be # 'input' to this machine or be 'forwarded' to some interface for # delivery to another machine, say on an internal network.
+a word about routing # -------------------- # # note that this web page does not discuss routing decisions.
+it has many powerful features; the installation was fairly straightforward and the user interface and documentation are excellent.
+as for your applications, i don't think that those work on linux unless u use wine(sort of an emulator) but im sure you can find alternatives on the net.
+mandrake and suse are not bad as well.
+i run a few web servers on # x.y.z.w, a dns server on x.y.z.n, and qmail on x.y.z.m.
+not having had any experience of this os, i don't know if this is a good idea or, if so, which version of linux would be best.
+# # now, dnat and snat are *not* routing but can *interact* with routing.
+this specific thing is also handled by iptables (the nat-capabilities of this module respectively).
+this increases the amount of time it takes for an attacker # to scan all udp ports.
+and, i couldn't find any gui tool # in either gnome or kde to reconfigure the firewall.
+this increases the amount of time it takes for an attacker # to scan all udp ports.
+dnat and snat rules are, # respectively, mechnisms to map the incoming destination ip number and # outgoing source ip number to different ip numbers.
+linux will certainly be a better server choice for you, but hopefully you are a computer enthusiast and will take on the challenge.
+as none of the progs you've mentioned is available under linux you may want to take a brief look at what it would take (software- and effort-wise) to ensure the same functionality on your desktop-machine as you now have ... firewall every contemporary linux comes with a fw-module built into the "kernel" (the system-nucleus, so to say).
+personally, i prefer red hat linux but its really up to you.
+email-stuff this will be by far the most trickiest thing to set up.
+i think you would be wise to create a dual boot so that you can begin to 'learn' if linux is a viable solution for you.
+this firewall was running on a gateway machine having two # ethernet interfaces, an external one, eth0, which is # my dsl connection to my isp, and an internal one, eth1 # which is assigned to 198.211.65.1, an ip number on my # class c network.
+it is also still an 'expert' system.
+-j accept # # enable snat functionality on eth0 # # snat (source nat) is used to map private source ip numbers of # interfaces on the internal lan to one of my public static ip numbers.
+when a client running on our # host makes a dns query, the outgoing query is allowed since we permit all # outgoing packets.
+nat -o eth0 -j masquerade # note that the above snat and masquerade rules are applicable # independent of how a host on the internal network is assigned its own # internal ip number.
+examine # and understand the current set of iptables rules # before you reconnect to the internet.
+so an attacking client will be left in the dark # about whether or not the denied udp packets arrived and will hang # waiting for a response from denied tcp ports.
+this script works on on servers running red hat 7.3, 8.0, 9.0, and
+but i # promised above in the description of my network to give examples of # rules used when there are servers running on machines on the internal # network.
+you can also achieve your internet connection sharing by setting up a proxy server using linux.
+but i hate to admit it stay with xp it isnt as stable but none the less its familiar ground and you dont want something your not familiar with to take over now do you id recommend checking out some linux help sites
+my public # network has static ip numbers depicted below as x.y.z....
+# in red hat 7.1, the man page for ipchains and for # ipchains-restore does not document the syntax of this # file.
+using deny instead of reject means that no 'icmp port # unreachable' response is sent back to the client attempting to # connect.
+# iptables -a forward -i eth0 -o eth1 -m state --state established,related -j accept # # permit packets in to firewall itself that are part of existing and related connections.
+apply prerouting dnat rules (if any) to map destination ip # 2.
+(in # fact, dnat could also map public to public or private to private or # private to public, but that is left as an exercise for the reader).
+it's a very interesting and powerful system which is being developed at a breakneck pace and has vast potential.
+given the considerable rise in the number of virus and trojan attacks on windows that are happening lately, i am wondering if the primary machine would be safer running under linux.
+linux will certainly be a better server choice for you, but hopefully you are a computer enthusiast and will take on the challenge.
+this has the advantage of letting you be # in full control of the dns zone files yet keeping the dns servers exposed # to the public outside of your network.
+hence, use of # deny causes udp connection requests to time out and tcp connection # requests to hang.
+you can also achieve your internet connection sharing by setting up a proxy server using linux.
+i dunno due to what linux-tradition this is, but setting up a spam- and virus-filtering, mail-forwarding server can drive you nuts.
+i used to have a third ethernet card, #eth2, attached to a separate isp via a cable modem and used the rules #shown below to cause a specific windows machine on my internal network #(192.168.0.128) to send traffic out via dsl and get it back via cable.
+if you need information about ip tables there are many books online that can give you ideas of how to configure it...
+# i could of course increase security by running the dns cache on its own # machine/ip and restricting to just that machine/ip.
+things will probably only get worse in the future on the windows-side of the internet.
+i'm an engineer with administration experience in everything from dos through os/2 and xp.
+# the firewall that the red hat 7.1 installer set up for me # in response to my request for a high level of security # was too restrictive.
+all connection requests to any udp port not yet provided # for and all syn connection requests to any tcp port not yet provided # for.
+but since we trust our isp dns server not not have been hacked and we may # not be sure what our client ip range is, we loosen this to: # iptables -a input -p udp -s /32
+--destination-port 53 -j accept # # running a master dns server to update slave dns servers # # you may have your server colocated at an isp and may arrange to have your # isp provide your primary and secondary dns with the isp dns servers slaving # off of your master dns server.
+the fourth of the above # four rules is similar but operates on any destination ip, port 22.
+the host could be assigned a static ip number on # an internal nonpublic network (e.g. 10.
+-a input -i eth0 -s 198.211.65.0/24 -j deny -a input -i eth0 -s 127.0.0.0/8 -j deny # accept all tcp syn packets for protocols smtp, http, and ssh # note, smtp connections are further audited by my smtp server -a input -s 0/0 -d 198.211.65.1/32 25 -p tcp -y -j accept -a input -s 0/0 -d 0/0 80 -p tcp -y -j accept -a input -s 0/0 -d 0/0 22 -p tcp -y -j accept #
+perhaps it is much easier to set up a router and dual boot your sytem with linux so when you are online you can always use linux and when you play games use windows....
+as none of the progs you've mentioned is available under linux you may want to take a brief look at what it would take (software- and effort-wise) to ensure the same functionality on your desktop-machine as you now have ... firewall every contemporary linux comes with a fw-module built into the "kernel" (the system-nucleus, so to say).
+you are taking all of the appropriate security measures and i simply don't see any immediate benefit to you.
+# forward all packets from eth1 (internal network) to eth0 (the internet).
+an attacker will not # be able to immediately tell if udp connection requests are simply # taking a long time, if there is a problem with connectivity between # the attacking client and the server, or if the packets are being # ignored.
+similarly, tcp connection requests to denied # ports will hang for a long time.
+so any decision towards using linux to harden your gateway/router/mailserver-machine is more than just agreeable.
+on the other hand ... you are about to enter the linux-domain from the "server-side", and this can give you a lot of headaches if you lack a certain amount of necessary endurance as dapperdan has already mentioned.
+joined: 30-april 04 posted 30 april 2004 - 11:50 am i have a small home network, consisting of two desktops and a laptop (all running win xp pro).
+apply postrouting snat rules (if any) to map source ip # # (3a and 3b can be done in either order since they apply to a mutually # exclusive set of packets) # # i *think* that's correct.
+if i ran my mail server on an internal machine, i would no longer # need my previous input rule for x.y.z.m and would use the above # forward rule instead.
+-a input -i eth0 -s 198.211.65.0/24 -j deny -a input -i eth0 -s 127.0.0.0/8 -j deny # accept all tcp syn packets for protocols smtp, http, and ssh # note, smtp connections are further audited by my smtp server -a input -s 0/0 -d 198.211.65.1/32 25 -p tcp -y
+# although such packets will not normally be processed by an application, # they can be used as part of a denial of service attack.
+by stopping all other packets in their tracks, we limit # attempts to attack our internal network.
+# input or forward would be needed purely depending on whether your # routing would cause the packet to stay on the machine where the # firewall is installed or be forwarded to another machine.
+# # provide rules that are applied in the following order: # # accept all udp packets for certain udp services # # currently the only udp connections i accept are to my secure dns # server, tinydns.
+finally, the script is just for a single server ip, # hence all of the "/32" network masks below.
+if you know of some # good documenation that completely and accurately explains the # semantics of the ifconfig and route commands, i.e., explains what # affect each has such that i can reliably predict what the output # of `route` will be after executing a sequence of ifconfig and # route commands, then please do let me know.
+we # only allow syn packets for the specific servers running on specific # ports of specific hosts.
+-j masq # finally, deny all connection requests to any udp port not yet provided # for and all syn connection requests to any tcp port not yet provided # for.
+# # forward all packets from eth1 (internal network) to eth0 (the internet).
+that # decision is done by routing and *not* by dnat or snat or anything # else in this firewall script.
+if you want to e.g. add a proxie too you may want to check outsquid, to just name a polular one.
+if you know of some # good documenation that completely and accurately explains the # semantics of the ifconfig and route commands, i.e., explains what # affect each has such that i can reliably predict what the output # of `route` will be after
+the good news is that they mix # extremely well.
+this increases the amount of time it takes for an attacker # to scan all udp ports.
+this machine is also the primary connection to my dsl broadband service.
+the first three of the above four rules would be used if my routing # delivered packets having destination ip x.y.z.m, port 25, or ip # x.y.z.w, port 80 or 443, to an interface connected to my internal # network (i.e. the packet was being forwarded).
+# hence, input/forward rules would operate on destination ip numbers # *after* a dnat rule is applied.
+# snat performs this mapping when a client running on one of the # internal hosts (x.y.z.c) initiates a tcp connection (syn) through # eth0.
+by using reject instead of deny, you # would prevent access to a port in a more 'polite' manner, but give out # more information to wannabe attackers, since the attacker can positively # detect that a port is not accessible in a small amount of time from # the 'icmp pot unreachable' response.
+dnat and snat rules are, # respectively, mechnisms to map the incoming destination ip number and # outgoing source ip number to different ip numbers.
+ipchains # will allow packets in that are not part of an existing tcp connection.
+to achieve this, in addition to # permitting vanilla dns responses from the isp dns serves, you also need # to allow tcp connections from the isp master dns server: # # allow dns zone transfers via tcp from isp master dns server: # # iptables -a input -p tcp -s /32 -d 0/0 --destination-port 53 --syn -j accept # # for some other custom server running here listening on port : # iptables -a input -p tcp -s 0/0 -d 0/0
+the sources and destinations seen by the packet filter # will be the `real' sources and destinations.
+so i had no confidence # in the gui firewall tools, resulting in my decision to edit # this file manually.
+i also don't know if zonealarm, avg and mailtraq will run on linux.
+note that certain services can be # further filtered by xinetd.
+it is now time for you to read the following packet filtering # howto section: # it's common to want to do network address translation (see the # nat howto) and packet filtering.
+currently the only udp connections i accept are to my secure dns # server, tinydns.
+but if you don't have any dnat rules, # then input/forward would apply to the ip numbers as they are in the # incoming packet.
+this is done via 'stateful packet inspection' provided by the # netfilter functionality added to linux as of kernel 2.4.
+#i no longer have that third interface, so no longer use this technique.
+similarly, tcp connection requests to denied # ports will hang for a long time.
+what *can* be done by iptables rules that has the 'feel' of routing is # dnat (destintion nat) and snat (source nat).
+i have # updated my firewall to use iptable and udpated the description # of my firewall at http://oceanpark.com/notes/firewall_example.html.
+many distros access iptables through gui-frontends that let you define those rules more easily (smoothwall has been mentioned, and there are many more frontends, likefirestarter or firewall-builder).
+# however, it seems unlikely that one would want to assign a public ip # number to a host and then proceed to hide that number from the public.
+to make spam- and virus-filtering happen you have to "daisy-chain" multiple apps.
+but i # promised above in the description of my network to give examples of # rules used when there are servers running on machines on the internal # network.
+the network # this firewall is running on a gateway machine having multiple ethernet # interfaces, a public one, eth0, which is a dsl connection to an isp, # and one or more internal ones, including eth1, which is assigned to # 192.168.0.1, an ip number on my internal private network.
+# i.e., routing is determined by ifconfig, route, et.
+iamroot, i personally have not been aware of problems associated with just accessing ntfs partitions with linux, and never had any problems reading windows partitions back in my dual booting days.
+# this file is /etc/sysconfig/ipchains, intended for # consumption by the script /etc/rc.d/init.d/ipchains, # which makes use of the script /sbin/ipchains-restore.
+as for your applications, i don't think that those work on linux unless u use wine(sort of an emulator) but im sure you can find alternatives on the net.
+# however, it seems unlikely that one would want to assign a public ip # number to a host and then proceed to hide that number from the public.
+# # accept syn packets just for certain tcp services # # syn packets are specified via the -syn flag in the input # rules defined below.
+i agree with the going back to xp to play games part.
+also, you're more than competent in setting up and running your network.
+if you prevail, you will be greatly rewarded in the end!
+if you need information about ip tables there are many books online that can give you ideas of how to configure it...
+the very first tcp packet # is sent by the client to the server and is called a syn packet, # because it has the syn flag set to 1 in the tcp packet header.
+the sources and destinations seen by the packet filter # will be the `real' sources and destinations.
+one of the desktops is dedicated to running just zonealarm, avg, spybot and a mailserver (mailtraq).
+# similarly, you can ignore masquerading: packets will seem to come # from their real internal ip addresses (say 10.1.1.1), and replies # will seem to go back there.
+be prepared to research and learn because linux is challenging.
+subsequently, we only permit further tcp # packets in that are determined to be part of a connection whose # initial syn packet was already accepted and responded to by one of our # servers.
+you really have to have more than average experience, understanding and ability to deal with hardware and os in general.
+note that certain services can be # further filtered by xinetd.
+if your firewall has a dynamic ip number because it connects to the # internet itself via dhcp, then you probably cannot predict what the ip # number is of your firewall's interface connected to the internet.
+hence, using deny instead of reject may have # the effect of frustrating attackers due to increasing the amount of # time taken to probe ports.
+it was neat #since my cable modem had higher inbound bandwidth
+#i no longer have that third interface, so no longer use this technique.
+# for example, the kde menu item for editing my firewall # showed an empty set of rules even though this file and # the above startup script existed.
+# # # hence, input/forward rules would operate on destination ip numbers # *after* a dnat rule is applied.
+by using reject instead of deny, you # would prevent access to a port in a more 'polite' manner, but give out # more information to wannabe attackers, since the attacker can positively # detect that a port is not accessible in a small amount of time from # the 'icmp port unreachable' response.
+we # only allow syn packets for the specific servers running on specific # ports of specific hosts.
+m$ phobia aside, i certainly 'would not' recommend that you switch from a system that you are familiar with, and, appear to have entirely under control to one that you don't know and that will require 'considerable' effort to learn well.
+an attacker will not # be able to immediately tell if udp connection requests are simply # taking a long time, if there is a problem with connectivity between # the attacking client and the server, or if the packets are being # ignored.
+i only want people to be aware of that 'necessary' commitment, especially if a business' sucess may depend on it.
+i also don't know if zonealarm, avg and mailtraq will run on linux.
+although i managed to use wine and winex to play games.
+since i am running # a caching dns server on x.y.z.d that makes requests for dns lookups # to external dns servers, those servers send back responses via udp to # the high numbered client port on x.y.z.d where the caching server listens.
+-s 0/0 -d 0/0 -j accept # enable snat functionality on eth0 # snat (source nat) is used to map private source ip numbers of # interfaces on the internal lan to one of my public static ip numbers.
+# # accept syn packets just for certain tcp services # syn packets are specified via the -y flag in the input # rules defined below.
+so an attacking client will be left in the dark # about whether or not the denied udp packets arrived and will hang # waiting for a response from denied tcp ports.
+# # before mucking with setting up iptables, you should # disconnect the machine from the internet.
+see: # # chkconfig --list | grep ipchains # # you can restart the ipchains firewall via: # # /etc/rc.d/init.d/ipchains restart # # a good way to show your ipchains rules is with: # # ipchains -vnl # preliminaries # ------------- # # to permit machines internal to the network to be able to # send ip packets to the outside world, enable ip forwarding: # # echo 1 > /proc/sys/net/ipv4/ip_forward # # prevent syn floods from consuming memory resources: # # echo 1 > /proc/sys/net/ipv4/tcp_syncookies # # i place the above echo commands into /etc/rc.d/rc.local # so that they will be executed at boot time.
+what *can* be done by iptables rules that has the 'feel' of routing is # dnat (destintion nat) and snat (source nat).
+i dunno due to what linux-tradition this is, but setting up a spam- and virus-filtering, mail-forwarding server can drive you nuts.
+m$ phobia aside, i certainly 'would not' recommend that you switch from a system that you are familiar with, and, appear to have entirely under control to one that you don't know and that will require 'considerable' effort to learn well.
+were i to route some of my public # static ip numbers to interfaces on one or more machines inside the # firewall on the internal network, i would modify certain rules to be # forward rules instead of input rules.
+i have # updated my firewall to use iptable and udpated the description # of my firewall at http://oceanpark.com/notes/firewall_example.html.
+as you can see there are a lot of apps and things involved and most definitely an even basic setup with minimum-functionality will take you up to several days if you haven't laid hands on linux so far.
+but if you don't have any dnat rules, # then input/forward would apply to the ip numbers as they are in the # incoming packet.
+also, you're more than competent in setting up and running your network.
+# snat performs this mapping when a client running on one of the # internal hosts (x.y.z.c) initiates a tcp connection (syn) through # eth0.
+for this # script, i assume that the firewall is running on the same machine # having the interfaces configued with my public ips.
+tcp connections # are initiated via a hand shaking protocol between the client and server # programs at either end of the connection.
+04-february 10 posted 04 february 2010 - 02:30 pm ip chain # red hat 7.1 linux firewall using ipchains # may, 2001 # configured by dennis g. allard and don cohen,http://oceanpark.com # # permission to copy is granted provided that credit is given # to the author and whatever howtos are used to understand this # stuff.
+# this file is /etc/sysconfig/ipchains, intended for # consumption by the script /etc/rc.d/init.d/ipchains, # which makes use of the script /sbin/ipchains-restore.
+if you intend to have a dual boot system with win xp/2000 and linux, dun try to access ntfs partitions from linux as it is dangerous.
+things will probably only get worse in the future on the windows-side of the internet.
+or it could be # itself assigned a dynamic ip number from your own dhcp server running # on the firewall, or it could even have a public static ip number.
+that's so my nephews can play games on my mom's computer, and it's windows 98.
+iamroot, i personally have not been aware of problems associated with just accessing ntfs partitions with linux, and never had any problems reading windows partitions back in my dual booting days.
+i have not # yet seen any very good explanation of how to setup the static routing # table (what you see as output from the `route` command).
+windows 2000 is better if you opt for windows....root is right xp really sucks.
+so i had no confidence # in the gui firewall tools, resulting in my decision to edit # this file manually.
+--destination-port 53 -j accept # running a master dns server to update slave dns servers # you may have your server colocated at an isp and may arrange to have your # isp provide your primary and secondary dns with the isp dns servers slaving # off of your master dns server.
+routing # (see the 'ifconfig' and 'route' commands) decides which interface an # incoming packet will be delivered to, i.e. if a given packet will be # 'input' to this machine or be 'forwarded' to some interface for # delivery to another machine, say on an internal network.
+the reply will be a udp connection back to the high # numbered client port from which the query was made.
+the good news is that they mix # extremely well.
+for example, snat # can be used to map an internal source ip number to any one of your # external public ip numbers so that a workstation on your internal # network will appear to servers on the internet to which it connects to # have a source ip number equal to the mapped public ip number.
+similarly, tcp connection requests to denied # ports will hang for a long time.
+that's so my nephews can play games on my mom's computer, and it's windows 98.
+this has the advantage of letting you be # in full control of the dns zone files yet keeping the dns servers exposed # to the public outside of your network.
+the post may still be visible to moderators in this topic reason: delete from topic the post will be removed from this topic
+:-) # # preliminaries # ------------- # # to permit machines internal to the network to be able to # send ip packets to the outside world, enable ip forwarding: # # echo 1 > /proc/sys/net/ipv4/ip_forward # # prevent syn floods from consuming memory resources: # # echo 1 > /proc/sys/net/ipv4/tcp_syncookies # # i place the above echo commands into /etc/rc.d/rc.local #
+# this firewall was running on a gateway machine having two # ethernet interfaces, an external one, eth0, which is # my dsl connection to my isp, and an internal one, eth1 # which is assigned to 198.211.65.1, an ip number on my # class c network.
+tcp connections # are initiated via a hand shaking protocol between the client and server # programs at either end of the connection.
+there's literally no tcp/ip-issue that you could not catch with a specific iptables-rule.
+# i had to add the following line to make my dns server honor requests # from the public internet.
+this machine is also the primary connection to my dsl broadband service.
+not having had any experience of this os, i don't know if this is a good idea or, if so, which version of linux would be best.
+on the # other hand dnat is applied by a prerouting rule and snat by a postrouting # rule.
+had a bit of a problem updating the firmware in my adsl modem, but got that sorted eventually.
+i had to read the script to understand better # what is going on.
+subsequently, we only permit further tcp # packets in that are determined to be part of a connection whose # initial syn packet was already accepted and responded to by one of our # servers.
+a more realistic situation # would involve using ip ranges and their corresponding network masks.
+# # # deny any packet coming in on the public internet interface eth0 # which has a spoofed source address from our local networks: # iptables -a input -i eth0 -s x.y.z.s/32
+:-) # red hat 7.1 runs /etc/rc.d/init.d/ipchains at system # startup, which uses this file as input.
+in other words, we allow any tcp packet through that is part of an # established tcp connection, but we are very selective in just which # connections we permit to be made to start off with.
+dnat and snat provide a way for the iptables firewall to modify the # destination or source ip addresses of a packet and, in this way, interact # with routing decisions.
+it's a very interesting and powerful system which is being developed at a breakneck pace and has vast potential.
+# it is perfectly possible for the machine having the firewall to have # both public and internal ips configured and/or for some packets to be # input and others to be forwarded.
+you will need anmta (mail transport agent) like exim or qmail, a spamfilter (is there anything else butspamassasin? and a virus-filter (e.g clamav which we use for our mail-servers).
+for example, snat # can be used to map an internal source ip number to any one of your # external public ip numbers so that a workstation on your internal # network will appear to servers on the internet to which it connects to # have a source ip number equal to the mapped public ip number.
+and i notice this with xp there are two sides too it a. easy to set up easy to run b low security, ie the viruses mentioned sure xp is plagued by the virus scene
+# # the difference between an input rule and a forward rule is that an # input rule applies to packets that are 'input' to this machine (the # machine on which these iptables firewall rules are installed), whereas # a forward rule applies to packets that are being 'fowarded', i.e. to # packets that are passing through this machine to some other machine, # such as a machine on my internal network.
+be prepared to research and learn because linux is challenging.
+the host could be assigned a static ip number on # an internal nonpublic network (e.g. 10.
+accept # # running a caching dns server # # we need to permit querying a remote dns server.
+something i learned from a very good book:agustin's linux manual -second edition which is available at http://www.netcontrol.org if you opt to use a router, you can secure your stations by using iptables.
+# # accept all other tcp packets that are part of existing connections # # deny all other tcp packets.
+i have not # yet seen any very good explanation of how to setup the static routing # table (what you see as output from the `route` command).
+but the gain is indeed immense: if you decide to go all the way and maybe even tweak/harden your box you will have a halluva bullet-proof and reliable machine that will let you forget about things like "reboot" and which will be "99% immortal" (unless you pull the plug)
+i think you would be wise to create a dual boot so that you can begin to 'learn' if linux is a viable solution for you.
+# in red hat 7.1, the man page for ipchains and for # ipchains-restore does not document the syntax of this # file.
+and i notice this with xp there are two sides too it a. easy to set up easy to run b low security, ie the viruses mentioned sure xp is plagued by the virus scene
+the lates edition tells you about iptables and proxy server good luck back to top of the page up there ^ #13   prakash0106 posted 04 february 2010 - 02:30 pm ip chain # red hat 7.1 linux firewall using ipchains # may, 2001 # configured by dennis g. allard and don cohen,http://oceanpark.com # permission to copy is granted provided that credit is given # to the author and whatever howtos are used to understand this # stuff.
+by stopping all # other packets in their tracks, we limit attempts to attack our internal # network.
+-j masq # finally, deny all connection requests to any udp port not yet provided # for and all syn connection requests to any tcp port not yet provided # for.
+forward -i eth0 -o eth1 -m state --state established,related -j accept # permit packets in to firewall itself that are part of existing and related connections.
+eth0 -j masquerade # # note that the above snat and masquerade rules are applicable # independent of how a host on the internal network is assigned its own # internal ip number.
+# # it is perfectly possible for the machine having the firewall to have # both public and internal ips configured and/or for some packets to be # input and others to be forwarded.
+before, with windows, i felt like a slave in comparison.
+i downloaded and installed smoothwall and am so far very impressed.
+you can read it to # gain understanding of how iptables uses iptables-restore to restore # iptables firewall rules at reboot.
+something i learned from a very good book:agustin's linux manual -second edition which is available at http://www.netcontrol.org if you opt to use a router, you can secure your stations by using iptables.
+if i ran my mail server on an internal machine, i would no longer # need my previous input rule for x.y.z.m and would use the above # forward rule instead.
+on the other hand ... you are about to enter the linux-domain from the "server-side", and this can give you a lot of headaches if you lack a certain amount of necessary endurance as dapperdan has already mentioned.
+particular attention would need to # be given to using the right the ip numbers and interfaces, # among other things.
+the difference between an input rule and a forward rule is that an # input rule applies to packets that are 'input' to this machine (the # machine on which these iptables firewall rules are installed), whereas # a forward rule applies to packets that are being 'fowarded', i.e. to # packets that are passing through this machine to some other machine, # such as a machine on my internal network.
+the fourth of the above # four rules is similar but operates on any destination ip, port 22.
+hence, using deny instead of reject may have # the effect of frustrating attackers due to increasing the amount of # time taken to probe ports.
+my public # network has static ip numbers depicted below as x.y.z....
+# now, dnat and snat are *not* routing but can *interact* with routing.
+the gateway at my isp is x.y.z.1.
+accept # # forward packets that are part of existing and related connections from eth0 to eth1.
+this is done via 'stateful packet inspection' provided by the # netfilter functionality added to linux as of kernel 2.4.
+# # in other words, we allow any tcp packet through that is part of an # established tcp connection, but we are very selective in just which # connections we permit to be made to start off with.
+many distros access iptables through gui-frontends that let you define those rules more easily (smoothwall has been mentioned, and there are many more frontends, likefirestarter or firewall-builder).
+important: # ipchains is less powerful than iptables since iptables, introduced # in linux kernel 2.4 provides for stateful packet inspection.
+the first three of the above four rules would be used if my routing # delivered packets having destination ip x.y.z.m, port 25, or ip # x.y.z.w, port 80 or 443, to an interface connected to my internal # network (i.e. the packet was being forwarded).
+it has many powerful features; the installation was fairly straightforward and the user interface and documentation are excellent.
+# i could of course increase security by running the dns cache on its own # machine/ip and restricting to just that machine/ip.
+and it permitted #me to do downloads without impacting my dsl inbound bandwidth.
+# so, for example, if you run a mail server on a machine configured with # an internal ip number but wish to expose that service to the external # world via a public ip number, dnat is for you.
+the reply will be a udp connection back to the high # numbered client port from which the query was made.
+you can read it to # gain understanding of how iptables uses iptables-restore to restore # iptables firewall rules at reboot.
+if you intend to have a dual boot system with win xp/2000 and linux, dun try to access ntfs partitions from linux as it is dangerous.
+were i to route some of my public # static ip numbers to interfaces on one or more machines inside the # firewall on the internal network, i would modify certain rules to be # forward rules instead of input rules.
+for example, if you # are doing dnat to send any connections to 1.2.3.4 port 80 through # to 10.1.1.1 port 8080, the packet filter would see packets going # to 10.1.1.1 port 8080 (the real destination), not 1.2.3.4 port 80.
+apply input rules to packets having a destination ip on this machine # 3b.
+for this # script, i assume that the firewall is running on the same machine # having the interfaces configued with my public ips.
+you are taking all of the appropriate security measures and i simply don't see any immediate benefit to you.
+# before mucking with setting up iptables, you should # disconnect the machine from the internet.
+by stopping all # other packets in their tracks, we limit attempts to attack our internal # network.
+in other words, we allow any tcp packet through that is part of an # established tcp connection, but we are very selective in just which # connections we permit to be made to start off with.
+0 - back to top of the page up there ^ #2 iamroot - group: members - posts: 501 - joined: 06-april 04 posted 30 april 2004 - 01:15 pm linux will definitely be more stable and safe than windows xp.
+you will need anmta (mail transport agent) like exim or qmail, a spamfilter (is there anything else butspamassasin? and a virus-filter (e.g clamav which we use for our mail-servers).
+so any decision towards using linux to harden your gateway/router/mailserver-machine is more than just agreeable.
+you can # turn ipchains on and off via chkconfig.
+drop #iptables -t nat -a postrouting -s 192.168.0.128/32 -d 0/0 -j snat --to-source 68.65.209.39 # finally, deny all connection requests to any udp port not yet provided # for and all syn connection requests to any tcp port not yet provided # for.
+# i had to add the following line to make my dns server honor requests # from the public internet.
+i used to have a third ethernet card, #eth2, attached to a separate isp via a cable modem and used the rules #shown below to cause a specific windows machine on my internal network #(192.168.0.128) to send traffic out via dsl and get it back via cable.
+by using reject instead of deny, you # would prevent access to a port in a more 'polite' manner, but give out # more information to wannabe attackers, since the attacker can positively # detect that a port is not accessible in a small amount of time from # the 'icmp port unreachable' response.
+# so, for example, if you run a mail server on a machine configured with # an internal ip number but wish to expose that service to the external # world via a public ip number, dnat is for you.
+hence, using deny instead of reject may have # the effect of frustrating attackers due to increasing the amount of # time taken to probe ports.
+so we only need to # permit udp packets from our isp's dns servers back to high numbered ports: # #iptables -a input -p udp -s /32
+of course, the basic sendmail/fetchmail-couple will not filter anything (but it would forward mails to the right accounts, given that a lot of things are set up properly (likealiases, permissions etc.)).
+defaults are to drop anything sent to firewall or internal # network, permit anything going out.
+iptables -a input -i eth0 -m state --state established,related -j accept # note, in the above two rules, a connection becomes established in the # iptables prerouting chain upon receipt of a synack packet that is a # response to a previously sent syn packet.
+so an attacking client will be left in the dark # about whether or not the denied udp packets arrived and will hang # waiting for a response from denied tcp ports.
+one of the desktops is dedicated to running just zonealarm, avg, spybot and a mailserver (mailtraq).
+so we only need to # permit udp packets from our isp's dns servers back to high numbered ports: #iptables -a input -p udp -s /32
+i only want people to be aware of that 'necessary' commitment, especially if a business' sucess may depend on it.
+particular attention would need to # be given to using the right the ip numbers and interfaces, # among other things.
+examine # and understand the current set of iptables rules # before you reconnect to the internet.
+frankly, i've had horrible experiences with win xp.
+# similarly, you can ignore masquerading: packets will seem to come # from their real internal ip addresses (say 10.1.1.1), and replies # will seem to go back there.
+a more realistic situation # would involve using ip ranges and their corresponding network masks.
+i'm an engineer with administration experience in everything from dos through os/2 and xp.
+apply forward rules to packets having a destination ip elsewhere # 4.
+by stopping all other packets in their tracks, we limit # attempts to attack our internal network.
+linux is a whole new world but it isnt mainstream like xp yet, faster development and good software another thing is any software you learn there is a linux here are some more sites to check out ttp://www.linuxquestions.org/questions/answers.php?action=viewcat&catid=1 http://www.justlinux.com/ and again before you install boot a live one 0 back to top of the page up there ^ #7   gewitty joined: 30-april 04 posted 01 may 2004 - 09:45 am thanks dan.
+that # decision is done by routing and *not* by dnat or snat or anything # else in this firewall script.
+apply prerouting dnat rules (if any) to map destination ip # 2.
+# for example, the kde menu item for editing my firewall # showed an empty set of rules even though this file and # the above startup script existed.
+my current network # does not require me to make use of forward rules, since i run all # publicly accessible servers directly on my firewall machine.
+by using reject instead of deny, you # would prevent access to a port in a more 'polite' manner, but give out # more information to wannabe attackers, since the attacker can positively # detect that a port is not accessible in a small amount of time from # the 'icmp pot unreachable' response.
+when we run a dns server, we have to accept udp from anywhere to port 53 iptables -a input -p udp -s 0/0 -d 0/0
+see: # chkconfig --list | grep ipchains # you can restart the ipchains firewall via: # /etc/rc.d/init.d/ipchains restart # a good way to show your ipchains rules is with: # ipchains -vnl # to permit machines internal to the network to be able to # send ip packets to the outside world, enable ip forwarding: # echo 1 > /proc/sys/net/ipv4/ip_forward # prevent syn floods from consuming memory resources: # echo 1 > /proc/sys/net/ipv4/tcp_syncookies # i place the above echo commands into /etc/rc.d/rc.local # so that they will be executed at boot time.
+# iptables -a input -i eth0 -m state --state established,related -j accept # note, in the above two rules, a connection becomes established in the # iptables prerouting chain upon receipt of a synack packet that is a # response to a previously sent syn packet.
+we recommend # that you use an iptables firewall, which is able to audit connections # more completely.

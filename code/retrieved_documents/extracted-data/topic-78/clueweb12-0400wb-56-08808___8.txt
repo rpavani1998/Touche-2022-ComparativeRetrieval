@@ -1,0 +1,415 @@
+but if your scheme has a faster mechanism (e.g., chez), you should definitely port over to it.
+this document, in simple text format: http://srfi.schemers.org/srfi-32/srfi-32.txt archive of srfi-32 discussion-list email: http://srfi.schemers.org/srfi-32/mail-archive/maillist.html srfi web site: http://srfi.schemers.org/ [commonlisp] common lisp: the language guy l. steele jr. (editor).
+here are my  notes from the systems i checked.
+[start end]) - use of the let-optionals macro from scsh to parse and default optional arguments to three routines.
+not  in-place -- requires a temporary buffer of equal size.
+[r5rs] revised^5 report on the algorithmic language scheme, r. kelsey, w. clinger, j. rees (editors).
+i mean, you'd really have to be a boor to take  this free code i wrote and mutate its interface over to your incompatible,  unportable api, wouldn't you?
+in no  event shall the authors or copyright holders be liable for any claim, damages  or other liability, whether in an action of contract, tort or otherwise,  arising from, out of or in connection with the software or the use or other  dealings in the software.
+vector-merge! writes its result into vector v, beginning at index start0, for indices less than end0 = start0 + (end1-start1) +
+permission is hereby  granted, free of charge, to any person obtaining a copy of this software and  associated documentation files (the "software"), to deal in the  software without restriction, including without limitation the rights to use,  copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the  software, and to permit persons to whom the software is furnished to do so,  subject to the following conditions: the above copyright notice and this  permission notice shall be included in all copies or substantial portions of  the software.
+note that argument defaulting and error-checking are interleaved --  you don't have to error-check defaulted start/end args to see if they are  fixnums that are legal vector indices for the corresponding vector, etc.
+it is - very portable, - much better code than what is currently in elk, gambit, bigloo, scheme->c, mzscheme, rscheme, scheme48, mit scheme, or slib, and - priced to move: free code.
+- a general, non-algorithmic  set of procedure names for general sorting and merging.
+the comparison function = passed to these procedures is always applied  (= x y) where x comes before y in the containing list or vector.
+vector-merge-sort-lib - vector merge sort vector-merge-sort v  vector vector-merge-sort!
+o(n lg n)  worst-case, and possibly better, depending upon the input list (see above).
+v  unspecific these procedures sort  their data using heap sort, which is not a stable sorting algorithm.
+see below for the properties of this  algorithm.)
+mzscheme naive  quicksort -- but not available for vector sorting, even though it internally  uses a vector.
+they run in o(n lg n) worst case, o(n) best  case, and require only a logarithmic number of stack frames.
+in the input list or vector such that y   list list-merge-sort!
+** algorithm-specific sorting packages  =
+lis = -> list vector-sorted?
+3 7) => #(7 0 -2) ;; result left in v[3,9): (let ((v (vector 0 0 0 1 1 2 2 3 3 4 4 5 5 6 6))) (cons (vector-delete-neighbor-dups!
+in the input list or vector such that y  list list-merge-sort!
+[this link may not be valid while the srfi is in draft form.]
+they run in o(n lg n) worst case, o(n) best case, and require only a logarithmic number of stack frames.
+available at http://www.elwood.com/alu/table/references.htm#cltl2
+while i wrote all  of this code myself, i read a lot of code before i began writing.
+the natural merge sorts (pure list,  destructive list, and vector) are not only my own code, but are implementations  of an algorithm of my own devising.
+the package includes - vector insert sort (stable) -
+the merge operations are stable: an element of v1 will come before an equal-comparing element in v2 in the result vector.
+** data parameter first, less-than parameter after ==
+list-delete-neighbor-dups does not alter its input list; its answer may share storage with the input list.
+-------------------------------------------------------------------------------  * procedure index ----------------- list-sorted?
+#(0 0 0  1 2 3 4 5 6 4 4 5 5 6 6))
+and acm sigplan notices, vol. 33, no. 9, october, 1998.
+vector quick sort not stable.
+say c-h m for instructions on how to move through it by sections (e.g.,  c-c c-n, c-c c-p).
+v v1 v2  unspecific the sort procedures sort their data  using vector merge sort, which is stable.
+"scheme implementors," in this  context, includes slib, which isn't really a standalone implementation of  scheme, but is an influential collection of api's and code.
+is in-place, leaving its result in v[start,end).
+vector-merge-sort-lib -  vector merge sort vector-merge-sort v  vector  vector-merge-sort!
+v  unspecific these procedures stably sort their data  using insertion sort.
+the code is tightly  bummed.
+fast -- o(n lg n) -- and  has good memory locality for large vectors.
+that is, we write (sort lis   boolean list-merge lis1 lis2  list  list-merge!
+should it be (list-sort <  lis) or (list-sort lis <)
+scheme programmers may  want to adopt this package.
+the target subvector v[start0,end0) may not  overlap either source subvector v1[start1,end1) v2[start2,end2).
+-------------------------------------------------------------------------------
+i've designed the api for a full-featured sort toolkit, which i propose as an srfi.
+v v1 v2  unspecific the sort procedures sort their data using vector merge sort, which is stable.
+- simple: you specify semantics: datatype (list or vector),  mutability, and stability.
+the ! procedures are destructive -- they use set-cdr!s to rearrange the cells of the lists into the proper order.
+i'd like scheme implementors to adopt this code and its api -- in fact, the code is a bribe to make it easy for implementors to converge on the suggested api.
+worst case average case in-place ------------------------------------------------------
+return true if their input list or vector is in sorted order, as determined by their  (1 2 7 0 -2)
+i thank the authors of the open source i  consulted when designing this library, particularly richard o'keefe, donovan  kolby and the mit scheme team.
+is fast on average -- o(n lg n) -- but  has bad worst-case behaviour.
+** consistency across function  signatures ===
+- detailed: you specify the actual algorithm (quick, heap, insert, merge).
+** reference implementation  =
+* algorithmic properties ------------------------
+------------------------------------------------------------------------------- * procedure index ----------------- list-sorted?
+implementors want this code.
+open source-code is a wonderful thing.
+destructive list merge sort stable, fast and  in-place (i.e., allocates no new cons cells).
+this document, in simple text format:  http://srfi.schemers.org/srfi-32/srfi-32.txt archive of srfi-32 discussion-list  email: http://srfi.schemers.org/srfi-32/mail-archive/maillist.html srfi web  site: http://srfi.schemers.org/ [commonlisp] common lisp: the language guy l.  steele jr. (editor).
+note that sorting lists involves chasing pointers through memory, which can be a loser on modern machine architectures because of poor cache & page locality.
+the code is tightly bummed.
+sorted?-lib - sorted predicates list-sorted?
+i'd like scheme implementors to adopt this code and  its api -- in fact, the code is a bribe to make it easy for implementors to  converge on the suggested api.
+lis = -> list  vector-delete-neighbor-dups v =
+the optional start/end arguments provide for sorting of subranges,  and default to 0 and the length of the corresponding vector.
+but  if your scheme has a faster mechanism (e.g., chez), you should definitely port  over to it.
+this document is copyright (c) olin shivers (1998, 1999).
+in fact, all the  code bumming i've done pretty much disappears in the noise unless you have a  good compiler and also can dump the vector-index checks and generic arithmetic  -- so i've really just set things up for you to exploit.
+vector-delete-neighbor-dups does not alter its  input vector, but rather allocates a fresh vector to hold the result.
+- a vector-copy procedure.
+no o(n lg n) o(n lg n)
+and the destructive-list variant allocates zero cons cells; it simply  rearranges the cells of the input list.
+note that sorting lists involves chasing pointers  through memory, which can be a loser on modern machine architectures because of  poor cache & page locality.
+v  unspecific (heap or quick sort) vector-stable-sort v  vector (vector merge sort) vector-stable-sort!
+- a general, non-algorithmic set of procedure names for general sorting and merging.
+the two interfaces share common function signatures wherever possible, to facilitate switching a given call from one procedure to another.
+return true if their input list or vector  is in sorted order, as determined by their  (1 2 7 0 -2)
+there are several (quotient n 2)'s that could be  changed to a fixnum right-shift, as well, in both the list and vector code.
+vector-heap-sort-lib - vector heap sort heap-sort v   vector heap-sort!
+i particularly solicit comments about the following topics.
+------------------------------------------------------------------------------- * algorithmic properties ------------------------
+- calls to an error function for complaining about bad arguments.
+[start end] -> vector  vector-delete-neighbor-dups!
+it's just amazing to me that in 2002, sorting and merging hasn't been completely put to bed.
+multiple-value binding macro.
+v v1 v2  unspecific  vector-sort v  vector (heap or quick sort) vector-sort!
+** reference implementation =
+this package should be trivial to port.
+but you could, of course -- it's freely  available.
+but if you tour the major scheme implementations out there on the net, you find badly written code that provides extremely spotty coverage of the algorithm space.
+v  unspecific these procedures sort their data using heap sort, which is not a stable sorting algorithm.
+in a couple of hours, i was able to download and check the sources of 9 scheme systems.
+for example, the sole distinction between heap sort and quick sort -- both of which are provided by this library -- is one of execution time, which is not a "semantic" distinction.
+the first/leftmost element of a run of equal elements is the one that survives.
+in a couple of hours, i  was able to download and check the sources of 9 scheme systems.
+v  boolean return #f iff there is an adjacent pair ...
+see below for the properties of  this algorithm.)
+is fast on average -- o(n lg n) -- but has bad worst-case behaviour.
+again, easy to port the macro or rewrite the code to parse, default, and error check the args by hand.
+if not supplied, the sort routines allocate one themselves.
+v  boolean vector-merge v1 v2  vector  vector-merge!
+programmers that need a particular algorithm can use  one of these packages.
+the right  solution: implement a full toolbox of carefully written standard sort routines.
+higher-order and symbolic computation, vol. 11, no. 1, september,  1998.
+the right solution: implement a full toolbox of carefully written standard sort routines.
+scheme 48 & t sort-list list  (0 2 3) (list-merge!
+the software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement.
+v  unspecific  these procedures sort their data using quick sort, which is not a stable  sorting algorithm.
+it is clearly written, and commented in my usual voluminous style.
+i've designed the api for a  full-featured sort toolkit, which i propose as an srfi.
+vector merge sort stable.
+- include vector-binary-search ?
+#(0 0 0 1 2 3 4 5 6 4 4 5 5 6 6))
+as such, they do not  allocate any extra cons cells -- they are "in place" sorts.
+nothing for stable sorting, and naive quicksort has bad  worst-case behaviour.
+[start end] -> vector vector-delete-neighbor-dups!
+abstract procedure index introduction what's wrong with the current state of affairs?
+[start end]) in the srfi?
+available at http://www.schemers.org/documents/standards/ ------------------------------------------------------------------------------- * acknowledgements ------------------
+** consistency across function signatures ==
+porting and optimisation --------------------------
+more in the spirit of the offering, you could make this api  available, and then also write a little module providing your old interface  that is defined in terms of this api.
+vector-insert-sort-lib -  vector insertion sort insert-sort v  vector insert-sort!
+there is overwhelming consistency among the implementations: data first, < after.
+one implementation even has a buggy implementation that has been in use for  about 20 years!
+the two interfaces share  common function signatures wherever possible, to facilitate switching a given  call from one procedure to another.
+bigloo, scheme->c couldn't find anything -- but maybe i didn't search for the right thing, since the bigloo names are french.
+these procedures are linear time -- much faster than the o(n^2) general duplicate-element deletors that do not assume any "bunching" of elements (such as the ones provided by srfi-1).
+v   unspecific (heap or quick sort) vector-stable-sort v   vector (vector merge sort) vector-stable-sort!
+guaranteed fast -- o(n lg n) *worst* case.
+it's just amazing to me that  in 2002, sorting and merging hasn't been completely put to bed.
+has good memory locality for big vectors (unlike  heap sort).
+here are my notes from the systems i checked.
+it  sort of goes with sorting; it's exactly ten lines of code.
+the srfi-32 sort libraries -*- outline -*- olin shivers first draft: 1998/10/19
+lis1 lis2  list list-sort lis  list (vector heap or quick) list-sort!
+predicates, vector binary search, vector and list delete-equal-neighbor procedures.
+leaves its result in v[start,end).
+you could speed up the vector code a lot by error-checking the procedure parameters and then shifting over to fixnum-specific arithmetic and dangerous vector-indexing and vector-setting primitives.
+it's better  than what you have.
+abstract procedure  index introduction
+vector vector; sort; vector->list", which  allocates unneeded temp storage.
+- comparison  function before or after the list/vector argument?
+- simple: you specify semantics: datatype (list or vector), mutability, and stability.
+o(n lg n) worst-case, and possibly better, depending upon the input list (see above).
+heap-sort  returns a vector of length end-start.
+v  boolean return #f iff  there is an adjacent pair ...
+vector merge sort (stable) - pure and destructive list merge sort  (stable) - stable vector and list merge - miscellaneous sort-related  procedures: vector and list merging, sorted?
+these procedures are linear time -- much faster than the o(n^2)  general duplicate-element deletors that do not assume any "bunching"  of elements (such as the ones provided by srfi-1).
+v  unspecific vector-merge v1 v2   vector vector-merge!
+design rules what vs. how consistency across function signatures data parameter first, less-than parameter after ordering, comparison functions & stability all vector operations accept optional subrange parameters required vs. allowed side-effects procedure specification procedure naming and functionality types of parameters and return values sort-lib - general sorting package algorithm-specific sorting packages algorithmic properties topics to be resolved during discussion phase porting and optimisation references & links acknowledgements copyright *
+the  straightforward algorithms are basic, core stuff -- sophomore-level.
+list-merge  vector-merge list-sort vector-sort list-stable-sort vector-stable-sort  list-delete-neighbor-dups vector-delete-neighbor-dups list-merge!
+the comments in the code indicate where the initial error checks would have to be added.
+* table of contents -------------------
+-------------------------------------------------------------------------------  * references & links --------------------
+there are two different interfaces: "what" (simple) & "how" (detailed).
+different algorithms have different properties, both  semantic & pragmatic, so these exports are necessary.
+delndup-lib -  list and vector delete neighbor duplicates list-delete-neighbor-dups lis =
+the first/leftmost element of a run of equal  elements is the one that survives.
+-------------------------------------------------
+(the reference implementation is,  additionally, a "natural" sort.
+vector-delete-neighbor-dups!
+(i  invite correction from the bigloo implementors.)
+heap-sort quick-sort insert-sort list-merge-sort vector-merge-sort heap-sort!
+as such, they do not allocate any extra cons cells -- they are "in place" sorts.
+it's better than what you have.
+you can skip to the next section if you aren't morbidly curious.
+has good memory locality for big vectors (unlike heap sort).
+nothing for stable sorting, and naive quicksort has bad worst-case behaviour.
+=> #(7 0 -2) ;; result left in v[3,9): (let ((v (vector 0 0 0 1 1 2 2 3 3 4  4 5 5 6 6))) (cons (vector-delete-neighbor-dups!
+list-delete-neighbor-dups does not alter its input list; its answer may share  storage with the input list.
+this code is tightly bummed, as far as i can go in portable scheme.
+the software is provided "as is", without warranty of  any kind, express or implied, including but not limited to the warranties of  merchantability, fitness for a particular purpose and noninfringement.
+hence the reference implementation is  copyright (c) 1998 by olin shivers.
+and they are  stable.
+[start end] -> end' these procedures delete adjacent duplicate elements from a list or a vector, using a given element-equality procedure =.
+rscheme  vector-sort!
+delndup-lib - list and vector delete neighbor duplicates list-delete-neighbor-dups lis = -> list list-delete-neighbor-dups!
+[r5rs] revised^5  report on the algorithmic language scheme, r. kelsey, w. clinger, j. rees  (editors).
+for example, the sole distinction between  heap sort and quick sort -- both of which are provided by this library -- is  one of execution time, which is not a "semantic" distinction.
+this document is copyright  (c) olin shivers (1998, 1999).
+(i invite correction from the bigloo implementors.)
+lis  list (list merge sort) list-delete-neighbor-dups lis = -> list list-delete-neighbor-dups!
+but you could, of course -- it's freely available.
+a clever pivot-picking trick (median of three samples) helps avoid worst-case behaviour, but pathological cases can still blow up.
+scheme programmers may want to adopt this package.
+-------------------------------------------------------------------------------  * introduction --------------
+the implementation of vector merge sort provided by this srfi's reference implementation is, additionally, a "natural" sort, meaning that it exploits existing order in the input data, providing o(n) best case.
+lis  list list-merge lis1 lis2  list list-merge!
+reuses its input vector to hold the answer, packing its answer into the index range [start,end'), where end' is the non-negative exact integer returned as its value.
+the spec comes with  1200 lines of high-quality reference code: tightly written, highly commented,  portable code, available for free.
+the ! procedures are destructive -- they use set-cdr!s to  rearrange the cells of the lists into the proper order.
+"scheme implementors," in this context, includes slib, which isn't really a standalone implementation of scheme, but is an influential collection of api's and code.
+-> list list-delete-neighbor-dups!
+available at  http://www.schemers.org/documents/standards/  -------------------------------------------------------------------------------  * acknowledgements ------------------
+v  unspecific vector-merge v1 v2  vector vector-merge!
+i particularly solicit comments  about the following topics.
+higher-order and symbolic computation, vol. 11, no. 1, september, 1998.
+say c-h m for instructions on how to move through it by sections (e.g., c-c c-n, c-c c-p).
+this scratch vector can be passed in by the client as the optional temp argument; if so, the supplied vector must be of size >=
+these procedures uniformly observe the following parameter order: the data to be sorted come before the the comparison function.
+lis1 lis2  list list-sort lis  list (vector  heap or quick) list-sort!
+short summary: no restrictions.
+that is, we write (sort lis  boolean list-merge lis1 lis2  list list-merge!
+------------------------------------------------------------------------------- * design rules --------------
+the  code is designed to enable this -- each file usually exports one or two  "safe" procedures that end up calling an internal  "dangerous" primitive.
+-------------------------------------------------------------------------------  * design rules --------------
+last update: 2002/7/21 emacs should display this document in outline mode.
+[start end] -> end' these procedures delete  adjacent duplicate elements from a list or a vector, using a given  element-equality procedure
+this could be fixed very easily, but it isn't worth it given the other problems with the algorithm.
+the sort procedures sort their data using a list merge sort, which is stable.
+the implementation of vector merge  sort provided by this srfi's reference implementation is, additionally, a  "natural" sort, meaning that it exploits existing order in the input  data, providing o(n) best case.
+lis = -> list vector-delete-neighbor-dups v =
+it sort of goes with sorting; it's exactly ten lines of code.
+in fact, all the code bumming i've done pretty much disappears in the noise unless you have a good compiler and also can dump the vector-index checks and generic arithmetic -- so i've really just set things up for you to exploit.
+as i'll detail bewlow, i wasn't very happy with  the state of the scheme world for sorting and merging lists and vectors.
+these are well-understood algorithms, each of them well under a page of code.
+i appreciate the authors making their source  available under such open terms.
+different sort and merge  algorithms have different properties.
+destructive list merge sort stable, fast and in-place (i.e., allocates no new cons cells).
+v  unspecific (vector merge sort)
+the target subvector v[start0,end0) may not overlap either source subvector v1[start1,end1) v2[start2,end2).
+choose the algorithm that matches your needs: vector insert sort stable, but only suitable for small vectors -- o(n^2).
+(the reference implementation  is, additionally, a "natural" sort.
+the list or vector is not otherwise  disordered.
+i mean, you'd really have to be a boor to take this free code i wrote and mutate its interface over to your incompatible, unportable api, wouldn't you?
+(the reference implementation is, additionally, a "natural" sort.
+vector-insert-sort-lib - vector insertion sort insert-sort v  vector insert-sort!
+there are only four non-r4rs bits in the code: - use of multiple-value return, with the r5rs values procedure, and the simple (receive (var ...)
+heap-sort quick-sort  insert-sort list-merge-sort vector-merge-sort heap-sort!
+vector-merge! writes its result  into vector v, beginning at index start0, for indices less than end0 = start0 +  (end1-start1)
+------------------------------------------------------------------------------- * copyright -----------
+it returns end' as its result.
+there is overwhelming consistency among the  implementations: data first, < after.
+similar  resource-use statements are made about "iterative" procedures,  meaning that they can execute on input of arbitrary size without needing to  allocate an unbounded number of stack frames.
+list-delete-neighbor-dups! is permitted, but not required, to mutate its input list in order to construct its answer.
+gambit sort-list list  bool)  -> 'a list -> 'a list "smooth applicative merge sort," which is  stable.
+vector-delete-neighbor-dups v =
+vector-merge returns a  vector of length (end1-start1)+(end2-start2).
+this srfis destructive list  merge and merge sort implementations are opportunistic -- they avoid redundant  set-cdr!s, and try to take long already-ordered runs of list structure as-is  when doing the merges.
+the merge operations are stable: an element of lis1 will come before an equal-comparing element in lis2 in the result list.
+list-merge vector-merge list-sort vector-sort list-stable-sort vector-stable-sort list-delete-neighbor-dups vector-delete-neighbor-dups list-merge!
+fast -- o(n lg n) -- and has good memory locality for large vectors.
+vector-delete-neighbor-dups v  =
+v  unspecific these procedures stably sort their data using insertion sort.
+note that argument defaulting and error-checking are interleaved -- you don't have to error-check defaulted start/end args to see if they are fixnums that are legal vector indices for the corresponding vector, etc. ------------------------------------------------------------------------------- * references & links --------------------
+so i have designed and written a fairly comprehensive sorting & merging toolkit.
+vector-delete-neighbor-dups does not alter its input vector, but rather allocates a fresh vector to hold the result.
+this  includes notes on porting and implementation-specific optimisations.
+you could speed up the vector code a lot by  error-checking the procedure parameters and then shifting over to  fixnum-specific arithmetic and dangerous vector-indexing and vector-setting  primitives.
+vector heap  sort not stable.
+v insert yes o(n^2) o(n^2)
+** data parameter first, less-than  parameter after ==
+if you want to delete  duplicate elements from a large list or vector, sort the elements to bring  equal items together, then use one of these procedures, for a total time of o(n  lg n).
+you can skip to the next section if you  aren't morbidly curious.
+copyright -----------
+different algorithms have different properties, both semantic & pragmatic, so these exports are necessary.
+- calls to an error function for  complaining about bad arguments.
+the sort procedures sort their  data using a list merge sort, which is stable.
+the srfi-32 sort libraries -*- outline -*- olin shivers first draft:
+- detailed: you specify the actual algorithm (quick,  heap, insert, merge).
+again, easy to port the macro or rewrite the code to parse,  default, and error check the args by hand.
+vector-merge returns a vector of length (end1-start1)+(end2-start2).
+additionally, list-merge! is iterative, not recursive -- it can operate on  arguments of arbitrary size without requiring an unbounded amount of stack  space.
+pointer *writing*, which is what the set-cdr!s of a destructive list-sort algorithm do, is even worse, especially if your scheme has a generational gc -- the writes will thrash the write-barrier.
+the little exported cover procedures are where you move the error checks.
+abstract ---------- current scheme sorting packages are, every one of them, surprisingly bad.
+but if you  tour the major scheme implementations out there on the net, you find badly  written code that provides extremely spotty coverage of the algorithm space.
+vector vector; sort; vector->list", which allocates unneeded temp storage.
+[start end] -> end' list-sorted?
+last update: 2002/7/21 emacs should display this document in outline  mode.
+should we include (vector-binary-search v keykey key
+poor locality on large vectors.
+list-delete-neighbor-dups! is permitted, but not required, to mutate its input  list in order to construct its answer.
+the optional start/end arguments provide for sorting of subranges, and default to 0 and the length of the corresponding vector.
+list-delete-neighbor-dups!
+these are  well-understood algorithms, each of them well under a page of code.
+it is necessarily the  case that the specifications of these procedures make statements about  execution "pragmatics."
+poor locality on  large vectors.
+similar resource-use statements are made about "iterative" procedures, meaning that they can execute on input of arbitrary size without needing to allocate an unbounded number of stack frames.
+lis  boolean vector-sorted?
+what's wrong with the current state of affairs?
+choose the algorithm that matches your  needs: vector insert sort stable, but only suitable for small vectors --  o(n^2).
+a very reliable workhorse.
+while i wrote all of this code myself, i read a lot of code before i began writing.
+v  boolean vector-merge v1 v2  vector vector-merge!
+this scratch vector can be passed in by the  client as the optional temp argument; if so, the supplied vector must be of  size >=
+the code is designed to enable this -- each file usually exports one or two "safe" procedures that end up calling an internal "dangerous" primitive.
+a clever stable vector merge sort, albeit not very bummed.
+the optional-arg  parsing, defaulting, and error checking is done with a portable r4rs macro.
+end, and will not be altered outside the range [start,end).
+if not  supplied, the sort routines allocate one themselves.
+one implementation even has a buggy implementation that has been in use for about 20 years!
+however, all  such code is, itself, either open source or public domain, rendering irrelevant  any issue of "copyright taint."
+vector-heap-sort-lib - vector heap sort heap-sort v  vector heap-sort!
+vector heap sort not stable.
+as i'll detail bewlow, i wasn't very happy with the state of the scheme world for sorting and merging lists and vectors.
+there are two  different interfaces: "what" (simple) & "how"  (detailed).
+the comparison function = passed to these procedures is always applied (= x y) where x comes before y in the containing list or vector.
+the little exported cover procedures are where  you move the error checks.
+v v1 v2  unspecific vector-sort v  vector (heap or quick sort) vector-sort!
+this could be fixed very easily, but it  isn't worth it given the other problems with the algorithm.
+see below for the properties of this algorithm.)
+in no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
+either  -------------------------------------------------------------------------------  * topics to be resolved during discussion phase  -----------------------------------------------
+i appreciate the authors making their source available under such open terms.
+this code is tightly bummed, as far as i can  go in portable scheme.
+having the source available for all of these above-cited schemes made life a  lot easier writing this code.
+the spec comes with 1200 lines of high-quality reference code: tightly written, highly commented, portable code, available for free.
+and the destructive-list variant allocates zero cons cells; it simply rearranges the cells of the input list.
+a  clever stable vector merge sort, albeit not very bummed.
+this is a tiny little procedure: (vector-copy v
+the straightforward algorithms are basic, core stuff -- sophomore-level.
+design rules  what vs. how consistency across function signatures data parameter first,  less-than parameter after ordering, comparison functions & stability all  vector operations accept optional subrange parameters required vs. allowed  side-effects procedure specification procedure naming and functionality types  of parameters and return values sort-lib - general sorting package  algorithm-specific sorting packages algorithmic properties topics to be  resolved during discussion phase porting and optimisation references &  links acknowledgements copyright *
+nothing for stable sorting.
+the vector is not altered outside the  range [start,end').
+should we include  (vector-binary-search v keykey key
+quick-sort returns a vector of length end-start.
+is in-place, leaving its  result in v[start,end).
+the natural merge sorts (pure list, destructive list, and vector) are not only my own code, but are implementations of an algorithm of my own devising.
+insert-sort returns a vector of length end-start.
+i have done it in the backwards-compatible way.
+i thank the authors of the open source i consulted when designing this library, particularly richard o'keefe, donovan kolby and the mit scheme team.
+the package includes - vector insert sort  (stable) - vector heap sort - vector quick sort (with median-of-3 pivot  picking) -
+"fast" means o(n lg n)  worse-case, and substantially better if the data is already mostly ordered, all  the way down to linear time for a completely-ordered input list (i.e., it is a  "natural" sort).
+- a vector-copy  procedure.
+hence the reference implementation is copyright (c) 1998 by olin shivers.
+pure list merge sort stable and fast --
+vector-quick-sort-lib - vector quick sort quick-sort v   vector quick-sort!
+mzscheme naive quicksort -- but not available for vector sorting, even though it internally uses a vector.
+the optional-arg parsing, defaulting, and error checking is done with a portable r4rs macro.
+v insert yes o(n^2)  o(n^2)
+predicates, vector binary search,  vector and list delete-equal-neighbor procedures.
+these  procedures uniformly observe the following parameter order: the data to be  sorted come before the the comparison function.
+and made available under the same copyright  as the srfi text (see above).
+vector-or-list vector; quicksort; vector->list," hence also loser.
+having the source available for all of these above-cited schemes made life a lot easier writing this code.
+** algorithm-specific sorting packages =
+there are several (quotient n 2)'s that could be changed to a fixnum right-shift, as well, in both the list and vector code.
+merge-sorting a vector requires the allocation of a temporary "scratch" work vector for the duration of the sort.
+not in-place -- requires a temporary buffer of equal size.
+- comparison function before or after the list/vector argument?
+should it be (list-sort < lis) or (list-sort lis <)
+[start end] ->  end' list-sorted?
+reuses its  input vector to hold the answer, packing its answer into the index range  [start,end'), where end' is the non-negative exact integer returned as its  value.
+this document, in html: http://srfi.schemers.org/srfi-32/srfi-32.html
+worst case average case in-place  ------------------------------------------------------
+i have  done it in the backwards-compatible way.
+there is also a highly bummed quicksort for vectors.
+but i prefer the < first, data after way.
+either ------------------------------------------------------------------------------- * topics to be resolved during discussion phase -----------------------------------------------
+it is - very portable, - much better code than what is currently in elk,  gambit, bigloo, scheme->c, mzscheme, rscheme, scheme48, mit scheme, or slib,  and - priced to move: free code.
+v  unspecific these procedures sort their data using quick sort, which is not a stable sorting algorithm.
+the common  lisp "hyperspec," produced by kent pitman, is essentially the ansi  spec for common lisp:  http://www.xanalys.com/software_tools/reference/hyperspec/
+these packages provide more specific sorting functionality, that is, specific committment to particular algorithms that have particular pragmatic consequences (such as memory locality, asymptotic running time) beyond their semantic behaviour (sorting, stable sorting, merging, etc.).
+the vector is not altered outside the range [start,end').
+this should provide *big* speedups.
+a clever pivot-picking trick (median of three samples) helps avoid  worst-case behaviour, but pathological cases can still blow up.
+(vector-delete-neighbor-dups '#(1 1 2 7 7 7 0
+but i prefer the < first, data  after way.
+permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "software"), to deal in the software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, and to permit persons to whom the software is furnished to do so, subject to the following conditions: the above copyright notice and this permission notice shall be included in all copies or substantial portions of the software.
+sorting vectors has inherently better locality.
+the merge operations are  stable: an element of v1 will come before an equal-comparing element in v2 in  the result vector.
+and made available under the same copyright as the srfi text (see above).
+vector-merge-sort returns a vector of length end-start.
+only chez does it differently.
+heap-sort returns a vector of length end-start.
+lis  list (list merge sort)  list-stable-sort lis  list (vector merge sort) list-stable-sort!
+more in the spirit of the offering, you could make this api available, and then also write a little module providing your old interface that is defined in terms of this api.
+merge-sorting a  vector requires the allocation of a temporary "scratch" work vector  for the duration of the sort.
+lis  list (list merge sort) list-stable-sort lis  list (vector merge sort) list-stable-sort!
+[start end]) - use  of the let-optionals macro from scsh to parse and default optional arguments to  three routines.
+programmers that need a particular algorithm can use one of these packages.
+it is necessarily the case that the specifications of these procedures make statements about execution "pragmatics."
+these packages provide more specific  sorting functionality, that is, specific committment to particular algorithms  that have particular pragmatic consequences (such as memory locality,  asymptotic running time) beyond their semantic behaviour (sorting, stable  sorting, merging, etc.).
+* porting and optimisation --------------------------
+* introduction --------------
+the list or vector is not otherwise disordered.
+the comments in the code indicate where the initial error checks  would have to be added.
+this document, in html:  http://srfi.schemers.org/srfi-32/srfi-32.html
+the common lisp "hyperspec," produced by kent pitman, is essentially the ansi spec for common lisp: http://www.xanalys.com/software_tools/reference/hyperspec/
+bigloo, scheme->c couldn't find anything -- but maybe  i didn't search for the right thing, since the bigloo names are french.
+this includes notes on porting and implementation-specific optimisations.
+additionally, list-merge! is iterative, not recursive -- it can operate on arguments of arbitrary size without requiring an unbounded amount of stack space.
+abstract ---------- current scheme sorting  packages are, every one of them, surprisingly bad.
+examples: (list-delete-neighbor-dups '(1 1 2 7 7 7 0
+gambit sort-list list  bool) -> 'a list -> 'a list "smooth applicative merge sort," which is stable.
+this srfis destructive list merge and merge sort implementations are opportunistic -- they avoid redundant set-cdr!s, and try to take long already-ordered runs of list structure as-is when doing the merges.
+however, all such code is, itself, either open source or public domain, rendering irrelevant any issue of "copyright taint."
+there are only four non-r4rs bits in the code: - use of  multiple-value return, with the r5rs values procedure, and the simple (receive  (var ...)
+"fast" means o(n lg n) worse-case, and substantially better if the data is already mostly ordered, all the way down to linear time for a completely-ordered input list (i.e., it is a "natural" sort).
+[this link may not be valid while  the srfi is in draft form.]
+different sort and merge algorithms have different properties.
+digital press, maynard, mass., second edition 1990.
+lis   list (list merge sort) list-delete-neighbor-dups lis = -> list  list-delete-neighbor-dups!
+vector merge sort (stable) - pure and destructive list merge sort (stable) - stable vector and list merge - miscellaneous sort-related procedures: vector and list merging, sorted?
+scheme 48 & t  sort-list list  (0 2 3) (list-merge!
+pointer *writing*, which is what the set-cdr!s  of a destructive list-sort algorithm do, is even worse, especially if your  scheme has a generational gc -- the writes will thrash the write-barrier.
+if you want to delete duplicate elements from a large list or vector, sort the elements to bring equal items together, then use one of these procedures, for a total time of o(n lg n).
+vector-quick-sort-lib - vector quick sort quick-sort v  vector quick-sort!
+vector heap sort - vector quick sort (with median-of-3 pivot picking) -
+so i  have designed and written a fairly comprehensive sorting & merging toolkit.
+the merge operations are stable: an element of lis1 will come before an  equal-comparing element in lis2 in the result list.
+this package should be  trivial to port.

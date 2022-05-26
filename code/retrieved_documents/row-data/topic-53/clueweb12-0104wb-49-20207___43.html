@@ -1,0 +1,1284 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Best Buy Uniforms About us</title>
+<body>
+ &lt;% dbname = &quot;productdb.mdb&quot; dbbase = &quot;/db/&quot; dbpath = 
+Server.MapPath(dbbase &amp; dbname) 'dbdriver = &quot;DRIVER={Microsoft Access 
+Driver (*.mdb)}; DBQ=&quot; 'dbdriver = &quot;Provider=Microsoft.Jet.OLEDB.4.0; 
+Data Source=&quot; 'dbdriver = &quot;Driver={Microsoft Access Driver (*.mdb, 
+*.accdb)};Dbq=&quot; 'dbdriver = &quot;Driver={SQL 
+Server};Server=MU01;Database=productdbSQL;Uid=sa;Pwd=welcome;&quot; dbdriver = 
+&quot;DRIVER={MySQL ODBC 3.51 Driver}; SERVER=localhost; PORT=3306; 
+DATABASE=bestbuyuniforms; USER=steveb123; PASSWORD=bbu052$; OPTION=0;&quot; 
+'create and open a connection to the database Dim db Set db = 
+Server.CreateObject(&quot;ADODB.Connection&quot;) On Error Resume Next db.Open 
+dbdriver &amp; dbpath 'error handling here If Err Then dbopen = false else 
+dbopen = true End If On Error Goto 0 %&gt; &lt;% '///////////////////////////// 
+'/// /// '/// CONFIG VALUES /// '/// /// '///////////////////////////// 'pid is 
+the current top level category (parent id) - used by the menu() sub dim pid pid 
+= 99 'default bogus value dim imgexists imgexists = true 'point to the search 
+page dim searchform searchform = &quot; &quot; 'shopping cart form actions 
+processingpage = &quot;http://www.bestbuyuniforms.com/processorder.asp&quot; 
+cart32page = 
+&quot;https://www.cart32hostingred.com/cgi-bin/cart32.exe/052-AddItem?&quot; 
+cart32cart = 
+&quot;https://www.cart32hostingred.com/cgi-bin/cart32.exe/052-itemlist&quot; 
+'base URL for all links baseurl = &quot;http://www.bestbuyuniforms.com/&quot; 
+%&gt; &lt;% '////////////////////////////////// '// // '// Quick Config // '// 
+// '////////////////////////////////// ' MAIN TITLE - Enter the title you wish 
+to appear on all pages without a specified category or item number. Dim 
+settitle settitle = &quot;Work Wear Chef Uniforms Hotel Apparel Nursing Scrubs 
+Restaurant Apron&quot; '// END QUICK CONFIG sub infomenu() 'creates and 
+displays the info menu (800#, search box, etc) at the toop of the page %&gt; 
+&lt;%=searchform%&gt;search&nbsp; <br>
+1.800.345.1924&nbsp;&nbsp;|&nbsp;&nbsp; 
+testimonials&nbsp;|&nbsp;&nbsp; free catalog&nbsp;|&nbsp;&nbsp; shopping cart
+&nbsp;|&nbsp;&nbsp; &lt;% end sub sub topmenu() 'creates and displays the top 
+menu (links to static pages - about us, contact, etc) %&gt; &lt;% end sub sub 
+menu() 'grabs the data from the BBU database and generates the menu items 
+'Initialise the strSQL variable with an SQL statement to query the database sql 
+= &quot;SELECT CategoryName, CategoryID FROM tblCategories WHERE ParentID = 
+0;&quot; Set menuitems = db.Execute(sql) if menuitems.EOF then 'this is a 
+pretty serious error that should never occur response.write(&quot;ERROR: Unable 
+to load menu.&quot;) 'Set myMail=CreateObject(&quot;CDO.Message&quot;) 
+'myMail.Subject=&quot;DATABASE ERROR - unable to load menu&quot; 
+'myMail.From=&quot;errors@bestbuyuniforms.com&quot; 
+'myMail.To=&quot;capone@novaurora.com&quot; 'myMail.TextBody=&quot;DATABASE 
+ERROR - 0 menu items returned from the Best Buy Uniforms database.&quot; 
+'myMail.Send Exit Sub end if response.write(&quot;
+<ul> &quot;) Do While not menuitems.EOF 'pull data from the database catid = 
+menuitems(&quot;CategoryID&quot;) catname = menuItems(&quot;CategoryName&quot;) 
+menuitems.MoveNext 'Write the HTML to display the current record in the 
+recordset if pid = catid then response.write (&quot;
+<li>&quot; &amp; catname &amp; &quot;</li>&quot;) else response.write (&quot; 
+<li>&quot; &amp; catname &amp; &quot;</li>&quot;) end if Loop 
+response.write(&quot;</ul>&quot;) end sub sub sidemenu() 'creates and displays 
+the side menu %&gt;  &lt;% If dbopen Then menu() else response.write(&quot; 
+<ul> 
+<li>product menu unavailable</li> </ul>&quot;) end if %&gt;  &lt;% end sub sub 
+promotion() %&gt; Clients<br>
+Sizing Charts<br>
+Career Opportuntities <br>
+<br>
+
+Free How to Videos<br>
+<br>
+Testimonials<br>
+<br>
+Downloadable Order Form <br>
+
+<br> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Our prices are as much as 50% off 
+competitors prices for some of the same exact uniforms take a look for youself!
+<br> <br>
+ We just added a large variety of mens and womens sweaters for the 
+holiday christmas season be sure to check back for more holiday deals! Take 
+advantage of our wholesale prices on chef uniforms, nursing uniforms, formal 
+wear, work uniforms, and other career uniforms. We offer hundreds of products 
+(new items added frequently) including an affordable and great selection of 
+chef coats, chef hats, chef pants, chef uniforms and chef accessories in the 
+food service hospitality industry. We also offer a wide variety of formal wear, 
+dress shirts, dress pants, vests, tuxedo shirts, suits, skirts, ties and 
+blazers. If you're in the medical or nursing field we have you covered too with 
+great deals on dickies medical scrubs, landau nursing uniforms, economy nursing 
+uniform scrubs, lab coats, smocks, tunics, warm up jackets and more. We also 
+offer uniforms for spa resorts hotels (maid housekeeping) and security 
+uniforms. We have amazing deals on dickies work shirts, work pants, coveralls, 
+work uniforms, and other industrial safety work wear including hi visibility 
+and safety work uniforms. We offer the best price on bib aprons, bar aprons, 
+waist aprons, restaurant and chef aprons. If you are looking for linens, 
+napkins, and banquet tablecloths we have you covered on those as well with 
+quality restaurant tablecloths, napkins and banquet cloths that you can afford. 
+Best Buy Uniforms offers our customers the best selection in embroidered and 
+logo apparel including polo shirts, golf shirts, womens shirts, jackets, hats 
+and more!<br>
+<br>
+ Best of all you can place your order securely, quickly and 
+easily right on our website where most orders are processed and shipped out 
+within 24 hours if they are in stock. <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br> <br>
+
+<p>International Orders<br>
+<br>
+<br>
+Partners<br>
+<br>
+</p>
+<p>Nursing Resources<br>
+</p>
+<p>Culinary Resources<br>
+<br>
+</p>
+<p>Chef &amp; Cooking Articles<br>
+</p>
+<p>Nursing and Medical Articles<br>
+</p>
+<p>Police and Security Articles<br>
+</p>
+<p>Business &amp; Work Uniform Articles<br>
+</p>
+<p>Chef Knives</p> 
+<p></p> 
+<p></p> 
+<p></p> <br>
+<br>
+ &lt;% end sub sub maketitle() pageid = 
+request.servervariables(&quot;script_name&quot;) pageid = replace(pageid, 
+&quot;/&quot;, &quot;&quot;) pageid = replace(pageid, &quot;.asp&quot;, 
+&quot;&quot;) if pageid = &quot;about&quot; then response.write &quot;Best Buy 
+Uniforms About us&quot; Session(&quot;TempTitle&quot;) = &quot;Best Buy 
+Uniforms About us&quot; elseif pageid = &quot;contact&quot; then response.write 
+&quot;Best Buy Uniforms Contact us&quot; Session(&quot;TempTitle&quot;) = 
+&quot;Best Buy Uniforms Contact us&quot; elseif pageid = &quot;catalog&quot; 
+then response.write &quot;Best Buy Uniforms Free Catalog&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms Free Catalog&quot; 
+elseif pageid = &quot;catalog_request&quot; then response.write &quot;Best Buy 
+Uniforms Catalog Request Form&quot; Session(&quot;TempTitle&quot;) = &quot;Best 
+Buy Uniforms Catalog Request Form&quot; elseif pageid = &quot;clients&quot; 
+then response.write &quot;Best Buy Uniforms Clients List&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms Clients List&quot; 
+elseif pageid = &quot;sizing&quot; then response.write &quot;Best Buy Uniforms 
+Sizing Charts&quot; Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms 
+Sizing Charts&quot; elseif pageid = &quot;testimonials&quot; then 
+response.write &quot;Best Buy Uniforms Testimonials&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms Testimonials&quot; 
+elseif pageid = &quot;extended_catalog&quot; then response.write &quot;Best Buy 
+Uniforms Extended Catalog&quot; Session(&quot;TempTitle&quot;) = &quot;Best Buy 
+Uniforms Extended Catalog&quot; elseif pageid = &quot;faqs&quot; then 
+response.write &quot;Best Buy Uniforms Frequently Asked Questions&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms Frequently Asked 
+Questions&quot; elseif pageid = &quot;careers&quot; then response.write &quot;
+Best Buy Uniforms Career Opportunities&quot; Session(&quot;TempTitle&quot;) = 
+&quot;Best Buy Uniforms Career Opportunities&quot; elseif pageid = 
+&quot;wsjournal&quot; then response.write &quot;Best Buy Uniforms In the Wall 
+Street Journal&quot; Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms 
+In the Wall Street Journal&quot; elseif pageid = &quot;pghtimes&quot; then 
+response.write &quot;Best Buy Uniforms In the Pittsburgh Business Times&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms In the Pittsburgh 
+Business Times&quot; elseif pageid = 
+&quot;beverage_service_alcohol_awareness&quot; then response.write &quot;
+Beverage Service and Alcohol Awareness Training DVD&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Beverage Service and Alcohol Awareness 
+DVD&quot; elseif pageid = &quot;dishwashing&quot; then response.write &quot;
+Bussing and Dishwashing Training DVD&quot; Session(&quot;TempTitle&quot;) = 
+&quot;Bussing and Dishwashing Training DVD&quot; elseif pageid = 
+&quot;enhanced_selling&quot; then response.write &quot;Enhanced Selling 
+Training DVD&quot; Session(&quot;TempTitle&quot;) = &quot;Enhanced Selling 
+Training DVD&quot; elseif pageid = &quot;food_prep&quot; then response.write 
+&quot;Food Preparation and Kitchen Operations Training DVD&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Food Preparation and Kitchen Operations 
+Training DVD&quot; elseif pageid = &quot;food_safety&quot; then response.write 
+&quot;Food Safety and Sanitation Training DVD&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Food Safety and Sanitation Training 
+DVD&quot; elseif pageid = &quot;hosting_cashiering&quot; then response.write 
+&quot;Hosting and Cashiering Training DVD&quot; Session(&quot;TempTitle&quot;) 
+= &quot;Hosting and Cashiering Training DVD&quot; elseif pageid = 
+&quot;house&quot; then response.write &quot;Housekeeping and Laundry Training 
+DVD&quot; Session(&quot;TempTitle&quot;) = &quot;Housekeeping and Laundry 
+Training DVD&quot; elseif pageid = &quot;new_employee_orientation&quot; then 
+response.write &quot;New Employee Orientation Training DVD&quot; 
+Session(&quot;TempTitle&quot;) = &quot;New Employee Orientation Training 
+DVD&quot; elseif pageid = &quot;professional_table_service&quot; then 
+response.write &quot;Professional Table Services Training DVD&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Professional Table Services Training 
+DVD&quot; elseif pageid = &quot;quality_guest_service&quot; then response.write 
+&quot;Quality Guest Service Training DVD&quot; Session(&quot;TempTitle&quot;) = 
+&quot;Quality Guest Service Training DVD&quot; elseif pageid = 
+&quot;workplace_safety_security&quot; then response.write &quot;Workplace 
+Safety and Security Training DVD&quot; Session(&quot;TempTitle&quot;) = 
+&quot;Workplace Safety and Security Training DVD&quot; end if If pageid 
+&lt;&gt; &quot;view&quot; then If request.querystring(&quot;cid&quot;) &lt;&gt; 
+&quot;&quot; then 'Initialise the strSQL variable with an SQL statement to 
+query the database sql = &quot;SELECT * FROM tblCategories;&quot; 
+'response.write db.connectionstring set menuitems = db.Execute(sql) Do While 
+not menuitems.EOF catid = menuitems(&quot;CategoryID&quot;) catname = 
+menuItems(&quot;CategoryName&quot;) if Cstr(catid) = 
+request.querystring(&quot;cid&quot;) then if menuitems(&quot;ParentID&quot;) 
+&lt;&gt; &quot;0&quot; then catname = Replace(catname, &quot;&quot;, 
+&quot;&quot;) catname = Replace(catname, &quot;&quot;, &quot;&quot;) 
+response.write &quot;&quot; &amp; catname &amp; &quot; from Best Buy Uniforms
+&quot; Session(&quot;TempTitle&quot;) = &quot;&quot; &amp; catname else 
+response.write &quot;&quot; &amp; catname &amp; &quot; from Best Buy Uniforms
+&quot; Session(&quot;TempTitle&quot;) = &quot;&quot; &amp; catname end if end 
+if menuitems.MoveNext Loop ElseIf request.querystring(&quot;id&quot;) &lt;&gt; 
+&quot;&quot; then 'Initialise the strSQL variable with an SQL statement to 
+query the database sql = &quot;SELECT * FROM tblProducts WHERE ProductID = 
+'&quot; &amp; request.querystring(&quot;id&quot;) &amp; &quot;';&quot; Set 
+iteminfo = db.Execute(sql) if iteminfo.EOF then errorpage(&quot;The product you 
+requested cannot be found (#BADID).&quot;) end if itemname = 
+iteminfo(&quot;ItemName&quot;) itemname = Replace(itemname, &quot;&quot;, 
+&quot;&quot;) itemname = Replace(itemname, &quot;&quot;, &quot;&quot;) ' 
+Addition Amanat Ali If pageid = &quot;detail&quot; then response.write &quot;
+Buy &quot; &amp; itemname &amp; &quot; from Best Buy Uniforms&quot; 
+Session(&quot;TempTitle&quot;) = &quot;&quot; &amp; itemname Elseif pageid = 
+&quot;pricing&quot; then response.write &quot;Best Buy Uniforms Pricing Table 
+of &quot; &amp; itemname &amp; &quot;&quot; Session(&quot;TempTitle&quot;) = 
+&quot;Best Buy Uniforms's pricing details of &quot; &amp; itemname Else 
+response.write &quot;Best Buy Uniforms &quot; &amp; itemname &amp; &quot;&quot; 
+Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms offers &quot; &amp; 
+itemname End if Else response.write &quot;&quot; &amp; settitle &amp; &quot;
+&quot; Session(&quot;TempTitle&quot;) = settitle End If Else ' New Adition 
+Amanat Ali If request.querystring(&quot;id&quot;) &lt;&gt; &quot;&quot; then 
+'Initialise the strSQL variable with an SQL statement to query the database sql 
+= &quot;SELECT * FROM tblProducts WHERE ProductID = '&quot; &amp; 
+request.querystring(&quot;id&quot;) &amp; &quot;';&quot; Set iteminfo = 
+db.Execute(sql) if iteminfo.EOF then errorpage(&quot;The product you requested 
+cannot be found (#BADID).&quot;) end if itemname = 
+iteminfo(&quot;ItemName&quot;) itemname = Replace(itemname, &quot;&quot;, 
+&quot;&quot;) itemname = Replace(itemname, &quot;&quot;, &quot;&quot;) 
+response.write &quot;Best Buy Uniforms Large Image - &quot; &amp; itemname 
+&amp; &quot;&quot; Session(&quot;TempTitle&quot;) = &quot;Best Buy Uniforms 
+Large Image of &quot; &amp; itemname Else response.write &quot;Best Buy 
+Uniforms Large Image&quot; Session(&quot;TempTitle&quot;) = &quot;Best Buy 
+Uniforms&quot; End if End If Session(&quot;TempDesc&quot;)=&quot;&quot; Dim 
+KeyW Dim DescA Dim MetaTagList Dim iUpper, iLower, iLoop, iSwapPos, varTmp KeyW 
+= Array (&quot;work uniforms&quot;, &quot;wholesale&quot;,&quot;shirts&quot;, 
+&quot;pants&quot;, &quot;restaurant uniforms&quot;, &quot;chef 
+uniform&quot;,&quot;corporate apparel&quot;, &quot;security uniform&quot;, 
+&quot;formal vest&quot;,&quot;clothes&quot;, 
+&quot;clothing&quot;,&quot;embroidery&quot;, &quot;wholesale uniforms&quot;, 
+&quot;work shirts&quot;, &quot;dress pants&quot;, &quot;aprons&quot;, 
+&quot;scrubs&quot;, &quot;linens&quot;, &quot;towels&quot;, &quot;work 
+pants&quot;, &quot;chef coats&quot;, &quot;nursing 
+uniform&quot;,&quot;housekeeping uniform&quot;, &quot;polos&quot;, &quot;chef 
+wear&quot;, &quot;scrubs&quot;, &quot;linen&quot;, 
+&quot;towel&quot;,&quot;apron&quot;, &quot;maid&quot;, &quot;attire&quot;, 
+&quot;shoes&quot;,&quot;knives&quot;, &quot;coat&quot;, &quot;jacket&quot;, 
+&quot;knife&quot;, &quot;custom&quot;,&quot;logo&quot;, &quot;hospital&quot;, 
+&quot;tunic&quot;, &quot;smock&quot;, &quot;discount uniforms&quot;, 
+&quot;cheap uniforms&quot;) DescA= Array(&quot;If you work in a hospital or 
+you're in the medical or nursing career field we have you covered too with 
+great deals on cherokee nursing uniforms with a large new variety of nursing 
+scrub prints, dickies medical scrubs, landau nursing uniforms, economy nursing 
+uniform scrubs, lab coats, smocks, tunics, warm up jackets and more.&quot;, 
+&quot;If you are looking for discount prices on linens, napkins, and banquet 
+tablecloths we have you covered on those as well with quality restaurant 
+tablecloths, napkins and banquet cloths that you can afford.&quot;, &quot;For 
+schools, students and teachers we offer wholesale pricing on dickies school 
+uniforms, shirts, and pants.&quot;, &quot;Take a look at our wholesale prices 
+on spa, resort, restaurant and hotel towels. We offer discount pricing on bulk 
+bath towels, bar mops, and hand towels.&quot;) DescB=Array(&quot;Take advantage 
+of our wholesale prices on chef uniforms, nursing uniforms, formal wear, work 
+uniforms, and other career uniforms.&quot;, &quot;We also offer a wide variety 
+of formal wear, dress shirts, dress pants, vests, tuxedo shirts, suits, skirts, 
+ties and blazers.&quot;, &quot;We offer the best price on bib aprons, bar 
+aprons, waist aprons, restaurant and chef aprons.&quot;, &quot;Best Buy 
+Uniforms offers our customers the best selection in embroidered and company 
+logo apparel including polo shirts, golf shirts, women's shirts, jackets, hats 
+and more!&quot;) DescC=Array(&quot;We have an affordable and great selection of 
+chef coats, cook shirts, chef hats, chef pants, chef uniforms, chef 
+accessories, and unbeatable prices on dickies chef uniforms in the restaurant 
+food service hospitality industry.&quot;, &quot;If you work in the law 
+enforcement or security industry you will want to check out our prices on 
+security uniforms, police shirts, security pants, handcuffs, metal detectors, 
+and security badges.&quot;, &quot;We have amazing deals on uniforms for spa 
+resorts hotels as well as maid and housekeeping uniforms.&quot;, &quot;We also 
+offer dickies work shirts, work pants, coveralls, work uniforms, and other 
+industrial safety work wear including hi visibility and safety work 
+uniforms.&quot;) 'Code for Description Sentence A iUpper = UBound(DescA) iLower 
+= LBound(DescA) Randomize Timer For iLoop = iLower to iUpper iSwapPos = Int(Rnd 
+* (iUpper + 1)) varTmp = DescA(iLoop) DescA(iLoop) = DescA(iSwapPos) 
+DescA(iSwapPos) = varTmp Next Metataglist = Session(&quot;TempTitle&quot;) 
+&amp; &quot;. &quot; For iLoop = LBound(DescA) to UBound(DescA) MetaTagList = 
+MetaTagList &amp; DescA(iLoop) if iLoop=UBOUND(DescA)-1 then MetaTagList = 
+MetaTagList &amp; &quot; &quot; elseif iLoop=UBOUND(DescA) then MetaTagList = 
+MetaTagList &amp; &quot; &quot; else MetaTagList = MetaTagList &amp; &quot; 
+&quot; end if Next Session(&quot;TempDesc&quot;)=MetaTagList 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' 'Code for 
+Description Sentence B iUpper = UBound(DescB) iLower = LBound(DescB) Randomize 
+Timer For iLoop = iLower to iUpper iSwapPos = Int(Rnd * (iUpper + 1)) varTmp = 
+DescB(iLoop) DescB(iLoop) = DescB(iSwapPos) DescB(iSwapPos) = varTmp Next 
+Metataglist = &quot;&quot; For iLoop = LBound(DescB) to UBound(DescB) 
+MetaTagList = metataglist &amp; DescB(iLoop) if iLoop=UBOUND(DescB)-1 then 
+MetaTagList = MetaTagList &amp; &quot; &quot; elseif iLoop=UBOUND(DescB) then 
+MetaTagList = MetaTagList &amp; &quot; &quot; else MetaTagList = MetaTagList 
+&amp; &quot; &quot; end if Next 
+Session(&quot;TempDesc&quot;)=Session(&quot;TempDesc&quot;) &amp; MetaTagList 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' 'Code for 
+Description Sentence C iUpper = UBound(DescC) iLower = LBound(DescC) Randomize 
+Timer For iLoop = iLower to iUpper iSwapPos = Int(Rnd * (iUpper + 1)) varTmp = 
+DescC(iLoop) DescC(iLoop) = DescC(iSwapPos) DescC(iSwapPos) = varTmp Next 
+Metataglist = &quot;&quot; For iLoop = LBound(DescC) to UBound(DescC) 
+MetaTagList = metataglist &amp; DescC(iLoop) Next 
+Session(&quot;TempDesc&quot;)=Session(&quot;TempDesc&quot;) &amp; MetaTagList 
+'Code for Keywords iUpper = UBound(KeyW) iLower = LBound(KeyW) Randomize Timer 
+For iLoop = iLower to iUpper iSwapPos = Int(Rnd * (iUpper + 1)) varTmp = 
+KeyW(iLoop) KeyW(iLoop) = KeyW(iSwapPos) KeyW(iSwapPos) = varTmp Next 
+Metataglist = Session(&quot;TempTitle&quot;) &amp; &quot;, &quot; For iLoop = 
+LBound(KeyW) to UBound(KeyW) if iLoop&lt;&gt;UBOUND (KeyW) then MetaTagList = 
+metataglist &amp; KeyW(iLoop) &amp; &quot;, &quot; else MetaTagList = 
+metataglist &amp; KeyW(iLoop) end if Next 
+Session(&quot;TempTitle&quot;)=Session(&quot;TempTitle&quot;) end sub sub 
+header() %&gt; &lt;% maketitle() %&gt; ? Best Buy Uniforms offers wholesale, 
+discount prices on &lt;%=Session(&quot;TempTitle&quot;)%&gt;. Order 
+&lt;%=Session(&quot;TempTitle&quot;)%&gt; easily and securely online.&quot; 
+/&gt;, uniforms, work uniforms, chef uniforms, corporate uniforms, medical 
+uniform, chef uniform, apparel, nursing uniforms, polo shirts, chef wear, 
+dickies scrubs, security uniforms, linens, towels, aprons, maid uniforms, 
+housekeeping uniform, restaurant uniforms, attire, security uniforms, work 
+shirt, chef shoes, hotel uniforms, chef coat, chef jacket, formal wear, 
+hospital uniform, tunics, smocks, sweaters, business uniform, work pants&quot; 
+/&gt;  &iuml;&raquo;&iquest; 1-800-345-1924 CONTACT | LIVE CHAT | SIZING | 
+CATALOG | ORDER FORM | FAQs | RETURNS | SHOPPING CART <br>
+Uniforms <br>
+<br>
+
+<br> <br>
+ &iuml;&raquo;&iquest; <br>
+
+<ul> 
+<li>Career Uniforms 
+<ul> 
+<li>Basic Oxford Shirts</li> 
+<li>Caps 
+<ul> 
+<li>Camouflage Caps</li> 
+<li>Cotton Twill and Canvas Caps</li> 
+<li>Fleece Caps and Beanies</li> 
+<li>Flex Fit Caps</li> 
+<li>Full Brim Caps</li> 
+<li>Ladies Caps</li> 
+<li>Performance and Athletic Caps</li> 
+<li>Pigment and Garment Dyed Caps</li> 
+<li>Racing Caps</li> 
+<li>Safety Caps</li> 
+<li>Sandwich Bill and Contrast Trim Caps</li> 
+<li>Visors</li> 
+<li>Youth Caps</li> </ul> </li> 
+<li>Casual Dress Shirts</li> 
+<li>Dress Pants</li> 
+<li>Dress Shirts and Blouses 
+<ul> 
+<li>Banded Dress Shirts</li> 
+<li>Casual Dress Shirts</li> 
+<li>Oxford Shirts</li> </ul> </li> 
+<li>Oxford Shirts</li> 
+<li>Polo Shirts and Knit Shirts 
+<ul> 
+<li>100% Cotton Polo Shirts</li> 
+<li>Basic Polo Shirts</li> 
+<li>Cotton/Poly Blend Polo Shirts</li> 
+<li>Golf Apparel</li> 
+<li>Ladies Specialty Knit Polo Shirts</li> 
+<li>Long Sleeve Polo Shirts</li> 
+<li>Mock &amp; Turtlenecks</li> 
+<li>Organic Polo Shirts</li> 
+<li>Performance Fabric Polo Shirts</li> 
+<li>Polo Shirts with Pocket</li> 
+<li>Premium Knit Polo Shirts</li> 
+<li>Silk Touch Polo Shirts</li> 
+<li>Tall Polo Shirts</li> 
+<li>Workwear Pique Polo Shirts</li> 
+<li>Youth Polo Shirts</li> </ul> </li> 
+<li>Twill Shirts | Denim Shirts | Sport Shirts 
+<ul> 
+<li>100% Cotton Sport and Twill Shirts</li> 
+<li>Cotton/Poly Blend Shirts</li> 
+<li>Denim Shirts</li> 
+<li>Easy Care Shirts</li> 
+<li>Fishing Shirts</li> 
+<li>Tall Shirts</li> 
+<li>Workwear Shirts</li> 
+<li>Youth Shirts</li> </ul> </li> </ul> </li> </ul> 
+<ul> 
+<li>Chef Uniforms 
+<ul> 
+<li>Chef Coats 
+<ul> 
+<li>100% Cotton Chef Coats</li> 
+<li>AMAZING Deals On Designer Chef Coats!</li> </ul> </li> 
+<li>Chef Hats </li> 
+<li>Chef Pants | Cook Pants | Kitchen Pants</li> 
+<li>Chef Shirts | Cook Shirts | Kitchen Shirts </li> 
+<li>Chef Uniforms For Women</li> 
+<li>Cook Kitchen and Chef Accessories 
+<ul> 
+<li>Chef Knives</li> </ul> </li> 
+<li>Neckerchiefs </li> 
+<li>xTemporarily Discontinued Best Prices On Dickies Chef Uniforms! 
+<ul> 
+<li>Dickies Chef Coats</li> 
+<li>Dickies Chef Pants</li> </ul> </li> </ul> </li> </ul> 
+<ul> 
+<li>Work Uniforms 
+<ul> 
+<li>Cornerstone &amp; Port Authority Workwear 
+<ul> 
+<li>Aprons</li> 
+<li>Cornerstone and Port Authority Industrial Work Shirts</li> 
+<li>Cornerstone Medical Uniforms and Scrubs</li> 
+<li>Industrial Work Pants</li> 
+<li>Ladies Workwear</li> 
+<li>Safety Uniforms and Hi-Visibility Clothing</li> 
+<li>Work Jackets</li> </ul> </li> 
+<li>Coveralls and Overalls 
+<ul> 
+<li>Dickies Coveralls</li> 
+<li>Red Kap Coveralls and Overalls </li> </ul> </li> 
+<li>Industrial Work Pants </li> 
+<li>Industrial Work Shirts 
+<ul> 
+<li>Red Kap Work Shirts </li> </ul> </li> 
+<li>Jackets and Work Coats Dickies 
+<ul> 
+<li>Dickies Denim Jackets and Coats </li> 
+<li>Dickies Duck Jackets and Coats</li> </ul> </li> 
+<li>Outerwear 
+<ul> 
+<li>Athletic Outerwear</li> 
+<li>Camouflage Outerwear</li> 
+<li>Corporate Jackets</li> 
+<li>Denim Jackets</li> 
+<li>Insulated Jackets</li> 
+<li>Leather Suede and Wool Jackets</li> 
+<li>Parkas Shell Jackets and Systems</li> 
+<li>Poly Fleece Jackets</li> 
+<li>Soft Shell Jackets</li> 
+<li>Vests</li> 
+<li>Wind Shirts</li> 
+<li>Workwear Jackets</li> 
+<li>Youth Jackets</li> </ul> </li> 
+<li>Painter Uniforms Dickies</li> 
+<li>Polo Work Shirts Red Kap</li> 
+<li>Rainwear</li> 
+<li>Safety ANSI Hi Visibility Work Uniforms</li> 
+<li>Safety ANSI Work Wear Accessories and Vests</li> </ul> </li> </ul> 
+<ul> 
+<li>Formal Wear 
+<ul> 
+<li>Designer and Formal Vests 
+<ul> 
+<li>Deluxe Designer Vests</li> </ul> </li> 
+<li>Dress Shirts and Blouses 
+<ul> 
+<li>Banded Dress Shirts</li> 
+<li>Casual Dress Shirts</li> 
+<li>Oxford Shirts</li> </ul> </li> 
+<li>Neckties Cummerbunds and Bow Ties 
+<ul> 
+<li>Bow Ties</li> 
+<li>Cummerbunds</li> 
+<li>Neckties</li> </ul> </li> 
+<li>Serving Gloves</li> 
+<li>Suit Coats and Blazers</li> 
+<li>Suit Pants and Skirts 
+<ul> 
+<li>Mens Suit Pants</li> 
+<li>Skirts and A-Line Skirts</li> 
+<li>Womens Suit Pants</li> </ul> </li> 
+<li>Tuxedo Pants </li> 
+<li>Tuxedo Shirts </li> </ul> </li> </ul> 
+<ul> 
+<li>Medical Uniforms 
+<ul> 
+<li>Cherokee Nursing Uniforms &amp; Medical Scrubs 
+<ul> 
+<li>Cherokee Empire Waist Tunic Top Prints</li> 
+<li>Cherokee Halloween Scrub Tops</li> 
+<li>Cherokee Mock Wrap Tunic Top Prints</li> 
+<li>Cherokee V-neck Tunic Prints</li> 
+<li>Cherokee Whites and Lab Coats</li> 
+<li>Cherokee Womens Shoes</li> </ul> </li> 
+<li>Dickies Medical Scrubs &amp; Nursing Uniforms 
+<ul> 
+<li>Dickies Everyday Scrubs</li> 
+<li>Dickies Hip Flip Scrubs</li> 
+<li>Dickies Mens Scrubs</li> </ul> </li> 
+<li>EWC Nursing Uniform Scrub Tops &amp; Medical Tunics</li> 
+<li>Landau Medical Scrubs &amp; Nursing Uniforms 
+<ul> 
+<li>Landau Mens Medical Uniforms</li> 
+<li>Landau Unisex Medical Uniforms</li> 
+<li>Landau Womens Medical Uniforms</li> </ul> </li> 
+<li>Medical Lab Coats 
+<ul> 
+<li>Cherokee Whites and Lab Coats</li> </ul> </li> 
+<li>Nursing Dresses</li> 
+<li>Nursing Smocks</li> 
+<li>Nursing Uniform Scrub and Hospital Pants</li> </ul> </li> </ul> 
+<ul> 
+<li>Housekeeping Uniforms 
+<ul> 
+<li>Hotel and Housekeeping Service Pants</li> 
+<li>Hotel and Housekeeping Service Shirts</li> 
+<li>Housekeeping Dresses and Hotel Service Tunics</li> </ul> </li> </ul> 
+<ul> 
+<li>Security and Police Uniforms 
+<ul> 
+<li>Accessories Security</li> 
+<li>Security Guard and Police Pants</li> 
+<li>Security Guard and Police Shirts </li> 
+<li>Security Officer Badges</li> 
+<li>Security Officer Patches</li> </ul> </li> </ul> 
+<ul> 
+<li>Spa and Salon Uniforms 
+<ul> 
+<li>Spa / Salon Jackets</li> 
+<li>Spa / Salon Vests</li> 
+<li>Spa / Salon Wraps</li> </ul> </li> </ul> 
+<ul> 
+<li>T-Shirts Activewear &amp; Casual 
+<ul> 
+<li>Activewear and T-shirts 
+<ul> 
+<li>100% Cotton T-shirts</li> 
+<li>50/50 T-shirts</li> 
+<li>Jerseys</li> 
+<li>Long Sleeve T-shirts</li> 
+<li>Organic T-shirts</li> 
+<li>Performance Fabric T-shirts</li> 
+<li>Pigment-Dyed T-shirts</li> 
+<li>Ringer Tees</li> 
+<li>Shorts</li> 
+<li>T-shirts with Pocket</li> 
+<li>Tanks</li> 
+<li>Tie-Dye T-shirts</li> 
+<li>Youth T-shirts</li> </ul> </li> 
+<li>Camp Shirts 
+<ul> 
+<li>Island Camp Shirts</li> </ul> </li> 
+<li>Fleece Jackets | Sweatshirts | Sweatpants 
+<ul> 
+<li>Crewneck Sweatshirts</li> 
+<li>Heavyweight Sweatshirts</li> 
+<li>Jackets and Hooded Sweatshirts Full Zip 1/2 -Zip &amp; 1/4-Zip</li> 
+<li>Ladies Jackets and Hooded Sweatshirts</li> 
+<li>Performance Sweatshirts</li> 
+<li>Pullover Hoods</li> 
+<li>Sweatpants</li> </ul> </li> 
+<li>Scarves and Gloves</li> 
+<li>Shorts - Mens</li> 
+<li>Shorts - Womens</li> 
+<li>Totes - Bags - Duffels - Briefs - Coolers 
+<ul> 
+<li>Backpacks</li> 
+<li>Briefcases/Messengers</li> 
+<li>Cinch Packs</li> 
+<li>Coolers</li> 
+<li>Duffels</li> 
+<li>Golf Bags</li> 
+<li>Grocery Totes</li> 
+<li>Organic</li> 
+<li>Totes/Specialty Bags</li> 
+<li>Travel Bags</li> </ul> </li> 
+<li>Towels - Blankets - Golf Towels - Robes 
+<ul> 
+<li>Blankets</li> 
+<li>Golf Towels</li> 
+<li>Infant/Toddler</li> 
+<li>Robes/Towels</li> </ul> </li> </ul> </li> </ul> Promotional Products <br>
+
+<ul> 
+<li>Aprons 
+<ul> 
+<li>Bar Aprons</li> 
+<li>Bib Aprons 
+<ul> 
+<li>Pattern - Bib Aprons</li> </ul> </li> 
+<li>Bistro Aprons</li> 
+<li>Formal Aprons</li> 
+<li>Busboy/Dishwasher Aprons</li> 
+<li>Cornerstone and Port Authority Work Aprons</li> 
+<li>Deluxe Waist Aprons</li> </ul> </li> </ul> Towels <br>
+<br>
+
+<ul> 
+<li>Industrial Work Shirts 
+<ul> 
+<li>Red Kap Work Shirts</li> </ul> </li> </ul> 
+<ul> 
+<li>Polo Shirts 
+<ul> 
+<li>100% Cotton Polo Shirts</li> 
+<li>Basic Polo Shirts</li> 
+<li>Cotton/Poly Blend Polo Shirts</li> 
+<li>Golf Apparel</li> 
+<li>Ladies Specialty Knit Polo Shirts</li> 
+<li>Long Sleeve Polo Shirts</li> 
+<li>Mock &amp; Turtlenecks</li> 
+<li>Organic Polo Shirts</li> 
+<li>Performance Fabric Polo Shirts</li> 
+<li>Polo Shirts with Pocket</li> 
+<li>Premium Knit Polo Shirts</li> 
+<li>Silk Touch Polo Shirts</li> 
+<li>Tall Polo Shirts</li> 
+<li>Workwear Pique Polo Shirts</li> 
+<li>Youth Polo Shirts</li> </ul> </li> </ul> Oxford Shirts <br>
+
+<ul> 
+<li>Dress Shirts and Blouses 
+<ul> 
+<li>Banded Dress Shirts</li> 
+<li>Casual Dress Shirts</li> 
+<li>Oxford Shirts</li> </ul> </li> </ul> 
+<ul> 
+<li>Cherokee Nursing Scrubs 
+<ul> 
+<li>Cherokee Empire Waist Tunic Top Prints</li> 
+<li>Cherokee Halloween Scrub Tops</li> 
+<li>Cherokee Mock Wrap Tunic Top Prints</li> 
+<li>Cherokee V-neck Tunic Prints</li> 
+<li>Cherokee Whites and Lab Coats</li> 
+<li>Cherokee Womens Shoes</li> </ul> </li> </ul> 
+<ul> 
+<li>Chef Coats 
+<ul> 
+<li>100% Cotton Chef Coats</li> 
+<li>AMAZING Deals On Designer Chef Coats!</li> </ul> </li> </ul> Work Pants 
+<br> 
+<ul> 
+<li>Outerwear 
+<ul> 
+<li>Athletic Outerwear</li> 
+<li>Camouflage Outerwear</li> 
+<li>Corporate Jackets</li> 
+<li>Denim Jackets</li> 
+<li>Insulated Jackets</li> 
+<li>Leather Suede and Wool Jackets</li> 
+<li>Parkas Shell Jackets and Systems</li> 
+<li>Poly Fleece Jackets</li> 
+<li>Soft Shell Jackets</li> 
+<li>Vests</li> 
+<li>Wind Shirts</li> 
+<li>Workwear Jackets</li> 
+<li>Youth Jackets</li> </ul> </li> </ul> <br>
+
+<ul> 
+<li>Sweaters 
+<ul> 
+<li>Best Selling Sweaters</li> 
+<li>Mens Cotton Sweaters</li> 
+<li>Port Authority and Red House Sweaters</li> 
+<li>Womens Cotton Sweaters</li> </ul> </li> </ul> 
+<ul> 
+<li>Table Linens 
+<ul> 
+<li>Banquet Cloths</li> 
+<li>Napkins</li> 
+<li>Tablecloths</li> </ul> </li> </ul> 
+<ul> 
+<li>Table Skirting 
+<ul> 
+<li>Clips</li> 
+<li>Stretch Fabric Table Skirting</li> 
+<li>Tableskirting </li> </ul> </li> </ul> Custom Logo Apparel <br>
+
+<ul> 
+<li>Dickies School Uniforms 
+<ul> 
+<li>Backpacks</li> 
+<li>Limited Supply School Uniforms Sale</li> 
+<li>School Pants</li> 
+<li>School Shirts</li> </ul> </li> </ul> Hotel Training Videos <br>
+Food 
+Service DVDs <br>
+Restaurant Hospitality Books <br>
+<br>
+<br>
+<br>
+About Us <br>
+Our Clients <br>
+Company Stores <br>
+Return Policies <br>
+Career Opportunities 
+<br> Testimonials <br>
+Site Map <br>
+<br>
+Nursing Resources <br>
+Culinary 
+Resources <br>
+Chef and Cooking Articles <br>
+Nursing and Medical Articles <br>
+
+Police and Security Articles <br>
+Business and Work Articles <br>
+<br>
+<br>
+<br>
+ &iuml;&raquo;&iquest;  Why Best Buy?  When we say we are the one stop shop for 
+all of your uniform requirements; we really mean it. We offer hundreds of 
+quality products geared towards meeting the expectations of every type of 
+uniform requirement. In addition, we don&rsquo;t stock our shelves with the 
+same old uniforms and then walk away and forget it. We continually stock our 
+shelves with the latest popular styles so that our customers have the best on 
+the market to choose from. The best part of all, at Bestbuyuniforms.com we work 
+hard to ensure affordability. We know that if you pay less for great quality 
+you will make us your one stop shop.<br>
+<br>
+<em>At Bestbuyuniforms.com we 
+offer first class service to all of our customers. We cater to the lone 
+individual, the smallest of businesses, and the major corporate chains as well. 
+Whether you are ordering a couple of our quality uniforms or a couple hundred; 
+your order will be professionally handled with care.</em> <br>
+<br>
+ We offer 
+discount prices on &lt;%=Session(&quot;TempDesc&quot;)%&gt;<br>
+<br>
+ Best of 
+all you can place your order securely, quickly and easily right on our website 
+where most orders are processed and shipped out within 24 hours if they are in 
+stock.  Best Buy Uniforms and Promos&trade;  500 East 8th Avenue <br>
+ 
+Homestead PA, 15120-1904 USA<br>
+<br>
+ Telephone <br>
+ Toll-Free: 1.800.345.1924
+<br> Local: 412.461.4600 <br>
+ Fax: 412.461.4016 <br>
+<br>
+ Email <br>
+
+customer-service<br>
+ @bestbuyuniforms.com <br>
+<br>
+ Showroom Hours <br>
+ 
+Monday - Friday<br>
+ 8:30am - 5pm <br>
+<br>
+<br>
+<br>
+ &lt;% end sub sub 
+footer() %&gt;  &iuml;&raquo;&iquest;  &copy; 2011 Best Buy Uniforms and 
+Promos&trade; <br>
+<br>
+ &lt;% 'close the db connection if dbopen then ' 
+db.Close Set db = Nothing end if end sub function checkfile(file) image = file 
++ &quot;.jpg&quot; fullpath = Server.MapPath(&quot;/images/products/&quot; 
+&amp; image) set fs=Server.CreateObject(&quot;Scripting.FileSystemObject&quot;) 
+if fs.FileExists(fullpath)=true then checkfile = true else checkfile = false 
+end if set fs=nothing end function sub errorpage(message) 'header() 
+response.write(&quot; error &quot;) response.write(&quot; 
+<h2>an error has occured</h2>&quot;) response.write(&quot; 
+<p>&quot; &amp; message &amp; &quot;</p>&quot;) footer() response.end end sub 
+%&gt; &lt;% call header() %&gt; Wusthof Knife Sets <br>
+click here to go to our 
+new website search&nbsp; <br>
+1.800.345.1924&nbsp;&nbsp;|&nbsp;&nbsp; 
+testimonials&nbsp;|&nbsp;&nbsp; free catalog&nbsp;|&nbsp;&nbsp; shopping cart
+&nbsp;&nbsp;&nbsp; <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<ul> 
+<li>Career Uniforms Corporate Attire<br>
+ Casual Dress Shirts &amp; Dress Pants
+</li>
+<li>Business Accessories </li>
+<li>Polos T-Shirts Hats &amp; Jackets </li>
+<li>Formal Wear Tuxedo Dress Shirts<br>
+ Ties Skirts Vests Blazers &amp; Suits 
+</li>
+<li>Chef Uniforms Chef Coats<br>
+ Chef Pants &amp; Cook Shirts </li>
+<li>Aprons - Bib Bar Bistro Waist<br>
+ Restaurant &amp; Moneypouch </li>
+<li>Work Uniforms Coveralls Jackets<br>
+ Coats Dickies Work Shirts &amp; Pants 
+</li>
+<li>Dickies Painter Uniforms </li>
+<li>Medical Scrubs Lab Coats <br>
+ Smocks &amp; Nursing Uniforms </li>
+<li>Table Linens Tablecloths<br>
+ Napkins &amp; Banquet Cloths </li>
+<li>Towels </li>
+<li>Table Skirting</li> 
+<li>Security Uniforms &amp; Police Shirts</li> 
+<li>Housekeeping &amp; Maid Uniforms </li> 
+<li>Dickies School Uniforms </li> 
+<li>Clearance Uniforms and Items </li> 
+<li>Hospitality Food Service Chef<br>
+ and Restaurant Training Videos </li> 
+<li>Hotel and Resort Training DVDs </li> 
+<li>Spa Uniforms &amp; Salon Apparel </li> 
+<li>NEW Sweaters </li> </ul> <br>
+<br>
+<br>
+<br>
+
+<p> Our prices are as much as 50% off competitors prices for some of the same 
+exact uniforms take a look for yourself!<br>
+<br>
+ We have a large variety of 
+to fulfill all of our customers needs.<br>
+<br>
+ We offer hundreds of products 
+including chef coats, chef hats, chef pants, chef uniforms, chef aprons, towels 
+and restaurant accessories in the food service hospitality industry. We just 
+added a large variety of mens and womens sweaters for the holiday christmas 
+season be sure to check back for more holiday deals! We have a large variety of 
+cook shirts dickies chef uniforms and cook pants at a wholesale price. We also 
+offer a wide variety of hotel uniforms and restaurant formal wear, dress 
+shirts, dress pants, vests, tuxedo shirts, suits, skirts, blazers, ties. If 
+you're in the medical or nursing field we have you covered too with great deals 
+on dickies medical scrubs, lab coats, smocks, tunics and more. We now offer 
+Landau nursing uniforms as well as economy nursing uniform scrubs. We also 
+offer uniforms for spa resorts hotels (maid housekeeping) and security. We have 
+great deals on red kap, dickies, and professional work shirts, work pants, 
+coveralls, hi visibility safety work wear and other industrial work uniforms. 
+We offer an amazing price on bib aprons, bar aprons, waist aprons, restaurant 
+and chef aprons. If you are looking for linens we have you covered on those as 
+well with restaurant tablecloths, napkins and banquet cloths.<br>
+<br>
+ Best of 
+all you can place your order securely, quickly and easily right on our website 
+where most orders are processed and shipped out within 24 hours if they are in 
+stock.</p> 
+<p>&nbsp;</p> 
+<p>&nbsp;</p> 
+<p>&nbsp;</p> <br>
+<br>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+Best Buy Uniforms Sitemap <br>
+<br>
+Chef &amp; 
+Cooking Tips<br>
+Nursing and Medical Tips<br>
+Police and Security Tips<br>
+
+Business &amp; Work Uniform Tips<br>
+<br>
+</p> <br>
+
+<p><b>Wusthof Knife Sets <br>
+</b> <br>
+</p> 
+<p><b>Wusthof 3-pc. Silverpoint Paring Knife Set</b></p> 
+<p>Wusthof, manufacturers of quality cutlery, offers a Paring Knife Set that's 
+both affordable and functional. This 3-pc. Set is designed for all the special 
+needs that a small blade meets, such as coring, paring, styling, decorating, 
+scoring and mincing. The molded handle resembles that of the Grand Prix line 
+and adds comfort to kitchen performance. The stainless blade, while not hand 
+forged, will perfectly suit beginning cooks or the occasional gourmet.</p> <br>
+
+<br> &nbsp; <br>
+
+<p><b>Wusthof 3-pc. Gourmet Paring Knife Set</b></p> 
+<p>Wusthof brings you this trio of knives at an incredible price too good to 
+pass up! From their Gourmet line, the set includes one straight paring knife, 
+one traditional paring knife and one Bird's Beak peeling knife for all your 
+cutting needs. The &quot;Gourmet&quot; series by Wusthof is their entry level 
+line of cutlery, featuring full tangs with non-forged blades of high-carbon, 
+rust-free alloy. The lightweight knives have high-impact plastic handles 
+secured to the knives with three stainless steel rivets. Razor sharp cutting 
+performance at affordable prices.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 2-pc. Silverpoint Cheese Knife Set</b></p> 
+<p>Wusthof's Cheese Set includes two instruments for cutting a number of 
+cheeses - the perfect accessories for your next cocktail party. Included in the 
+set is a 4.75-in. long cheese knife for cutting wedges of Gruy&egrave;re and 
+Gouda; the etched sides deter semi-soft cheeses from sticking, and the stepped 
+handle elevates your hand as you slice downward. Paired with it is the classic 
+cutter that slices your cheeses into thin, square shapes.</p> <br>
+<br>
+&nbsp; 
+<br> 
+<p><b>Wusthof 4-pc. Steak Knife Set with Aluminum Case</b></p> 
+<p>Instead of the wood-handled steak knives that you see so much of, how about 
+a stylishly new steak knife set in stainless steel? From Wusthof, these four 
+knives are crafted of 18/10 stainless steel with serrated edges and polished 
+handles. With their brilliant shine, the knives will blend beautifully with 
+your finest flatware. The set makes a wonderful gift, too, presented in the 
+handsome storage case.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 4-pc. Gourmet Steak Knife Set</b></p> 
+<p>For the true steak aficionado, this set of knives is the ultimate culinary 
+gift. Part of Wusthof's Gourmet line of cutlery, these quality steakhouse 
+knives are substantial in size - just right for carving steaks and chops, hot 
+off the grill. The knives feature full tangs with non-forged blades of 
+high-carbon, rust-free alloy. The lightweight knives have high-impact, plastic 
+handles securely riveted in three places.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 2-pc. Gourmet Asian Cook's Set, Hollow Edge</b></p> 
+<p>Every element of this renowned cutlery contributes to its precision and 
+ease of use. The high-carbon stainless steel blades are hardened to maintain a 
+sharp edge, and full tangs provide perfect balance with riveted, high-impact 
+composition handles. This Asian Cook's Set works well for preparing traditional 
+Asian fare and much more. The blade and shape on the 6.5-in. Santoku knife, 
+similar to the Japanese Cook's Knife, is just right for slicing sushi and 
+sashimi paper-thin. The hollow indents in the blade allow food to slide right 
+off without sticking. Also works well when dicing onions or other vegetables. 
+The 3-in. Paring Knife is ideal for making precise cuts and incisions and for 
+small chopping jobs. Core apples, tomatoes and more. Use it to make fancy and 
+fun cuts in vegetables for beautiful presentations.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 8-pc. Steak Knife Set with Wood Case</b></p> 
+<p>This dark wood case is home to a collection of quality-made steak knives 
+from Wusthof. In all, there are eight knives, crafted of 18/10 stainless steel 
+with serrated edges and polished handles. With their brilliant shine, the 
+knives will blend beautifully with your finest flatware. The set makes a 
+wonderful gift, too, presented in the handsome storage case.</p> <br>
+<br>
+
+&nbsp; <br>
+
+<p><b>Wusthof 7-pc. Gourmet Steak Knife Block Set</b></p> 
+<p>Handsome and precise, these razor-sharp Steak Knives by Wusthof Gourmet 
+easily cut the thickest steaks and chops. Made of the highest quality 
+high-carbon stainless steel to hold a sharp edge and resist stains and rust. 
+Full tangs provide maximum safety and perfect balance, and the durable riveted 
+handles are dishwasher-safe. Set of 6 comes in its own wooden storage block for 
+safety and easy access.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 2-pc. Classic Black Asian Cook's Set, Hollow Edge</b></p> 
+<p>Every element of the Wusthof Classic cutlery contributes to its precision 
+and ease of use. In Solingen, Germany, each piece is hand-forged in 38 
+manufacturing steps by skilled craftsmen. The high-carbon stainless steel 
+blades are hardened to maintain a sharp edge and full tangs provide perfect 
+balance with riveted, high-impact composition handles.This Asian Cook's Set 
+works well for preparing traditional Asian fare and much more. The blade and 
+shape on the 6.5-in. Santoku knife, similar to the Japanese Cook's Knife, is 
+just right for slicing sushi and sashimi paper-thin. The hollow indents in the 
+blade allow food to slide right off without sticking. Also works well when 
+dicing onions or other vegetables. The 3-in. Paring Knife is ideal for making 
+precise cuts and incisions and for small chopping jobs. Core apples, tomatoes 
+and more. Use it to make fancy and fun cuts in vegetables for beautiful 
+presentations. For lasting performance, use your steel to sharpen knives before 
+each use.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 4-pc. Classic Black Steak Knife Set</b></p> 
+<p>These Classic Black knives go well with your elegant Filet Mignon or 
+Porterhouse steaks. This steak knife set by Wusthof also makes a great gift for 
+the meat lover in your family. The steak knives are hand-forged in 38 
+manufacturing steps by skilled craftsmen. The high-carbon stainless steel 
+blades are hardened to maintain a sharp edge, and full tangs provide perfect 
+balance with riveted, high-impact composition handles.</p> <br>
+<br>
+&nbsp; <br>
+<p><b>Wusthof 3-pc. Classic Black Starter Set</b></p> 
+<p>This 3-pc. Classic knife set is all you need to get started in the kitchen. 
+If you're looking for the basics for food prep, each knife will work to your 
+expectations and more, ensuring precision cutting, slicing and chopping. Set 
+includes: 3.5-in Paring Knife , 6-in. Sandwich Knife , 8-in. Chef's Knife . 
+Prized possessions of professional chefs, Wusthof knives are an invaluable 
+asset of any kitchen. Every element of this renowned Classic cutlery 
+contributes to its precision and ease of use. In Solingen, Germany, each piece 
+is hand-forged in 38 manufacturing steps by skilled craftsmen. The high-carbon 
+stainless steel blades are hardened to maintain a sharp edge and full tangs 
+provide perfect balance with riveted, high-impact composition handles.</p> <br>
+
+<br> &nbsp; <br>
+
+<p><b>Wusthof 4-pc. Classic Black Steak Knife Set with Aluminum Case</b></p> 
+<p>This set of four, 4.5-in. steak knives is essential for anyone who grills 
+or appreciates a fine filet of meat. The brushed aluminum case is padded on the 
+inside for safe storing and has a handsome latch closure. The set makes a 
+stunning gift for any gourmet. Prized possessions of professional chefs, 
+Wusthof knives are an invaluable asset in any kitchen. Every element of this 
+renowned cutlery contributes to its precision and ease of use. In Solingen, 
+Germany, each piece is hand-forged in 38 manufacturing steps by skilled 
+craftsmen. The high-carbon stainless steel blades are hardened to maintain a 
+sharp edge and full tangs provide perfect balance with riveted, high-impact 
+composition handles.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 4-pc. Grand Prix II Steak Knife Set with Aluminum Box</b></p> 
+<p>Treat yourself to the finest quality steak knives, designed for everything 
+from a well-grilled Porterhouse to roasted poultry. It easily slices through 
+thicker cuts so you can enjoy every last bite. Each Grand Prix II knife is 
+precision forged of a single blank of high carbon stainless steel, skillfully 
+honed by hand twice. The perfectly balanced tool features molded handles that 
+are slip resistant and completely hygienic. An update to the original line, the 
+Wusthof Grand Prix II knives offer more ergonomically designed handles combined 
+with the high quality and contemporary good looks chef's desire.</p> <br>
+<br>
+
+&nbsp; <br>
+
+<p><b>Wusthof 4-pc. Classic Black Mignon Steak Knife Set with Aluminum Case</b>
+</p> 
+<p>For your fine cuts of meat like filet mignon, the world's finest cutlery 
+set. Contained in this brushed aluminum storage box are four special mignon 
+knives, made of high-carbon, stainless steel with unique, hook-shaped blades 
+that pierce and slice with elegance and ease. Part of Wusthof's classic series, 
+the fully-forged knives are hand-forged by skilled craftsmen in Solingen, 
+Germany. The full tang knives provide the perfect balance while the 
+high-impact, composition handles are triple-riveted for added and lasting 
+durability.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 6-pc. Classic Black Steak Knife Set</b></p> 
+<p>Handsome and precise, these razor-sharp Steak Knives by Wusthof Classic 
+easily cut the thickest steaks and chops. Made of the highest quality 
+high-carbon stainless steel to hold a sharp edge and resist stains and rust, 
+every Wusthof knife is hand-forged in 38 manufacturing steps by skilled 
+craftsmen in Solingen, Germany. Full tangs provide maximum safety and perfect 
+balance, and the durable riveted handles are dishwasher-safe. Set of 6.</p> <br>
+<br> &nbsp; <br>
+
+<p><b>Wusthof 5-pc. Classic Black Professional Chef's Knife Set</b></p> 
+<p>Prized possessions of professional chefs, Wusthof knives are an invaluable 
+asset of any kitchen. The 5-piece Pro Chef's Classic Cutlery Set from Wusthof 
+Includes: 3.5-in. Paring Knife , 8-in. Chef's Knife , 5-in. Boning Knife , 
+10-in. Sharpening Steel , Cordura Roll, with pockets for storing and protecting 
+knives and taking them on the road. . Every element of this renowned cutlery 
+contributes to its precision and ease of use. In Solingen, Germany, each piece 
+is hand-forged in 38 manufacturing steps by skilled craftsmen. The high-carbon 
+stainless steel blades are hardened to maintain a sharp edge and full tangs 
+provide perfect balance with riveted, high-impact composition handles.</p> <br>
+
+<br> &nbsp; <br>
+
+<p><b>Wusthof 6-pc. Classic Black Mignon Steak Knife Set</b></p> 
+<p>These specialty knives from Wusthof are defined by their unique, 
+hook-shaped blades that pierce and slice elegant filet mignons as well as thick 
+pork chops and other meats. They're part of the Classic series, a harmonious 
+blend of precision cutting performance, integrity of materials, safety and 
+comfort. Prized possessions of professional chefs, Wusthof knives are an 
+invaluable asset in any kitchen. Made in Solingen, Germany, each cutting 
+utensil is hand-forged by skilled craftsmen following a 38-step manufacturing 
+process. The high-carbon stainless steel blades are hardened to maintain a 
+sharp edge for exact and precise cutting. Full tangs provide perfect balance 
+while the high-impact composition handles are triple-riveted for added 
+durability.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 6-pc. Classic Black Cook's Set</b></p> 
+<p>Prized possessions of professional chefs, Wusthof knives are an invaluable 
+asset of any kitchen. The 6-piece Classic Cook's Set from Wusthof Includes: 
+4-in. Paring Knife , 8-in. Chef's Knife , 8-in. Bread Knife , 9-in. Slicer , 
+9-in. Sharpening Steel , 5-in. Boning. Every element of this renowned cutlery 
+contributes to its precision and ease of use. In Solingen, Germany, each piece 
+is hand-forged in 38 manufacturing steps by skilled craftsmen. The high-carbon 
+stainless steel blades are hardened to maintain a sharp edge and full tangs 
+provide perfect balance with riveted, high-impact composition handles.</p> <br>
+
+<br> &nbsp; <br>
+
+<p><b>Wusthof 8-pc. Classic Black Mignon Steak Knife Set with Aluminum Case</b>
+</p> 
+<p>Even with tender cuts of meat, like filet mignon, you'll want a sharp knife 
+for serving and savoring each bite. This 8-pc. steak set allows you and family 
+or friends to enjoy a delicious steak or roast without fuss, and it comes in an 
+attractive brushed aluminum case, only from Wusthof. Makes a nice gift for the 
+gourmet on your list. Part of the Classic series, these knives, made in 
+Solingen, Germany, are hand-forged in 38 manufacturing steps by skilled 
+craftsmen. The high-carbon stainless steel blades are hardened to maintain a 
+sharp edge and full tangs provide perfect balance with riveted, high-impact 
+composition handles.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 8-pc. Culinar Steak Knife Set with Aluminum Case</b></p> 
+<p>Exciting looks in cutlery, Wusthof's Culinar series melds masterfully-made 
+blades with dynamic, 18/10 stainless steel handles. Detailed with a brushed 
+finish on the contoured handles, the 4.5-in. steak knives are hand-forged by 
+skilled craftsmen following a 38-step manufacturing process. The high-carbon 
+stainless steel blades are hardened to maintain a sharp edge for exact and 
+precise cutting. Full tangs provide perfect balance. The set of eight knives 
+comes with an aluminum case, padded inside with a latch on the outside for 
+added protection.</p> <br>
+<br>
+&nbsp; <br>
+
+<p><b>Wusthof 20-pc. Complete Cutlery Attache Set</b></p> 
+<p>For the serious chef who cooks on the road, at demos, in school and at 
+home, consider this Wusthof Super Chef's Attache Set. This set, made up of 
+cutlery from the Classic and Gourmet collection, contains everything you need 
+for preparing hors d'oeuvres to desserts. 20-pc. set includes: 2.75-in. Bird's 
+Beak Peeler Gourmet, 4-in. Paring Knife Gourmet, 4-in. Offset Decorating Knife, 
+6-in. Flexible Fillet Knife, 8-in. Chef's Knife, 9-in. Slicer, 6-in. Fork 
+Gourmet, 5-in. Boning Gourmet, 10-in. Spatula, 10-in. Confectioner's Knife 
+Gourmet, 11-in. Salmon Slicer Gourmet, 10-in. Sharpening Steel, Lemon Zester, 
+Channel Knife, Double Melon Baller, Apple Corer, 2 Larding Needles &amp; 1 
+Trussing Needle. Prized possessions of professional chefs, Wusthof knives are 
+an invaluable asset of any kitchen. Every element of this renowned cutlery 
+contributes to its precision and ease of use. In Solingen, Germany, each piece 
+is hand-forged in 38 manufacturing steps by skilled craftsmen. The high-carbon 
+stainless steel blades are hardened to maintain a sharp edge and full tangs 
+provide perfect balance with riveted, high-impact composition handles.</p> <br>
+
+<br> &nbsp; <br>
+&nbsp; <br>
+&nbsp; <br>
+&nbsp; <br>
+&nbsp; <br>
+<br>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p> Best Buy Uniforms offers the 
+lowest prices and highest quality chef uniforms, chef apparel, chef wear , chef 
+coats, chef jackets, chef aprons, chef hats, chef gloves, chef pants, chef 
+knives, discount chef pants, baggy chef pants, affordable chef pants, custom 
+chef pants in corporate U.S.A. In addition to the best corporate, chef, 
+nursing, and work uniforms, Best Buy Uniforms offers custom corporate 
+embroidered and silk screened logos for your uniforms. Discount chef knives, 
+bulk chef knives, affordable chef knives, wholesale chef knives, quality chef 
+knives, low cost chef knives. <br>
+<br>
+
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p> 
+<h1>Choosing the Right Kitchen Cutlery&nbsp;&nbsp;<em> by Johnny Shaw</em></h1>
+<br> 
+<p>Kitchen knives come in all sizes and shapes. Each small variation results 
+in a different use. There are long ones, short ones, wide ones, narrow ones, 
+curved ones, angled ones and the list goes on and on. They are made from carbon 
+steel, stainless steel, stamped steel ceramic or even plastic. The better 
+knives are balanced so as they are being used they do not feel awkward. By 
+awkward I mean they feel heavy or light at the pointed end. Proper balance 
+eases the strain on the user. Grips or handles have made great advances further 
+easing the strain on the user. Sharpness is also a key factor in easing the 
+strain on the user. The type of edge used for a particular cutting or slicing 
+project is very important.</p>
+<p>Styles </p>
+<p>The size and shape of the knife determines its primary use. The cook's or 
+chef's knife is used for the heavy duty cutting needed in the kitchen. It is 
+normally a longer, heavy constructed knife that will handle the abuse of the 
+overzealous cook. Slicing, dicing, and chopping are some of the primary uses of 
+the cook's knife. The slicing knife is for use in slicing food such as ham or 
+large cuts of meat. The Bread knife normally has a thin serrated blade. The 
+serrated blade allows it to easily slice through a loaf of bread or a tomato 
+without crushing or tearing. The steak knife is normally a smaller version of 
+the slicing knife, designed for individual use. The knife used most often by 
+any cook is the paring knife. It is a small knife that is easy to handle and 
+can be used for cutting, peeling and dicing fruits, vegetables, meats, cheeses, 
+etc.</p>
+<p>Construction </p>
+<p>The way knives are constructed determines several things. There are several 
+types of material used in the manufacturing of the blade material.</p>
+<p>Carbon Steel blades are made from iron with about 2% carbon. This blade is 
+easily sharpened and holds its edge well. The down side of this is they tend 
+rust if they are not dried immediately after washing. Over time they obtain a 
+dark color considered to be the sign of a quality knife. The higher the 
+percentage of carbon to iron, the better the blade. Stainless Steel blades are 
+made from an alloy of iron with 10-15 % chromium, maybe some nickel and 
+molybdenum with only a very small amount of carbon. This type of material 
+cannot be sharpened as sharp as the carbon steel blade, but it is very 
+resistant to staining and discoloration. Some people think the discoloration 
+imparts a flavor into the food.</p>
+<p>High Carbon Stainless Steel blades combine the best of both worlds. They do 
+not discolor like the carbon blades, but they can be sharpened to a keen edge 
+that is long lasting. They do not impart any flavor into your food.</p>
+<p>Titanium alloy blades are lighter and more flexible than steel blades. The 
+carbon in the alloy allows them to be heat treated so they will hold an edge 
+well. They do not impart any flavor into your food, either.</p>
+<p>Ceramic blades are made from ceramic. They are extremely hard and will hold 
+their edge for a long time. They will cut the glaze on a dinner plate and 
+should only be used on a cutting board. The down side is that they must be 
+professionally sharpened.</p>
+<p>Plastic blades are not very sharp and are specialized in the use in the 
+kitchen. They are used to cut vegetables so they don't turn dark.</p>
+<p>Laminate blades are made by layering different materials together. The 
+number of possibilities is endless. The only way to decide if you want one of 
+these types is to buy and try.</p>
+<p>Steel blades are either forged or stamped. </p>
+<p>Forged blades are made in a detailed process that takes a lot of time and 
+is accomplished by skilled craftsman. I will not go into detail here, but this 
+type of blade is more often than not preferred by chefs.</p>
+<p>Stamped blades are designed to be made in mass. The quality of the metal 
+used is such that it can be worked quickly into a finished product. This type 
+of knife is less expensive than the forged one, but it must be replaced on a 
+regular basis.</p>
+<p>The Business Edge </p>
+<p>The type and design of the knife edge determines how it should be used. </p>
+<p>Flat ground blades are tapered from the backbone to the edge. This blade is 
+very strong but is heavy.</p>
+<p>Hollow ground blades look a lot like the flat ground except starting about 
+halfway up the blade it is ground into a concave shape. It is weaker than the 
+flat ground blade but has the advantage of being lighter.</p>
+<p>The Serrated blade looks like a saw. It is ideal for cutting things that 
+are hard on the outside and soft on the inside. It actually tears the food 
+rather than cutting, so it should not be used for all kinds of food.</p>
+<p>Handle </p>
+<p>The handle of your knife can be made from an array of different materials. 
+The basic handles are wood, plastic, composite and Stainless Steel.</p>
+<p>Wood handles are made from hardwoods. Wooden handles are the most 
+attractive and do not become slick when wet. Some individuals claim the 
+porosity of the wood retains bacteria and refuse to use them. This is up to the 
+individual as whether this factor is included in the decision process.</p>
+<p>Plastic handles can be molded into almost any shape you can imagine. The 
+modern plastic handle has evolved into ergonomically designed units designed by 
+a computer. They fit your hand nicely, but a lot of pole people complain about 
+the &quot;one-size-fits-all&quot; concept. Also, plastic handles can be 
+slippery when wet.</p>
+<p>Composite handles incorporate the best of the wood and plastic materials. 
+They are easy to care for and some chefs will use nothing else.</p>
+<p>Stainless Steel handles are by far the most durable. They are the most 
+sanitary but can be tricky to handle when wet. Manufacturers form them with 
+bumps and finger grooves to help eliminate this problem.</p>
+<p>Conclusion </p>
+<p>This information is not by any means everything there is to know. It should 
+give you the basic information you need to make a qualified decision. There are 
+many variations to the ones listed. Choosing your knife will be determined by 
+several factors. How often will you use a particular knife, what will it will 
+be used for, and how much are you willing to spend are just a few of the things 
+you should look at. Hopefully the information given will give you a basic 
+understanding and an idea of what you might look for when purchasing your 
+kitchen cutlery.</p>
+<p> </p>
+<p> </p>
+<p><br>
+</p>
+<h1>About the Author</h1> 
+<p>Born and raised in a small town in Oklahoma. He married in 1971 and then 
+joined the Air Force in 1977. After traveling the world, he retired in 1997 
+after 20 years of service and has recently moved back to Oklahoma. He has 
+started and online store to supplement his retirement income. His rule to live 
+by &quot;Never give up, Never surrender&quot;</p> <br>
+<br>
+
+<p> </p> <strong>Best Buy Uniforms</strong> is a member of the <strong>Better 
+Business Bureau</strong> we care about <strong>customer satisfaction</strong>, 
+<strong>quality</strong>, and would like to make your online experience as easy 
+as possible maybe that's why we are<strong>America's 1st choice</strong> for 
+uniforms and apparel. Comments or Suggestions on how to make your online 
+experience even better?<br>
+ Send us an e-mail at webmaster@bestbuyuniforms.com 
+<br> <strong><br>
+ &quot; Offering quality uniforms at an affordable price 
+everyday.&quot;</strong> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<p> </p> 
+</body>

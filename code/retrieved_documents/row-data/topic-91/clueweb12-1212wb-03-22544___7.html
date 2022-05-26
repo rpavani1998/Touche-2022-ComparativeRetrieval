@@ -1,0 +1,335 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>3.9. Ensemble methods &mdash; scikit-learn v0.11-git documentation</title>
+<body>
+
+<p> </p> 
+<ul> 
+<li>Download</li> 
+<li>Support</li> 
+<li>User Guide</li> 
+<li>Examples</li> 
+<li>Reference</li> </ul> <br>
+<br>
+Previous <br>
+ 3.8. Decision Tr...  3.8. 
+Decision Trees <br>
+ &nbsp; Next <br>
+ 3.10. Multiclass...  3.10. Multiclass 
+and multilabel algorithms <br>
+ &nbsp; <br>
+ Up <br>
+ 3. Supervised le...  3. 
+Supervised learning <br>
+
+<p>This documentation is for scikit-learn <strong>version 0.11-git</strong> 
+&mdash;Other versions</p> 
+<h3>Citing</h3> 
+<p>If you use the software, please consider citing scikit-learn.</p> 
+<h3>This page</h3> 
+<ul> 
+<li>3.9. Ensemble methods 
+<ul> 
+<li>3.9.1. Forests of randomized trees 
+<ul> 
+<li>3.9.1.1. Random Forests</li> 
+<li>3.9.1.2. Extremely Randomized Trees</li> 
+<li>3.9.1.3. Parameters</li> 
+<li>3.9.1.4. Parallelization</li> </ul> </li> 
+<li>3.9.2. Gradient Tree Boosting</li> 
+<li>3.9.3. Classification</li> 
+<li>3.9.4. Regression</li> 
+<li>3.9.5. Mathematical formulation 
+<ul> 
+<li>3.9.5.1. Loss Functions</li> </ul> </li> 
+<li>3.9.6. Regularization 
+<ul> 
+<li>3.9.6.1. Shrinkage</li> 
+<li>3.9.6.2. Subsampling</li> </ul> </li> </ul> </li> </ul> 
+<h1>3.9. Ensemble methods&para;</h1> 
+<p>The goal of <strong>ensemble methods</strong> is to combine the predictions 
+of several models built with a given learning algorithm in order to improve 
+generalizability / robustness over a single model.</p> 
+<p>Two families of ensemble methods are usually distinguished:</p> 
+<ul> 
+<li>
+<p>In <strong>averaging methods</strong>, the driving principle is to build 
+several models independently and then to average their predictions. On average, 
+the combined model is usually better than any of the single model because its 
+variance is reduced.</p> 
+<p><strong>Examples:</strong> Bagging methods, <em>Forests of randomized trees
+</em>...</p> </li> 
+<li>
+<p>By contrast, in <strong>boosting methods</strong>, models are built 
+sequentially and one tries to reduce the bias of the combined model. The 
+motivation is to combine several weak models to produce a powerful ensemble.</p>
+<p><strong>Examples:</strong> AdaBoost, Least Squares Boosting, <em>Gradient 
+Tree Boosting</em>, ...</p> </li> </ul> 
+<h2>3.9.1. Forests of randomized trees&para;</h2> 
+<p>The sklearn.ensemble module includes two averaging algorithms based on 
+randomized<em>decision trees</em>: the RandomForest algorithm and the 
+Extra-Trees method. Both algorithms are perturb-and-combine techniques[B1998] 
+specifically designed for trees. This means a diverse set of classifiers is 
+created by introducing randomness in the classifier construction. The 
+prediction of the ensemble is given as the averaged prediction of the 
+individual classifiers.</p> 
+<p>As other classifiers, forest classifiers have to be fitted with two arrays: 
+an array X of size[n_samples, n_features] holding the training samples, and an 
+array Y of size[n_samples] holding the target values (class labels) for the 
+training samples:</p> 
+<pre>&gt;&gt;&gt; from sklearn.ensemble import RandomForestClassifier 
+&gt;&gt;&gt;X = [[0, 0], [1, 1]] &gt;&gt;&gt; Y = [0, 1] &gt;&gt;&gt; clf = 
+RandomForestClassifier(n_estimators=10) &gt;&gt;&gt; clf = clf.fit(X, Y) </pre> 
+<h3>3.9.1.1. Random Forests&para;</h3> 
+<p>In random forests (see RandomForestClassifier and RandomForestRegressor 
+classes), each tree in the ensemble is built from a sample drawn with 
+replacement (i.e., a bootstrap sample) from the training set. In addition, when 
+splitting a node during the construction of the tree, the split that is chosen 
+is no longer the best split among all features. Instead, the split that is 
+picked is the best split among a random subset of the features. As a result of 
+this randomness, the bias of the forest usually slightly increases (with 
+respect to the bias of a single non-random tree) but, due to averaging, its 
+variance also decreases, usually more than compensating for the increase in 
+bias, hence yielding an overall better model.</p> 
+<p>In contrast to the original publication [B2001], the scikit-learn 
+implementation combines classifiers by averaging their probabilistic 
+prediction, instead of letting each classifier vote for a single class.</p> 
+<h3>3.9.1.2. Extremely Randomized Trees&para;</h3> 
+<p>In extremely randomized trees (see ExtraTreesClassifier and 
+ExtraTreesRegressor classes), randomness goes one step further in the way 
+splits are computed. As in random forests, a random subset of candidate 
+features is used, but instead of looking for the most discriminative 
+thresholds, thresholds are drawn at random for each candidate feature and the 
+best of these randomly-generated thresholds is picked as the splitting rule. 
+This usually allows to reduce the variance of the model a bit more, at the 
+expense of a slightly greater increase in bias:</p> 
+<pre>&gt;&gt;&gt; from sklearn.cross_validation import cross_val_score 
+&gt;&gt;&gt;from sklearn.datasets import make_blobs &gt;&gt;&gt; from 
+sklearn.ensemble import RandomForestClassifier &gt;&gt;&gt; from 
+sklearn.ensemble import ExtraTreesClassifier &gt;&gt;&gt; from sklearn.tree 
+import DecisionTreeClassifier &gt;&gt;&gt; X, y = make_blobs(n_samples=10000, 
+n_features=10, centers=100, ... random_state=0) &gt;&gt;&gt; clf = 
+DecisionTreeClassifier(max_depth=None, min_samples_split=1, ... random_state=0) 
+&gt;&gt;&gt;scores = cross_val_score(clf, X, y) &gt;&gt;&gt; scores.mean() 
+0.978... &gt;&gt;&gt; clf = RandomForestClassifier(n_estimators=10, max_depth=
+None, ... min_samples_split=1, random_state=0) &gt;&gt;&gt; scores = 
+cross_val_score(clf, X, y) &gt;&gt;&gt; scores.mean() 0.999... &gt;&gt;&gt; clf 
+= ExtraTreesClassifier(n_estimators=10, max_depth=None, ... min_samples_split=1,
+random_state=0) &gt;&gt;&gt; scores = cross_val_score(clf, X, y) &gt;&gt;&gt; 
+scores.mean() &gt; 0.999 True </pre> <br>
+
+<h3>3.9.1.3. Parameters&para;</h3> 
+<p>The main parameters to adjust when using these methods is n_estimators and 
+max_features. The former is the number of trees in the forest. The larger the 
+better, but also the longer it will take to compute. In addition, note that 
+results will stop getting significantly better beyond a critical number of 
+trees. The latter is the size of the random subsets of features to consider 
+when splitting a node. The lower the greater the reduction of variance, but 
+also the greater the increase in bias. Empiricial good default values are
+max_features=n_features for regression problems, and 
+max_features=sqrt(n_features) for classification tasks (where n_features is the 
+number of features in the data). The best results are also usually reached when 
+settingmax_depth=None in combination with min_samples_split=1 (i.e., when fully 
+developping the trees). Bear in mind though that these values are usually not 
+optimal. The best parameter values should always be cross- validated. In 
+addition, note that bootstrap samples are used by default in random forests (
+bootstrap=True) while the default strategy is to use the original dataset for 
+building extra-trees (bootstrap=False).</p> 
+<p>When training on large datasets, where runtime and memory requirements are 
+important, it might also be beneficial to adjust themin_density parameter, that 
+controls a heuristic for speeding up computations in each tree. See<em>
+Complexity of trees</em> for details.</p> 
+<h3>3.9.1.4. Parallelization&para;</h3> 
+<p>Finally, this module also features the parallel construction of the trees 
+and the parallel computation of the predictions through then_jobs parameter. If 
+n_jobs=k then computations are partitioned into k jobs, and run on k cores of 
+the machine. Ifn_jobs=-1 then all cores available on the machine are used. Note 
+that because of inter-process communication overhead, the speedup might not be 
+linear (i.e., usingk jobs will unfortunately not be k times as fast). 
+Significant speedup can still be achieved though when building a large number 
+of trees, or when building a single tree requires a fair amount of time (e.g., 
+on large datasets).</p> 
+<p>Examples:</p> 
+<ul> 
+<li><em>Plot the decision surfaces of ensembles of trees on the iris dataset
+</em></li> 
+<li><em>Pixel importances with a parallel forest of trees</em></li> </ul> 
+<p>References</p> [B2001] Leo Breiman, &ldquo;Random Forests&rdquo;, Machine 
+Learning, 45(1), 5-32, 2001. <br>
+<br>
+[B1998] Leo Breiman, &ldquo;Arcing 
+Classifiers&rdquo;, Annals of Statistics 1998. <br>
+<br>
+[GEW2006] Pierre 
+Geurts, Damien Ernst., and Louis Wehenkel, &ldquo;Extremely randomized 
+trees&rdquo;, Machine Learning, 63(1), 3-42, 2006. <br>
+<br>
+
+<h2>3.9.2. Gradient Tree Boosting&para;</h2> 
+<p>Gradient Tree Boosting or Gradient Boosted Regression Trees (GBRT) is a 
+generalization of boosting to arbitrary differentiable loss functions. GBRT is 
+an accurate and effective off-the-shelf procedure that can be used for both 
+regression and classification problems. Gradient Tree Boosting models are used 
+in a variety of areas including Web search ranking and ecology.</p> 
+<p>The advantages of GBRT are:</p> 
+<blockquote> 
+<ul> 
+<li>Natural handling of data of mixed type (= heterogeneous features)</li> 
+<li>Predictive power</li> 
+<li>Robustness to outliers in input space (via robust loss functions)</li> 
+</ul> </blockquote> 
+<p>The disadvantages of GBRT are:</p> 
+<blockquote> 
+<ul> 
+<li>Scalability, due to the sequential nature of boosting it can hardly be 
+parallelized.</li> </ul> </blockquote> 
+<p>The module sklearn.ensemble provides methods for both classification and 
+regression via gradient boosted regression trees.</p> 
+<h2>3.9.3. Classification&para;</h2> 
+<p>GradientBoostingClassifier supports both binary and multi-class 
+classification via the deviance loss function (loss='deviance'). The following 
+example shows how to fit a gradient boosting classifier with 100 decision 
+stumps as weak learners:</p> 
+<pre>&gt;&gt;&gt; from sklearn.datasets import make_hastie_10_2 &gt;&gt;&gt; 
+from sklearn.ensemble import GradientBoostingClassifier &gt;&gt;&gt; X, y = 
+make_hastie_10_2(random_state=0) &gt;&gt;&gt; X_train, X_test = X[:2000], X[2000
+:] &gt;&gt;&gt; y_train, y_test = y[:2000], y[2000:] &gt;&gt;&gt; clf = 
+GradientBoostingClassifier(n_estimators=100, learn_rate=1.0, ... max_depth=1, 
+random_state=0).fit(X_train, y_train) &gt;&gt;&gt; clf.score(X_test, y_test) 
+0.913... </pre> 
+<p>The number of weak learners (i.e. regression trees) is controlled by the 
+parametern_estimators; The maximum depth of each tree is controlled via 
+max_depth. The learn_rate is a hyper-parameter in the range (0.0, 1.0] that 
+controls overfitting via<em>shrinkage</em>.</p> 
+<h2>3.9.4. Regression&para;</h2> 
+<p>GradientBoostingRegressor supports a number of different loss functions for 
+regression which can be specified via the argumentloss. Currently, supported 
+are least squares (loss='ls') and least absolute deviation (loss='lad'), which 
+is more robust w.r.t. outliers. See[F2001] for detailed information.</p> 
+<pre>&gt;&gt;&gt; import numpy as np &gt;&gt;&gt; from sklearn.metrics import 
+mean_squared_error &gt;&gt;&gt; from sklearn.datasets import make_friedman1 
+&gt;&gt;&gt;from sklearn.ensemble import GradientBoostingRegressor &gt;&gt;&gt; 
+X, y = make_friedman1(n_samples=1200, random_state=0, noise=1.0) &gt;&gt;&gt; 
+X_train, X_test = X[:200], X[200:] &gt;&gt;&gt; y_train, y_test = y[:200], y[200
+:] &gt;&gt;&gt; clf = GradientBoostingRegressor(n_estimators=100, learn_rate=1.0
+, ... max_depth=1, random_state=0, loss='ls').fit(X_train, y_train) &gt;&gt;&gt;
+mean_squared_error(y_test, clf.predict(X_test)) 6.90... </pre> 
+<p>The figure below shows the results of applying GradientBoostingRegressor 
+with least squares loss and 500 base learners to the Boston house-price dataset 
+(seesklearn.datasets.load_boston). The plot on the left shows the train and 
+test error at each iteration. Plots like these are often used for early 
+stopping. The plot on the right shows the feature importances which can be 
+optained via thefeature_importance property.</p> <br>
+
+<h2>3.9.5. Mathematical formulation&para;</h2> 
+<p>GBRT considers additive models of the following form:</p> 
+<blockquote> 
+<p></p> </blockquote> 
+<p>where  are the basis functions which are usually called <em>weak learners
+</em> in the context of boosting. Gradient Tree Boosting uses <em>decision trees
+</em> of fixed size as weak learners. Decision trees have a number of abilities 
+that make them valuable for boosting, namely the ability to handle data of 
+mixed type and the ability to model complex functions.</p> 
+<p>Similar to other boosting algorithms GBRT builds the additive model in a 
+forward stagewise fashion:</p> 
+<blockquote> 
+<p></p> </blockquote> 
+<p>At each stage the decision tree  is choosen that minimizes the loss function
+ given the current model and its fit </p> 
+<blockquote> 
+<p></p> </blockquote> 
+<p>The initial model  is problem specific, for least-squares regression one 
+usually chooses the mean of the target values.</p> 
+<p>Note</p> 
+<p>The initial model can also be specified via the init argument. The passed 
+object has to implementfit and predict.</p> 
+<p>Gradient Boosting attempts to solve this minimization problem numerically 
+via steepest descent: The steepest descent direction is the negative gradient 
+of the loss function evaluated at the current model which can be calculated for 
+any differentiable loss function:</p> 
+<blockquote> 
+<p></p> </blockquote> 
+<p>Where the step length  is choosen using line search:</p> 
+<blockquote> 
+<p></p> </blockquote> 
+<p>The algorithms for regression and classification only differ in the 
+concrete loss function used.</p> 
+<h3>3.9.5.1. Loss Functions&para;</h3> 
+<p>The following loss functions are supported and can be specified using the 
+parameterloss:</p> 
+<blockquote> 
+<ul> 
+<li>Regression 
+<ul> 
+<li>Least squares ('ls'): The natural choice for regression due to its 
+superior computational properties. The initial model is given by the mean of 
+the target values.</li> 
+<li>Least absolute deviation ('lad'): A robust loss function for regression. 
+The initial model is given by the median of the target values.</li> </ul> </li> 
+<li>Classification 
+<ul> 
+<li>Binomial deviance ('deviance'): The negative binomial log-likelihood loss 
+function for binary classification (provides probability estimates). The 
+initial model is given by the log odds-ratio.</li> 
+<li>Multinomial deviance ('deviance'): The negative multinomial log-likelihood 
+loss function for multi-class classification withn_classes mutually exclusive 
+classes. It provides probability estimates. The initial model is given by the 
+prior probability of each class. At each iterationn_classes regression trees 
+have to be constructed which makes GBRT rather inefficient for data sets with a 
+large number of classes.</li> </ul> </li> </ul> </blockquote> 
+<h2>3.9.6. Regularization&para;</h2> 
+<h3>3.9.6.1. Shrinkage&para;</h3> 
+<p>[F2001] proposed a simple regularization strategy that scales the 
+contribution of each weak learner by a factor:</p> 
+<p></p> 
+<p>The parameter  is also called the <strong>learning rate</strong> because it 
+scales the step length the the gradient descent procedure; it can be set via the
+learn_rate parameter.</p> 
+<p>The parameter learn_rate strongly interacts with the parameter n_estimators
+, the number of weak learners to fit. Smaller values oflearn_rate require 
+larger numbers of weak learners to maintain a constant training error. 
+Empirical evidence suggests that small values oflearn_rate favor better test 
+error.[HTF2009] recommend to set the learning rate to a small constant (e.g. 
+learn_rate &lt;= 0.1) and choose n_estimators by early stopping. For a more 
+detailed discussion of the interaction betweenlearn_rate and n_estimators see 
+[R2007].</p> 
+<h3>3.9.6.2. Subsampling&para;</h3> 
+<p>[F1999] proposed stochastic gradient boosting, which combines gradient 
+boosting with bootstrap averaging (bagging). At each iteration the base 
+classifier is trained on a fractionsubsample of the available training data. 
+The subsample is drawn without replacement. A typical value ofsubsample is 0.5.
+</p> 
+<p>The figure below illustrates the effect of shrinkage and subsampling on the 
+goodness-of-fit of the model. We can clearly see that shrinkage outperforms 
+no-shrinkage. Subsampling with shrinkage can further increase the accuracy of 
+the model. Subsampling without shrinkage, on the other hand, does poorly.</p> 
+<br> 
+<p>Examples:</p> 
+<ul> 
+<li><em>Gradient Boosting regression</em></li> 
+<li><em>Gradient Boosting regularization</em></li> </ul> 
+<p>References</p> [F2001] <em>(1, 2)</em> J. Friedman, &ldquo;Greedy Function 
+Approximation: A Gradient Boosting Machine&rdquo;, The Annals of Statistics, 
+Vol. 29, No. 5, 2001. <br>
+<br>
+[F1999] 
+<ol> 
+<li>Friedman, &ldquo;Stochastic Gradient Boosting&rdquo;, 1999</li> </ol> <br>
+
+<br> [HTF2009] 
+<ol> 
+<li>Hastie, R. Tibshirani and J. Friedman, &ldquo;Elements of Statistical 
+Learning Ed. 2&rdquo;, Springer, 2009.</li> </ol> <br>
+<br>
+[R2007] 
+<ol> 
+<li>Ridgeway, &ldquo;Generalized Boosted Models: A guide to the gbm 
+package&rdquo;, 2007</li> </ol> <br>
+<br>
+ &copy; 2010&acirc;&#128;&#147;2011, 
+scikit-learn developers (BSD License). Created usingSphinx 1.0.7. Design by Web 
+y Limonada. Show this page source <br>
+ Previous <br>
+ Next <br>
+
+</body>

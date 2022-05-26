@@ -1,0 +1,2304 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Michael Tsai - Blog  -  Perl vs. Python vs. Ruby</title>
+<body>
+
+<p>Monday, November 25, 2002</p> 
+<h1>Perl vs. Python vs. Ruby</h1> 
+<p>I&rsquo;m evaluating Python and Ruby as replacements for Perl. I&rsquo;ve 
+been using Perl for several years and am very comfortable with it, although 
+I&rsquo;m definitely not an expert. Perl is a powerful language, but I think 
+it&rsquo;s ugly and encourages writing bad code, so I want to get rid of it. 
+Python and Ruby both come with Mac OS X 10.2, both haveBBEdit language modules, 
+and both promise a cleaner approach to scripting. Over the past few weeks I 
+read thePython Tutorial and the non-reference parts of Programming Ruby, 
+however as of this afternoon I&rsquo;d not written any Python or Ruby code yet.
+</p> 
+<p>Here&rsquo;s a toy problem I wanted to solve. eSellerate gives me a 
+tab-delimited file containing information about the people who boughtmy 
+shareware. I wanted a script to extract from this file the e-mail addresses of 
+people who asked to be contacted when I release the new versions of the 
+products.</p> 
+<p>I decided to solve this problem in each language and then compare the 
+resulting programs. The algorithm I chose was just the first one that came to 
+mind. I coded it first in Ruby, and then ported the code to Python and Perl, 
+changing it as little as possible. Thus, the style is perhaps not canonical 
+Python or Perl, although since I&rsquo;m new to Ruby it&rsquo;s probably not 
+canonical Ruby either. If I were<em>just</em> writing this in Perl, I might 
+have tried to avoid Perl&rsquo;s messy syntax for nested arrays and instead 
+used an array of strings.</p> 
+<p>Here&rsquo;s the basic algorithm:</p> 
+<ol> 
+<li>Read each line of standard input and break it into fields at each tab.</li>
+<li>Each field is wrapped in quotation marks, so remove them. Assume that 
+there are no quotation marks in the interior of the field.</li> 
+<li>Store the fields in an array called <code>record</code>.</li> 
+<li>Create another array, <code>records</code> and fill it with all the <code>
+record</code>s.</li> 
+<li>Make a new array, <code>contactRecords</code>, that contains arrays of 
+just the fields we care about: SKUTITLE, CONTACTME, EMAIL.</li> 
+<li>Sort <code>contactRecords</code> by SKUTITLE.</li> 
+<li>Remove the elements of <code>contactRecords</code> where CONTACTME is not 
+1.</li> 
+<li>Print <code>contactRecords</code> to standard output, with the fields 
+separated by tabs and the records separated by newlines.</li> </ol> 
+<p>And here&rsquo;s the code:</p> 
+<h3>Perl</h3> 
+<pre> #!/usr/bin/perl -w use strict; my @records = (); foreach my $line ( 
+&lt;&gt; ) { my @record = map {s/&quot;//g; $_} split(&quot;\t&quot;, $line); 
+push(@records, \@record); } my $EMAIL = 17; my $CONTACTME = 27; my $SKUTITLE = 
+34; my @contactRecords = (); foreach my $r ( @records ) { push(@contactRecords, 
+[$$r[$SKUTITLE], $$r[$CONTACTME], $$r[$EMAIL]]); } @contactRecords = sort 
+{$$a[0] cmp $$b[0]} @contactRecords; @contactRecords = grep($$_[1] eq 
+&quot;1&quot;, @contactRecords); foreach my $r ( @contactRecords ) { print 
+join(&quot;\t&quot;, @$r), &quot;\n&quot;; }</pre> 
+<p>The punctuation and <code>my</code>&rsquo;s make this harder to read than 
+it should be.</p> 
+<h3>Python</h3> 
+<pre> #!/usr/bin/python import fileinput records = [] for line in 
+fileinput.input(): record = [field.replace('&quot;', '') for field in 
+line.split(&quot;\t&quot;)] records.append(record) EMAIL = 17 CONTACTME = 27 
+SKUTITLE = 34 contactRecords = [[r[SKUTITLE], r[CONTACTME], r[EMAIL]] for r in 
+records] contactRecords.sort() # default sort will group by sku title 
+contactRecords = filter(lambda r: r[1] == &quot;1&quot;, contactRecords) for r 
+in contactRecords: print &quot;\t&quot;.join(r)</pre> 
+<p>I think the Python version is generally the cleanest to read&mdash;that is, 
+it&rsquo;s the most English-like. I had to look up how<code>join</code> and 
+<code>filter</code> worked, because they weren&rsquo;t methods of <code>list
+</code> as I had guessed.</p> 
+<h3>Ruby</h3> 
+<pre> #!/usr/bin/ruby records = [] while gets record = $_.split('\t').collect! 
+{|field| field.gsub('&quot;', '') } records &lt;&lt; record end EMAIL = 17 
+CONTACTME = 27 SKUTITLE = 34 contactRecords = records.collect {|r| 
+[r[SKUTITLE], r[CONTACTME], r[EMAIL]] } contactRecords.sort! # default sort 
+will group by sku title contactRecords.reject! {|a| a[1] != &quot;1&quot;} 
+contactRecords.each {|r| print r.join(&quot;\t&quot;), &quot;\n&quot; }</pre> 
+<p>This is actually the shortest version, and I think it&rsquo;s the easiest 
+to read if you aren&rsquo;t put off by the block syntax. I like how the 
+sequence of operations in the first line of the<code>while</code> isn&rsquo;t 
+&ldquo;backwards&rdquo; as it is in the Perl and Python versions. Also, I 
+correctly guessed which classes &ldquo;owned&rdquo; the methods and whether 
+they were mutators.</p> 
+<p>156 Comments</p> 
+<h2>156 Comments </h2> bbum <br>
+November 25, 2002 10:01 PM <br>
+
+<p>Have some sample input?</p> 
+<p>The value in any of the three languages is in examples that use the idioms 
+pervasive to that language. Looking at the python [a language I'm intimately 
+familiar with], I can think of a number of ways to do this a bit differently 
+that would come more naturally. Likewise, I would like to see an example from 
+someone deeply versed in Ruby as I find that language to be quite interesting.
+</p> 
+<p>(I have a lot of deep experience with Perl and suspect most solutions in 
+Perl will still look like line noise...)</p> Michael <br>
+November 25, 2002 
+10:52 PM <br>
+
+<p>Here&rsquo;s some sample input. I&rsquo;d be interested to know how an 
+experienced Python (or Ruby) programmer would rewrite the above code.</p> bbum 
+<br> November 26, 2002 12:46 PM <br>
+
+<p>I would implement it in Python as something like the following. It could be 
+done in fewer lines and exhibits a couple of idiosyncracies in my style of 
+Python programming; namely, I can't stand the [... for x in y] style of 
+creating arrays and I tend to use dictionaries instead of arrays because it 
+allows me to store extra stuff and only pull that which I need. In this case, 
+it means that records contains all information on each record and, as such, it 
+would be trivial to augment the output to generate different kinds of reports 
+from that single array of dictionaries.</p> 
+<pre> #!/usr/bin/python import sys import string records = [] def 
+splitAndStrip(aLine): &nbsp;&nbsp;&nbsp;&nbsp;return map(lambda aField: 
+aField.strip().replace('&quot;', ''), aLine.split('\t')) keys = 
+splitAndStrip(sys.stdin.readline()) for aLine in sys.stdin: 
+&nbsp;&nbsp;&nbsp;&nbsp;records.append( dict( zip( keys, splitAndStrip( aLine 
+))) ) records = filter( lambda aRecord: aRecord['CONTACT_ME'] == &quot;1&quot;, 
+records ) records.sort( lambda x,y: cmp(x['SKU_TITLE'], y['SKU_TITLE']) ) for 
+aRecord in records: &nbsp;&nbsp;&nbsp;&nbsp;print &quot;%s\t%s\t%s&quot; % 
+(aRecord['SKU_TITLE'], aRecord['CONTACT_ME'], aRecord['EMAIL'])</pre> wari <br>
+
+November 26, 2002 10:33 PM <br>
+
+<p>I'm not an expert in python, but I guess, bbum's example could be clearer 
+using python's string expansion:</p> 
+<pre> print '\n'.join(['%(SKU_TITLE)s\t%(CONTACT_ME)s\t%(EMAIL)s' % r for r in 
+records])</pre> 
+<p>Actually it's already clear, but typing aRecord[''] can be quite a turnoff.
+</p> Michael <br>
+November 26, 2002 10:38 PM <br>
+
+<p>But he doesn't like list comprehensions. :-)</p> wari <br>
+November 26, 
+2002 10:49 PM <br>
+
+<p>Ok, here's a revision then :)</p> 
+<pre> for r in records: &nbsp;&nbsp;&nbsp;&nbsp;print 
+'%(SKU_TITLE)s\t%(CONTACT_ME)s\t%(EMAIL)s' % r</pre> 
+<p>Sweet :)</p> brianl <br>
+November 27, 2002 1:31 AM <br>
+
+<p>This is what I'd do: head over to the Vaults of Parnassus and see what I 
+can find by searching for 'CSV'. I'll take list comprehesions over lambda, map, 
+and filter just about all the time.</p> 
+<pre> #!/usr/bin/env python from DSV import DSV data = 
+open('2002-11-25-sample-input.txt').readlines() records = DSV.importDSV(data, 
+delimiter='\t') sku = records[0].index('SKU_TITLE') opt_in = 
+records[0].index('CONTACT_ME') email = records[0].index('EMAIL') contacts = 
+[[r[sku], r[opt_in], r[email]] for r in records[1:] if r[opt_in] == '1'] 
+contacts.sort() for contact in contacts: &nbsp;&nbsp;&nbsp;&nbsp;print 
+'\t'.join(contact)</pre>  jm November 27, 2002 11:18 AM <br>
+
+<p>Reading the perl version,</p> 
+<p>I was wondering why you kept all the records ?</p> 
+<p>Since obviously you're just looking for the email addresses printed on 
+screen.</p> 
+<p>Or did I miss something ??</p> 
+<p>How about something like that:</p> 
+<pre> use strict; my $EMAIL = 17; my $CONTACTME = 27; my $SKUTITLE = 34; 
+while( &lt;&gt; ) { &nbsp;&nbsp;&nbsp;&nbsp;my @record= split(&quot;\t&quot;); 
+&nbsp;&nbsp;&nbsp;&nbsp;next if($record[$CONTACTME] ne '&quot;1&quot;'); 
+&nbsp;&nbsp;&nbsp;&nbsp;$record[$EMAIL] =~ s/&quot;//g; 
+&nbsp;&nbsp;&nbsp;&nbsp;$record[$SKUTITLE] =~ s/&quot;//g; 
+&nbsp;&nbsp;&nbsp;&nbsp;print $record[$SKUTITLE].&quot;\t&quot;; 
+&nbsp;&nbsp;&nbsp;&nbsp;print $record[$EMAIL].&quot;\n&quot;; }</pre> 
+<p>You can even try something like s/^&quot;(.+)&quot;$/$1/ to try to remove 
+only the external quotes (but then I guess potential quote inside the quotes 
+need to be escaped)</p> 
+<p>$ perl foo.pl 2002-11-25-sample-input.txt<br>
+ Product1 foo0@bar.com<br>
+ 
+Product3foo2@bar.com<br>
+ Product2 foo3@bar.com<br>
+ Product3 foo7@bar.com</p> 
+bbum <br>
+November 27, 2002 12:03 PM <br>
+
+<p>I still don't like list comprehensions [is that what they are called?] -- 
+but, as I said, that's just me... I just don't find them terribly intuitive and 
+am much more comfortable with lambda/map/filter.</p> 
+<p>I keep forgetting about the string composition using keywords. I like that 
+*much* better.</p> Michael <br>
+November 27, 2002 4:49 PM <br>
+
+<p>jm: I wanted to try out arrays, sorting, and filtering in the various 
+languages. The whole thing could probably be done with one s///ge in Perl, but 
+that wasn't what I was going for.</p> Gavin <br>
+December 1, 2002 12:37 AM <br>
+
+<p>Perhaps your time would be better spent becoming a better perl programmer 
+than to learn a new language? :)</p> 
+<p>Seriously, it's unfair to compare bad perl code that doesn't use common 
+idioms. If you write bad ugly code you've got nobody to blame but yourself.</p> 
+<p>If it was something I was writing for myself I would use something like 
+this. It's something I probably wouldn't use in production but it's a fairly 
+decent example. The advantage over your example is that the sort comes after 
+the grep, thus avoiding sorting records you are going to reject anyway, the 
+same with quotes.</p> 
+<pre> my @recs = sort { $a-&gt;[0] cmp $b-&gt;[0] } grep { $_-&gt;[1] eq '1' } 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map { 
+my @r = split /\t/; [map { s/&quot;//g; $_ } @r[34, 27, 17]] } &lt;&gt;; print 
+join(&quot;\t&quot;, @$_), &quot;\n&quot; for @recs;</pre> Michael <br>
+
+December 1, 2002 12:26 PM <br>
+
+<p>Gavin: I definitely should have used the array slice idiom rather than 
+writing out [$$r[$SKUTITLE], $$r[$CONTACTME], $$r[$EMAIL]]. I just neglected to 
+make that simplification when porting the code. And maybe using more maps or 
+statement modifiers would make the code more Perlish and closer to the other 
+examples. That was unfair.</p> 
+<p>On the other hand, your example is both idiomatic and ugly (to me). Why not 
+go all the way and make it a one-liner? :-)</p> 
+<p>As to learning Perl better, I dislike looking at Perl code, especially when 
+it&rsquo;s written by Perl experts and is highly idiomatic. I just don&rsquo;t 
+want to write that kind of code. But I agree that it&rsquo;s a good idea to use 
+the idioms of the language you are writing in, so I think the solution is for 
+me to learn a language that has a more appealing style. When I look at other 
+people&rsquo;s code in these three languages, I find it easier and more 
+enjoyable to read Python and Ruby.</p> Gavin <br>
+December 1, 2002 7:17 PM <br>
+
+<p>I was intending my example to be extreme, it's idiomatic but very 
+functional. That's why I like Perl, it supports a variety of styles of 
+thinking. I think the real key is to find a language that fits in with how you 
+think, whether that's Perl or not isn't an issue for me, I just wanted the 
+comparison to be a fair one.</p> 
+<p>Here's something which is simpler but still idoimatic, and in my opinion, 
+easier on the eye than your example.</p> 
+<pre> use constant EMAIL =&gt; 17; use constant CONTACTME =&gt; 27; use 
+constant SKUTITLE =&gt; 34; my @recs = (); while (&lt;&gt;) { 
+&nbsp;&nbsp;&nbsp;&nbsp;s/&quot;//g; &nbsp;&nbsp;&nbsp;&nbsp;my @rec = split 
+/\t/; &nbsp;&nbsp;&nbsp;&nbsp;push @recs, [@rec[SKUTITLE, CONTACTME, EMAIL]] if 
+$rec[CONTACTME]; } for (sort { $a-&gt;[0] cmp $b-&gt;[0] } @recs) { 
+&nbsp;&nbsp;&nbsp;&nbsp;print join(&quot;\t&quot;, @$_), &quot;\n&quot; }</pre> 
+Michael <br>
+December 2, 2002 8:12 PM <br>
+
+<p>Fair enough. I like this last version a lot, though a lot of the cleanness 
+comes from using $_ and avoiding temporary variables. That's a real win for 
+short scripts like this one. My example used a two-phase approach, imagining 
+that it would be part of a larger system. The if $rec[CONTACTME] in the while 
+loop goes against that, but could easily be moved into the for loop.</p> Kerry 
+Kartchner <br>
+December 4, 2002 2:29 AM <br>
+
+<p>I find it interesting that, particularly with the python and ruby 
+solutions, nobody chose to use classes. I realize that this particular example 
+rather lends itself to a simple procedural approach, but as someone who uses 
+Python and Java regularly, I would have done something very similar to bbum's 
+solution except I would use a class rather than a dictionary or an array of 
+arrays. But really, I would count bbum's solution as pretty normal looking 
+python. Lambda expressions and composition functions like map and filter seem 
+to be more common than list expressions, but most of the python code I've read 
+was written by Java developers, so that may just be a foreign dialect intruding.
+</p> 
+<pre> #!/usr/bin/python import sys import string def clean(quotedString): 
+&nbsp;&nbsp;&nbsp;&nbsp;return quotedString.strip()[1:-1] #get rid of 
+whitespace and slice the quotes off the end. def parseLine(line): 
+&nbsp;&nbsp;&nbsp;&nbsp;fieldList = line.split('\t') 
+&nbsp;&nbsp;&nbsp;&nbsp;return Customer(int(clean(fieldList[27])), 
+clean(fieldList[34]), clean(fieldList[17])) class Customer: 
+&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, contactMe, skuTitle, emailAddress): 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.contactMe = contactMe 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.skuTitle = skuTitle 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.emailAddress = 
+emailAddress &nbsp;&nbsp;&nbsp;&nbsp;def __repr__(self): 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return self.skuTitle + 
+&quot;\t&quot; + str(self.contactMe) + &quot;\t&quot; + self.emailAddress if 
+__name__ == '__main__': &nbsp;&nbsp;&nbsp;&nbsp;customers = [] 
+&nbsp;&nbsp;&nbsp;&nbsp;lines = sys.stdin.readlines()[1:] # the slice gets rid 
+of the field names. &nbsp;&nbsp;&nbsp;&nbsp;for line in lines: 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;customer = parseLine(line) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if customer.contactMe: 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;customers.append( 
+customer) &nbsp;&nbsp;&nbsp;&nbsp;customers.sort( lambda x,y: cmp(x.skuTitle, 
+y.skuTitle) ) &nbsp;&nbsp;&nbsp;&nbsp;for customer in customers: 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print customer</pre> Michael 
+<br> December 4, 2002 10:45 AM <br>
+
+<p>Kerry: I avoided classes because I lacked experience with Python and Ruby 
+(those were my first programs) and because I'm used to languages where there is 
+a higher overhead (in LOC) for introducing a new class.</p>  Alun ap Rhisiart 
+December 21, 2002 6:12 AM <br>
+
+<p>Both Python and Ruby are very enjoyable languages to write in. Apart from 
+style (I prefer ruby, it is a cleaner design to my view, like Smalltalk, but 
+with cleaned-up Perl things like integrated Regex), there are other things that 
+may sway you for a particular project. Python has more available for it than 
+Ruby at this time, and having a library to do what you want can make a big 
+difference. Both are working towards integration with Cocoa, but again Python 
+is further along. Finally, you can't ship compiled code with Ruby, but with 
+Python you can.</p> 
+<p> As for classes, I like the fact that both languages make creating classes 
+easy, but don't force it. For your example, creating a class is needless 
+overhead unless this is embedded in a larger context. Java forces you to do it 
+all the time, but it isn't necessary even in pure OO languages (eg Ruby and 
+Smalltalk).</p>  James July 3, 2003 1:34 PM <br>
+
+<p>All of the the &quot;my&quot;s in the original Perl script are unnecessary.
+</p>  Eivind Eklund November 27, 2003 1:29 PM <br>
+
+<p>Since this is a plain pipe&amp;filter operation, the way to write it in 
+ruby is IMO using filter ops.<br>
+ There is an example below (not tested). I 
+replaced your regexp replacement with a plain string extract, which supports 
+double quotes inside values, and is faster. Also note that I moved your filter 
+(implemented using reject! in your code; I turned it) as early as possible in 
+the stream.</p> 
+<pre> #!/usr/bin/env ruby -w EMAIL = 17 CONTACTME = 27 SKUTITLE = 34 
+readlines.collect { |line| line.split('\t').collect { |field| field[1..-1] } 
+}.find_all { |r| r[CONTACTME] == &quot;1&quot; }.collect { |r| r[SKUTITLE], 
+r[CONTACTME], r[EMAIL] }.sort.each { |r| puts r.join(&quot;\t&quot;) }</pre> 
+David Ross <br>
+February 14, 2004 1:20 PM <br>
+
+<p>This is an interesting document you have made. Ruby is quite something and 
+I expect people will start using Ruby for scripting. I'm not fond of the ugly 
+perl syntax myself. Ruby made it easy to go from Perl, it has the variable 
+syntax to lure perl programmers over. Anyway, end of comment</p> Mark Aufflick 
+<br> October 24, 2004 11:17 PM <br>
+
+<p>In regards to the various comments about the 'my' keywords in the perl 
+versions.</p> 
+<p>It's true that you could drop the &quot;use strict;&quot; pragma and then 
+avoid having to use &quot;my&quot;, but IMHO Perl 5's variable scoping options 
+is one of it's greatest features. Especially Perl &gt; 5.6 with the 'our' 
+scoping option.</p> 
+<p>The beauty with any good agile language (like these three) is that while 
+you can get started quite easily, the deeper you understand it the more 
+productive you get (and the richer programs you can easily create).</p> 
+<p>I would reccomend that you pick one and use it forever. Once you are expert 
+at any one of them, there would probably be little reason to ever switch to 
+another.</p> 
+<p>Another point of view in choosing languages and environments is that 
+&quot;it's all about the API&quot;. In this case, Perl's CPAN with mature 
+building blocks such as POE and mod_perl wins me over every time.</p> 
+<p>Of course if you're building a large collaborative website, choose your 
+environment first (like my personal favourite OpenACS or perhaps Zope). 
+Learning the language behind it (tcl or python) is going to be a lot easier 
+than writing the hundreds of thousands of lines of existing code yourself.</p> 
+japhy <br>
+April 12, 2005 9:34 AM <br>
+
+<p>Someone already mentioned how you should be sorting after you've removed 
+the unwanted elements from the array. I'd like to dwell on that for a moment. 
+Perl derived some of its functionality from Lisp, and since Ruby is 
+Perl-inspired, I'd expect it has a similar chained mechanism.</p> 
+<p>In Perl, you can say:</p> 
+<pre>@list = sort { $a-&gt;[0] cmp $b-&gt;[1] } grep { $a-&gt;[1] == 1 } 
+something_that_builds_a_list();</pre> 
+<p>In Ruby, I'd expect you can do:</p> 
+<pre>contactRecords = records .collect {...} .reject! {|a| a[1] != 1} .sort!
+</pre> 
+<p>One-lining things is not so much a display of guruism, but rather a 
+comprehension of how to streamline your code. People familiar with Unix know 
+how pipelines work, and the same idea works here. You send input to A, it sends 
+its output to B, which sends to C, and you only store the end result, not the 
+intermediate results.</p>  Blazar April 13, 2005 8:50 AM <br>
+
+<p>I don't know for the rest, but re Perl:</p> 
+<blockquote> 
+<pre>#!/usr/bin/perl -w use strict;</pre> </blockquote> 
+<p>Incidentally, (nowadays) better </p> 
+<pre>use warnings</pre> 
+<p> instead.</p> 
+<blockquote> 
+<pre>my @records = ();</pre> </blockquote> 
+<p>Incidentally, </p> 
+<pre>my @records;</pre> 
+<p> is just as fine.</p> 
+<blockquote> 
+<pre>foreach my $line ( &lt;&gt; )</pre> </blockquote> 
+<p>Ouch! It may not be actually a problem to do so, but it is generally 
+recommended not to do this, as it will slurp all of your file at once, which is 
+not needed. It is recommendend to do things</p> 
+<pre>while (&lt;&gt;)</pre> 
+<p> instead.</p> 
+<blockquote> 
+<pre>{ my @record = map {s/&quot;//g; $_} split(&quot;\t&quot;, $line); 
+push(@records, @record); }</pre> </blockquote> 
+<p>I really do not see the need for the intermediate </p> 
+<pre>@record</pre> 
+<p> variable, and from the description above it <em>seems</em> to me that you 
+may really want</p> 
+<pre>push(@records, \@record);</pre> 
+<p> instead (in which case it's still not really needed either).</p> 
+<p>Also, bear in mind that </p> 
+<pre>split</pre> 
+<p> really wants a regex as aq first argument, with one major -useful- 
+exception. Passing it a tring and relying on the automatic conversion, while 
+actualy working is not something most perl programmer would regard as a good 
+practice. I also suppose you really want &quot;\t&quot; rather than 
+&quot;\t&quot;, as in the latter case it wouldn't work at all (wrt your 
+description).</p> 
+<blockquote> 
+<pre>my $EMAIL = 17; my $CONTACTME = 27; my $SKUTITLE = 34;</pre> </blockquote>
+<p>You may find </p> 
+<pre>constant.pm</pre> 
+<p> useful in cases like this. Otherwise, and more similarly to what you did,
+</p> 
+<pre>my ($EMAIL, $CONTACTME, $SKUTITLE) = (17, 27, 34);</pre> 
+<p>I'm not commenting the rest of your code because it seems more awkward perl 
+code. Here's one of the possible (simplified) ways I would do it: it should 
+comply with your requirements as described above. Of course it reflects my 
+personal coding preferences:</p> 
+<pre> #!/usr/bin/perl use strict; use warnings; my @records; push @records, [ 
+(/&quot;(.*?)&quot;/g)[17,27,34] ] while &lt;&gt;; 
+($\,$&quot;)=($/,&quot;\t&quot;); print &quot;@$_&quot; for sort { $a-&gt;[0] 
+cmp $b-&gt;[0] } grep $_-&gt;[1] eq '1', @records; __END__</pre> 
+<p></p>  Q June 18, 2005 4:24 AM <br>
+
+<p>Blazar, while this is perfectly reasonable perl code for a seasoned veteran 
+like you or me, it demonstrates perfectly why perl is such a horrible language 
+for writing intuitive and maintainable code.</p> 
+<p>You cannot look at this code snippet and just &quot;know&quot; what it's 
+meant to do without reading ever single line and mentally parsing/executing it. 
+Meaningful syntax and well named intermediate variables are essential to 
+writing code that is &quot;intuitive&quot;. You shouldn't have to comment every 
+second line to make it clear why you are doing something.</p> 
+<p>You can write easily readable and maintainable perl code, but it's 
+something the language tries hard to prevent you from doing in it's simplest 
+form, as you have demonstrated.</p> Personal Bytes &raquo; Blog Archive Some 
+links.. &raquo; <br>
+February 11, 2006 3:48 PM <br>
+
+<p>[...] Two (1,2) interesting personal comparasions of Perl vs Ruby vs Python 
+(both evaluating Ruby and Python after thinking about replacing Perl &mdash; 
+not suited for Perl addicts ;-) [...]</p>  sciolizer June 19, 2006 8:03 AM <br>
+
+<p>&quot;Specialization is for insects.&quot;</p> 
+<p>-Robert A. Heinlein</p> 
+<p>Learn as many languages as you can. The way to improve your programming is 
+not by learning the intracacies of a particular language, but by learning many 
+different paradigms. When I learned Java, my Basic programs became more 
+structured. When I learned Haskell, my Java programs became more interface 
+driven. When I learned Python, all my programs in Java and C# became cleaner 
+(though annoyingly verbose).</p> 
+<p>Perl, Python, and Ruby all have their strengths. If you know them all, you 
+can</p> 
+<p>1. Decide which language is best for a particular task.<br>
+ 2. Use what 
+you learned from the other languages to better design something in the one.</p> 
+ brainspun July 2, 2006 8:13 PM <br>
+
+<p>i realize this thread is a bit dead, but here's a perl solution that 
+reduces 'line noise', being rather maintainable while still making good use of 
+perlisms (just because something can be expressed on one line doesn't mean you 
+should slurp it onto one line):</p> 
+<pre> #!/usr/bin/perl use strict; use warnings; my @records = (); while ( my 
+$line = ) { chomp $line; my @record = split /\t/, $line; s/&quot;//g foreach 
+@record; push @records, \@record; } my $EMAIL = 17; my $CONTACTME = 27; my 
+$SKUTITLE = 34; my @contactRecords = map { [ @$_[ $SKUTITLE, $CONTACTME, $EMAIL 
+] ] } sort { $a-&gt;[$SKUTITLE] cmp $b-&gt;[$SKUTITLE] } grep { 
+$_-&gt;[$CONTACTME] eq '1' } @records; foreach my $r (@contactRecords) { print 
+join( &quot;\t&quot;, @$r ), &quot;\n&quot;; }</pre>  pavel kudinov July 28, 
+2006 3:40 AM <br>
+
+<pre> #!/usr/bin/perl $,=&quot;\t&quot;; $\=&quot;\n&quot;; print @$_ foreach 
+grep { $_-&gt;[1] eq &quot;1&quot; } sort { $a-&gt;[0] cmp $b-&gt;[0] } map { [ 
+@$_[17,27,34] ] } grep { s/&quot;//g for @$_ } map { [ split /\t/ ] } ;</pre> 
+<p>intermediate variables it's a rubbish! use variables only for stable phase 
+objects!</p> 
+<p>we have thousands of perl scripts in our projects, and really like to 
+maintain it!</p> 
+<p>p.s. sorry for my english</p> thoran <br>
+August 24, 2006 7:08 AM <br>
+
+<p>Hi,</p> 
+<p>Thanks for the comparison.</p> 
+<p>I decided to redo the Ruby version since that is my language of choice, and 
+have made this much shorter (slightly more than 50% fewer LOC) and quite a bit 
+more efficient (by rejecting unwanted records as they are read, rather than 
+going through all records again later and also by not sorting before 
+rejecting), and made a small change to the output---which was to remove the 
+CONTACTME field, since I would expect that it would not be required any further.
+</p> 
+<pre> #!/usr/bin/env ruby EMAIL, CONTACTME, SKUTITLE = 17, 27, 34 records = [] 
+while gets record = $_.split('\t').collect! {|field| field.gsub('&quot;', '') } 
+records &lt; &lt; [record[SKUTITLE], record[EMAIL]] if record[CONTACTME] == '1' 
+end records.sort!.each {|r| print(r.join(&quot;\t&quot;), &quot;\n&quot;) }
+</pre> 
+<p>Did you eventually make a choice of language? I took a look at your list of 
+posts and couldn't tell if you had.</p> Michael <br>
+August 24, 2006 9:56 AM 
+<br> 
+<p>Thoran: I chose Python. It feels more natural to me, and also I like its 
+Unicode support and PyObjC.</p> 
+<p>In retrospect, it was probably a mistake to base the Perl and Python 
+versions on the Ruby version that was the simplest thing that could possibly 
+work with my limited Ruby knowledge.</p>  Christopher August 25, 2006 5:56 PM 
+<br> 
+<p>I think Ruby is probably the best language because it has a cool name and 
+my birthstone is the ruby. Perl used to be my favorite because I could say, 
+&quot;I'm programming in Perl. Yes, that's the language I'm using... 
+Perl.&quot; My friends would comment on how that Pearl was a cool name for a 
+language. I would then correct them and with a smug little dismissive laugh 
+say, &quot;No, no. You don't understand. Its PERL. Its an acronym.&quot; But 
+now the more I think about it, Programming Python, by O'Reilly has a cool-ass 
+snake on its cover. While I'm on the subway reading it on the way to work, I 
+hope people will notice the book, the snake and think, &quot;Now THAT guy is 
+learning something cool.&quot; I also like the Monty connection. ;-)</p> 
+<p>-C</p>  Mark McDonald September 6, 2006 10:18 AM <br>
+
+<p>Started 20 years learning basic<br>
+ tried my had at pascal<br>
+ .... got 
+out of it (programming) ...<br>
+ learned Perl in 1995<br>
+ .... got really into 
+Perl<br>
+ 2003 I started using PHP<br>
+ until recently when a friend turned me 
+on to Ruby on Rails.</p> 
+<p>Honestly, I dont think anything compares --or even comes close!</p> 
+<p>-Mark McDonald</p> Ben <br>
+September 15, 2006 7:27 AM <br>
+
+<p>For something that comes better than &quot;close&quot; to Ruby on Rails, 
+have a look at Django. This is *deservedly* now getting a lot of attention, and 
+it actually powers the washington post website. Can someone point me to a well 
+known high traffic website (say 100 hits per second) that is using Rails?</p>  
+Aaron September 16, 2006 5:14 AM <br>
+
+<p>Ben,</p> 
+<p>I was told Django powers *parts* of the Washington Post website, not the 
+whole thing. Mostly small projects.</p> 
+<p>That being said, I've used both Django and Rails and both are great 
+frameworks. I prefer Python for several reasons, but either are good.</p> Bartek
+<br> October 10, 2006 4:36 PM <br>
+
+<p>Hi </p> 
+<p>Here is my 2c, optimized Python version, less lines, less memory, I hope it 
+is still readable despite list comprehensions.</p> 
+<pre> #!/usr/bin/python import sys EMAIL,CONTACTME, SKUTITLE = 17, 27, 34 
+FIELDS = [SKUTITLE, CONTACTME, EMAIL] records=[] for record in 
+[line.split('\t') for line in sys.stdin]: contacts = 
+[record[field].strip('&quot;') for field in FIELDS] if contacts[1] == '1': 
+records.append(contacts) records.sort() print '\n'.join(['\t'.join(r) for r in 
+records])</pre>  Jerry Spickelmire October 31, 2006 12:47 PM <br>
+
+<p>Bartek's version &quot;fit's my brain&quot;. I can see why the list 
+comprehensions look &quot;backwards&quot;, but these are short and clear. Long 
+ones can indeed get out of hand to the point of head explosion. Well, except 
+maybe for LISP coders.</p> 
+<p>Anyone who hasn't learned C won't take to Python's C-like (%s) string 
+replacement. Those are the least &quot;Pythonic&quot; of Python's legacy 
+features I know of. Thanks for NOT using them, Bartek!</p> 
+<p>Need I mention regular expressions? Sure, once you go through the insane 
+struggle to memorize random / arbitrary &quot;meanings&quot; tied to unrelated 
+typewriter keyboard symbols, you can parse the things, but why?! Thanks again, 
+Bartek, for leaving out the uglies, and demonstrating that they aren't needed 
+anyhow.</p> 
+<p>As Jamie Z. said, &quot;A programmer sees a problem, and thinks, 'I know, 
+I'll use regular expressions!'. Now he has two problems.&quot;</p>  Walter 
+Kempf (ZA) November 2, 2006 1:31 AM <br>
+
+<p>Admittedly I haven't written anything in Python and my Ruby experience is 
+very limited. I have much more experience in Perl though (OO Perl... *shudder*).
+</p> 
+<p>I've read the Python Tutorial for the first time today in the hopes of 
+discovering some glimmer of justification for the Python hype I see all around 
+me. That's the reason I Googled &quot;python vs ruby&quot; and found this page. 
+:P</p> 
+<p>To my surprise I found that Python was rather &quot;stuck together&quot; by 
+convention more than anything else. The annoying (although useful) indentation 
+and (seeming) dynamically typed variables is made up for only by the support 
+and development done by the Python community. This is (IMO) still not a good 
+enough reason to invest more than the introductory tutorial's time in Python.
+</p> 
+<p>Before I go on, I'd like to respond to Jerry Spickelmire's post above 
+regarding regular expressions. The integrated support for regex in Perl is the 
+number one reason I used Perl for all the scripts/projects I did. It is _the_ 
+most powerful tool you can hope for in any project involving text processing. 
+I, too, have laughed at the quote Jerry quoted above because of the apparent 
+relevance, but if anyone lives by it, it only means that he/she doesn't know 
+how to use it (regex) well enough. If a problem is too complex for one regex, 
+it is usually possible to break it up into more managable sub-patterns.</p> 
+<p>Like I said: regex is the reason I used Perl. Note that I used the past 
+tense, because I now use only Ruby for _anything_ I would've done in Perl. Not 
+only does Ruby have integrated regex support, but it's easier to code, read and 
+understand. Even if you read the code months after it was written. Compact 
+without sacrificing readability. Yes, the code blocks does seem to be a bit 
+strange in comparison to other languages (especially the ones I know), but once 
+you know what they do and how to use them, the power/flexibility becomes clear. 
+It is by no means a con in evaluating Ruby. I can only hope that the Ruby Gems 
+collection will one day rival Perl's CPAN collection - that's all Ruby still 
+needs.</p> 
+<p>I have to agree with Q above: Perl may be a perfectly good and usable 
+language, but it wants you to write bad/poorly readable code. One of my friends 
+is a Perl GURU that can write whole applications in</p>  Walter Kempf (ZA) 
+November 2, 2006 2:10 AM <br>
+
+<p>(previous post continued)</p> 
+<p>really want to dump Perl, but still need that bit of obscurity in your new 
+scripting language. :P</p> 
+<p>Having said all that, I would still rather use a simple bash one-liner:<br>
+
+<code>cat input-file.txt | awk '$27 ~ /1/ { print $34 &quot; &quot; $27 &quot; 
+&quot; $17; }' | sed 's#&quot;##g' | sort</code></p> 
+<p>Never underestimate the power of the console. :P</p> 
+<p>Everyone! Quickly! Port a CPAN module to Ruby today! :P</p>  Mark H 
+November 7, 2006 2:52 PM <br>
+
+<p>I happened on this page while searching for info to help me decide what to 
+learn next. I've no experience with any of the three.</p> 
+<p>My conclusion from reading the examples is that Perl code is likely to be a 
+maintenance nightmare because there are so many ways of doing the same thing, 
+most of them cryptic. Seems to be a bit like what I've heard of PL/1, that two 
+programmers could solve the same problem using disjoint subsets of the language.
+</p> 
+<p>By contrast both the Python and Ruby examples were readable even to someone 
+who has zero clue in either of the languages (although prior experience with 
+12+ other languages certainly helped).</p>  David November 12, 2006 12:53 AM 
+<br> 
+<p>Comparing Python or Ruby with Perl is like comparing Toyota or Chevy with 
+BMW. If you dont have class you just can't get it.</p>  Mike November 13, 2006 
+1:25 AM <br>
+
+<p>Better I'll say Python = BMW 90 Germany, Ruby = Toyota 95 Japan, Perl = 
+Chevy 87 USA but in particular this object is getting oxidized.</p>  Nexox 
+December 28, 2006 6:19 PM <br>
+
+<p>Ben:</p> 
+<p>Penny Arcade (www.penny-arcade.com) runs RoR. I heard somewhere that it 
+gets around 1 million hits a day. Sounds like a pretty high load page to me.</p>
+<p>I'm considering learning RoR myself for web scripting because PHP just 
+feels so old to me after learning Python.</p>  Productive Mr. Occam January 8, 
+2007 1:41 PM <br>
+
+<p>This is accomplished much simpler with Korn shell, and in much clearer 
+terms. I would also wager that it is faster, although this toy task is also a 
+trivial and very straightforward C application. Please, consider the following:
+<br> - /bin/ksh is ATT ksh93, an advanced programming language present in 
+modern Mac OS X (as well as other professional unices). It is worth of your 
+attention if you use perl, python or ruby.<br>
+ - C programming is not as 
+difficult as you might thing, and for a systems type application such as this 
+(ie, no GUI, operates on file input) it is in fact much less sloppy than your 
+prototype comparisons, although not as clean as ksh.</p> 
+<p>Unless you are writing classes that fit into larger applications, 
+perl|python|ruby are not worth the obfuscation of simple overall logic that is 
+sacrificed. Worth it for very large app, not worth it for</p>  jj January 16, 
+2007 5:54 PM <br>
+
+<p>ruby:</p> 
+<p>puts ARGF.map { |line|<br>
+ line.split(&quot;\t&quot;).values_at(17, 27, 
+34).map { |val| val[1..-2] }<br>
+ }.find_all { |email, contactme, skutitle| 
+contactme == '1' }.map { |*arr| arr.join &quot;\t&quot; }</p>  Anonymous 
+February 17, 2007 8:35 AM <br>
+
+<p>i believe ALL ruby versions should be CLEAR on first read - and</p> 
+<p>NOT short because you CAN write it short:)</p>  Baishampayan Ghose February 
+19, 2007 3:37 PM <br>
+
+<p>I am assuming the data to be of the form: </p> 
+<p>&quot;SKUTITLE&quot; &quot;CONTACTME&quot; &quot;EMAIL&quot;<br>
+ 
+&quot;Product1&quot; &quot;0&quot; &quot;foo@bar.com&quot;<br>
+ 
+&quot;Product2&quot; &quot;1&quot; &quot;foo1@bar.com&quot;<br>
+ 
+&quot;Product3&quot; &quot;1&quot; &quot;foo2@bar.com&quot;</p> 
+<p>since the sample data is giving a 404.</p> 
+<p>So my solution is this:</p> 
+<pre> from csv import reader, QUOTE_NONE from sys import argv, stdin data = 
+stdin.readlines() reader = reader(data, delimiter='\t', quoting=QUOTE_NONE) for 
+row in reader: if row[1] == '1': print row[0], row[2]</pre> 
+<p>The above code can be modified easily to read any form of data.</p>  
+n3xtl3v3l February 22, 2007 5:23 PM <br>
+
+<p>Perl, Python and Ruby are all pretty cool languages and we have seen some 
+very good solutions to the problem in all three. I like the solutions proposed 
+by bartek (python), thoran (ruby) and brainspun (perl). Why not simply learn 
+all three? They each have an area where they are clearly ahead of the game:<br>
+
+ - perl for CPAN, the built-in regex and the fun-factor<br>
+ - python for 
+things such as Pynum, Django, Turbo Gears slightly better speed and ease of FFI 
+through ctypes, not to mention good unicode suppot<br>
+ - ruby for code blocks, 
+case expressions, built-in regex and ROR.</p> 
+<p>IMHO, learning Ruby from a Perl background can only be beneficial in really 
+grokking the language. I really like the code blocks in Ruby and the =~ 
+operator in both Ruby and Perl (although I think the latter is the absolute 
+king in regex support).</p> 
+<p>Python on the other hand, feels less cluttered due to no automatic 
+variables ($_, $., $@), c++/java like use of the dot operator in 
+class.object.method()/property and (I don't really like using '::' and =&gt;).
+</p> 
+<p>The point I am trying to make is that all languages have their strengths 
+and weaknesses. I like and use all three, altough I am currently more 
+proficient in Python...</p>  n3xtl3v3l February 22, 2007 5:30 PM <br>
+
+<p>Oh, I don't mind jj's solution at all but you need to grok functional 
+programming to get it... Also in my previous post I forgot to mention list 
+comprehensions for Python as a really cool thing and -&gt; came out =&gt; 
+(which is also used in Ruby) but for building hashes. Ruby drives more like a 
+Lexus than a Toyota to me, although I still like taking out the BMW and the 
+Chevy for a drive!!! ;-)</p>  Todd Smith March 10, 2007 7:22 PM <br>
+
+<p>List comprehensions are by now very idomatic in Python. While Ruby has a 
+number of nice features, its lack of list comprehensions always frustrates me a 
+bit. Here is my solution to this problem in python:</p> 
+<p>#!/usr/bin/env python<br>
+ import fileinput<br>
+ EMAIL, CONTACT, SKU = 17, 
+27, 34</p> 
+<p>records = [[f[1:-1] for f in line.split(&quot;\t&quot;)] for line in 
+fileinput.input()]<br>
+ contacts = [[r[i] for i in SKU, CONTACT, EMAIL] for r 
+in records if r[CONTACT]==&quot;1&quot;]<br>
+ contacts.sort()</p> 
+<p>for r in contacts:<br>
+ print &quot;\t&quot;.join(r)</p> Bartek <br>
+March 
+12, 2007 2:30 PM <br>
+
+<p>print '\t'.join(sorted(contacts)) </p> 
+<p>will save you two more lines but will it make the code better??</p> 
+<p>I think list comprehension are good when used with moderation but when 
+overdosed make code look very cryptic, like Perl maybe... trolling ;)</p> 
+<p>Bartek</p> Bartek <br>
+March 12, 2007 2:33 PM <br>
+
+<p>Heh exactly speaking:</p> 
+<p>print '\n'.join(['\t'.join(r) for r in sorted(contacts)]),</p>  Soul-Burn 
+March 17, 2007 7:51 AM <br>
+
+<p>Both bartek's and Baishampayan's versions read the whole file into the 
+memory before running.</p> 
+<p>In Bartek's solution, changing<br>
+ for record in [line.split('\t') for 
+line in sys.stdin]:<br>
+ Into:<br>
+ for record in (line.split('\t') for line in 
+sys.stdin):<br>
+ Would change the full list comprehension into a generator, 
+meaning it will only read the next line when the loop iterates.<br>
+ You also 
+copy the whole list with the second list comprehension, which can be 
+transformed into a for loop after the in-place sort.</p>  Arnaud March 25, 2007 
+7:06 PM <br>
+
+<p>Hi,</p> 
+<p>Interesting Thread, ..<br>
+ I am a perl lover that just learnt Ruby and 
+indeed I like Ruby a lot, partly because it is close to perl in some sense with 
+a lot of built in stuff and a cpan like network with gem ( though less 
+libraries and a lot of beta/alpha code).<br>
+ The one thing I find really 
+really really annoying in Ruby (besides the end all over the place ) is the non 
+autovivifying arrays and hashes.</p> 
+<p>Where in perl you can write :<br>
+ my %blah;<br>
+ 
+$blah{dum}[2][7]{verydum}[0]=&quot;tralala&quot;;<br>
+ which creates all arrays 
+and hashes along the line its more convoluted in Ruby.<br>
+ - unless somebody 
+has a nice way to do this ? -</p>  Moke May 6, 2007 1:13 PM <br>
+
+<p>I am doing a Python / Ruby comparison trying do decide which language to 
+choose for a big project that I have before me.</p> 
+<p>The most important thing, by far, for me is maintainability. I want someone 
+(not necessarily someone conversant in the language!) to be able to go back to 
+the code and quickly grok what it is doing. Readability, English-ness etc. Perl 
+is way too cryptic for my purposes.</p> 
+<p>Kerry's Python example is the only one that really &quot;fits my 
+brain&quot;. I am very very comfortable with the real-life-nature of OOP so the 
+Customer class just fits.</p> 
+<p>I hate the absence of type declarations in Python, but it appears that 
+PyChecker can help out in this regard.</p> 
+<p>I have not seen anything in Ruby that compares. I am a RoR fan but that is 
+secondary compared to the issue of maintainability of code.</p>  Mark McDonald 
+May 17, 2007 6:08 PM <br>
+
+<p>#Where in perl you can write :<br>
+ #my %blah;<br>
+ 
+#$blah{dum}[2][7]{verydum}[0]=&quot;tralala&quot;;<br>
+ #which creates all 
+arrays and hashes along the line #its more convoluted in Ruby.<br>
+ #- unless 
+somebody has a nice way to do this ? -</p> 
+<p>I had the same problem (as I also came from perl to ruby and couldn't 
+figure this one out right away). Somewhere I found a post that did something 
+like this:</p> 
+<p>data = Hash.new()<br>
+ HashFactory = lambda { Hash.new {|h,k| h[k] = 
+HashFactory.call} }<br>
+ data = HashFactory.call</p> 
+<p>data[:x][:y]['z'][1] = 2121</p> 
+<p>puts data.inspect</p> 
+<p>#{:x=&gt;{:y=&gt;{&quot;z&quot;=&gt;{1=&gt;2121}}}}</p> 
+<p>hope this helps!</p> 
+<p>Mark</p>  Troy May 21, 2007 10:09 PM <br>
+
+<p>This requirement is most efficiently done in standard Bourne shell...</p> 
+<p>% cat x<br>
+ &quot;SKUTITLE&quot; &quot;CONTACTME&quot; &quot;EMAIL&quot;
+<br> &quot;Product1&quot; &quot;0&quot; &quot;foo@bar.com&quot;<br>
+ 
+&quot;Product2&quot; &quot;1&quot; &quot;foo1@bar.com&quot;<br>
+ 
+&quot;Product3&quot; &quot;1&quot; &quot;foo2@bar.com&quot;</p> 
+<p>==</p> 
+<p>% cat y<br>
+ #!/bin/sh</p> 
+<p>cat x | # open file and process<br>
+ tr -d &quot;\&quot;&quot; | # remove 
+quotes<br>
+ grep &quot;^.* 1 &quot;| # regex to find proper rows (tabs inside 
+quotes)<br>
+ cut -d&quot; &quot; -f 1,3 | # cut fields 1 &amp; 3 (tabs inside 
+quotes)<br>
+ sort # sort and display to stdout</p> 
+<p>==</p> 
+<p>% sh y<br>
+ Product2 foo1@bar.com<br>
+ Product3 foo2@bar.com<br>
+ %</p> 
+<p>Interesting discussion though!</p> 
+<p>Troy.<br>
+ #</p>  BM May 24, 2007 2:50 AM <br>
+
+<p>Some more optimisation.</p> 
+<p>from csv import reader, QUOTE_NONE<br>
+ from sys import argv, stdin</p> 
+<p>for row in reader(stdin.readlines(), delimiter='\t', quoting=QUOTE_NONE):
+<br> print (ow[1] == '1' and (row[0], row[2]) or '\r',</p> grafman <br>
+June 5, 
+2007 3:24 PM <br>
+
+<p>I know this is outside the scope of your examples, but possibly 
+informative... I did a similar comparison between C vs Perl and Perl vs Python 
+- with the intent of comparing OpenGL performance. I plan to do the same for 
+Ruby shortly. Http://graphcomp.com/opengl/benchmarks</p> 
+<p>Perl provides OpenGL performance comparable to C, and much faster than 
+Python; I suspect that Ruby will also be faster than Python, and close to Perl. 
+Updates will be posted on the POGL site.</p> Huidae Cho <br>
+June 24, 2007 5:05 
+PM <br>
+
+<p>This is a really useful post. I've learned a lot today, so my conclusion, 
+as far as Perl is concerned, is this ONE print:</p> 
+<p> #!/usr/bin/perl<br>
+ print join(&quot;\t&quot;, @$_), &quot;\n&quot; for
+<br> sort { $a-&gt;[0] cmp $b-&gt;[0] }<br>
+ grep { $_-&gt;[1] eq '1' }<br>
+ 
+map { [@$_[34,27,17]] }<br>
+ map { s/&quot;//g for @$_; [@$_] }<br>
+ map { 
+[split /[\t\r\n]/] }<br>
+ ;</p>  Comentador June 30, 2007 11:17 AM <br>
+
+<p>The perl examples look like jokes... Anyone reading that sort of code at 
+work is probably going to have nightmares with gigantic (^[a-Z])'s...</p>  Tom C
+July 20, 2007 6:59 PM <br>
+
+<p>I find it interesting the number of programmers who assume that shorter 
+code == better code.</p> 
+<p>Having programmed for a quarter century and professionally for 15 years, 
+having gone through literally dozens of languages, operating systems, and 
+development environments, I've come to a few conclusions:</p> 
+<p>1. Good programmers are rarely flashy.<br>
+ 2. Good code is rarely 
+impressive; rather, it's clean and functional.<br>
+ 2a. Good code is easy to 
+read.<br>
+ 2b. Good code is easy to understand (variant of 2a.)<br>
+ 2c. Good 
+code is easy to maintain (result of 2a. and 2b.)<br>
+ 3. Good programmers 
+produce good code.<br>
+ 3a. Good code is OPTIMIZED LATE. Early optimization (in 
+other words, optimizing before you know the scope of the problem) is a telltale 
+giveaway of a programmer who thinks he knows more than he does.<br>
+ 4. Good 
+programmers rarely brag about it, rather they just know that it's what they're 
+paid to do, and they do it instinctively.<br>
+ 5. Good programmers are rarely 
+impressed with the newest hype or fad, and good programmers can write good code 
+in any language.<br>
+ 6. The language usually doesn't make anywhere near as 
+much of a difference as the programmer's skill does. I've seen beautiful, 
+clean, maintainable, performant Perl code, and horrible, ugly, slow Python/Ruby 
+code. It's all in the skill of the coder. NB: I'm not bragging; I've written 
+code that falls into both the former and the latter categories.<br>
+ 6a. 
+API/portability differences usually make much more of an impact than syntax. 
+The poster who recommended choosing your featureset/API first, then learning 
+the language required, was spot on. It almost always takes much longer to roll 
+your own than it does to learn a new system. No matter how much better you 
+*think* you can do it.</p> 
+<p>So while this is an interesting read (esp. wrt syntax differences between 
+the three scripting languages), I don't think it's terribly edifying.</p>  Neil 
+C August 7, 2007 8:00 AM <br>
+
+<p>This post and comments has confirmed that for me:</p> 
+<p>(1) Python code is far easier to read than Ruby or Perl code. </p> 
+<p>(2) List comprehensions are much clearer to read than map/filter/lambda</p> 
+<p>(3) the .join string method is a blight upon the otherwise clear Python 
+syntax.</p>  Zkr Ryz August 30, 2007 9:56 AM <br>
+
+<p>A word on why these excellent languages have not become the mainstream in 
+the last decade.</p> 
+<p> I was expecting Ruby code to be more easy to read, but definitely Python 
+looks easier in this comparison.</p> 
+<p> I would rather readable, maintainable code over one line programs while 
+developing in group. If I'm to create an script only for my self, and I do not 
+need to read it again and modify it a month later, a super-optimized-obfuscated 
+on line programs makes me feel very happy and proud ( but I don't share that 
+code, otherwise I have always to add comments like the shell version )</p> 
+<p> I think that readable code is useful in a development team that has 
+different programming skills. Actually I think this is the reason java is so 
+successful. It provides an strict syntax that allows the compiler to remove 
+THOUSANDS of trivial errors, and allow the novice programmers to have a more 
+readable high level version than something written in C++, plus the portability.
+</p> 
+<p> Still, I've seen HUNDREDS of THOUSANDS of java.lang.NullPointerException 
+in the last 8 years.</p> 
+<p> The reason why I think none of these excellent programming languages have 
+become the mainstream and will never do at least for another 10 yrs. ( and we 
+are 2007 ) Is due the existence of novice programmers. I know that sounds 
+strange, but if everybody would be a good programmer, everybody would have used 
+these dynamic languages in the last decade. But as there is a huge base of 
+young people learning to do things, something as strict as java is needed.</p> 
+<p> That was aswell the reason why smalltalk, and even things like Objective-C 
+did not had the acceptance that c, C++ and Java had.</p> 
+<p> These languages ( Python, Ruby, Perl ) have remained to a small amount of 
+experienced programmers. Probably that is also the reason why M$ 
+&quot;languages&quot; ( are they programming languages yet Oh, yes, after .net 
+they did ) have as well that wider acceptance. Still under Java of course.</p> 
+<p> What do you think?. Do you believe that compile time vs. runtime error 
+check makes a difference with the novice programmers, that is with the 80% of 
+the programmers out there. The kind of programmers that only learns enough to 
+earn some money and have a job, but does not care about forums like this one, 
+or learning anything new?</p> 
+<p> Nice thread.</p> BKB <br>
+September 7, 2007 10:59 PM <br>
+
+<p>Do you think you could put the example text back up? I was interested in 
+your comparison but it is hard to run the scripts without the example stuff.</p>
+<p>Thanks.</p> Michael <br>
+September 10, 2007 12:48 PM <br>
+
+<p>BKB: Sorry, but it looks like that file&rsquo;s been missing for a long 
+time, and I don&rsquo;t have an archive handy.</p>  Guo September 11, 2007 9:30 
+PM <br>
+
+<p>Who can draw a conclusion then?</p>  James September 15, 2007 12:12 PM <br>
+
+<p>There cannot be a perfect language. </p> 
+<p>The beauty of Perl is what really grabbed me, and that was after I was a 
+professional developer for 10+ years. The $ on variables is actually a good 
+thing. Also, if you were inside a function, the my and our definitions would 
+relate to you the scoping the author was trying to achieve.</p> 
+<p>I disagree that Perl is hard to maintain on larger projects. If you think 
+that, then you aren't using Modules and other Object Oriented techniques. Perl 
+is easy to maintain, scale, and debug. I'm not saying it is the best, but I 
+reach for Perl as my secret weapon over and over again. Perl really is the 
+swiss army knife from hell.</p> 
+<p>Also, when I write .NET code for work (luckily .net is only 30% of the 
+work, I yearn for the freedom of Perl, Bash, and C on Linux.</p> 
+<p>I will point out that all of the above code examples are flawed in that if 
+you want clear, readable code, you need to add many comments. With proper 
+commenting, all 3 language examples would be ideal. Some employers have 
+required me to have a comment on every line. This is not uncommon. So, looking 
+at code and understanding it clearly without comments is only good for you, and 
+not another programmer that comes along.</p> 
+<p>On another topic. Interpreted languages are definitely better in that they 
+done require a re-compile if you switch operating systems. That alone should 
+make all 3 of these languages a wise choice. I'm not saying there is anything 
+wrong with compiled code, but in many cases, especially with the rise of web 
+applications, this holds true.</p> Michael <br>
+September 16, 2007 1:46 PM <br>
+
+<p>I've restored a recreation of the sample data.</p> Klaus <br>
+September 20, 
+2007 6:27 AM <br>
+
+<p>Wow. This is literature. I have never programmed a single line in my entire 
+life, but I read this post and its comments with great pleasure. It made me 
+think of rappers freestyling.</p>  starter October 20, 2007 5:53 PM <br>
+
+<p>Hi,</p> 
+<p>This is one of interesting articles where experienced developers shared 
+their views on perl,python,ruby without many flames.</p> 
+<p>Iam new to these three langs and I previoulsy had c/c++ exp.(ofcoursely 
+relatively very small). For few projects in our organization, we are looking 
+for suitable lang among these three. Seems every org. has some share of either 
+of three.</p> 
+<p>Python does not have braces for blocks. braces are useful to trap errors. 
+If you put one statement in incorrect place, ofcourse wehave to debug.</p> 
+<p>Ruby and python use too much of english and one poster rightly pointed out 
+that org. ask for comments. With comments, it is just mix of english everywhere 
+and just imagine you write a comment in near line syntax and missed the 
+&quot;#&quot; or &quot;//&quot; whatever. It is another nightmare.</p> 
+<p>some perl examples given above are not readable but some are readable. So 
+it is not problem with language &quot;perl&quot;.</p> 
+<p>posters like &quot;Tom C&quot; and &quot;Mark affuleck&quot; made valuable 
+commnets. Thanks for that. This helped me to choose lang. based on existing 
+matured capabilities, rather than anticipating x will reach y state IF modules 
+are ported ...etc, which is not guaranteed.</p> 
+<p>I prefer to go with perl.</p>  Tend October 28, 2007 4:12 PM <br>
+
+<p>I will agree with Tom C that it is more of a matter of style since any 
+language allows you to write in a lengthy or short way. And as he pointed out, 
+the 'right' style is the one that appeals most to readability. For example, I 
+quote the original algorithm written in plain english.</p> 
+<p>Read each line of standard input and break it into fields at each tab.<br>
+ 
+Each field is wrapped in quotation marks, so remove them. Assume that there are 
+no quotation marks in the interior of the field.<br>
+ Store the fields in an 
+array called record.<br>
+ Create another array, records and fill it with all 
+the records.<br>
+ Make a new array, contactRecords, that contains arrays of 
+just the fields we care about: SKUTITLE, CONTACTME, EMAIL.<br>
+ Sort 
+contactRecords by SKUTITLE.<br>
+ Remove the elements of contactRecords where 
+CONTACTME is not 1.<br>
+ Print contactRecords to standard output, with the 
+fields separated by tabs and the records separated by newlines.</p> 
+<p>If a programming language could input this and give the correct results, in 
+my opinion, this is the BEST language.</p>  Tend October 28, 2007 4:44 PM <br>
+
+<p>The best programming language must:<br>
+ 1. Accept a readable style of 
+programming.<br>
+ 2. Encourage a readable style of programming.</p> 
+<p>Readable and logical to the way we commonly think. To this end, I will 
+choose Java as being my language of choice.</p>  Brad Cathey November 19, 2007 
+9:50 AM <br>
+
+<p>Many thanks to all who haver so far participated in this lengthy, but 
+friendly and thoughtful thread.</p> 
+<p>Before I came to it, I was an experienced, long-time Perl programmer with 
+major doubts about my chosen language. After the hour of carefully reading 
+through this thread, I am now...drum roll...still a Perl programmer.</p> 
+<p>Sure 'word[2:4]' is cooler than 'substr($word,2,4)', but 'substr' is 
+literal and helps to see immediately that I am dealing with a scalar and 
+returning a substring. But arguments could be made for either, and really not a 
+good reasons for choosing either.</p> 
+<p>So, why Perl? Gavin's comment, &quot;Perhaps your time would be better 
+spent becoming a better Perl programmer than to learn a new language?&quot; was 
+the watershed moment. If I was a new coder, never having worked in any of them, 
+I might not chose Perl, but I'm not a new programmer.</p> 
+<p>Bottom line:<br>
+ 1. I know Perl<br>
+ 2. It has worked well for me<br>
+ 3. 
+It can do anything<br>
+ 4. I already write well-structured, easy-to-read, 
+non-obfuscated code<br>
+ 5. CPAN (one of the real clinchers)<br>
+ 6. Perlmonks
+</p> 
+<p>--Brad</p>  J November 19, 2007 5:51 PM <br>
+
+<p>Why do you use such complex languages? We use PHP for such programs. Map, 
+grep, filter are too complex to support. IMHO good, supportable program should 
+not have them - it requires knowing language to read them.</p> David <br>
+
+November 20, 2007 1:16 AM <br>
+
+<p>I've done quite a lot of Perl, enough Ruby and Python.</p> 
+<p>I found all versions of all programs above very readable (perhaps I'm 
+gifted? ;).</p> 
+<p>IMHO Python is the least readable language of the three for maintenance as 
+it's more verbose. Both Perl5 and Ruby are reasonably terse, and can have both 
+good function-point density and comment density in a page of code.</p> 
+<p>Every other aspect of readability boils down to two things - 1) do you know 
+the language, and 2) does your code follow the project/company standards 
+previously established.</p> 
+<p>If you have developers/maintainers who can't grasp the language, you've got 
+much bigger problems waiting for you.</p> 
+<p>To those (like J) who think that languages like Perl5, Ruby and Python are 
+&quot;complex languages&quot;... I'm afraid that you'll find your 
+skill-relevance will have evaporated in about 5 years.</p> 
+<p>Those features (map/L.C, sort, grep/filter) can be grasped fully by 12 year 
+olds (I've taught them).</p> 
+<p>Languages (all modern ones) will get more (lower-order) functional in 
+nature, not less. You need to upgrade your brain, not downgrade your language.
+</p> 
+<p>Java is <i>slooowly</i> gaining the (lower-order) functional features that 
+C# has been piling on recently.</p> 
+<p>Perl6 is a quantum-leap toward a full-featured dynamic programming platform.
+</p> 
+<p>What I'm looking forward to is a time when:<br>
+ the programming retards 
+have changed profession<br>
+ simple applications are programmed using languages 
+like Perl6, Java7, C#4, etc<br>
+ demanding/important applications are 
+programmed using languages like Haskell, Scala, Erlang, etc.</p> 
+<p>The likelihood of that mostly rests on education of future programmers 
+(right now we're churning out idiots)... time will tell.</p>  Terrible Sponge 
+November 26, 2007 8:21 AM <br>
+
+<p>A lot of people complain that Perl doesn't look like English. The solution 
+is simple:</p> 
+<p>use English;</p> 
+<p>Seriously. Its that easy. Then you get nice names such as $ARG, $OS_ERROR, 
+$CHILD_ERROR, and $EVAL_ERROR in stead of $_, $!, $?, and $@.</p> 
+<p>If it were not for this module (its been a core module for a while now, so 
+it works anywhere) I would have switched languages long ago.</p>  mssram 
+November 30, 2007 1:19 AM <br>
+
+<p>In this thread different level of developers shared their views. First time 
+I am planning to use one scripting language for the common administrative 
+purpose. I used to program in old good 'COBOL' language. I know well, I have to 
+learn a fresh.</p> 
+<p>This thread make me more confused about selecting a correct scripting 
+language. Can some one clearly deciphre it?</p> Artist Mp3 Site &raquo; Blog 
+Archive &raquo; Syntax vs Forever Young-Always Young <br>
+January 3, 2008 12:30 
+PM <br>
+
+<p>[...] Michael Tsai - Blog - Perl vs. Python vs. Ruby &hellip; in Perl, I 
+might have tried to avoid Perl [...]</p>  JAPH January 7, 2008 2:58 PM <br>
+
+<p>My experience with writing code has always been very project specific. 
+Though I'm not a sophisticaded programmer, as a course six alumn from MIT I 
+like to think of myself not as a complete rookie either. Throughout the years 
+the occasions when I had to actually sit down and write code varied 
+substantially in size and scope. As such, I have had a chance do program in a 
+number of languages, both systemic and dynamic, such as Lisp, C, C++, Fortran, 
+Pascal, Perl, Python, Ruby, .Net, Visual Basic, Sed, Awk, Tcl/Tk, etc. I own a 
+website that has around 200 thousand unique visitors a day, and that was done 
+in PHP (though I only sat down to write the core engine of the site, which is 
+very math and DB intensive; I have rewritten some of it in Python recently). A 
+couple of months ago I had to design a program to assemble a custom-made 
+catalogue with hundred of photos on the fly for our clients, in the format of a 
+pdf file. This task, which required 2 full time employees to assemble the 
+catalogue every fortnight, is now done by the program and through the internet, 
+sparing my employees who can now perform more productive work. In my first job 
+I had to program monte carlo simulations and markov-chain algorithms in C, 
+which after compilation was send to mini computers that required a couple of 
+hours to come back with the results. Currently one my hobbies is to play with 
+math intensive coding that explores the intricacies of the zeta function and 
+the Riemann hypothesis (all programing done in Perl). I mention all this for 
+the sake of showing that I believe that my view on how programming languages 
+compare with each other comes after many years of using and exploring a variety 
+of them in different contexts, and for different needs. I don't claim to write 
+beautiful code, and honestly I suspect I don't. If anything, the fact that I 
+never get to code in any single language for long enought certainly doesn't 
+help in mastering the idiomatic strenghts of any of the languages I used. My 
+focus is always on getting the job done. Fast. And by and large I have 
+succeeded at it. But the bottom line is that when presented with a new problem, 
+if the platform I work with poses no constraints in terms of the language I can 
+use, I will normally choose Perl. It's strength and flexibility makes it 
+perfect for fast development/prototyping. As for those that find it cryptic or 
+hard to maintain, I must say that there were times I went full five years 
+without writing a single line of Perl code and yet was able to go back and 
+re-use thousands of lines I had written long before. CPAN in itself could be an 
+excuse for one to choose Perl (the PDF::API2 comes to mind, for instance, 
+allowing me to do image manipulation and typesetting work with Chinese/Unicode, 
+the latter being something that not even Knuth's TeX would allow me to 
+accomplish). Currently I wondered if I should write the Zeta function test I 
+run in C in order to speed things a bit. The result? Of 5 routines I rewrote in 
+C, one ran faster than the original Perl code, 3 of them ran as fast as... and 
+one ran MORE SLOWLY than the original Perl code!!! I was surprised but that 
+apparently had to do with Perl's dynamic allocation of memory. Anyway, one must 
+be confortable with the tools one choose. In my case -- and it's been 18 years 
+since I wrote my first Perl program -- Perl has time and again proven its value 
+in the must diverse and unsuspect circumstances. My 2 cents.</p>  Dr Bullshit 
+January 11, 2008 1:10 PM <br>
+
+<p>I started programming with C++ and adopted its efficiency and terseness 
+philosophy. Nowadays though, the programmer's time should be worth more than 
+the computer's, so rapid development time and maintainability are key. I find 
+that Perl/Ruby are more of the old paradigm. Of course you can write clean code 
+in those, but the language structures support it less. There's also the 
+environment ; if you have a huge IDE with tons of automated tasks and 
+refactorings, it won't be a hurdle to clean your code, so your code will be 
+cleaner. That's why I chose Java, and I would be more inclined to use Python as 
+a scripting language. Days of one liners are over ; you may spend 5 minutes 
+writing that one line, and make people(including yourself) lose 1000 hours 
+reading it and expanding its meaning in their head. Something like 
+aString.removeAllWhiteSpaces() is pretty clear, gibberish like s/&quot;//g 
+isn't.</p>  LAWL January 16, 2008 3:33 PM <br>
+
+<p>Until you learn what a regular expression is. Once you've done, you will 
+never want to come back to dumb wrappers like .removeAllWhiteSpaces(). Can you 
+also even imagine writing a module containing wrapper methods around the 
+infinity of possibilities regular expressions give you? Talking about a waste 
+of time, finding names to those methods would a huge one. s/\s+//g is perfectly 
+readable. If you find regular expressions difficult, break them down in smaller 
+pieces using qr//.</p>  WoW January 24, 2008 6:11 PM <br>
+
+<p>What an amazing thread. I am impressed with the opinions and insights. I 
+still don't know which language is better to become more familiar with. I guess 
+I need to learn at least two out of the three. I might add that PERL seems to 
+have the most support here and offers up a variety of ways to solve the initial 
+problem.</p> Born00Slippy <br>
+January 25, 2008 1:10 PM <br>
+
+<p>I always found PERL to rescue me in the toughest of the circumstances :)</p>
+ from /. January 25, 2008 7:19 PM <br>
+
+<p>I guess once you learn one of them (Perl, Python or Ruby) you will just 
+hold to it.</p> 
+<p>Recent post from /. http://tinyurl.com/24jou4 shows Python as growing most 
+in 2007. Being widely used at Google helps Python, also Microsoft support in 
+IronPython and Jython integration on Java side of world make Python in my 
+opinion first choice if you haven't got scripting language into you 
+programmer's toolbox yet.</p> 
+<p>Ruby is very cool.</p> 
+<p>And Perl well... see http://tinyurl.com/yob2nm</p>  JAPH February 6, 2008 
+3:47 PM <br>
+
+<p>Contrary to /.'s post of Jan 25, I don't code in a given language just cuz 
+I know it. Like I mentioned in my comment (Jan 7), I look at each new 
+problem/project individually, and try to select the tools accordingly. In the 
+case of my website for instance, I decided to rewrite the core engine in 
+Python, even though I had never coded in that language (not Perl, contrary to 
+/.'s argument). The reason being that the team that would maintain it 
+afterwards knew Python the best. So I took it up to learn a new language even 
+though I would be perfectly comfortable writing it in PHP or Perl (or C/C++, 
+for that matter). At this point I defer to Tom C's brilliant comment: &quot;The 
+language usually doesn't make anywhere near as much of a difference as the 
+programmer's skill does. I've seen beautiful, clean, maintainable, performant 
+Perl code, and horrible, ugly, slow Python/Ruby code.&quot; And I absolutely 
+agree with David's point when he mentions Python being very verbose, and the 
+need to strike a balance between function point and comment density. In general 
+I find that blindly following the hold-on-to-the-language-you-know approach 
+tends to correlate with poor programming skills.</p>  qor February 10, 2008 
+3:23 AM <br>
+
+<p>ARGF.each { |line| p line.split(&quot;\t&quot;).values_at(17, 27, 34) if 
+line.gsub!('&quot;', 
+'').split(&quot;\t&quot;).values_at(27).include?(&quot;1&quot;) }</p> Phaldor 
+<br> February 18, 2008 8:39 PM <br>
+
+<p>I think all of you have missed a vital element to writing any 
+program.....the customer. JAPH got the closest when he talked about writing in 
+Python so that the people that would inherit the code would understand it, but 
+ultimately, we have to face the fact that we are generally not going to own the 
+code once it is handed off to the real owners, those that told us to write it 
+in the first place. Granted, sometimes that is ourselves, but in those cases, 
+like so many of us have pointed out, we'll just do things our own way and 
+cleanliness and commenting go out the window, fast. :-)</p> 
+<p>My point here is that you absolutely must consider who the code will be 
+viewed by and whether they will be able to replace you as their primary 
+programmer after accepting your code. What happens if you get hit by that bus 
+on the way home? People that write one liners will have their name 
+cursed...those of you who write poorly documented code won't fare much better 
+either. People who insist upon using what is most comfortable for them just 
+because of that fact alone aren't taking into consideration the strengths of 
+each language and utilizing them to their best.</p> 
+<p>I came here looking for a good discussion on what language was the best to 
+use in a given situation and found a very well developed discussion on 
+programming in general, which is good. It has helped me determine that I'm on 
+the right course in that I should consider all aspects of every project and 
+chose the best language for the individual task at hand. No one language is 
+best at everything, even on a web application, so my conclusion is to learn 
+them all and utilize them in their areas of strengths: Perl for text 
+manipulation, shell scripting for simple operations, Ruby (most likely) for 
+database integration. Quite frankly, I'm not exactly sure where Python would 
+fit on the web as there aren't that many tasks that it seems overwhelmingly 
+suited for, but perhaps that's because I don't know it well enough. Bottom line 
+is that a good programmer will even mix his programming languages in a single 
+project when possible to take advantage of their individual strengths.</p> 
+<p>Anyway, that's my 2c</p>  Proteus February 22, 2008 11:21 PM <br>
+
+<p>I was trawling through the web for Python, Ruby, Perl comparisons when I 
+saw your excellent discussion. Although I can program in many languages I am 
+hooked on Perl. Nevertheless I was aware of all the hullabaloo about python and 
+ruby and I thought I may need to upgrade.</p> 
+<p>I read all the contributions with interest and I conclude that although 
+python and ruby are nice languages and they indeed force you to write readable 
+and maintainable code, perl has nothing to be envious of them. I already know 
+that in perl we can write highly readable or highly idiomatic code or both if 
+you write lots of comments. It is your choice. In the comments of those who 
+spoke for perl I detect something like a certain infatuation with the language 
+and I can relate to this.</p> 
+<p>In conclusion, I will carry on with perl. Thanks </p> 
+<p>PS. If JAPH wrote his first perl code 18 years ago then he was using perl 
+before Larry Wall invented the language! (I will say nothing about his 
+&quot;zeta function and the Riemann hypothesis... or the chinese 
+typesetting&quot; he he he...</p>  Mark March 3, 2008 8:46 PM <br>
+
+<p>Re: Proteus</p> 
+<p>Funny we both found this old discussion so many years later. I was also 
+looking for a comparison of the three languages, but after seeing Gavin's 
+excellent post from December 1 at 7:17 PM, I don't really need to see more. 
+Perl allows for very clear and concise code. It's just a matter of becoming 
+familiar with the idioms; becoming fluent.</p> Python vs Ruby: The Flame War 
+&laquo; Rudimentary Art of Programming &amp; Development <br>
+March 4, 2008 
+3:32 AM <br>
+
+<p>[...] Michael Tsai post.&nbsp;Smack down between Perl vs Python vs Ruby. 
+The flame war uses List as its battlefield. The sample codes include list 
+comprehension, filter, lambda, block, and various Perl idioms. Very good flame 
+war! [...]</p>  Old Unix Guy March 25, 2008 8:22 PM <br>
+
+<p>In days of old, we had sed and awk, and we liked 'em:</p> 
+<p>#!/bin/sh</p> 
+<p>sed -e 1d -e 's/&quot;//g' |<br>
+ awk 'BEGIN { FS=&quot;\t&quot; } $28 == 1 
+{ printf &quot;%s\t%s\n&quot;, $35, $18 }' |<br>
+ sort</p> 
+<p>---<br>
+ $ doit.sh</p>  Old Unix Guy March 25, 2008 8:24 PM <br>
+
+<p>Ooops. Hit and posted the durned thing!</p> 
+<p>---<br>
+ In days of old, we had sed and awk, and we liked 'em:</p> 
+<p>#!/bin/sh</p> 
+<p>sed -e 1d -e 's/&quot;//g' |<br>
+ awk 'BEGIN { FS=&quot;\t&quot; } $28 == 1 
+{ printf &quot;%s\t%s\n&quot;, $35, $18 }' |<br>
+ sort</p> 
+<p>---<br>
+ $ doit.sh</p>  Old Unix Guy March 25, 2008 8:32 PM <br>
+
+<p>Okay, my apologies. I assumed the comment-taker was smart enough to 
+HTML-ificate the text. But no, it just eats things that look like tags. Ugh.</p>
+<p>Anyway, feed the sample file to the shell script as standard input. It 
+works. Trust me. :-)</p> 
+<p>The whole argument that one can write easy-to-read Perl code is, to me, 
+kind of vacuous. Yeah, one can. But get real - almost nobody DOES. Perl is an 
+abomination. Some cool stuff written in it, though. :-)</p>  Younger Unix Guy 
+March 27, 2008 5:03 PM <br>
+
+<p>Word to the Old Unix Guy.</p> 
+<p>I've been writing perl scripts for well, at very least 5 or 6 years, and I 
+still cannot skim through one of my colleague's scripts and know exactly what 
+it does instantly.</p> 
+<p>I do not, and have never liked Python's syntax, for whatever reason, I 
+don't like it. It's a personal thing I suppose.</p> 
+<p>I have been recently learning and scripting in Ruby, and I could not be 
+happier, an excellent language that has been eating up and converting some of 
+the oldest Perl programmers.</p>  Zack April 5, 2008 4:21 PM <br>
+
+<p>Wow, I love this thread. I just started learning python and was interested 
+in other scripting languages (that darned o'reilly book gave me the idea of 
+looking up &quot;python vs perl&quot; (seems he's pretty popular around here)).
+</p> 
+<p>So, I came across this page. I'll have to say that<br>
+ Comentador's 
+comment about nightmares from programming perl really cracked me up once I saw 
+what he was talking about. Good job there.</p> 
+<p>So once I get a bit better at Python, I'll post my solution and see how it 
+fares against these others (there hasn't been a new example in a few years).</p>
+<p>Ruby, from what it sounds, looks pretty good as well. Though being 
+primarily a BASIC/C programmer myself, I think I'm going to like Python/C and 
+feel at home.</p> 
+<p>One thing that Python has and GCC doesn't is, have you ever seen a current, 
+stable GCC Windows XP x64 binary? I didn't think so, only thing that I've seen 
+for Windows x64 would be the MS VC .NET IDE. Thats one of the things that I am 
+really impressed with with Python.</p> 
+<p>Well, there's my two cents.</p>  Zack April 5, 2008 4:25 PM <br>
+
+<p>Oh, and one more thing:</p> 
+<p>I had was completly ignorant as to the fact that you could just type 
+&quot;python&quot; or &quot;ruby&quot; or whatever kindof oldskool stuff that 
+that Unix guy conjured up, into like 99% of major linux distrobutions.</p> 
+<p>As I only have a liveCD distro to work with atm, I was shocked really, when 
+I opened my terminal, and to my utter surprise, when I type &quot;python&quot;, 
+sure enough, the interactive python interpreter comes up.</p> 
+<p>Things are looking great right now. Fedora 9 comes out in a few days, I'll 
+use that as my development platform.</p> 
+<p>(sorry in advance if I seem a bit too loosly connected to the subject of 
+this thread)</p> Python - dar neatrasta | Dirbtuv&#279;s <br>
+April 6, 2008 
+2:04 PM <br>
+
+<p>[...] korporacij&#371; u&#382;nugarius ir dideli&#371; projekt&#371;, tad 
+artimiausi Python populiarumo konkurentai yra Perl, Ruby ir tikriausiai PHP bei 
+Delphi. &#302;domu, k&#261; Tiobe reitingai rodys po [...]</p>  xtopher April 
+13, 2008 3:05 AM <br>
+
+<p>My principal tool of choice was Perl for several years; then it was Python 
+for several years; Now, I am back to Perl.</p> 
+<p>I really do like the cleanliness of the Python. Guido did an excellent job 
+of making code look like pseudo code. This is a huge leap forward for 
+programming.</p> 
+<p>And had it not been for the success of Python and its influence to fix the 
+ugliness of Perl code. I would have happily never written another line of Perl 
+code. But the Perl community took to heart the criticism of the programmers who 
+fled to Pyhton. If not for the aforementioned English, and Perl Critic and, 
+especially, Moose ... that made Perl more like Python ... I would have stayed 
+with Python. Since the Perl community acknowledged and started devising 
+problems for this short-coming, I was more comfortable returning to Perl.</p> 
+<p>I also like CPAN as a repository better than anything similar offered by 
+any language, period. CPAN does have it's problems, but its wealth as others 
+have pointed out is remarkable. Often projects become a simple stitching 
+together CPAN modules.</p> 
+<p>And for what I do, Python has two annoying quirks, both related to 
+performance.</p> 
+<p>1) Threading. The global interpreter lock problem is a sincere impediment. 
+Once the task becomes CPU bound on one of the processors of your SMP box. You 
+are stuck. You can, of course, incur an expensive fork process, but then 
+passing values between the seperate processes becomes expensive. I am a little 
+surprised that compute intensive companies such as Google have not pushed the 
+Python folks to overcoming this limitation.</p> 
+<p>2) Performance. Objects orientation comes at a price (~20% from some simple 
+benchmarks). Perhaps somethings such as strings should (optionally?) not be an 
+object.</p> 
+<p>I suspect that the Python community will figure these out ... and not take 
+as long as the Perl communities release of Perl6 ... and when they do, I will 
+probably be back to Python.</p> Michael <br>
+April 13, 2008 11:38 AM <br>
+
+<p>xtopher: (1) Google has such big computations that they have to split them 
+across multiple processes (and machines), anyway. (2) Cite, please.</p> brian 
+<br> April 17, 2008 7:12 PM <br>
+
+<p>Now that Google has released the Google Apps framework which is authored in 
+Python, do you think that Python will become a more popular choice than Ruby?
+</p> 
+<p>Did you program SpamSieve in Python? I've been a SpamSieve user for many 
+years (and love it).</p> Michael <br>
+April 17, 2008 9:11 PM <br>
+
+<p>Brian: Certainly, it can only help Python's popularity, however I was under 
+the impression that Python was already more widely used than Ruby. SpamSieve is 
+written in Objective-C, however I use Python in EagleFiler and DropDMG, as well 
+as during the development process for all my apps.</p>  Jess May 5, 2008 11:23 
+PM <br>
+
+<p>Hi,<br>
+ Very interesting posts! I have been using perl for many years now, 
+and have also been involved with much Java and some .Net. I have toyed with 
+Ruby and Python, and both, while &quot;ok&quot;, just didn't do it for me.</p> 
+<p>I agree with several other posters though, in that good, readable code is 
+&quot;documented code&quot;. Any code is going to be difficult for another 
+programmer to know exactly what the previous programmer wrote and why. Many 
+times now I have revisited my old code, only to find that I hadn't documented 
+it. Other times, I have found documented code in whatever language, and it is 
+sooo much easier. Looking at other folks code (ahem, Java developers listen 
+up), I find the lack of try...catch... disturbing, and the constant drone in 
+logs about java.nullpointer...blah...blah..blah completely disgusting. test 
+your variables please, it will make all of us very happy!</p> 
+<p>But then again, Perl's syntax doesn't bother me at all, and I can usually 
+read right through (its kind of like a warm blanket ;-).</p> 
+<p>It also goes to point out that I agree (with whoever now ;-), that knowing 
+multiple languages is invaluable. Those that only bother with one are destined 
+to be the guy that gets laid off when the company moves on without them. As 
+someone who has worked in everything ranging from Windows/VB -&gt; Solaris/Java 
+-&gt; Linux/PHP/Perl, I have only found my skills getting stronger with each 
+new task/project.</p> 
+<p>Much of any language is going to be planning, and figuring out what works, 
+does so consistently, and provides benefits over other languages.</p> 
+<p>Oh, I also agree that Perl is the swiss army knife hell. I have never found 
+a language so powerful, and so &quot;suited' to UNIX. Oh, for the old guy, I 
+agree that sed/awk/ etc were fairly easy, but man, what a pain in the arse, and 
+to boot, I had so many of those darn things running around, I thought I was 
+going to lose my mind ;-).</p>  anon123 May 15, 2008 7:04 AM <br>
+
+<p>Regarding maintainability.</p> 
+<p>Standard and defacto standard ways of doing common tasks make for better 
+maintainability.</p> 
+<p>I argue that this:<br>
+ $t=~s/\s+//g;</p> 
+<p>is more maintainable than:</p> 
+<p>t.removeAllWhiteSpaces()</p> 
+<p>Because real perl programmers would know exactly what the first line did 
+without having to look at some other function/method, and if they understand 
+the rest of the code, they might know instantly whether that line is doing the 
+right thing or not (otherwise hope the comments/docs are good ;) ).</p> 
+<p>Whereas the second requires you to check what the removeAllWhiteSpaces 
+method is actually doing, and if it isn't doing it, then you have the problem 
+of figuring out whether that behaviour is correct or not (better hope the 
+comments/docs are good ;) ).</p> 
+<p>So, to me, the first way of doing it is more maintainable.</p> 
+<p>For a similar reason something like CPAN is a great factor in 
+maintainability.</p> 
+<p>Since there's often a _good_ CPAN module/library that does something 
+common, it results in perl programmers using the same libraries, in 
+understandable ways.</p> 
+<p>While Java also has lots of standard libraries, Java tends to be a lower 
+level language (more lines of code to look through), and many of the libraries 
+appear to be written to fulfill some spec rather than to accomplish common 
+tasks more easily (whereas CPAN modules tend to be written to be used by mere 
+mortals).</p> rtfa.net &raquo; Michael Tsai - Blog - Perl vs. Python vs. Ruby 
+<br> May 26, 2008 7:13 AM <br>
+
+<p>[...] http://mjtsai.com/blog/2002/11/25/perl_vs_python_v&amp;#8230; 
+I&rsquo;m evaluating Python and Ruby as replacements for Perl. I&rsquo;ve been 
+using Perl for [...]</p>  Sam June 23, 2008 7:36 AM <br>
+
+<p>Michael:</p> 
+<p>Understand this:</p> 
+<p>1) We can write maintainable code in perl too.<br>
+ Python is anyway 
+naturally clean</p> 
+<p> Perl - 1, Python -1</p> 
+<p>2) Perl is faster than Python<br>
+ Even using Pyscho doesn't help(offers a 
+max<br>
+ of 4x speed than the original version). Only<br>
+ few people can play 
+with 'Pyrex'</p> 
+<p> perl - 2, Python -1</p> 
+<p>3) Mod-perl better than Mod-python<br>
+ We can tweak apache better with perl
+</p> 
+<p> Perl - 3, Python -1</p> 
+<p>4) DBI:x (No such facility in Python)</p> 
+<p> Perl -4, Python -1</p> 
+<p>5) Great Template engines (equal)</p> 
+<p> Perl -5, Python-2</p> 
+<p>6) Good web framework<br>
+ (Django better than catalyst)</p> 
+<p> Perl -5, Python-3</p> 
+<p>7) Optimized Scientific modules (Graph &amp; Math)<br>
+ Python better than 
+perl</p> 
+<p> Perl -5, Python-4</p> 
+<p>8) Programming Web services with ease (equal)</p> 
+<p> Perl -6, Python-5</p> 
+<p>So almost both are nearly equals with a bit of<br>
+ advantage with perl. 
+Also, I can iterate that<br>
+ we can write clean code with perl also. Further,
+<br> having $, @, % helps me to know the datatype<br>
+ at any point in the 
+program than just a name as<br>
+ used in python, java, c++ etc.</p> 
+<p>Summary:<br>
+ -------<br>
+ For high calculation and graphics - Use Python
+<br> [SciPy, Wx are just gr8]</p> 
+<p>For Standalone apps - Use Python</p> 
+<p>For web apps - Use Mod-perl with Catalyst.<br>
+ [Though Django is better 
+than Catalyst (Less time to process requests), Catalyst has a better<br>
+ DBIC 
+ORM ]</p> 
+<p>Love u,<br>
+ Sam</p>  matt b July 3, 2008 8:58 AM <br>
+
+<p>Wow. Seldom (I think this is the third time) do I comment on 
+discussions/blogs/forums etc.</p> 
+<p>A real discussion on the internet with gentlemen (sorry if any of the post 
+were from ladies).</p> 
+<p> I realised early on in my career that I was no programmer (with fortran, 
+pascal, c). I could program what everyone else could but it took me five times 
+longer and so my career path took a different turn (config mngmt).<br>
+ A few 
+years ago I discovered Perl. The immediacy of the language really charmed me as 
+I could now write programs that made sense to me very quickly and with little 
+effort. Things just worked! From that day, I am weekly writing perl scripts for 
+my developers to parse information, sort files, text manipulation, and even the 
+odd gui. I do this for them as I want them to get on and &quot;develop&quot; 
+(using more traditional langs). My scripts are more often than not treated with 
+a weird awe as they can't understand how someone who isn't a &quot;techie&quot; 
+can produce results so quickly... even stupid little scripts such as</p> 
+<p>open (UNSORTED,&quot;file1.txt&quot;);<br>
+ open 
+(OUT,&quot;&gt;file2.txt&quot;);<br>
+ @orig_list=&lt;UNSORTED&gt;;<br>
+ 
+@sorted_list=sort(@orig_list);<br>
+ print OUT @sorted_list;</p> 
+<p> However, my scripts seem to reach critical mass at a certain number of 
+lines (this could well be my lack of skill). After a few hundred lines the 
+ability to quickly surmise what's going on becomes suddenly more challenging. I 
+think the syntax also makes the program (at this point I no longer consider it 
+a script) &quot;look&quot; like a garbled mess even though it's still as clear 
+as its smaller cousins.</p> 
+<p> This appearance may be what makes some developers shy away from learning 
+perl (some of my developers I still consider lazy mind).</p> 
+<p> I have recently started to dabble with Python and, thanks to this great 
+article/discussion will also look at Ruby. I like the &quot;clean&quot; look of 
+Python and will consider for larger scripts/programs especially if other people 
+are going to pick it up and run with it.</p> 
+<p> Modules, support, structure, community, and the internet/open source 
+mentality are paving the way for great new computer ideas and languages, as 
+well as changing opinion that programming is just for &quot;geeks&quot;. 
+However, given a small computing task that needs to be done *right now* with 
+little fuss I'll probably always do it in Perl and probably will be doing until 
+my fingers can no longer type.</p> 
+<p>Matt B.</p>  GODhack July 4, 2008 7:32 PM <br>
+
+<p>Useless talks...<br>
+ Perl is art like poetry.<br>
+ Python is practical 
+like recipe.<br>
+ Ruby is bicycle version 2.0.</p>  Eljay September 5, 2008 
+10:47 AM <br>
+
+<p>Perl is a very powerful sharp knife, with bazillions of ways to accomplish 
+a task. Regex is Perl's greatest strength. Legibility near the level of 
+line-noise is Perl's greatest weakness -- Perl developers who write legible 
+code are the exception, not the norm.</p> 
+<p>Ruby is a pure O-O language that should appeal to Perl programmers. Ruby on 
+Rails is a home run in that problem domain. Ruby follows the Perl idiom of 
+bazillions of ways to accomplish the task, but only gajillions (which is much 
+less than bazillions) of them are Ruby-esque. Ruby follows Perl with its 
+integrated regex support. Ruby's author took the best of Perl and the best of 
+Python to create Ruby (other developer's idea of &quot;best&quot; may vary).</p>
+<p>Python is a hybrid O-O language that is a good replacement for BASIC as a 
+introductory tutorial language, yet has sufficient power to displace Perl for 
+many tasks in the Perl domain. Perl fans may find Python's non-Perl to be 
+off-putting. Legibility fans may find Python's emphasis on fun and legibility 
+to be a major plus. Also it's emphasis on &quot;only one way to do 
+something&quot; (the pythonic way). The blocks-by-indentation may be extremely 
+distasteful to curly-brace lovers. Regex is not part of the core language, but 
+is part of the Python standard library -- but having it be a standard library 
+means that the core language is not intimately regex-ified (this may be a plus 
+or a minus, depending on the programmer and the problem domain).</p> SBP Editor 
+<br> October 11, 2008 12:49 PM <br>
+
+<p>I blogged about this same topic... to me Ruby comes out way ahead almost 
+all cases... I won't repeat all the reasons here but you can read my post if 
+you like athttp://www.strangeblueplanet.com/2008/10/perl-python-ruby.html</p> 
+Michael Tsai <br>
+October 11, 2008 1:04 PM <br>
+
+<p>SBP Editor: It sounds like you have some misconceptions about how Python 
+works.</p> stevebsd <br>
+October 25, 2008 2:58 AM <br>
+
+<p>I'm trying to create this blog on programming in different languages. Stop 
+on by and check it out! :)</p>  dan December 4, 2008 2:24 PM <br>
+
+<p>Perl have been, is and remains the most powerful piece of software.<br>
+ 
+Now with Parrot, no language can compete with Perl!</p> Joshua 
+&quot;Limbic~Region&quot; Gatcomb <br>
+December 5, 2008 9:23 PM <br>
+
+<p>I happen to love perl. I know your input data was very specific. You didn't 
+have to worry about embedded delimiters, records spanning multiple lines, and 
+escaped quotes. On the other hand, it doesn't take any additional effort to 
+write code that can be future proofed against data that would otherwise break.
+</p> 
+<p>#!/usr/bin/perl<br>
+ use constant {SKU_TITLE =&gt; 1, CONTACT_ME =&gt; 2};
+<br> use strict;<br>
+ use warnings;<br>
+ use Text::CSV;</p> 
+<p>my $file = $ARGV[0] or die &quot;Usage: $0 &quot;;<br>
+ open(my $fh, 
+'new({sep_char =&gt; &quot;\t&quot;});<br>
+ 
+$csv-&gt;column_names($csv-&gt;getline($fh));<br>
+ while (my $rec = 
+$csv-&gt;getline_hr($fh)) {<br>
+ push @contactRecords, [$rec-&gt;{EMAIL}, 
+$rec-&gt;{SKU_TITLE}, $rec-&gt;{CONTACT_ME}];<br>
+ }</p> 
+<p>@contactRecords = grep $_-&gt;[CONTACT_ME], sort {$a-&gt;[SKU_TITLE] cmp 
+$b-&gt;[SKU_TITLE]} @contactRecords;</p> 
+<p>for my $rec (@contactRecords) {<br>
+ $csv-&gt;combine(@$rec);<br>
+ print 
+$csv-&gt;string, &quot;\n&quot;;<br>
+ }</p>  ddber December 9, 2008 1:53 PM <br>
+<p>Hi All,<br>
+ Really interesting thread, I learned a lot...Thanks!<br>
+ I'd 
+like to add my 2p to the discussion.</p> 
+<p>I'm a biologist who sometimes has to analyze large datasets so a few months 
+ago I convinced myself to learn a scripting language. Like many others, I had 
+to face the biblical dilemma perl vs python (I hardly knew about the existence 
+of Ruby at that time).<br>
+ I decided to give it a go with perl for two good 
+reasons 1) Perl is the English of bioinformatics 2) Lucky coincidence, some 
+people in our department started a reading group of Tisdall's &quot;Beginning 
+perl for bioinformatics&quot; which I promptly joined (good book by the way).
+</p> 
+<p>Well, after having gone through all the chapters and done many of the 
+exercises, I realized that... perl and my brain go in different directions. I 
+found perl often to be counterintuitive (the concept of default variable 
+appeared to me mysterious, unnecessary and that $_ look didn't help. The same 
+for reference/dereference.) And this is to say nothing about the syntax.</p> 
+<p>Then I tried python and that was another story. I learned the basics quite 
+quickly and soon I could write useful scripts to make my life easier. I much 
+prefer python's 'There must be one obviuos way of doing it' over perl's 'There 
+is more than one way...'.</p> 
+<p>I think that in the decision to learn perl or python one should consider 
+also how intensively s/he is going to use them. As I said, I'm not a full time 
+programmer so for me an intuitive and english-like style is a big plus since I 
+might not touch a script for months.<br>
+ I could make sense of my python 
+scripts even after weeks I wrote them. With perl, I forgot what I was doing 
+even after coffee break.</p> 
+<p>I'd like to finish with a couple of questions. Does anyone have an idea of 
+the number of perl vs python users, roughly? How is this trend changing (python 
+gaining/loosing popularity over perl)? And what is the situation in the field 
+of bioinformatics?</p> 
+<p>Bye</p>  Aureliano December 15, 2008 9:54 AM <br>
+
+<p>to all above: nice discussion.</p> 
+<p>to ddber: I'm also a biologist, but feel comfortable (actually, couldn't 
+more) with perl. You simply cannot survive without the regular expression 
+(IMHO, the real Swiss army knife) at your back, when you are thrown into the<br>
+ tremendous biological text data desert.</p> 
+<p>If you want some tool intuitive(in these programmers' words object-oriented 
+style) to deal with large dataset in biology, why do you just try R 
+(www.r-project.com), the statistical software package with features they 
+mentioned above in python, like classes, functions, English-style, along with 
+even more powerful extensional packages designated for specific biological 
+analyses.</p> 
+<p>Being a biologist, I found perl+R+MySQL almost can do every thing one can 
+encounter.</p> Nuovo Labs - Florida <br>
+December 16, 2008 2:53 AM <br>
+
+<p>I've been learning Python for a few months now, and it's surprisingly easy 
+to learn. It seems very common sense to somebody coming from another language. 
+It takes what other languages accomplish, does it faster, with less code, and 
+makes it fun to write.</p> 
+<p>When I think of Ruby I think of:</p> 
+<p>if user.is.not.logged.in<br>
+ create.new.table.in.the.database<br>
+ end</p> 
+<p>As a programmer, it's easier to remember how to do things across languages 
+if they at least appear similar, instead of reinventing the wheel for the sake 
+of making your code appear to have the same exact lexical value as English, at 
+the expense of the language's speed, and usability.</p>  oilbane December 23, 
+2008 10:04 PM <br>
+
+<p>&quot;&quot;Perl have been, is and remains the most powerful piece of 
+software.<br>
+ Now with Parrot, no language can compete with Perl!&quot;&quot;
+<br> NO<br>
+ Code that works and is easy to understand is powerful. Programming 
+is complex why would I use a language thats hard to read and understand. 
+&quot;thats just seems stupid&quot;<br>
+ 
+------------learn----------------------------<br>
+ 
+------------and-----------------------------<br>
+ 
+-------------USE---------------------------<br>
+ 
+-------------PYTHON------------------------</p>  oilbane December 23, 2008 
+10:16 PM <br>
+
+<p>Python may or may not be the language that brings about a 
+Computer-Programming-for-Everybody world. But it is currently the best 
+contender. When there is a better horse, I'll switch my bet.</p>  Vlad December 
+31, 2008 5:18 PM <br>
+
+<p>Perl may be cryptic.... yes, specially because of the sigils thing. Always 
+changing! And the pass by reference...</p> 
+<p>But if you write &quot;noisy&quot; code, then COMMENT... dammit</p> 
+<p>In my case (and in my organization) we comment everything that is not clear 
+enough at first sight.</p> 
+<p>Example. </p> 
+<p>foreach my $r ( @records )<br>
+ {<br>
+ push(@contactRecords, 
+[$$r[$SKUTITLE], $$r[$CONTACTME], $$r[$EMAIL]]);<br>
+ }</p> 
+<p>....<br>
+ ....<br>
+ ....<br>
+ hundreds of lines of code here<br>
+ ....<br>
+ 
+....<br>
+ ....<br>
+ foreach my $r ( @contactRecords )<br>
+ {<br>
+ my @rec = 
+@{$r}; #--- contactRecords is an array of records<br>
+ print 
+join(&quot;\t&quot;, @rec), &quot;\n&quot;;<br>
+ }</p> 
+<p>Of course I KNOW that every perl programmer will assume that 
+@contactRecords is like that... But many times, we have non-perl programmers 
+looking at the code (we use many languages, from java, visual basic, asp, c adn 
+perl) and many systems interact here, each part written by different companies 
+with different language choices.</p> 
+<p>So, the solution is REGARDLESS THE LANGUAGE, DO COMMENT WHEN IS (even 
+barely) WORTH IT.</p>  Vlad December 31, 2008 5:24 PM <br>
+
+<p>BTW, the comment &quot;#--- contactRecords is an....&quot; is just an 
+example... it could have been anything, of course it just have to be meaningful 
+in the context.. Anyway</p> 
+<p>I found Python to be a good choice also. Having to see a lot of code from 
+others programmers, having them forced to indent correctly seems like a nice 
+feature.</p> 
+<p>The only thing i hate about perl5 is the lack of a nicer OOP syntax.</p> 
+<p>BTW, excelent discussion you have here :)</p>  sandy December 31, 2008 
+10:57 PM <br>
+
+<p>Hello friends, i am looking for perl indepth good tutorial. i found couple 
+of tutorials over google but they are not good enough. i want tutorial for job 
+perspective<br>
+ or any one having personal notes and can share with 
+me.....please send me buddy</p> 
+<p>please friends help me, i don't even have enough money to buy books or to 
+join any classes but i promise i'll pay you back once i got the job....</p> 
+<p>for god sake help me</p> 
+<p>God bless u</p>  Just another Programming Language Designer January 1, 2009 
+8:08 AM <br>
+
+<p>Try http://perldoc.perl.org/ then click on &quot;Tutorials&quot;. There are 
+many tutorials about specific sub-topics in Perl, but maybe you better try
+http://perldoc.perl.org/perlintro.html first. The Perl Intro is a short 
+introduction to Perl and complete enough to get you started in the earnest.</p> 
+ Vlad January 2, 2009 9:41 AM <br>
+
+<p>Well. the best easy book to learn perl i&acute;ve ever read is Perl and CGI 
+for the World Wide Web: Visual QuickStart Guide, from Liz Castro. Is really 
+cheap, and short. Really a Quickstart. Is not an in-depth manual. For an 
+indepth view, just check the documentation of perl itself, available through 
+the console, or just googling PERLDOC PERL</p>  Anonymous January 27, 2009 
+12:31 AM <br>
+
+<p>This can be achieved in a SINGLE line of bash shell scripting:</p> 
+<p>cat inputfile | awk '{if($27==&quot;1&quot;) print}' | sort -k 34 | awk 
+'{print $34 $17}'</p> 
+<p>Assumptions:<br>
+ 1) inputfile is the input data file<br>
+ 2) As shown in 
+an example above EMAIL is the 17th field, CONTACTME is the 27th field and 
+SKUTITLE is the 34th field respectively.</p> 
+<p>The power of python and perl is not put into proper use when you don't do 
+stuff that are the strengths of those languages.</p> 
+<p>You cannot compare perl and python with such examples/problems.</p> 
+<p>Generally perl is preferred over python MAINLY because of the advantages 
+perl modules offer over that of python.</p> 
+<p>If the modules are equivalent then python is preferred because its 
+programming style helps the programmer avoid much documentation.<br>
+ Good perl 
+code needs to be documented very heavily in order to be readable over time. 
+Python needs it as well, but its syntax makes the program code more obvious 
+than its perl counterpart.</p>  Pavel February 13, 2009 11:32 AM <br>
+
+<p>Let me tell about my experience with perl.<br>
+ We are quite big project 
+(well, more than 100 requests per second).<br>
+ What we do to avoid complex 
+constructions is we have our internal rules which developers should follow. For 
+example, we don't write ifs on the same line like:<br>
+ print if 
+$something_happened;<br>
+ we use<br>
+ if ($something_happened) {<br>
+ print;<br>
+ }<br>
+ instead. That improves readability when you try to follow.<br>
+ Another 
+thing we do is review all commits to follow those rules. (We also review other 
+possible problems in the code. All developers receive those updates).</p> 
+<p>So there's no readability problem in our project. Even if you are concerned 
+by readability, perl is very customizable. I even think it is possible to 
+convert perl to any language without even changing to other interpreter :)</p> 
+<p>What we really like in perl is very huge CPAN archive. It really helps 
+saving time which would otherwise spent on programming quite simple things. For 
+example, date conversion, file format detection, server processes handling, 
+protocol handling and many many more...</p>  muni February 15, 2009 7:47 PM <br>
+<p>This is in response to a question of perl vs python in the field of 
+bioinformatics. There is no question about it. If there was no perl, biologists 
+would be upto their a***s in C code or something even more horrible. Perl 
+finishes the race and python is not even out of its tracks. Although the thread 
+has argued long and hard over readability of code, I believe this finally boils 
+down to individual style. Its possible to write unreadable code in any 
+language. It may be a bit more true for perl, as it has been candidly confessed 
+by its developers &quot;more than enough rope to hang yourself&quot;. But my 
+point is why should you go and hang yourself at all? Perl provides absolutely 
+simple ways to document your code. So my advice to users (of any language) is 
+to learn to document your code if you are concerned with readability. My own 
+perl code is quite readable and usable even after years and years. I wouldn't 
+touch python with a long pole if I had to, I'm now completely addicted to the 
+perl way of things and beyond hope. As someone in the thread pointed out ... 
+perl is like art and I agree. While python allows you to do a job, perl allows 
+you to do it &quot;and&quot; dream.</p> 
+<p>peace</p>  muni February 15, 2009 8:24 PM <br>
+
+<p>here's another way to do it, using a CPAN module<br>
+ called Sort::Fields. 
+I've deliberately tried not to be too terse.</p> 
+<p><code></code></p> <code> 
+<p>#!/usr/bin/perl</p> 
+<p>use strict;<br>
+ use Sort::Fields;</p> 
+<p># you can use these as comments<br>
+ #my $EMAIL = 17;<br>
+ #my $CONTACTME = 
+27;<br>
+ #my $SKUTITLE = 34;</p> 
+<p>my @selectedRecords;<br>
+ while () {<br>
+ my @array = split (/\t/);<br>
+ 
+next if $array[27] ne &quot;\&quot;1\&quot;&quot;;<br>
+ push 
+(@selectedRecords,&quot;$array[17]\t$array[27]\t$array[34]&quot;);<br>
+ }</p> 
+<p> print map { &quot;$_\n&quot; } fieldsort '\t' , [3], @selectedRecords;</p> 
+</code> 
+<p><code></code></p> Alpha Monk <br>
+March 29, 2009 2:13 AM <br>
+
+<p>I realize this as a 7 year old weblog(blog) post, but I wonder what Michael 
+Tsai is using as a programming language, when dealing with text now.</p> 
+<p>BTW. the website indeed has a list of how many perl jobs, php jobs, ruby 
+jobs and python jobs are available. They started the tracking in 2005 and it is 
+current to date. I took the liberty to state the jobs greatest to smallest for 
+folks who may not check this out for themselves.</p> 
+<p>I do a lot of Perl maintenance programming and my run perl tidy on some 
+programs to clean them up a bit, but Perl continues to be a beautiful girl to 
+me.</p> Michael Tsai <br>
+March 29, 2009 10:48 AM <br>
+
+<p>Alpha Monk: I&rsquo;m using Python, and I&rsquo;m very happy with it.</p>  
+Proteus March 31, 2009 7:56 PM <br>
+
+<p>Resently I was required to learn visual basic (and VBA) for a project. The 
+microsoft world is a nightmare. It is the hell where condemned programmers go 
+to for their sins. I am back to my beloved perl and I will never sin again.</p> 
+<p>P.S. Python sounds like a 70's joke and Ruby sounds jewish. :-&gt;</p> 
+conficker <br>
+April 1, 2009 1:20 AM <br>
+
+<p>I don't understand how people can like Ruby. It's clean compared to Perl, 
+or Java, etc. but it doesn't have a recognizable syntax. Too many @ signs, etc. 
+It's like going from learning Italian, then Spanish, then Portuguese, and then 
+Arabic.</p>  Ben May 13, 2009 10:54 AM <br>
+
+<p>The thing I like about Perl over Ruby is the fact that Perl's functions are 
+very versatile. Ruby has a truck load more functions to do things which means 
+you have to remember them, where as Perl has a small set of functions that can 
+be manipulated to do all kinds of things. And this idiom is used throughout 
+Perl. Once you get the hang of these idoms then you can use them throughout.</p>
+<p>Kind of reminds me of PHP where there are a lot of functions that serve 
+almost the same purpose. Why have 50 almost-the-same regexp functions, then 
+another 50 for case insensitive operations?</p> 
+<p>My 2c.</p>  James May 18, 2009 9:41 AM <br>
+
+<p>Only one or 2 people have picked up on this, but not as a major point, but 
+when it comes to maintaining; it is often not the one who wrote the code who 
+has to do it.</p> 
+<p>As such the best language to use is one that's most likely to be known by 
+the maintainer. Since most of the time you don't know who this will be, I'd 
+always go for perl as it's the most widly known scripting language - even if it 
+gives you the most rope to hang yourself.</p> 
+<p>My 2p.</p> Kiran <br>
+August 11, 2009 10:20 AM <br>
+
+<p>Thanks for the comparison, I prefer Python over PERL for complicated 
+programs.</p> 
+<p>Python tutorial has moved to a new URL : 
+http://www.python.org/doc/current/tutorial/index.html</p>  Genny August 30, 
+2009 5:49 PM <br>
+
+<p>If Python 'has only one way to do it', how come we've got dozens of 
+variants above?</p>  Genny August 30, 2009 6:06 PM <br>
+
+<p>I seems very ignorant/arrogant to choose a language mostly based on how 
+much one can understand without knowing it. Although it is interesting 
+somewhat, it only matters in the very beginning.</p> 
+<p>'Which language can teach me more' is at least as important as 'which 
+language fits my brain'.</p> 
+<p>So, not only learn these, but Lisps, Haskell, TCL, etc.. and yes, regex.</p>
+ Edward Chua October 2, 2009 1:50 AM <br>
+
+<p>wow.</p> 
+<p>this has got to be the most surreal thread I've ever read.</p> 
+<p>I felt like I just went through a 7-year long discussion, and never did it 
+stray away from its initial focus (of Python, Perl, Ruby). Also, the absence of 
+language-religious fanatics or dumb/flames is a rare find nowadays in the year 
+2009.</p> 
+<p>I never really did proper learning for programming, only bits of C or PHP 
+here and there, and as such usually write horrid code. Recently a friend asked 
+me if I could help him write a script for manipulating a dataset in text-file 
+for his research project.</p> 
+<p>Remembering someone mentioning Perl being very well suited for such 
+purposes (ie bioinformatics) I went online for a quick tutorial and very 
+quickly came up with the script which did the job and had fun doing it =)</p> 
+<p>Now, I am actually planning a little pet project for home automation, and 
+is torn between Perl and Python (thus I'm here, no Ruby tho, my brain just 
+refuses to comprehend no matter how much I read it). As mentioned before, Perl 
+is very very attractive as the components I'm going to use are incidentally 
+already written in Perl, but yet I was afraid if the project gets large, Perl 
+might get very messy.</p> 
+<p>Tho after spending a really long time going through this page, I think I'm 
+settling on Perl. Even though I only knew it for days, it feels, weirdly 
+comforting and nice (ref. to the warm blanket above).</p>  VSB October 14, 2009 
+2:43 AM <br>
+
+<p>AWK was the best suited then, now and in future for the task mentioned 
+above. Please refer to the comment made by Anonymous on January 27, 2009 12:31 
+AM to see the simplicity of Awk.</p> Leo <br>
+October 24, 2009 4:39 PM <br>
+
+<p>I know this thread is old, but i couldn't resist to post my perl version. 
+I've been programming perl for more than 10 years now, and i have to admint 
+that i really love it.</p> 
+<p>I have my own conventions when i program perl so i won't get confused when 
+i read the code later. One of the things that i do is to use a lot of hashes.
+</p> 
+<p>-------------<br>
+ use strict;</p> 
+<p>my @contactRecords;</p> 
+<p>my $fields_hash ={EMAIL=&gt;17, CONTACTME =&gt;27, SKUTITLE=&gt;34};<br>
+ 
+my $fields_array =[qw/EMAIL CONTACTME SKUTITLE/];</p> 
+<p>while (my $line=){<br>
+ $line=~s/&quot;//g;<br>
+ my @record = split /\t/, 
+$line;<br>
+ if ($record[$fields_hash-&gt;{CONTACTME}]==1){<br>
+ my $r={};<br>
+ 
+foreach my $k (@$fields_array){ $r-&gt;{$k}=$record[$fields_hash-&gt;{$k}]; }
+<br> push @contactRecords, $r;<br>
+ }<br>
+ }</p> 
+<p>foreach my $r (@contactRecords){<br>
+ my $sep=&quot;&quot;;<br>
+ foreach my 
+$k (@$fields_array){<br>
+ print $sep. $r-&gt;{$k};<br>
+ $sep=&quot;\t&quot;;<br>
+ }<br>
+ print &quot;\n&quot;;<br>
+ }<br>
+ -------------</p> cLive ;-) <br>
+
+November 7, 2009 10:04 AM <br>
+
+<p>Christopher wrote:<br>
+ [quote]&quot;No, no. You don't understand. Its 
+PERL. Its an acronym.&quot;[/quote]<br>
+ Um, it's not. It's a 
+&quot;backronym&quot;.</p>  John November 7, 2009 11:31 AM <br>
+
+<p>Edward C wrote:</p> 
+<p>&gt; Even though I only knew it for days, it feels, weirdly comforting and 
+nice (ref. to the warm blanket above).</p> 
+<p>Yes. That right there I think is one of the keys to Perl's success. Larry 
+and Company have gone through great pains -- years of polishing and fine tuning 
+-- to get Perl to have that well-worn comfortable feel.</p> 
+<p>My hunch/hope is that they're doing/have-done the same thing with Perl 6, 
+but I haven't learned Perl 6 yet.</p> Albino <br>
+November 8, 2009 6:06 PM <br>
+
+<p>Generators! You must learn the power of generators in python.</p> 
+<p>Here is my preferred solution:<br>
+http://paste.lisp.org/display/90009</p> 
+<p>Also, read pep8, in python we eschew the use of camelCase. Leave that to 
+the Java peeps since they can't get enough widgetWhichProducesBSFactory. I like 
+that with mine it is more clear which field we are sorting and filtering on.</p>
+ John November 13, 2009 7:22 PM <br>
+
+<p>Awesome thread. I have been in management a long time but LOVE programming. 
+I was a mainframe ALC/COBOL programmer for years before venturing into JAVA/C++ 
+a little then was &quot;promoted&quot; (lol) to management. I miss programming.
+</p> 
+<p>The reason I found this is that I was asked to help with something in my 
+company which may require file/text manipulation for a conversion of data from 
+one system to another.</p> 
+<p>I was very proficient with REXX (if anyone knows that that is) which I 
+loved. Seeing that it's no longer relevant I did a search on interpretive 
+languages for file/text manipulation and eventually found this thread.</p> 
+<p>Many thanks to the person who started this topic and to EVERYONE for all 
+the replies. As a result, I will go with Perl (I dabbled in it a LONG time ago) 
+and will play with the others for fun.</p> zen sand gardens <br>
+November 18, 
+2009 5:02 PM <br>
+
+<p>Wow, nice article. I like Python better than Ruby better than Perl. I 
+simply like expressive, clean languages.</p>  Jon December 11, 2009 3:11 PM <br>
+<p>John said that REXX is no longer relevant. I am not sure that is true :-) 
+REXX continues to be distributed with IBM systems and there has been an ANSI 
+standard for REXX since 1996. There are a number of open source REXX's 
+available including several object-oriented REXX's. All are good 
+implementations.</p> 
+<p>I used REXX for a long time, but use Python almost exclusively now. I never 
+liked Perl. Why in the WORLD did someone come up with the idea in the late 
+1980s that there had to be TWO sets of comparison operators, one for numbers 
+and one for strings? That looks like SUCH a &quot;lazy compiler/interpreter 
+writer&quot; thing that one has to ask WTF? I mean even lowly BASIC didn't need 
+that kludge. The first time I encountered that, I pretty much figured that Perl 
+was a poorly designed language hack, even if it did make some things &quot;easy 
+to do&quot;.</p> 
+<p>Read Eric Raymond's 2000 article on Why Python? to get from someone who 
+loved Perl and is well respected in the industry as a user of programming 
+languages why Python is definitively a &quot;better language&quot;.</p> 
+<p>BTW, I write/have written in MANY languages over the years, including like 
+John, in ALC for the 370, Cobol, PL/I, C, C++, Objective-C (before it was used 
+on the Mac :-), Java, REXX, Python, Ruby, SQL, etc. There are many languages, 
+and there is no one &quot;perfect&quot; language. The good languages each have 
+a problem domain (or several) that they are best suited for.</p> 
+<p>However, there are &quot;poor&quot; languages, languages that make things 
+difficult or obscure or are just poorly designed. At the risk of LOTS of 
+flames, I consider Perl to be one of these, ditto for PHP. This obviously 
+ignores the fact that both are used by MANY MANY people, but that doesn't make 
+them &quot;better&quot; by any means. Acceptance is as much an accident of 
+history as it is a matter of goodness. Python, Perl and indeed PHP have many 
+similar problem domains, and there is no question, that if I am in one of those 
+domains, I prefer Python every time.</p> 
+<p>Jon<br>
+ -------------------------------<br>
+ &quot;The difference between 
+theory and reality is that in theory, there is no difference, but in reality, 
+there is.&quot;</p> David M <br>
+December 22, 2009 12:21 AM <br>
+
+<p>Great stuff all around. I am a Perl guy and just wanted to add my notes and 
+clarify a few points, especially about the 200-line 'mental limit' for Perl 
+scripts.</p> 
+<p>I have read Eric Raymond's discussion on why he prefers Python. I think he 
+has good points, but he wrote those comments in 2000. The Perl community has 
+come a long way. The best rejoinder is probably Perl Best Practices, by Damian 
+Conway. But always remember: You can write fortran in any language. :)</p> 
+<p>As for scalability of perl scripts, I have heard that Perl programs get 
+quite difficult to maintain after they get much larger than about 100 lines. I 
+agree with that - maintaining a sense of context becomes mind-bending. My rule 
+of thumb is that if my script gets much longer than 200 lines, it probably has 
+some ideas that I can (and should) abstract into modules.</p> 
+<p>I recently ran into this very problem with a really simple simulator for my 
+research. The program reached maybe 500 or 600 lines before I finally 
+refactored it into many modules. Now I am back to writing 15 line scripts using 
+my newly created libraries. It was painful but very enlightening to refactor 
+and now I have an extensible (extendable) library that I can use for my 
+research that should carry me through my thesis and quite possibly beyond.</p> 
+<p>By the way, you might think that my collection of modules should have the 
+same 200-line mental limitations, but I find that I can work with a module with 
+many thousands of lines of code and it doesn't bother me. This is because the 
+modules tends to focus on a much more clearly defined target, which makes the 
+context much narrower. Also, I tend to be much stricter with my libraries than 
+with my scripts, especially when it comes to documentation.</p> 
+<p>Is this 200+ line mental limit on Perl scripts a feature or a bug? 
+Obviously it depends on what you're trying to do, but for me, it has turned out 
+to be a great feature.</p> 
+<p>P.S. Just to be sure everybody is clear: Perl can do serious computational 
+stuff, at the computational level of C/Fortran. It's called PDL. I do all sorts 
+of numerical stuff with PDL as grad student in physics, doing (single-core) 
+simulations at the moment. I linked to PDL's web page, and while it looks old, 
+the modules are still in active maintenance and development. And mailing list 
+is awfully nice, too!</p> John P <br>
+January 22, 2010 6:36 PM <br>
+
+<p>I started with Perl, then learned some Java and C/C++. Surrounded by many 
+Pythonistas, I fully intended to make the jump to Python, but it felt awkward 
+to me. Later I tried Ruby and very quickly fell in love. I'd been writing Perl 
+for many years, but I found I could accomplish the same tasks in much cleaner 
+ways with far fewer mistakes coding in Ruby. I've had to use Python (matplotlib 
+and pymol scripting in particular) for some projects since then; it is a great 
+language with fantastic libraries. Ruby and Python are far more similar than 
+they are different. For me, Ruby, despite her few warts, flows in a way that I 
+haven't been able to duplicate in Python. I guess I'd rather write my own 
+library/extension in/for Ruby (which one has to do less frequently these days) 
+than use an existing solution in Python or Perl. I do think the crosstalk 
+between the languages is a good thing and appreciate all the great code that 
+comes out of each camp. Interesting blog and comments.</p>  palash February 12, 
+2010 4:51 PM <br>
+
+<p>Really an interesting discussion. Michel started with perl but settled 
+(happy with python). Readability is definitely a point which assists a 
+programmer or even a non programmer who wants to learn and improve the code but 
+doesnt have the technical competence in that language. Perhaps in that sense 
+python scores better. The &gt;&gt;&gt; interface of python is where we can 
+check the code. Ok, now a different set of problem. Suppose we have to automate 
+the server configuration process. Say we have to modify /etc/inittab and change 
+it to init 3. In such case which can score better? Perl, Python or Ruby .... 
+Shell Script like old unix guy says...?</p> tbartdev <br>
+March 10, 2010 10:04 
+AM <br>
+
+<p>I know this is OT, but seriously, gentlemen, IF you want to use console 
+&amp; friends, then please do so responsiby ;-&gt;</p> 
+<p>I say forget grep, awk and whatnot. sed has it all, if you can be sure the 
+input is in a fixed format.</p> 
+<p>This is what you need:<br>
+ wget -O - 
+http://www.mjtsai.com/blog/files/2002-11-25-sample-input.txt 2&gt;/dev/null | 
+sed -ne 
+'/\(&quot;[^&quot;]*&quot;\t\)\{26\}&quot;1&quot;/s#\(&quot;[^&quot;]*&quot;\t\)\{17\}&quot;\([^&quot;]*\)&quot;.*$#\2#p'
+</p> 
+<p>and I guess this is also as fast as you can get...</p>  anonymous March 12, 
+2010 11:17 AM <br>
+
+<p>Jon:<br>
+ &quot;Why in the WORLD did someone come up with the idea in the 
+late 1980s that there had to be TWO sets of comparison operators, one for 
+numbers and one for strings?&quot;</p> 
+<p>Perl can't do all the work for you. If you want it to decide according to 
+context whether &quot;4.5&quot; is a string or a number, you have to provide a 
+context. I don't know about you, but I'd rather juggle two sets of operators 
+than have to convert my numberish strings to numbers explicitly.</p> Carl 
+Williams <br>
+March 23, 2010 10:34 AM <br>
+
+<p>There is a comparison for Python, Perl, and Ruby as far as job demand and 
+median salary goes at
+http://www.odinjobs.com/Odin/marketstatcompare?id=51907&amp;q=python+vs+perl+vs+ruby
+</p>  Paul Pomerleau November 1, 2010 1:37 PM <br>
+
+<p>You can write ugly code in any language. If you chose to ignore the things 
+which make perl (or again, any language) readable, easy to understand, easy to 
+maintain, etc. then of course you can make things unpleasant.</p> 
+<p>But if the aim here is to accomplish a goal and speed is not a crucial 
+factor, then the following perl code would be a better solution, as it is more 
+self-documenting. It is more wasteful of space and slightly slower than a some 
+of the above examples, but unless you have a whole lot of records, that 
+shouldn't matter.</p> 
+<p>For the input below</p> 
+<p>&quot;fred@1.com&quot; 0 Director of research<br>
+ &quot;fred@3.com&quot; 1 
+Director of research<br>
+ &quot;fred@4.com&quot; 1 Director of research<br>
+ 
+&quot;fred@5.com&quot; 1 Director of research<br>
+ &quot;fred@2.com&quot; 1 
+Director of research</p> 
+<p>I recommend this as a solution:<br>
+<code><br>
+ #!/usr/bin/perl -w</code>
+</p> <code> 
+<p>use strict;</p> 
+<p>my @contactable_records;</p> 
+<p>while ( ) {<br>
+ if (/\S/) { # Check for blank lines<br>
+ my @fields;<br>
+ 
+my %record;</p> 
+<p> s/[\r\n\&quot;]//g;<br>
+ @fields = split(&quot;\t&quot;,$_);</p> 
+<p> ($record{eMail}, $record{Contact_Me}, $record{SKU_Title}) =<br>
+ 
+($fields[0], $fields[1], $fields[2]);</p> 
+<p> push (@contactable_records, \%record) if ($record{Contact_Me} == 1);<br>
+ }
+<br> }</p> </code> 
+<p><code>foreach my $record ( sort { $a-&gt;{eMail} cmp $b-&gt;{eMail} } 
+@contactable_records ) {<br>
+ print &quot;$record-&gt;{eMail} 
+$record-&gt;{Contact_Me} $record-&gt;{SKU_Title}\n&quot;;<br>
+ }<br>
+</code></p>
+<p>You can certainly make a much shorter perl program than this, but you 
+generally want something which makes sense when you look at it.</p>  Roman 
+March 30, 2011 4:35 AM <br>
+
+<p>I'm only few month programer in perl, but...<br>
+ not better write perl 
+like this ?</p> 
+<p>my ($EMAIL,$CONTACTME,$SKUTITLE,@contactRecords)=(17,27,34);<br>
+ push 
+@contactRecords,[$_-&gt;[$SKUTITLE],$_-&gt;[$CONTACTME],$_-&gt;[$EMAIL]] for 
+@records;</p>  Roman March 30, 2011 4:36 AM <br>
+
+<p>and not like :<br>
+ my $EMAIL = 17;<br>
+ my $CONTACTME = 27;<br>
+ my 
+$SKUTITLE = 34;</p> 
+<p>my @contactRecords = ();<br>
+ foreach my $r ( @records )<br>
+ {<br>
+ 
+push(@contactRecords, [$$r[$SKUTITLE], $$r[$CONTACTME], $$r[$EMAIL]]);<br>
+ }
+</p> Lri <br>
+August 17, 2011 1:38 PM <br>
+
+<p>The comment thread clearly needs more code examples:</p> 
+<p> #!/usr/bin/env ruby<br>
+ b = []<br>
+ a = `curl -s 
+http://www.mjtsai.com/blog/files/2002-11-25-sample-input.txt`<br>
+ 
+a.gsub!('&quot;', '')<br>
+ a.each {|l| b &lt;&lt; 
+l.split(&quot;\t&quot;).values_at(34, 27, 17)}<br>
+ b[1..-1].sort!.each {|l| 
+puts l.join(&quot;\t&quot;) if l[1] == &quot;1&quot;}</p>  JDS November 19, 
+2011 10:07 PM <br>
+
+<p>It is now nearly nine (9) years later. RubyGems has got to be close to 
+rivaling CPAN in breadth, if not in depth (I'm referring to a comment up there 
+^^^ from 2006). All three languages have had 9 years of additional development 
+and maturity.</p> 
+<p>What are you using these days to solve problems similar to the original one?
+</p> 
+<p>Thanks</p> 
+<p>Comments RSS Feed </p> 
+<h3>Leave a Comment</h3> 
+<p> Name </p> 
+<p> Mail (will not be published) </p> 
+<p> URL</p> 
+<p></p> 
+<p> </p> 
+<p></p> 
+<p>Prev | Next</p> 
+<p> Blog<br>
+Archives<br>
+RSS<br>
+RSS Comments </p> <br>
+DropDMG <br>
+
+EagleFiler <br>
+SpamSieve <br>
+ATPM <br>
+ Copyright &copy; 2002&ndash;2012 
+Michael Tsai <br>
+
+</body>

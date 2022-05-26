@@ -1,0 +1,202 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>ICCV 2009 Tutorial - Boosting and Random Forests</title>
+<body>
+<br>
+
+<p> </p> 
+<ul> 
+<li>Speakers </li> 
+<li>Abstract </li> 
+<li>Syllabus </li> 
+<li>Publications </li> 
+<li>Advisors </li> </ul>  Date Monday, 28 September 2009, afternoon  Speakers 
+<br> Tae-Kyun Kim <br>
+University of Cambridge Cambridge, UK<br>
+
+tkk22[at]cam.ac.uk<br>
+<br>
+Jamie Shotton <br>
+Microsoft Research Cambridge, UK 
+<br>Jamie.Shotton[at]microsoft.com <br>
+Bj&ouml;rn Stenger <br>
+Toshiba 
+Research Europe Ltd Cambridge, UK<br>
+bjorn.stenger[at]crl.toshiba.co.uk<br>
+
+<br> <br>
+ Abstract <br>
+Many visual recognition tasks such as object tracking, 
+detection and segmentation favour fast and yet accurate classification methods. 
+The classification speed is not just a matter of time-efficiency but is often 
+crucial to achieve good accuracy, which is manifest in e.g. tracking problems. 
+Standard kernel machines e.g. Support Vector Machine and Gaussian Process 
+Classifier are slow and methods for rapid classification have been pursued. A 
+boosting classifier has been so successful owing to its fast computation and 
+yet comparable accuracy to kernel methods, being a standard method in related 
+fields over past decades. It is also pertinent for online learning for 
+adaptation and tracking. Boosting as a representative ensemble learning method, 
+which aggregates simple weak learners, can be seen as a flat tree structure 
+when each learner is a decision-stump. The flat structure ensures reasonably 
+smooth decision regions for good generalisation, however, is not optimal in 
+classification time. A hierarchical structure having many short paths, i.e. a 
+decision tree, is advantageous in speed but is notoriously bad at 
+generalisation. Random Forest, an ensemble of random trees for good 
+generalisation, has been emerging in related tasks including object 
+segmentation and key-point recognition problems. In this tutorial, we review 
+Boosting and Random Forest and present comparative studies with insightful 
+discussions. The tutorial is comprised of largely three parts: Boosting and 
+tree structured classifiers, Random Forest, and Online learning as detailed 
+below.
+<p><br>
+</p> 
+<p> </p> <br>
+ Syllabus <br>
+
+<p><b>PART I &#150; Boosting and Tree Structured Classifiers<b> [slides]</b>
+</b></p> 
+<blockquote> 
+<p>1. Motivations </p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Object detection/tracking/segmentation problems </p></li> </ul> 
+</blockquote> 
+<p>2. Introduction to Boosting [Meir et al 03, Schapire 03] </p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Brief history and formalisation </p> </li> 
+<li> 
+<p>Bagging/random forest [Breiman 01, Geurts et al 06] </p></li> </ul> 
+</blockquote> 
+<p>3. Standard methods</p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Adaboost [Freund and Schapire 04] </p> </li> 
+<li> 
+<p>Mixture of experts [Jordan and Jacobs 94] and multiple classifier systems 
+[Kittler et al 98,03,07]</p> </li> 
+<li> 
+<p>Robust real-time object detector [Viola and Jones 01] </p> </li> 
+<li> 
+<p>Boosting as a tree-structured classifier </p> </li> </ul> </blockquote> 
+<p>4. AnyBoost as an unified framework [Mason et al 00]</p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Multiple instance/component boosting [Viola et al 06, Dollar et al 08] </p> 
+</li> </ul> </blockquote> 
+<p>5. Tree-structured classifiers</p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>JointBoost [Torralba et al 07] </p> </li> 
+<li> 
+<p>ClusterBoostTree [Wu et al 07] </p> </li> 
+<li> 
+<p>Multiple classifier boosting [Kim and Cipolla 08] </p> </li> 
+<li> 
+<p>Speeding up [Li et al 04, Sochman and Matas 05] </p> </li> 
+<li> 
+<p>Super tree [Kim et al 09] </p> </li> </ul> </blockquote> 
+<p>6. Comparisons in literature [Yin, Crinimi et al 07]</p> </blockquote> 
+<p><b>PART II &#150; Random Forest [<b>slides]</b></b></p> 
+<blockquote> 
+<p>1. Related studies in computer vision </p> 
+<p>2. Tutorial on randomised decision forests [Breiman 01, Geurts et al 06]</p>
+<blockquote> 
+<ul> 
+<li> 
+<p>Including toy classification demo </p> </li> 
+<li> 
+<p>Randomised forest for clustering [Moosmann et al 06] </p> </li> 
+<li> 
+<p>Random ferns [Ozuysal et al 07, Bosch et al 07] </p></li> </ul> 
+</blockquote> 
+<p>3. Applications to vision</p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Keypoint recognition [Lepetit et al 06] </p> </li> 
+<li> 
+<p>Object segmentation [Shotton et al 08] including live demo </p></li> </ul> 
+</blockquote> </blockquote> 
+<p><b>PART III - Online learning&nbsp; for adaptation and tracking [slides]</b>
+</p> 
+<blockquote> 
+<p>1. Tracking by classification </p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Online discriminative feature selection [Collins et al 03] </p> </li> 
+<li> 
+<p>Ensemble tracking [Avidan 07] </p></li> </ul> </blockquote> 
+<p>2. Online Boosting for object tracking</p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Online Boosting [Oza and Russel 01] </p> </li> 
+<li> 
+<p>Online Boosting for feature selection [Grabner and Bischof 06] </p> </li> 
+<li> 
+<p>Application to tracking and challenges </p></li> </ul> </blockquote> 
+<p>3. Improvements</p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Combining object detector and tracker [Stenger et al 09] </p> </li> 
+<li> 
+<p>Semi-supervised learning [Leistner et al 08] </p> </li> 
+<li> 
+<p>Online multiple classifier/instance boosting [Kim,Woodley,Stenger 09 and 
+Babenko et al 09]</p></li> </ul> </blockquote> 
+<p>4. Online Random Forest</p> 
+<blockquote> 
+<ul> 
+<li> 
+<p>Online adaptive decision trees [Basak 04] </p> </li> 
+<li> 
+<p>Online Random Forests [Osman 08] </p></li> </ul> </blockquote> </blockquote>
+<p><br>
+</p>  Relevant Publications of the Speakers T-K. Kim and R. Cipolla, 
+MCBoost: Multiple Classifier Boosting for Perceptual Co-clustering of Images 
+and Visual Features, NIPS, 2008.
+<p>T-K. Kim*, I. Budvytis*, R. Cipolla, Making a Shallow Network Deep: Growing 
+a Tree from Decision Regions of a Boosting Classifier, CUED/F-INFENG/TR633, 
+Department of Engineering, University of Cambridge, July 2009 (*indicates equal 
+contributions).</p> 
+<p>J. Shotton, M. Johnson, R. Cipolla, Semantic Texton Forests for Image 
+Categorization and Segmentation. In Proc. IEEE CVPR 2008.</p> 
+<p>G. Brostow, J. Shotton, J. Fauqueur, R. Cipolla. Segmentation and 
+Recognition using Structure from Motion Point Clouds. In Proc. ECCV 2008.</p> 
+<p>B. Stenger, T. Woodley, R. Cipolla. Learning to Track With Multiple 
+Observers. Proc. CVPR, Miami, June 2009.</p> 
+<p>B. Stenger, T. Woodley, T.-K. Kim, C. Hernandez, R. Cipolla. AIDIA - 
+Adaptive Interface for Display InterAction. Proc. BMVC, Leeds, September 2008.
+</p> 
+<p>T-K. Kim, T. Woodley, B. Stenger, R. Cipolla, Online Multiple Classifier 
+Boosting for Object Tracking, CUED/F-INFENG/TR631, Department of Engineering, 
+University of Cambridge, June 2009.</p> 
+<p>T. Woodley, B. Stenger, R. Cipolla. Tracking Using Online Feature Selection 
+and a Local Generative Model. Proc. BMVC, Warwick, September 2007.</p> 
+<p>B. Stenger, A. Thayananthan, P.H.S. Torr, R. Cipolla, Filtering Using a 
+Tree-based Estimator, Proc. 9th ICCV, pages 1063-1070, Nice, France, October 
+2003.</p> 
+<p> </p>  Advisory Board Prof. Roberto Cipolla <br>
+University of Cambridge, 
+Cambridge, UK<br>
+rc10001[at]cam.ac.uk <br>
+
+<p>Prof. Josef Kittler<br>
+University of Surrey, Guildford, UK<br>
+
+J.Kittler[at].surrey.ac.uk<br>
+</p> 
+<p><br>
+</p>  Copyright &copy; 2009, Tae-Kyun Kim &amp; Bjorn Stenger, All 
+Rights Reserved. <br>
+<br>
+
+</body>

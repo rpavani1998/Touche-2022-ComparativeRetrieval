@@ -1,0 +1,398 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Python List, Python Tuple, Python Dictionary</title>
+<body>
+ 208b Python List, Python Tuple, Python Dictionary Training, Open Source 
+Computer Languages <br>
+
+<ul> 
+<li>Perl &bull; 
+<ul> 
+<li>Learning to Program in Perl</li> 
+<li>Perl Programming</li> 
+<li>Perl for Larger Projects</li> 
+<li>Perl on the Web</li> 
+<li>Regular Expression Workshop</li> </ul> </li> </ul> 
+<ul> 
+<li>PHP &bull; 
+<ul> 
+<li>Learning to Program in PHP</li> 
+<li>PHP Programming</li> 
+<li>MySQL - Programming and Admin</li> 
+<li>PHP Techniques workshop</li> 
+<li>Object Oriented PHP</li> 
+<li>Regular Expression Workshop</li> </ul> </li> </ul> 
+<ul> 
+<li>Python &bull; 
+<ul> 
+<li>Learning to Program in Python</li> 
+<li>Python Programming</li> 
+<li>Regular Expression Workshop</li> </ul> </li> </ul> 
+<ul> 
+<li>Tcl &bull; 
+<ul> 
+<li>Learning to Program in Tcl</li> 
+<li>Tcl Basic (and Expect)</li> 
+<li>The Tk Toolkit</li> </ul> </li> </ul> 
+<ul> 
+<li>Ruby &bull; 
+<ul> 
+<li>Learning to Program in Ruby</li> 
+<li>Ruby Programming</li> 
+<li>Ruby on Rails</li> 
+<li>Regular Expression Workshop</li> </ul> </li> </ul> 
+<ul> 
+<li>Lua &bull; 
+<ul> 
+<li>Learning to Program in Lua</li> 
+<li>Lua Programming</li> </ul> </li> </ul> 
+<ul> 
+<li>C &amp; C++ &bull; 
+<ul> 
+<li>Learning to Program in C</li> 
+<li>C Programming</li> 
+<li>Learning to Program in C++</li> 
+<li>C and C++ Programming</li> 
+<li>C++ for C Programmers</li> </ul> </li> </ul> 
+<ul> 
+<li>MySQL &bull; 
+<ul> 
+<li>MySQL - Programming and Admin</li> </ul> </li> </ul> 
+<ul> 
+<li>Tomcat &bull; 
+<ul> 
+<li>Deploying Apache / Tomcat</li> 
+<li>Linux Basics</li> 
+<li>Linux Admin</li> 
+<li>Linux Web Server</li> </ul> </li> </ul> 
+<ul> 
+<li>Linux 
+<ul> 
+<li>Linux Basics</li> 
+<li>Linux Admin</li> 
+<li>Linux Web Server</li> 
+<li>Apache httpd / Tomcat</li> 
+<li>Deploying LAMP</li> </ul> </li> </ul> <br>
+<br>
+<br>
+ Search for: <br>
+
+Print friendly page <br>
+<br>
+<br>
+<br>
+ Home  Accessibility  Courses  Diary  
+The Mouth  Forum  Resources  Site Map  About Us  Contact <br>
+<br>
+<br>
+ Python 
+List, Python Tuple, Python Dictionary <br>
+If a Python list were like a pencil, 
+then a Python Tuple would be like a pen.<br>
+<br>
+Most programming languages 
+include structures in which you can hold a collection of values. The most 
+frequent example you'll come across is called an &quot;array&quot; - but 
+exactly what that does varies from language to language as a C array is very 
+different to a Tcl array, for example.<br>
+<br>
+Python has FOUR (or five?) 
+object types built into the language that can be regarded as collections.<br>
+
+<br>  LISTS AND TUPLES <br>
+<br>
+Both LISTS and TUPLES consist of a number of 
+objects which can be referenced by their position number within the 284c 
+object. I can create a list by writing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;salad 
+= [&quot;Lettuce&quot;,&quot;Tomato&quot;,&quot;Onion&quot;,&quot;Tuna&quot;]
+<br>and then refer to salad[0] to refer to lettuce and salad[2] to refer to 
+Onion. I can create a tuple by writing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fruit 
+= 
+(&quot;Apple&quot;,&quot;Banana&quot;,&quot;Cherry&quot;,&quot;Fig&quot;,&quot;Grapefruit&quot;)
+<br>and then refer to fruit[0] to refer to Apple, and so on. You'll notice that 
+when I created the list I used [...] notation, and when I created the tuple I 
+used (....) notation, but when I refer to elements later I do so using square 
+brackets every time.<br>
+<br>
+So what's the difference? With a list, I can 
+change the elements, add extra elements, and so on, after it has been created. 
+It's perfectly acceptable for me to write<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;salad[3] = &quot;Cheese&quot;<br>
+for example if 
+I want to replace the tuna. But if I write<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fruit[3] = &quot;Orange&quot;<br>
+I will get an 
+error message when the program runs. You can change a list but NOT a tuple! In 
+technical jargon, a tuple is immutable by a list is mutable.<br>
+<br>
+ Link - 
+complete example usinga list Link - complete example using a tuple <br>
+You're 
+probably wondering why the two structures are provided - are they both 
+necessary? A Tuple is much more efficient in use, and there are many occasions 
+you want to set up a collection of objects in order (an &quot;ordered 
+collection&quot;) and refer to it many times later on. These days, though, with 
+all the extra power of computers since Guido wrote Python, perhaps we could do 
+without the tuple.<br>
+<br>
+ DICTIONARIES <br>
+<br>
+If you don't want to refer 
+to the elements of a collection by their position number but prefer some other 
+type of object as a key, you can use a python dictionary. Let's see an example 
+of one of those:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;starter = 
+{&quot;John&quot;:&quot;soup&quot;, &quot;James&quot;:&quot;pate&quot;, 
+&quot;Joan&quot;:&quot;soup&quot;}<br>
+There are three elements in that 
+dictionary, and I can refer to starter[&quot;James&quot;] and get the string 
+&quot;pate&quot;. You'll notice that I set up a dictionary with { ... } (curly 
+braces, but yet again I refer to it using square brackets. If you want to 
+perform an operation on element of a dictionary, you can find out the keys 
+using the keys method<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print starter.keys() <br>
+for 
+example since you can't know what the elements are called just be looking at a 
+count of the number of elements as you can with a list or tuple.<br>
+<br>
+If 
+you're familiar with Perl hashes, PHP associative arrays or Tcl arrays, then 
+you have a good parallel to a python dictionary.<br>
+<br>
+ Link - complete 
+example usinga dictionary <br>
+ STRINGS <br>
+<br>
+Strings can be treated as 
+immutable ordered collection objects. In other words, I can write<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;something = &quot;Marmalade&quot;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;third = something[2]<br>
+and have the letter 
+&quot;r&quot; assigned to the variable third. This is a very useful facility in 
+certain applications - for example if you're using Python in a bioinformatics 
+application and you're doing sequence analysis.<br>
+<br>
+ Link - complete 
+example usinga string as a tuple <br>
+ ITERATORS <br>
+<br>
+An iterator is an 
+object that generates a collection. If you set up a large collection (for 
+example a list that contains all ten thousand lines from a data file), you're 
+occupying computer memory ... and if the only thing you then do with it is 
+process each element once, it's not efficient. Increase the number of lines in 
+the file by a factor of 10 or 100 and you're likely to find that you're 
+starting to create &quot;issues&quot; on the host computer. Iterators overcome 
+this problem. For example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for line in 
+huge.readlines():<br>
+will set up a temporary list containing all the data in 
+the stream opened in object huge, then put each element into the variable line 
+one by one. In contrast, if you write<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for line in 
+huge.xreadlines():<br>
+then you're using an iterator and lines from the file 
+are only read in as required.<br>
+<br>
+If you want to write your own generator 
+function, you can do so; to return an intermediate value, use the keyword yield 
+rather than the keyword return.<br>
+<br>
+ Link - complete example using a 
+generator function <br>
+<br>
+See also Python programming course <br>
+ Please 
+note that articles in this section of our web site were current and correct to 
+the best of our ability when published, but by the nature of our business may 
+go out of date quite quickly. The quoting of a price, contract term or any 
+other information in this area of our website is NOT an offer to supply now on 
+those terms - please check back viaour main web site <br>
+<br>
+ Related Material
+<br> Python - Lists and Tuples <br>
+&nbsp;&nbsp; [3669] Stepping through a list 
+(or an array) in reverse order - (2012-03-23)<br>
+&nbsp;&nbsp; [3348] List 
+slices in Python - 2 and 3 values forms, with an uplifting example - 
+(2011-07-06)<br>
+&nbsp;&nbsp; [3257] All possible combinations from a list 
+(Python) or array (Ruby) - (2011-04-23)<br>
+&nbsp;&nbsp; [3181] Beware - a=a+b 
+and a+=b are different - Python - (2011-02-23)<br>
+&nbsp;&nbsp; [3118] Arrays 
+of arrays - or 2D arrays. How to program tables. - (2011-01-02)<br>
+&nbsp;&nbsp;
+[2996] Copying - duplicating data, or just adding a name? Perl and Python 
+compared - (2010-10-12)<br>
+&nbsp;&nbsp; [2719] Traffic lights in Python - 
+(2010-04-13)<br>
+&nbsp;&nbsp; [2368] Python - fresh examples of all the 
+fundamentals - (2009-08-20)<br>
+&nbsp;&nbsp; [2284] Strings as collections in 
+Python - (2009-07-12)<br>
+&nbsp;&nbsp; [2280] Creating and iterating through 
+Python lists - (2009-07-12)<br>
+&nbsp;&nbsp; [1789] Looking for a value in a 
+list - Python - (2008-09-08)<br>
+&nbsp;&nbsp; [1641] Tektronix 4010 series / 
+Python Tuples - (2008-05-13)<br>
+&nbsp;&nbsp; [1220] for loop - how it works 
+(Perl, PHP, Java, C, etc) - (2007-06-06)<br>
+&nbsp;&nbsp; [955] Python 
+collections - mutable and imutable - (2006-11-29)<br>
+&nbsp;&nbsp; [899] Python 
+- extend v append on a list - (2006-10-20)<br>
+&nbsp;&nbsp; [657] The ternary 
+operator in Python - (2006-03-25)<br>
+&nbsp;&nbsp; [383] Overloading of 
+operators on standard objects in Python - (2005-07-19)<br>
+<br>
+Python - 
+Dictionaries <br>
+&nbsp;&nbsp; [3662] Finding all the unique lines in a file, 
+using Python or Perl - (2012-03-20)<br>
+&nbsp;&nbsp; [3555] Football league 
+tables - under old and new point system. Python program. - (2011-12-18)<br>
+
+&nbsp;&nbsp;[3554] Learning more about our web site - and learning how to learn 
+about yours - (2011-12-17)<br>
+&nbsp;&nbsp; [3488] Python sets and frozensets - 
+what are they? - (2011-10-20)<br>
+&nbsp;&nbsp; [3464] Passing optional and 
+named parameters to python methods - (2011-10-04)<br>
+&nbsp;&nbsp; [2994] 
+Python - some common questions answered in code examples - (2010-10-10)<br>
+
+&nbsp;&nbsp;[2986] Python dictionaries - reaching to new uses - (2010-10-05) 
+<br>&nbsp;&nbsp; [2915] Looking up a value by key - associative arrays / Hashes 
+/ Dictionaries - (2010-08-11)<br>
+&nbsp;&nbsp; [2368] Python - fresh examples 
+of all the fundamentals - (2009-08-20)<br>
+&nbsp;&nbsp; [1145] Using a list of 
+keys and a list of values to make a dictionary in Python - zip - (2007-04-13)
+<br>&nbsp;&nbsp; [1144] Python dictionary for quick look ups - (2007-04-12) <br>
+&nbsp;&nbsp;[955] Python collections - mutable and imutable - (2006-11-29) <br>
+
+&nbsp;&nbsp;[103] Can't resist writing about Python - (2004-10-29) <br>
+ 21d3 
+<br> Python - More on Collections and Sequences <br>
+&nbsp;&nbsp; [3439] Python 
+for loops - applying a temporary second name to the same object - (2011-09-14)
+<br>&nbsp;&nbsp; [3348] List slices in Python - 2 and 3 values forms, with an 
+uplifting example - (2011-07-06)<br>
+&nbsp;&nbsp; [3150] Python dictionaries - 
+mutable and immutable keys and values - (2011-01-29)<br>
+&nbsp;&nbsp; [2996] 
+Copying - duplicating data, or just adding a name? Perl and Python compared - 
+(2010-10-12)<br>
+&nbsp;&nbsp; [2920] Sorting - naturally, or into a different 
+order - (2010-08-14)<br>
+&nbsp;&nbsp; [2894] Sorting people by their names - 
+(2010-07-29)<br>
+&nbsp;&nbsp; [2718] Python - access to variables in the outer 
+scope - (2010-04-12)<br>
+&nbsp;&nbsp; [1873] List Comprehensions in Python - 
+(2008-11-06)<br>
+&nbsp;&nbsp; [1869] Anonymous functions (lambdas) and map in 
+Python - (2008-11-04)<br>
+&nbsp;&nbsp; [1310] Callbacks - a more complex code 
+sandwich - (2007-08-19)<br>
+&nbsp;&nbsp; [1304] Last elements in a Perl or 
+Python list - (2007-08-16)<br>
+&nbsp;&nbsp; [899] Python - extend v append on a 
+list - (2006-10-20)<br>
+&nbsp;&nbsp; [633] Copying a reference, or cloning - 
+(2006-03-05)<br>
+&nbsp;&nbsp; [386] What is a callback? - (2005-07-22) <br>
+
+&nbsp;&nbsp;[61] Python is a fabulous language - (2004-09-24) <br>
+<br>
+
+resource index - Python <br>
+Solutions centre home page <br>
+<br>
+ You'll find 
+shorter technical items atThe Horse's Mouth and delegate's questions answered at
+the Opentalk forum. <br>
+<br>
+ At Well House Consultants, we provide training 
+courses on subjects such as Ruby, Lua, Perl, Python, Linux, C, C++, Tcl/Tk, 
+Tomcat, PHP and MySQL. We're asked (and answer) many questions, and answers to 
+those which are of general interest are published in this area of our site.<br>
+
+<br> <br>
+<br>
+Comment: &quot;Thanks for your comment, &quot;Anon&quot;. This 
+article is an ...&quot;<br>
+Visitor Ranking 3.0 (5=excellent, 1=poor) <br>
+<br>
+
+<br> <b>Comment by Graham</b> (published 2010-09-11) Suggested link. <br>
+
+Thanks for your comment, &quot;Anon&quot;. This article is an overview 
+comparison and not a definitive specification of lists, tuples and 
+dictionaries. I never claimed it to be complete reference material ... so it's 
+natural that it's incomplete. My suggested link includes an alternative 
+description of Tuples, described on their own rather than based on a 
+comparison. [#3774]<br>
+<br>
+<b>Comment by Anon</b> (published 2010-09-11) <br>
+
+you have an incomplete understanding of python tuple [#3689]<br>
+<br>
+You can 
+Add a comment or ranking or edit your own comments <br>
+<br>
+Average page 
+ranking - 3.0  Public Training Courses <br>
+ Running regularly at our UK 
+training Centre.<br>
+ [ Schedule] - [ About] - [ Book] <br>
+ Python solutions 
+errors v exceptions <br>
+Graphic User Interfaces (GUIs) <br>
+Analysing incoming 
+data lines <br>
+Nasty Characters in Web Applications <br>
+Inheritance <br>
+all 
+variables are objects <br>
+<b>Python List, Python Tuple, Python Dictionary </b> 
+Python threads - a first example <br>
+Python Calling functions and methods. 
+Using objects and modules. <br>
+User defined sorting - what is a callback? <br>
+
+copying an object - copy the reference <br>
+Python Fast Start <br>
+Log file 
+analysis - short Python example <br>
+the while and else structure <br>
+Pattern 
+Matching - a primer on regular Expressions <br>
+Interfacing applications to a 
+MySQL database engine <br>
+What makes a good variable name? <br>
+Solution 
+Centre - all article listing <br>
+<br>
+&copy; WELL HOUSE CONSULTANTS LTD., 
+2012: Well House Manor &bull; 48 Spa Road &bull; Melksham, Wiltshire &bull; 
+United Kingdom &bull; SN12 7NY<br>
+ PH: 01144 1225 708225 &bull; FAX: 01144 
+1225 899360 &bull; EMAIL:info@wellho.net &bull; WEB: http://www.wellho.net 
+&bull; SKYPE:wellho <br>
+<br>
+ PAGE: http://www.wellho.net/solutions/python-p 
+... onary.html &bull; PAGE BUILT: Wed Mar 28 07:47:11 2012 &bull; BUILD SYSTEM: 
+wizard 2c <br>
+<br>
+ 0 
+</body>

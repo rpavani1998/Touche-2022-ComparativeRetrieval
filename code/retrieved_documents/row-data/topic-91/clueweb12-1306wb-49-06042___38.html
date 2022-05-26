@@ -1,0 +1,1245 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Security Informatics | Full text | Detecting unknown malicious code by applying classification techniques on OpCode patterns</title>
+<body>
+ security-informatics.com/article/10.1186/2190/8532/1/1 <br>
+ Bottom,Top 
+<dl> 
+<dt></dt> 
+<dd> </dd> </dl> 
+<dl> 
+<dt></dt> 
+<dd> </dd> </dl> 
+<ul> 
+<li><strong>Welcome Carnegie Mellon University[NERL]</strong></li> 
+<li>Log on</li> </ul> 
+<ul> 
+<li> &nbsp; SpringerOpen </li> 
+<li>Journals</li> </ul> 
+<h1> </h1>  Search this journal SpringerOpen  for Go<br>
+Advanced search <br>
+
+<ul> 
+<li>Home</li> 
+<li>Articles</li> 
+<li>Authors</li> 
+<li>Reviewers</li> 
+<li>About this journal</li> 
+<li>My Security Informatics</li> </ul> 
+<ul> 
+<ul> 
+<li> Top </li> 
+<li> Abstract </li> 
+<li> 1. Introducti... </li> 
+<li> 2. Background </li> 
+<li> 3. Methods </li> 
+<li> 4 Evaluation </li> 
+<li> 5 Experiments... </li> 
+<li> 6. Discussion... </li> 
+<li> Competing interests </li> 
+<li> Authors' contributions </li> 
+<li> References </li> </ul> </ul> 
+<dl> 
+<dl> 
+<dt> Advertisement </dt> 
+<dd> </dd> </dl> 
+<dl> 
+<dt> Advertisement </dt> 
+<dd> </dd> </dl> </dl> 
+<h5><strong>Security Informatics</strong></h5> 
+<ul> 
+<li>Volume 1</li> </ul> 
+<h5>Viewing options</h5> 
+<ul> 
+<li> Abstract </li> 
+<li> <strong>Full text</strong> </li> 
+<li> PDF (3.7MB) </li> 
+<li> Additional files </li> </ul> 
+<h5>Associated material</h5> 
+<ul> 
+<li>About this article</li> 
+<li> Readers' comments </li> 
+<li> </li> </ul> 
+<h5>Related literature</h5> 
+<ul> 
+<li> 
+<h6>Cited by</h6></li> 
+<h6>Other articles by authors</h6> 
+<li> <i>&nbsp;</i>on Google Scholar 
+<ul> 
+<li> Shabtai A </li> 
+<li> Moskovitch R </li> 
+<li> Feher C </li> 
+<li> Dolev S </li> 
+<li> Elovici Y </li> </ul> </li> 
+<li> <i>&nbsp;</i>on PubMed 
+<ul> 
+<li>Shabtai A </li> 
+<li>Moskovitch R </li> 
+<li>Feher C </li> 
+<li>Dolev S </li> 
+<li>Elovici Y </li> </ul> </li> </ul> 
+<h6>Related articles/pages</h6> 
+<ul> 
+<li>on Google</li> 
+<li>on Google Scholar</li> </ul> 
+<h5>Tools</h5> 
+<ul> 
+<li> Download references </li> 
+<li>Download XML</li> 
+<li> Email to a friend </li> 
+<li>Order reprints</li> 
+<li> Post a comment </li> </ul> 
+<h5>Share this article</h5> 
+<ul> 
+<li> </li> 
+<li> Tweet </li> 
+<li> </li> 
+<li> &nbsp;More options... 
+<ul> 
+<li> Citeulike </li> 
+<li> Connotea </li> 
+<li> Del.icio.us </li> 
+<li> Email </li> 
+<li> Facebook </li> 
+<li> <br>
+Google+ </li> 
+<li> Mendeley </li> 
+<li> Twitter </li> </ul> </li> </ul> Research 
+<h1>Detecting unknown malicious code by applying classification techniques on 
+OpCode patterns</h1> 
+<p> <strong>Asaf Shabtai</strong>1,2*, <strong>Robert Moskovitch</strong>1,2, 
+<strong>Clint Feher</strong>1,2, <strong>Shlomi Dolev</strong>3,1 and <strong>
+Yuval Elovici</strong>1,2 </p> 
+<ul> 
+<li> 
+<p> * Corresponding author: Asaf Shabtai shabtaia@bgu.ac.il </p> </li> </ul> 
+<p><i></i>Author Affiliations</p> 
+<p> 1 Deutsche Telekom Laboratories, Ben-Gurion University, Be'er Sheva, 
+84105, Israel</p> 
+<p> 2 Department of Information Systems Engineering, Ben-Gurion University, 
+Be'er Sheva, 84105, Israel</p> 
+<p> 3 Department of Computer Science, Ben-Gurion University, Be'er Sheva, 
+84105, Israel</p> 
+<p> For all author emails, please log on. </p> 
+<p><em>Security Informatics</em> 2012, <strong>1</strong>:1&nbsp;
+doi:10.1186/2190-8532-1-1</p> <br>
+
+<p>The electronic version of this article is the complete one and can be found 
+online at:http://www.security-informatics.com/content/1/1/1</p> <br>
+Received: 
+12 July 2011 <br>
+Accepted: 27 February 2012 <br>
+Published: 27 February 2012 
+<br> <br>
+<br>
+
+<p> &copy; 2012 Shabtai et al; licensee Springer. <br>
+</p> 
+<p> This is an Open Access article distributed under the terms of the Creative 
+Commons Attribution License (http://creativecommons.org/licenses/by/2.0), which 
+permits unrestricted use, distribution, and reproduction in any medium, 
+provided the original work is properly cited.</p> 
+<h3>Abstract</h3> 
+<p>In previous studies classification algorithms were employed successfully 
+for the detection of unknown malicious code. Most of these studies extracted 
+features based on<em>byte n-gram </em>patterns in order to represent the 
+inspected files. In this study we represent the inspected files using<em>OpCode 
+n-gram</em>patterns which are extracted from the files after disassembly. The 
+OpCode<em>n</em>-gram patterns are used as features for the classification 
+process. The classification process main goal is to detect unknown malware 
+within a set of suspected files which will later be included in antivirus 
+software as signatures. A rigorous evaluation was performed using a test 
+collection comprising of more than 30,000 files, in which various settings of 
+OpCode<em>n</em>-gram patterns of various size representations and eight types 
+of classifiers were evaluated. A typical problem of this domain is the 
+imbalance problem in which the distribution of the classes in real life varies. 
+We investigated the imbalance problem, referring to several real-life scenarios 
+in which malicious files are expected to be about 10% of the total inspected 
+files. Lastly, we present a chronological evaluation in which the frequent need 
+for updating the training set was evaluated. Evaluation results indicate that 
+the evaluated methodology achieves a level of accuracy higher than 96% (with 
+TPR above 0.95 and FPR approximately 0.1), which slightly improves the results 
+in previous studies that use byte<em>n</em>-gram representation. The 
+chronological evaluation showed a clear trend in which the performance improves 
+as the training set is more updated.</p> 
+<h5>Keywords: </h5>Malicious Code Detection; OpCode; Data Mining; 
+Classification 
+<h3>1. Introduction</h3> 
+<p>Modern computer and communication infrastructures are highly susceptible to 
+various types of attacks. A common method of launching these attacks is by 
+means of<em>malicious software </em>(malware) such as worms, viruses, and 
+Trojan horses, which, when spread, can cause severe damage to private users, 
+commercial companies and governments. The recent growth in high-speed Internet 
+connections enable malware to propagate and infect hosts very quickly, 
+therefore it is essential to detect and eliminate new (unknown) malware in a 
+prompt manner[1]. </p> 
+<p>Anti-virus vendors are facing huge quantities (thousands) of suspicious 
+files every day[2]. These files are collected from various sources including 
+dedicated honeypots, third party providers and files reported by customers 
+either automatically or explicitly. The large amount of files makes efficient 
+and effective inspection of files particularly challenging. Our main goal in 
+this study is to be able to filter out unknown malicious files from the files 
+arriving to an anti-virus vendor every day. For that, we investigate the 
+approach of representing malicious files by OpCode expressions as features in 
+the classification task.</p> 
+<p>Several analysis techniques for detecting malware, which commonly 
+distinguished between dynamic and static, have been proposed. In<em>dynamic 
+analysis</em>(also known as behavioral analysis) the detection of malware 
+consists of information that is collected from the operating system at runtime 
+(i.e., during the execution of the program) such as system calls, network 
+access and files and memory modifications[3-7]. This approach has several 
+disadvantages. First, it is difficult to simulate the appropriate conditions in 
+which the malicious functions of the program, such as the vulnerable 
+application that the malware exploits, will be activated. Secondly, it is not 
+clear what is the required period of time needed to observe the appearance of 
+the malicious activity for each malware.</p> 
+<p>In <em>static analysis</em>, information about the program or its expected 
+behavior consists of explicit and implicit observations in its binary/source 
+code. The main advantage of static analysis is that it is able to detect a file 
+without actually executing it and thereby providing rapid classification[8]. 
+</p> 
+<p>Static analysis solutions are primarily implemented using the <em>
+signature-based</em>method which relies on the identification of unique strings 
+in the binary code[2]. While being very precise, signature-based methods are 
+useless against unknown malicious code[9]. Thus, generalization of the 
+detection methods is crucial in order to be able to detect unknown malware 
+before its execution. Recently, classification algorithms were employed to 
+automate and extend the idea of<em>heuristic-based </em>methods. In these 
+methods the binary code of a file is represented, for example, using byte 
+sequence (i.e., byte<em>n</em>-grams), and classifiers are used to learn 
+patterns in the code in order to classify new (unknown) files as malicious or 
+benign[1,10]. Recent studies, which we survey in the next section, have shown 
+that by using byte<em>n</em>-grams to represent the binary file features, 
+classifiers with very accurate classification results can be trained, yet there 
+still remains room for improvement.</p> 
+<p>In this paper, which is an extended version of [11], we use a methodology 
+for malware categorization by implementing concepts from the text 
+categorization domain, as was presented by part of the authors in[12]. While 
+most of the previous studies extracted features which are based on<em>byte 
+n-grams</em>[12,13], in this study, we use <em>OpCode n-gram patterns</em>, 
+generated by disassembling the inspected executable files, to represent the 
+files. Unlike byte sequence, OpCode expressions, extracted from the executable 
+file, are expected to provide a more meaningful representation of the code. In 
+the analogy to text categorization, using letters or sequences of letters as 
+features is analogous to using byte sequences, while using words or sequences 
+of words is analogous to the OpCode sequences.</p> 
+<p>Another important aspect when using binary classifiers for the detection of 
+unknown malicious code is the imbalance problem. The imbalance problem refers 
+to scenarios in which the proportions of the classes are not equal. Previous 
+studies presented evaluations based on test collections having similar 
+proportions of malicious and benign files in the test collections. These 
+proportions do not reflect real-life situations in which malicious code is 
+significantly lower than 50% and therefore might report optimistic results. As 
+a case in point, a recent McAfee survey[14] indicates that about 4% of search 
+results from the major search engines on the web contain malicious code. 
+Additionally, Shin et al.[15] found that above 15% of the files in the KaZaA 
+network contained malicious code.</p> 
+<p>We rigorously evaluate the framework that is suggested in this paper, using 
+a test collection containing more than 30,000 files, in order to determine the 
+optimal settings of the framework. Additionally, we investigate the imbalance 
+problem and evaluate through various malicious-benign proportions, the best 
+settings for a training set given a test set.</p> 
+<p>Another aspect in the maintenance of such a framework is the importance of 
+updating the training set with new known malicious files. This is intuitively 
+important, because the purpose of malicious files changes over time and 
+accordingly the patterns within the code. Moreover, these malicious files are 
+written in varying frameworks which result in differing patterns. However, it 
+is not clear to what extent it is essential to retrain the classifier with the 
+new files. For this purpose we designed a chronological experiment, based on a 
+dataset including files from the years 2000 to 2007, trained each time on files 
+untill year<em>k </em>and tested on the following years. </p> 
+<p>The rest of the paper is organized as follows. We begin in section 2 with a 
+survey of previous relevant studies. Section 3 describes the methods we used, 
+including concepts from text categorization, data preparation, and classifiers. 
+In sections 4 and 5 we present the evaluation and the evaluation results. 
+Lastly, section 6 discusses the results and future work.</p> 
+<h3>2. Background</h3> 
+<h4>2.1 Detecting Unknown Malware using Byte N-Grams Patterns</h4> 
+<p>Over the past decade, several studies have focused on the detection of 
+unknown malware based on its binary code content. The authors of[16] were the 
+first to introduce the idea of applying<em>Machine </em><em>Learning </em>(<em>
+ML</em>) methods for the detection of different malwares based on their 
+respective binary codes. Three different feature extraction (FE) approaches 
+were employed: features extracted from the<em>Portable Executable </em>(<em>PE
+</em>) <em>section</em>, meaningful <em>plain-text strings </em>that are 
+encoded in programs files, and<em>byte sequence features</em>. </p> 
+<p>Abou-Assaleh et al. [13] introduced a framework that uses the Common N-Gram 
+(CNG) method and the<em>k</em>-nearest neighbor (KNN) classifier for the 
+detection of malware. For each malicious and benign class a representative 
+profile was constructed. A new executable file was compared with the profiles 
+of malicious and benign classes, and was assigned to the most similar.</p> 
+<p>Kotler and Maloof [17] also used byte <em>n</em>-grams representation, 
+however the vector of<em>n</em>-gram features was binary, presenting the 
+presence or absence of a feature in the file and ignoring the frequency of 
+feature appearances (in the file). In an extension of their previous study, 
+Kolter and Maloof[18] classified malware into families (multiple classes) based 
+on the functions in their respective payloads. In attempts to estimate their 
+ability to detect malicious codes based on their issue dates, these techniques 
+were trained on files issued before July 2003, and then tested on files issued 
+from that point in time through August 2004.</p> 
+<p>Cai et al. [19] conducted several experiments in which they evaluated the 
+combinations of seven feature selection methods, three classifiers, and byte<em>
+n</em>-gram size. </p> 
+<p>Recently, Moskovitch et al. [12] published the results of a study which 
+used a test collection containing more than 30,000 files, in which the files 
+were represented by byte<em>n</em>-grams. Additionally, an investigation of the 
+imbalance problem, on which we elaborate later, was demonstrated. In this paper 
+we present the results of an alternative representation of the executable files 
+using OpCode<em>n</em>-gram patterns instead of using byte <em>n</em>-gram 
+patterns.</p> 
+<h4>2.2 Representing Executables using OpCodes</h4> 
+<p>An <em>OpCode </em>(short for operational code) is the portion of a machine 
+language instruction that specifies the operation to be performed. A complete 
+machine language instruction contains an OpCode and, optionally, the 
+specification of one or more operands. The operations of an OpCode may include 
+arithmetic, data manipulation, logical operations, and program control.</p> 
+<p>The OpCodes, being the building blocks of machine language, have been used 
+for statically analyzing application behavior and detecting malware. Karim et 
+al.[20] addressed the tracking of malware evolution based on OpCode sequences 
+and permutations. Data mining methods (Logistic Regression, Artificial Neural 
+Networks and Decision Trees) are used in[21] to automatically identify critical 
+instruction sequences that can distinguish between malicious and benign 
+programs. The evaluation showed a high accuracy level of 98.4%. Bilar[22] 
+examines the difference of statistical OpCode frequency distribution in 
+malicious and non-malicious code. A total of 67 malware executables were 
+compared with the aggregate statistics of 20 non-malicious samples. The results 
+show that malicious software OpCode distributions differ significantly from 
+non-malicious software and suggests that the method can be used to detect 
+malicious code. The approach in[22] presents a single case in our methodology; 
+in this paper we test several OpCode<em>n</em>-gram sizes while Bilar [22] used 
+only 1-gram. Based on our experiments, using OpCode sequences improves the 
+detection performance significantly. Santos et al.[23] used the OpCode <em>n
+</em>-grams (of size <em>n</em>=1,2) representation to ascribe malware 
+instances to their families by measuring the similarity between files. This is, 
+however, different from our goal in which we attempt to classify unknown 
+suspicious files as malicious or benign in order to detect new malware.</p> 
+<p>Our approach also stems from the idea that there are families of malware 
+such that two members of the same family share a common &quot;engine.&quot; 
+Moreover, there are malware generation utilities which use a common engine to 
+create new malware instances; this engine may even be used to polymorph the 
+threat as it propagates. When searching for such common engines among known 
+malware, one must be aware that malware designers will attempt to hide such 
+engines using a broad range of techniques. For example, these common engines 
+may be located in varying locations inside the executables, and thus may be 
+mapped to different addresses in memory or even perturbed slightly. To overcome 
+such practices, we suggest disregarding any parameters of the OpCodes. We 
+believe that disregarding the parameters would provide a more general 
+representation of the files, which is expected to be more effective for 
+purposes of classification into benign and malicious files.</p> 
+<h4>2.3 The Imbalance Problem</h4> 
+<p>The class imbalance problem was first introduced to the ML research 
+community a little over a decade ago[24]. Typically, the class imbalance 
+problem occurs when there are significantly more instances from one class 
+relative to other classes. In such cases the classifier tends to misclassify 
+the instances of the less represented classes. More and more researchers 
+realized that the performance of their classifiers may be sub-optimal due to 
+the fact that the datasets are not balanced. This problem is even more relevant 
+in fields where the natural datasets are highly imbalanced in the first place[25
+], as in the problem we describe.</p> 
+<p>Over the years, the ML community has addressed the issue of class imbalance 
+following two general strategies. The first strategy, which is 
+classifier-independent, consists of balancing the original data-set by using 
+different kinds of undersampling or oversampling approaches. In particular, 
+researchers have experimented with random (e.g.,[26]), directed (e.g., [24,26
+]), and artificial sampling[27]. The second strategy involves modifying the 
+classifiers in order to adapt them to the data-sets. In particular, these 
+approaches search for methods for incorporating misclassification costs into 
+the classification process and assigning higher misclassification costs to the 
+minority class so as to compensate for its small size. This was done for a 
+variety of classifiers such as Artificial Neural Networks[28], Random Forests [
+29], and SVM [30]. </p> 
+<p>In our case, the data is imbalanced in real-life conditions and reflected 
+by the test-set in our experiments, therefore, we would like to understand the 
+optimal construction of a training-set for achieving the best performance in 
+real-life conditions. Similarly to the work of[31], in our research we also 
+consider the question of what is the appropriate proportion of examples of each 
+class (benign and malicious) for learning if only a limited number of training 
+instances can be used altogether. Their work considers the case of Decision 
+Trees induction on 26 different data-sets. We, on the other hand, focus on the 
+single problem of interest here--malware detection--but consider eight 
+different classifiers.</p> 
+<p>Another relevant issue to the research which emanates from the class 
+imbalance problem concerns the choice of an evaluation metric. When faced with 
+unequal class sizes, classification accuracy is often an inappropriate measure 
+of performance. Indeed, in such circumstances, a trivial classifier that 
+predicts every case as the majority class could achieve very high accuracy 
+levels in extremely skewed domains. Several proposals have been made to address 
+this issue including the decomposition of accuracy into its basic components[25
+], the use of ROC analysis[32] or the G-Mean [33]. In this paper we chose to 
+decompose accuracy into basic components in addition to the use of the G-mean. 
+This approach is conceptually simpler than using ROC analysis and sheds 
+sufficient light on our results. The details of the evaluation measures we used 
+will be given in Section 5.1.</p> 
+<h3>3. Methods</h3> 
+<p>The goal of our work was to explore methods of using data mining techniques 
+in order to create accurate detectors for new (unseen) binaries. The overall 
+process of classifying unknown files as either benign or malicious using ML 
+methods is divided into two subsequent phases: training and testing. In the<em>
+training</em>phase, a training-set of benign and malicious files is provided to 
+the system. Each file is then parsed and a vector representing each file is 
+extracted based on a pre-determined vocabulary (which can be an outcome of setup
+<em>feature </em><em>selection </em>process). The representative vectors of the 
+files in the training set and their real (known) classification are the input 
+for a learning algorithm (such as a Decision Tree or Artificial Neural Network 
+algorithms). By processing these vectors, the learning algorithm trains a 
+classifier. Next, during the testing phase, a test-set collection of new benign 
+and malicious files which did not appear in the training-set are classified by 
+the classifier that was generated in the training phase. Each file in the 
+test-set is first parsed and the representative vector is extracted using the 
+same vocabulary as in the training phase. Based on this vector, the classifier 
+will classify the file as either benign or malicious. In the testing phase the 
+performance of the generated classifier is evaluated by extracting standard 
+accuracy measures for classifiers. Thus, it is necessary to know the real class 
+of the files in the test-set in order to compare their real class with the 
+class that was derived by the classifier.</p> 
+<h4>3.2 Dataset Creation</h4> 
+<p>We created a dataset of malicious and benign executables for the Windows 
+operating system, the system most commonly used and attacked today. This 
+malicious and benign file collection was previously used in[12]. We acquired 
+7,688 malicious files from the VX Heaven website[34]. To identify the files, we 
+used the Kaspersky anti-virus. Benign files, including executable and DLL 
+(Dynamic Linked Library) files, were gathered from machines running the Windows 
+XP operating system on our campus. The benign set contained 22,735 files. The 
+Kaspersky anti-virus program was used to verify that these files did not 
+contain any malicious code.</p> 
+<p>Some of the files in our collection were either compressed or packed. These 
+files could not be disassembled by disassembler software and therefore, after 
+converting the files into OpCode representation we ended up with 5,677 
+malicious and 20,416 benign files (total of 26,093 files).</p> 
+<p>Code obfuscation is a prominent technique used by hackers in order to avoid 
+detection by security mechanisms (e.g., anti-viruses and intrusion detection 
+systems)[35]. These techniques are also applied on benign software for 
+copyrights protection purposes. Packing and compressing files can be achieved 
+by using off-the-shelf packers such as Armadillo, UPX and Themida. In such 
+cases, static analysis methods might fail to correctly classify a packed malware
+[36]. Several solutions to the challenge of packed code were suggested (e.g., 
+Ether[36], McBoost [37], PolyUnpack [38]). These methods were proposed for 
+automatic unpacking of packed files by applying either static or dynamic 
+analysis. Evaluation performed in these studies showed that unpacking files 
+before being classified increase the classification accuracy[37,38]. Our 
+proposed method can use such an approach in order to overcome packed files. In 
+addition, we would like to point out that classifying benign files is also 
+useful and can reduce the load of inspecting suspicious (or unknown) files. 
+Also, the large number of malware files in our dataset that could be dissembled 
+indicates that in order to appear benign and to pass security mechanisms (that 
+are configured to block content that is encrypted\obfuscated and cannot be 
+inspected), these techniques are not always used by hackers.</p> 
+<h4>3.3 Data Preparation and Feature Selection</h4> 
+<p>To classify the files we had to convert them into a vectorial 
+representation. We had two representations, the known one, often called byte<em>
+n</em>-grams, which consists of byte sequences of characters extracted from the 
+binary code[12], and the second OpCode <em>n</em>-grams represented by 
+sequences of OpCodes. Using a disassembler software, we extracted a sequence of 
+OpCodes from each file representing execution flow of machine operations. 
+Subsequently, several OpCode<em>n</em>-gram lengths were considered where each 
+<em>n</em>-gram was composed of <em>n </em>sequential OpCodes. This process is 
+presented in Figure1. </p> 
+<p><strong>Figure 1.</strong> <strong>Converting byte representation into 
+OpCode<em>n</em>-grams patterns</strong>. </p> 
+<p>The process of streamlining an executable starts with <em>disassembling 
+</em>it. The disassembly process consists of translating the machine code 
+instructions stored in the executable to a more human-readable language, namely,
+<em>Assembly </em>language. The next and final step in streamlining the 
+executable is achieved by extracting the sequence of OpCodes generated during 
+the disassembly process. The extracting of sequences is in the same logical 
+order in which the OpCodes appear in the executable, disregarding the extra 
+information available (e.g., memory location, registers, etc.)</p> 
+<p>Although such a process seems trivial, malware writers often try to prevent 
+the successful application of the disassembly process to prevent experts from 
+analyzing their malwares. In this study we used IDA-Pro, the most advanced 
+commercial disassembly program available today. IDA-Pro implements 
+sophisticated techniques which enabled us to disassemble most of our malware 
+collection successfully (approximately 74% of the malware files).</p> 
+<p>The size of vocabularies (number of distinct <em>n</em>-grams) extracted 
+for the OpCode<em>n</em>-grams representation were of 515, 39,011, 443,730, 
+1,769,641, 5,033,722 and 11,948,491, for 1-gram, 2-gram, 3-gram, 4-gram, 5-gram 
+and 6-gram, respectively. Later, the<em>normalized term frequency </em>(TF) and 
+TF<em>inverse document frequency </em>(TFIDF) representations were calculated 
+for each OpCode<em>n</em>-grams patterns in each file. The TF and TFIDF are 
+well known measures in the<em>text categorization </em>field [39]. In our 
+domain, each<em>n</em>-gram is analogous to a word (or a term) in a text 
+document. The<em>normalized </em>TF is calculated by dividing the frequency of 
+the term in the document by the frequency of the most frequent term in a 
+document. The TFIDF combines the frequency of a term in the document (TF) and 
+its frequency in the whole document collection, denoted by<em>document frequency
+</em>(DF). The term's (normalized) TF value is multiplied by the <em>IDF </em>= 
+<em>log </em>(<em>N/DF</em>), where <em>N </em>is the number of documents in 
+the entire file collection and<em>DF </em>is the number of files in which it 
+appears.</p> 
+<p>The TF representation is actually the representation which was used in 
+previous papers in the domain of malicious code classification[13,16,17], where 
+counting words was replaced by byte<em>n</em>-grams extracted from the 
+executable files. However, in the textual domain, it was shown that the<em>TFIDF
+</em>is a richer and more successful representation for the retrieval and 
+categorization purposes[39] and thus we expected that using the <em>TFIDF </em>
+weighting would lead to better performance than the<em>TF</em>. </p> 
+<p>In ML applications, the large number of features (many of which do not 
+contribute to the accuracy and may even decrease it) in many domains presents a 
+significant problem. In our study, the reduction of the number of features is 
+crucial and must be performed while maintaining a high level of accuracy. This 
+is due to the fact that the vocabulary size may exceed millions of features; 
+far more than can be processed by any feature selection tool within a 
+reasonable period of time. Additionally, it is important to identify the terms 
+that appear in most of the files in order to avoid vectors that contain many 
+zeros. Thus, we first extracted the 1,000 features (i.e., OpCode<em>n</em>
+-grams patterns) with the highest<em>Document Frequency </em>values and on 
+which three feature selection methods were later applied.</p> 
+<p>The three feature selection methods operate according to the <em>filters 
+</em><em>approach </em>[40]. In a filters approach method, a measure is used to 
+quantify the correlation of each feature to the class (malicious or benign) and 
+estimate its expected contribution to the classification task. The feature 
+measure that is used by the feature selection method is independent of any 
+classification algorithm, thus allowing us to compare the performances of the 
+different classification algorithms. We used the<em>Document Frequency </em>
+measure<em>DF </em>(the amount of files in which the term appeared), <em>Gain 
+Ratio</em>(GR) [40] and <em>Fisher Score </em>(FS) [41]. Based on each feature 
+selection measure we selected the top 50, 100, 200 and 300 features.</p> 
+<p>Using the selected features, we evaluated eight commonly used 
+classification algorithms: Support Vector Machine (SVM)[42], Logistic 
+Regression (LR)[43], Random Forest (RF) [44], Artificial Neural Networks (ANN) [
+45], Decision Trees (DT) [46], Na&iuml;ve Bayes (NB) [47], and their boosted 
+versions, BDT and BNB[48]. We used the WEKA implementation of these methods [49
+].</p> 
+<h3>4 Evaluation</h3> 
+<h4>4.1 Research Questions</h4> 
+<p>We set out to evaluate the use of OpCodes patterns for the purpose of 
+unknown malicious code detection through three main experiments. When designing 
+these experiments our objective was to investigate the usage of OpCode for 
+unknown malcode detection while considering various strategies and settings of 
+the framework. We summarize the research goals in six questions:</p> 
+<p>1. Which <em>term-representation </em>is better: <em>TF </em>or <em>TFIDF
+</em>? </p> 
+<p>2. Which OpCode <em>n-gram </em>size is the best: <em>1, 2, 3</em>, <em>4
+</em>, <em>5 </em>or <em>6</em>? or a combination of OpCode <em>n</em>-gram 
+sizes?</p> 
+<p>3. Which <em>top-selection </em>(number of features) is the best: <em>50
+</em>, <em>100</em>, <em>200 </em>or <em>300 </em>and which <em>features 
+selection</em>method: <em>DF</em>, <em>FS </em>and <em>GR </em>is superior? </p>
+<p>4. Which <em>classifier </em>is the best: SVM, LR, RF, ANN, DT, BDT, NB or 
+BNB?</p> 
+<p>5. What is the best <em>Malicious File Percentage </em>(<em>MFP</em>) in 
+the training set for varying MFP in the test set?</p> 
+<p>6. How often should a classifier be trained with recent malicious files in 
+order to improve the detection accuracy of new malicious files?</p> 
+<p>To answer the above questions we first performed a wide set of experiments 
+to identify the best term representation,<em>n</em>-gram size, top-selection 
+and feature selection method. After determining the optimal settings when using 
+the OpCode representation, we compared the achieved accuracy to the byte<em>n
+</em>-gram representation used in [12]. In the second experiment we 
+investigated the imbalance problem to determine the optimal settings of the 
+training set for each classifier in varying &quot;real-life&quot; conditions. 
+Finally, in the third experiment, we performed a chronological evaluation to 
+determine how well a classifier, which was trained on past examples, can detect 
+new malicious file and to investigate the importance and need in updating the 
+training set frequently.</p> 
+<p>For evaluation purposes, we used the <em>True Positive Rate (TPR) </em>
+measure, which is the number of<em>positive </em>instances classified correctly,
+<em>False Positive Rate (FPR)</em>, which is the number of <em>negative </em>
+instances misclassified, and the<em>Total Accuracy</em>, which measures the 
+number of absolutely correctly classified instances, either positive or 
+negative, divided by the entire number of instances. For the imbalance 
+analysis, where the accuracy measure can sometimes be misleading, we also 
+computed the G-Means measure. This measure, which is often used in imbalance 
+dataset evaluation studies, is a metric that combines both the sensitivity and 
+specificity by calculating their geometric mean.</p> 
+<h3>5 Experiments and Results</h3> 
+<h4>5.1 Experiment 1 - evaluate OpCode <em>n</em>-gram representations settings
+</h4> 
+<p>In the first experiment we aimed to answer the first four research 
+questions presented in section 4.1. In accordance to these questions, we wanted 
+to identify the best settings of the classification framework which is 
+determined by a combination of: (1) the term-representation (TF or TFIDF); (2) 
+the OpCode<em>n</em>-gram size (1, 2, 3, 4, 5 or 6); (3) the top-selection of 
+features (50, 100, 200 or 300); (4) the feature selection method (DF, FS or 
+GR); and (5) the classifier (SVM, LR, RF, ANN, DT, BDT, NB or BNB). We designed 
+a wide and comprehensive set of evaluation runs, including all the combinations 
+of the optional settings for each of the aspects, amounting to 1,152 runs in a 
+5-fold cross validation format for all eight classifiers. The files in the 
+test-set were not in the training set, presenting unknown files to the 
+classifier. In this experiment, the<em>Malicious File Percentage </em>(MFP) in 
+the training and test sets was set according to the natural proportions in the 
+file-set at approximately 22%.</p> 
+<h4>5.1.1 Feature representation vs. n-grams</h4> 
+<p>We first wanted to find the best terms representation (i.e., TF or TFIDF). 
+Figure2 presents the mean TPR, FPR, accuracy and G-Mean of the combinations of 
+the term representation and<em>n</em>-grams size. The mean TPRs, FPRs, 
+accuracies and G-Means of the TF and the TFIDF were quite identical, which is 
+good because maintaining the TFIDF requires additional computational efforts 
+each time a malcode or benign files are added to the collection. This can be 
+explained by the fact that for each<em>n</em>-gram size, the top 1,000 OpCode 
+<em>n</em>-grams, having the highest Document Frequency (DF) value, were 
+selected. This was done in order to avoid problems related to sparse data 
+(i.e., vectors that contain many zeros). Consequently, the selected OpCode<em>n
+</em>-grams appear in both sets and therefore eliminate the IDF factor in the 
+TF-IDF measure.</p> 
+<p><strong>Figure 2.</strong> <strong>The mean TPR, FPR, accuracy and G-Mean 
+for each term representation (TF and TFIDF) as a function of the OpCode<em>n
+</em>-gram size</strong>. While the mean TPRs, FPRs, accuracies and G-Means of 
+the TF and TFIDF were quite identical, the mean accuracy and G-Mean of the 
+2-gram outperforms all the other<em>n</em>-grams with the lowest FPR. </p> 
+<p>Following this observation we opted to use the TF representation for the 
+rest of our experiments.</p> 
+<p>Interestingly, the best <em>n</em>-gram size of OpCodes was the 2-gram with 
+the highest accuracy and G-Mean values and the lowest FPR (and with TPR similar 
+but slightly lower from the 3-gram). This signifies that the sequence of two 
+OpCodes is more representative than single OpCodes, however, longer grams 
+decreased the accuracy. This observation can be explained by the fact that 
+longer OpCode<em>n</em>-grams indicates larger vocabulary (since there are more 
+combinations of the<em>n</em>-grams), yet on the other hand, a large number of 
+<em>n</em>-grams results in fewer appearances in many files, thus creating 
+sparse vectors. As a case in point, we extracted 443,730 3-grams and 1,769,641 
+4-grams. In such cases, where many of the vectors are sparse, the detection 
+accuracy will be decreased.</p> 
+<h4>5.1.2 Feature Selections and Top Selections</h4> 
+<p>To identify the best feature selection method and the top number of 
+features, we calculated the mean TPR, FPR, accuracy and G-Mean of each method, 
+as shown in Figure3. Generally, DF outperformed on all sizes of top features, 
+while FS performed very well, especially when fewer top features were used (top 
+50 and top 100). Moreover, the DF and FS performance was more stable for 
+varying numbers of top feature in terms accuracy and G-Mean. The DF is a simple 
+feature selection method which favors features which appear in most of the 
+files. This can be explained by its criterion, which has an advantage for fewer 
+features. In other methods, the lack of appearances in many files might create 
+zeroed vectors and might consequently lead to a lower accuracy level.</p> 
+<p><strong>Figure 3.</strong> <strong>The mean TPR, FPR, accuracy and G-Mean 
+of the evaluated feature selection methods (Document Frequency, Fisher Score, 
+Gain Ratio) as a function of the number of top features (50, 100, 200 and 300)
+</strong>. DF was accurate for all sizes of top features. FS performed very 
+well, especially when fewer features were used (top 50 and top 100).</p> 
+<h4>5.1.3 Classifiers</h4> 
+<p>Figure 4 depicts the mean TPR, FPR, accuracy and G-Mean for each classifier 
+as a function of the OpCode<em>n</em>-gram size using the TF representation. 
+The performance of both the Na&iuml;ve Bayes and the Boosted Na&iuml;ve Bayes 
+was the worst for all the<em>n</em>-gram sizes, having the lowest mean TPR, 
+accuracy and G-Mean, and highest mean FPR. The remaining the classifiers 
+performed very well, having the Random Forest, Boosted Decision Trees and 
+Decision Trees outperforming. The mean accuracy, TPR and G-Mean of the 2-gram 
+outperforms all the other<em>n</em>-grams with the lowest mean FPR for all 
+classifiers, but not significantly.</p> 
+<p><strong>Figure 4.</strong> <strong>The mean TPR, FPR, accuracy and G-Mean 
+for each classifier (using TF representation) as a function of the OpCode<em>n
+</em>-gram size</strong>. The performance of both the Na&iuml;ve Bayes and the 
+Boosted Na&iuml;ve Bayes was worst for all<em>n</em>-gram sizes having the 
+lowest mean TPR, accuracy and G-Mean and highest mean FPR. The mean accuracy, 
+TPR and G-Mean of the 2-gram outperforms all the other<em>n</em>-grams with the 
+lowest mean FPR for all classifiers.</p> 
+<p>Classifiers differ in performance within different domains and the best 
+fitted classifier can often be identified by experimentation. From the results 
+we conclude that for this problem domain, complex classifiers, such as the 
+ensemble Random Forest algorithm[44] which induces many decision trees and then 
+combines the results of all trees, and the boosted decision tree[48] generate a 
+more accurate classifier.</p> 
+<p>Additionally, in order to compare the classifiers' performance, we selected 
+the settings which had the highest mean accuracy level over all the 
+classifiers. In order to find the best settings for all the classifiers, we 
+calculated the mean FPR, TPR, accuracy and G-Mean for each setting that is 
+defined by the: (1)<em>n</em>-gram size; (2) feature representation; (3) 
+feature selection method; and (4) the number of top features. Table1 depicts 
+the top five settings with the highest mean accuracy level (averaged over all 
+the classifiers).<em>The outperforming setting was the: 2-gram, TF, using 300 
+features selected by the DF measure</em>. </p> 
+<p><strong>Table 1.</strong> The top five settings with the highest mean 
+accuracy over all the classifiers.</p> 
+<p>The results of each classifier when using the best mean settings (i.e., 
+-gram, TF, using 300 features selected by the DF measure), including the 
+accuracy, TPR, FPR and G-Mean are presented in Table2. In addition, the optimal 
+setting of each classifier is presented, as well as the resulted accuracy for 
+the optimal setting, and the difference compared to the accuracy achieved with 
+the best averaged setting. The comparisons show that for all classifiers, 
+excluding the NB and BNB, the best averaged setting yields similar performance.
+</p> 
+<p><strong>Table 2.</strong> The accuracy, FPR, TPR and G-Mean of each 
+classifier when using the best mean settings (i</p> 
+<p>The graphs in Figure 5 depict the TPR, FPR, accuracy and G-Mean of each 
+classifier when comparing the best averaged settings (2-gram, TF 
+representation, using 300 features selected by the DF measure) with the 
+classifier's optimal settings. The graphs show that the Random Forest and 
+Boosted Decision Tree yielded the highest accuracy and lowest FPR. Na&iuml;ve 
+Bayes and Boosted Na&iuml;ve Bayes performed poorly and thus we omitted them 
+from the following experiments.</p> 
+<p><strong>Figure 5.</strong> <strong>TPR, FPR, Accuracy and G-Mean of each 
+classifier when comparing the best averaged settings (i.e., 2-gram, TF 
+representation, 300 features selected by the DF measure) and the classifier's 
+optimal settings</strong>. </p> 
+<p>In the following two experiments we used the best six classifiers (RF, DT, 
+BDT, LR, ANN, SVM) when trained on the best averaged settings (2-gram, TF 
+representation, 300 top features selected by the DF measure).</p> 
+<h4>5.1.4 Varying OpCode n-grams sizes</h4> 
+<p>In this analysis we set out to answer the second part of research question 
+2 and to understand whether a combination of different sizes of OpCode<em>n</em>
+-grams, as features in the classification task, may result in better detection 
+performance. For this we used three OpCode<em>n</em>-grams sets on which the 
+three feature selection methods were applied with four top-selections (50, 100, 
+200 or 300):</p> 
+<h4><em>- Constant <em>n</em>-gram size</em></h4> 
+<p>This option refers to the 6 OpCode <em>n</em>-grams sets that were used in 
+the previous experiments, in which the<em>n</em>-grams in each set are of the 
+same size (1, 2, 3, 4, 5 and 6).</p> 
+<h4><em>- Top 1,800 over all <em>n</em>-gram sizes</em></h4> 
+<p>In this set, <em>all </em>OpCode <em>n</em>-grams, <em>of all sizes</em>, 
+were sorted according to their DF value. Then, the first 1,800<em>n</em>-grams 
+with the top DF score were selected. Feature selection was applied on the 
+collection of 1,800<em>n</em>-grams patterns. </p> 
+<h4><em>- Top 300 for each <em>n</em>-gram size</em></h4> 
+<p>In this set, for each OpCode <em>n</em>-gram size (1- to 6-gram), the first 
+300<em>n</em>-grams with the top DF score were selected (i.e., total of 1,800 
+<em>n</em>-grams). Feature selection was applied on the collection of 1,800 <em>
+n</em>-grams patterns. </p> 
+<p>The distribution of <em>n</em>-grams sizes for the two <em>n</em>-grams 
+sets that consist of varying n-gram sizes is presented in Table3. From the 
+table we can see, as expected, that the DF feature selection method favors short
+<em>n</em>-grams which appear in a larger number of files. In addition, we can 
+see that in most cases, FS and GR tend to select<em>n</em>-grams of size 2, 3 
+and 4 which we conclude to be more informative and with a tendency to 
+discriminate better between the malicious and benign classes in the 
+classification task.</p> 
+<p><strong>Table 3.</strong> Distribution of <em>n</em>-gram sizes, chosen by 
+each feature selection method, for the two<em>n</em>-grams sets that consist of 
+varying<em>n</em>-grams sizes. </p> 
+<p>In Figure 6 we present the mean TPR, FPR, accuracy and G-Mean of each 
+classifier when using the best mean settings obtained for each of the three 
+OpCode<em>n</em>-grams patterns sets: </p> 
+<p><strong>Figure 6.</strong> <strong>Mean TPR, FPR, accuracy and G-Mean of 
+each classifier when using the best mean settings obtained for each of the three
+<em>n</em>-grams sets: [2gram;TF;Top300;DF], [Top1800All;TF;Top300;GR] and 
+[Top300Each;TF;Top300;GR]</strong>. </p> 
+<h4><em>- Constant <em>n</em>-gram size</em></h4> 
+<p>2-gram, TF representation, 300 features selected by the DF measure (as 
+presented in section 5.1.3) - denoted by [2gram;TF;Top300;DF].</p> 
+<h4><em>- Top 1,800 over all <em>n</em>-gram sizes</em></h4> 
+<p>TF representation, 300 features selected by the GR measure - denoted by 
+[Top1800All;TF;Top300;GR].</p> 
+<h4><em>- Top 300 for each <em>n</em>-gram size</em></h4> 
+<p>TF representation, 300 features selected by the GR measure - denoted by 
+[Top300Each; TF;Top300;GR].</p> 
+<p>The results show that using various sizes of OpCode <em>n</em>-grams 
+patterns does not improve the detection performance and in fact for most 
+classifiers, the performance accuracy was deteriorated. We therefore use the 
+constant<em>n</em>-gram size sets for the next experiments. </p> 
+<h4>5.2 Experiment 2 - The imbalance problem</h4> 
+<p>In our second experiment, we addressed our 5th research question in order 
+to find the best Malicious File Percentage (MFP) among the training-set files 
+for varying MFP in the test-set files, and more specifically, for low MFP in 
+the test-set (10-15%), which resembles a real-life scenario. We created five 
+levels of Malicious Files Percentage (MFP) in the training set (5, 10, 15, 30, 
+and 50%). For example, when referring to 15%, we assert that 15% of the files 
+in the training set were malicious and 85% were benign. The test-set represents 
+the real-life situation while the training set represents the set-up of the 
+classifier, which is controlled. We had the same MFP levels for the test-sets 
+as well. Thus, we ran all the product combinations of five training sets and 
+five test-sets for a total of 25 runs for each classifier. The dataset was 
+divided into two parts. Each time the training set was chosen from one part and 
+the test set was chosen from the other part, thus forming a 2-fold cross 
+validation-like evaluation to render the results more significant.</p> 
+<h4>Training-Set Malware Percentage</h4> 
+<p>Figure 7 presents the mean accuracy, FPR, TPR, and G-Mean (i.e., averaged 
+over all the MFP levels in the test-sets) of each classifier and for each 
+training MFP level. It is shown that all classifiers, excluding ANN, had a 
+similar trend and perform better when using MFP of 15% - 30% in the training 
+set, while Random Forest and Boosted Decision Tree outperformed all other 
+classifiers exceeding 94.5% accuracy and 87.1% TPR, while keeping the FPR 
+bellow 4%. The ANN performance was generally low and dropped significantly for 
+5%, 15% and 50% MFP in the training set. Additionally, it is shown that the FPR 
+grows for all classifiers with the increasing of the MFP in the training set. 
+This can be explained by the fact that for training sets with higher MFP most 
+of the test sets are have a lower MFP, which in turn results in higher FPR. 
+This in fact emphasizes the imbalance problem.</p> 
+<p><strong>Figure 7.</strong> <strong>Mean accuracy, FPR, TRP and G-Mean (over 
+all the MFP levels in the test-sets) for each MFP in the training set</strong>. 
+RF and BDT out-performed across the varying MFPs.</p> 
+<h4>10% Malware Percentage in the Test-Set</h4> 
+<p>we consider the 10% MFP level in the test-set to be a reasonable real-life 
+scenario, as mentioned in the introduction. Figure8 presents the mean accuracy, 
+FPR, TPR and G-Mean for a 2-fold cross validation experiment for each MFP in 
+the training set and with a fixed level of 10% MFP in the test-set. These 
+results are quite similar in their magnitude to the results in Figure7, 
+although here the performance level was higher. For the RF and BDT, the highest 
+performance level was in 10% and 15% of MFP in the training set, which is more 
+similar to the MFP in the test-set.</p> 
+<p><strong>Figure 8.</strong> <strong>The mean accuracy, FPR, TPR and G-Mean 
+for 10% MFP in the test-set, for each MFP in the training set</strong>. </p> 
+<h4>Relations among MFPs in Training and Test-sets</h4> 
+<p>further to our results from the training-set point of view (Figures 7 and 8
+), we present a detailed description of the accuracy, TPR and FPR for the MFP 
+levels in the two sets in a 3-dimensional presentation for each classifier (the 
+graphs of the two best classifiers, RF and BDT, are presented in Figure9; the 
+graphs of the rest of the classifiers are provided in Additional file1). 
+Interestingly, a stable state is observed in the accuracy measure for any MFP 
+level. In addition, we can see that for a given MFP in the<em>training set</em>
+, the TPR and the FPR of the classifiers are stable for any MFP level in the 
+test set. This observation, which emphasizes the imbalance problem, signifies 
+that in order to achieve a desired TPR and FPR, only the training set can be 
+considered and selecting the proper MFP in the training set will ensure the 
+desired TPR and FPR for any MFP in the test set.</p> 
+<p><strong>Figure 9.</strong> <strong>The mean Accuracy, TPR and FPR for 
+different MFP levels in the training and test sets for the two best classifiers 
+BDT and RF (the graphs for the rest of the classifiers are provided in 
+Additional file</strong>1). </p> 
+<p><strong>Additional file 1.</strong> <strong>Relations among MFPs in 
+training and test-sets: accuracy, TPR and FPR for the MFP levels in the two 
+sets in a 3-dimensional presentation</strong>. Detailed description of the 
+accuracy, TPR and FPR for the malicious file percentage levels in the two sets 
+in a 3-dimensional presentation for each classifier.</p> 
+<p> Format: PDF Size: 1.5MB Download file</p> 
+<p>This file can be viewed with: Adobe Acrobat Reader</p> 
+<p>When comparing these results with the results of the byte <em>n</em>-grams 
+patterns experiments in[12] we notice that in terms of accuracy, the byte <em>n
+</em>-grams classifiers are more sensitive to varying MFP levels in the 
+training and test-sets. In particular, the DT and BDT classifiers behaved 
+optimally when the MFP levels in the training-set and test-set were similar. 
+This observation may indicate an advantage of the OpCode<em>n</em>-grams 
+representation as being less sensitive to the levels of MFP in the two sets, or 
+more specifically in the test sets which represent the changes of proportions 
+in real life conditions.</p> 
+<h4>5.3 Experiment 3 - Chronological Evaluation</h4> 
+<p>In the third experiment, we addressed our 6th research question in order to 
+understand the need in updating the training set. The question asks how 
+important it is to update the repository of malicious and benign files and 
+whether, for specific years, the files were more contributive to the accuracy 
+when introduced in the training set or in the test set. In order to answer 
+these questions we divided the entire test collection into years from 2000 to 
+2007, in which the files were created. We had 7 training sets, in which 
+training set<em>k </em>included samples from the year 2000 till year 200[<em>k
+</em>] (where <em>k </em>= 0,1,2..,6). Each training set <em>k </em>was 
+evaluated separately on each following year from 200[<em>k</em>+1] till 2007. 
+Clearly, the files in the test were not present in the training set. Figure10 
+presents the results with a 50% MFP in the training set and10% MFP in the 
+testing set for the two best classifiers BDT and RF (the graphs for the rest of 
+the classifiers are provided in Additional file2). Out of the ANN classifier, 
+all other classifiers observed similar behavior in which higher TPR and lower 
+FPR were achieved when training on newer files. In fact, in all of the cases, 
+the TPR was above 0.95 and FPR approximately 0.1 when training the models on a 
+yearly basis. Finally, for all classifiers, when testing on 2007 examples, a 
+significant decrease in the accuracy was observed; a fact that might indicate 
+that new types of malware were released during 2007.</p> 
+<p><strong>Figure 10.</strong> <strong>The results (accuracy, TPR and FPR) for 
+with a 50% MFP on the training set and 10% MFP on the test set for the two best 
+classifiers BDT and RF (the rest of the classifiers are presented in Additional 
+file</strong>2). </p> 
+<p><strong>Additional file 2.</strong> <strong>Chronological evaluation: 
+accuracy, TPR and FPR with a 50% MFP in the training set and 10% MFP in the 
+testing set for all classifiers</strong>. Detailed description of the accuracy, 
+TPR and FPR with a 50% MFP in the training set and 10% MFP in the testing set 
+for all classifiers.</p> 
+<p> Format: PDF Size: 307KB Download file</p> 
+<p>This file can be viewed with: Adobe Acrobat Reader</p> 
+<h3>6. Discussion and Conclusions</h3> 
+<p>In this study we used OpCode <em>n</em>-gram patterns generated by 
+disassembling the inspected executable files to extract features from the 
+inspected files. OpCode<em>n</em>-grams are used as features during the 
+classification process with the aim of identifying unknown malicious code. We 
+performed an extensive evaluation using a test collection comprising more than 
+30,000 files. The evaluation consisted of three experiments.</p> 
+<p>In the first experiment, we found that the TFIDF representation has no 
+added value over the TF representation, which is not the case in many 
+information retrieval applications. This is very important since using the 
+TFIDF representation introduces additional computational challenges in the 
+maintenance of the collection when it is updated. In order to reduce the number 
+of OpCode<em>n</em>-gram features, which ranges from thousands to millions, we 
+used the DF measure to select the top 1,000 features and tested three feature 
+selection methods. The 2-gram OpCodes outperformed the others and the DF was 
+the best feature selection method. We also evaluated the performance of 
+classifiers when using a constant size of OpCode<em>n</em>-grams versus using 
+varying sizes of<em>n</em>-grams. The result of this experiment showed no 
+improvement when using OpCode<em>n</em>-grams of different sizes. </p> 
+<p>In the second experiment, we investigated the relationship between the 
+Malicious File Percentage (MFP) in the test-set, which represents real-life 
+scenario, and in the training set, which is used for training the classifier. 
+In this experiment, we found that there are classifiers which are relatively 
+non-reactive to changes in the MFP level of the test-set. In general, this 
+indicates that in order to achieve a desired TPR and FPR, only the training set 
+can be considered and selecting the proper MFP in the training set will ensure 
+the desired TPR and FPR for any MFP in the test set.</p> 
+<p>In the third experiment we wanted to determine the importance of updating 
+the training set over time. Thus, we divided the test collection into years and 
+evaluated training sets of selected years on the next years. Evaluation results 
+show that an update in the training set is needed. Using 10% malicious files in 
+the training set showed a clear trend in which the performance improves when 
+the training set is updated on a yearly basis.</p> 
+<p>Based on the reported experiments and results, we suggest that when setting 
+up a classifier for real-life purposes, one should first use the OpCode 
+representation and, if the disassemble of the file is not feasible, use the 
+byte representation[12], which appears to be less accurate. In addition, one 
+should consider the expected proportion of malicious files in the stream of 
+data. Seeing as we assume that in most real-life scenarios low proportions of 
+malicious files are present, training sets should be designed accordingly.</p> 
+<p>In future work we plan to experiment with cost-sensitive classification in 
+which the costs of the two types of errors (i.e., missing a malicious file and 
+false alarm) are not equal. We believe that the application of cost-sensitive 
+classification depends on the goals to be achieved, and accordingly the cost of 
+having a misclassification of each type. Having experience in using this 
+approach in real life setting, we can give two general examples of such 
+applications. The first example pertains to for anti-virus companies that need 
+to analyze dozens of thousands of maliciously suspected (or unknown) files, 
+including benign files, every day. In such an application the goal is to 
+perform an initial filtering to reduce the amount of files to investigate 
+manually. Thus, having a relatively high false-positive is reasonable in order 
+to decrease the probability of missing an unknown malicious file. Another 
+application is as an anti-virus. In this case we would like to decrease the 
+probability of false-negative, which will result in quarantining, deleting, or 
+blocking of a legitimate file. For both scenarios it is difficult to assign the 
+costs for the two errors (note that each type of malware can be assigned with a 
+different cost level based on the damage it causes) and therefore in this paper 
+we focus on exploring and identifying the settings and classifiers that can 
+classify the files as accurately as possible, leaving the cost-sensitive 
+analysis for future work.</p> 
+<h3>Competing interests</h3> 
+<p>The authors declare that they have no competing interests.</p> 
+<h3>Authors' contributions</h3> 
+<p>RM and AS conceived of the study, studied the research domain, participated 
+in the design of the study, performed the analysis of the results, and drafted 
+the manuscript. CF carried out the data collection and experiments. YE and SD 
+participated in the design of the study and its coordination. All authors read 
+and approved the final manuscript.</p> 
+<h3>References</h3> 
+<ol> 
+<li> 
+<p> Shabtai A, Moskovitch R, Elovici Y, Glezer C: <strong> Detection of 
+malicious code by applying machine learning classifiers on static features: A 
+state-of-the-art survey.</strong></p>
+<p><em>Information Security Technical Report</em> 2009, <strong>14</strong>(1)
+<strong>:</strong>1-34. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Griffin K, Schneider S, Hu X, Chiueh T: <strong> Automatic generation of 
+string signatures for malware detection.</strong>In <em>12th International 
+Symposium on Recent Advances in Intrusion Detection</em>. Heidelberg: Springer; 
+2009:101-120.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Rieck K, Holz T, D&uuml;ssel P, Laskov P: <strong> Learning and 
+classification of malware behavior.</strong>In <em>Conference on Detection of 
+Intrusions and Malware &amp; Vulnerability Assessment</em>. Heidelberg: 
+Springer; 2008:108-125.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Bailey M, Oberheide J, Andersen J, Mao ZM, Jahanian F, Nazario J: <strong> 
+Automated classification and analysis of Internet malware.</strong>In <em>12th 
+International Symposium on Recent Advances in Intrusion Detection</em>. 
+Heidelberg: Springer; 2007:178-197.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Lee W, Stolfo SJ: <strong> A framework for constructing features and 
+models for intrusion detection systems.</strong></p>
+<p><em>ACM Transactions on Information and System Security</em> 2000, <strong>3
+</strong>(4)<strong>:</strong>227-261. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Moskovitch R, Elovici Y, Rokach L: <strong> Detection of unknown computer 
+worms based on behavioral classification of the host.</strong></p>
+<p><em>Computational Statistics and Data Analysis</em> 2008, <strong>52
+</strong>(9)<strong>:</strong>4544-4566. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Jacob G, Debar H, Filiol E: <strong> Behavioral detection of malware: from 
+a survey towards an established taxonomy.</strong></p>
+<p><em>Journal in Computer Virology</em> 2008, <strong>4</strong><strong>:
+</strong>251-266. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Shabtai A, Potashnik D, Fledel Y, Moskovitch R, Elovici E: <strong> 
+Monitoring, analysis and filtering system for purifying network traffic of 
+known and unknown malicious content.</strong></p>
+<p><em>Security and Communication Networks</em> 2010. </p>
+<p>DOI: 10.1002/sec.229</p> 
+<p></p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Moser A, Kruegel C, Kirda E: <strong> Limits of static analysis for 
+malware detection.</strong></p>
+<p><em>Annual Computer Security Applications Conference, IEEE Computer Society
+</em> 2007, 421-430. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Menahem E, Shabtai A, Rokach L, Elovici Y: <strong> Improving malware 
+detection by applying multi-inducer ensemble.</strong></p>
+<p><em>Computational Statistics and Data Analysis</em> 2008, <strong>53
+</strong>(4)<strong>:</strong>1483-1494. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Moskovitch R, Feher C, Tzachar N, Berger E, Gitelman M, Dolev S, Elovici Y:
+<strong> Unknown malcode detection using OpCode representation. </strong>In <em>
+European Conference on Intelligence and Security Informatics</em>. Heidelberg: 
+Springer; 2008:204-215.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Moskovitch R, Stopel D, Feher C, Nissim N, Japkowicz N, Elovici Y: <strong>
+ Unknown malcode detection and the imbalance problem.</strong></p>
+<p><em>Journal in Computer Virology</em> 2009, <strong>5</strong>(4)<strong>:
+</strong>295-308. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Abou-Assaleh T, Keselj V, Sweidan R: <strong> N-gram based detection of 
+new malicious code.</strong></p>
+<p><em>Proc of the 28th Annual International Computer Software and 
+Applications Conference, IEEE Computer Society</em> 2004, 41-42. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p><strong> McAfee Study Finds 4% of Search Results Malicious </strong>[
+http://www.newsfactor.com/story.xhtml?story_id = 010000CEUEQO] webcite</p>
+<p><em>Frederick Lane</em> 2007. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Shin S, Jung J, Balakrishnan H: <strong> Malware prevalence in the KaZaA 
+file-sharing network.</strong></p>
+<p><em>Internet Measurement Conference(IMC), ACM Press</em> 2006, 333-338. </p>
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Schultz M, Eskin E, Zadok E, Stolfo S: <strong> Data mining methods for 
+detection of new malicious executables.</strong></p>
+<p><em>Proc of the IEEE Symposium on Security and Privacy, IEEE Computer 
+Society</em> 2001, 38. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Kolter JZ, Maloof MA: <strong> Learning to detect malicious executables in 
+the wild.</strong></p>
+<p><em>Proc of the 10th ACM SIGKDD International Conference on Knowledge 
+Discovery and Data Mining, ACM Press</em> 2006, 470-478. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Kolter J, Maloof M: <strong> Learning to detect and classify malicious 
+executables in the wild.</strong></p>
+<p><em>Journal of Machine Learning Research</em> 2006, <strong>7</strong>
+<strong>:</strong>2721-2744. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Cai DM, Gokhale M, Theiler J: <strong> Comparison of feature selection and 
+classification algorithms in identifying malicious executables.</strong></p>
+<p><em>Computational Statistics and Data Analysis</em> 2007, <strong>51
+</strong><strong>:</strong>3156-3172. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Karim E, Walenstein A, Lakhotia A, Parida L: <strong> Malware phylogeny 
+generation using permutations of code.</strong></p>
+<p><em>Journal in Computer Virology</em> 2005, <strong>1</strong>(1-2)<strong>:
+</strong>13-23. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Siddiqui M, Wang MC, Lee J: <strong> Data mining methods for malware 
+detection using instruction sequences.</strong>In <em>Artificial Intelligence 
+and Applications</em>. ACTA Press; 2008:358-363. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Bilar D: <strong> Opcodes as predictor for malware. </strong></p>
+<p><em>International Journal Electronic Security and Digital Forensics</em> 
+2007,<strong>1</strong>(2)<strong>:</strong>156-168. 
+Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Santos I, Brezo F, Nieves J, Penya YK, Sanz B, Laorden C, Bringas PG: 
+<strong> Idea: Opcode-sequence-based malware detection. </strong></p>
+<p><em>Proc 2nd International Symposium on Engineering Secure Software and 
+Systems</em> 2010, 35-42. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Kubat M, Matwin S: <strong> Addressing the curse of imbalanced data sets: 
+one-sided sampling.</strong></p>
+<p><em>Proc of the 14th International Conference on Machine Learning</em> 
+1997, 179-186.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Chawla NV, Japkowicz N, Kotcz A: <strong> Editorial: Special issue on 
+learning from imbalanced datasets.</strong></p>
+<p><em>SIGKDD Explorations Newsletter</em> 2004, <strong>6</strong>(1)<strong>:
+</strong>1-6. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Japkowicz N, Stephen S: <strong> The class imbalance problem: a systematic 
+study.</strong></p>
+<p><em>Intelligent Data Analysis Journal</em> 2002, <strong>6</strong>(5)
+<strong>:</strong>429-450. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Chawla NV, Bowyer KW, Kegelmeyer WP: <strong> SMOTE: synthetic minority 
+over-sampling technique.</strong></p>
+<p><em>Journal of Artificial Intelligence Research (JAIR)</em> 2002, <strong>16
+</strong><strong>:</strong>321-357. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Lawrence S, Burns I, Back AD, Tsoi AC, Giles CL: <strong> Neural network 
+classification and unequal prior class probabilities.</strong>In <em>Tricks of 
+the Trade, Lecture Notes in Computer Science State-of-the-Art Surveys</em>. 
+Edited by Orr G, Muller K-R, Cruana R. Springer Verlag; 1998:299-314.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Chen C, Liaw A, Breiman L: <strong> Using random forest to learn 
+unbalanced data.</strong>In <em>Technical Report 666</em>. Statistics 
+Department, University of California at Berkeley; 2004.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Morik K, Brockhausen P, Joachims T: <strong> Combining statistical 
+learning with a knowledge-based approach - a case study in intensive care 
+monitoring.</strong></p>
+<p><em>ICML, Morgan Kaufmann Publishers Inc</em> 1999, 268-277. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Weiss GM, Provost F: <strong> Learning when training data are costly: the 
+effect of class distribution on tree induction.</strong></p>
+<p><em>Journal of Artificial Intelligence Research</em> 2003, <strong>19
+</strong><strong>:</strong>315-354. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Provost F, Fawcett T: <strong> Robust classification systems for imprecise 
+environments.</strong></p>
+<p><em>Machine Learning</em> 2001, <strong>42</strong>(3)<strong>:</strong>
+203-231.Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Kubat M, Matwin S: <strong> Machine learning for the detection of oil 
+spills in satellite radar images.</strong></p>
+<p><em>Machine Learning</em> 1998, <strong>30</strong><strong>:</strong>
+195-215.Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Heavens VX[http://vx.netlux.org] webcite</p>
+<p></p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Linn C, Debray S: <strong> Obfuscation of executable code to improve 
+resistance to static disassembly.</strong>In <em>Proc of the 10th ACM 
+conference on Computer and communications security</em>. ACM Press; 
+2003:290-299.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Dinaburg A, Royal P, Sharif MI, Lee W: <strong> Ether: malware analysis 
+via hardware virtualization extensions.</strong></p>
+<p><em>ACM Conference on Computer and Communications Security, ACM Press</em> 
+2008, 51-62.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Perdisci R, Lanzi A, Lee W: <strong> McBoost: Boosting scalability in 
+malware collection and analysis using statistical classification of executables.
+</strong></p>
+<p><em>Annual Computer Security Applications Conference, IEEE Computer Society
+</em> 2008, 301-310. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Royal P, Halpin M, Dagon D, Edmonds R, Lee W: <strong> PolyUnpack: 
+automating the hidden-code extraction of unpack-executing malware.</strong>In 
+<em>Annual Computer Security Applications Conference</em>. IEEE Computer 
+Society; 2006:289-300.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Salton G, Wong A, Yang CS: <strong> A vector space model for automatic 
+indexing.</strong></p>
+<p><em>Communications of the ACM</em> 1975, <strong>18</strong><strong>:
+</strong>613-620. Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Mitchell T: <em>Machine Learning</em>. McGraw-Hill; 1997. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Golub T, Slonim DK, Tamayo P, Huard C, Gaasenbeek M, Mesirov JP, Coller H, 
+Loh ML, Downing JR, Caligiuri MA, Bloomfield CD, Lander ES:<strong> Molecular 
+classification of cancer: class discovery and class prediction by gene 
+expression monitoring.</strong></p>
+<p><em>Science</em> 1999, <strong>286</strong><strong>:</strong>531-537. 
+PubMed&nbsp;Abstract | Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Joachims T: <strong> Making large-scale support vector machine learning 
+practical.</strong>In <em>Advances in Kernel Methods</em>. Edited by Scholkopf 
+B, Burges C, Smola AJ. Cambridge, MA: MIT Press; 1999:169-184.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Neter J, Kutner MH, Nachtsheim CJ, Wasserman W: <em>Applied Linear 
+Statistical Models</em>. McGraw-Hill; 1996. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Kam HT: <strong> Random Decision Forest. </strong></p>
+<p><em>Proc of the 3rd International Conference on Document Analysis and 
+Recognition</em> 1995, 278-282. </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Bishop C: <em>Neural Networks for Pattern Recognition</em>. Oxford: 
+Clarendon Press; 1995.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Quinlan JR: <em>C4.5: Programs for Machine Learning</em>. San Francisco, 
+CA, USA: Morgan Kaufmann Publishers, Inc; 1993.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Domingos P, Pazzani M: <strong> On the optimality of simple Bayesian 
+classifier under zero-one loss.</strong></p>
+<p><em>Machine Learning</em> 1997, <strong>29</strong><strong>:</strong>
+103-130.Publisher&nbsp;Full&nbsp;Text </p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Freund Y, Schapire RE: <strong> A brief introduction to boosting. </strong>
+In<em>International Joint Conference on Artificial Intelligence</em>. Morgan 
+Kaufmann Publishers Inc; 1999:1401-1406.</p> 
+<p></p> 
+<p></p> </li> 
+<li> 
+<p> Witten IH, Frank E: <em>Data Mining: Practical Machine Learning Tools and 
+Techniques</em>. 2nd edition. San Francisco, CA, USA: Morgan Kaufmann 
+Publishers, Inc; 2005.</p> 
+<p></p> 
+<p></p> </li> </ol> 
+<dl> 
+<dt> Advertisement </dt> 
+<dd> </dd> </dl> 
+<dl> 
+<dt> Advertisement </dt> 
+<dd> </dd> </dl> <br>
+
+<ul> 
+<li>Terms and Conditions</li> 
+<li>Privacy statement</li> 
+<li>Imprint</li> 
+<li>Support</li> 
+<li>Contact us</li> </ul> 
+<p>&copy; 2012 Springer unless otherwise stated. Part of Springer 
+Science+Business Media.</p> <br>
+<br>
+<br>
+
+</body>

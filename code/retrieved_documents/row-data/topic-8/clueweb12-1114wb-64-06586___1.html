@@ -1,0 +1,871 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Python &laquo;  News Apps Blog</title>
+<body>
+
+<h1>News Apps Blog</h1> 
+<p>Matters of interest, from the News Applications team at the Chicago Tribune
+</p> 
+<h2>Archive for the &lsquo;<strong>Python</strong>&rsquo; Category</h2> 
+<h2>We&rsquo;re hiring: WordPress, HTML5 developer&nbsp;extraordinaire</h2> 
+<p>with one comment</p> 
+<p>We are looking for an experienced web developer who can help us build sites 
+for the Chicago Tribune and Chicago Tribune Media Group. Somebody who has a 
+passion for code and getting things done. Somebody who likes having a problem 
+to solve.</p> 
+<p>On the News Apps team, you will help us research, design, and build online 
+news products. You will be a generalist: sometimes interviewing or helping 
+users, sometimes writing HTML and CSS, sometimes coding in Python, PHP or 
+Javascript, and sometimes working on servers.</p> 
+<p>You will work with a group of talented, passionate folks who enjoy making 
+websites and software. We have short deadlines so we work iteratively and try 
+to work closely with our users and stakeholders. It can be stressful at times, 
+but it&rsquo;s worth it. We build good stuff fast and you will become a better 
+programmer. You will always be refining your tools and trying out bleeding edge 
+web technologies. You will make things you will be proud to show mom.</p> 
+<h2>Acronyms and buzzwords:</h2> 
+<p>These are the tools we use. Apply if you can rock them.</p> 
+<ul> 
+<li>WordPress &amp; PHP development</li> 
+<li>Git</li> 
+<li>HTML5, CSS3, SASS and Responsive Design</li> 
+<li>Javascript &amp; Coffeescript: Backbone.js, Underscore.js, jQuery</li> 
+<li>Python and Django</li> 
+<li>Amazon Web Services: EC2, S3, RDS</li> 
+<li>Linux/Ubuntu server administration: Apache, Nginx, Varnish</li> </ul> 
+<p>P.S. You don&rsquo;t have to know them all to apply.</p> 
+<h2>Stuff we&rsquo;ve done:</h2> 
+<p>You will be working on these sites, and new ones like them.</p> 
+<ul> 
+<li>Triblocal.com</li> 
+<li>Chicagonow.com</li> 
+<li>Chicago Tribune Election Center</li> </ul> 
+<p>And you&rsquo;ll be contributing to our blog and our github.</p> 
+<h2>Gear you&rsquo;ll get:</h2> 
+<ul> 
+<li>One shiny, new MacBook Pro (or an iMac, if you&rsquo;d prefer)</li> 
+<li>One CDM (Cheap Dell Monitor)</li> 
+<li>One comfy Aeron chair</li> 
+<li>&hellip;all at a desk somewhere in the Tribune newsroom, where 
+you&rsquo;ll be surrounded by reporters arguing with the cops, yelling about 
+the ball game, telling crazy stories, and otherwise practicing their trade.</li>
+</ul>  Interested? Send a cover letter and resume to newsapps at tribune.com 
+<p><strong><br>
+</strong></p> 
+<p>Written by Ryan Mark </p> 
+<p>January 12, 2012 at 10:12 am</p> 
+<p>Posted in Jobs, PHP, Python</p> 
+<h2>Analyzing Illinois Pension Codes using the Open States&nbsp;Project</h2> 
+<p>leave a comment &raquo;</p> 
+<p>Tribune reporter Jason Grotto has been leading a team of Tribune and WGN-TV 
+reporters ona series of investigations into the morass which is the Illinois 
+pension system. Fora recent report, I helped them analyze the laws passed by 
+the Illinois General Assembly to tell the broad story of how we got into this 
+situation.</p> 
+<p>If you look carefully, you can see me in the back corner of this room, 
+hunched over my laptop. To my left is Ian Bicking, and to his left, Brian 
+Boyer. (Photo by Joshua Ruihley)</p> 
+<p>To do the analysis, we built upon the Open States Project framework 
+developed by our friends atSunlight Labs. I&rsquo;ll write some more about the 
+technical details below, but first, there&rsquo;s a good story. I metBrian Boyer
+, my editor, at aSunlight Labs hackathon during the PyCon 2009 code sprints. At 
+the event, we were working on code for the precursor project to Open States, 
+although neither of us worked on code for Illinois&mdash;someone else had 
+claimed that work. This was before the TribApps team was officially formed, but 
+thanks to Sunlight, I was in a good position to apply for a spot on the team 
+when it was created.</p> 
+<p>Furthermore, in my first few weeks on the job, some of our reporters came 
+to us interested in General Assembly research. By that point, it appeared that 
+the Open States Illinois work was not going anywhere, so I worked out the 
+basics of scraping the site and contributed my work to the project.</p> 
+<p>Two years later, Sunlight has continued to invest in Open States, which 
+means that the code I contributed then has gotten better without a bit of work 
+from me&mdash;you can probably see why we get enthusiastic about open source 
+development. As a foundation for Open States, they&rsquo;ve made a very robust 
+library calledScrapeLib, which can be used to manage caching and robots.txt 
+compliance for any web scraper. It even has an interesting tool called
+scrapeshell which is appealing to me as someone who likes interactive code 
+development. If I find myself scraping any other web sites, I&rsquo;ll 
+definitely use Sunlight&rsquo;s library rather than build my own.</p> 
+<p>Some minor changes that were made to the Illinois General Assembly website 
+had broken the scraper for past legislative sessions, but that turned out to be 
+pretty easy to fix, so I was quickly up and running with the 2011 version of 
+the code, and I was able to turn to gathering the data Jason needed. (And of 
+courseI offered my fixes back to the core project.)</p> 
+<h2>How we used Open States for this story</h2> 
+<p>Here&rsquo;s how Jason and Tribune reporter Ray Long described 
+Illinois&rsquo; system in the recent story:</p> 
+<blockquote> 
+<p>Pension experts say healthy pension plans require stable, well-structured 
+rules that are rarely altered. But Illinois&rsquo; pension code is a tangled, 
+convoluted mess of provisions riddled with giveaways, funding flaws, excessive 
+borrowing and pension holidays. Since 2003 alone, the pension laws have been 
+revised nearly 700 times, according to a Tribune/WGN-TV analysis.</p> 
+</blockquote> 
+<p>The first step in establishing figures like this for the story was to run a 
+complete scrape of the General Assembly&rsquo;s legislative activity back to 
+2003.&nbsp; Running on my MacBook, this took about four days and produced about 
+one gigabyte&rsquo;s worth of JSON data files (not to mention over 3.7 GB of 
+cached files from the ILGA website.)</p> 
+<p>Since 2003, the General Assembly has filed nearly 60,000 pieces of 
+legislation, but only a few of those became laws, and of course, most of those 
+laws don&rsquo;t impact the pension codes. I wrote python code to analyze the 
+data produced by the scrape to identify only those bills which were actually 
+passed and signed by the governor. I then wrote some custom code to analyze the 
+full text of the public act (that is, the version of the bill which was signed 
+into law) to find those which made changes to theIllinois Pension Code. 
+(Specifically, I looked for the text<code>40 ILCS 5</code> which refers to that 
+section of the Illinois Compiled Statues.<code></code>) This allowed me to 
+produce an index to changes to the pension laws since the 93rd session of the 
+Illinois General Assembly,in spreadsheet form. On a technical note, one of the 
+nice features of the ScrapeLib library mentioned above, and the 3.7+ GB of 
+cached web pages, was that as I refined my code to build the index, I was able 
+to run it against the cached documents, which made things much faster.</p> 
+<p>Some of the code I wrote, like that which extracts the list of statutes 
+impacted by a bill, is probably of general use. I haven&rsquo;t shared that 
+back with the Open States project yet because I want to do it in a way which 
+they believe is extensible to other states. I starteda conversation about that 
+on the Open States developer list, but we haven&rsquo;t settled the question 
+yet. Some other parts are more unique to how the Illinois legislature works, or 
+just to how our team wanted to look at this specific issue. Open States has 
+some provisions for &ldquo;custom&rdquo; data properties, so perhaps in the 
+future I&rsquo;ll find time to determine a good way to include that as well.</p>
+<p>&nbsp;</p> 
+<p>Written by Joe Germuska </p> 
+<p>December 19, 2011 at 3:22 pm</p> 
+<p>Posted in Craft, Open Source, Python</p> 
+<h2>Better web cartography with dot density maps and new&nbsp;tools</h2> 
+<p>with 16 comments</p> 
+<p></p> 
+<p>Between Brian, Joe, and myself there hasn&rsquo;t been a time in the last 
+six months where at least one of us wasn&rsquo;t working with census data.</p> 
+<p>Back in February we attacked the less-detailed (redistricting) data for 
+print andthe web. In April, May, and June we contributed to a joint effort with 
+an esteemed cadre of news nerds to developcensus.ire.org, a site intended to 
+make it easier for journalists to report from census data. And to prepare for 
+this recent release, we even spent a week hacking near-complete prototype maps 
+using data that the census had already released, Kings County, New York.</p> 
+<p>We learned hard lessons about the scale and nuance of the census in the 
+last few months, and along the way, further built out our toolkit for making 
+maps. Last week the Census Bureau released detailed (summary file) data for 
+Illinois, and we used our new tools to produce a couple of maps we&rsquo;re 
+pretty excited about:</p> 
+<ul> 
+<li>2010 Census: Same-sex partners in Chicagoland</li> 
+<li>2010 Census: Children less than five years old (shown above)</li> </ul> 
+<p>These maps demonstrate a map style we haven&rsquo;t attempted before: dot 
+density mapping. Dot maps let us represent multi-variate data more richly than 
+choropleth maps&ndash;for example, illustrating variation in race and 
+population density simultaneously. We were inspired in this effort by Bill 
+Rankin&rsquo;sRadical Cartography project and Dennis McClendon&rsquo;s race map 
+for the Encyclopedia of Chicago.</p> 
+<p>Many of the tools needed to create the maps we wanted didn&rsquo;t exist. 
+Using the fantasticTileMill as our starting point, we began to build a toolkit.
+</p> 
+<h3>Invar</h3> 
+<p></p> 
+<p>Invar automates the generation of map tiles, and the deployment of tiles to 
+S3. It is the first and least glamorous of the tools we created, but crucially, 
+it&rsquo;s very, very fast. Fast!</p> 
+<p>The first time we ever tried to create our own tileset, it took hours to 
+render and twice as long to deploy. Thanks to invar&rsquo;s parallelizing these 
+tasks, we can now produce a map in minutes and deploy it just as fast. In fact, 
+we now deploy our maps to four separate S3 buckets so that we can take 
+advantage ofLeaflet&lsquo;s support for round-robining tile requests to 
+multiple subdomains. Fast!</p> 
+<h3>Englewood</h3> 
+<p>Next we needed to distribute dots across geographies. We found one 
+implementation of dot distribution in Python, which we extended into a module 
+for reuse.</p> 
+<p>Englewood (named after an ailing Chicago neighborhood that the newspaper 
+writes many sad stories about) uses the Python bindings forGDAL to load data 
+from PostGIS or shapefile. It scatters points within each feature and then 
+writes the points out to a table or new shapefile.</p> 
+<p>A small snippet of Python is required to configure Englewood. The following 
+code renders the dots for our map of children less than five from a database. 
+(A demo using shapefiles can be found inthe repository):</p> 
+<p></p> 
+<pre> #!/usr/bin/env python from englewood import DotDensityPlotter def 
+get_data(feature): &quot;&quot;&quot; This function is called for each feature 
+Englewood processes and needs to return a dictionary of classes, with a number 
+assigned to each. Englewood will divide this number by a &quot;dots_per&quot; 
+value set below and create that many dots for that class within the geography. 
+&quot;&quot;&quot; return { 'hispanic': 
+feature.GetFieldAsInteger(feature.GetFieldIndex('hispanic_under5')), 'black': 
+feature.GetFieldAsInteger(feature.GetFieldIndex('black_under5')), 'asian': 
+feature.GetFieldAsInteger(feature.GetFieldIndex('asian_under5')), 'nhwhite': 
+feature.GetFieldAsInteger(feature.GetFieldIndex('nhwhite_under5')) } # Example 
+argument values passed into the DotDensityPlotter # In this case features are 
+read from a PostGIS table (under_5_by_race_blocks_shapes)... source = 
+'PG:dbname=chicagocensus host=localhost' source_layer = 
+'under_5_by_race_blocks_shapes' # ...and written into another PostGIS table 
+(under_five_dots) dest_driver = 'PostgreSQL' dest = 'PG:dbname=chicagocensus 
+host=localhost' dest_layer = 'under_five_dots' get_data_callback = get_data 
+dots_per = 1 dots = DotDensityPlotter(source, source_layer, dest_driver, dest, 
+dest_layer, get_data_callback, dots_per) dots.plot()</pre> 
+<p></p> 
+<h3>Deployment</h3> 
+<p>A fast and stable process is useless if you can&rsquo;t repeat it. 
+We&rsquo;ve built out afabric configuration which allows us to make these maps 
+in the quickest and most efficient way possible. Among other things, it allows 
+us to keep some configuration (such as a bounding box) in a per-map YAML file. 
+It parses this file and handles passing the correct arguments to invar for 
+rendering and deployment. Perhaps most exciting, if you&rsquo;re using the new
+TileMill 0.4 (available for OSX or Ubuntu) it can completely automate the 
+production ofWax interactivity grids, such as we used to do the highlighting in 
+our recent maps.</p> 
+<p>Via Crayonsman (CC BY-SA 3.0)</p> 
+<h3>Styling dots</h3> 
+<p>Creating dot density maps created new challenges with regards to styling. 
+Brian tried numerous approaches to color and size the dots, but ultimately we 
+settled on a few principles that worked pretty well:</p> 
+<ul> 
+<li>Use a dark, sparse base-layer (we used a custom-styled Google Maps layer, 
+but would like to move to an Open Street Map base-layer in the future).</li> 
+<li>Make your dots to stand out brightly. Try the fluorescent colors from the 
+palette ofCrayola crayons.</li> 
+<li>Play with transparency&ndash;you may want to take advantage of the effect 
+of overlapping transparent dots.</li> 
+<li>Make Dots scale on zoom.</li> 
+<li>Whenever possible, use one dot per individual. It&rsquo;ll make for a more 
+interesting map.</li> </ul> 
+<p>Here is the style we settled on:</p> 
+<p></p> 
+<pre> #under-five { marker-fill:#f00; marker-line-width:0; 
+marker-allow-overlap: true; marker-opacity:1; [group=&quot;asian&quot;] 
+{marker-fill:#FF496C;} [group=&quot;black&quot;] {marker-fill:#76FF7A;} 
+[group=&quot;hispanic&quot;] {marker-fill:#FFCF48;} [group=&quot;nhwhite&quot;] 
+{marker-fill:#7366BD;} [zoom=9] {marker-height:.2;} [zoom=10] 
+{marker-height:.3;} [zoom=11] {marker-height:.5; marker-opacity:.7;} [zoom=12] 
+{marker-height:.8; marker-opacity:.7;} [zoom=13] {marker-height:1; 
+marker-opacity:.8;} [zoom=14] {marker-height:1.5; marker-opacity:.8;} }</pre> 
+<p></p> 
+<h3>Wrapping up</h3> 
+<p>Although I&rsquo;ve linked to a number of projects and code snippets in 
+this post, you may find it useful to see a complete project. This week, with 
+Illinois under our belt, I decided to apply the same methodology to my 
+side-project,Hack Tyler. I produced a map of race in Smith County, Texas 
+(relatedblog post). Part of Hack Tyler&rsquo;s <em>modus operandi</em> is 
+developing in a completely transparent manner. As a result, you can see 
+complete examples of both our backend and client-side mapping rigs in the 
+following projects:</p> 
+<ul> 
+<li>hacktyler-maptiles</li> 
+<li>hacktyler-census</li> </ul> 
+<p>We hope that we&rsquo;ve pressed the envelope a bit with these new maps. 
+Someone said that this was the year cartographers retake the internet. I hope 
+that&rsquo;s true. Its about time that online maps were more than just shading 
+boxes.</p> 
+<p>Written by Christopher Groskopf </p> 
+<p>August 12, 2011 at 4:02 pm</p> 
+<p>Posted in Apps, Mapping, Open Source, Python, Recipes</p> 
+<h2>Don&rsquo;t break the homepage! Using unit tests to validate your 
+WordPress + Varnish caching&nbsp;strategy</h2> 
+<p>with 3 comments</p> 
+<p>For the last few months my coworkers Ryan Mark and Ryan Nagle have been 
+engaged in rebuilding the Tribune&rsquo;s blog-network,ChicagoNow.com (new 
+version not yet launched). Much of the rebuild has revolved around migrating to 
+a new architecture&ndash;Apache, WordPress, and Varnish. Being the 
+&ldquo;Varnish guy&rdquo; on the team, I was asked to implement a similar 
+caching strategy to what we had developed forTribLocal.com last summer. Perhaps 
+the most important lesson I learned from TribLocal&rsquo;s development was that 
+our cache layer was extremely fragile&ndash;it was prone to break when a new 
+version of a site was deployed. Worse yet, minor changes to the VCL 
+configuration frequently had unforeseen consequences that cascaded across the 
+site.</p> 
+<p>My intention with ChicagoNow was to do a much better job of 
+compartmentalizing the various elements of the configuration to ensure changes 
+were idempotent, however, Brian had an even better idea: unit tests. For those 
+who want to cut to the chase, here is the Pythonunittest script for testing our 
+Varnish cache layer. The script knits together three unrelated technologies in 
+order to allow us to test how changes to the site affect the cache:</p> 
+<ul> 
+<li>Python&rsquo;s standard library unittest module</li> 
+<li>Kenneth Reitz&rsquo;s Python requests library</li> 
+<li>Max Cutler&rsquo;s python-wordpress-xmlrpc library</li> </ul> 
+<p>The unittest module provides a convenient framework for isolating tests 
+from one another and python-requests dramatically simplifies the process of 
+making various types of requests and testing the response headers. The VCL for 
+the site attaches &ldquo;X-Cache&rdquo; and &ldquo;X-Cache-Hit&rdquo; debug 
+headers indicating whether the response was a cache hit or miss and if it was a 
+hit how many hits there have been. The final component in the stack is the 
+python-wordpress-xmlrpc library, which makes it nearly trivial to create posts 
+and comments programmatically. This is crucial to testing if the cache is being 
+correctly invalidated. Let&rsquo;s take a look at a couple tests to see how 
+these three components work together.</p> 
+<p></p> 
+<pre> class TestLoggedOut(TestCachingBase): &quot;&quot;&quot; Tests for 
+logged-out users. &quot;&quot;&quot; def test_homepage(self): url = 
+build_url('/') response = self.get_twice(url) self.assertHit(response) 
+self.assertMaxAge(response, 300) def test_homepage_login_logout(self): url = 
+build_url('/') cookies = self.login() cookies = self.logout(cookies) response = 
+self.get_twice(url, cookies=cookies) self.assertHit(response)</pre> 
+<p></p> 
+<p>Here we see two tests for logged-out users. The first test fetches the 
+homepage of the site twice and assures that the second request was a hit and 
+also that the max-age header is what we declared it to be in the VCL. The 
+second test logs the user in and then out and then, while maintaining the same 
+cookie jar, hits the homepage twice to ensure that the user gets cached results 
+after logging out. Let&rsquo;s look at one more test from<code>TestLoggedOut
+</code> to see how python-wordpress-xmlrpc comes into play:</p> 
+<p></p> 
+<pre> def test_edit_post(self): url = build_url('/%s/' % BLOG) post_id = 
+self.new_post(BLOG) response = self.get_twice(url) self.assertHit(response) 
+self.edit_post(BLOG, post_id) response = requests.get(url) 
+self.assertMiss(response)</pre> 
+<p></p> 
+<p>This test creates a new post on a particular blog, then hits the blog 
+homepage twice to ensure it is cached. Then it edits the post that was created 
+and hits the blog homepage once more to ensure that the cache was invalidated. 
+Most of the actual functionality has been abstracted into the<code>
+TestCachingBase</code> base class so the individual tests are brief and 
+readable. The full test suite includes several other complex scenarios.</p> 
+<p>It&rsquo;s unfortunate that we lack a good &ldquo;code coverage&rdquo; 
+metric for this sort of testing and of course these aren&rsquo;t true 
+&ldquo;unit tests,&rdquo; but using unit testing tools in this way goes a long 
+way toward organizing the logic. The best thing about this cache testing rig is 
+knowing that if we change something we can easily check if we have broken 
+anything else (i.e. regression testing). This was a frequent problem with 
+TribLocal and I think this implementation is going to go a long way toward 
+preventing that from happening again.</p> 
+<p>Get the code for the unittest script.<br>
+ Get the code for the ChicagoNow 
+Varnish Configuration.<br>
+ Get the code for our simple Newsapps Varnish plugin 
+for WordPress.</p> 
+<p>Written by Christopher Groskopf </p> 
+<p>June 28, 2011 at 4:01 pm</p> 
+<p>Posted in Infrastructure, Open Source, Python</p> 
+<h2>Recent open source work and other projects we&rsquo;re excited&nbsp;about
+</h2> 
+<p>with 3 comments</p> 
+<p>In case you missed &lsquo;em, here&rsquo;s some fun stuff we&rsquo;ve been 
+up to lately. For updates on our work in-between blog posts, follow us at
+@tribapps and github.com/newsapps.</p> 
+<p><strong>appengine-autotweeter</strong></p> 
+<p>A simple application for auto-tweeting an RSS feed. Built because 
+TwitterFeed and other services weren&rsquo;t fast enough for breaking news. 
+Powers@ChicagoBreaking.</p> 
+<p><strong>census.ire.org</strong></p> 
+<p>A simple browser for census data, built with journalists in mind. Made in 
+conjunction with news hackers from CNN, NYT, Spokesman-Review, University of 
+Nebraska and USA Today. Check outthe source code and the other great census 
+resources provided by IRE.</p> 
+<p><strong>Cloud Commander</strong></p> 
+<p>Scripts you can use to quickly build and launch servers in Amazon&rsquo;s 
+cloud &mdash; you won&rsquo;t forget how you built the server if you wrote a 
+script to do it.</p> 
+<p><strong>csvkit</strong></p> 
+<p>csvkit is a library of utilities for working with CSV, the king of tabular 
+file formats. If you&rsquo;re working with CSV files or other spreadsheets of 
+data, try it out. We use it every day.</p> 
+<p><strong>invar</strong></p> 
+<p>Command line tools for generating map images from Mapnik configuration. Use 
+it to render the custom map tile sets you&rsquo;re working on in TileMill. 
+It&rsquo;s fast. (If you&rsquo;re not making your own tile sets, check out 
+tutorial and get on it!)</p> 
+<p><strong>The Newsapps Boundary Service, now with 100% more django</strong>
+</p> 
+<p>The Boundary Service is a ready-to-deploy system for aggregating regional 
+boundary data. We&rsquo;ve recently made it a pluggable django app. Check out
+Hack Tyler&lsquo;s instance for the hot demo boundaryservice.hacktyler.com/.</p>
+<p><strong>PANDA</strong></p> 
+<p>PANDA is your new data research toolkit (to help you search and compare 
+data) &amp; newsroom data management system (&lsquo;cuz data stuck on your hard 
+drive is sad data).Special thanks for the Knight Foundation for funding the 
+development! For more details and updates on our progress, follow @pandaproject.
+</p> 
+<p>Written by Brian Boyer </p> 
+<p>June 24, 2011 at 8:39 am</p> 
+<p>Posted in Apps, Mapping, Open Source, Python</p> 
+<h2>PyCon 2011: Newshackers&nbsp;assemble!</h2> 
+<p>with one comment</p> 
+<p></p> 
+<p>At PyCon 2011 I will be delivering a talk entitled Best Practices for 
+Impossible Deadlines, which will go in depth on the incredible variety of ways 
+we&rsquo;ve found to shave precious hours off the software development process. 
+Special attention will be paid to Python and Django tools developed in the 
+newsroom.</p> 
+<p>I know that many of you reading this will be blowing your conference 
+budgets to attend the2011 CAR conference in February, but if you&rsquo;re not, 
+or if you can make it to both I strongly encourage you to come to PyCon this 
+year. Its got an impressive line-up oftalks and tutorials. I&rsquo;m also 
+planning to organize an OpenSpace for news developers and perhaps another for 
+those working with government data, if someone doesn&rsquo;t beat me to them.
+</p> 
+<p>If you&rsquo;re going to be there, please let me know so we can plan to 
+connect early in the conference. Hope to meet many of you there!</p> 
+<p>Written by Christopher Groskopf </p> 
+<p>January 10, 2011 at 9:58 am</p> 
+<p>Posted in Events, Python, Talks</p> 
+<h2>From spreadsheet to HTML in 15 minutes with python-tablefu, Jinja 
+and&nbsp;Flask</h2> 
+<p>with one comment</p> 
+<p>The best Christmas carol</p> 
+<p>We often need to take a spreadsheet of info and lay it out in HTML on 
+deadline. Typically we useProPublica&rsquo;s TableSetter which takes a google 
+spreadsheet and generates an HTML table. TableSetter can be tweaked in a bunch 
+of different ways to customize the generated table, but as with all specialized 
+tools it has it&rsquo;s limits. Luckly it&rsquo;s easy to create a rudementary 
+tablesetter clone in python quite quickly.</p> 
+<p>This week I got a spreadsheet of Christmas carols with YouTube embed codes 
+to go along with a story about aNorthern Illinois University professor and 
+carol expert who recently died. The shape of the data in the spreadsheet lent 
+itself more to a top-ten-style list than a table, so TableSetter was not the 
+best tool for the job. The spreadsheet was only 25 rows, but I was not about 
+build all the HTML by hand.</p> 
+<p>I exported the spreadsheet to a csv file, created a simple html template 
+and wrote a simple script to mash the two together. I usedChris Amico&rsquo;s 
+python clone of ProPublica&rsquo;s TableFu and the great templating library 
+Jinja.</p> 
+<p>Here is the result.</p> 
+<h2>Here is the code</h2> 
+<p></p> 
+<pre> #!/usr/bin/env python # -*- coding: utf-8 -*- import jinja2 import 
+table_fu TEMPLATE_DIR = 'templates' DATA_FILE = 'data/xmas-carols.csv' 
+TEMPLATE_FILE = 'xmas-carols.html' OUTPUT_FILE = 'build/xmas-carols.html' # Set 
+up jinja templates. Look for templates in the TEMPLATE_DIR env = 
+jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR)) # Open the csv 
+file and load it up with TableFu table = table_fu.TableFu(open(DATA_FILE, 'U')) 
+# Get the template and render it to a string. Pass table in as a var called 
+table. html = env.get_template(TEMPLATE_FILE).render(table=table) # Write the 
+html string to our OUTPUT_FILE o = open(OUTPUT_FILE, 'w') o.write(html) 
+o.close()</pre> 
+<p></p> 
+<p>Jinja templates are very similar to Django templates. The biggest 
+difference that I can discern is the much more powerful template syntax. It 
+does stuff that I always thought Django templates should be able to do.</p> 
+<p>Well this script is kinda boring without the template:</p> 
+<p></p> 
+<pre> &lt;ul id=&quot;xmas-songs&quot;&gt; {% for row in table.rows %} 
+&lt;li&gt; {% if row['Year featured']|trim %} &lt;div 
+class=&quot;featured&quot;&gt;{{ row['Year featured'] }}&lt;/div&gt; {% endif 
+%} &lt;div class=&quot;name&quot;&gt;{{ row['Name'] }}&lt;/div&gt; {% if 
+row['youtube'] %} &lt;div class=&quot;youtube&quot;&gt;{{ row['youtube']|safe 
+}}&lt;/div&gt; {% endif %} &lt;div 
+class=&quot;written&quot;&gt;&lt;small&gt;Written:&lt;/small&gt; 
+&lt;strong&gt;{{ row['Year written'] }}&lt;/strong&gt;&lt;/div&gt; &lt;div 
+class=&quot;origin&quot;&gt;&lt;small&gt;Country of origin:&lt;/small&gt; 
+&lt;strong&gt;{{ row['country of origin'] }}&lt;/strong&gt;&lt;/div&gt; &lt;div 
+class=&quot;composer&quot;&gt;&lt;small&gt;Originally by:&lt;/small&gt; 
+&lt;strong&gt;{{ row['original composer/lyricist'] }}&lt;/strong&gt; {{ 
+row['Other composers/lyricists'] }}&lt;/div&gt; {% if row['keywords']|trim %} 
+&lt;div class=&quot;keywords&quot;&gt;&lt;small&gt;Memorable 
+lyrics&lt;/small&gt; {{ row['keywords'] }}&lt;/div&gt; {% endif %} {% if 
+row['famous versions']|trim %} &lt;div 
+class=&quot;famous&quot;&gt;&lt;small&gt;Famous renditions&lt;/small&gt; {{ 
+row['famous versions'] }}&lt;/div&gt; {% endif %} {% if row['noteable']|trim %} 
+&lt;div class=&quot;notable&quot;&gt;&lt;small&gt;Did you know?&lt;/small&gt; 
+{{ row['noteable'] }}&lt;/div&gt; {% endif %}&lt;/li&gt; {% endfor %}&lt;/ul&gt;
+</pre> 
+<p></p> 
+<p>That&rsquo;s it. There are a lot of cool things you can do with TableFu 
+that aren&rsquo;t illustrated here, andJinja does a ton of stuff, their 
+documentation is pretty extensive.</p> 
+<p>Oh there&rsquo;s one other thing. If you don&rsquo;t feel like dropping 
+back to the shell to run the script to update your HTML with your new CSS or 
+HTML changes, you may want to &hellip;</p> 
+<h2>Sprinkle a little Flask into the mix</h2> 
+<p></p> 
+<pre> #!/usr/bin/env python # -*- coding: utf-8 -*- import jinja2 import 
+table_fu from flask import Flask TEMPLATE_DIR = 'templates' DATA_FILE = 
+'data/xmas-carols.csv' TEMPLATE_FILE = 'xmas-carols.html' OUTPUT_FILE = 
+'build/xmas-carols.html' app = Flask(__name__) @app.route(&quot;/&quot;) def 
+main(): env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR)) 
+table = table_fu.TableFu(open(DATA_FILE, 'U')) html = 
+env.get_template(TEMPLATE_FILE).render(table=table) o = open(OUTPUT_FILE, 'w') 
+o.write(html) o.close() return html if __name__ == &quot;__main__&quot;: 
+app.run()</pre> 
+<p></p> 
+<p>There you go. Just run your script, visit http://localhost:5000/ and see 
+your handiwork. Reload the page when you make changes. And when you&rsquo;re 
+all done, just grab the output file and drop it where it needs to go.</p> 
+<p>Written by Ryan Mark </p> 
+<p>December 7, 2010 at 5:07 pm</p> 
+<p>Posted in Python, Recipes</p> 
+<h2>Bees with machine guns! Low-cost, distributed load-testing using&nbsp;EC2.
+</h2> 
+<p>with 20 comments</p> 
+<p><strong>The challenge</strong></p> 
+<blockquote> 
+<p> You don&rsquo;t get to start optimizing until you&rsquo;ve made the 
+servers fucking cry.<br>
+ &mdash;Brian Boyer </p> </blockquote> 
+<p>In June we launched Chicago Breaking Business, which is, at least in terms 
+of traffic, our largest site so far. Both before and during that project I had 
+been iterating toward a load-testing solution that would meet the challenge of 
+the above quote and provide us with a reasonable certainty that sites of this 
+size (and larger) would not collapse under sudden waves of traffic. The 
+traditional load-testing tools we tried (ab, flood, jmeter, etc.), while often 
+useful, suffered from a number of problems when trying to simulate this sort of 
+event:</p> 
+<ul> 
+<li>Testing clients may have an operating system imposed maximum number of 
+out-bound connections.</li> 
+<li>Testing a staging environment from a development workstation introduces 
+network latency, firewalling, and traffic shaping as variables in the tests.
+</li> 
+<li>Testing from a single client will cause Amazon&rsquo;s Elastic Load 
+Balancer to route all connections to a single application server, no matter how 
+many are available. (so-called &ldquo;sticky sessions&rdquo;)</li> </ul> 
+<p>What we needed was a solution that allowed us to use multiple, 
+topographically-close clients to all simultaneously assault our servers with 
+traffic.</p> 
+<p>Put it another way, what we needed were <em>bees with machine guns</em>.</p>
+<p><strong>The solution</strong></p> 
+<p>Bees with machines guns is a fabric script that I put together to 
+aggressively load-test our sites. It provides methods to spin up an army of EC2 
+instances (the bees), assault a target server with a configurable amount of 
+traffic, and then spin those instances back down.</p> 
+<p>Here is an example of what a Bees session might look like:</p> 
+<p></p> 
+<pre> $ fab -f bees.py up:2 Connecting to the hive. Attempting to call up 2 
+bees. Waiting for bees to load their machine guns... . . . . Bee i-df450ab4 is 
+ready for the attack. . Bee i-dd450ab6 is ready for the attack. The swarm has 
+assembled 2 bees. Done. $ fab -f bees.py 
+attack:http://YOUR-DOMAIN.com/,1000,100 Read 2 bees from the roster. Connecting 
+to the hive. Assembling bees. Each of 2 bees will fire 500 rounds, 50 at a 
+time. Stinging URL so it will be cached for the attack. [localhost] run: curl 
+http://YOUR-DOMAIN.com/ &gt;&gt; /dev/null Organizing the swarm. Bee 0 is 
+joining the swarm. Bee 1 is joining the swarm. Bee 0 is firing his machine gun. 
+Bang bang! Bee 1 is firing his machine gun. Bang bang! Bee 0 is out of ammo. 
+Bee 1 lost sight of the target (connection timed out). Offensive complete. 
+Target failed to fully respond to 1 bees. Complete requests: 500 Requests per 
+second: 81.670000 [#/sec] (mean) Time per request: 612.188000 [ms] (mean) 50% 
+response time: 358.000000 [ms] (mean) 90% response time: 1541.000000 [ms] 
+(mean) Mission Assessment: Target successfully fended off the swarm. The swarm 
+is awaiting new orders. Done. $ fab -f bees.py down Read 2 bees from the 
+roster. Connecting to the hive. Calling off the swarm. Stood down 2 bees. Done.
+</pre> 
+<p></p> 
+<p><em>(Note: Bees assumes you have AWS_ACCESS_KEY_ID and 
+AWS_SECRET_ACCESS_KEY set as environment variables&ndash;just as you would if 
+you were using the Amazon command line tools.)</em></p> 
+<p>Using the Bees I was able to verify that our new load-balanced and Varnished
+ servers could handle a sustained load significantly beyond our requirements. 
+Obviously this testing strategy doesn&rsquo;t attempt to address all scenarios 
+and it should be used in conjunction with traditional testing tools such as
+jmeter. That being said, it also provides a pretty interesting example of using 
+EC2 to solve problems that can really only be properly addressed with 
+distributed computing. This particular example is very well-suited to 
+validating caching and scaling strategies.</p> 
+<p><strong>The caveat</strong></p> 
+<p>If you decide to use the Bees, <strong>please keep in mind the following 
+important caveat</strong>: they are, more-or-less a distributed 
+denial-of-service attack in a fancy package and, therefore, if you point them 
+at any server you don&rsquo;t own you will behaving<strong>unethically</strong>
+, have your Amazon Web Services account<strong>locked-out</strong>, and be 
+<strong>liable</strong> in a court of law for any downtime you cause.</p> 
+<p>You have been warned.</p> 
+<p>Now then&ndash;how does your server handle thousands of simultaneous 
+connections?</p> 
+<p>Written by Christopher Groskopf </p> 
+<p>July 8, 2010 at 9:12 am</p> 
+<p>Posted in Infrastructure, Open Source, Python</p> 
+<h2>Advanced django project&nbsp;layout</h2> 
+<p>with 24 comments</p> 
+<p>Default django project layout versus news apps project layout</p> 
+<p>We&rsquo;re releasing our project layout for Django, based on Gareth 
+Rushgrove&rsquo;s lovely django-project-templates. If you&rsquo;ve found 
+yourself unsatisfied with the default layout, or you&rsquo;re using ourfabfile 
+orec2 image, you might be interested in using our project layout.</p> 
+<p>The default Django project layout makes it dead simple to learn the 
+framework and get an application up and running. But it can quickly get 
+cumbersome as your application grows and you have to figure out how to handle 
+deployment. A few projects, most notablyPinax, have their own ways to organize 
+large projects.</p> 
+<p>Here are the things that we need that the default layout doesn&rsquo;t 
+provide a solution for:</p> 
+<ul> 
+<li>Separate settings, Apache configuration files and WSGI handlers for local 
+development, a staging server and a production server.</li> 
+<li>A separate place for the various primary source data files (CSV, JSON, 
+shape files) we typically have in a project.</li> 
+<li>A place to put Django apps that does not clutter up the root directory of 
+the project.</li> 
+<li>A library directory to keep various reusable helper functions that are not 
+Django applications.</li> 
+<li>A template directory and media directory for the entire project.</li> </ul>
+<p>Gareth&rsquo;s project is really well organized and addresses all of these 
+issues. We tweaked his templates to match our use case.</p> 
+<p><strong>Getting off the ground<br>
+</strong></p> 
+<ol> 
+<li>Clone my fork of django-project-templates.<br>
+
+<pre>git clone git://github.com/ryanmark/django-project-templates.git</pre>
+</li> 
+<li>Install the templates. It will install the dependencies: PasteScript, 
+Cheetah and Fabric. You may want to use a new virtualenv.<br>
+
+<pre>python setup.py install</pre></li> 
+<li>Create a new project from the News Apps Paste template.<br>
+
+<pre>paster create --template=newsapps_project example_project</pre></li> 
+<li>You&rsquo;ll be asked for staging and production domains, a git repository 
+location and a database password. These setting will be put in the fabfile and 
+will be used for deployment. You&rsquo;ll also be asked for a secret key which 
+is used internally by Django. It&rsquo;s okay to press enter and accept the 
+defaults. The template will still get created, you&rsquo;ll just have to edit 
+the fabfile later if you plan on deploying the project to a staging or 
+production server.</li> </ol> 
+<p>The template contains a lot of personal preference but it&rsquo;s been very 
+useful for us and&nbsp; handful of projects. We are all quite satisfied with 
+it. Take it, use it, tell us what you think!</p> 
+<p>Written by Ryan Mark </p> 
+<p>March 8, 2010 at 2:30 pm</p> 
+<p>Posted in Infrastructure, Python</p> 
+<h2>Best practices in web development with Python and&nbsp;Django</h2> 
+<p>with 27 comments</p> 
+<p>At some point during the course of developing the Elections Center it 
+became clear to me that each of us was spending too much development time 
+trying to understand one another&rsquo;s code. Sometimes this was because our 
+intuitions about the right way to do things were different, other times it was 
+a difference of priorities, but most often it was simply due to a lack of any 
+explicit best practice.</p> 
+<p>Being something of a documentation and organization junky I took it upon 
+myself to begin to collate a best practices guide. The hope was that in doing 
+this we could both ensure craft knowledge was well-distributed as well as 
+minimize the amount of &ldquo;why did he do it that way?&rdquo; moments when 
+reading one another&rsquo;s code. (More famously,WTFs/minute.) In our 
+fast-paced environment there is little justification for being confused when it 
+could have been avoided by simply writing it down.</p> 
+<p>What follows are the best practices we have established (by commission and 
+arbitration) thus far. Some of them are tried-and-true policies (PEP 8), others 
+are process-driven (the use of python&rsquo;s logging module), and a few are 
+entirely idiosyncratic (formatting of CSS files). All of them combine to 
+provide us with explicit expectations for reading one another&rsquo;s code and 
+therefore a much easier time when are obligated to fix it at 10:30, on a 
+Sunday, for a Monday morning paper.</p> 
+<p>We hope you will find them inspirational and make many suggestions about 
+how they can be improved.</p> 
+<h3><strong>1. Version control</strong></h3> 
+<ul> 
+<li>Excluding bug-fixes, active development should not be performed on the 
+stable branch.</li> 
+<li>Large, discrete units of work should be developed on their own feature 
+branches, so that another developer can pick it up if you get hit by a truck.
+</li> 
+<li>Feature branches should be prefixed with the owner&rsquo;s initials to 
+prevent confusion, e.g. &ldquo;bb_polls&rdquo;.</li> 
+<li>Feature branches should merge <strong>from</strong> master as often as is 
+feasible, to prevent merge headaches later on.</li> 
+<li>Completed feature branches should be merged into master and deleted from 
+the remote repository so that they are not mistaken for work-in-progress.</li> 
+<li>At the end of each iteration (when features are about to be deployed to 
+production), master should be merged into stable and then stableHEAD should be 
+tagged, e.g. &ldquo;v3.0&rdquo;. For example:<br>
+
+<pre> git tag -a v3.0 -m &quot;Deploying iteration 3.&quot; git push --tags 
+</pre></li> 
+<li>In the event a release needs to be redeployed with fixes, increment the 
+sub-version index, e.g. &ldquo;v3.1&rdquo;</li> 
+<li>Follow the principle of &ldquo;merge early, merge often&rdquo; to prevent 
+conflicts.</li> 
+<li>Commit messages should accurately summarize each task included in the 
+commit, otherwise<code>git log</code> is useless.</li> 
+<li>Commit messages that reference tickets should use the <code>#1234</code> 
+syntax so that they are automatically associated in issue tracker.</li> 
+<li>Commit messages that close tickets should use the <code>Closes #1234</code>
+ syntax to automatically tie the commit to the appropriate ticket.</li> 
+<li>Always install dependencies in a <code>mkvirtualenv --no-site-packages 
+$name</code> environment. This eliminates the possibility of version conflicts 
+and makes setup as easy as<code>pip install -r requirements.txt</code>.</li> 
+</ul> 
+<h3><strong>2. Python</strong></h3> 
+<ul> 
+<li>Follow PEP 8 best practices, this means (among other things):</li> 
+<li>Four-space tabs are required.</li> 
+<li>Don&rsquo;t use <code>from package import *</code>.</li> 
+<li>Do use whitespace liberally.</li> 
+<li>Do use descriptive lower_case_with_underscores variable names 
+(understanding is much more important than brevity).</li> 
+<li>Do put explanatory docstrings on all non-trivial classes and methods.</li> 
+<li>If it isn&rsquo;t covered by PEP 8, refer to Idiomatic Python, which is 
+far more thorough.</li> 
+<li>Don&rsquo;t use print. Use Python&rsquo;s built-in logging so that output 
+can be structured for different use-cases. (Also it makes transition to Py3k 
+much easier.)</li> 
+<li>Always request a logger with <code>log = 
+logging.getLogger(&quot;project.app.module&quot;)</code>. Take note of the 
+logger naming structure so that output can be filtered.</li> 
+<li>Organize imports in a logical manner: standard libraries first, then 
+third-party libraries, then our own modules. Alphabetization within groups 
+takes only a few seconds and makes removing cruft easier.</li> 
+<li>When in doubt, remember <code>import this</code>. (PEP 20)</li> </ul> 
+<h3><strong>3. Django</strong></h3> 
+<ul> 
+<li>Follow the Django Coding style with regard to naming, spacing, etc.</li> 
+<li>Use pickled model fields with extreme caution.</li> 
+<li>Build normalized models and denormalize only when necessary for 
+performance. When feasible, do so without altering the original table.</li> 
+<li>If you define a generic magic constant in a module (path, API key, url, 
+etc) that is likely to be reused in another module define it in<code>settings.py
+</code> instead.</li> 
+<li>Use management commands instead of shell scripts. Remember that management 
+commands can be invoked programmatically with<code>call_command()</code>.</li> 
+<li>Don&rsquo;t forget to activate the virtualenv when invoking a management 
+command from cron:<br>
+
+<pre> */5 * * * * source /home/newsapps/sites/$project/env/bin/activate 
+&amp;&amp; /home/newsapps/sites/$project/repository/manage $command &gt;&gt; 
+/dev/null 2&gt;&amp;1</pre></li> 
+<li>Always include the RequestContext when rendering view templates. For 
+example:<br>
+
+<pre> render_to_response(&lsquo;template&rsquo;, template_dict, 
+context_instance=RequestContext(request))</pre></li> 
+<li>Put logic in view functions, not in templates. The simpler the template 
+the better.</li> </ul> 
+<h3><strong>4. Javascript</strong></h3> 
+<ul> 
+<li>Don&rsquo;t use jQuery in widgets that will end up on other sites.</li> 
+<li>Otherwise, use jQuery.</li> 
+<li>Whenever possible, put Javascript at the bottom of the page.</li> 
+<li>Don&rsquo;t use inline Javascript.</li> </ul> 
+<h3><strong>5. HTML/CSS</strong></h3> 
+<ul> 
+<li>Add a top level ID to every kind of page (#race-page, #candidate-page)</li>
+<li>Use IDs for elements that are unique to every page in the site. Use 
+classes for everything else.</li> 
+<li>Use hyphens for IDs and classes, no camelCase or underscores.</li> 
+<li>Use descriptive and unique names for IDs. Use simple generic names for 
+classes.</li> 
+<li>Always define classes with nested rules: <code>#candidate-page .box-column 
+.box .bar-chart</code>. Use your best judgment, don&rsquo;t go overboard with 
+the nested rules, just enough to make sure your not going to style the wrong 
+things. IDs rarely need to be nested</li> 
+<li>Each CSS selector gets its own line. The block of rules has to share. It 
+makes big CSS scannable:<br>
+
+<pre> a:link {color:#336699;} a:hover, a:active {color:#6d9fd2;} a:visited 
+{color:#336699;} a:visited:hover {color:#6d9fd2;}</pre></li> 
+<li>Don&rsquo;t rely on (because of IE6): 
+<ul> 
+<li>min-width, max-width, min-height, max-height</li> 
+<li>overflow:hidden</li> 
+<li>css tables</li> 
+<li>attribute selectors</li> 
+<li>psudo-classes (other than for a tags)</li> 
+<li>&gt; (child selector)</li> 
+<li>position:fixed</li> </ul> </li> 
+<li>If you are positioning one block absolutely inside another, make sure the 
+parent has a specified size.</li> 
+<li>Don&rsquo;t use inline styles.</li> </ul> 
+<h3><strong>6. Images</strong></h3> 
+<ul> 
+<li>Don&rsquo;t use them.</li> 
+<li>If you use them, make sure you use photoshop&rsquo;s &ldquo;Save for 
+web&hellip;&rdquo; or figure out another way to optimize them.</li> 
+<li>Use jpeg for images with lots of different colors and gradients, png/gif 
+for images with few colors.</li> 
+<li>PNG rules (if you&rsquo;re relying on PNG fix) 
+<ul> 
+<li>Don&rsquo;t use PNGs. If it hurts, blame Microsoft.</li> 
+<li>If you use PNGs, don&rsquo;t use PNGs with alpha</li> 
+<li>If you use PNGs with alpha, use them in img tags only.</li> 
+<li>If you use PNGs with alpha as background images: 
+http://24ways.org/2007/supersleight-transparent-png-in-ie6</li> </ul> </li> 
+</ul> 
+<h3><strong>7. Testing</strong></h3> 
+<ul> 
+<li>Use unit tests to validate non-trivial methods.</li> 
+<li>Always test methods that involve date math, statistical calculations, 
+non-ducky type conversions, or extract data from arbitrary sources (Excel, web, 
+etc).</li> </ul> 
+<p>Written by Christopher Groskopf </p> 
+<p>February 26, 2010 at 1:27 pm</p> 
+<p>Posted in Craft, Python</p> &laquo; Older Entries <br>
+<br>
+
+<h3>Steal our code!</h3> newsapps on GitHub <br>
+
+<h3>The news apps team</h3> 
+<ul> 
+<li> <strong>Heather Billings</strong> </li> 
+<li> <strong>Brian Boyer</strong> </li> 
+<li> <strong>David Eads</strong> </li> 
+<li> <strong>Joe Germuska</strong> </li> 
+<li> <strong>Christopher Groskopf</strong> (emeritus) </li> 
+<li> <strong>Ryan Mark</strong> </li> 
+<li> <strong>Ryan Nagle</strong> </li> 
+<li> <strong>Matt Hampel</strong> (emeritus) </li> 
+<li> <strong>Emily Chow</strong> (emeritus) </li> </ul> 
+<h3>Our work</h3> <br>
+<br>
+
+<h3>Recent posts</h3> 
+<ul> 
+<li>Style and Substance: Analyzing a Beach Ball&nbsp;Chart</li> 
+<li>ISO detail-obsessed, hyper-organized weirdo. Must love&nbsp;crafting.</li> 
+<li>We&rsquo;re hiring: WordPress, HTML5 developer&nbsp;extraordinaire</li> 
+<li>Analyzing Illinois Pension Codes using the Open States&nbsp;Project</li> 
+<li>What are you doing for&nbsp;democracy?</li> </ul> 
+<h3>Subscribe</h3> 
+<p>&nbsp;RSS - Posts</p> 
+<p>&nbsp;RSS - Comments</p> 
+<h3>Categories</h3> 
+<ul> 
+<li>Apps (9) </li> 
+<li>Craft (9) </li> 
+<li>Data Visualization (1) </li> 
+<li>Events (6) </li> 
+<li>Infrastructure (13) </li> 
+<li>Jobs (13) </li> 
+<li>Kick ass (2) </li> 
+<li>Mapping (11) </li> 
+<li>Open Source (19) </li> 
+<li>PHP (3) </li> 
+<li>Python (18) </li> 
+<li>Recipes (11) </li> 
+<li>Talks (5) </li> 
+<li>Uncategorized (1) </li> </ul> 
+<h3>@TribApps</h3> 
+<ul> 
+<li>Big thanks to our pals at @LATdatadesk for python-elections, it's powering 
+our results page tonight.http://t.co/FfWi6srS 4&nbsp;days&nbsp;ago</li> </ul> 
+Follow @TribApps 
+<h3>@HBillings (Heather)</h3> 
+<ul> 
+<li>I will now do penance for all those times I used list.index(item) instead 
+of for index, item in enumerate(list).7&nbsp;hours&nbsp;ago</li> </ul> Follow 
+@hbillings 
+<h3>@BrianBoyer</h3> 
+<ul> 
+<li>There are few finer beverages on a hot day in the shade than a bicyclette. 
+Campari + dry white wine. Refreshing!http://t.co/KViuDkYc 16&nbsp;hours&nbsp;ago
+</li> </ul> Follow @BrianBoyer 
+<h3>@Eads (David)</h3> 
+<ul> 
+<li>@HeidiEKMassey @IdeaHackChi @emeraldblueltd Mockups! Simple! Recycle here 
+now!https://t.co/3mggg1IS 12&nbsp;hours&nbsp;ago</li> </ul> Follow @Eads 
+<h3>@JoeGermuska</h3> 
+<ul> 
+<li>Interview: Jenny Scheinman and Nels Cline | eMusic News &amp; Features 
+http://t.co/MNaea7BI 19&nbsp;hours&nbsp;ago</li> </ul> Follow @JoeGermuska 
+<h3>@RyanMark</h3> 
+<ul> 
+<li>At WWPJ with @evogelgesang and @cdwills http://t.co/NXtxqbbV 
+1&nbsp;day&nbsp;ago</li> </ul> Follow @RyanMark 
+<h3>@RyanNagle</h3> 
+<ul> 
+<li>attn beer nerds: check my sweet loots from @3floyds XV anniversary party 
+http://t.co/y1ttwQIO 4&nbsp;months&nbsp;ago</li> </ul> Follow @RyanNagle <br>
+
+<br> <br>
+<br>
+This work is licensed under a Creative Commons Attribution 3.0 
+United States License. <br>
+
+<p>Blog at WordPress.com. Theme: The Journalist v1.9 by Lucian E. Marin.</p> 
+<br> <br>
+Follow 
+<h3>Follow &ldquo;News Apps Blog&rdquo;</h3> 
+<p>Get every new post delivered to your Inbox.</p> 
+<p></p> 
+<p></p> 
+<p></p> Powered by WordPress.com <br>
+<br>
+
+<p></p> 
+</body>

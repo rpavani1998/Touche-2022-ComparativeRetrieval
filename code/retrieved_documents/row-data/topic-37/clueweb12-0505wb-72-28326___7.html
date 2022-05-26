@@ -1,0 +1,1139 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>DirectX 8 Graphics and Video: A Fresh Start</title>
+<body>
+
+<p>Jump to content</p> 
+<ul> 
+<li>  &nbsp;&nbsp;&nbsp;&nbsp; Sign In&nbsp;&nbsp;&nbsp; </li> 
+<li> Create Account </li> </ul> <br>
+<br>
+
+<ul> 
+<li>Home</li> 
+<li>For Beginners</li> 
+<li>Technical 
+<ul> 
+<li>Game Programming</li> 
+<li>General Programming</li> 
+<li>Graphics Programming and Theory</li> 
+<li>DirectX and XNA</li> 
+<li>OpenGL</li> 
+<li>Multiplayer and Network Programming</li> 
+<li>Artificial Intelligence</li> 
+<li>Math and Physics</li> 
+<li>Mobile &amp; Console Development</li> 
+<li>APIs and Tools</li> </ul> </li> 
+<li>Creative 
+<ul> 
+<li>Game Design</li> 
+<li>Writing For Games</li> 
+<li>Music and Sound</li> 
+<li>Visual Arts</li> 
+<li>Gallery</li> </ul> </li> 
+<li>Business 
+<ul> 
+<li>Breaking into the Industry</li> 
+<li>Business &amp; Law</li> 
+<li>Production &amp; Management</li> </ul> </li> 
+<li>Community 
+<ul> 
+<li>Forums</li> 
+<li>Developer Journals</li> 
+<li>GDNet+ Subscriptions</li> 
+<li>Gallery</li> 
+<li>Books</li> 
+<li>Calendar</li> 
+<li>Store</li> </ul> </li> 
+<li>Classifieds 
+<ul> 
+<li>Job Offers</li> 
+<li>Contractors For Hire</li> 
+<li>Contract Projects</li> 
+<li>Hobbyist Projects</li> </ul> </li> 
+<li>Marketplace</li> </ul> Search Advanced 
+<ul> 
+<li><strong>Search section:</strong></li> 
+<li> <strong>Google</strong> </li> 
+<li>Forums</li> 
+<li>Members</li> 
+<li>Help Files</li> 
+<li>Developer Journals</li> 
+<li>Gallery</li> 
+<li>Calendar</li> 
+<li>Downloads</li> 
+<li>Resources</li> 
+<li>Store</li> 
+<li>Classifieds</li> 
+<li>Tracker</li> </ul> <br>
+<br>
+<br>
+
+<ol> 
+<li> Articles </li> 
+<li> &raquo; Technical </li> 
+<li> &raquo; DirectX and XNA </li> 
+<li> &raquo; Article: DirectX 8 Graphics and Video: A Fresh Start </li> </ol> 
+Watched Content New Content <br>
+<br>
+<br>
+
+<h3>Categories (See All)</h3> 
+<ul> 
+<li> Technical 
+<ul> 
+<li> Game Programming </li> 
+<li> General Programming </li> 
+<li> Graphics Programming and Theory </li> 
+<li> DirectX and XNA </li> 
+<li> OpenGL </li> 
+<li> Multiplayer and Network Programming </li> 
+<li> Artificial Intelligence </li> 
+<li> Math and Physics </li> 
+<li> Mobile Development </li> 
+<li> APIs and Tools </li> </ul> </li> 
+<li> Creative 
+<ul> 
+<li> Game Design </li> 
+<li> Music and Sound </li> 
+<li> Visual Arts </li> </ul> </li> 
+<li> Business 
+<ul> 
+<li> Event Coverage </li> 
+<li> Breaking Into the Industry </li> 
+<li> Business and Law </li> 
+<li> Interviews </li> 
+<li> Production and Management </li> </ul> </li> </ul> 
+<h3>Recent Resources</h3> 
+<ul> 
+<li> Using Animated Pieces in a Board-based Game wit...<br>
+
+<p>Feb 24 2012 11:17 PM | 0 Comments</p> </li> 
+<li> Getting Started with Audacity<br>
+
+<p>Feb 24 2012 10:04 PM | 0 Comments</p> </li> 
+<li> Peter Molyneux: How to get a job in games devel...<br>
+
+<p>Feb 24 2012 11:17 AM | 0 Comments</p> </li> 
+<li> How we Built an iOS game on PC<br>
+
+<p>Feb 23 2012 07:07 PM | 0 Comments</p> </li> 
+<li> 3D Animation Techniques with XNA Game Studio 4.0<br>
+
+<p>Feb 23 2012 02:40 PM | 0 Comments</p> </li> 
+<li> Producer Consumer Using Double Queues<br>
+
+<p>Feb 22 2012 09:13 AM | 0 Comments</p> </li> 
+<li> Introducing Xcode Tools for iPhone Development<br>
+
+<p>Feb 21 2012 09:39 PM | 0 Comments</p> </li> </ul> 
+<p>Show more &raquo; | View all recent resources&raquo;</p> 
+<h1>DirectX 8 Graphics and Video: A Fresh Start</h1> 
+<p> <b>By Toby Jones </b> | Published Nov 30 2000 09:25 AM in DirectX and XNA 
+</p> 
+<ul> 
+<li>Article</li> 
+<li>Comments (1)</li> 
+<li>Revisions (2)</li> 
+<li>Related Stuff (25)</li> </ul> <b>Download attached article resource</b> 
+<br> <br>
+ Sometimes it is nice to start with a clean sheet of paper. While I 
+can make jokes about Microsoft starting over eight times when it comes to 
+DirectX, the latest version of DirectX is Microsoft&rsquo;s freshest start 
+since DrawPrimitive came into style.<br>
+<br>
+ DirectX 8 (DX8) really shows its 
+maturity. Many operations have been simplified and streamlined, and it is now 
+embarrassingly easy to access advanced functions. As an example, I used to 
+write short OpenGL applications in under 500 lines. My pre-DX8 Direct3D 
+initialization code was around 1000 lines. Now, with DX8, my OpenGL and 
+Direct3D applications look almost identical.<br>
+<br>
+ Since DX8 is so 
+different, I won&rsquo;t spend a lot of time talking about what has changed. 
+Instead, I will discuss what the API looks like now, and how you can take 
+advantage of it in no time.<br>
+<br>
+ The DX8 Foundation consists of 6 APIs: 
+DirectX Graphics (which includes Direct3D and the D3DX library), DirectX Audio 
+(which includes DirectSound and DirectMusic), DirectInput, DirectPlay, 
+DirectSetup, and DirectShow. DX8 is huge, so I won&rsquo;t cover it all here. 
+This article will get you started programming graphics and video using DX8.<br>
+
+<br> I do not know if there is going to be an updated version of DirectX Media. 
+DirectShow was formerly included in DirectX Media, but now it is part of the 
+base DirectX runtime. The advantage to this is that now developers can take 
+advantage of this API without having to install a separate runtime. Direct3D 
+Retained Mode was part of DirectX Media, but the D3DX library mostly replaces 
+this API. I suspect that DX transforms, another component of DirectX Media, has 
+remained unchanged, and can be used from the old DirectX Media 6.1 SDK.<br>
+<br>
+<br> <strong>DirectX Graphics</strong> <br>
+<br>
+ Perhaps the most glaring 
+change to DirectX is the lack of DirectDraw. DirectDraw is dead, replaced 
+completely by Direct3D.<br>
+<br>
+ Direct3D is super-streamlined, and contains 
+many new features. No longer do you have to enumerate everything under the sun. 
+Direct3D consists of only 12 interfaces. The inheritance graph is very simple:
+<br> <br>
+
+<p> </p> <br>
+ One of the coolest features is the addition of a shader 
+language. Microsoft&rsquo;s new shader language looks more like assembly 
+language than it looks like Renderman or Quake 3&rsquo;s shader language. 
+However, the concepts are all the same.<br>
+<br>
+ Direct3D comes with a high 
+level library called D3DX. The D3DX library is very slick, containing APIs to 
+create everything from sprites, to fonts, to textures. Using D3DX is an easy 
+way to jump-start your development.<br>
+<br>
+ Matrix operations are very clean 
+(especially with D3DX), and it is far easier to work with than OpenGL. There 
+are many other similarities with OpenGL:<br>
+<br>
+<b>Direct3D</b> <b>OpenGL</b> 
+<br> BeginScene glBegin <br>
+EndScene glEnd <br>
+DrawPrimitive glDrawElements 
+<br> SetRenderState glEnable <br>
+SetTexture glBindTexture <br>
+Clear glClear 
+<br> <br>
+Many of these similarities appeared in earlier versions of DirectX, 
+but with the new simplifications of DX8, it is very apparent as to how similar 
+Direct3D and OpenGL now are.<br>
+<br>
+ 2D programming is not dead even with the 
+removal of DirectDraw. DX8 does have a sprite interface in its D3DX library. 
+However, the preferred way to do 2D graphics is with simple textures. Since 
+chroma keying has been removed, the only way to do transparency is with alpha 
+blending.<br>
+<br>
+ You can probably tell that I am quickly becoming a fan of 
+this API. I used to be an OpenGL die hard, but with all the improvements, there 
+is little reason not to use Direct3D in your games. We&rsquo;ll write some code 
+shortly that will let you hitting the ground running.<br>
+<br>
+ DirectX 
+Graphics is just plain awesome. The rest of DX8 looks old in comparison. After 
+working with DX8 for a few days, you will wish other DX8 APIs worked like it.
+<br> <br>
+<br>
+<strong>DirectShow</strong> <br>
+<br>
+ DirectShow is 
+Microsoft&rsquo;s API for everything video. Anything to do with VCR&rsquo;s, 
+digital camcorders, and DVD players can be found here. It is no surprise that 
+playback of video files also falls under this category, and game developers can 
+now use this API with ease to add FMV to their games.<br>
+<br>
+ There are some 
+new things added to DirectShow, but few are of interest to game developers. 
+Support for European PAL video has been enhanced (meaning that it works now). 
+Filters can be added and removed while a filter graph is running. Native 
+support for Microsoft&rsquo;s streaming format, ASF, has been added as well. 
+However, even though DirectShow has many improvements, it remains the buggiest 
+portion of DX8 due to its complexity.<br>
+<br>
+ Since playback of video is the 
+primary reason why a game developer would use DirectShow, we&rsquo;ll do some 
+code that does just that a little bit later.<br>
+<br>
+<br>
+<strong>Our Basic 
+Application (dxtest.cpp and d3d1.cpp)</strong> <br>
+<br>
+ I will present 
+several demos along the way. To make things simple, each of the demos will 
+share the same basic application.<br>
+<br>
+ The base application I will start 
+with is a simple Win32 skeleton that is around 90 lines long. All it does is 
+create a window and call the DirectX functions that I will define a bit later. 
+These functions are InitDirect3D, ShutdownDirect3D, and DrawScene. This shell 
+can be used with all the sample demos I will work with in this article, so I 
+separated it from the rest of the code. This code is nothing you can&rsquo;t 
+find in Petzold, so I won&rsquo;t reproduce it here. It is included in the code 
+pack that comes with this article.<br>
+<br>
+ All the demos share the same 
+ShutdownDirect3D function and related variables:<br>
+<br>
+
+<pre> #define HELPER_RELEASE(x) { if(x) { (x)-&gt;Release(); (x) = NULL; }}<br>
+<br>IDirect3D8 * pID3D = NULL;<br>
+IDirect3DDevice8 * pID3DDevice = NULL;<br>
+
+IDirect3DVertexBuffer8 * pStreamData = NULL;<br>
+IDirect3DIndexBuffer8 * 
+pIndexBuffer = NULL;<br>
+IDirect3DTexture8 * pTexture = NULL;<br>
+<br>
+void 
+ShutdownDirect3D()<br>
+{<br>
+ HELPER_RELEASE(pTexture);<br>
+ 
+HELPER_RELEASE(pIndexBuffer);<br>
+ HELPER_RELEASE(pStreamData);<br>
+ 
+HELPER_RELEASE(pID3DDevice);<br>
+ HELPER_RELEASE(pID3D);<br>
+} </pre> First I 
+declared all the interfaces I will use. Take note that not all the demos will 
+use all the interfaces. They are simply included to simplify and unify the code 
+base.<br>
+<br>
+ ShutdownDirect3D simply releases all these interfaces. In the 
+future, you may need to add extra code to shutdown these interfaces, but for 
+now this is all we will need.<br>
+<br>
+ Let us start our initialization code, 
+which is located in the InitDirect3D function. InitDirect3D and DrawScene are 
+functions that you will change as we go on, so be sure to experiment with them. 
+IDirect3D is the first interface that you need to instantiate. To do this you 
+write:<br>
+<br>
+
+<pre> IDirect3D8 * pID3D = Direct3DCreate8(D3D_SDK_VERSION); </pre> Unlike 
+most DirectX methods, there is no return code that you need to check here. You 
+do, however, need to check that your pointer is non-NULL before you reference 
+it.<br>
+<br>
+ Your next step would usually be to create a device interface. You 
+can&rsquo;t do this until you first call the GetAdapterDisplayMode method to 
+get some needed information:<br>
+<br>
+
+<pre> D3DDISPLAYMODE d3ddm;<br>
+
+pID3D-&gt;GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &amp;d3ddm);</pre> This 
+will get the parameters of the current display mode. The parameter you are 
+looking for is the surface format. You can use this to build a 
+D3DPRESENT_PARAMETERS structure:<br>
+<br>
+
+<pre> D3DPRESENT_PARAMETERS present;<br>
+ZeroMemory(&amp;present, 
+sizeof(present));<br>
+present.SwapEffect = D3DSWAPEFFECT_COPY;<br>
+
+present.Windowed = TRUE;<br>
+present.BackBufferFormat = d3ddm.Format; </pre> 
+D3DPRESENT_PARAMETERS describes information such as the format of a 
+display&rsquo;s surfaces, the type of swapping mechanism, and whether the app 
+is windowed or full screen.<br>
+<br>
+ In this example, surface copying is used 
+instead of page flipping because the app is windowed. The back buffer is set to 
+match the surface of the current video mode. A surface represents an area that 
+can be drawn upon. Surfaces have properties like resolution and color depth. It 
+is important that our back buffer and our primary buffer match in these 
+properties.<br>
+<br>
+ You can now create an IDirect3DDevice8 interface: <br>
+
+<br> 
+<pre> pID3D-&gt;CreateDevice(D3DADAPTER_DEFAULT,<br>
+ D3DDEVTYPE_HAL,<br>
+ 
+hwnd,<br>
+ D3DCREATE_SOFTWARE_VERTEXPROCESSING,<br>
+ &amp;present,<br>
+ 
+&amp;pID3DDevice);</pre> This function has six parameters, but luckily, none of 
+them are complex. D3DADAPTER_DEFAULT tells Direct3D to use the primary monitor. 
+This is only an issue if you are using a multi-monitor system. You can use a 
+secondary monitor by specifying the number of the monitor you wish to use. 
+Calling GetAdapterCount on the IDirect3D interface will return the count of 
+adapters in the system.<br>
+<br>
+ The next parameter, D3DDEVTYPE_HAL, tells 
+Direct3D to use the HAL for display purposes. Other options include 
+D3DDEVTYPE_REF and D3DDEVTYPE_SW, which are the reference software rasterizer 
+and a user specified software rasterizer respectively. Usually you will want to 
+use D3DDEVTYPE_HAL, but you may want to use reference rasterizer for some 
+testing purposes. You certainly should ship with the HAL version.<br>
+<br>
+ You 
+then specify the focus window. For a full screen application, you need to make 
+this a top-level window.<br>
+<br>
+ D3DCREATE_SOFTWARE_VERTEXPROCESSING 
+specifies the type of vertex processing. You can also use hardware, or a 
+combination, but I chose software for maximum compatibility. You will want to 
+use hardware vertex processing if you want hardware assisted T &amp; L.<br>
+<br>
+ The last two parameters are simple. You pass in the structure that you built 
+above, and you are returned the IDirect3DDevice8 interface. If the method 
+returns D3DERR_NOTAVAILABLE, then you passed in valid parameters, but the 
+device does not support them.<br>
+<br>
+ The nicest part about this method is 
+that it automatically creates all your needed back buffers and depth buffers. 
+Clipping is automatically enabled, as is backface culling. Lighting is also 
+enabled, and since you will specify our own vertex colors later, you want to 
+disable this:<br>
+<br>
+
+<pre> pID3DDevice-&gt;SetRenderState(D3DRS_LIGHTING, FALSE); </pre> That is 
+the end of our InitDirect3D function. Let&rsquo;s see it in its entirety:<br>
+
+<br> 
+<pre> HRESULT InitDirect3D(HWND hwnd)<br>
+{<br>
+ pID3D = 
+Direct3DCreate8(D3D_SDK_VERSION);<br>
+<br>
+ HRESULT hr;<br>
+ do<br>
+ {<br>
+ // 
+we need the display mode so we can get<br>
+ // the properties of our back buffer
+<br> D3DDISPLAYMODE d3ddm;<br>
+ hr = pID3D-&gt;GetAdapterDisplayMode(<br>
+ 
+D3DADAPTER_DEFAULT,<br>
+ &amp;d3ddm);<br>
+ if(FAILED(hr))<br>
+ break;<br>
+<br>
+ 
+D3DPRESENT_PARAMETERS present;<br>
+ ZeroMemory(&amp;present, sizeof(present));
+<br> present.SwapEffect = D3DSWAPEFFECT_COPY;<br>
+ present.Windowed = TRUE;<br>
+
+ present.BackBufferFormat = d3ddm.Format;<br>
+<br>
+ hr = 
+pID3D-&gt;CreateDevice(D3DADAPTER_DEFAULT,<br>
+ D3DDEVTYPE_HAL,<br>
+ hwnd,<br>
+ 
+D3DCREATE_SOFTWARE_VERTEXPROCESSING,<br>
+ &amp;present,<br>
+ &amp;pID3DDevice);
+<br><br>
+ if(FAILED(hr))<br>
+ break;<br>
+<br>
+ hr = 
+pID3DDevice-&gt;SetRenderState(D3DRS_LIGHTING,<br>
+ FALSE);<br>
+<br>
+ } 
+while(0);<br>
+<br>
+ return hr;<br>
+} </pre> We now turn our attention to the 
+DrawScene function. For our first exercise, I want to just get something on the 
+screen. Once we get to this point, adding to it should be trivial.<br>
+<br>
+ 
+This is the DrawScene function we will start with:<br>
+<br>
+
+<pre> HRESULT DrawScene()<br>
+{<br>
+ HRESULT hr;<br>
+ do<br>
+ {<br>
+ // clear 
+back buffer<br>
+ hr = pID3DDevice-&gt;Clear(0,<br>
+ NULL,<br>
+ D3DCLEAR_TARGET,
+<br> D3DCOLOR_RGBA(0,63,0,0),<br>
+ 0,<br>
+ 0);<br>
+ if(FAILED(hr))<br>
+ break;
+<br><br>
+ // start drawing<br>
+ hr = pID3DDevice-&gt;BeginScene();<br>
+ 
+if(FAILED(hr))<br>
+ break;<br>
+<br>
+ // Put all drawing code here<br>
+<br>
+ hr 
+= pID3DDevice-&gt;EndScene();<br>
+ if(FAILED(hr))<br>
+ break;<br>
+<br>
+ // flip 
+back buffer to front<br>
+ hr = pID3DDevice-&gt;Present(NULL, NULL, NULL, NULL);
+<br> } while(0);<br>
+<br>
+ return hr;<br>
+} </pre> This code is pretty simple, 
+if you look beyond all the error handling. Clear will flood fill the buffers 
+you specify. You can fill the z-buffer, the back buffer, or the stencil buffer. 
+In this example, you want to fill the back buffer with the color green. So we 
+set the flags to D3DCLEAR_TARGET, and the color to green.<br>
+<br>
+ BeginScene 
+and EndScene don&rsquo;t do anything in this example, but we will be using them 
+in future versions. These functions will wrap all of our primitive drawing 
+routines.<br>
+<br>
+ The Present function will cycle to the next back buffer. 
+Since we only have one back buffer and one front buffer, the buffers simply 
+flip. The back buffer will be displayed and we can now draw on the front buffer 
+(actually, since we not doing page flipping, we are actually still drawing on 
+the back buffer, but the concept is the same).<br>
+<br>
+ If you now run the 
+program, you should get a window that is filled green. If everything worked 
+okay, we can start writing code to draw triangles, the primitive that is the 
+heart of game programming.<br>
+<br>
+<br>
+<strong>Drawing Triangles (d3d2.cpp)
+</strong> <br>
+<br>
+ Triangles have a few interesting properties that make them 
+attractive to 3D programming. They are always planar. A combination of 
+triangles can make up any shape. In the upcoming examples, we will use 
+triangles to build a cube. I used a rotating cube as the base for my first 3D 
+engine. If its good enough for one programmer, its good enough for another.<br>
+
+<br> In its simplest form, a triangle consists of three vertices. How these 
+vertices are defined is up to the programmer. A 2D triangle may be as plain as 
+x and y coordinates for each point. A beefy 3D program may specify coordinates 
+for position, transformed coordinates, color, several texture coordinates, and 
+possibly other information.<br>
+<br>
+ The exact semantics of how to use this 
+information is slightly different between OpenGL and Direct3D. Drawing discrete 
+triangles would use this information raw and define each triangle separately. 
+However, when drawing a model, vertices are shared between triangles, so 
+storing all three vertices for each triangle would be inefficient. For both 
+OpenGL and Direct3D, you can specify all the vertices of a model in a huge 
+array. Triangles are defined as a triple of indices into this array. You can 
+take this approach to the extreme by specifying many indices in another array, 
+and passing the index array to a function, such as DrawIndexedPrimitive, which 
+will draw a large part of the model at once.<br>
+<br>
+ We will get this far 
+eventually, but for the next example we will just set up the foundations for 
+this approach. To define your vertex format, Direct3D introduces the concept of 
+a flexible vertex format (FVF). In FVF, you define a structure that includes 
+just the components of the vertex that we need. This structure will change as 
+your program changes, but you will initially define it as:<br>
+<br>
+
+<pre> struct MYVERTEX<br>
+{<br>
+ FLOAT x, y, z; // The transformed position<br>
+ FLOAT rhw; // 1.0 (reciprocal of homogeneous w)<br>
+ DWORD color; // The 
+vertex color<br>
+}; </pre> Go ahead and instantiate an array of this structure, 
+named<em>vertices</em>, defining each of the three vertices for a triangle. In 
+your InitDirect3D function, you have to create a vertex buffer:<br>
+<br>
+
+<pre> int num_elems = sizeof(vertices) / sizeof(vertices[0]);<br>
+
+pID3DDevice-&gt;CreateVertexBuffer(sizeof(MYVERTEX) *<br>
+ num_elems,<br>
+ 
+D3DUSAGE_WRITEONLY,<br>
+ D3DFVF_XYZRHW|D3DFVF_DIFFUSE,<br>
+ D3DPOOL_DEFAULT,<br>
+ &amp;pStreamData);</pre> Here, the size of the vertex array in bytes is the 
+first parameter. Since the app won&rsquo;t read from these vertices, you pass 
+in D3DUSAGE_WRITEONLY. There are various other flags that you could pass here 
+to specify how your vertex array would be used, but you can go ahead and trust 
+Direct3D to do the right thing for now.<br>
+<br>
+ Next you specify the FVF that 
+we are using. Since you are using pre-transformed coordinates (meaning that you 
+won&rsquo;t be doing matrix operations), you first specify D3DFVF_XYZRHW. Later 
+when you do your own matrix transformations, this will change to D3DFVF_XYZ. 
+D3DFVF_DIFFUSE tells Direct3D that you will specify a color for each of the 
+vertices.<br>
+<br>
+ The next parameter represents the type of memory management 
+you require. You can trust Direct3D again, and pass D3DPOOL_DEFAULT.<br>
+<br>
+ 
+Lastly, you pass a pointer to your vertex buffer. You may recall that this was 
+defined in our first example, but it went unused.<br>
+<br>
+ Your vertex buffer 
+is useless without filling it with meaningful data:<br>
+<br>
+
+<pre> MYVERTEX *v;<br>
+pStreamData-&gt;Lock(0, 0, (BYTE**)&amp;v, 0);<br>
+
+for(int ii = 0; ii &lt; num_elems; ii++)<br>
+{<br>
+ v[ii].x = vertices[ii].x;
+<br> v[ii].y = vertices[ii].y;<br>
+ v[ii].z = vertices[ii].z;<br>
+ v[ii].rhw = 
+vertices[ii].rhw;<br>
+ v[ii].color = vertices[ii].color;<br>
+}<br>
+
+pStreamData-&gt;Unlock();</pre> This isn&rsquo;t that complicated. Lock returns 
+a pointer to where you can write your vertex data. Next, you copy your vertex 
+data verbatim from your<em>vertices</em> array. Then you give the pointer back. 
+<br> <br>
+ A pair of calls will tell Direct3D about your FVF and set your 
+vertex array as your active vertex array (you can have multiple vertex arrays).
+<br> <br>
+ pID3DDevice-&gt;SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE); <br>
+<br> pID3DDevice-&gt;SetStreamSource(0, pStreamData, sizeof(MYVERTEX)); <br>
+
+<br> These parameters should be obvious. SetVertexShader tells Direct3D to use 
+the same format that was specified in the CreateVertexBuffer call above. Since 
+SetVertexShader and CreateVertexBuffer will use the parameter for the FVF, you 
+can, and should, use a macro to make sure these stay the same.<br>
+<br>
+ 
+SetStreamSource tells Direct3D to use pStreamData as the active vertex array, 
+and gives the size of each element.<br>
+<br>
+ That was easy. You can now add 
+the code to draw a triangle. In between the BeginScene and EndScene calls in 
+the DrawScene function, insert this:<br>
+<br>
+
+<pre> int num_elems = sizeof(vertices) / sizeof(vertices[0]);<br>
+
+pID3DDevice-&gt;DrawPrimitive(D3DPT_TRIANGLELIST,<br>
+ 0,<br>
+ num_elems / 3); 
+</pre> D3DPT_TRIANGLELIST will command Direct3D to draw discrete triangles, 
+with each vertex specified individually. You start at index zero, and specify 
+the number of triangles to draw as the last parameter.<br>
+<br>
+ If everything 
+has been done correctly, you should have a triangle drawn on your previous 
+green background.<br>
+<br>
+<br>
+<strong>Indexed Triangles (d3d3.cpp)</strong> 
+<br> <br>
+ In the above code, you told DirectX to draw straight from the vertex 
+array. The main issues with this are size and, indirectly, speed. Take a cube 
+for example. A cube has eight vertices. Using the above code, you would need to 
+draw 12 triangles, each with three vertices, for a total of 36 vertices in your 
+vertex array. This is more than four times the number of vertices in the cube 
+itself!<br>
+<br>
+ It would be better if you could just list each vertex once 
+and index into this array. This way, you only have to transform eight vertices 
+instead of 36. As it turns out, you can do this.<br>
+<br>
+ First you set up an 
+index buffer. This is the list of indices into the vertex array.<br>
+<br>
+
+<pre> num_elems = sizeof(indices) / sizeof(indices[0]);<br>
+
+pID3DDevice-&gt;CreateIndexBuffer(sizeof(WORD) * num_elems,<br>
+ 
+D3DUSAGE_WRITEONLY,<br>
+ D3DFMT_INDEX16,<br>
+ D3DPOOL_DEFAULT,<br>
+ 
+&amp;pIndexBuffer);</pre> The variable indices is defined as: <br>
+<br>
+ WORD 
+indices[] = { 0, 1, 2 };<br>
+<br>
+ CreateIndexBuffer is similar to your 
+CreateVertexBuffer call above. First you pass the size of the buffer in bytes. 
+Other flags are the same as before; D3DUSAGE_WRITEONLY because you only write 
+to the buffer, D3DPOOL_DEFAULT to use the default memory configuration, and a 
+pointer to receive the interface. D3DFMT_INDEX16 is the only new flag. This 
+simply specifies the size of each element in the buffer. Since<em>indices</em> 
+is defined as WORDs and since a WORD is 16 bits in Windows, you pass 
+D3DFMT_INDEX16. You could pass D3DFMT_INDEX32, but a cube does not need that 
+many indices.<br>
+<br>
+ Next you fill in this buffer, just as you did with the 
+vertex buffers:<br>
+<br>
+
+<pre> WORD *pIndex;<br>
+pIndexBuffer-&gt;Lock(0, 0, (BYTE **)&amp;pIndex, 0);
+<br>for(ii = 0; ii &lt; num_elems; ii++)<br>
+{<br>
+ pIndex[ii] = indices[ii];
+<br>}<br>
+pIndexBuffer-&gt;Unlock(); </pre> <br>
+ You lock the buffer, copy the 
+elements into the buffer, and unlock it. This is the same as before. The second 
+parameter to Lock is supposed to be the count of bytes to lock, but sending 0 
+(which is undocumented) locks the whole buffer.<br>
+<br>
+ Now you set this 
+buffer as our index buffer, and then you can draw:<br>
+<br>
+ 
+pID3DDevice-&gt;SetIndices(pIndexBuffer, 0);<br>
+<br>
+ In your DrawScene 
+function, you can get rid of the DrawPrimitive method in exchange for a 
+DrawIndexedPrimitive method:<br>
+<br>
+
+<pre> pID3DDevice-&gt;DrawIndexedPrimitive(<br>
+ D3DPT_TRIANGLELIST,<br>
+ 0,
+<br> sizeof(indices) / sizeof(indices[0]),<br>
+ 0,<br>
+ sizeof(indices) / 
+sizeof(indices[0]) / 3);</pre> You are still drawing a triangle list as before. 
+You also pass the minimum vertex index used (zero in this case), the number of 
+indices used (three), the index number to start on (zero), and the number of 
+triangles to render (one).<br>
+<br>
+ If all goes well, this program should 
+produce the exact same output as the last one. It&rsquo;s a bit more work, but 
+it is also more scalable.<br>
+<br>
+<br>
+<strong>Adding Texture (d3d4.cpp)
+</strong> <br>
+<br>
+ Texturing is just one of those things that adds so much 
+visual bang for the buck, that is would be ludicrous not to add it. Luckily for 
+us, doing this in DX8 is painless.<br>
+<br>
+ First you add texture coordinates, 
+tu and tv, into your MYVERTEX structure. Then add the appropriate values to 
+your vertices array.<br>
+<br>
+ Next, in your CreateVertexBuffer and 
+SetVertexShader methods, you have a parameter that looks like 
+D3DFVF_XYZRHW|D3DFVF_DIFFUSE. You add D3DFVF_TEX1 to these flags to tell 
+DirectX that you have one set of texture coordinates.<br>
+<br>
+ Add the code to 
+copy tu and tv into the vertex array (between your Lock and Unlock methods).<br>
+<br> DirectX will now draw the texture, but you have to tell it what texture to 
+draw. In your InitDirect3D function, you add:<br>
+<br>
+
+<pre> D3DXCreateTextureFromFile(pID3DDevice,<br>
+ &quot;dx5_logo.bmp&quot;,<br>
+ &amp;pTexture);<br>
+pID3DDevice-&gt;SetTexture(0, pTexture); </pre> Change 
+&quot;dx5_logo.bmp&quot; to whatever bitmap you want to display. Here you are 
+using the D3DX library to build an IDirect3DTexture8 interface. Next you put 
+this texture into stage zero. You can have up to eight stages of textures, but 
+for now, you will just use the one. You could also use the SetTextureStageState 
+to add different features like MIP mapping and bump mapping, but you will just 
+use the default values for now.<br>
+<br>
+ Now you have a texture-mapped 
+triangle.<br>
+<br>
+<br>
+<strong>Using Matrices and Extra Texture Coordinates 
+(d3d5.cpp)</strong> <br>
+<br>
+ It is time to build our cube. Now that you are 
+entering the 3rd dimension (the previous examples were on a single plane), you 
+have to enable your z-buffer. You also have to set up some matrices for model, 
+world, and projection transformations.<br>
+<br>
+ Enabling the z-buffer is 
+fairly easy. In your call to CreateDevice, you must add some extra fields to 
+your D3DPRESENT_PARAMETERS structure:<br>
+<br>
+
+<pre> present.EnableAutoDepthStencil = TRUE;<br>
+
+present.AutoDepthStencilFormat = D3DFMT_D16;</pre> This tells DirectX to use a 
+16 bit z-buffer. Next you call<br>
+<br>
+
+<pre> pID3DDevice-&gt;SetRenderState(D3DRS_ZENABLE, TRUE); </pre> and your 
+z-buffer is set up. Lastly, in your DrawScene function, you must modify the 
+Clear method to clear the z-buffer in addition to the back buffer:<br>
+<br>
+
+<pre> pID3DDevice-&gt;Clear(0,<br>
+ NULL,<br>
+ D3DCLEAR_TARGET | 
+D3DCLEAR_ZBUFFER,<br>
+ D3DCOLOR_RGBA(0,63,0,0),<br>
+ 1.0,<br>
+ 0); </pre> You 
+add the flag D3DCLEAR_ZBUFFER to enable z-buffer clearing, and you pass 1.0 as 
+the fill value for the z-buffer. Now all of your polygons will be drawn 
+correctly.<br>
+<br>
+ Since you will be doing some transformations to your 
+vertices, you can go ahead and remove the extra rhw parameter from your 
+MYVERTEX structure. Remove the values from your vertices array, and the 
+reference between your Lock and Unlock calls. Lastly, change your D3DFVF_XYZRHW 
+references to D3DFVF_XYZ.<br>
+<br>
+ Direct3D has several types of matrices 
+available, but we will use only three: World, View, and Projection. The World 
+transformation will move the cube into world coordinates. The View 
+transformations will move the world into view space. The Projection matrix will 
+scale the world to make it look as if it has depth.<br>
+<br>
+ Now add a call to 
+a new function, BuildMatrices, to your DrawScene function. BuildMatrices will 
+build and activate your three matrices as described above. After you build each 
+matrix, you call SetTransform, passing the matrix itself and the type of matrix 
+it is.<br>
+<br>
+ As an example, we will build a no-op matrix: <br>
+<br>
+
+<pre> D3DXMATRIX matrix;<br>
+D3DXMatrixIdentity(&amp;matrix);<br>
+
+pID3DDevice-&gt;SetTransform(D3DTS_WORLD, &amp;matrix);</pre> As you can see, 
+this fills the matrix structure with an identity matrix, and then tells DirectX 
+to use this as the World transformation. The D3DX library does all the menial 
+work for us.<br>
+<br>
+ In the example program, your model coordinates are 
+already transformed to world coordinates, so you could just leave this code as 
+is. However, this needs a bit of flavor. In your code, start your BuildMatrices 
+function with:<br>
+<br>
+
+<pre> D3DXMATRIX matrix;<br>
+D3DXMatrixRotationY(&amp;matrix, timeGetTime() / 
+1000.0f);<br>
+pID3DDevice-&gt;SetTransform(D3DTS_WORLD, &amp;matrix); </pre> 
+This setup will rotate the cube about the Y-axis. The parameter timeGetTime() / 
+1000.0f is the angle in radians. Doing this will give a smooth constant 
+rotation.<br>
+<br>
+ Now you build the other two matrices: <br>
+<br>
+
+<pre> D3DXMatrixLookAtLH(&amp;matrix,<br>
+ &amp;D3DXVECTOR3(0.0f, 3.0f, -5.0f),
+<br> &amp;D3DXVECTOR3(0.0f, 0.0f, 0.0f),<br>
+ &amp;D3DXVECTOR3(0.0f, 1.0f, 
+0.0f));<br>
+pID3DDevice-&gt;SetTransform(D3DTS_VIEW, &amp;matrix);<br>
+<br>
+
+D3DXMatrixPerspectiveFovLH(&amp;matrix,<br>
+ D3DX_PI / 4,<br>
+ 4.0f / 3.0f, 
+1.0f, 100.0f);<br>
+pID3DDevice-&gt;SetTransform(D3DTS_PROJECTION, &amp;matrix); 
+</pre> D3DXMatrixLookAtLH builds a left-handed view matrix (some textbooks call 
+this the camera). You pass three vectors: the position of the camera, the point 
+you are looking at, and a vector that points up. Then you tell DirectX to use 
+this as the view matrix.<br>
+<br>
+ D3DXMatrixPerspectiveFovLH builds a 
+left-handed projection matrix that uses a variable field of view. D3DX_PI / 4 
+is the field of view in radians, which is 45 degrees. Then you pass the aspect 
+ratio (most monitors are 4:3), and values representing our near and far clip 
+plane. Lastly, you tell DirectX to use this as your projection matrix.<br>
+<br>
+
+ After adding the rest of the vertices to your vertex array, you are ready to 
+go. The result should be a spinning textured cube.<br>
+<br>
+ Note, you are not 
+reusing the vertices as described in example three. This is because you need up 
+to three texture coordinates per vertex and you only have specified the one.<br>
+<br> <br>
+<strong>Full Screen Graphics</strong> <br>
+<br>
+ Okay, windowed 
+programs are great, but most games run full screen. Full screen is not tough at 
+all. All you have to do is build the correct D3DPRESENT_PARAMETERS structure 
+before you call CreateDevice.<br>
+<br>
+
+<pre> D3DPRESENT_PARAMETERS present;<br>
+ZeroMemory(&amp;present, 
+sizeof(present));<br>
+present.SwapEffect = D3DSWAPEFFECT_FLIP;<br>
+
+present.Windowed = FALSE;<br>
+present.BackBufferFormat = d3ddm.Format;<br>
+
+present.BackBufferWidth = d3ddm.Width;<br>
+present.BackBufferHeight = 
+d3ddm.Height;<br>
+present.EnableAutoDepthStencil = TRUE;<br>
+
+present.AutoDepthStencilFormat = D3DFMT_D16;<br>
+
+present.FullScreen_RefreshRateInHz =<br>
+ D3DPRESENT_RATE_DEFAULT;<br>
+
+present.FullScreen_PresentationInterval =<br>
+ D3DPRESENT_INTERVAL_IMMEDIATE; 
+</pre> Here we see that we change the swap effect to flip so that we are page 
+flipping instead of copying the back buffer. You can continue to copy if you 
+wish.<br>
+<br>
+ The back buffer now requires a height and width. We also set 
+the refresh rate and the presentation speed, which is how often to page flip.
+<br> <br>
+ You can exit the example by pressing Alt+F4. <br>
+<br>
+<br>
+<strong>
+Shaders</strong> <br>
+<br>
+ One could write a book on shaders and barely 
+scratch the surface of their power. In DX8, shaders come in two varieties: 
+vertex and pixel.<br>
+<br>
+ Vertex shaders, of course, operate on vertices. You 
+can change position, color, texture coordinate, or any other property of a 
+vertex. This is great for all kinds of procedural effects.<br>
+<br>
+ Pixel 
+shaders operate on pixels and can do all kinds of texture blending, noise 
+generation, or anything else you can think of.<br>
+<br>
+ Shaders do come at a 
+price. They can get expensive if they are complex. But every vertex and pixel 
+passes through a shader at some point, even if the shader is simple. The call 
+you made to SetVertexShader above did just that. Those shaders are simple, and 
+since they are so common, have been optimized.<br>
+<br>
+ A shader script is 
+simply a text file written in a sort of assembly language. Microsoft made no 
+attempt to make it readable, and may result in write-only code (code that even 
+you can&rsquo;t read after you have written it), if you are not careful. The 
+Microsoft documentation has some errors in it, so use it as a guideline rather 
+than a rule. I highly recommend using MFCPixelShader and ShaderCity for shader 
+testing purposes.<br>
+<br>
+<br>
+<strong>Video Playback</strong> <br>
+<br>
+ The 
+Microsoft engineers added the DirectShow API to the main DirectX runtime. There 
+is an interface, IDDrawExclModeVideo, that is supposed to coordinate between 
+DirectShow and exclusive mode apps, but it requires a DirectDraw surface. As 
+you may recall, DX8 has removed DirectDraw.<br>
+<br>
+ It is possible for a 
+video to play while an IDirect3DDevice8 interface is running, so it 
+doesn&rsquo;t seem like you need to query for a DirectDraw interface. This 
+awkward scenario is a big oversight of the DirectX developers.<br>
+<br>
+ 
+Another oddity is that the DirectShow libraries needed to play video must be 
+built by hand. In previous versions of DirectX Media, the DirectShow libraries 
+(the &quot;Base Classes&quot;) included source code as well as the .LIBs needed 
+to link. In DX8, the Base Classes are moved to the Samples folder, and no .LIBs 
+are included. Microsoft does include a VC6 workspace to build these, but you 
+may run into difficulties if you have other SDKs installed (Platform SDK, 
+previous DX Media, etc.).<br>
+<br>
+<br>
+<strong>Conclusion</strong> <br>
+<br>
+ 
+DirectX 8 Graphics are awesome. The rest of DirectX would do well to follow its 
+lead, especially DirectShow. The most glaring problem with DirectX Graphics is 
+its lack of an existing extension mechanism, like OpenGL&rsquo;s glGetString. 
+Otherwise, it is an incredibly mature API, one that I look forward to using for 
+some time. This was simply an introduction, and there is much more to be 
+discovered.<br>
+<br>
+ I&rsquo;d love to hear what people have to say. Drop me a 
+line attjones@hot-shot.com. <br>
+<br>
+<br>
+<strong>A note on the examples
+</strong> <br>
+<br>
+ The examples were built and tested with DirectX 8. When 
+textures and video files were needed, files from the SDK were used. All six 
+examples are included in the sample workspace. There may be some minor changes 
+in order to build with your configuration. <br>
+<br>
+<b>Download attached 
+article resource</b> <br>
+<br>
+<br>
+<br>
+Gaiiden <br>
+Jun 15 2011 08:11 PM <br>
+
+ Table code:<br>
+<br>
+ &lt;table border=&quot;1&quot; cellpadding=&quot;3&quot; 
+cellspacing=&quot;0&quot;&gt;&lt;tbody&gt;&lt;tr valign=&quot;top&quot; 
+bgcolor=&quot;#666699&quot;&gt;&lt;td width=&quot;50%&quot;&gt;&lt;font 
+color=&quot;#FFFFFF&quot;&gt;&lt;b&gt;Direct3D&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;td 
+width=&quot;50%&quot;&gt;&lt;font 
+color=&quot;#FFFFFF&quot;&gt;&lt;b&gt;OpenGL&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr 
+valign=&quot;top&quot;&gt;&lt;td&gt;BeginScene&lt;/td&gt;&lt;td&gt;glBegin&lt;/td&gt;&lt;/tr&gt;&lt;tr 
+valign=&quot;top&quot;&gt;&lt;td&gt;EndScene&lt;/td&gt;&lt;td&gt;glEnd&lt;/td&gt;&lt;/tr&gt;&lt;tr 
+valign=&quot;top&quot;&gt;&lt;td&gt;DrawPrimitive&lt;/td&gt;&lt;td&gt;glDrawElements&lt;/td&gt;&lt;/tr&gt;&lt;tr 
+valign=&quot;top&quot;&gt;&lt;td&gt;SetRenderState&lt;/td&gt;&lt;td&gt;glEnable&lt;/td&gt;&lt;/tr&gt;&lt;tr 
+valign=&quot;top&quot;&gt;&lt;td&gt;SetTexture&lt;/td&gt;&lt;td&gt;glBindTexture&lt;/td&gt;&lt;/tr&gt;&lt;tr 
+valign=&quot;top&quot;&gt;&lt;td&gt;Clear&lt;/td&gt;&lt;td&gt;glClear&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+<ul> 
+<li> </li> </ul> Compare Revision Date Title Editor <br>
+<b>2</b> Jun 15 2011 
+08:10 PM <strong>DirectX 8 Graphics and Video: A Fresh Start</strong>  Gaiiden 
+<br> <b>1</b> Jun 15 2011 07:59 PM <strong>DirectX 8 Graphics and Video: A 
+Fresh Start</strong>  Gaiiden <br>
+<br>
+<br>
+<br>
+<strong>Developing a Mobile 
+Application with Flash</strong> 
+<ul> 
+<li>5 comments</li> 
+<li>3934 views</li> </ul> <br>
+<strong>Video Game Localisation - A Tricky Game
+</strong> 
+<ul> 
+<li>3 comments</li> 
+<li>7344 views</li> </ul> <br>
+<strong>Comparing Shadow Mapping Techniques 
+with Shadow Explorer</strong> 
+<ul> 
+<li>7 comments</li> 
+<li>10309 views</li> </ul> <br>
+<strong>New Incentives and a Whole New 
+Platform From The Intel AppUp developer program</strong> 
+<ul> 
+<li>0 comments</li> 
+<li>4741 views</li> </ul> <br>
+<strong>Autodesk Previews a Games Production 
+Solution</strong> 
+<ul> 
+<li>1 comments</li> 
+<li>8684 views</li> </ul> <br>
+<strong>3D in Photoshop: The Ultimate Guide for 
+Creative Professionals</strong> 
+<ul> 
+<li>7 comments</li> 
+<li>25871 views</li> </ul> <br>
+<strong>Getting your app on Intel AppUp: 
+Porting &quot;Ancient Frog&quot;</strong> 
+<ul> 
+<li>2 comments</li> 
+<li>6301 views</li> </ul> <br>
+<strong>Why AppUp? A Quick Review of the AppUp 
+Model</strong> 
+<ul> 
+<li>0 comments</li> 
+<li>103 views</li> </ul> <br>
+<strong>The Game Maker's Companion</strong> 
+<ul> 
+<li>0 comments</li> 
+<li>308 views</li> </ul> <br>
+<strong>Interview with Firelight Technologies
+</strong> 
+<ul> 
+<li>1 comments</li> 
+<li>918 views</li> </ul> <br>
+<strong>Learning iOS Game Programming</strong> 
+<ul> 
+<li>0 comments</li> 
+<li>678 views</li> </ul> <br>
+<strong>Real-Time Dynamic Fur on the GPU</strong>
+<ul> 
+<li>11 comments</li> 
+<li>425 views</li> </ul> <br>
+<strong>A Super Simple Method for Creating 
+Infinite Scenery</strong> 
+<ul> 
+<li>0 comments</li> 
+<li>354 views</li> </ul> <br>
+<strong>A Type-safe Generic Pointer</strong> 
+<ul> 
+<li>11 comments</li> 
+<li>173 views</li> </ul> <br>
+<strong>A Collection of Examples of 64-bit 
+Errors in Real Programs</strong> 
+<ul> 
+<li>11 comments</li> 
+<li>230 views</li> </ul> <br>
+<br>
+
+<ul> 
+<li></li> 
+<li></li> 
+<li> <br>
+</li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> <br>
+<br>
+
+<ol> 
+<li> &raquo; Articles </li> 
+<li> &raquo; Technical </li> 
+<li> &raquo; DirectX and XNA </li> 
+<li> &raquo; Article: DirectX 8 Graphics and Video: A Fresh Start </li> </ol> 
+<ul> 
+<li> </li> 
+<li> Mark Community Read 
+<ul> 
+<li> </li> 
+<li> Forums </li> 
+<li> Developer Journals </li> 
+<li> Gallery </li> 
+<li> Downloads </li> 
+<li> Resources </li> 
+<li> Store </li> 
+<li> Classifieds </li> 
+<li> Tracker </li> 
+<li> <strong>Mark all as read</strong> </li> </ul> </li> 
+<li> Help </li> </ul>  PARTNERS <br>
+<br>
+<br>
+<br>
+<br>
+ Copyright &copy; 
+1999-2012 GameDev.Net LLC
+<p><br>
+GameDev.net&trade;, the GameDev.net logo, and GDNet&trade; are 
+trademarks of GameDev.net, LLC</p> 
+<h5>Navigation</h5> 
+<ul> 
+<li>Home</li> 
+<li>Features</li> 
+<li>Community</li> 
+<li>Resources</li> 
+<li>Careers</li> </ul> 
+<h5>Customer Service</h5> 
+<ul> 
+<li>GDNet+ Subscriptions</li> 
+<li>Job Advertising</li> 
+<li>Terms of Service</li> 
+<li>Privacy Policy</li> </ul> 
+<h5>Company Info</h5> 
+<ul> 
+<li>About Us</li> 
+<li>Advertise on Gamedev.net</li> 
+<li>Contact Us</li> </ul> <br>
+<br>
+<br>
+
+</body>

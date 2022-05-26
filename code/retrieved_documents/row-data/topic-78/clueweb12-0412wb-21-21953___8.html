@@ -1,0 +1,194 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Optimizing Sort Algorithms For The PS3 Part 5 (Parallel Sort On 2 SPUs) by Pierre-Andre Saulais - Codeplay.com</title>
+<body>
+Login or Register <br>
+
+<ul> 
+<li>Home</li> 
+<li>Games</li> 
+<li>Compilers</li> 
+<li>Company</li> 
+<li>Support</li> </ul> 
+<ul> 
+<li>Codeplay</li> 
+<li>Academia</li> 
+<li>Blogs</li> 
+<li>Team</li> 
+<li>Documents</li> 
+<li>Publications</li> 
+<li>Partners</li> 
+<li>Jobs</li> 
+<li>Media</li> 
+<li>Contact Us</li> </ul> 
+<ul> 
+<li>  Pierre-Andre Saulais <br>
+ Research Student </li> 
+<li>Codeplay Bloggers</li> 
+<li> </li> 
+<li>Similar Blogs</li> 
+<li>The New Website</li> 
+<li>Offload&trade; Feedback</li> 
+<li>Codeplay Launches Offloa..</li> 
+<li>Offload&trade; compiler ..</li> 
+<li>Codeplay sets out to wre..</li> </ul> 
+<ul> 
+<li>Pierre-Andre Saulais's Blogs</li> </ul>  &raquo;  Optimizing Sort 
+Algorithms for the PS.. Tweet <br>
+
+<h1>Optimizing Sort Algorithms For The PS3 Part 5 (Parallel Sort On 2 SPUs)
+</h1> 
+<h4>Posted on Monday 11th of July 2011 10:31:22 AM.</h4> <br>
+
+<p>Sorting is a simple but important concept for implementing games. For 
+example, sorting transparent objects before rendering or sorting objects by 
+state attribute (e.g. texture) to improve batching. Because of the way most 
+algorithms work (comparing and swapping pairs of items) sorting often takes 
+precious time. With multi-core architectures like the PS3 it makes sense to 
+parallelize this operation to maximize the use of these cores.</p> 
+<p>In the previous part we have started running these implementations on a SPU 
+to improve performance even further. In this part we will run our sort 
+functions on multiple SPUs and create a parallel sort implementation. However 
+we will have to address the array size limitation.</p> 
+<h2>Quick Links</h2> 
+<p>Part 1 (Quicksort)</p> 
+<p>Part 2 (Merge)</p> 
+<p>Part 3 (Merge Sort)</p> 
+<p>Part 4 (Offloading on 1 SPU)</p> 
+<p>Part 5 (Parallel Sort on 2 SPUs)</p> 
+<p>Part 6 (Final Optimizations)</p> 
+<p>The entire series is also available as a single PDF document.</p> 
+<h2>Queuing Offload&trade; Blocks</h2> 
+<p>The function we use to offload sorting on 1 SPU (sortOffloadedLocalMem) is 
+blocking, which means that the PPU is blocked while the SPU is sorting the 
+array. We have to change this function if we want to use it in a parallel 
+merge, because we need multiple SPUs to work at the same time. This can be done 
+with the __offload keyword and a simple queue:</p> 
+<pre>template&lt;typename T&gt; void sortChunkQueued(T *data, size_t start, 
+size_t end, ThreadQueue *queue) { size_t count = (end - start + 1); if(count 
+&lt; 2) return; // wait until the number of active blocks is less than the 
+maximum number // try to join blocks in the queue and remove the ones that are 
+finished queue-&gt;waitForSlot(); // execute the block on a SPU and immediately 
+return an execution handle offloadThread_t handle = __offload(data, start, end, 
+count) { size_t size = count * sizeof(T); if(count &lt;= MAX_SPU_ARRAY_COUNT) { 
+AlignedT copy[MAX_SPU_ARRAY_COUNT]; __builtin_memcpy(copy, data + start, size); 
+mySort(copy, 0, count - 1); __builtin_memcpy(data + start, copy, size); } else 
+{ printf(&quot;Error: array size (%d) exceeds maximum size (%d)\n&quot;, count, 
+MAX_SPU_ARRAY_COUNT); } }; // add the block's execution handle to the queue 
+queue-&gt;enqueue(handle); }</pre> 
+<p>Executing an __offload block returns a handle which can be used to wait 
+until the block has been executed. The ThreadQueue class (not part of Offload) 
+can be used to enqueue multiple blocks and join (i.e. wait for) them 
+afterwards. The number of concurrent blocks can be specified in the 
+constructor. In that case waitForSlot() should be called before enqueueing a 
+block). In simple cases an array of handles could be used, but ThreadQueue is 
+easier to use with recursive functions.</p> 
+<p>Doing two sorting operations on different SPUs at the same time is then 
+quite easy:</p> 
+<pre>T *array1, array2; size_t size1, size2; ThreadQueue queue; 
+sortQueued(array1, 0, size1 - 1, &amp;queue); sortQueued(array2, 0, size2 - 1, 
+&amp;queue); queue.joinAllThreads();</pre> 
+<h2>Parallel Sort on 2 SPUs</h2> 
+<p>Now that we can execute code on multiple SPUs at the same time, we can 
+start designing our parallel sort implementation. But we still need to address 
+the array size limitation on the SPU. The easiest solution would be to divide 
+the array into chunks that can fit in SPU memory and then merge them on the 
+PPU. Recall how recursive merge sort is implemented:</p> 
+<pre>template&lt;typename T&gt; void mergeSort(T *data, T *temp, size_t start, 
+size_t end) { size_t count = end - start + 1; if(count &lt; 2) return; // 
+divide the array to sort into two parts and sort them size_t mid = (start + 
+end) / 2; mergeSort(data, temp, start, mid); mergeSort(data, temp, mid + 1, 
+end); // merge two parts (data) into one (temp) merge(temp + start, data, 
+start, mid, data, mid + 1, end); // copy one part from temp to data 
+__builtin_memcpy(data + start, temp + start, (end - start + 1) * sizeof(T)); }
+</pre> 
+<p>By substituting the function that sorts small chunks by the sortChunkQueued 
+function we have seen earlier, and the threshold byMAX_SPU_ARRAY_COUNT we have 
+a working parallel sort implementation. The only other required change is to 
+join the blocks we have enqueued before merging the two sorted halves of the 
+array (otherwisemerge could access arrays still being sorted).</p> 
+<pre>template&lt;typename T&gt; void parallelSort(T *data, T *temp, size_t 
+start, size_t end, ThreadQueue *queue) { size_t count = end - start + 1; 
+if(count &lt;= MAX_SPU_ARRAY_COUNT) { sortChunkQueued(data, start, end, queue); 
+return; } // divide the array to sort into two parts and sort them size_t mid = 
+(start + end) / 2; parallelSort(data, temp, start, mid, queue); 
+parallelSort(data, temp, mid + 1, end, queue); queue-&gt;joinAllThreads(); // 
+merge two parts (data) into one (temp) merge(temp + start, data, start, mid, 
+data, mid + 1, end); // copy one part from temp to data __builtin_memcpy(data + 
+start, temp + start,(end - start + 1) * sizeof(T)); } template&lt;typename 
+T&gt; void parallelSort(T *data, size_t count) { // nothing to sort if(count 
+&lt; 2) return; ThreadQueue queue; T *temp = (T *)memalign(16, count * 
+sizeof(T)); if(!temp) { FAILED_MALLOC(&quot;temp&quot;); return; } 
+parallelSort(data, temp, 0, count - 1, &amp;queue); free(temp); }</pre> 
+<p>This implementation behaves identically to the sequential one, except that 
+when the size of the array gets small enough, sorting is offloaded on a SPU. 
+Since there are two recursive calls in parallelSort and the blocks have to be 
+joined right after that, at most two blocks will be executing in parallel on 
+SPUs. This effectively limits this implementation to use at most 2 SPUs.</p> 
+<h2>Results</h2> 
+<p>&nbsp;</p> 
+<p>20K floats</p> 
+<p>20K ints</p> 
+<p>64K floats </p> 
+<p>64K ints</p> <br>
+
+<p>Quicksort (PPU)</p> 
+<p>4.7 ms</p> 
+<p>2.1 ms</p> 
+<p>16.8 ms</p> 
+<p>7.1 ms</p> <br>
+
+<p>Quicksort (1 SPU)</p> 
+<p>3.1 ms</p> 
+<p>3.1 ms</p> 
+<p>&ndash;</p> 
+<p>&ndash;</p> <br>
+
+<p>Parallel quicksort (2 SPU)</p> 
+<p>3.1 ms</p> 
+<p>3.1 ms</p> 
+<p>6.2 ms</p> 
+<p>5.9 ms</p> <br>
+
+<p>Merge sort (PPU)</p> 
+<p>2.8 ms</p> 
+<p>2.4 ms</p> 
+<p>10.8 ms</p> 
+<p>9.6 ms</p> <br>
+
+<p>Merge sort (1 SPU)</p> 
+<p>1.2 ms</p> 
+<p>1.2 ms</p> 
+<p>&ndash;</p> 
+<p>&ndash;</p> <br>
+
+<p>Parallel merge sort (2 SPU)</p> 
+<p>1.2 ms</p> 
+<p>1.2 ms</p> 
+<p>3.5 ms</p> 
+<p>3.3 m</p> <br>
+<br>
+
+<p>The results for this implementation can be seen in the table above. The 
+performance for sorting 20K floats and 20K ints on 2 SPUs is similar to 1 SPU, 
+which is reasonable since this is the threshold for offloading instead of doing 
+another level of recursion. However, we see ~3x speed-ups over PPU when sorting 
+&gt;20K arrays using merge sort (the speed-ups with quicksort are not as good). 
+In addition, despite using the vectorized merge function presented earlier in 
+the series, we do not see any significant difference in performance between 
+sorting floats on integers on the SPU.</p> 
+<p>In the next and last post in the series we will see how to improve our 
+parallel sort so that it can run on 4 SPUs instead of 2. In addition, we will 
+show how to parallelize merge to run on any number of SPUs which will improve 
+performance even further.</p> 
+<p>&nbsp;</p> 
+<h1>Comments</h1> <b>Copyright 2002 - 2012 Codeplay Software Ltd.</b> <br>
+<b>
+All Rights Reserved.</b> <br>
+<i>&quot;PlayStation&reg;&quot; is a registered 
+trademark, and &quot;Cell Broadband Engine&quot; is a trademark of Sony 
+Computer Entertainment Inc.</i> <b>Tel:</b> +44 131 466 0503 <br>
+<b>Email:</b> 
+info@codeplay.com <br>
+<b>VAT:</b> GB 802 8335 47 
+</body>

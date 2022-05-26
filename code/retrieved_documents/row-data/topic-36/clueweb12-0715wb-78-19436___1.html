@@ -1,0 +1,258 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Eclipse Tooling for JavaFX Project</title>
+<body>
+
+<ul> 
+<li>jump to navigation (press enter).</li> 
+<li>jump to content (press enter).</li> 
+<li>jump to additional (press enter).</li> </ul> <br>
+<br>
+Welcome 
+<ul> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li>
+<h5>Follow us</h5></li> </ul> <br>
+
+<ul> 
+<li> Home 
+<ul> 
+<li> News </li> 
+<li> Videos </li> 
+<li> Books </li> 
+<li> Events </li> 
+<li> Java Tech Journal </li> </ul> </li> </ul> 
+<ul> 
+<li> Home <br>
+</li> 
+<li> News <br>
+</li> 
+<li> Java <br>
+</li> 
+<li> Editors Pick </li> 
+<li> Eclipse </li> 
+<li> Android </li> 
+<li> Architecture </li> 
+<li> Cloud </li> 
+<li> Agile </li> 
+<li> Series </li> </ul> 
+<ul> 
+<li> 
+<h5>java</h5> 
+<h2> New Java spec request for Social Media API </h2> </li> 
+<li> 
+<h5>java</h5> 
+<h2> First version of GroovyFX arrives </h2> </li> 
+<li> 
+<h5>java</h5> 
+<h2> NetBeans IDE 7.1.1 is here, quick to support &hellip; </h2> </li> 
+<li> 
+<h5>eclipse</h5> 
+<h2> Polarsys Interview Series - Thales' Benoit &hellip; </h2> </li> 
+<li> 
+<h5>eclipse</h5> 
+<h2> Browser-based IDE Eclipse Orion gets 0.4 &hellip; </h2> </li> </ul> <br>
+
+<h2>New e(fx)clipse Project</h2> 
+<h3>Eclipse Tooling for JavaFX Project </h3> 
+<p></p> 
+<h3> Tom Schindl </h3> 
+<h3> </h3> 
+<p>Tom is cofounder and CEO of a software company named BestSolution.at 
+located in Tyrol, Austria, Europe which provides consulting as well as contract 
+services on Eclipse Technologies. Tom is committer on various Eclipse.org 
+projects including central ones like Platform UI and e4. Tom was one of the 
+people who wrote the first Prototype of what today became the &quot;Eclipse 4.x 
+Application Platform&quot; the next generation of the Eclipse SDK is built on. 
+He's a regular speaker at Eclipse and Java related conferences and events.</p> 
+<p>Earlier this week, Tom Schindl blogged about the  first release of a new 
+project that provides Eclipse Tooling for JavaFX projects, 'e(fx)clipse.' 
+JAXenter spoke to Tom Schindl about what niche he's aiming to fill with 
+e(fx)clipse, and what the future might hold for this new project.</p> 
+<p><strong>JAXenter:</strong> You recently announced a new project: 
+e(fx)clipse. Can you give us an introduction to e(fx)clipse?</p> 
+<p><strong>Tom Schindl:</strong> Before talking a bit about e(fx)clipse I 
+think it is important to understand how e(fx)clipse came into existence. Some 
+people might know that I'm part of the Eclipse 4 development team which is 
+working on the next generation of the Eclipse SDK.</p> 
+<p>At first I didn't start with what I later called e(fx)clipse but with the 
+target to teach myself how I can create a DSL using theXtext 2.0 framework 
+released as part of Eclipse Indigo, and was searching for a medium complex 
+problem with a practical relevance.</p> 
+<p>At the same time I was working on a proof of concept to make the Eclipse 4 
+Application Platform using JavaFX as a UI-Library instead ofSWT, and so I had 
+to edit JavaFX specific CSS-Files and missed an editor for the vendor 
+extensions. It was a fortunate coincidence because now I had a practical use 
+case for teaching myself a DSL.</p> 
+<p>I think this bit of history is important when proceeding to talk about 
+e(fx)clipse and what the future holds for it, because there's currently no 
+commercial, or whatever, hidden agenda.</p> 
+<p>I naturally welcome if a company thinks that a free and open source Eclipse 
+Tooling for JavaFX 2.0 is needed to make it a success - leaving a big community 
+like the one using Eclipse is probably not ideal! - but I don't have problems 
+proceeding with it in my spare time because it provides enough technical fun 
+that I'll keep going.</p> 
+<p>Anyways, what do I think e(fx)clipse is, and what could it provide:</p> 
+<p>e(fx)clipse's main target is to provide tooling to author JavaFX 2.0 
+applications using the Eclipse IDE, so that developers currently using Eclipse 
+as their primary IDE do not have to switch to e.g. NetBeans to get tooling 
+support when they want to develop applications using this new UI-Toolkit.</p> 
+<p>Because JavaFX 2.0 applications can be authored with a mixture of Java (or 
+any other JVM-Language) and CSS, and Eclipse provides excellent Java-Tooling 
+out of the box, the most important missing feature is a CSS-Editor who 
+understands the CSS-Extension used by JavaFX 2.0.</p> 
+<p>Another interesting fact is that I don't want e(fx)clipse to stop on the 
+tooling front but also provide a runtime framework which supports developers 
+writing medium to big modular JavaFX applications.</p> 
+<p>The idea is to leverage the runtime platform used by Eclipse 4.1 named 
+&quot;Eclipse 4 Application Platform&quot; to provide such a runtime layer. 
+I've already shown in proof of concept implementations that the runtime 
+platform used by Eclipse 4.1 can be used by none SWT-UI applications, so 
+technically it is possible.</p> 
+<p><strong>JAXenter:</strong> Can you give us some potential use cases for an 
+Eclipse Tooling for JavaFX?</p> 
+<p><strong>Tom:</strong> The target audience of the tooling part are naturally 
+all developers who use Eclipse today to develop all kinds of Java-Applications 
+(e.g. WTP, Virgo-Tooling, ...) and don't want to switch to another IDE to 
+author their JavaFX-UIs, which would contradict the idea of an IDE a bit.</p> 
+<p>The target audience of the runtime framework are developers who want to 
+write modular JavaFX applications using a modern software architecture 
+including OSGi, Dependency Injection and central application model. As far as I 
+know there's no such framework available as of now, and it simply makes sense 
+to leverage this solid application framework outside the Eclipse SDK project, 
+instead of reinventing and reintegrating those technologies.</p> 
+<p><strong>JAXenter:</strong> What functionality is already available in the 
+0.0.1 release?</p> 
+<p><strong>Tom:</strong> The only real feature the 0.0.1 release provides is 
+an CSS-Editor which currently provides, besides the default CSS 2.1 attributes, 
+those defined by JavaFX. There is some preliminary support for attribute values 
+but it's not really sophisticated as of now.</p> 
+<p><strong>JAXenter:</strong> What's the next step for the e(fx)clipse project?
+</p> 
+<p><strong>Tom:</strong> From a feature point of view:</p> 
+<p>0.0.2: Will bring better attribute value proposal support</p> 
+<p>0.0.3: Will bring validation support, improved outline view</p> 
+<p>0.0.4: Will focus on e(fx)clipse runtime on top of the &quot;Eclipse 4 
+Application Platform&quot; (the current biggest problem here is JavaFX itself 
+because it is not designed with strong modularity, as defined by OSGi, in mind)
+</p> 
+<p>Out of scope for now is e.g. a WYSIWYG-Editor, which could be built in 
+theory on top of WindowBuilder. It would require a big investment because - at 
+least I - would have to make myself familiar with the WindowBuilder codebase.
+</p> 
+<p>Another interesting idea would be to develop a DSL using Xtext to author 
+JavaFX applications, together with the XBase and Xtend2 introduced with Xtext 
+2.0, this could lead to slick DSL integrated tightly into Eclipse and Java.</p> 
+<p>From a project organization point of view:</p> 
+<p>I currently plan to move the Core CSS-Editor codebase to the e4 project 
+because Eclipse 4.x application developers currently face the same problem 
+JavaFX devs do in Eclipse: They'll have to author CSS-Files with vendor 
+specific extensions but have no tooling.</p> 
+<p>Because I'm currently the one responsible for the Eclipse 4.x Tooling it 
+makes sense to move the core over to Eclipse.org and proceed with the 
+development of the core there.</p> 
+<p>The e(fx)clipse code will be developed outside Eclipse.org on my personal 
+github repository.</p>  Jessica Thornsby 
+<p> Did you like this article? Please leave a comment or recommend the article.
+</p>  Jessica Thornsby 
+<p> 1309471200 July 01, 2011 </p> 
+<ul> 
+<li> Share </li> 
+<li> Tweet </li> 
+<li> <br>
+</li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> </ul> 
+<ul> 
+<li> Share </li> 
+<li> Tweet </li> 
+<li> <br>
+</li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> 
+<li> </li> </ul> 
+<h4>Links</h4> 
+<h3>related</h3> 
+<h4>News</h4> 
+<ul> 
+<li> RabbitMQ Comes to Cloud Foundry </li> 
+<li> JavaFX Plugin for Eclipse 1.3.1 </li> 
+<li> New Eclipse Tooling for JavaFX Project </li> 
+<li> Exadel JavaFX Plugin for Eclipse 1.3.2 </li> 
+<li> JavaFX Plugin For Eclipse </li> </ul> <br>
+
+<h2>What do you think?</h2> <br>
+
+<p> </p> 
+<p> </p> <br>
+<br>
+
+<h4>News</h4> 
+<h4>Most Read News</h4> 
+<h4>Today</h4> 
+<ul> 
+<li> VMware joins the Cloud Industry Forum </li> 
+<li> Rebel with A Cause: Interview with&hellip; </li> 
+<li> Typesafe release Akka 2.0 - a&hellip; </li> 
+<li> Browser-based IDE Eclipse Orion gets 0.4&hellip; </li> 
+<li> Java 7: The Top 8 Features </li> </ul> 
+<h4>Past Week</h4> 
+<ul> 
+<li> VMware joins the Cloud Industry Forum </li> 
+<li> Browser-based IDE Eclipse Orion gets 0.4&hellip; </li> 
+<li> Typesafe release Akka 2.0 - a&hellip; </li> 
+<li> SpringSource announces Scala DSL for&hellip; </li> 
+<li> CloudBees founder Sacha Labourey talks&hellip; </li> </ul> 
+<h4>Past Month</h4> 
+<ul> 
+<li> VMware joins the Cloud Industry Forum </li> 
+<li> Java 7: The Top 8 Features </li> 
+<li> PrimeFaces angered over copycat Icefaces&hellip; </li> 
+<li> Last Java EE 7 JSR filed with WebSocket&hellip; </li> 
+<li> Oracle gives Java 6 extended period of&hellip; </li> </ul> <br>
+
+<h2>Comments</h2> 
+<h3>Latest opinions</h3> <br>
+
+<h2>Videos</h2> 
+<h3>Most Viewed Videos</h3> 
+<h4>Most Popular</h4> <br>
+
+<h5> Continuous Integration With Jenkins </h5> <br>
+
+<h5> BonitaSoft CEO Miguel Vald&eacute;s Faura discusses the future for BPM 
+and Java </h5> <br>
+
+<h5> Mik Kersten JAXconf 2011 </h5> 
+<h4>Latest</h4> <br>
+
+<h5> Mike Lazaridis Blackberry founder - &quot;We've let many of you down&quot;
+</h5> <br>
+
+<h5> Game development in iOS SDK </h5> <br>
+
+<h5> How to get Facebook Notifications faster on Android with a Blackberry 
+</h5>  &copy; 1995&acirc;&#128;&#147;2012 S&amp;S Media Group. Reproduction 
+only with permission of the publisher 
+<ul> 
+<li> Privacy Policy </li> 
+<li> Advertise </li> 
+<li> Contact </li> 
+<li> Terms of use </li> 
+<li> Sitemap </li> 
+<li> RSS </li> 
+<li> Authors </li> 
+<li> Newsletter </li> </ul> 
+<p>Oops! That didn't work...</p> <br>
+<br>
+<br>
+
+</body>

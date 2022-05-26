@@ -1,0 +1,72 @@
+for example, sorting transparent objects before rendering or sorting objects by state attribute (e.g. texture) to improve batching.
+for example, our parallel merge sort (with parallel merge) implementation sees 7-11x speed-ups for float and int arrays >40k on 4 spus.
+- lowx + midy - lowy; to[midto] = fromx[midx]; //  merge x[lowx ..
+with one level of  recursion and dividing the array in half each time we are limited to using 2  spus in parallel.
+the entire series is also available as a single pdf document.
+these speed-ups come from “unrolling” one  recursion level.
+then these two items divide each array into two parts that can be merged independently.
+part 4 (offloading on 1 spu) part 5 (parallel sort on 2 spus) part 6 (final optimizations)
+the algorithm would be the same, only with “unrolling” one level of recursion.
+in this part we willimprove it so that it can run on 4 spus instead of 2.
+part 1 (quicksort) part 2 (merge) part 3 (merge sort) part 4 (offloading on 1 spu) part 5 (parallel sort on 2 spus) part 6 (final optimizations) the entire series is also available as a single pdf document.
+all speed-ups are over our optimized merge sort running on the ppu.
+midy - 1] parallelmerge(to, fromx, lowx, midx - 1, fromy, lowy, midy - 1, lowto, q); // and x[midx + 1 ..
+midx - 1] with y[lowy ..
+when it comes to face arrays >16k we see 2-2.3x speed-ups with 2 spus and 3.6-4.5x speed-ups with 4 spus (see below for tables and plots of the results).
+in the previous part we have created a parallel sort implementation that runs on 2 spus.
+with offload™ we can enqueue more blocks than there are spus but some spus will be idle at the end: if we enqueue 8 blocks, 6 will be processed in parallel at the same time and when they have been sorted the last 2 blocks will be processed.
+it  turns out that merge can also be parallelized[1].
+at each recursion level we are left with 4 sorted array  parts.
+*temp, threadqueue *queue) { // divide the data array into (nearly) equal parts const size_t parts = 4; size_t partsize[parts], partstart[parts], partend[parts]; size_t current = 0, left = count; for(int i = 0; i  max_spu_array_count) { parallelsort(data + partstart[0], partsize[0], temp, queue); parallelsort(data + partstart[1], partsize[1], temp, queue); parallelsort(data + partstart[2], partsize[2], temp, queue); parallelsort(data + partstart[3], partsize[3], temp, queue); } else { sortchunkqueued(data, partstart[0], partend[0], queue); sortchunkqueued(data, partstart[1], partend[1], queue); sortchunkqueued(data, partstart[2], partend[2], queue); sortchunkqueued(data, partstart[3], partend[3], queue); } // parts must have been sorted before merging queue->joinallthreads(); // merge four parts (data) into two (temp) merge(temp + partstart[0], data, partstart[0], partend[0], data, partstart[1], partend[1]); merge(temp + partstart[2], data, partstart[2], partend[2], data, partstart[3], partend[3]); // merge two parts (temp) into one (data) merge(data, temp, partstart[0], partend[1], temp, partstart[2], partend[3]); } without going into details, when sorting >20k arrays with merge sort we see 3.4-4.8x speed-ups.
+and independently means we can  easily parallelize it: template void parallelmerge(t *to, const t *fromx,  size_t lowx, size_t highx, const t *fromy, size_t lowy, size_t highy, size_t  lowto, threadqueue *q) { size_t lengthx =
+with multi-core architectures like the ps3 it makes sense to parallelize this operation to maximize the use of these cores.
+and independently means we can easily parallelize it: template void parallelmerge(t *to, const t *fromx, size_t lowx, size_t highx, const t *fromy, size_t lowy, size_t highy, size_t lowto, threadqueue *q) { size_t lengthx =
+16k faces 64k floats 64k ints std::sort 8.4 ms 12.0 ms 7.0 ms quicksort (ppu) 9.4 ms 17.7 ms 7.2 ms parallel quicksort (2 spu) with sequential merge 6.5 ms 6.1 ms 6.1 ms parallel quicksort (4 spu) with sequential merge 5.4 ms 4.1 ms 4.0 ms parallel quicksort (2 spu) with parallel merge (6 spu) 5.5 ms 5.4 ms 5.4 ms parallel quicksort (4 spu) with parallel merge (6 spu) 3.6
+parallel sort on 4 spus as we have seen, the recursive structure of our parallel sort  implementation limits the number of spus we can use.
+with  offload™ we can enqueue more blocks than there are spus but some spus  will be idle at the end: if we enqueue 8 blocks, 6 will be processed in  parallel at the same time and when they have been sorted the last 2 blocks will  be processed.
+if we divided the array in four parts we could use 4 spus.
+sortchunkqueued(data,  partstart[1], partend[1], queue); sortchunkqueued(data, partstart[2],  partend[2], queue); sortchunkqueued(data, partstart[3], partend[3], queue); }  // parts must have been sorted before merging queue->joinallthreads(); //  merge four parts (data) into two (temp) merge(temp + partstart[0], data,  partstart[0], partend[0], data, partstart[1], partend[1]); merge(temp +  partstart[2], data, partstart[2], partend[2], data, partstart[3], partend[3]);  // merge two parts (temp) into one (data) merge(data, temp, partstart[0],  partend[1], temp, partstart[2], partend[3]); } without going into details, when sorting >20k arrays with merge sort we  see 3.4-4.8x speed-ups.
+on the other hand, the parallel quicksort (with parallel merge) sees 5-6x speed-ups (over merge sort) on the same face arrays.
+the idea is to take the median of the left array (the middle element since the array is sorted) and look in the right array for an item that is smaller than the median (this is fast since the array is sorted).
+- lowx + midy - lowy; to[midto] = fromx[midx]; // merge x[lowx ..
+note that now  we don't need to copy back temp into data: template void parallelsort(t *data, size_t count,  alignedt *temp, threadqueue *queue) { // divide the data array into (nearly)  equal parts const size_t parts = 4; size_t partsize[parts], partstart[parts],  partend[parts]; size_t current = 0, left = count; for(int i = 0; i  max_spu_array_count) { parallelsort(data +  partstart[0], partsize[0], temp, queue); parallelsort(data + partstart[1],  partsize[1], temp, queue); parallelsort(data + partstart[2], partsize[2], temp,  queue); parallelsort(data + partstart[3], partsize[3], temp, queue); } else {  sortchunkqueued(data, partstart[0], partend[0], queue);
+sorting is a simple but important concept for implementing games.
+one major part of our sort implementation remains sequential: merging.
+; // copy the median size_t midto =
+when sorting >20k arrays with merge sort on 4 spus we see 6-11x speed-ups for float arrays and 5-10x speed-ups for int arrays over the ppu implementation.
+highx] with y[midy .. highy] parallelmerge(to, fromx, midx + 1, highx, fromy, midy, highy, midto + 1,q); } in this code, the mergequeued function is similar to the sortchunkqueued function we have seen earlier.
+these plots compare the performance of the different sort implementations we have presented in the series as well as stl's.
+the idea is to take the  median of the left array (the middle element since the array is sorted) and  look in the right array for an item that is smaller than the median (this is  fast since the array is sorted).
+at each recursion level we are left with 4 sorted array parts.
+when sorting faces the speed-ups are lower (~4x).
+parallel merge one major part of our sort implementation remains sequential: merging.
+doing this again (i.e. dividing the array into 8 parts) would  be possible, unfortunately only 6 out of the ps3's 8 spus can be used.
+as we have seen, the recursive structure of our parallel sort implementation limits the number of spus we can use.
+[1] http://dzmitryhuba.blogspot.com/2010/10/parallel-merge-sort.html
+in this blog post series we have explained the process of creating a parallel sort implementation on the ps3's spus.
+it allocates spu memory for all arrays, copy the  data from ppu to spu, merge both arrays and copies the result back to the ppu  once finished.
+the algorithm would be the same, only with “unrolling” one  level of recursion.
+with float and integer arrays the speed-ups are lower (~4x over merge sort).
+midy - 1] parallelmerge(to, fromx,  lowx, midx - 1, fromy, lowy, midy - 1, lowto, q); // and x[midx + 1 ..
+interestingly, different sort algorithms perform differently with different data types.
+thus it is not any faster than sorting 4 blocks on 4 spus.
+highx]  with y[midy .. highy] parallelmerge(to, fromx, midx + 1, highx, fromy, midy,  highy, midto + 1,q); } in this code, the mergequeued function is similar to the sortchunkqueued  function we have seen earlier.
+with one level of recursion and dividing the array in half each time we are limited to using 2 spus in parallel.
+doing this again (i.e. dividing the array into 8 parts) would be possible, unfortunately only 6 out of the ps3's 8 spus can be used.
+it turns out that merge can also be parallelized[1].
+highx - lowx + 1; size_t lengthy =
+these chunks are then merged in parallel, also on spus.
+then these two items divide each array into  two parts that can be merged independently.
+up to 4 spus are used for sorting and up to 6 spus for merging.
+this results in 6-11x speed-ups for sorting float and integers arrays of over 20k elements and 2.5-3x speed-ups for sorting similarly-sized arrays of our user-definedface struct.
+in addition, we will show how to parallelize merge to run on any number of spus which will improve performance even further.
+ms 2.8 ms 2.8 ms std::stable_sort 23.3 ms 31.6 ms 19.9 ms merge sort (ppu) 18.3 ms 10.1 ms 9.6 ms parallel merge sort (2 spu) with sequential merge 10.1 ms 3.6 ms 3.3 ms parallel merge sort (4 spu) with sequential merge 6.3 ms 2.5 ms 2.4 ms parallel merge sort (2 spu) with parallel merge (6 spu) 8.7 ms 2.5 ms 2.4 ms parallel merge sort (4 spu) with parallel merge (6 spu) 4.5 ms 1.2 ms 1.2 m using parallelmerge instead of merge in our parallelsort function gives even greater speedups (using all 6 spus for merging).
+all vectorized functions we have described are used whenever possible.
+our implementation can use any sort function (that can run inside an offload™ block) to sort array chunks small enough to fit in a spu's local memory.
+we then need to merge these 4 parts into 2, then into one.
+because of the way most algorithms work (comparing and swapping pairs of items) sorting often takes precious time.
+it allocates spu memory for all arrays, copy the data from ppu to spu, merge both arrays and copies the result back to the ppu once finished.
+highy - lowy + 1; if((lengthx + lengthy)  temp[midx] size_t midy = binarysearch(fromy, lowy, highy, fromx[midx])
+these speed-ups come from “unrolling” one recursion level.
+note that now we don't need to copy back temp into data: template void parallelsort(t *data, size_t count, alignedt
+highx - lowx + 1; size_t lengthy =  highy - lowy + 1; if((lengthx + lengthy)  temp[midx]  size_t midy = binarysearch(fromy, lowy, highy, fromx[midx]); // copy the median  size_t midto =

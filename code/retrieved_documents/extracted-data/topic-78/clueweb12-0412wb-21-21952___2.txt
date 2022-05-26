@@ -1,0 +1,42 @@
+if(count  void sortoffloadedlocalmem(t  *data, size_t start, size_t end) { size_t count = (end - start + 1); if(count  < 2) return; __blockingoffload(data, start, end, count) { size_t size =  count * sizeof(t); // enforce the maximum array size if(count
+in the first three parts we have implemented the quicksort, merge and merge sort algorithms, as well as optimized them on the ps3's ppu.
+builtin_memcpy(data + start, copy, size); } else { printf("error: array size (%d) exceeds maximum size (%d)\n", count, max_spu_array_count); } }; } with this approach it only takes 3.1 ms to sort 20k floats on the spu using quicksort.
+the user-defined structure used ('face')
+this can be done by using either an__offload or __blockingoffload block in the c++ code.
+this can be done by using either an__offload or  __blockingoffload block in the c++ code.
+2.6 ms 3.1 ms 3.1 ms – – iterative merge sort (vectorized merge) 3.7 ms 2.8 ms 2.4 ms 10.8 ms 9.6 ms iterative merge sort, on 1 spu (local mem.)
+for example, sorting transparent objects before rendering or sorting objects by state attribute (e.g. texture) to improve batching.
+4k faces 20k floats 20k ints 64k floats 64k ints iterative quicksort 2.6
+the former spawns a thread on a spu  and runs the code inside of the block (see code below).
+similarly merge sort sees 2-2.4x
+sorting is a simple but important concept for implementing games.
+speed-up for floats and 1.9-2.1x speed-ups for integers.
+in this part we will start running these implementations on a spu to improve performance even further.
+the first step for sorting in parallel is to offload sorting an array chunk  on a spu using offload.
+ms 1.2 ms – – in the next part in the series we will see how to run our sort functions on multiple spus in parallel to build a parallel sort implementation and work around the current arrays size limitation.
+because of the way most algorithms work (comparing and swapping pairs of items) sorting often takes precious time.
+quicksort is limited to ~40k arrays in spu's local memory while merge sort's limit is ~20k. the table below compares the performance of sorting on 1 spu and the various implementations presented in the last post.
+the entire series is also available as a single pdf document.
+this could be used to sort non-opaque polygons by depth.
+template void sortoffloaded(t *data, size_t start,  size_t end) { size_t count =
+if(count  void sortoffloadedlocalmem(t *data, size_t start, size_t end) { size_t count = (end - start + 1); if(count < 2) return; __blockingoffload(data, start, end, count) { size_t size = count * sizeof(t); // enforce the maximum array size if(count <= max_spu_array_count) { t __attribute__((aligned(128))) copy[max_spu_array_count]; // copy the array from ppu to spu __builtin_memcpy(copy, data + start, size); // sort the local array mysort(copy, 0, count – 1); // copy the array back from spu to ppu __
+the former spawns a thread on a spu and runs the code inside of the block (see code below).
+<=  max_spu_array_count) { t __attribute__((aligned(128)))
+for now we will use the latter  as we are using only one spu and not doing any processing on the ppu.
+with multi-core architectures like the ps3 it makes sense to parallelize this operation to maximize the use of these cores.
+part 1 (quicksort) part 2 (merge) part 3 (merge sort) part 4 (offloading on 1 spu) part 5 (parallel sort on 2 spus) part 6 (final optimizations) the entire series is also available as a single pdf document.
+quicksort is limited  to ~40k arrays in spu's local memory while merge sort's limit is ~20k. the table below compares the performance of sorting on 1 spu and the  various implementations presented in the last post.
+the latter is similar  except that the execution of the function containing the offload block is  stopped until the block has finished executing.
+part 4 (offloading on 1 spu) part 5 (parallel sort on 2 spus) part 6 (final optimizations)
+template void sortoffloaded(t *data, size_t start, size_t end) { size_t count =
+the first step for sorting in parallel is to offload sorting an array chunk on a spu using offload.
+this represents a 1.5x speed-up over execution on ppu, however sorting integers results in 0.6x slowdowns.
+this represents a 1.5x speed-up over execution on ppu, however  sorting integers results in 0.6x slowdowns.
+ms 4.7 ms 2.1 ms 16.8 ms 7.1 ms iterative quicksort, on 1 spu 7.5 ms 10.7 ms 10.7 ms 39.7 ms 39.4 ms iterative quicksort, on 1 spu (local mem.)
+the user-defined structure  used ('face') contains one floating point (depth value) and three integer  indices.
+the latter is similar except that the execution of the function containing the offload block is stopped until the block has finished executing.
+copy[max_spu_array_count]; // copy the array from ppu to spu  __builtin_memcpy(copy, data + start, size); // sort the local array  mysort(copy, 0, count – 1); // copy the array back from spu to ppu  __builtin_memcpy(data + start, copy, size); } else { printf("error: array  size (%d) exceeds maximum size (%d)\n", count, max_spu_array_count); } }; } results with this approach it only takes 3.1 ms to sort 20k floats on the spu using  quicksort.
+offload the sort code on 1 spu
+for now we will use the latter as we are using only one spu and not doing any processing on the ppu.
+contains one floating point (depth value) and three integer indices.
+similarly merge sort sees 2-2.4x speed-up for floats and 1.9-2.1x speed-ups for integers.

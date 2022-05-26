@@ -1,0 +1,613 @@
+there are about 80 branches.
+tags: pyjaco, python, todos, web development category:uncategorized  |  1 comment pyjaco and jquery december 27, 2011, 10:53 pm after giving up on coffeescript, i decided to play around with pyjaco the  python to javascript compiler.
+notice that the hour-long  translation step is not part of the procedure.
+however, it fails for the workflow i prefer, so i wrote my own.
+on the positive side, rpython and python are much easier to read and write than c. the pypy devs are brilliant, but not intimidating.
+finally, we setself.next_id using the python max() call, which pyjaco also automatically translates into  javascript.
+in the compiled script, of course these python variables are  represented by javascript objects, but from the point of view of a pyjaco  coder, it is important to keep the two types of files separate.
+so now, open that html file in a web browser using afile:// url.
+now back into the python file.
+therefore, i’ve spent most of my vacation time so far researching some technologies i haven’t had a chance to explore in the past year.
+while [ $quit -eq 0 ] do cd $cwd if [ $cwd == '/' ] ; then quit=1 fi if [ -e $name ] ; then source "$name/bin/activate" quit =1 fi put this in your ~/.bashrc.
+i currently use rememberthemilk, which is a lovely service, but i don’t like paying them for mobile access.
+the code does not appear to be well-documented.
+name the file pyjados.py: def setup(): print "pyjados hello world" jquery(js(setup) ); first we write a python function named setup.
+note that the todos dict is a python object, so when we insert the value of the js_add_box into it, we must convert it from a javascript object using py().
+it’s just not good enough.
+you  will see examples of these shortly.
+when excluding this file from the line count, around half a million lines of actual python code exist, and about a quarter of these are tests.
+"""  %(text)s """ and we change the for loop in render to: for id, todo in sorted(self.todos.items()): js_todo_items.append(js( todosapp.list_item_template % { "id": id, "text": todo}))
+there are (at least) two ways to compile python code in pyjaco.
+second, we need to explicitly convert our variables between javascript and python any time we access one from the other.
+if any of you are attending pycon 2012 in santa  clara, ca this week, make sure to bump into me.
+i like to add thejs_ prefix to variable names to help remind myself that this is a javascript  variable.
+however, i was looking to have a complete python file that compiles to a complete javascript file.
+normally, i put them in a folder named venv, although sometimes i use different names, most often when i have multiple virtualenvs applying to the same source tree (e.g. venv27, venvpypy).
+the pyjaco examples all embed generated javascript in an html page.
+first we generate the library: pyjs.py --builtins=generate --output=py-builtins.js pyjs.py is the name of the pyjaco command.
+aspen will serve a single html file with no python code without any boilerplate.
+function v { # activate a virtualenv # usage: v # activate the virtualenv  named venv # usage: v venvname # activate the virtualenv named venvname name =venvif [ $1 ] ; then name=$1 fi olddir=$(pwd) quit=0 deactivate &amp;& gt;/dev/null cwd=$(pwd) while [ $quit -eq 0 ] do cd $cwd if [ $cwd == '/' ] ;  then quit=1 fi if [ -e $name ] ; then source "$name/bin/activate"
+the pypy developers don’t really believe in  documenting their code.
+it is simply unfair to all the other programming languages and coders of  those languages to say, “we can’t displace javascript, so we  won’t try.”
+now we compile the code using the following command inside our activated  virtualenv: pyjs.py --watch pyjados.py --output pyjados.js you’ll notice the command doesn’t exit.
+now we compile the code using the following command inside our activated virtualenv: pyjs.py --watch pyjados.py --output pyjados.js you’ll notice the command doesn’t exit.
+let’s create a class to manage the  various todo elements: class todosapp: @jsvar("jquery", "js_add_form") def  __init__(self):
+in a python file, if i set it to 1, folding happens only at the classes or module-level functions in the module.
+you’ll see the syntax error in your console where pyjs.py is  watching the compiled code.
+i also add a couple of dom elements (a heading and paragraph) that are to be manipulated via jquery:         click me    that’s the easy part.
+i don’t have to worry about collapsing multiple levels of indentation or creating manual folds.
+it provides a better analysis of  code coverage, and is closer to the actual code.
+it is simply unfair to all the other programming languages and coders of those languages to say, “we can’t displace javascript, so we won’t try.”
+if you find a security hole, pull requests are welcome.
+we also wrap the false return value (to prevent event propogation on the submit handler) in a js() call so that jquery recognizes it as a javascript false rather than a (true) object named false.
+the id = line converts the javascript string id attribute of this element (which looks like “ todo_5“, as defined in list_item_template) into the python integer id of the todo.
+the fallacious underlying assumption here is that modern html applications must be supported on all web browsers in order to be useful.
+update 2: from the number of comments on this article, it appears that my article has hit some web aggregator.
+now, as a bonus, let’s try hooking this up to the  html 5localstorage object so that the list is maintained across  page reloads.
+note also how we can loop over items() on the self.todos dictionary just as if we were using a  normal python dictionary.
+this is a bit of magic in the pyjaco compiler, just pretend it has been imported.
+"rgb(%d, %d, %d)" %(r,g,b) jquery( '#when_clicked').attr('style', 'background-color: ' + color) else: jquery( '#when_clicked').html("you clicked it!") jquery(ready)
+let’s make it better!
+the --builtins=generate option tells pyjaco to generate the standard library, while the --output flag provides the filename for the new library file: $ ls index.html py-builtins.js venv we then need to load this library in the head of our html file.
+the remaining lines simply remove that todo from the internal list and from the dom, after a 1.5 second delay.
+second, we need to explicitly convert our variables between javascript  and python any time we access one from the other.
+you should see the words “pyjados hello world” printed on the  console.
+note the ids on the elements, since we’ll  be utilizing these from pyjaco using jquery selectors.
+the code is therefore wrapped in a call to dict(), which converts the object to a dictionary.
+we add a couple lines to our __init__ method to connect a live click event to the checkbox items, which now looks like this: @jsvar("jquery", "js_add_form", "js_checkbox") def __init__(self): js_add_form = jquery(js( "#add_todo_form")) js_add_form.submit(js(self.add_todo))
+floor((math.random())
+it has the potential to be a great tool, and the head developer, christian iversen is very open to outside contributions.
+aspen throws that all away.
+the issues could  largely be divided into two categories: those that come from a fundamental  misunderstanding of why python is wonderful (e.g. whitespace), and those that  are not an issue for the core python dev team, but are being actively worked on  outside of core python (e.g event loop).
+however, it fails for the  workflow i prefer, so i wrote my own.
+but not python programmers.
+after a great talk, he answered with a decisive, “i still don’t know.”
+before we start implementing our todo list, let’s look at an example of accessing a javascript variable inside a function.
+refresh the page, add a couple todos, and inspect the localstorage object in your console.
+this is the file we included in our html file.
+the submit method is a javascript function expecting a javascript object.
+dave beazely’s keynote made pypy more approachable, and i  approached it.
+let’s start by adding a template string as a class variable, and use that string inside the render function.
+another setting that i discovered today is foldlevelstart.
+trembling arbitrarily chooses mongoengine for the models.
+however, i miss the testclient feature from django that allows me to  mock a request without running the server.
+i still can’t answer the, “is python  easily hackable?” question fully.
+../../venv/bin/activate one time and venv/bin/activate another time.
+you should see the words “pyjados hello world” printed on the console.
+uncategorized   | comments off hacking on pypy march 17, 2012, 6:05 pm in another great pycon2012 keynote, david beazely asked the question,  “is pypy easily hackable?”
+the problem is, i may be anywhere in the folder tree when i want to activate a virtualenv.
+popular ones during the sprints included py3k and  numpy-ufuncs2 pick a feature to work on.
+let’s start by  adding a template string as a class variable, and use that string inside the  render function.
+jquery(js("input[type=checkbox]"))
+the next step was to create an html file that included jquery, the py-builtins.js script above, and a yet-to be defined javascript file named clicker.js that will be generated from a yet-to-be-defined python file.
+pyjaco doesn’t currently provide very useful compile-time errors, and it also does not yet map javascript errors back to the input python.
+i don’t really grok the many layers of the translation toolset and pypy interpreter, but it’s pretty clear that the layers are well separated.
+i made no effort to make  pluggable backends like django does; aspen does not encourage excessive layers  of abstraction.
+they are so confident in their test suite that they are comfortable programming in a “cowboy coding” style, hacking randomly until all the tests pass.
+this is a bit odd, since the jsvar decorator is never actually imported into the namespace.
+my directory structure therefore looks like this: /home/dusty/code/ + project1 | + src | | + pkg1 | | + pkg2 | + doc | +  venv + project2 | + src | + venv27 | + venvpypy + project3 | + venv ... and so on
+add the bracket and let it automatically recompile  itself: @jsvar("alert") def setup(): alert(js("pyjados  hello alert"))   jquery(js(setup)); let’s analyze this snippet.
+you are working on a python 2 application that executes python 3 bytecode!
+in a rebellion against regular expression url  parsing, aspen uses the filesystem to define url structure and paths; like in  the old days of statically served html files.
+then we call json.stringify on this object to create a string suitable for insertion into localstorage.
+we add a couple lines to our__init__ method to connect a  live click event to the checkbox items, which now looks like this: @jsvar("jquery", "js_add_form",  "js_checkbox") def __init__(self):
+coffeescript is a wonderful idea.
+in an ideal world, we could convert this variable to a python variable using py(), but as noted earlier, calling py on a jquery object results in a stack overflow or browser crash.
+web browsers can be viewed as a zero install interface, a virtual machine for these applications.
+a little more of everything, please posts tagged ‘python’« previous entries aspen is a unique python web framework developed by chad whitacre.
+and i see it as the current best bet for python programmers hoping to avoid  javascript one day in the future.
+namely, trembling provides: aspen itself does not define or require a model layer; you’re free to use the orm, dbapi connector, or nosql database of your choice.
+second, notice that since alert has been flagged as a jsvar,  it must accept a javascript variable.
+let’s  also load the futurepyjados.js script at this time:  pyjaco todo list example        now, before we start coding the python file that will be compiled to
+we do this by using two javascript functions supplied with the standard library we just generated, appropriately named js() and py().
+initialize this object by adding the  following two lines of code to the end of__init__: self.todos = {} self.next_id = 1 and rewrite add_todo as follows as well as a new method named render @jsvar("event", "js_add_box") def add_todo(self,  js_event): js_add_box = jquery(js("#add_box"))
+after a great talk, he answered with a  decisive, “i still don’t know.”
+i tried to learn ruby several times, and each time i was left with a foul taste in my mouth.
+now let’s actually store and render a newly added todo.
+if i’m done with that method, i just zc and it’s hidden from site.
+if you create a dict or a list, for example, it  will be compiled to a list or dict object from the standard library we just  generated.
+this must be generated: cd pyjaco python2 generate_library.py cp py-builtins.js ~/pyjaco_test # directory for my new page
+to those users suggesting python to  javascript compilers, i’ve been aminor contributor to the pyjaco project,  a rewrite of the pyjs library.
+i understand all the hype around the project.
+i ended up with a stack overflow.
+if you want to make it prettier, feel free to fork it on github.
+update: i just stumbled across http://www.gnu.org/software/pythonwebkit/  and i can’t wait to play with it!
+however, they are well organized, and every page seems to answer every question i have on the topic succinctly and quickly.
+almost all the bugs i have encountered in my pyjaco code have been caused by confusing the two types of variables.
+also note how, because we are writing in a python function, manipulating the python value self.next_id requires no conversion, and calling the python function self.render is also clean.
+* (255)); var g = math.
+typing v on the command line will look in the current and all parent directories for a directory named venv, and will activate that venv.
+here’s how the script is run: python2 ~/code/pyjaco/pyjs.py -n --output clicker.js clicker.py the -n option tells pyjs not to generate the builtin library that we created manually in the first step.
+if you now make a change to pyjados.py and save it, it will automatically recompile it.
+pyjaco doesn’t simply translate python into javascript.
+it took some investigating to understand how to reference javascript variables inside python functions.
+i also don’t know how secure trembling’s session and auth features are.
+# clicker.py @jsvar("jquery") def ready(): jquery('h1').click( on_click) @jsvar("jquery", "math.random", "math.floor") def on_click(): if jquery('#when_clicked').html(): r = math.floor(math.random()
+the problem is, i may be anywhere in the folder tree when i want to  activate a virtualenv.
+pyjaco is alpha software.
+i have spent three days studying and playing with these two technologies.
+overall, i am much less intimidated by this project than i was before i started the dev sprints.
+so now, open that html file in a web browser using a file:// url.
+the mystifying bit is that because we will be compiling this file to javascript as a string, it is not necessary (or possible) to import the jsvar decorator, as was done in the pyjaco examples linked above.
+or contact me to schedule a  meetup.
+compiler methods to combine the functions into a string of text.
+indent folding does essentially what i want; when all folds are closed, i can see the overview of classes and module-level methods in the python module.
+this is a political problem.
+this illustrates that pyjaco supports class variables: class todosapp: list_item_template =
+there are even situations where it may not be necessary to sandbox the code because it’s trusted.
+these include alert, window, document and the like, as well as variables in third-party javascript libraries, such as the ubiquitous jquery.
+so i wrote a bash function to activate the optionally named virtualenv in the current directory or any parent directory.
+this means i'm doing stuff like .
+i would also like to try it on a more complicated project just to see how well it performs.
+thebug tracker contains many features and issues that  need addressing add /path/to/pypy/ to your path so you can run the pytest.py command cd into the directory indicated in the buildbot output and run pytest.py path/to/test.py -k testname the test will likely fail.
+therefore, we convert it using js() as we pass it into the alert call.
+rather, it  creates a basic standard library of python-like objects that are utilized in  the compiled javascript code.
+enter some characters into the text box and use the enter key or the add todo button to submit the form.
+there are numerous open source task manager apps out there that i’m sure would suit my not-too-exotic tastes.
+self.todos = {} self.next_id = 1 don’t forget to add js_checkbox to the jsvar decorator.
+trying to remember which parent directory i want often requires several tab completions to see the directory listing.
+you should normally install directly from chrivers’s git repository using pip install git+git://github.com/chrivers/pyjaco.git.
+my goal was to get an overview of the file.
+you should see the stringified dict in the todolist value.
+i don’t know  what they all do.
+it has the potential to be a great tool, and the  head developer, christian iversen is very open to outside contributions.
+it contains rpython, but if it starts with  “app_” it contains python.
+unfortunately, jquery is a rather large object, and the py function apparently recursively converts all attributes from javascript to python.
+hack away and fix it.
+why we need python in the browser march 13, 2012, 10:49 pm in his pycon 2012 keynote speech on sunday, guido van rossum covered many  of the open “troll” questions related to the python community.
+i needed a way to generate an external javascript file as i would include in an html file.
+i hope to address this with this blog post.
+the irc  channel is full of friendly, knowledgable, helpful people at any time of day.
+load the pyjados html file, add some todos, check a few of them  off, then close and reload the web browser.
+this translation step creates a clicker.js file that looks like this: var ready = function() { var __kwargs = __kwargs_get(arguments); var __varargs= __varargs_get(arguments); var $v1 = array.prototype.slice.call( arguments).concat(js(__varargs)); jquery("h1").click(on_click); return none; } var on_click = function() { var __kwargs = __kwargs_get(arguments); var __varargs= __varargs_get(arguments); var $v2 = array.prototype.slice.call( arguments).concat(js(__varargs)); if (bool(jquery("#when_clicked").
+while the code is readable, there is very little in the way of end-user documentation.
+i needed a way to generate an  external javascript file as i would include in an html file.
+i am still evaluating it, but one thing i can say unequivocally is that it’s different.
+while it is true that the  most restrictive operating systems only permit us to code in objective c, in  general, it is not considerate to restrict your developers a single language or  environment.
+i’ve had occasion to either complain about or defend all of the topics he covered, and he did a wonderful job of addressing them.
+hg clone https://bitbucket.org/pypy/pypy/ /path/to/pypy/to your path so you can run the pytest.pycommand pytest.py path/to/test.py
+notice that the hour-long translation step is not part of the procedure.
+i also  add a couple of dom elements (a heading and paragraph) that are to be  manipulated via jquery:
+math.floor(math.random() * 255) b =
+start by  adding a form for submitting todos and a list to render the todos to the html  body:  pyjaco todo list example   add  todo    nothing too exciting here.
+i don’t believe in regurgitating information.
+i’d like to clear up one oversight in dave’s otherwise  impeachable talk.
+but today, i discovered foldnestmax.
+however, they are well organized, and  every page seems to answer every question i have on the topic succinctly and  quickly.
+tags: conference, pycon, python i didn’t get the memo, but there appears to be a movement to demonstrate emerging web technologies with a simple todo list application, much as hello world is used to introduce programming languages.
+tags:  activate, python, re-env, virtualenv category:
+the complete_todo method looks like this: @jsvar("event", "jquery", "todo_item") def  complete_todo(self, event):
+the distinction between python and javascript variables introduces a couple  of complications to writing pyjaco compatible python code.
+then we call json.stringify on this  object to create a string suitable for insertion intolocalstorage.
+the words form submitted should be displayed in the javascript console.
+being able to tell the difference between rpython and python (which have identical syntax) is important.
+js_add_form = jquery(js("#add_todo_form")) js_add_form.submit(js(self.add_todo)) def add_todo(self, event): print "form submitted" return js(false) def setup(): todo_app = todosapp() jquery(js(setup)); the __init__
+writing python code that compiles to correct javascript is the hard part.
+trembling aspen april 5, 2012, 3:17 pm aspen is a unique python web framework developed by chad whitacre.
+a variety of factors, including beazely’s thorough  keynote address motivated me to join the pypy team during the pycon developer  sprints.
+it is time (in fact, long overdue) for python to be supported in the browser, not necessarily as an equal to javascript, but as an alternative.
+this is no longer true.
+this is a project with a lot of potential, and i see it as the current best bet for python programmers hoping to avoid javascript one day in the future.
+note the ids on the elements, since we’ll be utilizing these from pyjaco using jquery selectors.
+and coffeescript does suck less, it has pretty language features and it is much more succinct than javascript.
+js_add_form = jquery(js( "#add_todo_form")) js_add_form.submit(js(self.add_todo))
+while the code is readable, there is very little in the way of end-user  documentation.
+uncategorized   | 1 comment
+currently, i find writing pyjaco code to be  approximately equally tedious to writing javascript code.
+since then, i’ve made severalcontributions to the  project and have been involved in diverse discussions with pyjaco developers  regarding the current and future status of the project.
+i wasn’t too keen on this idea when i first  heard it, as it introduces a dependency that currently weighs in at 65k before  minification and compression.
+pypy has a solid test framework, and the pypy crew are focused on a 100% test-driven-development paradigm.
+the first step was to install a development version of pyjaco: git clone https://github.com/chrivers/pyjaco.git pyjaco normally requires a generated javascript file mapping python  builtins to javascript to be included with the created javascripts.
+the def add_todo method has its single parameter flagged as a @jsvar, since the method is being called internally by jquery when the event occurs.
+you can refactor much of the code into backend libraries and test that, of course, or you can start the service running and mock requests.
+i hope you’ve enjoyed this introduction to pyjaco.
+this setting is the maximum number of folds in the file.
+decorator syntax is used to expose the variables for jquery, math.random, and math.floor in the following example.
+first we need to  flag all of our javascript variables using a decorator on methods that access  them.
+i made no effort to make pluggable backends like django does; aspen does not encourage excessive layers of abstraction.
+now add this call to the end of the two methods that manipulate the todo  list,add_todo and complete_todo: self.store() .
+i always felt that indent mode should be ideal with whitespace-driven python, but in the past, i found that the default settings left far too many folds to work with.
+this function is a python object.
+the todos are  stored in memory in a python dict object.
+now let’s create a basic html 5 page with jquery loaded:    pyjaco todo  list example     pyjaco todo list example    we can load this in our web browser using a file:// url.
+further, any attributes on those objects are also  javascript variables, and the return value of any methods will also be  javascript variables.
+tags: pypy, python, python 3 category:
+having sprinted on python i’d like to answer his question in a bit more detail.
+aspen  will serve a single html file with no python code without any boilerplate.
+if you are hacking on python 3 support, you need to bear in mind that the pypy interpreter is written in python 2.
+the  web is a platform, and we must take guido’s statement as a call to  improve this platform, not to give up on it.
+now i needed a refresher on how best to interact with these folds.
+py(js_add_box.val()) js_add_box.val('') js_add_box.focus() self.next_id += 1 self.render() return js(false)
+in an ideal world, we could convert this variable to a python variable using py(), but as noted earlier, calling py on a jquery  object results in a stack overflow or browser crash.
+there are basically two types of variables in pyjaco,  javascript variables, and python variables.
+i’m told that this conversion can — and one day will — be done automatically by the pyjaco multiplexer, but in the meantime, we need to make it explicit.
+i suspect that javascript would also work well using a foldnestmax of 1.
+however, i feel that as i learn the ins and outs of pyjaco, and as the developers continue to refine and improve the compiler, pyjaco may one day be a perfectly viable alternative to writing pure javascript or to the rather too ruby-esque, but otherwise excellent coffeescript.
+currently, i find writing pyjaco code to be approximately equally tedious to writing javascript code.
+we do  this by using two javascript functions supplied with the standard library we  just generated, appropriately namedjs() and py().
+when i finally figured out the distinction, my first thought was,  “ok, let’s prefer to always work with python variables.”
+reload the page again and notice how checkboxes have been displayed beside  each todo.
+in a rebellion against regular expression url parsing, aspen uses the filesystem to define url structure and paths; like in the old days of statically served html files.
+pyjaco  does not currently work with python 3, so in arch linux, i use the virtualenv2  command.
+now, with the review over, i’d like to introduce a little project  i’ve started to provide some vital features that aspen core is missing.
+it is time (in fact, long overdue) for python to be supported in the  browser, not necessarily as an equal to javascript, but as an alternative.
+being able to tell the difference between rpython and  python (which have identical syntax) is important.
+i wasn’t too keen on this idea when i first heard it, as it introduces a dependency that currently weighs in at 65k before minification and compression.
+i am also considering a port to python 3.tags: javascript, jquery, pyjaco, python i had some space between wrapping up my last contract on december 20, and starting my new job on january 16.
+in the render function itself, i think it’s pretty cool that string  formatting using % is supported by pyjaco (as an aside, the str.format method  introduced in python 2.6 is not yet available) and that the pythonsorted() function is available.
++ 1 self.render() note that calling py() on the output of json.parse creates a python object, not a python dict.
+i intend my next patch to be an autocompile tool that monitors files in one directory for change and outputs .js
+let’s make it better!tags: pycon, python, webapp hello arch linux community!
+notice that we need to flag not justjquery , but also js_add_form as a javascript variable.
+tags: pycon, python, webapp pycon 2012 march 7, 2012, 7:25 am hello arch linux community!
+therefore, in my initialization code, i tried jq=py(jquery).
+aspen divorces itself from the mvc pattern that  every major — and almost every minor — web framework has been  relying on for the past decade.
+math.floor((math.random())
+it would be more convenient if we could code these projects in python.
+jquery will now run setup when document.ready is fired.
+luckily, the python community is already working on pythonic answers, including the evilly poorly documentedpyjaco and the less-than-well maintainedpyvascript and pyjamas projects.
+as a writer, i know just how  difficult this is to accomplish without repeating oneself.
+js_checkbox  = jquery(js("input[type=checkbox]")) js_checkbox.live( "click", js(self.complete_todo))
+in aspen, template and control code live in the same file, but in separate pages, calledsimplates.
+client side local storage has created fully javascript applications that require no or optional network connectivity.
+therefore, we wrapsetup in a js() call and pass the result into the jquery function.
+i am hopeful that improvements to pyjaco will cause it to generate more readable javascript with less extraneous code.
+there are other fold commands; see :help fold for an overview, but just using these settings and memorizing these four commands seems to be all i need.
+however, i also wanted to take this opportunity to learn a bunch of new technologies for an offline-enabled and mobile-enabled web application.
+that is the --watch option at work.
+while this is not a terribly heavy library, there  are efforts under way to shrink the builtins or to dynamically generate it to  contain only those builtins that your code actually touches.
+in general, if a module starts with “interp_”
+now let’s prepare to create some working todo-list code.
+tags: activate, python, re-env, virtualenv in another great pycon2012 keynote, david beazely asked the question, “is pypy easily hackable?”
+you  should normally install directly from chrivers’s git repository using pip install git+git://github.com/chrivers/pyjaco.git.
+as a writer, i know just how difficult this is to accomplish without repeating oneself.
+floor(math.random() * 255) color =
+however, the string “pyjados hello alert” is a python variable.
+notice that i’m using the jquery function instead of the $ alias, since $ is not a valid variable name in python.
+i like to add the js_ prefix to variable names to help remind myself that this is a javascript variable.
+pyjaco automatically compilesprint statements into console.log output.
+enter some characters into the text box and use theenter key or the add todo button to submit the form.
+trembling  arbitrarily chooses mongoengine for the models.
+also pay attention to the way we wrap the self.add_todo method name in a js() call when we pass it into the submit handler.
+further, any attributes on those objects are also javascript variables, and the return value of any methods will also be javascript variables.
+normally, i put them in a folder named venv, although  sometimes i use different names, most often when i have multiple virtualenvs  applying to the same source tree (e.g. venv27, venvpypy).
+i still can’t answer the, “is python easily hackable?”
+the--builtins=generate option  tells pyjaco to generate the standard library, while the--output flag provides the filename for the new library file: $ ls index.html py-builtins.js venv we then need to load this library in the head of our html file.
+trying to remember which parent directory i want often requires  several tab completions to see the directory listing.
+almost all the  bugs i have encountered in my pyjaco code have been caused by confusing the two  types of variables.
+py(js_add_box.val()) js_add_box.val('') js_add_box.focus() self.next_id += 1 self.render() return js(false) @jsvar("js_todo_items") def render(self): js_todo_items = jquery(js("#todo_items")) js_todo_items.
+the last one is the most useful, because it works from anywhere in the method.
+aspen lodges itself in a small niche between php-like spaghetti code and a  complicated package structure full of python models, views, controllers, and  templates.
+the  remaining lines simply remove that todo from the internal list and from the  dom, after a 1.5 second delay.
+i had to repeat the compile and test step a few times before coming up with the above file.
+in his pycon 2012 keynote speech on sunday, guido van rossum covered many of the open “troll” questions related to the python community.
+it is a nice tool with a lot of potential.
+let’s start: mkdir pyjados cd pyjados virtualenv2 venv --distribute --no-site-packages  source venv/bin/activate pip install git+https://buchuki@github.com/buchuki/ pyjaco.git@run_script first we create a directory to work in and install a virtualenv.
+now all we have to do is ensure the self.todos dict is loaded from localstorage when the app is initialized.
+changesetup.py to utilize alert, as follows: @jsvar("alert") def setup(): alert(js("pyjados  hello alert")   jquery(js(setup)); did you look closely at that code?
+however, i feel that  as i learn the ins and outs of pyjaco, and as the developers continue to refine  and improve the compiler, pyjaco may one day be a perfectly viable alternative  to writing pure javascript or to the rather too ruby-esque, but otherwise  excellent coffeescript.
+python variables, on the other hand, refer to any variables that you define  in your python source code.
+one of the pypy devs,holger kregel explained to me that pypy does not have over 1 million lines of code.
+it’s pretty rare for me to link to other people’s articles in this blog.
+notice that we need to flag not just jquery , but also js_add_form as a javascript variable.
+initialize this object by adding the following two lines of code to the end of __init__: self.todos = {} self.next_id = 1 and rewrite add_todo as follows as well as a new method named render @jsvar("event", "js_add_box") def add_todo(self, js_event): js_add_box = jquery(js("#add_box"))
+there are even  situations where it may not be necessary to sandbox the code because it’s  trusted.
+typing v on the  command line will look in the current and all parent directories for a  directory named venv, and will activate that venv.
+in spite of the hiccups, it is possible to generate a working javascript app using just pyjaco.
+unfortunately, jquery is a rather large object, and thepy function  apparently recursively converts all attributes from javascript to python.
+this line is a bit hard to read, but i wanted to include it to demonstrate that pyjaco can parse list comprehensions.
+there is no incentive for me to add a layer of complexity (the coffeescript to javascript compile step) to my code when i know my code is going to be “ugly” either way.
+def add_todo(self, event): print  "form submitted" return js(false)   def setup(): todo_app =  todosapp()   jquery(js(setup)); the __init__
+many developers create personal or private projects using html 5  because it’s convenient.
+i decided it was finally time to build a simple task management system, something i’ve attempted to do and never finished several times before.
+i avoid bash whenever i can, so this may not be the prettiest bash script
+[venvname] will walk the same tree looking for a directory named [venvname] to  activate.
+quit =1 fi put this in your ~/.bashrc.
+the next step is to make clicking these boxes actually complete the  todos.
+we start by adding a store() method to our class: @jsvar("localstorage", "json") def store(self): localstorage.setitem("todolist", json.stringify(js(self.todos)))
+aspen lodges itself in a small niche between php-like spaghetti code and a complicated package structure full of python models, views, controllers, and templates.
+many developers create personal or private projects using html 5 because it’s convenient.
+in my last post, i introduced using jquery with pyjaco, the python  javascript compiler.
+first we need to flag all of our javascript variables using a decorator on methods that access them.
+we then activate the virtualenv and install the pyjaco package.
+this means i'm doing stuff like.
+my personal philosophy happens to coincide almost exactly with thezen of python.
+thesubmit method is a javascript function expecting a  javascript object.
+i’ve had occasion to either complain about or defend all of the topics he  covered, and he did a wonderful job of addressing them.
+jquery is a javascript object that expects a javascript object as input.
+tags: aspen, python, web framework the workon script available in virtualenvwrapper is a useful tool for switching virtual environments on the fly.
+i honestly thought i was the only one that cared about this issue, but apparently enough people have complained about it that guido felt a need to address it.
+the pypy developers don’t really believe in documenting their code.
+it would be more convenient if we could code these projects in  python.
+and then there’s the question of supporting python in the web  browser.
+dave beazely’s keynote made pypy more approachable, and i approached it.
+i’m told that this  conversion can — and one day will — be done automatically by the  pyjaco multiplexer, but in the meantime, we need to make it explicit.
+js_add_form.submit(js(self.add_todo))
+ensure the compiler recompiled it, and reload the html file.
+i don’t have exact numbers, but for “historical reasons”, a non-python file containing base64 encoded data was given a .py extension.
+politics shouldn’t impact technical  awesomeness.
+let’s start: mkdir pyjados cd pyjados virtualenv2 venv --distribute --no-site-packages source venv/bin/activate pip install git+https://buchuki@github.com/buchuki/ pyjaco.git@run_script
+the todos are stored in memory in a python dict object.
+it is expected to be renamed to pyjaco in the future.
+first we  convert theself.todos dict to a normal javascript object using the js() function.
+html("") for id, todo in sorted(self.todos.items()): js_todo_items.
+the issues could largely be divided into two categories: those that come from a fundamental misunderstanding of why python is wonderful (e.g. whitespace), and those that are not an issue for the core python dev team, but are being actively worked on outside of core python (e.g event loop).
+at first glance, the  docs seem sparse and rather limited.
+yes, there are plugins or ctags to do this, but i don’t have ctags installed and have tried different plugins that didn’t really work as i wanted.
+at any rate, we  need to ensure this library is available to our code.
+this must  be generated:
+this is no longer  true.
+javascript variables refer to “normal” variables that you would call in javascript.
+this is a rather odd looking mix of python and javascript functions, but it works.
+it is expected to  be renamed to pyjaco in the future.
+second, notice that since alert has been flagged as a jsvar, it must accept a javascript variable.
+in general, if a module  starts with “interp_”
+it’s certainly easy to get started, but i don’t know how easy it is to become intimate with the project.
+on the negative side, i do have misgivings as to how well aspen’s filesystem urls it can scale.
+clone pypy (this takes a while): hg clone https://bitbucket.org/pypy/pypy/ pick a branch to work on.
+js_add_form = jquery(js("#add_todo_form"))
+further the use of “mock” python builtins makes the javascript look less javascripty.
+chad has assured me that aspen is up for running  large sites.
+finally, we set self.next_id using the python max() call, which pyjaco also automatically translates into javascript.
+now, let’s create our first python code and watch it compile to javascript.
+if you run hg in the  pypy/modules/ directory, it will try to pick standard library modules from pypy  and choke horribly.
+in a way, html 5, css 3, and dom manipulation have emerged as a de  facto standard mvc and gui system.
+it provides a better analysis of code coverage, and is closer to the actual code.
+to add a  dynamic page to your aspen powered site, you simply use the aforementioned  simplates, which include python controllers and tornado inspired templates in  the same file.
+web browser applications are not necessarily deployed to myriad unknown clients.
+luckily, i can change these values on per filetype basis using autocmd .
+cd pyjaco python2 generate_library.py cp py-builtins.js ~/pyjaco_test #  directory for my new page
+therefore, we wrap setup in a js() call and pass the result into the jquery function.
+this function is  a python object.jquery is a javascript object that expects a  javascript object as input.
+at first glance, the docs seem sparse and rather limited.
+this is a bit of magic in the pyjaco compiler,  just pretend it has been imported.
+one thing i love about aspen is how easy it is to get up and running.
+to add a dynamic page to your aspen powered site, you simply use the aforementioned simplates, which include python controllers and tornado inspired templates in the same file.
+in the compiled script, of course these python variables are represented by javascript objects, but from the point of view of a pyjaco coder, it is important to keep the two types of files separate.
+for py3k support, the list of failing tests in  thebuildbot is a good place to start.
+i’ve managed to both lock up firefox and hard crash it while using  the pyjaco library.
+js_checkbox.live( "click", js(self.complete_todo)) self.todos = {} self.next_id = 1 don’t forget to add js_checkbox to the jsvar decorator.
+the main line of code is easiest to read from the inside out.
+further, even though i trust this small company, i see no reason to share intimate information about the tasks i accomplish every day with them.
+so a pure-python list comprehension is used to convert the dictionary to one with integer keys.
+first, notice how we told the compiler  thatalert is a javascript variable when used inside setup() .
+while this is not a terribly heavy library, there are efforts under way to shrink the builtins or to dynamically generate it to contain only those builtins that your code actually touches.
+aspen divorces itself from the mvc pattern that every major — and almost every minor — web framework has been relying on for the past decade.
+the head developer,christian iversen is extremely responsive to both questions about pyjaco, and to code contributions.
+here i am installing from my personal fork, as it contains some changes for generating the built-in standard library that have not yet been merged upstream.
+so i  wrote a bash function to activate the optionally named virtualenv in the  current directory or any parent directory.
+on the negative side, i do have misgivings as to how well aspen’s  filesystem urls it can scale.
+i love david’s presentation style.
+he has a novel method of using  phrases like, “blow your mind” and “this is really  scary” repeatedly until they lose their meaning and you no longer feel  mindblown or scared.
+i honestly thought i was the only one that cared about this issue, but  apparently enough people have complained about it that guido felt a need to  address it.
+there are quite a few cons to working on this project.
+at any rate, we need to ensure this library is available to our code.
+python variables, on the other hand, refer to any variables that you define in your python source code.
+in spite of the hiccups, it is possible to generate a working javascript  app using just pyjaco.
+now, as a bonus, let’s try hooking this up to the html 5 localstorage object so that the list is maintained across page reloads.
+the fallacious underlying assumption here is that modern html applications  must be supported on all web browsers in order to be useful.
+web browsers have evolved into a virtualization layer more like operating systems than single programs.
+in aspen, template and control code live in the same file, but in  separate pages, calledsimplates.
+it serves static files for css, javascript, and images just as easily.
+the id = line converts the javascript string id attribute of this  element (which looks like “todo_5“, as defined in list_item_template) into the python integer id of the todo.
+since then, i’ve made severalcontributions to the project and have been involved in diverse discussions with pyjaco developers regarding the current and future status of the project.
+therefore, in my initialization code, i triedjq=py(jquery).
+however, the string “pyjados hello  alert” is a python variable.
+here are the steps to start hacking on pypy.
+change setup.py to utilize alert, as follows: @jsvar("alert") def setup(): alert(js("pyjados hello alert") jquery(js(setup)); did you look closely at that code?
+javascript, i want to discuss what i consider to be the most confusing aspect  of pyjaco development.
+the first step was to install a development version of pyjaco: git clone https://github.com/chrivers/pyjaco.git pyjaco normally requires a generated javascript file mapping python builtins to javascript to be included with the created javascripts.
+i’d like to clear up one oversight in dave’s otherwise impeachable talk.
+his basic assertion is that the browsers aren’t going to support this because nobody uses it and that nobody uses it because the browsers don’t support it.
+any one layer in the toolchain is easy to understand and develop.
+first, notice how we told the compiler that alert is a javascript variable when used inside setup() .
+you’ll see the syntax error in your console where pyjs.py is watching the compiled code.
+unfortunately, the resultant dict contains keys that are strings, whereas our original dict used integer keys.
+self.todos[self.next_id ] =
+@jsvar("js_todo_items") def  render(self): js_todo_items = jquery(js("#todo_items"))
+so a pure-python list comprehension is  used to convert the dictionary to one with integer keys.
+while each framework has its perks and annoyances, they all have this underlying mvc-like interface.
+this is the only html page in our app, and it can be refreshed to load our changes as we work.
+overall,  i think the combination of trembling and aspen will be very useful for my  future basic sites.
+tags: coffeescript, javascript, offline, python, todos i’ve always found vim folding to be somewhat mysterious.
+another downside is that i haven’t figured out a good way to unit  test aspen simplates.
+rather, it creates a basic standard library of python-like objects that are utilized in the compiled javascript code.
+politics shouldn’t impact technical awesomeness.
+i appreciate the power of regex urls, and i don’t  necessarily like having arbitrary file extensions in urls.
+the next step was to create an html file that included jquery, the  py-builtins.js script above, and a yet-to be defined javascript file named  clicker.js that will be generated from a yet-to-be-defined python file.
+we also wrap thefalse return value (to prevent  event propogation on the submit handler) in ajs() call so that  jquery recognizes it as a javascriptfalse rather than a (true)  object namedfalse.
+web browsers have evolved into a virtualization layer  more like operating systems than single programs.
+name the filepyjados.py: def setup(): print "pyjados hello world"   jquery(js(setup) ); first we write a python function named setup.
+javascript really does suck.
+the head  developer,christian iversen is extremely responsive to both questions about  pyjaco, and to code contributions.
+i  don’t really grok the many layers of the translation toolset and pypy  interpreter, but it’s pretty clear that the layers are well separated.
+i don’t get a bunch of internal folds that i don’t want.
+if you create a dict or a list, for example, it will be compiled to a list or dict object from the standard library we just generated.
+also pay attention to the way we wrap the self.add_todo method  name in ajs() call when we pass it into the submit handler.
+i was surprised how trivial it was to get started hacking on pypy.
+chad seems to have a terrific minimalist policy of telling you exactly  what you want to know in as few words as possible.
+he has a novel method of using phrases like, “blow your mind” and “this is really scary” repeatedly until they lose their meaning and you no longer feel mindblown or scared.
+first we convert the self.todos dict to a normal javascript object using the js() function.
+* (255)); var color= str('rgb(%d, %d, %d)').py$__mod__(tuple([r, g, b])); jquery( "#when_clicked").attr("style", ("background-color: ") + (color)); } else { jquery("#when_clicked").html("you clicked it!"); } return none; } jquery(ready); i find this rather unfortunately difficult to read.
+i  was hacking on the py3k branch of pypy.
+self.todos = dict([(int(i), stored_dict[i]) for i in stored_dict.keys()]) self.next_id = max( self.todos.keys())
+it is hard to write valid code, and harder to debug.
+first we create a directory to work in and install a virtualenv.
+my long term goal is to pull as much of my personal data out of the cloud as i possibly can.
+i also don’t know how secure trembling’s session and auth  features are.
+such a vm has no reason to be language  dependent.
+i also wanted to  find out if i could use pyjaco with jquery.
+first we generate the  library: pyjs.py --builtins=generate --output=py-builtins.js pyjs.py is the name of the pyjaco command.
+in fact, we now have a fully functional todo list that allows adding todos and checking them off.
+i can imagine a lot of people being really excited about cofeescript, especially ruby and perl programmers, and possibly even php programmers.
+html would probably not work as well since normally the entire body is the top level of intent.
+like ruby and perl, coffeescript violently violates what i consider the most important rule of python: “there should be one — and preferably only one — obvious way to do it.”
+i looked at backbone.js, but was more attracted tospine.js.
+aspen throws that  all away.
+i would also like to try it on a more complicated project  just to see how well it performs.
+aspen provides numerous service connectors, sodeployment can also be trivial.
+let’s also load the future pyjados.js script at this time:  pyjaco todo list example     now, before we start coding the python file that will be compiled to javascript, i want to discuss what i consider to be the most confusing aspect of pyjaco development.
+to those users suggesting python to javascript compilers, i’ve been aminor contributor to the pyjaco project, a rewrite of the pyjs library.
+i also wanted to try out coffeescript, as i’ve always hated writing javascript, and i wanted to use some sort of client-side orm for localstorage.
+the irc channel is full of friendly, knowledgable, helpful people at any time of day.
+the script can be compiled using the pyjs.py that comes with the pyjaco source distribution (and, thanks to asimple patch i submitted, will come with the binary distribution in the next release.)
+the simple truth is, writing coffeescript leaves me feeling like i’ve done something dirty, no less dirty than writing javascript.
+update: i just stumbled across http://www.gnu.org/software/pythonwebkit/ and i can’t wait to play with it!
+let’s create a class to manage the various todo elements: class todosapp: @jsvar("jquery", "js_add_form") def __init__(self):
+i was hacking on the py3k branch of pypy.
+this post goes further by acting as a tutorial for writing a basic todos app using pyjaco.
+append(js('%s' % (id, todo)))
+add the bracket and let it automatically recompile itself: @jsvar("alert") def setup(): alert(js("pyjados hello alert")) jquery(js(setup)); let’s analyze this snippet.
+i’m not going to argue why this is a good idea, i understand that some programmers prefer the “even if i don’t understand it, i can write code that will probably work” paradigm that ruby promotes.
+you will see examples of these shortly.
+the code is therefore wrapped in a  call todict(), which converts the object to a dictionary.
+before we start implementing our todo list, let’s look at an example  of accessing a javascript variable inside a function.
+chad seems to have a terrific minimalist policy of telling you exactly what you want to know in as few words as possible.
+on the positive side, rpython and python are much easier to read and write  than c. the pypy devs are brilliant, but not intimidating.
+i think locators  should be succinct and divorced from implementation details.
+pypy has a solid test framework,  and the pypy crew are focused on a 100% test-driven-development paradigm.
+method (make sure to add js_stored_todos to the jsvars decorator): js_stored_todos = localstorage.getitem("todolist") if js_stored_todos: stored_dict =dict(py(json.parse(js_stored_todos)))
+function hooks up the form’s submit button  to a method on the object.
+i am happy to admit i was working  primarily on changingprint statements to print() functions and commas in exceptions to theas keyword.
+i  ended up with a stack overflow.
+the entire example can be found on my github fork christian iversen is actively working on pyjaco right now.
+i am  still evaluating it, but one thing i can say unequivocally is that it’s  different.
+in a way, html 5, css 3, and dom manipulation have emerged as a de facto standard mvc and gui system.
+seehttps://github.com/chrivers/pyjaco/tree/devel/examples for three examples.
+i think locators should be succinct and divorced from implementation details.
+it’s certainly easy to get  started, but i don’t know how easy it is to become intimate with the  project.
+this is the file we included in our  html file.
+this project is a step towards that goal.
+no matter which of the foldmethods i used, it seemed like it was always too tedious or too manual.
+i avoid bash whenever i can, so this may not be the prettiest bash script you've ever seen.
+when they are open, i see the whole file.
+dict([(int(i), stored_dict[i]) for i in stored_dict.keys()]) self.next_id = max(
+in fact, we now have a fully functional todo list that allows adding todos  and checking them off.
+typing v [venvname] will walk the same tree looking for a directory named [venvname] to activate.
+while it is true that the most restrictive operating systems only permit us to code in objective c, in general, it is not considerate to restrict your developers a single language or environment.
+while each framework has its perks and  annoyances, they all have this underlying mvc-like interface.
+perhaps a foldnestmax of 2 or 3 would be helpful here.
+tags: conference, pycon, python pyjaco in a real app: todos with local storage january 8, 2012,  10:15 pm i didn’t get the memo, but there appears to be a movement to  demonstrate emerging web technologies with a simple todo list application, much  as hello world is used to introduce programming languages.
+tags: aspen, python, web framework category:uncategorized  |  2 comments easily changing virtualenvs march 20, 2012, 3:26 am the workon script available in virtualenvwrapper is a useful  tool for switching virtual environments on the fly.
+therefore, we convert it usingjs() as we pass it into the alert call.
+when i finally figured out the distinction, my first thought was, “ok, let’s prefer to always work with python variables.”
+however, the original python file looks much more readable than an equivalent javascript one would.
+now, with the review over, i’d like to introduce a little project i’ve started to provide some vital features that aspen core is missing.
+the def add_todo method has its single parameter flagged as a @jsvar, since the method is being called internally by jquery when  the event occurs.
+ideally, i believe there may be a happy medium between aspen’s enforced folder structure, and the overly-abstract and overly-complicated url scheme django and its kin provide.
+i don’t have exact numbers,  but for “historical reasons”, a non-python file containing base64  encoded data was given a .py extension.
+i am happy to admit i was working primarily on changing print() functions and commas in exceptions to the as keyword.
+also note how, because we are writing  in a python function, manipulating the python valueself.next_id requires no conversion, and calling the python functionself.render is also clean.
+pyjaco does not currently work with python 3, so in arch linux, i use the virtualenv2 command.
+in the render function itself, i think it’s pretty cool that string formatting using % is supported by pyjaco (as an aside, the str.format method introduced in python 2.6 is not yet available) and that the python sorted() function is available.
+the first line is using exclusively javascript arguments, and returns the  element containing the checkbox that was clicked.
+and then there’s the question of supporting python in the web browser.
+i’ve managed to both lock up firefox and hard crash it while using the pyjaco library.
+when the test passes, commit, push to a bitbucket repo, and issue a pull  request.
+this is the only  html page in our app, and it can be refreshed to load our changes as we work.
+the first, which is used in the pyjaco examples, and appears to be the preferred method at this time is to create a custom main() method that uses various pyjaco.
+you are working on a python 2  application that executes python 3 bytecode!
+i think it’s a lovely framework and i expect to continue using it.
+one of the pypy devs,holger kregel explained to me that pypy  does not have over 1 million lines of code.
+however, i miss the testclient feature from django that allows me to mock a request without running the server.
+so now i have exactly what i want: a few top-level folds are created automatically based on indentation, but i don’t have to fuss with interior indentation in other folds.
+on the positive side, pyjaco is under active, rapid development.
+for example, many mobile apps are developed  with html 5 interfaces that are rendered by a packaged web library rather than  an unknown browser.
+the web is a platform, and we must take guido’s statement as a call to improve this platform, not to give up on it.
+now let’s create a basic html 5 page with jquery loaded:    pyjaco todo list example    pyjaco todo list example   we can load this in our web browser using a file:// url.
+ask on irc, the pypy  crew are very helpful.
+make sure the javascript console is displayed and reload the page.
+his basic assertion is that the browsers aren’t going to  support this because nobody uses it and that nobody uses it because the  browsers don’t support it.
+if any of you are attending pycon 2012 in santa clara, ca this week, make sure to bump into me.
+your todos will be stored!
++ 1   self.render() note that calling py() on the output of json.parse creates a python object, not a python dict.
+i prefer to keep my virtualenvs in the same folder as whatever source code  or project they apply to.
+overall, i am much less intimidated by this project than i was before i  started the dev sprints.
+quit=0 deactivate && gt;/dev/null cwd=$(pwd)
+it contains rpython, but if it starts with “app_” it contains python.
+update 2: from the number of comments on this article, it appears that my  article has hit some web aggregator.
+or contact me to schedule a meetup.
+such a vm has no reason to be language dependent.
+these include alert, window, document and the like, as  well as variables in third-party javascript libraries, such as the ubiquitous jquery.
+i chose python because it matched my philosophy… not the other way around.
+another great feature of aspen is its documentation.
+chad has assured me that aspen is up for running large sites.
+note that the todos dict is a python object, so when we insert  the value of thejs_add_box into it, we must convert it from a  javascript object usingpy().
+there is a missing close bracket on the alert line.
+note also how we can loop over items() on the self.todos dictionary just as if we were using a normal python dictionary.
+i hope one of these or a new upstart will soon gain community momentum so frontend development is no longer painful.
+for example, many mobile apps are developed with html 5 interfaces that are rendered by a packaged web library rather than an unknown browser.
+tags: pyjaco, python, todos, web development after giving up on coffeescript, i decided to play around with pyjaco the python to javascript compiler.
+aspen provides numerous service connectors, sodeployment can  also be trivial.
+trembling is kind of a catch-all project with a few basic helpers and a few useful projects.
+the distinction between python and javascript variables introduces a couple of complications to writing pyjaco compatible python code.
+we start by adding astore() method to our class: @jsvar("localstorage", "json") def store(self):  localstorage.setitem("todolist", json.stringify(js(self.todos)))
+function v { # activate a virtualenv # usage: v # activate the virtualenv named venv # usage: v venvname # activate the virtualenv named venvname name =venvif [ $1 ] ; then name=$1 fi olddir=$(pwd)
+this post goes further  by acting as a tutorial for writing a basic todos app using pyjaco.
+numpy programmers had a list of fuctions  that needed implementing, but i can’t find the link.
+pyjaco supports this as well, using the provided pyjs.py script.
+load the pyjados html file, add some todos, check a few of them off, then close and reload the web browser.
+having sprinted on python
+pyjaco automatically compiles console.log output.
+the pyjaco examples  all embed generated javascript in an html page.
+reload the page again and notice how checkboxes have been displayed beside each todo.
+it is a nice tool  with a lot of potential.
+a variety of factors, including beazely’s thorough keynote address motivated me to join the pypy team during the pycon developer sprints.
+if i set it to two, it happens at each method in each class.
+namely, trembling provides: basic sessions less than basic single request messages a simple redirect response aspen itself does not define or require a model layer; you’re free to  use the orm, dbapi connector, or nosql database of your choice.
+it  serves static files for css, javascript, and images just as easily.
+now, let’s create our first python code and watch it compile to  javascript.
+trembling is kind of a catch-all project with a few basic helpers and a  few useful projects.
+there is code for argument parsing that would not have been needed if i had hand-written javascript.
+the code does not appear to be  well-documented.
+hopefully this article will encourage you to do the same.
+javascript variables refer to  “normal” variables that you would call in javascript.
+this is a bit odd, since the jsvar decorator is never actually  imported into the namespace.
+web browsers can be viewed as a zero install interface, a virtual  machine for these applications.
+i also wanted to find out if i could use pyjaco with jquery.
+jquery mobile was at the top of the list.
+now all we have to do is ensure the self.todos dict is loaded  fromlocalstorage when the app is initialized.
+my directory structure therefore looks like this: /home/dusty/code/ + project1 | + src | | + pkg1 | | + pkg2 | + doc | + venv + project2 | + src | + venv27 | + venvpypy + project3 | + venv ... and so on
+i prefer to keep my virtualenvs in the same folder as whatever source code or project they apply to.
+this line is a bit  hard to read, but i wanted to include it to demonstrate that pyjaco can parse  list comprehensions.
+it’s far better than javascript.
+if you run hg in the pypy/modules/ directory, it will try to pick standard library modules from pypy and choke horribly.
+the complete_todo method looks like this: @jsvar("event", "jquery", "todo_item") def complete_todo(self, event):
+i already new about the foldminlines setting which only creates a fold if more than a specific number of lines is displayed.
+ideally, i believe  there may be a happy medium between aspen’s enforced folder structure,  and the overly-abstract and overly-complicated url scheme django and its kin  provide.
+it is hard to write valid code, and harder to  debug.
+todo_item = jquery(event.target).parent() id = int( py(todo_item.attr("id"))[5:]) del self.todos[id] todo_item.delay(1500) .fadeout("slow")
+they are so  confident in their test suite that they are comfortable programming in a  “cowboy coding” style, hacking randomly until all the tests pass.
+i am excited about this project and hope that further community involvement will help it evolve into a practical and useful tool.
+add the following to the end of the __init__
+now add this call to the end of the two methods that manipulate the todo list, add_todo and complete_todo: self.store() .
+pyjaco  does not (currently) know that a javascript variable is returned when calling a  method on an existing javascript variable.
+function hooks up the form’s submit button to a method on the object.
+pyjaco does not (currently) know that a javascript variable is returned when calling a method on an existing javascript variable.
+it’s not a bad language, it just doesn’t fit in well with my personal philosophy.
+i’d like to answer his question in a bit more detail.
+this is a project with a lot of potential,
+overall, i think the combination of trembling and aspen will be very useful for my future basic sites.
+i am still undecided about spine.js, but i have come to the conclusion that coffeescript is not for me.
+in my last post, i introduced using jquery with pyjaco, the python javascript compiler.
+there are basically two types of variables in pyjaco, javascript variables, and python variables.
+you can refactor much of the code into backend libraries  and test that, of course, or you can start the service running and mock  requests.
+when excluding this file from the line  count, around half a million lines of actual python code exist, and about a  quarter of these are tests.
+another downside is that i haven’t figured out a good way to unit test aspen simplates.
+start by adding a form for submitting todos and a list to render the todos to the html body:  pyjaco todo list example   add todo    nothing too exciting here.
+there is a missing close bracket on the  alert line.
+i appreciate the power of regex urls, and i don’t necessarily like having arbitrary file extensions in urls.
+however, this link is not regurgitated, it’s an interview i gave to http://mylinuxrig.com/ so it’s my own words: http://www.mylinuxrig.com/post/9557009605/the-linux-setup-dusty-phillips-developertags: arch linux, awesomewm, interview, python
+files in another directory, one of coffeescript’s killer features.
+the output file pyjados.js is regenerated each time.
+client side local storage has created fully javascript  applications that require no or optional network connectivity.
+add the following to  the end of the__init__ method (make sure to add js_stored_todos to the jsvars decorator): js_stored_todos = localstorage.getitem("todolist")   if  js_stored_todos: stored_dict =dict(py(json.parse(js_stored_todos)))
+web browser applications are not necessarily deployed to myriad unknown  clients.
+now let’s add the ability to complete todos.
+today, while editing a python file over a remote connection that has high enough latency to interfere with rapidly scrolling through the file, i finally set out to solve this problem.
+here i  am installing from my personal fork, as it contains some changes for generating  the built-in standard library that have not yet been merged upstream.
+""" %(text)s """ and we change the for loop in render to: for id, todo in sorted(self.todos.items()): js_todo_items.append(js( todosapp.list_item_template % { "id": id, "text": todo}))
+the next step is to make clicking these boxes actually complete the todos.
+unfortunately, the resultant dict contains keys that are strings, whereas  our original dict used integer keys.
+if set to 99, opening a new file will always have all the folds expanded, which is what i want.
+if you are hacking on python 3 support, you need to bear in mind that the  pypy interpreter is written in python 2.

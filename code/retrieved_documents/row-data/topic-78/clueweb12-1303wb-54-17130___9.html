@@ -1,0 +1,146 @@
+<!doctype html>
+<meta charset="utf-8">
+<title></title>
+<body>
+ Lecture 15 Th 7/15/2004 CS61B, Jeff Schoner A lot of today's material comes 
+out of the CLR book (including many examples and the proofs) chapters 8 and 9. 
+Lower Bounds on Comparison Sorting Algorithms 
+--------------------------------------------- All the sorting algorithms we've 
+seen so far are comparison sorts: bubble sort, insertion sort, Shell's sort, 
+selection sort, merge sort and quicksort. All of these work by comparing 
+individual items against each other (thus why they're called comparison sorts). 
+You may have noticed that the best run-time we've been able to achieve from all 
+of these (collectively) is Omega(n log n) if n is the number items to be 
+sorted. It turns out that the worst case of any comparison sort cannot run any 
+faster than this limit. Let's prove it. We can represent any comparison sort on 
+a certain sized sequence as a decision tree. Each node in a decision tree 
+represents a binary decision with one outcome causing the left branch to be 
+followed and the other outcome, the right branch. In our case, each node 
+represents a comparison between two elements a and b (a:b in the node). If a 
+&lt;= b, we take the left branch. If a &gt; b, we take the right branch. By 
+this manner, eventually we'll reach a leaf, where a certain permutation of the 
+input is the resulting sorted sequence. A decision tree for insertion sort with 
+3 elements (the numbers are indices): 1:2 /--/ \--\ 2:3 1:3 / \ / \ (1,2,3) 1:3 
+(2,1,3) 2:3 ---\ / \ / | (1,3,2) (3,1,2) (2,3,1) (3,2,1) Since there are n! 
+possible permutations of a sequence of length n, there will be at least n! 
+leaves. If the sort is a correct sorting algorithm, all the leaves will be 
+reachable, thus n! &lt;= l, where l is the number of leaves. We know that a 
+binary tree with height h cannot have more than 2^h leaves. Combining these two 
+constraints: 2^h &gt;= l &gt;= n! and taking the log of all terms (ignoring the 
+middle one): h &gt;= log(n!) h in Omega(n log n) The sorting of any given 
+sequence represents a traversal from the root to a leaf of the tree. The length 
+of this traversal in the worst case is the height of the tree. Since we've 
+shown that the height of the tree is in Omega(n log n), that means the number 
+of comparisons for the worst case traversal (representing the worst case for 
+the comparison sort method), is also in Omega(n log n). Hence, merge sort in 
+general and quicksort on average, are as good as we can hope for complexity. It 
+may be possible to come up with a comparison sort algorithm that has lower 
+constants, but the asymptotic complexity can't be any better. Radix Sort 
+---------- Radix sort is not a comparison sort, but rather a distribution sort. 
+Individual items are not compared against each other. It is commonly used to 
+sort numbers. Here's some pseudo-code: radixSort(nArr, radix): for each digit d 
+in the numbers in nArr (from least to most significant) buckets = a new 
+radix-length array of lists for each number n in nArr // n steps 
+buckets[digit(n, d)] = new ListNode(n, buckets[digit(n, d)]) i = 0 for each 
+bucket b in buckets // radix steps for each number n in bucket b nArr[i] = n i 
+= i + 1 Example: radixSort((056 234 592 512), 10) initial d = 1 d = 2 d = 3 056 
+592 512 056 234 512 234 234 592 234 056 512 512 056 592 592 Interestingly, the 
+run time of radix sort is not limited by Omega(n log n) because it is not a 
+comparison sort. No actual comparisons are done. Instead, the values are 
+distributed into buckets by digit. If n is the number of numbers to sort, d the 
+number of digits and r the radix, the running time is clearly Theta(d(n+r)). 
+For sorting something like Java ints, because d = 32 (a constant in that case) 
+and r is also usually some constant (like 2 for binary), the run time here is 
+Theta(n). Linear time is certainly better than n log n time, but of course we 
+have to place these restrictions on the radix and number of digits. For 
+example, to sort something like a set of Strings, the radix could be the number 
+of possible characters (say 256), but d would have to be the length of the 
+longest String. That would give O(dn) time, which if d &lt;&lt; n, could still 
+be a big win running time wise. Bucket Sort ----------- Bucket sort is also a 
+distribution sort and works in a manner similar to radix sort. For this sort we 
+have to guarantee that all the items to be sorted fall in a certain fixed 
+range. For the general case, we can use the range [0,1]. Any other range could 
+be compressed down to this one and an analogous bucket sort algorithm could be 
+done. Here's the pseudo-code: bucketSort(nArr): bc = length of nArr buckets = 
+new bc-length array of lists for each item n in nArr // nArr.length operations 
+buckets[floor(n*bc)] = new ListNode(n, buckets[floor(n*bc)]) i = 0 for each 
+bucket b in buckets // bc == nArr.length operations insertionSort(b) // 
+quadratic # of ops in size of the bucket for each item n in b // linear # of 
+ops in size of the bucket nArr[i] = n i = i + 1 Example: 
+bucketSort((0.8,0.4,0.5,0.1,0.9)) bucket list after sort result 0.8 -&gt; 
+bucket 4 0 0.1 0.1 0.1 0.4 -&gt; bucket 2 1 / / 0.4 0.5 -&gt; bucket 2 2 
+0.5-&gt;0.4 0.4-&gt;0.5 0.5 0.1 -&gt; bucket 0 3 / / 0.8 0.9 -&gt; bucket 4 4 
+0.9-&gt;0.8 0.8-&gt;0.9 0.9 The general worst case of bucket sort is not all 
+that great: Theta(n + n (b^2 + b)) = Theta(nb^2). If all the elements end up in 
+the same bucket, b = n and the run time becomes Theta(n^3). However, if the 
+values are well distributed throughout the fixed range, b will tend towards 
+some constant (in the best case 1, since we have n items in n buckets), giving 
+a Theta(n) run time. This behavior should remind you of the running time of 
+hash table operations; good distributions mean small buckets/chains on average. 
+Selection --------- Selection is concerned with determining the ith order 
+statistic (the ith smallest item) of a set. We've already talked a bit about 
+how to find the minimum (1st order statistic) or maximum (nth order statistic) 
+in linear time. But how do we find an arbitrary order statistic efficiently? In 
+particular, this is useful for determining the median of a sequence. The median 
+of an odd-length set is the (n - 1) / 2 th order statistic. For an even-length 
+sequence there are really two medians: floor((n-1) / 2) (the lower median) and 
+ceil((n-1) / 2) (the upper median). The odd case could be said to have two 
+medians as well, but they are just the same number. To make things more 
+straightforward, let's just concern ourselves in general with the lower median, 
+which is always floor((n-1)/2). Furthermore, to keep things simple, we'll just 
+consider sets containing unique elements. Naive algorithm for finding an 
+arbitrary order statistic: - do merge or heap sort on the sequence - return the 
+(i-1)th index of the sorted sequence, where i is the desired order The running 
+time of this algorithm is bounded by the sort itself: Theta(n log n). It turns 
+out we can do better by using a divide and conquer style algorithm. When we did 
+quicksort, we broke the sorting problem up into two smaller sorting problems by 
+partitioning it. Here we will do something similar, except instead of 
+processing both new subproblems, we'll only need to process one of them. Here's 
+the pseudo-code: qselect(arr, start, end, i): // returns ith ordering statistic 
+from arr[start:end] if start == end return arr[start] q = partition(arr, start, 
+end) // our old friend partition from quicksort k = q - start if i == k // 
+pivot is at ordering stat i right now return arr[q] else if i &lt; k // pivot 
+is greater than the order stat i return qselect(arr, start, q-1, i) else // 
+pivot is less than the order stat i return qselect(arr, q+1, end, i-k) Example: 
+qselect((5,6,9,0,1,2,7), 0, 6, 3) // find median after partition w/ pivot 7, q 
+= 5, k = 5 -&gt; do smaller qselect((5,6,0,1,2,...), 0, 5, 3) after partition 
+w/ pivot 2, q = 2, k = 2 -&gt; do larger qselect((...,5,6,...), 3, 6, 1) after 
+partition w/ pivot 6, q = 4, k = 1 -&gt; found, stop The recurrence for the run 
+time and its analysis is rather complicated in this case, but the run time 
+turns out to be in Theta(n) so long as good pivots are being chosen. This of 
+course is more efficient than the naive Theta(n log n) method first described 
+above but like quicksort the running time is not guaranteed. However, there is 
+an algorithm that can perform in Theta(n) guaranteed time: select(arr, start, 
+end, i): // examine arr in groups of size 5 and at most one group of 
+(end-start+1) % 5 groups = (end-start+1) / 5 + ((end-start+1) % 5 == 0 ? 0 : 1) 
+medians = new array of length groups i = start j = 0 while (i+4 &lt;= end) // 
+compute the median for each group insertionSort(arr, i, i+4) // sort this 
+group, constant time medians[j] = arr[i+2] // get the median i = i + 5 j = j + 
+1 if (i &lt; end) // the extra group is still left insertionSort(arr, i, end) 
+// sort it in constant time medians[j] = arr[(end+i)/2] // figure out 
+&quot;median of medians&quot; x = select(medians, 0, medians.length-1, 
+(medians.length-1)/2) k = partition arr[start:end] around x if i == k return x 
+// at the correct ordering stat else if i &lt; k return select(arr, start, k-1, 
+i-k) else // i &gt; k return select(arr, k+1, end) Example: select((5 4 9 8 3 6 
+2 1 10 7 0 11), 0, 10, 4) group 1, sorted: (3 4 5 8 9), median: 5 group 2, 
+sorted: (1 2 6 7 10), median: 6 group 3, sorted: (0 11), median: 0 median of 
+medians (x): 5 after partition: (4 3 2 1 0 5 9 8 6 10 7 11), k = 5, do smaller 
+select((4 3 2 1 0 ...), 0, 4, 4) group 1, sorted: (0 1 2 3 4), median: 2 median 
+of medians (x): 2 after partition (0 1 2 3 4 5 9 8 6 10 7 11), k = 4, found 
+Let's analyze the running time. Because at least half of the medians found for 
+the groups of 5 are larger than the median of medians (x), at least half of the 
+ceil(n/5) groups contain 3 elements greater than x, except for the 1 group that 
+could have fewer than 5 elements and the group containing x. If we ignore these 
+two groups, the number of elements greater than x is at least: 3(ceil(1/2 * 
+ceil(n/5)) - 2) &gt;= 3n/10 - 6 By the same reasoning, the number of elements 
+less than x is at least 3n/10-6 as well. Therefore, at most n - (3n/10-6) = 
+7n/10+6 elements are processed in the next recursive call to select. With that, 
+we can write the following recurrence: T(n) &lt;= c_1 for n &lt;= c_2 T(n) 
+&lt;= T(n/5) + T(7n/10+6) + O(n) for n &gt; c_2 ^ ^ ^ | | | time for median of 
+time for recursive partition cost + cost medians computation call of doing 
+ceil(n/5) constant sized insertion sorts We have to choose a largish constant 
+c_2 (&gt; 70) in order to get the recurrence to solve to a closed form. This 
+just means that determining the ordering statistic of an array of a certain 
+size (say 140) or smaller is bounded by a constant of our choosing. In the end, 
+T(n) is in Theta(n) in the worst case guaranteed. 
+</body>

@@ -1,0 +1,362 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Lisp &laquo;  Jorge Tavares weblog</title>
+<body>
+
+<h1>Jorge Tavares weblog</h1> 
+<h2>Posts Tagged &lsquo;<strong>Lisp</strong>&rsquo;</h2> 
+<h2>zsort: portable sorting algorithms in Common&nbsp;Lisp</h2> 
+<p>with 6 comments</p> 
+<p>zsort is a library that I started working on as a simple hobby project. 
+More or less around the same time I decided to checkwhich algorithms the 
+different Common Lisp implementations use. It is now part of Quicklisp so it 
+can be easily used (thanksZack!). </p> 
+<p>The main goal of zsort is to be a collection of portable sorting 
+algorithms. If they can be fast, even better. Common lisp provides thesort and 
+stable-sort functions but these can have different algorithms implemented 
+according to each implementation, which can make an application unportable if 
+you rely on a specific type of sorting. Also, the standard functions might not 
+be the best for a certain situation and as such you might need a specialized 
+sort. Even if for most situations the standard functions are more than enough, 
+thezsort library could be a useful complement.</p> 
+<p>Right now the implemented algorithms are: insertion sort, quicksort, 
+randomized quicksort, merge sort, heapsort and counting sort. The plan is to 
+add more algorithms, for example,bucket sort and timsort. However, the main 
+thing on the todo list is adding the possibility ofexternal sorting (to handle 
+large amounts of data) and parallel versions of some sorting algorithms. I am 
+considering usinglparallel for this but I am still undecided.</p> 
+<p>There is still a lot of work to be done, but I think the library as it is 
+can already be a little useful. And of course, all kind of suggestions and 
+improvements are welcome!</p> 
+<p>Written by Jorge Tavares </p> 
+<p>April 22, 2012 at 20:15</p> 
+<p>Posted in Programming</p> 
+<p>Tagged with Common Lisp, library, Lisp, Sorting Algorithms, zsort</p> 
+<h2>Macros Design&nbsp;Patterns</h2> 
+<p>with 4 comments</p> 
+<p>I was reading the thread What are some fun or useful macros? on reddit and 
+it reminded me ofanother thread that appeared in the Pro mailing list. These 
+kind of threads are always enjoyable because each time you learn something new 
+and see really interesting things. While reading them, it crossed my mind that 
+another variant of this question would be<em>what are some fun or useful macros 
+design patterns</em>. Instead of examples of specific code macros (general or 
+not) it would be nice to see common programming practices using macros. So, for 
+a lack of a better expression name, let&rsquo;s call them<em>macros design 
+patterns</em>. </p> 
+<p>My favorite one is to configure an algorithm, especially when we want to 
+use the correct types. Essentially, we write an algorithm using a macro that 
+takes types or configuration arguments and then we expand it to the appropriate 
+desired configurations. For example, if you have an algorithm that operates on 
+different types of sequences, instead of writing several duplicate functions 
+with the same algorithm but with the associated type declarations, just apply 
+this pattern. A simple but contrived example: we want to compute the mean of a 
+vector but use its proper type. In addition, we might also want the possibility 
+of using a key to access the vector elements. We can write the following macro:
+</p> 
+<pre><code>(defmacro mean-body (vector vector-type vector-ref key) (let ((size 
+(gensym)) (i (gensym))) `(locally (declare (type ,vector-type ,vector)) (let 
+((,size (length ,vector))) (/ (loop for ,i from 0 below ,size sum ,(if key 
+`(funcall ,key (,vector-ref ,vector ,i)) `(,vector-ref ,vector ,i))) ,size)))))
+</code></pre> <code> </code> 
+<p><code></code></p> 
+<p>The macro contains the algorithm (in this simple case the mean) and the 
+arguments allow us to configure the multiple versions we need. If we want a 
+simple-vector, the macro will expand to use the correct type declaration and 
+svref. If a key function is needed it will also include it. Then, we can call 
+the macro with the several configurations value inside the main function:</p> 
+<pre><code>(defun mean (vector &amp;optional key) (typecase vector 
+(simple-vector (if key (mean-body vector simple-vector svref key) (mean-body 
+vector simple-vector svref nil))) (vector (if key (mean-body vector vector aref 
+key) (mean-body vector vector aref nil))) (otherwise (if key (mean-body vector 
+sequence elt key) (mean-body vector sequence elt nil)))))</code></pre> <code> 
+</code> 
+<p><code></code></p> 
+<p>This can be very useful in situations where we want to optimize code since 
+it becomes easy to add the proper type declarations to the input arguments of 
+an algorithm. Moreover, we keep the algorithm in a single place, making it 
+easier to maintain. Depending on the situation, we can also define a function 
+for each configuration. In the example we could have a mean-simple-vector and 
+mean-vector.</p> 
+<p>I don't know if it has already a specific name but I like to call it <em>
+the configurable algorithm pattern</em>. I find it very useful. And thinking 
+back to the redditthread, what are your favorite macros design patterns? Which 
+ones do you find useful and use them regularly? If you want to share, feel free 
+to drop a line. I am interested in seing and learning other patterns!</p> 
+<p>Written by Jorge Tavares </p> 
+<p>February 13, 2012 at 11:20</p> 
+<p>Posted in Programming</p> 
+<p>Tagged with Common Lisp, Design Patterns, Lisp, Macros</p> 
+<h2>Sorting algorithms used in the CL&nbsp;implementations</h2> 
+<p>with 2 comments</p> 
+<p>Which sorting algorithm should one implement when developing a program? The 
+best answer is probably<em>none</em>. Use the sort provided by your 
+system/library/etc. Unless you know your input data has some special properties 
+that you can take advantage of, the provided sort should be enough for your 
+needs and probably is more efficiently implemented.</p> 
+<p>However, I think it is important to know what sorting algorithm is 
+implemented. If one knows the properties of the data, it is possible to 
+understand if the provided sort can or will pose a problem. In the same way a 
+programmer shouldn&rsquo;t implement a sorting algorithm every time it needs to 
+sort something, the programmer should also be aware of the 
+limitations/advantages of the system sort. That way one can decide if a special 
+sort is needed or not.</p> 
+<p>Common Lisp provides the functions sort and stable-sort. The HyperSpec 
+describes their operation well but it does not define the sorting algorithm. 
+That decision is left free to the implementations. In addition, both functions 
+don&rsquo;t necessarily share the same algorithm. The difference between the 
+two is that the second function sorts in a way that guaranteesstability, i.e., 
+two elements that are equal remain in the same position after sorting is 
+completed. The use of sort and stable-sort requires some care (see the section
+sort pitfalls) but lets focus on the algorithms and not on its usage.</p> 
+<p>What sorting algorithms do the major open source CL implementations 
+actually implement? I was curious about it and went to check the source forABCL,
+CCL, CLISP, CMUCL, ECL and SBCL. Not surprising, we find some differences 
+between the implementations. What it was more unexpected to discover is that 
+some implementations also use different sorting algorithms according to the 
+sequence type. A quick survey of the findings is summarized in the following 
+table (if anythings is incorrect, please tell me). The links for the source 
+code are in the implementation name (careful, in CCL and SBCL there are two 
+links).</p> Implementation sort stable-sort <br>
+ABCL merge sort (lists) / 
+quicksort merge sort <br>
+CCL merge sort (lists) / quicksort merge sort <br>
+
+CLISP tree sort tree sort <br>
+CMUCL heapsort merge sort <br>
+ECL merge sort 
+(lists) / quicksort quicksort (strings + bit vectors) / merge sort <br>
+SBCL 
+merge sort (lists) / heapsort merge sort <br>
+<br>
+
+<p>&nbsp;<br>
+ In terms of the implementation of sort, quicksort is the most 
+used algorithm, followed byheapsort. The choice for these algorithms is 
+expected. Both have an average-case performance of O(<em>n</em>lg<em>n</em>) 
+and heapsort guarantees a worst-case performace of O(<em>n</em>lg<em>n</em>) 
+too. Quicksort has a worst-case performance of O(<em>n2</em>) but it can be 
+optimized in several ways so that it also gives an expected worst-case 
+performance of O(<em>n</em>lg<em>n</em>). However, it seems that the quicksort 
+implementations are not completely optimized. In ECL (and ABCL) quicksort 
+implements a partition scheme which deals better with duplicate elements 
+(although is not the three-way partitioning) but it always picks as pivot the 
+first element. CCL chooses the pivot with a median-of-3 method and always sorts 
+the smaller partition to ensure a worst-case stack depth of O(lg<em>n</em>). 
+</p> 
+<p>As for CLISP, I think it uses a tree sort but I am not entirely sure. The 
+only source file I could find with a sort implementation wassort.d and it looks 
+like it contains an implementation of tree sort with a self-balanced binary 
+tree, which also gives this algorithm an average and worst-case performance of 
+O(<em>n</em>lg<em>n</em>). </p> 
+<p>As expected, most of the implementations use merge sort to implement 
+stable-sort since it is a stable sort with average and worst-case performance 
+of O(<em>n</em>lg<em>n</em>). Apparently, all implementations are bottom-up 
+merge sorts with the exception of CCL and ECL. Another interesting thing is 
+that merge sort is also used for lists in sort, in most of the implementations. 
+However, I found it surprising to find quicksort in the stable-sort column 
+because it is not a stable algorithm. Since it is only used for strings and bit 
+vectors, it is not really an issue. While reading the source code of the 
+implementations, I realized that ABCL was using quicksort in stable-sort for 
+all non-list sequences. This is a problem that exists in the current1.0.1 
+release but I&rsquo;ve sent a bug report with a quick fix to the maintainers. 
+The next release should have stable-sort fixed.</p> 
+<p>This exploration of the sorting algorithms used in the open source 
+implementations was very educational and interesting to me. I&rsquo;ve learned 
+what algorithms are actually used and enjoyed seing how they were implemented. 
+Just spotting the issue in ABCL stable-sort made this review worthwhile. I 
+think there is still room for improvement in some implementations but knowing 
+now the strengths and weaknesses of the sorts in CL is already good enough. On 
+a final note, I just wonder what are the algorithms used inACL and LW. </p> 
+<p>Written by Jorge Tavares </p> 
+<p>February 2, 2012 at 9:45</p> 
+<p>Posted in Programming</p> 
+<p>Tagged with Common Lisp, Lisp, Sorting Algorithms, Survey</p> 
+<h2>ECLM 2011&nbsp;Notes</h2> 
+<p>with 2 comments</p> 
+<p>This last weekend I was in Amsterdam to attend the European Common Lisp 
+Meeting. This was my third participation in a organized Lisp meeting (after the 
+first ZSLUG in Zurich and the ELS 2011 in Hamburg) and I am happy I&rsquo;ve 
+decided to go. I was only present at the meeting itself since going to the 
+dinners and city tour would have been way out of my budget. Anyway, the ECLM 
+was a nice venue. I enjoyed most of the talks and still had an opportunity to 
+talk with fellow lispers. I enjoyed talking withLu&iacute;s Oliveira and meeting
+Zach Beane.</p> 
+<p>The first talk was given by Nick Levine and it can be viewed in two parts. 
+In the first one, he talked about his experiences of trying to write aCL book 
+forO&rsquo;Reilly. It was quite interesting to see how hard can it be to 
+prepare a book, especially for a publisher who was (is?)not very lisp-friendly. 
+The second part was mostly about the community, although presented with a rant 
+on libraries. This is a topic that has been debated several times. Thanks to
+Quicklisp, the problem now is not installing libraries but <em>finding them and 
+knowing which ones are good</em>. I am not sure if creating another site as 
+suggested would be a good thing since resources are already scarce. Perhaps 
+more thought must be made in how to improve the current ones.CLiki still seems 
+to me the best starting point. Still, Nick Levine talk was good and 
+entertaining. One of the best in the meeting.</p> 
+<p>The following talks were mostly about companies that use CL as their main 
+programming language.Jack Harper talked about the company he recently started, 
+Secure Outcomes, that produces a unique portable fingerprint scanner. I must 
+say his talk was quite inspiring! He talked about how to get a startup running 
+and the decisions that took him to choose Lisp as the main development 
+language. In addition, he also explained why prefers Lispworks to any other 
+implementation.</p> 
+<p>Next, it was the talk given by Dave Cooper. I must confess his talk was the 
+weaker of the day mainly because he talked about two different subjects without 
+any connection. He started talking aboutGDL, the main product from his company, 
+Genworks. I&rsquo;m sure GDL can be a great thing but I didn&rsquo;t get much 
+from his talk. About halftime, the talk suddenly changed to theCommon Lisp 
+Foundation. This was the interesting part of the talk since he explained the 
+aims of CLF, the people behind it, etc. However, it was not clear how it will 
+distinguish itself from ALU in terms of operation (in terms of purpose, CLF 
+just focus on Common Lisp while ALU in all Lisp dialects) and this was the main 
+concern that was expressed during the questions time. After presenting CLF, and 
+since there was still some time left for the next presenter, he went back to 
+GDL.</p> 
+<p>Afterwards, it was the turn of Luke Gorrie to present his lisp-hacker 
+startupTeclo Networks. His talk was an expanded/updated version of the one 
+given in Zurich. Still, it was also quite interesting. He started by telling 
+how a group of hackers with a Lisp and/orErlang background got together to 
+improve the mobile TCP/IP communications. Then, he showed us how TCP badly 
+misbehaves in a mobile network and how their product,Sambal, can give 10% to 
+27% improvements. Another interesting point of the talk was that CL is used as 
+their main development language. In short, it is used to develop and study all 
+their algorithms. They have a TCP/IP stack fully implemented in CL! Moreover, 
+all their analysis and maintenance tools are also all in CL. However, in the 
+actual product boxes they have reimplemented the algorithms in C. The reason: 
+extreme pragmatism. Luke concluded by hinting that the sales of their product 
+is going very well!</p> 
+<p>In the afternoon the talks started with Paul Miller from Xanalys. The talk 
+was dedicated toLink Explorer, a windows desktop tool to analyze data. The 
+application is quite impressive and was developed using just CL. Paul also gave 
+us a demonstration of the tool as well as some notes on future development.</p> 
+<p>The best and most awaited talk, <em>Quicklisp, technically and socially</em>
+, was given byZach Beane. The talk focused on several aspects of Quicklisp. 
+Zach started by giving an overview of the famous library problem of CL, the 
+solutions that existed before QL, explaining their advantages and 
+disadvantages. Also, and very important, what people were actually using and 
+what difficulties they were facing. In a survey he did, most CL programmers 
+were installing libraries by hand, including Zach! Then he proceed to how 
+Quicklisp was developed, some technical issues, what is the role of Quicklisp 
+and what is the reception after one year. The talk focused then on the social 
+impact of Quicklisp in the community. One of the things that makes Zach happy 
+it&rsquo;s the number of emails he gets saying that people are back to using CL 
+and contributing more to the community (i.e., making libraries available) 
+because of QL. Finally, some indications of what is to come. My perception is 
+that the possibility to enable hacking as it was possible with clbuild is one 
+of the most exciting future features for Quicklisp. Zach&rsquo;s talk was 
+excellent from all points of view!</p> 
+<p>The last talk of the day was by Hans H&uuml;bner. This was my second 
+favorite presentation. Although the topic, code style and conventions, can 
+start some heated discussions, I must say that I agree with almost everything 
+Hans H&uuml;bner mentioned. However, like everything, some common sense is 
+always necessary. One of the main points was that lispers should not use 
+constructions which are not part of the standard language when the standard 
+provide options, just because you want to save some typing. It is more 
+important for another programmer to understand faster what is written than 
+forcing him to look for the definition of the unusual constructs. Theif*, bind 
+were examples given. Hans also talked abut the 80-column rule, style guides, 
+etc. In the end, it always depends on the project, the people, etc, but code 
+style is important and should not be ignored.</p> 
+<p>The meeting ended with several lightning talks. The most interesting bits 
+were:Marco Antoniotti announced ELS 2012, to be held in Zadar, Croatia, around 
+April-May;Christophe Rhodes talked again about swankr, a swank and slime for R; 
+theannouncement of ABCL 1.0.0 by Erik Huelsmann. </p> 
+<p>Some words on the organization. Organizing a meeting of this kind is not 
+easy andEdi Weitz and Arthur Lemmens must be congratulated for making a great 
+event. Not all was perfect but everything went smoothly. I wish that it 
+continues to happen in the coming years!</p> 
+<p>Written by Jorge Tavares </p> 
+<p>October 26, 2011 at 21:19</p> 
+<p>Posted in Programming</p> 
+<p>Tagged with Common Lisp, Lisp, Meetings</p> 
+<h2>NXT&nbsp;2.0</h2> 
+<p>leave a comment &raquo;</p> 
+<p></p> 
+<p>Yesterday I finally dedicated some time to assembly my newest toy: a Lego 
+Mindstorm NXT 2.0! I just made the basic drive rover with some sounds. I need 
+now to explore more the capabilities of the NXT. I need to see what other 
+options exist in terms of programming the brick.</p> 
+<p>As before, the internal language it&rsquo;s a bit limited. I played with 
+the original Mindstorm a few years ago. Already back then, I used for a few 
+experiments a set of Lisp macros to generate some commands for the rover. There 
+isXS in Lisp but I&rsquo;m not sure if that is what I want. Something more like 
+lejOS would be nicer (but in Common Lisp). Anyway, regardless of that, a 
+mindstorm is always a cool toy :-)</p> 
+<p>Written by Jorge Tavares </p> 
+<p>June 13, 2011 at 10:18</p> 
+<p>Posted in Programming</p> 
+<p>Tagged with Fun, LEGO Mindstoms, Lisp</p> &laquo; Older Entries <br>
+
+<p></p> 
+<h3>Pages</h3> 
+<ul> 
+<li>About</li> 
+<li>Publications</li> 
+<li>Contacts</li> </ul> Search for: <br>
+
+<h3>Recent Posts</h3> 
+<ul> 
+<li>zsort: portable sorting algorithms in Common&nbsp;Lisp</li> 
+<li>Best Paper Award at EuroGP&nbsp;2012</li> 
+<li>Book review: The Tangled&nbsp;Web</li> 
+<li>Macros Design&nbsp;Patterns</li> 
+<li>Sorting algorithms used in the CL&nbsp;implementations</li> 
+<li>Packages organization and exporting&nbsp;symbols</li> </ul> 
+<h3>Categories</h3> 
+<ul> 
+<li>Blog (4) </li> 
+<li>Programming (19) </li> 
+<li>Publications (2) </li> 
+<li>Research (13) </li> 
+<li>Science (2) </li> </ul> 
+<h3>Tags</h3> Ant System Bio-Inspired Algorithms Book Book review 
+Collaborations Common Lisp Complex Systems Conferences Curiosity Dublin Essay 
+EuroGP Evo* EvoBio Evolutionary Computation Genetic Programming GSL GSLL Haskell
+HIS Human Evolution Javascript libraries Lisp Macros Meetings Michael O'Neill 
+Molecular Docking Mozilla NCRA News Optimization Power Laws PPSN pseudo-random 
+numbers Publications Quicklisp SBCL Self Services Social Networks Sorting 
+Algorithms Talks Vehicle Routing Problem VRP <br>
+
+<h3>Archives</h3> Select Month  April 2012 &nbsp;(2)  February 2012 &nbsp;(3)  
+November 2011 &nbsp;(1)  October 2011 &nbsp;(1)  September 2011 &nbsp;(1)  July 
+2011 &nbsp;(1)  June 2011 &nbsp;(2)  May 2011 &nbsp;(1)  March 2011 &nbsp;(2)  
+December 2010 &nbsp;(1)  November 2010 &nbsp;(1)  October 2010 &nbsp;(1)  
+September 2010 &nbsp;(3)  May 2010 &nbsp;(1)  February 2010 &nbsp;(1)  December 
+2009 &nbsp;(1)  October 2009 &nbsp;(1)  September 2009 &nbsp;(2)  August 2009 
+&nbsp;(2)  June 2009 &nbsp;(1)  October 2008 &nbsp;(1)  September 2008 &nbsp;(1)
+ August 2008 &nbsp;(1)  July 2008 &nbsp;(2)  June 2008 &nbsp;(2)  May 2008 
+&nbsp;(1)  April 2008 &nbsp;(1) 
+<h3>Recent Tweets</h3> 
+<ul> 
+<li>Just made a short post about zsort, a simple lib that aims to collect 
+several sorting algorithms in CL:http://t.co/0wJMlJK1 #lisp 1&nbsp;week&nbsp;ago
+</li> 
+<li>Just returned from my best #evostar2012 ever! And with a Best Paper Award 
+:-)http://t.co/XkDcD9HU 1&nbsp;week&nbsp;ago</li> 
+<li>... and having a cold is really not fun at all :( 1&nbsp;month&nbsp;ago
+</li> 
+<li>Cleaning and organizing your twitter following and lists is hard work... 
+1&nbsp;month&nbsp;ago</li> 
+<li>Cool! My last patch for #abcl sort functions was accepted :) #lisp 
+1&nbsp;month&nbsp;ago</li> </ul> 
+<h3>Meta</h3> 
+<ul> 
+<li>Register</li> 
+<li>Log in</li> 
+<li>Entries RSS</li> 
+<li>Comments RSS</li> 
+<li>WordPress.com</li> </ul> <br>
+
+<p> </p> 
+<p>Blog at WordPress.com. Theme: The Journalist v1.9 by Lucian E. Marin.</p> 
+<br> <br>
+Follow 
+<h3>Follow &ldquo;Jorge Tavares weblog&rdquo;</h3> 
+<p>Get every new post delivered to your Inbox.</p> 
+<p></p> 
+<p></p> 
+<p></p> Powered by WordPress.com <br>
+<br>
+
+<p></p> 
+</body>

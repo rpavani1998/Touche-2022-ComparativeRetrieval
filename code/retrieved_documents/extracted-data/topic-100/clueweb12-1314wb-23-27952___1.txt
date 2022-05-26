@@ -1,0 +1,125 @@
+we don’t have to write latex documents from scratch, and everything is intuitive in lyx. you can clearly see the structure of your document, as well as figures (instead of \includegraphics{}), tables (instead of the gory \begin{table} numbers 1.4 & 2.2 & 3.8), headings (instead of \title{} \section{}) and math formulae (instead of $\frac{\gamma}{\alpha_{ij}}$)…
+pgfsweave will try to format your r code by default, e.g. add  spaces and indent where appropriate when your source code is not  well-formatted.
+for example, i hate typing \item in an itemize environment each time i need a new item.
+“what’s a  layout file?
+this is good because we don’t need  to worry about the version numbers.
+in the  past, i did not like writing latex documents just because i hate wasting my  time on typing the raw commands.
+in pgfsweave, we just set the width and height naturally in the code chunk options like >=.
+in all, it is a whole lot easier  and faster to write latex documents in lyx. this is the main reason for an  easier life of sweave, because a sweave document is nothing but a mixture of  latex and r code.
+a brilliant one is the pgfsweave package.
+although sweave in lyx is convenient to use, it is not a trivial task for  beginners to configure and understand how it works.
+i use command-line tools a lot every day, but i am still  “gui-addicted”.
+there might  be some text editors which can automatically do this tedious task, but the more  serious problem is i cannot see the whole picture — in my eyes there are  only commands; my imagination is limited — it is difficult for me to  imagine\section{} to be a section title.
+this is good because we don’t need to worry about the version numbers.
+: r cmd  pgfsweave your-file.
+" r can accept a string in its -e argument, e.g. yihui@xie:~$ r -q -e "rnorm(5)" > rnorm(5)
+it was built upon the cachesweave package to support caching r objects (to avoid unnecessary repeated computations and save time), and it also provided a mechanism to cache graphics!
+i did not add r’s texmf directory to the root directory of miktex;  instead i copied all the files to the user directory of miktex (this can be a  bad practice too)
+for example, you may ask “what’s a texmf tree?”
+you are still reading… so first you have to read gregor gorjanc’s paper in r news and that make most things clear in this blog entry.
+instead, i  use this way: r -q -e "library(pgfsweave);pgfsweave('yourfile.
+gregor’s original definition for breaking a line was ctrl+enter.
+“where is the preference file?”  “what’s a converter?”
+i added another environment in lyx named scrapcenter, which  is for the code chunks that produce plots, because plots are usually centered  in the page.
+however, lyx has provided  a perfect solution to lazy people like me.
+r-bloggers.com offers daily e-mail updates aboutr news and tutorials on topics such as: visualization ( ggplot2, boxplots,  maps, animation), programming ( rstudio, sweave, latex, sql, eclipse, git,  hadoop, web scraping) statistics ( regression, pca, time series, ecdf, trading)  and more...
+… i spent several hours on writing an r script trying to cover all these gory  details automatically, so the configuration becomes as easy as source('http://yihui.name/en/wp-content/uploads/2010/10/lyx-pgfsweave-config.
+this is the main reason for an easier life of sweave, because a sweave document is nothing but a mixture of latex and r code.
+source('http://yihui.name/en/wp-content/uploads/2010/10/lyx-pgfsweave-config.
+this is a new feature of r 2.12.0 (reporting line numbers in case of errors), and i’m still trying to figure out how to get around it.
+please feel free to report problems during your installation and configuration.
+we don’t have to write latex  documents from scratch, and everything is intuitive in lyx. you can clearly see the structure of your document, as well as figures  (instead of\includegraphics{}), tables (instead of the gory \begin{table} numbers 1.4 & 2.2 & 3.8), headings (instead of \title{} \section{}) and math formulae (instead of $\frac{\gamma}{\alpha_{ij}}$)…
+beside the speed issues, a remarkable feature is the quality of graphics — it is unbeatable.
+“what’s a layout file?
+sweave.styto add line numbers to the code chunks in latex, and the real sweave style file i’m using is sweavex.sty.
+it was built upon the  cachesweave package to support caching r objects (to avoid unnecessary repeated  computations and save time), and it also provided a mechanism to cache  graphics!
+if you got this far, why not subscribe for  updates from the site?
+“where is the preference file?”
+in all, it is a whole lot easier and faster to write latex documents in lyx.
+tags: featured, literate programming, lyx, pgfsweave, r language, r programming, reproducible research, sweave comments are closed.
+i hope this is useful to the community.
+a sweave document is dynamic in the sense that everything in the  document can be changed by the r code (nothing is hard-coded), so we  don’t need to worry too much about the specific numbers and plots in the  output.
+scrapcenter, which is for the code chunks that produce plots, because plots are usually centered in the page.
+under mac and windows, the path for lyx was hard-coded as lyx16 , which is surely subject to changes in future when new versions of lyx  come out.
+and i did the same thing to mac and ubuntu.
+a few more things i need to add are: i modified the file literate-scrap.inc so that we can hit the enter key to start a new line in r code, which is more natural for the users,  i think.
+for those who do  not know sweave well, a good place to look at is the help page?sweave .
+r') in r under windows or ubuntu or mac; i tried my best to automatically  configure latex, r and lyx; restart lyx as instructed, and you can enjoy pgfsweave in lyx  now — either play withmy demo (click to download), or diy: create a new  document, change the document class to article (sweave noweb) from document  –> settings, switch the environment to scrap from the top-left drop  list, start your sweave code chunks like >= rnorm(10) @ and click the pdf button to compile this document.
+i use command-line tools a lot every day, but i am still “gui-addicted”.
+there might be some text editors which can automatically do this tedious task, but the more serious problem is i cannot see the whole picture — in my eyes there are only commands; my imagination is limited — it is difficult for me to imagine \section{} to be a section title.
+for example,  you may ask “what’s a texmf tree?”
+take a look at the video in this entry if you don’t understand  the title.
+how to start using (pgf)sweave in lyx in one minute october 30, 2010  byyihui xie (this article was first published on statistics, r, graphics  and fun » r language, and kindly contributed to r-bloggers)
+this will make the style of graphics completely consistent with the body of a document, e.g. the fonts.
+but i have to confess it is a really  nasty script — (for windows) it calls several system commands to help the  configuration, such asinitexmf or mpm, or setx to set the system path variable; this is a dangerous practice and some  users may feel extremely uncomfortable with it.
+this will make  latex know the style definitions for sweave.
+a few more things i need to add are: enterkey to start a new line in r code, which is more natural for the users, i think.
+g regor gorjanc published an interesting article “using sweave with lyx” inr news in 2008, which (i believe) makes it much easier to use
+however, lyx has provided a perfect solution to lazy people like me.
+for those who do not know sweave well, a good place to look at is the help page ?
+the video below can give you an idea on what it looks like in lyx (chinese visitors please go to photobucket or 56.com to watch the video): as we can see, r code can be easily embedded into lyx. if you are familiar with sweave, you don’t even need time to learn anything.
+instead, i use this way: r -q -e "library(pgfsweave);pgfsweave('yourfile.
+by the way, i also like the nogin option for sweave.sty to be  the default in pgfsweave, because i really don’t like the idea of setting  the size of graphics by a latex macro\setkeys{gin}{width=0.8\textwidth} .
+this packages uses the tikzdevice package to produce pgf/tikz graphics which are essentially latex code, in other words, the r graphics are represented in the latex language so that they are treated (compiled) in the same way as the body of a latex document.
+please feel free to report problems  during your installation and configuration.
+but i have to confess it is a really nasty script — (for windows) it calls several system commands to help the configuration, such as initexmf or mpm, or setx to set the system path variable; this is a dangerous practice and some users may feel extremely uncomfortable with it.
+configuration to make lyx work with sweave, we need to take these steps: put the latex style files such as sweave.sty under the texmf tree define the literate programming environment in lyx (literate-scrap.inc)  and corresponding layouts (the critical step) create converters to convert sweave documents to latex  (this is done in the preferences file) and the converter is like r -e  "library(pgfsweave);pgfsweave($$i,compile.tex=false)" where$$i is a variable in lyx denoting the input file each step involves with several novel concepts for beginners.
+while sweave is a great invention for reproducible research, there are  other packages which can improve r’s default sweave functionality.
+being: a comment line indicating the line number will be added to the beginning  of the code chunk.
+preferencesfile, with which i handled in a special way: if i could detect the sweave configurations in the old preferences, i will not do anything, otherwise i willappend the sweave configurations (converters) to the old preferences file.
+unfortunately pgfsweavehas not been adapted to r 2.12.0 in this aspect — there is a tiny bug for the time being: a comment line indicating the line number will be added to the beginning of the code chunk.
+after you have got everything ready, here are two demos that you can play  with: lyx and pgfsweave demo (7.6k)
+i need  to mention here that all the old configurations will be overwritten except the preferences file, with which i handled in a special way: if i  could detect the sweave configurations in the oldpreferences, i  will not do anything, otherwise i willappend the sweave configurations  (converters) to the old preferences file.
+under mac and linux, it tries to download and copy files to your home directory so that latex and lyx will work properly.
+lyx16, which is surely subject to changes in future when new versions of lyx come out.
+(i don’t want to comment more about microsoft  word here.)lyx is a somewhat wysiwyg tool based on latex, and on the first time  i saw it i decided that word was completely useless to me from then on.
+it will do no harm to your system, but i need to warn you first  in the spirit of “open source”.
+to put it short, install lyx and r as well as a working latex toolkit such as miktex or  texlive or mactex; run source('http://yihui.name/en/wp-content/uploads/2010/10/lyx-pgfsweave-config.
+in the above  video, i used a latex macro\sexpr{} to output the value of pi and i don’t need to write the specific number 3.1415926 there.
+in the past, i did not like writing latex documents just because i hate wasting my time on typing the raw commands.
+this is a new feature of r 2.12.0 (reporting line numbers in  case of errors), and i’m still trying to figure out how to get around it.
+this is my suggestion (and contribution), and i think this makes sense because many users just do not care about formatting r code (hence torture other people’s eyes), so let’s do it automatically with pgfsweave.
+i copied lyx configurations to the user directory of lyx as well.
+although sweave in lyx is convenient to use, it is not a trivial task for beginners to configure and understand how it works.
+to make lyx work with sweave, we need to take these steps: r -e "library(pgfsweave);pgfsweave($$i,compile.tex=false)" $$iis a variable in lyx denoting the input file each step involves with several novel concepts for beginners.
+i’m not using this approach in lyx, because this requires system admin privilege to install pgfsweave.
+unfortunately pgfsweave has not been  adapted to r 2.12.0 in this aspect — there is a tiny bug for the time
+in pgfsweave, we just set the width and height naturally in the code  chunk options like>=. pgfsweave comes with a command line usage like sweave
+gory details you are still reading… so first you have to read gregor  gorjanc’s paper in r news and that make most things clear in this blog  entry.
+i also modified sweave.sty to add line numbers to the code  chunks in latex, and the real sweave style file i’m using is sweavex.sty.
+linux usually stores configurations in the home directory as folders  with a dot, e.g.~/.lyx.
+[1] -0.2970093 -0.2171444 1.5645127 0.5422097 0.7359204
+users do not want their preferencesto be overwritten.
+this packages  uses thetikzdevice package to produce pgf/tikz graphics which are  essentially latex code, in other words, the r graphics are represented in the  latex language so that they are treated (compiled) in the same way as the body  of a latex document.
+this makes sense, i believe.
+under mac and linux, it tries  to download and copy files to your home directory so that latex and lyx will  work properly.
+linux usually stores configurations in the home directory as folders with a dot, e.g. ~/.lyx.
+this is convenient, which is good.
+it will do no harm to your system, but i need to warn you first in the spirit of “open source”.
+pgfsweavewill try to format your r code by default, e.g. add spaces and indent where appropriate when your source code is not well-formatted.
+this is my suggestion (and contribution), and i think this  makes sense because many users just do not care about formatting r code (hence  torture other people’s eyes), so let’s do it automatically with pgfsweave.
+this works for miktex under windows (server 2003 / win7), and texlive 2009  under ubuntu 10.10, mactex 2010 under mac os; r 2.12.0 or 2.11.1; lyx 1.6.x.
+by the way, i also like the nogin option for sweave.sty to be the default in pgfsweave, because i really don’t like the idea of setting the size of graphics by a latex macro \setkeys{gin}{width=0.8\textwidth} .
+the video below can give  you an idea on what it looks like in lyx (chinese visitors please go to photobucket or 56.com to watch the video): as we can see, r code can be easily embedded into lyx. if you are familiar  with sweave, you don’t even need time to learn anything.
+this will make the style of graphics completely consistent  with the body of a document, e.g. the fonts.
+users do  not want theirpreferences to be overwritten.
+after you have got everything ready, here are two demos that you can play with: lyx and pgfsweave demo (7.6k)
+r')in r under windows or ubuntu or mac; i tried my best to automatically configure latex, r and lyx; pgfsweavein lyx now — either play withmy demo (click to download), or diy: create a new document, change the document class to article (sweave noweb) from document –> settings, switch the environment to scrap from the top-left drop list, start your sweave code chunks like >= rnorm(10) @ this works for miktex under windows (server 2003 / win7), and texlive 2009 under ubuntu 10.10, mactex 2010 under mac os; r 2.12.0 or 2.11.1; lyx 1.6.x.
+pgfsweave comes with a command line usage like sweave: r cmd pgfsweave your-file.
+in the above video, i used a latex macro \sexpr{} to output the value of pi and i don’t need to write the specific number 3.1415926 there.
+[1] -0.2970093  -0.2171444 1.5645127 0.5422097 0.7359204
+take a look at this video if you feel confused.
+i’m not using this approach in lyx,  because this requires system admin privilege to install pgfsweave.
+related posts press enter in lyx sweave as you wish font families for the r pdf device on the gory loops in r syntaxhighlighter brush for the r language auto-completion in notepad++ for r script to leave a comment for the author, please follow the  link and comment on his blog: statistics, r, graphics and fun » r  language.
+g regor gorjanc published an interesting article “using sweave with  lyx” inr news in 2008, which (i believe) makes it much easier to use
+choose your flavor: e-mail, twitter, rss, or  facebook... tags: featured, literate programming, lyx, pgfsweave, r  language, r programming, reproducible research, sweave
+pgfsweave while sweave is a great invention for reproducible research, there are other packages which can improve r’s default sweave functionality.
+later i’ll explain how to connect lyx and r/pgfsweave in this way.
+i’m not exaggerating.
+instead, we focus on the code which produces these output.
+(i don’t want to comment more about microsoft word here.)lyx is a somewhat wysiwyg tool based on latex, and on the first time i saw it i decided that word was completely useless to me from then on.
+for example, i hate typing\item in anitemize environment each time i need a new item.
+beside the speed issues, a remarkable feature is the quality of  graphics — it is unbeatable.
+“what’s a converter?”… i spent several hours on writing an r script trying to cover all these gory details automatically, so the configuration becomes as easy as source('http://yihui.name/en/wp-content/uploads/2010/10/lyx-pgfsweave-config.
+a  brilliant one is thepgfsweave package.
+a sweave document is dynamic in the sense that everything in the document can be changed by the r code (nothing is hard-coded), so we don’t need to worry too much about the specific numbers and plots in the output.

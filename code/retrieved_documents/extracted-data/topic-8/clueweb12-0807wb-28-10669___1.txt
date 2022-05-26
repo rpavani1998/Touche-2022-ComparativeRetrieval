@@ -1,0 +1,244 @@
+note: the full source for the calculator calculator.py can be accessedhere.
+: assert process_keys((2,'+', 3)).current ==
+stack = ctx.stack current = ctx.current oldcurrent, oldop = stack.pop()
+from itertools import chain def plus_num_seq(n): count = 1 while count <=
+recommended links "appops": the new frontier in apm pros and cons of saas performance monitoring what browser really is the fastest?
+as a mechanism to conduct some  rudimentary tests on the code written so far, the following code is introduced.
+this is a must read article which provides the reader with a good overview without getting too much into the nitty gritties of functional programming.
+note that the first parameter to the lambda is either the initial value (the default context) or the return value of the last process_key (which is also a context) and the key is each key in the keys sequence injected sequentially.
+groupon: dealing with massive user load how mashable delivers a quality ux like this piece?
+add to that the fact that python is a language thats extremely  easy to learn, suffers from excellent readability, has fairly good web  frameworks such asdjango, has excellent mathematical and statistical libraries  such asnumpy, and cool network oriented frameworks such as twisted.
+threaded programs are nasty to write.
+here i shall add all numbers between 1 through 10.
+so it is being listed here for completeness.
+python may not be the right choice if you want to write 100% fp.
+def process_keys(keys): ctx = default_context() for key in keys : ctx =  process_key(ctx,key) return ctx usage
+* x def pow(x,y): return x *
+because of its focus on readability, it actually can be used to write functional programs are much more readable by a large mass of programmers than most of the functional programming languages themselves (readability being subjectively interpreted by me as what is most natural for english or similar language speaking people).
+thus it will continuously generate tuples with the first element of the tuple being the ‘+’ character and the second being the number with the number varying from values 1 through n. thechain.from_iterable flattens the generated list (it thus has 20 items for n = 10, each alternate one being the ‘+’ character starting with the first items).
+python is a multi paradigm language.
+square now refers  to another function with its y parameter value being anchored to 2 invoking functions dynamically unary_functions = {'!'
+the add function above is a good example of a function  without side effects.
+current =  ctx.current oldcurrent, oldop =
+finally the handle_float function either sets the current value to  the incoming value or in case the current operator is already set it applies  the binary operator to the current value and the incoming value and replaces current with the computed value.
+share it with your friends: |
+snippets python zone
+this is a must read article which provides the  reader with a good overview without getting too much into the nitty gritties of  functional programming.
+i also defined  another dict for binary operators.
+: for function_class in function_groups : if key in function_class : return function_groups[function_class](ctx,key) return ctx
+python will do it for you.
+def process_keys(keys): ctx = default_context() for key in keys : ctx = process_key(ctx,key) return ctx usage
+while namedtuple is a reasonable construct for simple tuple like  objects, it would be helpful to have immutable objects as well – but  thats to be covered in a future post.
+none) note that i created a unary_functions dict (or dictionary or hashmap) where  the key is the character which represents the function and the value is the  reference to the function.
+* y there’s not much to describe here.
+python is probably the most productive  language i have worked with (across a variety of different types of programming  requirements).
+functions as the basic building blocks : unsurprisingly  fp requires the construction and usage of functions as the basic building  units.
+but it was not  meant to be.
+hope you enjoyed the post.
+thus the code below should work (though it does not form a part of the  calculator program).
+so it is being  listed here for completeness.
+simple functions def add(x,y): return x + y def sub(x,y): return x - y def mult(x,y):  return x * y def div(x,y): return x/ y def reverse_sign(x): return -1
+immutable data : from collections import namedtuple context = namedtuple('context','stack,  current, op') def default_context(): return context([],0.0,none)
+binary_functions[x]) def handle_float(ctx,x): if not ctx.op :  return ctx._replace(current = x) else : return ctx._replace(current =
+thats something i shall detail upon much more in future posts.
+but if you want to learn  more of fp or use fp techniques along with other paradigmspython’s  capabilities are screaming to be heard.
+to quote from wikipedia, in computer science, functional programming is a programming paradigm that  treats computation as the evaluation of mathematical functions and avoids state  and mutable data.
+n : yield '+', count count += 1 keys = list(chain.from_iterable(plus_num_seq(10)))[1:] assert process_keys(keys)
+i shall attempt to briefly explain it here, but this family of functions in addition to a number of others will again be dealt with in a future blog post. to interpret the usage read the above reduce statement right to left.
+simple functions def add(x,y): return x + y def sub(x,y): return x - y def mult(x,y): return x * y def div(x,y): return x/ y def reverse_sign(x): return -1
+sample program : i debated whether i should introduce various elements of functional programming using python in detail and then put it all together in a sample program all in future blog posts of this series, or whether i should start with a sample program which cover various aspects of function programming in this post and then explain various aspects in much more detail in future posts.
+in the simplest terms “int add(int x, int y) { return x + y; } ” is a simple addition function written in ‘c’.
+{'+' : add, '-'  : sub, '*' : mult, '/' :
+python zone is brought to you in partnership with:  &lt;a  href="http://avpa.dzone.com/servlet/click/zone?zid=183&amp;pid=0&amp;lookup=true&amp;custom1=textad&amp;position=1"  rel="nofollow" target="_blank"&gt; &lt;img  src="http://avpa.dzone.com/servlet/view/banner/image/zone?zid=183&amp;pid=0&amp;custom1=textad&amp;position=1"  height="60" width="468" hspace="0"  vspace="0" border="0" alt="click here!"&gt;  &lt;/a&gt; dhananjay nene website @dnene dhananjay nene is a consulting software programmer and architect.
+here you see a reduce function being invoked.
+from functools import partial square = partial(pow,y=2) here partial is a function reference.
+thus the way most  changes to state are implemented are not by modifying an object in place (which  is how imperative programming deals with it) but by cloning the data structure  with some of the values getting modified and the modified data structure being  returned by the function.
+** y there’s not much to describe here.
+for the calculator i shall need acontext which contains astack for storing any incomplete operations, an attributecurrent reflecting the current value being shown on the screen and anop which might reflect a pending operation which is typically required for binary operators where the second value still needs to be provided.
+4 currying currying is a treatment afforded in functional programming which allows a function of n parameters to be treated as a sequence of n sequential functions each of one parameter.
+update: i much later also conducted a presentation on the same topic at pycon india 2010.
+after looking up the  appropriate unary function ie.unary_functions[x], i also invoke it on  the current value ie.unary_functions[x](ctx.current).
+immutability : pure functional programming often requires  you to deal with immutable data structures.
+functional programming ?
+thehandle_binary_op method reflects  how the op in the context is set to the appropriate binary function that should  be triggered after the subsequent value is known.
+25 assert process_keys((2,'+','(',3,'*',5,')')).current ==
+to further make it easy i re-represent the same function below differently which is much more readable and easier to understand.
+functional programming is sufficiently different from  the conventional mainstream programming style calledimperative programming to  warrant some discussion on what it is, before we delve into the specifics of  how it can be used in python.
+this  aspect complements the functions without side effects.
+for purpose of emphasis i would like to note that in the above  code, “add” is now an entry in the namespace which is a reference  to a function.
+: return  handle_float(ctx,key) elif isinstance(key,(types.
+n : yield '+', count count += 1 keys =
+imagine the same happening to all the datatypes across  the program.
+a function is said to be referentially transparent if its invocation can  be substituted by the return value in a program without impacting the program  in any other way.
+just like reduce this style of code is quite typical of functional  programming.
+processing a sequence of keys def process_keys(keys): return reduce(lambda ctx,key : process_key(ctx,key), keys, default_context())
+for purpose of emphasis i would like to note that in the above code, “add” is now an entry in the namespace which is a reference to a function.
+note the usage of the yield statement.
+this belongs to the family ofmap and filter functions which are used extensively in functional programming.
+: assert process_keys((2,'+',  3)).current ==
+sample program : i debated whether i should introduce various elements of functional  programming using python in detail and then put it all together in a sample  program all in future blog posts of this series, or whether i should start with  a sample program which cover various aspects of function programming in this  post and then explain various aspects in much more detail in future posts.
+note that the.keys() method is a method which returns a list of all the keys in a dictionary.
+that means i shall be explaining one sample program and shall leave it to future posts in this series to get into greater details.
+4 currying currying is a treatment afforded in  functional programming which allows a function of n parameters to be treated as  a sequence of n sequential functions each of one parameter.
+also note that in the handle_unary_opfunction, i invoke ctx._replace method.
+{'+' : add, '-' : sub, '*' : mult, '/' :
+however one of the  data structures, a tuple is immutable.
+want to write good old ‘c’ style procedural code?
+when i wrote the calculator program, i wrote the functionality to introduce braces.
+the functions should be self explanatory.
+as a mechanism to conduct some rudimentary tests on the code written so far, the following code is introduced.
+a fairly related term isreferential transparency .
+i shall attempt to briefly explain it here, but this  family of functions in addition to a number of others will again be dealt with  in a future blog post.
+if  isinstance(key,(types.
+python may  not be the right choice if you want to write 100% fp.
+list(chain.from_iterable(plus_num_seq(10)))[1:] assert process_keys(keys)
+however that  functionality is not particularly important in this explanation.
+here you can get an overall feel of the program.
+but it was not meant to be.
+ctx.op(ctx.current,x), op =
+in general because of fewer side effects, testing under  functional programming is often a lot easier, and the importance of having to  do “integration” testing and “module” testing is lesser  since testing functions in isolation is likely to identify most issues, far  more than in typical imperative programming.
+python is not particularly strong at immutable data.
+to further make it easy i re-represent the same function below differently  which is much more readable and easier to understand.
+on a named tuple it creates another tuple based on  the existing namedtuple data, but with some of the values modified as specified  in the keyword paramters passed to_replace.
+on a named tuple it creates another tuple based on the existing namedtuple data, but with some of the values modified as specified in the keyword paramters passed to_replace.
+binary_functions[x]) def handle_float(ctx,x): if not ctx.op : return ctx._replace(current = x) else : return ctx._replace(current =
+if isinstance(key,(types.
+this is a rather  obvious and simple case but i stated it since i would like to refer back to it  subsequently in this post.
+3 assert  process_keys((2, '
+functional programming prefers functions without side effects :
+since  we do not need the very first ‘+’ character, i removed it using the  [1:] slice operator.
+unary_functions[x](ctx.current)
+none) note that i created a unary_functions dict (or dictionary or hashmap) where the key is the character which represents the function and the value is the reference to the function.
+in this case i set up a dictionary where the key is a tuple of all the keys representing a particular class of a function.
+5 assert process_keys((2, '!', '+', 5)).current
+because of its focus on readability, it actually can be  used to write functional programs are much more readable by a large mass of  programmers than most of the functional programming languages themselves  (readability being subjectively interpreted by me as what is most natural for  english or similar language speaking people).
+keep the feedback coming
+immutable data : from collections import namedtuple context = namedtuple('context','stack, current, op') def default_context(): return context([],0.0,none)
+update: i much later also conducted a presentation on the same topic at  pycon india 2010.
+processing one key i must confess i started  off using key to represent the keystrokes, but along the way the key can also  represent a complete floating point number (not just a single keystroke).
+mocking out functions can also help testing each  function in isolation.
+functional  programming ?
+none) binary_functions =
+thus the key parameter can refer to a single character operator or a sequence of characters representing a floating point number function_groups = { tuple(unary_functions.keys()) : handle_unary_op, tuple(binary_functions.keys()) : handle_binary_op, tuple(tokens.keys()) :
+as this series of posts is about to demonstrate – python  can do a decent job at it as well.
+ctx.op(ctx.current,x),
+processing one key i must confess i started off using key to represent the keystrokes, but along the way the key can also represent a complete floating point number (not just a single keystroke).
+17 some more slightly advanced functional programming finally to tickle your interest even more, here’s a slightly more advanced usage of functional programming constructs.
+anamedtuple is another data structure which supports both tuple like access through indices or through named elements in the tuple.
+provides the resources  andbest practices to help you monitor these applications.
+since a detailed discussion on functional programming (henceforth referred to fp) is beyond the scope of this post, i will just briefly summarise the most critical elements of fp.
+c++/java  style object oriented code?
+this section is brought to you in partnership with: programming groovy is easy to start with.
+this shows one more  strength of python.
+more this section is brought to you in partnership with: lately there has been a substantial increase in interest and activity in  functional programming.
+thus  the key parameter can refer to a single character operator or a sequence of  characters representing a floating point number function_groups = { tuple(unary_functions.keys()) : handle_unary_op,  tuple(binary_functions.keys()) : handle_binary_op, tuple(tokens.keys()) :  handle_tokens } def process_key(ctx,key):
+otheradd = add add = sub assert otheradd(7,3)
+python is probably the most productive language i have worked with (across a variety of different types of programming requirements).
+so i can better structure the subsequent posts based on the feedback.
+handle_tokens } def process_key(ctx,key):
+visit the python zone for news, tips,  and tutorials on the python programming language.
+in other  words such a function cannot change any global variables, write to the console,  update the database etc.
+it emphasizes the application of functions, in contrast to  the imperative programming style, which emphasizes changes in state.
+so i can better  structure the subsequent posts based on the feedback.
+when i wrote the calculator  program, i wrote the functionality to introduce braces.
+for better or for worse, i have chosen the latter option.
+this is to demonstrate how python treats attributes and  functions virtually identically consistent with theuniform access principle.
+however since list is mutable, it cannot get used as a key into the overall hashmap, hence i convert it into a tuple.
+@')).current == 4 assert  process_keys((2,'+',3,'*',5)).current ==
+however since list is mutable, it cannot get used as a key into the overall  hashmap, hence i convert it into a tuple.
+a function is said to be without side effects if the only  changes it makes are those that are manifested in the return values.
+the functions should be self  explanatory.
+you can read more from them attheir website.
+div} def handle_binary_op(ctx,x): return  ctx._replace(op =
+some of the nice benefits (i am tempted to say side effects) of functional programming are : python is not the best functional programming language.
+you  essentially need to focus on testing each function individually.
+dhananjay is a dzone mvb and is not an employee of dzone and has posted 16  posts at dzone.
+ctx.stack newstack.append((ctx.current,ctx.op)) return ctx._replace( stack = newstack, current = 0.0, op =
+dzone has great portals forpython, cloud, nosql, and html5!
+and nastier to debug.
+square now refers to another function with its y parameter value being anchored to 2 invoking functions dynamically unary_functions = {'!'
+just like reduce this style of code is quite typical of functional programming.
+note the usage of the yield  statement.
+without much ado we now get into the sample program.
+note that the first parameter to the lambda is  either the initial value (the default context) or the return value of the last  process_key (which is also a context) and the key is each key in the keys  sequence injected sequentially.
+: reverse_sign, '@' : square } def handle_unary_op(ctx,x): return ctx._replace(current = unary_functions[x](ctx.current), op =
+: return handle_float(ctx,key) elif isinstance(key,(types.
+in this case i set up a dictionary where the key is a tuple of all the keys  representing a particular class of a function.
+ctx.stack  newstack.append((ctx.current,ctx.op)) return ctx._replace( stack = newstack,  current = 0.0, op =
+similarly  during debugging you need to be able to quickly locate the function likely to  have the problem, after which you can easily focus on the function to be able  to quickly resolve the issue.
+python is not the best functional programming language.
+the sample program i have chosen is that of a simple calculator.
+but if you want to learn more of fp or use fp techniques along with other paradigmspython’s capabilities are screaming to be heard.
+however one of the data structures, a tuple is immutable.
+since a detailed discussion on functional programming (henceforth referred  to fp) is beyond the scope of this post, i will just briefly summarise the most  critical elements of fp.
+because a data structure once constructed will not be modified and  because the source of the modifications can be clearly located to the function  which instantiated the datastructure, the unpredictability of data changing  right under you is gone.
+if it is the latter it searches for it in all the keys of each operator groups, and if it finds a match, it locates the corresponding handler function from the map and invokes it.
+since we do not need the very first ‘+’ character, i removed it using the [1:] slice operator.
+this can be a little expensive to manage and fp does  sometimes come up with some compromises (or cool features depending on how you  view it) such as software transactional memory but a discussion on that is  completely beyond the scope of this post. easier testing and debugging : because modifications to  data are contained and because a function communicates with the context outside  it only via its return values, testing and debugging become far easier.
+div} def handle_binary_op(ctx,x): return ctx._replace(op =
+this shows one more strength of python.
+for  better or for worse, i have chosen the latter option.
+a typical calculator supports simple unary or binary mathematical operators and performs floating point operations.
+note: the full source for the calculator calculator.py can be  accessedhere.
+* x def  pow(x,y): return x
+add to that the fact that python is a language thats extremely easy to learn, suffers from excellent readability, has fairly good web frameworks such asdjango, has excellent mathematical and statistical libraries such asnumpy, and cool network oriented frameworks such as twisted.
+that means i shall be  explaining one sample program and shall leave it to future posts in this series  to get into greater details.
+view full user  profile functional programming with python – part 1 01.09.2012  email views: 5790 tweet this content is part of the python zone, which is  presented to you by dzone andnew relic.
+what is functional programming?
+it takes  two parameters x and y, adds them, and returns the result.
+thus it will continuously generate tuples with the first element of  the tuple being the ‘+’ character and the second being the number  with the number varying from values 1 through n. thechain.from_iterable flattens the generated list (it thus has 20 items for n = 10, each alternate  one being the ‘+’ character starting with the first items).
+to interpret the usage read the above reduce statement right to left.
+this reference can be passed around, assigned to other entries.
+for beginners, one of the most fluent starter pages i would recommend  for the history and specifics of functional programming isfunctional  programming for the rest of us.
+anamedtuple is another data  structure which supports both tuple like access through indices or through  named elements in the tuple.
+c++/java style object oriented code?
+for the calculator i shall need acontext which contains astack for storing any incomplete operations, an  attributecurrent reflecting the current value being shown on the  screen and anop which might reflect a pending operation which is  typically required for binary operators where the second value still needs to  be provided.
+def start_brace(ctx): newstack =
+want to write good old  ‘c’ style procedural code?
+thus the code below should work (though it does not form a part of the calculator program).
+: reverse_sign, '@' : square } def  handle_unary_op(ctx,x): return ctx._replace(current =
+functional programming deals with the issue far more elegantly.
+none) def end_brace(ctx):
+this reference of best practices and idiomatic solutions smoothly guides you to the next step of...
+after looking up the appropriate unary function ie.unary_functions[x], i also invoke it on the current value ie.unary_functions[x](ctx.current).
+the slides to the topic can be found at the bottom ofthis page (direct link:talk.html) tags: source: http://blog.dhananjaynene.com/2010/02/functional-programming-with-python-part-1 (note: opinions expressed in this article and its replies are the opinions of their respective authors and not those of dzone, inc.)
+share it with your friends:| more this section is brought to you in partnership with: lately there has been a substantial increase in interest and activity in functional programming.
+finally in case no match is found it ignores the key.
+benefits of functional programming : some of the nice benefits (i am tempted to say side effects) of functional  programming are : superior ability to deal with concurrency (multi threading) :
+in an  imperative environment, you not only have to deal with data structures being  modified in place by some other parts of the program, in a threaded environment  such modifications can happen using peer threads, even as your current thread  whose logic you are focusing on is attempting to exercise that logic.
+finally the handle_float function either sets the current value to the incoming value or in case the current operator is already set it applies the binary operator to the current value and the incoming value and replaces current with the computed value.
+from itertools import chain def plus_num_seq(n): count = 1 while count  <=
+context(stack,oldcurrent,oldop) return process_key(oldctx,current) tokens = {
+this belongs to the  family ofmap and filter functions which are used extensively  in functional programming.
+thus  we start with a default context, and for each key in the sequence of keys, we  invoke a lambda (thats like an anonymous function), which calls process key  with the context and the key.
+the process_key function takes the incoming key, passes it handle_float if it is a number, or treats it as an operator.
+process_keys((2,'+','(',3,'*',5,')')).current == 17 some more slightly advanced functional programming finally to tickle your interest even more, here’s a slightly more  advanced usage of functional programming constructs.
+its an  extremely unpredictable environment which has resulted in a number of  how-to’s for safe threaded programming using constructs such as locks,  mutexes etc.
+thehandle_binary_op method reflects how the op in the context is set to the appropriate binary function that should be triggered after the subsequent value is known.
+'(': start_brace, ')' : end_brace} def handle_tokens(ctx,x): return tokens[x](ctx)
+this is to demonstrate how python treats attributes and functions virtually identically consistent with theuniform access principle.
+thus the value of any variable is  not open to modification (thus they are called values and not variables).
+3 assert process_keys((2, '@')).current == 4 assert process_keys((2,'+',3,'*',5)).current ==
+a typical  calculator supports simple unary or binary mathematical operators and performs  floating point operations.
+processing a sequence of keys def process_keys(keys): return reduce(lambda ctx,key :  process_key(ctx,key), keys, default_context())
+i also defined another dict for binary operators.
+java programmers are aware of the immutability of the  string instances wherein any modifications to the string result in a new string  instance being created.
+to quote from wikipedia, in computer science, functional programming is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids state and mutable data.
+while namedtuple is a reasonable construct for simple tuple like objects, it would be helpful to have immutable objects as well – but thats to be covered in a future post.
+functional programming is sufficiently different from the conventional mainstream programming style calledimperative programming to warrant some discussion on what it is, before we delve into the specifics of how it can be used in python.
+for beginners, one of the most fluent starter pages i would recommend for the history and specifics of functional programming isfunctional programming for the rest of us.
+the plus_num_seq is a generator.
+dhananjay is a dzone mvb and is not an employee of dzone and has posted 16 posts at dzone.
+the slides to the topic can be found at the bottom ofthis page  (direct link:talk.html) source:   http://blog.dhananjaynene.com/2010/02/functional-programming-with-python-part-1
+'(': start_brace, ')' : end_brace} def handle_tokens(ctx,x): return  tokens[x](ctx)
+stringtype)) : for  function_class in function_groups : if key in function_class : return  function_groups[function_class](ctx,key) return ctx
+thus we start with a default context, and for each key in the sequence of keys, we invoke a lambda (thats like an anonymous function), which calls process key with the context and the key.
+instead of controlling and managing unpredictability, it takes it out  completely.
+dhananjay nene is a consulting software programmer and architect.
+as this series of posts is about to demonstrate – python can do a decent job at it as well.
+here i shall add all  numbers between 1 through 10.
+view full user profile like this piece?
+it emphasizes the application of functions, in contrast to the imperative programming style, which emphasizes changes in state.
+if it is the  latter it searches for it in all the keys of each operator groups, and if it  finds a match, it locates the corresponding handler function from the map and  invokes it.
+however that functionality is not particularly important in this explanation.
+python is at your service as well.

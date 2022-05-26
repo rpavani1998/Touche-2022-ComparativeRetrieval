@@ -1,0 +1,166 @@
+instead, it would be nice to have a type to work directly with compositekey - something whichknew it was dealing with comparers of different types, one for each part of the key.
+a colleague alerted me  to this problem shortly after posting, but it's taken until now to correct it.
+on the  other hand, as i've mentioned before, max/sum/etc haveoodles of  overloads.
+all we need to do is work out when to yield.
+icomparer> is a particularly "fine" type.
+our first problem is to do with the key selectors.
+one oddity about this is that the array class itself has some api support  for large arrays, such as thelonglength property.
+i'm doing this in the  spirit of learning more about linq - but it's fun to try to optimize just a little bit.
+the final  code has some nasty generic complexity in it, but it's not too bad if you keep  all the types clear in your mind.
+but it's not quite amenable to early yielding.
+one significant difference between merge sort and quicksort is the use of the pivot.
+this reminds me of when i was writing c# in depth - i could never decide between appendixes and appendices.
+it's an ugly expression, but it does the job.
+i hope you can see the parallel between the old code and the new code.
+however, it's still worth fixing of course - one never  knows when the restriction will be lifted.
+again, for the sake of clarity i decided to implement this using a custom struct - nested within orderedenumerable as there's no need for it to exist anywhere else:private struct leftright purists amongst you may curse at the use of internal fields rather than properties.
+(that hasn't  stopped them frommessing up "descending" comparers, admittedly, as i  found out last night to my amusement.)
+it feels  like thatought to be cheaper to do explicitly than via pivoting and  adding two pointless entries to the stack... but the code gets alot more complicated (to the point where i had to fiddle significantly to get it  working) and from what i've seen, it doesn't make much performance difference.
+all feed content is property of original publisher.
+thenby and thenbydescending don't have to change at all - they were already just using the interface.
+that makes me happy :)
+fair enough - this is just a hobby, microsoft  have no doubt put a lot of performance testing effort into this.
+both sorts of "index" here really are indexes...
+here's the new version of orderby:public static iorderedenumerable orderby( lovely - we just call a constructor, basically.
+of course, the code is all open source, so if  microsoft wish to include the edulinq implementation in .net 5, they're quite  at liberty to do so, as long as they abide by the terms of the licence.
+now that we can compose keys in terms of both selection and comparison, we can implement createorderedenumerable:public iorderedenumerable createorderedenumerable( i'm not going to pretend that the second half of the method is anything other than ghastly.
+none of the remaining operators will be nearly as complex as this, unless i  choose to implement asqueryable (which i wasn't planning on doing).
+i'm going to delete the increasingly-inaccurately-named  mergesorttest project now - i may institute a few more benchmarks later on  though.
+i've left the code here as it is in source control - but looking at it now, i could certainly have used a foreach loop on the final yield part.
+for type parameters it's not too bad, but for normal parameters it can be awful if you mess around with the names - particularly for those using named arguments.
+now we can easily create a projection from two key selectors to a new one which selects a composite key.
+the  basic results are very roughly: when evaluating the whole ordered list, edulinq appears to run about 10%  faster than linq to objects when evaluating only the top 5 of a large ordered list, edulinq can be much faster.
+maybe it has worse locality of reference  in some scenarios.
+full performance  analysis was never meant to be the goal of edulinq.
+thus i named the type parameter tcompositekey, and introduced an appropriate field.
+here are a few of them: i decided to pick the middle option, using quicksort as the sorting algorithm.
+here's the non-quicksort part of the code, just to set the scene.public ienumerator getenumerator() i could certainly have combined the first two loops - i just liked the separation provided in this code.
+now in the original code, quicksort has four parameters, so you might expect our stack to have those four values within t too...
+there are all kinds of possibilities here.
+josh blochwrote about it back in 2006.
+the clr team blogged about the issue back in 2005 (when the 64-bit clr was new) - i haven't seen any mentions of  plans to remove the limitation, but i would imagine it's discussed periodically.
+fixing the key  selectors, and yielding early next post
+maxvalue elements, but that's a complete guess.email it!
+i have tried optimizing this a little further, to deal with the  case when right ==
+you just need to keep an eye on which is which.
+"previously, on reimplementing linq to objects..." well, we'd got as far as a working implementation of orderedenumerable which didn't have terrible performance -unless
+we could create a completely separate top-level type for that... but specifying the type parameters again seems a bit daft when we can reuse them by simply creating a nested class within compositekey:internal struct compositekey this may look a little odd to begin with, but the two types really are quite deeply connected.
+to be honest, i can't see  large arrays ever being particularly pleasant to work with - what would they  return for the normal length property, for example, or their implementation of  ilist etc?
+so, how well does it perform?
+but i'll come to that all in good time.
+fixing the key selectors, and yielding early the content of the postings is owned by the respective author.
+because .net restricts each object to be  less than 2gb in size, even in .net 4.0, even on a 64-bit clr.
+we wouldn't be able to later, admittedly...
+heck, i would have used anonymous types if it weren't for two issues: so, as a first step we can transform our code to use this "fake recursion" but still yield at the very end:var stack =
+i believe there are cunning ways of improving the worst-case performance, but i haven't implemented any of those.
+designated trademarks and brands are the property of their respective owners.
+the overloading of the word "index" here is unfortunate, but that is unfortunately life.
+this site is automatically generated and cannot be reviewed for abusive content.
+now what about the implementation of iorderedenumerable?
+it's all the same idea, just maintaining the split between key selection and key comparison.
+that's about as  simple as it gets - although it could still present some interesting options.
+that's just plain weird.
+how much faster depends on the size of the list of course,  and it still has to perform the initial complete partitioning step - but on  100,000 items it's regularly about 10x faster than linq to objects.
+if we're going to keep the key selectors in a strongly typed way, that means our orderedenumerable (or at leastsome type involved in the whole business) needs to become generic in the key type.
+as we've created  an array of integers, one per entry, that means we can only have just under  (int.
+the final point to note is how we're using the indexes in the comparison, as a tie-break to keep stability.
+this comes with the normal problems ofpossibly picking bad pivots, but it's usually a reasonable choice.
+after all, if we have orderby(...).thenby(...).thenby(...) we're going to have to have some way of representing the key formed by the three selectors.
+once partition has returned where the pivot element ended up, quicksort doesn't touch that element itself (we already know it will be in the right place).
+i'm sure that last night, when i was running the  "yield at the end" code, my tests were running twice as slowly in  edulinq as in linq to objects.
+that was on my "meaty" laptop  (which is 64-bit with a quad core i7).
+this is the bit which caused me the most headaches, until i worked out that the "if (right > left)" condition really meant "if we've got work to do"... and we're interested in the exact opposite scenario - when wedon't have any work to do, as that means everything up to and including "right" is already sorted.
+fortunately, quicksort is only directly recursive - we don't need to worry about mutually recursive routines: a calling b which might call c or it might call back to a, etc.
+(left + right) / 2; //
+it makes sense to use a "nested" key type, where the key type of orderedenumerable is always the "composite key so far".
+now we have a slight problem right away in the fact that the "createorderedenumerable" method is generic, introducing a new type parameter tkey...
+here's the skeleton of the new class:internal class orderedenumerable : iorderedenumerable (i'm aware this is very "stream of consciousness" - i'm assuming that presenting the decisions in the order in which i addressed them is a good way of explaining the necessary changes.
+now, do you want to hear the biggest surprise i received last night?
+this means that in the case of calling orderby(...).take(5) on a large collection, we can end up saving a lot of work...
+they'll live on in part 26a though... conclusions
+compare this with merge sort with recurses on two sublists which together comprise the whole list for that call.
+just as a reminder, one of my aims was to be able to use iterator blocks to return some values to anyone iterating over the result stream without having to doall the sorting work.
+left, i.e. we're sorting one element, or right == left - 1, which will occur if we picked a pivot which was the maximum or minimum value in the list at the previous recursive step.
+having just checked in the dictionary, it appears both are correct.
+there are two situations here: either right ==
+i suspect we may see support for larger objects before we  see support for arrays with more than int.
+that means we need to separate out the key selector from the key comparer - in other words, we need to get rid of the handy projectioncomparer we used to simplify the arguments to orderby/thenby/etc.
+addendum an earlier version of this post (and the merge sort implementation) had a  flawed piece of code for choosing the pivot.
+wecould rename the type parameter in the generic method implementation, but i'm becoming a big believer in leaving the signatures of methods alone when i implement an interface.
+it's taken me a little bit of thinking (and just running the code) to persuade me that we willalways naturally reach a situation where we end up seeing right ==
+i suspect we may see support for larger objects before we see support for arrays with more than int.
+on my netbook this morning, the same  edulinq code seemed to be running slightly faster than linq to objects.
+i blame my benchmarking methodology, which  is far from rigorous.
+left + (right - left) / 2; the difference is whether or not the code can overflow when left and right  are very large.
+however, we'll need to do the same thing for a comparer.
+orderby and orderbydescending become a little simpler, as we don't need to build the projection comparer.
+count and right  etc?
+well that was fun, wasn't it?
+for various reasons (mentioned inpart 26b) life is better if we execute the key selector once per input element.
+the only bit which might require a bit of explanation is the primaryselector variable.
+wecould use something like keyvaluepair, but that doesn't really give the right impression.
+i'm pretty pleased with the result.
+we should expect this to get messy, because there are three types of key involved: currently we don't even have a type which can represent the composite key.
+why was i not too worried?
+while wecan do that with lazy evaluation, it makes more sense in my opinion to do it up-front.
+new stack(); we initially push a value of (0, count - 1) to simulate the call to quicksort(0, count - 1) which started it all before.
+wecould use the compoundcomparer class we created before, but that will end up with quite a bit of indirection.
+i've tweaked theparameters of my tests quite a  bit, but i haven't tried all kinds of different key and element types, etc.
+i'm not quite sure how i pulled that off (merge sort didn't take long either, but it did at least have a few tweaks to fix up) but it shocked the heck out of me.
+so we shouldn't use tkey as the name of the new type parameter for orderedenumerable.
+maybe  my approach takes a lot more memory.
+i've only performed crude tests, and they  perplex me somewhat.
+(as a small matter of language, i wasn't sure whether to use indexes or indices.
+so, we'll have to fake the recursion.
+it recurses on the sublist entirely to the left of the pivot and the sublist entirely to the right of the pivot.
+as a bit of light relief, i think i'll tackle reverse.
+maxvalue elements, but that's a  complete guess.
+here's both the old and the new  code: //
+original post: reimplementing linq to objects: part 26d -
+this evening, having pulled the "early out" code from the source  repository, the edulinq implementation is running faster than the linq to  objects implementation even when the "early out" isn't actually doing  much good.
+i could certainly have just used compositeselector within the lambda expression used to create the new key selector - it's not like it's going to change, after all.
+it's interesting to observe how similar the quicksort and merge sort recursive parts are - both picking a midpoint, recursing on the left of it, recursing on the right of it, and performing some operation on the whole sublist.
+the memory benefits of not having a reference to "this" (where the intermediate orderedenumerable is likely to be eligible for gc collection immediately, in a typical orderby(...).thenby(...) call) are almost certainly not worth it.
+by skeet via jon skeet: coding blog on 1/7/2011 7:15:56 pm i feel i need a voice over.
+so far, we haven't implemented getenumerator - and that's all.
+if this were a production-quality library to be used in  performance-critical situations i'd go further in the testing, but as it is,  i'm happy to declare victory at this point.
+i'm not  holding my breath ;) more seriously, i fully expect there are a bunch of scenarios where my  knocked-up-in-an-evening code performs slower than that in the framework.
+there are several approaches to how we could sort.
+if you find abusive content on csharpfeeds, pleasecontact us.
+of course the "some operation" is very different between partition and merge, and it occurs at a different time - but it's an interesting parallel nonetheless.
+we're definitelycomputing the earliest results first, due to the order of the recursion - but we can't yield from the recursive method - iterator blocks just don't do that.
+while i'll certainly implement all of them, i'm sure i'll only  present thecode for selected interesting overloads.
+apologies if the style doesn't work for you.)
+one tiny micro-optimization point to note is that for each loop i'm using the length property of the array rather than "count" as the upper bound, as i believe that will reduce the amount of array boundary checking the jit will generate.
+we're getting very close now.
+left + 1, i.e. we're only sorting two elements.
+(i fixed the source repository almost immediately, but deferred writing this  addendum.)
+instead, we can just keep a stack of "calls" to quicksort that we want to make, and execute the appropriate code within our getenumerator() method, so we can yield at the right point.
+i'm not bothered - this is a private class, and we're basically using this as a tuple.
+i very much doubt that it's relevant, admittedly :)
+csharpfeeds is not responsible for the contents of the postings.
+i far prefer the former, so i used it.
+within those limits, there's no problem in the  original pivot code.
+instead, let's create our own simple type:internal struct compositekey
+let's bite the bullet and make it orderedenumerable.
+i'm also removing compoundcomparer and projectioncomparer, which are no  longer used.
+i'm not sure i've ever written code which is so dense in type arguments.
+maxvalue / 4) elements.
+after i'd fixed up the compile-time errors to arrive at the code above,it worked first time.
+they're both local variables, they'll be captured together, all will be well.
+as soon as we've done that to our satisfaction, we're finished with ordering.
+two of those values are just the keys and indexes... and we already have those in two local variables.
+it just feels right to have both the primary and secondary key selectors in the same type, which is what will happen with the current code.
+oh, and it didn't make use of the fact that we may only want the first few results.
+the code within the loop is very similar to the original quicksort method, with three changes: happy so far?
+thinking ahead, our single "key" type parameter in orderedenumerable could well end up being a composite key.
+now we're composing a new key selector and a new key comparer.
+previously we composed a new (element-based) comparer based on the existing comparer, and a projection comparer from the method parameters.
+here's the code for both the recursive call and the partition part:private void quicksort( int[] indexes, tcompositekey[] keys,int left, int right)
+it works (at least according to my tests).
+this is currently fairly normal quicksort code, leaving the "dual arrays" aspect aside...
+we only need to keep track of "right" and "left".
+yield   return data[indexes[nextyield]]; nextyield++; tada!
+the actual quicksort part is reasonably standard except for the fact that i pass in both the arrays for both indexes and keys - usually there's just the one array which is being sorted.
+you had an expensive key selector.
+however, it works - and once you've got your head round what each of the type parameters actually means at any one time, it's not reallycomplicated code - it's just verbose and clunky.

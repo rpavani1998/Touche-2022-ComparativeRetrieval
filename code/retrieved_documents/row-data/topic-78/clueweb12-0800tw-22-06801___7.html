@@ -1,0 +1,200 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Computer Algorithms: Merge Sort</title>
+<body>
+stoimen's web log <br>
+ about web development <br>
+Skip to content <br>
+
+<ul> 
+<li>Home</li> 
+<li>About</li> 
+<li>Download</li> </ul> <br>
+<br>
+<br>
+&larr; 5 Tips on How to Spot a Bad 
+Developer and Team Member <br>
+You think you know javascript. Quiz results! 
+&rarr; <br>
+
+<h1>Computer Algorithms: Merge Sort</h1> Posted on March 5, 2012 by Stoimen 
+<br> <br>
+
+<h2>Introduction</h2> 
+<p>Basically sorting algorithms can be divided into two main groups. Such 
+based on comparisons and such that are not. I already posted about some of the 
+algorithms of the first group. Insertion sort, bubble sort and Shell sort are 
+based on the comparison model. The problem with these three algorithms is that 
+their complexity is O(n2) so they are very slow. </p> 
+<p>So is it possible to sort a list of items by comparing their items faster 
+than O(n2)? The answer is yes and here&rsquo;s how we can do it.</p> 
+<p>The nature of those three algorithms mentioned above is that we almost 
+compared each two items from initial list.</p> 
+<p>Insertion sort and bubble sort make too many comparisons, exactly what 
+merge sort tries to overcome!</p> 
+<p>This, of course, is not the best approach and we don&rsquo;t need to do 
+that. Instead we can try to divide the list into smaller lists and then sort 
+them. After sorting the smaller lists, which is supposed to be easier than 
+sorting the entire initial list, we can try to merge the result into one sorted 
+list. This technique is typically known as &ldquo;divide and conquer&rdquo;.</p>
+<p>Normally if a problem is too difficult to solve, we can try to break it 
+apart into smaller sub-sets of this problem and try to solve them. Then somehow 
+we can merge the results of the solved problems.</p> 
+<p></p> 
+<p>If it's too difficult to sort a large list of items, we can break it apart 
+into smaller sub-lists and try to sort them!</p> <br>
+
+<p></p> 
+<h2>Overview</h2> 
+<p>Merge sort is a comparison model sorting algorithm based on the 
+&ldquo;divide and conquer&rdquo; principle. So far so good, so let&rsquo;s say 
+we have a very large list of data, which we want to sort. Obviously it will be 
+better if we divide the list into two sub-lists with equal length and then sort 
+them. If they remain too large, we can continue breaking them down until we get 
+to something very easy to sort as shown on the diagram bellow.</p> 
+<p>Merge sort is a typical example of divide and conquer technique!</p> 
+<p>The thing is that on some step of the algorithm we have two sorted lists 
+and the tricky part is to merge them. However this is not so difficult.<br>
+ We 
+can start comparing the first items of the lists and than we can pop the 
+smaller of them both and put it into a new list containing the merged (sorted) 
+array.</p> 
+<h2>Implementation</h2> 
+<p>The good news is that this algorithm is fast, but not so difficult to 
+implement and that sounds quite good from a developer&rsquo;s point of view. 
+Here&rsquo;s the implementation in PHP. Note that every algorithm that follows 
+the divide and conquer principles can be easily implemented in a recursive 
+solution. However recursion can be bitter so you can go for a iterative 
+solution. Typically recursion is &ldquo;replaced&rdquo; by additional memory 
+space in iterative solutions. Here&rsquo;s a recursive version of merge sort.
+</p> 
+<pre>$input = array(6, 5, 3, 1, 8, 7, 2, 4); &nbsp; function merge_sort($arr) {
+if (count($arr) &lt;= 1) { return $arr; } &nbsp; $left = array_slice($arr, 0, (
+int)(count($arr)/2)); $right = array_slice($arr, (int)(count($arr)/2)); &nbsp; 
+$left = merge_sort($left); $right = merge_sort($right); &nbsp; $output = merge(
+$left, $right); &nbsp; return $output; } &nbsp; &nbsp; function merge($left, 
+$right) { $result = array(); &nbsp; while (count($left) &gt; 0 &amp;&amp; count(
+$right) &gt; 0) { if ($left[0] &lt;= $right[0]) { array_push($result, 
+array_shift($left)); } else { array_push($result, array_shift($right)); } } 
+&nbsp;array_splice($result, count($result), 0, $left); array_splice($result, 
+count($result), 0, $right); &nbsp; return $result; } &nbsp; // 1, 2, 3, 4, 5, 
+6, 7, 8 $output = merge_sort($input);</pre> 
+<h2>Complexity</h2> 
+<p>It&rsquo;s great that the complexity of merge sort is O(n*log(n)) even in 
+the worst case! Note that even quicksort&rsquo;s complexity can be O(n2) in the 
+worst case. So we can be sure that merge sort is very stable no matter the 
+input.</p> 
+<p>Merge sort complexity is O(n*log(n))</p> 
+<p>Merge sort complexity is O(n*log(n)) even in the worst case!</p> 
+<h2>Two reasons why merge sort is useful</h2> 
+<h3>1. Fast no matter the input</h3> 
+<p>Merge sort is a great sorting algorithm mainly because it&rsquo;s very fast 
+and stable. It&rsquo;s complexity is the same even in the worst case and it is 
+O(n*log(n)). Note that even quicksort&rsquo;s complexity is O(n2) in the worst 
+case, which for n = 20 is about 4.6 times slower!</p> 
+<p> </p> 
+<h3>2. Easy implementation</h3> 
+<p>Another cool reason is that merge sort is easy to implement. Indeed most of 
+the developer consider something fast to be difficult to implement, but 
+that&rsquo;s not the case of merge sort.</p> 
+<h2>Three reasons why merge sort is not useful</h2> 
+<h3>1. Slower than non-comparison based algorithms</h3> 
+<p>Merge sort is however based on the comparison model and as such can be 
+slower than algorithms non-based on comparisons that can sort data in linear 
+time. Of course, this depends on the input data, so we must be careful for the 
+input.</p> 
+<h3>2. Difficult to implement for beginners</h3> 
+<p>Although I don&rsquo;t think this can be the main reason why not to use 
+merge sort some people say that it can be difficult to implement for beginners, 
+especially the merge part of the algorithm.</p> 
+<h3>3. Slower than insertion and bubble sort for nearly sorted input</h3> 
+<p>Again it is very important to know the input data. Indeed if the input is 
+nearly sorted the insertion sort or bubble sort can be faster. Note that in the 
+best case insertion and bubble sort complexity is O(n), while merge 
+sort&rsquo;s best case is O(n*log(n)).</p> 
+<p>As a conclusion I can say that merge sort is practically one of the best 
+sorting algorithms because it&rsquo;s easy to implement and fast, so it must be 
+considered by every developer!</p> 
+<p>Related posts:</p> 
+<ol> 
+<li>Computer Algorithms: Shell Sort</li> 
+<li>Friday Algorithms: JavaScript Merge Sort</li> 
+<li>Computer Algorithms: Insertion Sort</li> </ol> 
+<h3>You are a GREAT developer? Click here to answer the weekly quiz!</h3>  
+This entry was posted inalgorithms and tagged Adaptive sort, Best worst and 
+average case, Bubble sort, comparison model sorting algorithm, Divide and 
+conquer algorithm, Insertion sort, interative solution, interative solutions, 
+Merge sort, PHP, Quicksort, recursive solution, Shell sort, Sorting algorithms, 
+Strand sort, three algorithms, USD. Bookmark the permalink. <br>
+<br>
+&larr; 5 
+Tips on How to Spot a Bad Developer and Team Member <br>
+You think you know 
+javascript. Quiz results!&rarr; <br>
+
+<h3>One Response to <em>Computer Algorithms: Merge Sort</em></h3> 
+<ol> 
+<li> Chaker Nakhli says: <br>
+ March 7, 2012 at 4:17 pm <br>
+
+<p>Hello,</p> 
+<p>In this article you only present a recursive version of the merge sort 
+algorithm. An iterative approach is presented here:
+http://www.javageneration.com/?p=389. It is written in c# but it can be easily 
+converted to Java or any other language.</p> 
+<p> Cheers.</p> <br>
+</li> </ol> 
+<h3>Leave a Reply Cancel reply</h3> 
+<p>Your email address will not be published. Required fields are marked *</p> 
+<p>Name *</p> 
+<p>Email *</p> 
+<p>Website</p> 
+<p>Comment</p> 
+<p>You may use these HTML tags and attributes: <code>&lt;a href=&quot;&quot; 
+title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym 
+title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; 
+&lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; 
+&lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; &lt;pre 
+lang=&quot;&quot; line=&quot;&quot; escaped=&quot;&quot; 
+highlight=&quot;&quot;&gt;</code></p> 
+<p> </p> 
+<p></p> 
+<p> Notify me of followup comments via e-mail </p> <br>
+<br>
+<br>
+
+<ul> 
+<li> Search for: <br>
+</li> 
+<li>
+<h3>Related Posts</h3> 
+<ol> 
+<li>Computer Algorithms: Shell Sort</li> 
+<li>Friday Algorithms: JavaScript Merge Sort</li> 
+<li>Computer Algorithms: Insertion Sort</li> </ol></li> 
+<li>
+<h3>Categories</h3> 
+<ul> 
+<li>agile (3) </li> 
+<li>algorithms (21) </li> 
+<li>css (29) </li> 
+<li>download (3) </li> 
+<li>featured (46) </li> 
+<li>flex 3 (25) </li> 
+<li>javascript (139) </li> 
+<li>micro tutorial (203) </li> 
+<li>PHP (110) </li> 
+<li>portfolio (5) </li> 
+<li>quiz (4) </li> 
+<li>snippets (7) </li> 
+<li>video (1) </li> 
+<li>web development (168) </li> 
+<li>zend framework (81) </li> </ul> </li> </ul> <br>
+ stoimen's web log <br>
+
+Proudly powered by WordPress. <br>
+<br>
+<br>
+<br>
+
+</body>

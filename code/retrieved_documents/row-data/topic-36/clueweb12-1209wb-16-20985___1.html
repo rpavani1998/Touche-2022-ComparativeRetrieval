@@ -1,0 +1,357 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Using Java 6 Processors in Eclipse | Javalobby</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone 7</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Cloud Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+Javalobby <br>
+<strong>Did you 
+know? DZone has great portals forPython, Cloud, NoSQL, and HTML5!</strong> <b>
+Carl-petter Bertell</b> 
+<ul> 
+<li>Bio</li> </ul> 
+<p> Carl-Petter Bertell is a Software Creative who dabbles in the art of Java. 
+Carl-petter has posted 1 posts at DZone. View Full User Profile</p> 
+<h1>Using Java 6 Processors in Eclipse</h1>  02.07.2011  Email <br>
+ Views: 
+11368 <br>
+
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> 
+<h3>We Recommend These Resources</h3> 
+<h4>Apache Lucene 3.0: Download the LucidWorks Certified Distribution</h4> 
+<h4>Micro Focus SilkTest 2011</h4> 
+<h4>Micro Focus Silk Performer</h4> 
+<h4>Getting Started with FUSE Mediation Router</h4> 
+<h4>The Java Evolution Mismatch: Why You Need a Better JVM</h4> 
+<p>JDK5 introduced the APT (Annotation Processing Tool). It was part of the 
+SDK but the classes were part of the unofficial com.sun.* namespace, and you 
+had to use the<em>apt</em> tool to process the source code. <br>
+<br>
+ JDK6 
+cleaned up the API and integrated this stuff it into javac itself so you 
+didn&rsquo;t need to use the separate apt tool anymore.<br>
+<br>
+ Apparently 
+built for processing source code with annotations before they are compiled into 
+classes, it can also be used for all kinds of fun like code generation and code 
+analyzers which are IDE independent; and you don&rsquo;t even need to use 
+annotations necessarily. The JPA2 criteria api meta-model is generated using 
+this.</p> 
+<p>I made one very contrived example of java6 processor usage with Eclipse. 
+All of this is possible to integrate into a maven build but I&rsquo;m leaving 
+that out and focusing on how I got this processing to work within Eclipse.</p> 
+<p>So we&rsquo;re creating a processor which will generate a new class for 
+each class in projects compiled using this processor. Additionally we&rsquo;ll 
+create a Warning for each class which starts with a<strong>T</strong>. Yes 
+it&rsquo;s silly.</p> <strong>Step 1:</strong> Create the processor project 
+<p></p> 
+<p>SillyProcessor.java:</p> 
+<pre>@SupportedAnnotationTypes(value= {&quot;*&quot;}) 
+@SupportedSourceVersion(SourceVersion.RELEASE_6) public class SillyProcessor 
+extends AbstractProcessor { private Filer filer; private Messager messager; 
+@Override public void init(ProcessingEnvironment env) { filer = env.getFiler(); 
+messager = env.getMessager(); } @Override public boolean process(Set elements, 
+RoundEnvironment env) { for (Element element : env.getRootElements()) { if 
+(element.getSimpleName().toString().startsWith(&quot;Silly&quot;)) { // We 
+don't want generate new silly classes // for auto-generated silly classes 
+continue; } if (element.getSimpleName().toString().startsWith(&quot;T&quot;)) { 
+messager.printMessage(Kind.WARNING, &quot;This class name starts with a 
+T!&quot;, element); } String sillyClassName = &quot;Silly&quot; + 
+element.getSimpleName(); String sillyClassContent = &quot;package 
+silly;\n&quot; + &quot;public class &quot; + sillyClassName + &quot; {\n&quot; 
++ &quot; public String foobar;\n&quot; + &quot;}&quot;; JavaFileObject file = 
+null; try { file = filer.createSourceFile( &quot;silly/&quot; + sillyClassName, 
+element); file.openWriter() .append(sillyClassContent) .close(); } catch 
+(IOException e) { e.printStackTrace(); } } return true; } }</pre> 
+<p>Without creating this META-INF entry I couldn&rsquo;t get the processor to 
+register in Eclipse.</p> 
+<p>META-INF/services/javax.annotation.processing.Processor:</p> 
+<pre>com.kerebus.annotation.processor.SillyProcessor </pre> 
+<p>Its only contents is the name of the Processor implementation. I guess you 
+might be able to list several processors here, although I&rsquo;m not sure.</p> 
+<p>That&rsquo;s it. Now export it as a jar and use that jar in other projects 
+where you wish to use the processor.</p> <strong>STEP 2:</strong> Create a 
+project which uses your processor.
+<p>In the properties for your new project go to <strong>Java Compiler -&gt; 
+Annotation Processing</strong><br>
+ Check the <strong>&ldquo;Enable Project 
+Specific Settings&rdquo;</strong> and make sure <strong>&ldquo;Enable 
+annotation processing&rdquo;</strong> is checked. I also changed the generated 
+source directory to a name which didn&rsquo;t start with a dot so it 
+wouldn&rsquo;t be hidden in the package explorer (files or directories which 
+start with a dot are by default filtered away in eclipse).</p> 
+<p></p> 
+<p>Next off go to <strong>Java Compiler -&gt; Annotation Processing -&gt; 
+Factory Path</strong><br>
+ Here you should add the jar of your processor 
+project. You cannot use project references.<br>
+ Press the <strong>
+&ldquo;Advanced&rdquo;</strong> button and you&rsquo;ll be presented with a 
+dialog which contains the processor you defined in your 
+META-INF/services/javax.annotation.processing.Processor file. Select it and 
+press ok.</p> 
+<p></p> <strong>Step 3:</strong> Build! 
+<p>We&rsquo;re practically done. Here&rsquo;s what it looks like for me in my 
+project:<br>
+</p> 
+<p>So we get a warning for the Thing class because its class name start with a 
+&ldquo;T&rdquo; and for each class in the project we get corresponding 
+&ldquo;Silly&rdquo; classes generated. These are compiled and usable just like 
+any other normal class.</p> 
+<p>For more info check out the eclipse jdt/apt docs, this bit about creating a 
+code analyzer or the offical docs</p> 
+<p><em> From http://kerebus.com/2011/02/using-java-6-processors-in-eclipse/.
+</em></p>  Tags: 
+<ul> 
+<li>annotations</li> 
+<li>apt</li> 
+<li>Code Generation</li> 
+<li>java</li> 
+<li>Java</li> 
+<li>static code analysis</li> </ul> Published at DZone with permission of 
+Carl-petter Bertell, author. <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> 
+<h2>Comments</h2> <br>
+
+<h3>Mohamed El-beltagy replied on Mon, 2011/02/07 - 4:35am</h3> 
+<p>About your question weather the file 
+&quot;META-INF/services/javax.annotation.processing.Processor&quot; entries 
+could contain another entry or no; simple answer is yes.</p> 
+<p>For more info, please refer to here , here and here </p> 
+<ul> 
+<li>Login or register to post comments</li> </ul> <br>
+
+<h3>Mohamed El-beltagy replied on Mon, 2011/02/07 - 8:16am in response to: 
+melbeltagy</h3> 
+<p>I've been playing around with the processor and the example you mentioned.
+</p> 
+<p>I tried to add more than one processor in the JAR and I found out, 
+according to theProcessor.process java doc that you need to return false 
+instead of true (in you example).</p> 
+<p>This is when I tried to register a processor with the depricated 
+annotations running with the Silly processor you introduced.</p> 
+<p>When making both processors return false; both processors run well. </p> 
+<ul> 
+<li>Login or register to post comments</li> </ul> <br>
+
+<h3>Carl-petter Bertell replied on Tue, 2011/02/08 - 1:19am</h3> Thanks for 
+the clarification.<br>
+<br>
+ So if we're returning <b>true</b> from <i>process
+</i> subsequent processors which match the same supported annotation types will 
+not be called.<br>
+<br>
+ In this example we match all annotations and even 
+classes w/o annotations:<i>@SupportedAnnotationTypes(value= {&quot;*&quot;})</i>
+<br> <br>
+ So it essentially claims them all. 
+<ul> 
+<li>Login or register to post comments</li> </ul> <br>
+
+<h3>Thomas Kern replied on Sat, 2012/01/21 - 1:51pm</h3> Thanks, this is 
+exactly what I was looking for&ndash;the smallest possible example of adding 
+custom annotation processing to Eclipse. 
+<ul> 
+<li>Login or register to post comments</li> </ul> 
+<h2>Comment viewing options</h2> Flat list - collapsedFlat list - expanded
+Threaded list - collapsedThreaded list - expanded <br>
+Date - newest firstDate 
+- oldest first <br>
+10 comments per page30 comments per page50 comments per page
+70 comments per page90 comments per page150 comments per page200 comments per 
+page250 comments per page300 comments per page <br>
+<br>
+ Select your preferred 
+way to display the comments and click &quot;Save settings&quot; to activate 
+your changes. 
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Resources</h3> 
+<h4>Implementing Enterprise Integration Patterns</h4> 
+<h4>Getting Started with FUSE Mediation Router</h4> 
+<h4>Configuring and Running FUSE ESB</h4> 
+<h4>Best Practices for Open Source Adoption</h4> 
+<h4>The Java Evolution Mismatch: Why You Need a Better JVM</h4> <br>
+
+<h2>Spotlight Features</h2> 
+<h2>The 10 commandments of good source control management </h2> 
+<h2>Hadoop in Practice</h2> 
+<h2>Spring MVC - Flash Attributes</h2> 
+<h2>Git vs. SVN - Basic Commandline Syntax Reference</h2> 
+<ul> 
+<h2>Popular at DZone</h2> 
+<li>1:How to rock out with JRebel and Google Web Toolkit (GWT)</li> 
+<li>2:Unit Tests: Searching under the Lamp Post</li> 
+<li>3:Building Scalable Enterprise Systems</li> 
+<li>4:Complexity of Time</li> 
+<li>5:Android &ndash; How to Implement Google Search Inside Your App</li> 
+<li>6:Google App Engine Java Capabilities and Namespaces API</li> 
+<li>7:What it Takes to Participate in Open Source Projects?</li> See more 
+popular at DZone <br>
+Subscribe to the RSS feed </ul> Around the DZone Network 
+ARCHITECTS <br>
+<br>
+Using Neo4j To Make Predictions for Fast Senctence... <br>
+
+WEB BUILDER <br>
+<br>
+Interview: Todd Anglin on Telerik, Kendo UI, and H... <br>
+WEB BUILDER <br>
+<br>
+How to Set up Wordpress on EC2 Using Puppet and Gi... <br>
+MOBILE <br>
+<br>
+Android &ndash; How to Implement Google Search Inside ... <br>
+
+CLOUD <br>
+<br>
+Deploying a Django App on the Cloud using dotCloud <br>
+.NET 
+<br><br>
+XML Stack for node.js on Windows <br>
+You Might Also Like 
+<ul> 
+<li>Filtering the Stack Trace From Hell</li> 
+<li>JavaScript's Two Zeros </li> 
+<li>10 Best Practices of Code Commenting &amp; Formatting</li> 
+<li>Blast Aliens in Your Browser with Your iOS Trigger Device</li> 
+<li>12 Essential Skills for Software Architects</li> 
+<li>NEW Refcardz Topics (Round 2): Awesome or Lame?</li> 
+<li>You've Been Implementing main() Wrong All This Time</li> 
+<li>Unlearn, Young Programmer</li> 
+<li>New Features in Fork/Join from Java Concurrency Master, Doug Lea</li> 
+<li>The Most Important Languages For DevOps</li> 
+<li>Most Popular Tools Used on Our Java PaaS</li> 
+<li>My Problem With Your Interviews</li> 
+<li>Algorithm of the Week: Radix Sort</li> 
+<li>10 Best Practices for Code Commenting &amp; Formatting </li> 
+<li>The return of Vim</li> </ul> Popular on Javalobby 
+<ul> 
+<li>Spring Batch - Hello World</li> 
+<li>How to Fix Memory Leaks in Java</li> 
+<li>Lucene's FuzzyQuery is 100 times faster in 4.0 </li> 
+<li>Is Hibernate the best choice?</li> 
+<li>9 Programming Languages To Watch In 2011</li> 
+<li>How to Create Visual Applications in Java?</li> 
+<li>Introduction to Oracle's ADF Faces Rich Client Framework</li> 
+<li>Time Slider: OpenSolaris 2008.11 Killer Feature </li> </ul> Latest Articles
+<ul> 
+<li>NetBeans Weekly News (Issue #530 - Mar 19, 2012) </li> 
+<li>Bielefeld University on the NetBeans Platform Again</li> 
+<li>NetBeans Weekly News (Issue #529 - Mar 19, 2012) </li> 
+<li>Accounting Software on NetBeans</li> 
+<li>NetBeans Weekly News (Issue #528 - Mar 12, 2012) </li> 
+<li>Paint Store Price List Generator on NetBeans</li> 
+<li>NetBeans Weekly News (Issue #527 - Mar 5, 2012) </li> 
+<li>NUnit&rsquo;s New 'Action Attributes' Feature is AOP to Your Unit Tests
+</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>Getting Started with Cloud Computing</h3> 
+<p>If you are looking for more information on Cloud Computing then this DZone 
+Refcard is for you. Get an in depth comparison on three different Cloud...</p> 
+<br> 
+<h3>HTML5 Canvas: A Web Standard for Dynamic Graphics</h3> <br>
+
+<h3>Google App Engine for Java</h3> 
+<p>This DZone Refcard provides an in depth introduction to the cloud computing 
+technology, Google App Engine. Covering everything from the basics...</p> <br>
+
+<br> <br>
+<br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> RSS </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

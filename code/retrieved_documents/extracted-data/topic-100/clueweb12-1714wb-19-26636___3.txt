@@ -1,0 +1,73 @@
+nws can be used to coordinate heterogeneous ensembles of code written in  different languages.
+thus, a simple  assignment looks like this in nws: ws.store('x', ws.fetch('y'))
+but while its simplicity makes it a good choice for pedagogical examples,  it's not a toy system.
+y the y implies  a look-up of the value bound toy, while the x is the target of  the assignment.
+the server is implemented using python and twisted, which are required.
+a given language has rules about allowable names, allowable values for a given name, and the context in which the binding is valid (the binding's scope).
+>>> ws.store('ticket', 'ticket string')
+nws is designed to be a coordination facility that is  language neutral.
+so far, we've succeeded in making  a fairly routine construct more verbose.
+you must install both the server (on one machine) and a client (on all machines involved in the computation).
+in many languages, including python, we could have used syntax similar to that of normal bindings: ws.x =
+networkspaces (www.lindaspaces.com/products/nws_overview.html) was developed at scientific computing associates and is available at sourceforge (nws-py.sourceforge.net/).
+many developers work with newer dynamic languages like  python and r. to meet the needs of these users, we've developed a python-based  coordination system called "networkspaces" (nws) that is easy to  learn, accessible via almost all development environments (including r, java,  octave, python, perl, and ruby), and deployable on ad hoc collections of spare  cpus.
+r > library(nws) > ws nwsfetch(ws, 'ticket')
+for example, python nws can automatically handle  composite data structures: >>> from nws.client import networkspace
+many developers work with newer dynamic languages like python and r. to meet the needs of these users, we've developed a python-based coordination system called "networkspaces" (nws) that is easy to learn, accessible via almost all development environments (including r, java, octave, python, perl, and ruby), and deployable on ad hoc collections of spare cpus.
+while we describe the python client here, the ideas transfer to other language clients.
+inexample 1 below, for instance, you can use nws to move data from python to r encoded as an ascii string.
+even though nws is implemented in python, we have networkspace client apis for a variety of languages.
+nws is based on the concept of a set of bindings, which in programming languages are sometimes known as "environments," "namespaces," "workspaces," and the like.
+performance improvement via parallelism should be of interest to anyone whose codes run too slowly.
+{'list': ['a', 'b', 'c'], 'tuple': (1, 2, 3)} python(click here to read more) >>> from nws.client import networkspace >>> ws=networkspace('tickets')
+most values in most of the languages mentioned can be automatically serialized  (the serialization is done behind the scenes by nws, and is not of direct  concern to programmers).
+because this is a  concept familiar to programmers, it is a good foundation for building a  coordination system.
+we've used nws to run parallel programs on hundreds of  processors, producing many cpu years of useful computation.
+we've used nws to run parallel programs on hundreds of processors, producing many cpu years of useful computation.
+however, the semantics of these nws variables  differ in important ways from that of normal variables.
+the advantages this neutrality offers include: nws coordination patterns and idioms can be recycled from one language  environment to the next.
+[1] "ticket string" navigate to related informationnavigate to related information support@eetimes.com
+today, many new computers are multicore and most users have access to  multiple computers.
+but while its simplicity makes it a good choice for pedagogical examples, it's not a toy system.
+you must install both the server (on one machine) and a client (on all  machines involved in the computation).
+ws.yhowever, the semantics of these nws variables differ in important ways from that of normal variables.
+thus, a simple assignment looks like this in nws: ws.store('x', ws.fetch('y'))so far, we've succeeded in making a fairly routine construct more verbose.
+in our opinion, it's a mistake to create a false illusion of similarity when, in fact, there are important differences.
+because this is a concept familiar to programmers, it is a good foundation for building a coordination system.
+even though nws is implemented in python, we  have networkspace client apis for a variety of languages.
+the y implies a look-up of the value bound toy, while the x is the target of the assignment.
+nws provides a particular encapsulation of binding semantics.
+ee times home >  design > embedded design article python networkspaces and parallel programs robert bjornson, nicholas carriero, and stephen weston 7/2/2007 5:45 pm edt
+unfortunately, due in part to its history, parallel programming languages and tools still mostly focus on "big iron" and older languages such as c and fortran.
+nws is designed to be a coordination facility that is language neutral.
+nws is based on the concept of a set of bindings, which in programming  languages are sometimes known as "environments,"  "namespaces," "workspaces," and the like.
+design article parallel programming has the reputation of being an exotic field, pursued by experts using extremely large and expensive machines.
+a given language has rules about allowable names, allowable values for a  given name, and the context in which the binding is valid (the binding's  scope).
+networkspaces networkspaces (www.lindaspaces.com/products/nws_overview.html) was  developed at scientific computing associates and is available at sourceforge  (nws-py.sourceforge.net/).
+generally in programming languages, a binding maps a name to a value.
+> d={'list':l, 'tuple':t} >>> ws.store('dict example', d) >>> ws.fetch('dict example')
+the values can be any native type in the  client language for which that language has a workable serialization.
+the key point is that the nws encapsulation is amenable to a network-based implementation, which lets different processes exchange data and synchronize via nws bindings.
+scoping rules determine whichx and y are meant.
+parallel programming has the reputation of being an exotic field, pursued  by experts using extremely large and expensive machines.
+so, for example, inx =
+in many  languages, including python, we could have used syntax similar to that of  normal bindings: ws.x = ws.y
+often these operations are implied by the lexical structure of code, as is  the intended binding set.
+the server is implemented using python  and twisted, which are required.
+to facilitate interlanguage coordination, nws  variable names are ascii strings and don't need to conform to the variable  naming rules of any given language.
+performance improvement via parallelism should be of interest to anyone whose  codes run too slowly.
+the key point is that the nws  encapsulation is amenable to a network-based implementation, which lets  different processes exchange data and synchronize via nws bindings.
+often these operations are implied by the lexical structure of code, as is the intended binding set.
+the advantages this neutrality offers include: >>> from nws.client import networkspacefinally, ascii strings used as values are treated in a special way (they are not subject to the client language serialization protocol) that makes it possible for them to be exchanged across client languages.
+the language also provides operations for establishing a binding and  for retrieving the value of a bound name.
+>>> ws=networkspace('test') >>>
+in our opinion, it's a  mistake to create a false illusion of similarity when, in fact, there are  important differences.
+this requires a shift in focus.
+the language also provides operations for establishing a binding and for retrieving the value of a bound name.
+generally in  programming languages, a binding maps a name to a value.
+using this encapsulation, we explicitly specify the look-up (fetch), the association of the namex with the retrieved value (store), and the intended binding set (indicated by thews object).
+unfortunately, due in  part to its history, parallel programming languages and tools still mostly  focus on "big iron" and older languages such as c and fortran.
+today, many new computers are multicore and most users have access to multiple computers.
+while we describe the  python client here, the ideas transfer to other language clients.
+using this  encapsulation, we explicitly specify the look-up (fetch), the  association of the namex with the retrieved value (store), and  the intended binding set (indicated by thews object).
+l=['a','b','c'] >>> t=(1,2,3) >>

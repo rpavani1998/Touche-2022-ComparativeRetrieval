@@ -1,0 +1,326 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>What Is Adobe Flex?</title>
+<body>
+<br>
+<br>
+<br>
+What Is Adobe Flex? <br>
+<br>
+<br>
+&nbsp;&nbsp;Home <br>
+<br>
+
+<br> <br>
+
+<li><br>
+</li> <b>Hit the login button on the title bar to login.</b> <br>
+
+&nbsp; <br>
+<br>
+What Is <b><i>Adobe/Macromedia Flex</i></b>?
+<p> As a web developer you've often found yourself wishing there was a way to 
+make web applications that weren't limited to the heavy restrictions of HTML. 
+You've used JavaScript to make your forms a little more intuitive with 
+dynamic/context driven comboboxes, but to do anything more often requires heavy 
+amounts of JavaScript and DHTML. Even if you are a pro at it, it's extremely 
+time consuming to make workflow interactive and user friendly. More 
+importantly, why would you want to be spending so much time on core UI 
+functionality when you're getting paid to work on business logic and workflow.
+</p>
+<p> <b>Adobe/Macromedia Flex</b> takes you to the next level of web 
+application development with the concept of<b>Rich Internet Applications</b> 
+(aka RIAs). You may have seen applications developed natively in Flash itself 
+and realized that it offers a much more robust experience for the user where 
+productivity is bolstered by ease of use, streamlined workflow, and real time 
+interactivity that is impossible to accomplish in HTML itself. However 
+developing rich applications in Flash for those who are core developers is 
+daunting and unintuitive. The Flash development tool is geared for designers, 
+and developing on a timeline is a strange concept. Flex removes that barrier to 
+entry by providing a programmatic way for developing these RIAs.</p>
+<p> Rich Internet Applications</p>
+<p> What is an RIA anyways? Well HTML applications are state-less. Application 
+servers maintain state by using cookies and session variables to keep track of 
+users, but all the logic is on the server. So while a user is looking at a page 
+in their browser, the application is unable to do anything until the user 
+commits an action that sends data from the page back to the server for 
+processing. The code processes the data, and generates resulting HTML that the 
+browser loads back in.</p>
+<p> A simple example would be a report or search tool that queries a sales/CRM 
+database based on various criteria from the user such as deal time frame, 
+product group, and sales executive. The user enters these values, clicks on a 
+submit button, and the browser goes blank while it waits for a response from 
+the server and loads the resulting HTML which would be a tabular list of 
+records that match the criteria:</p>
+<p> Time Frame From  To  Product Group All Adapters Routers Hubs Switches  
+Sales Exec All Jeff Smith Bob Gordon John Sykes </p> Deal Initiated Product 
+Group Product Sales Exec Value ($) <br>
+04/03/2005 Adapters ADPR2D2 Jeff Smith 
+100K <br>
+04/10/2005 Switches SWC3PO Bob Gordon 142K <br>
+<br>
+
+<p> Look familiar to anything you've done? Now if the user wants to change the 
+parameters, or perhaps sort on a particular column, typically the page would 
+need to be sent back to the server where it rebuilds an up to date report based 
+on the new criteria. Pretty standard stuff for Coldfusion, JSP, PHP, ASP, or 
+any other servlet language.</p>
+<p> In the Flex world, your application wouldn't need to post a request to the 
+server every time the user made a change. Instead of the logic living purely on 
+the server side, your presentation tier is all on the client. So imagine 
+changing filters or criteria, and the table automatically updating as a result. 
+Imagine clicking on a column title and the column automatically sorts without 
+reloading the page. This saves hits to your web server, application server, 
+database, and network. For one user this may not be a big deal, but what about 
+1000 users, or 10 000 users?</p>
+<p> HTML based applications are a series of HTML web pages; Flex applications 
+are LIVE applications. A simple analogy is imagine Word or Excel being an HTML 
+web application; vs the real application itself. It could be done; but the real 
+application is aware of your mouse movements, every key stroke, and provides 
+much more feedback to the user by using sound, animation, and other visual 
+queues.</p>
+<p> Even better, with the Flash Player penetration near 99% (version 7 is at 
+83%) you can provide this real-time rich experience on Unix, Windows, and MAC. 
+Alternatively any richness you try to accomplish in IE using DCOM, ActiveX, and 
+DHTML locks you down to particular platforms.</p>
+<p> Flex vs Coldfusion (and other servlets) </p>
+<p> For CFMX developers, Flex doesn't replace CF (or JSP/J2EE/PHP/ASP/etc...). 
+It's a companion to your existing technology by being at the presentation tier, 
+while your other Application servers provide the middle/business tier. It lets 
+you focus on the client workflow, and not waste time building HTML tables and 
+endless cosmetic logic.</p>
+<p> I put together a simple example that demonstrates this, which you can 
+download here. The attached file provides a static XML file; but you easily 
+hook it up to a CF template which queries a database based on the parameters 
+passed in via the URL and return back the up to date HTML.</p>
+<p> The first example which uses Coldfusion:<br>
+</p>
+<p> It does a CFHTTP to the XML provider by passing in the sort direction 
+parameters based on what column a user clicked on. After parsing the XML, it 
+loops through the XML array with some basic styling to do alternating row 
+colors. It's roughly 40 lines or so, depending on how compact or readable you 
+want to make your code.</p>
+<p> The second example which uses Flex:<br>
+</p>
+<p> Since my web hosting company doesn't provide Flex hosting I can only 
+provide screen captures. The Flex version retrieves the exact same XML content 
+as the Coldfusion one would. However the key notes to make in the above example 
+are:</p>
+<li> The Flex version is <b>2</b> lines of code. </li>
+<li> The Flex version's columns are sortable AND re-sizeable with no page 
+refreshing required.</li>
+<li> No time is wasted building basic UI elements (that is tables). 
+<p> Another common scenario we're all used to is list &amp; edit. As 
+demonstrated above, often you'll use a table to list data, and then present the 
+user with an edit icon which let's you edit that record, which posts a URL to 
+the server, where the browser loads in an edit page where you make the 
+appropriate changes, then hit submit, the server processes the update and then 
+sends back the resulting HTML. That's a mouthful! Why not edit right in the 
+table itself; much like you would with Excel?</p>
+<p> The folks at iteration:two in their Flex Blog demonstrate this capability. 
+Click on any row and you'll see how it's immediately editable. Since the 
+application is live you don't need that common update/submit button to post 
+that change; the application knows an update was made and can commit those 
+changes on the backend if nescessary.</p>
+<p> </p>
+<p> The hidden beauty is that your Flex app can tap into your Coldfusion CFC's 
+as a WebService or RemoteObject with no extra work required. So use Coldfusion 
+to work with backend systems like databases, and provide services to the 
+presentation tier. And use Flex to handle interacting with the client.</p>
+<p> Flex VS AJAX </p>
+<p> The mindset you need to employ is that Flex is used for Rich Internet 
+Applications, not Rich Web Applications. There isn't a clear line between RIAs 
+and RWAs, but Flex is definitely on the RIA side of things in that you are 
+building applications that are desktop like but use the internet for deployment 
+ease and connectivity to services. Unlike AJAX, which is more along the RWA end 
+of the spectrum in that it increases functionality and usage efficiency of web 
+pages.</p>
+<p> The roots of HTML originate as platform agnostic document distribution, 
+and it vastly improved how content can be deployed, but severely compromised on 
+UI functionality since it's a stateless mechanism. A web application is 
+essentially a choose your own adventure book, where the choices you make 
+generate new pages in your book on the fly. Although there is overlap in how 
+Flex or AJAX could be used to solve a problem, there is also quite a bit of 
+difference.</p>
+<p> Think of it like this. If you were to build a photo editor, what would you 
+choose? HTML is optimized for document distribution, so although it could be 
+done in AJAX using an army of developers - it's clearly the wrong choice. Flex 
+on the other hand has desktop like powers, so making such a graphically 
+oriented application is fairly straight forward. Or what if you wanted to make 
+an application that allows users to update their profile by clicking on a 
+button that takes a picture from their webcam - this is extremely easy in Flex, 
+and impossible in HTML/AJAX. Or a stock application; in AJAX you would 
+continuously poll for updates in the stock symbols the user is interested in 
+(even if there is no change in price), compared to the Flex approach where the 
+client would use messaging to subscribe to the applicable symbols, and the Flex 
+Enterprise Server would push updates as they occur.</p>
+<p> AJAX's other drawback is that because Javascript differs from browser to 
+browser and OS to OS, a massive amount of QA needs to be done to ensure that it 
+works across all platforms. But to be fair there is a major effort to provide 
+tools and APIs to abstract that complexity, and streamline the development of 
+AJAX based applications. Most notably theOpen AJAX Initiative which is 
+supported by such heavyweights as IBM, BEA, Borland, Google, Mozilla, Oracle, 
+RedHat, and Yahoo.</p>
+<p> So to boil it down Flex and AJAX are like apples and oranges, but they're 
+both fruit so they share some characteristics.</p>
+<p> Developing in <b>Adobe/Macromedia Flex</b> </p>
+<p> So that's all well and dandy, but how long does it take to learn all this 
+stuff? Flex uses a combination of a tagged based language called MXML, and an 
+object oriented language called Actionscript 2.0 (the language of Flash). For 
+Coldfusion and JSP developers the MXML part is immediately understandable. The 
+Actionscript part will be familiar to Java, and other OO developers.</p>
+<p> You build your main files in .mxml, and can build custom components and 
+objects in .as (ActionScript). The Flex Application Server (a J2EE application) 
+will compile your code into a Flash file (.swf) which the browser then loads. 
+The Flex App server provides other services such as being a gateway to 
+RemoteObjects (eg CF CFCs) and WebServices.</p>
+<p> Although you can use any text editor to develop, FlexBuilder is the 
+primary development tool - which is a customized version of DreamWeaverMX. On 
+the debugging front you can use certain components such as XMLObject which 
+comes with Flex, flash debugging, and the NetConnection Debugger which lets you 
+analyze data between RemoteObjects and the Flash Player (ie your 
+Adobe/Macromedia Flex Application).</p>
+<p> Flex isn't billed as RAD (Rapid Application Development); it's geared 
+towards Enterprise Applications where the real-time interactivity and rich 
+workflow are the primary ROI. However developing in Flex is by far faster than 
+developing productivity tools in Flash natively; on some accounts there are 
+development speed gains of 10X.</p>
+<p> Flex out of the box comes with various pieces such as navigators (tree, 
+accordian, tab), charting/graphing components, components such as the infamous 
+datagrid, and effects such as fades and wipes. They're easy to use and often 
+require just passing it data and it handles the presentation on its own. All of 
+these can be customized to suit your purposes.</p>
+<p> The sky is really the limit when it comes to RIAs. Imagine dragging and 
+dropping an item for sale into a shopping cart instead of clicking on the old 
+school [add to cart] button. This type of functionality is easy to implement. 
+Or the whole realm of sound; where you can provide audio guided applications 
+that talk users through their first time in the workflow.</p>
+<p> Also consider the case of something like a dashboard such as a Network 
+Monitoring Application, or Stock monitor. In the HTML scenario, if the data 
+refreshes frequently, you would probably be meta-refreshing that page 
+constantly, and again pounding databases for up to the date data. In the Flex 
+scenario, since you can create stateful applications, the clients only need to 
+load an initial set of data once - and the middle tier can just<b>push/broadcast
+</b> deltas or updates (Flash Communication Server comes in handy in this case).
+</p>
+<p> One of the best examples out there is provided by Macromedia (now known as 
+Adobe), called the Flex Store. Try dragging and dropping an article into the 
+basket. Or play with the price range slider; the workflow benefits are 
+immediately recognizeable. Two other interesting examples include theRestaurant 
+Finder from Chrisophe Coenraets where you slide a box around a map to see 
+restaurants in the area, and the other being theBrocade Sales Dashboard (click 
+on measure viewer, and then a company on the bar graph). For more examples see 
+the<b><i>Community Adobe/Macromedia Flex</i></b> home page. </p>
+<p> Limitations </p>
+<p> Flex applications are Flash applications, and are limited by what the 
+Flash player can do.</p></li>
+<li> The Flash Player is not a web browser. So producing rich documentation is 
+challenging. That is what HTML was specifically designed for.
+<p> </p></li>
+<li> Flash/Flex popup windows are limited to being displayed within the 
+dimensions of the instance of the player that created it. So unlike a popup 
+window in a browser which you can move to anywhere on your desktop, your 
+Flex/Flash popup windows can't move outside the area occupied by the player. 
+This is actually quite a severe limitation if you want to maximize on desktop 
+real-estate (especially for users that have multiple monitors). There are 
+workarounds in that you can use Flex's Javascript to Actionscript API to popup 
+new instances of the player in browser windows, and use Javascript to act as a 
+communication bridge - however the effort is rarely justified. The removal of 
+this limitation is dependent on theApollo Player (aka the Universal Client) - 
+which will allow Flex/Flash apps to run and behave completely like a desktop 
+application without having to live inside a browser.
+<p> </p></li>
+<li> Drag and Drop from Desktop to Player is not supported. This may become 
+possible with Apollo, but for now the goal of the Flash player is to remain as 
+lightweight as possible and platform agnostic. Being able to drag a file from 
+your desktop on the player (to say initiate an upload) would require OS 
+specific support.
+<p> </p></li>
+<li> The Flash SWF format is a published specification - so it is possible for 
+other vendors to make tools that generate Flash files. However the future of 
+the Flash platform is controlled by a single organization (Adobe/Macromedia), 
+unlike open or collaborative intitiatives. But to mitigate that Adobe has been 
+extremely open in allowing the community to direct the future of the platform 
+(Flex 2 is the result of public alpha and beta programs).
+<p> </p></li>
+<li> Because Flex applications are thin clients, and not web pages they're not 
+suitable for where you want to use a web page. I.e, there is an initial load 
+and intialization that occurs when running a flex application initially, so the 
+user could have to wait 5-10 seconds as the application gets set up, and once 
+its loaded you're rocking and rolling. Similar is the case with desktop 
+applications.
+<p> Pricing &amp; History </p>
+<p> </p>
+<p> </p></li>
+<li><b>Flex 3.0:</b> Currently in public beta, aka &quot;Moxie&quot;. Can be 
+trialed atlabs.adobe.com. 
+<ul> 
+<li> Pricing structure expected to remain the same as Flex 2. </li> 
+<li> Introduces the AdvancedDataGrid </li> 
+<li> A Web Service introspection feature where you can point it at a 
+WebService and it will figure out all the function and parameters the functions 
+take.</li> 
+<li> New Wizards for connecting to AMFPHP and .NET (via Web Service). </li> 
+<li> Flex goes open source with most of the framework (everything except 
+charting and the AdvancedDataGrid)</li> 
+<li> Flex Builder 3 includes a profiler so you can monitor where CPU and 
+Memory utilization is consumed.</li> 
+<li> FDS gets renamed to LiveCycle Data Services (LCDS) 2.5. 
+<ul> 
+<li> Updates the client-side Web Services library. </li> 
+<li> Server-side PDF generation capabilities. </li> 
+<li> WSRP portal deployment of Flex applications (deploy a Flex application as 
+a portlet in a portal server).</li> 
+<li> Per Client Messaging quality of service (QoS). </li> 
+<li> Ajax Data Services. </li> 
+<li> Improved off-line message queuing. </li> 
+<li> RTMP tunneling (RTMPT). </li> 
+<li> A new SQL adaptor, simplifies the development of applications using Data 
+Management Services.</li> 
+<li> New JSP Tag Library that enables MXML and ActionScript code to be 
+embedded into a JSP page.</li> 
+<li> Several important enhancements to core Data Services performance and 
+scalability.</li> </ul> </li> </ul> </li>
+<li><b>Flex 2.01:</b> The current production version. 
+<ul> 
+<li> Tier 1: Free. Includes the Flex Framework, which is the Flex SDK 
+(framework, compiler, and documentation).</li> 
+<li> Tier 2: Includes Tier 1 plus the Flex Builder 2 IDE. $499 without 
+charting, $799 with charting.</li> 
+<li> Tier 3: An optional back end server called Flex Data Services which adds 
+the ability to do binary communications between a Flex client and your back-end 
+(e.g. Java and various Databases). Enables Flex clients to do paging across 
+record sets, RTMP (Real Time Messaging Protocol), push based communications to 
+the client, and real-time data syncronization to a database.<br>
+ FDS w/one 
+application per CPU &amp; unlimited users (aka FDS Express): FREE<br>
+ FDS 
+w/100 concurrent users:$6,000<br>
+ FDS Enterprise (unlimited users and 
+applications): $20,000</li> </ul> </li>
+<li><b>Flex 1.5 (obsolete):</b> The first prime time version. 
+<ul> 
+<li> This was aimed at the Enterprise with deep pockets with a price of $15K 
+USD per CPU.</li> 
+<li>However free developer and trial editions were available that didn't 
+require a license.</li> </ul> 
+<p> Resources and Getting Started </p>
+<p> </p></li>
+<li> Flex Home Page </li>
+<li> Community Adobe Flex </li>
+<li> Flex Portal </li>
+<li> FlexCoders - Email Discussion Forum </li>
+<li> The Flex Show - a weekly podcast 
+<p> <i>Last updated by Tariq Ahmed on 06/17/07. Visit the Sith Sigma School of 
+Business | ORHP. </i></p></li> <br>
+<br>
+<br>
+<br>
+Print Version
+<p> </p> <br>
+<br>
+<br>
+<br>
+<br>
+
+</body>

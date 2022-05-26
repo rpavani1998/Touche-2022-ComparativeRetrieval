@@ -1,0 +1,126 @@
+pre: the array is  of size n. *
+i wasn't able to get your homeworks graded because i was spending time  developing today's lab.
+- in bucket sort, we build a set of buckets that correspond to the range of elements.
+in each round, we spend o(n) time taking stuff out of the vector (assuming that we can append to each bucket in constant time) and o(m+n) time putting stuff back into the vector.
+if there are two elements that were never compared, they may not be in the correct place.
+- what is the extra space requirement? o(m).
+new  vector[possible_place_values]; for(int i = 0;
+fundamentals of computer science ii (csc-152 98s) [instructions] [search] [current] [changes] [syllabus] [handouts] [outlines ]
+[labs] [assignments] [examples] [bailey docs] [samr docs]
+well, there are o(l) rounds, where l is the  number of positions in the sequences.
+we'll leave that question to the future.
+after each partition, we glue the partitions back together, smallest to largest.
+we then step through our array, copying or  moving each element to the appropriate bucket.
+this page generated on mon jan 25 09:49:25 1999 by siteweaver.
+if you are restricted to compare and swap, it turns out that you can't do better than n*log_2(n) steps.
+- for part of today's class, we'll work on lab 9, which focuses on the quicksort algorithm.
+if we know that the elements in our array are in a restricted range, we  can do a sort that array without comparing and swapping, if we're willing to  use some extra space.
+we then step through our array, copying or moving each element to the appropriate bucket.
+those of you who want more programming to do please come and see me.
+- each partitioning must maintain the previous partitioning within each new partition.
+new vector[possible_place_values]; for(int i = 0;
+- can we do better than o(n*log_2(n))?
+a careful analysis will show you that if  you use fewer steps, you won't have been able to compare each element to every  other element (directly or indirectly).
+some are o(n*n) one (merge sort) is o(n*log_2(n)), but requires significantly extra space.
+silly sort bucket sort -
+- so, can we throw away our comparisons of elements and swaps?
+why is this an unsatisfying algorithm?
+that gives an overall running time of o(l*(m+n)).
+[tutorial] [api] disclaimer often, these pages were created "on the fly" with little, if any, proofreading.
+any or all of the information on the pages may be incorrect.
+this page may be found at http://www.math.grin.edu/~rebelsky/courses/cs152/98s/home/rebelsky/public_html/courses/cs152/98s/outlines/outline.26.html source text last modified tue jan 12 11:52:24 1999.
+(in the extreme case, we only use two buckets in each sort or subsort, giving us something close to quick sort.)
+- those of you who want more programming to do please come and see me.
+e.g., if a precedes b after the first partitioning, and a and b end up in the same group in the second partitioning, then a must precede b in its group.
+- in radix sort, one repeatedly partitions the objects based on one of the elements of the sequence, moving from least significant to most significant element of the sequence.
+- however, we can often call l and m constants (e.g., for integers, l is always 32 and m is always 2), so that's a running time of o(n).
+quicksort work on lab 9 for approximately twenty minutes to improve your  understanding of the operation of quicksort.
+i <  size(); ++i) { buckets[elementat(i).placevalue(p)].addelement(elementat(i)); }  //
+other sorting algorithms
+in bucket sort, we build a set of buckets that  correspond to the range of elements.
+if each object to be sorted can be represented as a sequence of values (e.g., a sequence of digits in a decimal number, a sequence of characters in words, a sequence of bits in the binary representation of the object) and sorting can be based on that sequence, then it is possible to sort based on those sequences.
+one to look forward to isheap sort.
+other sorting algorithms administrivia i have decided not to assign another homework before break since most of  you will be working hard on homeworks, essays, and such for your other classes.
+one (quicksort) is expected o(n*log_2(n)), but can behave significantly  worse.
+so, can we throw away our comparisons of elements and swaps?
+* * radix sort the vector, starting with the bth-least significant * bit.
+this page may be found at  http://www.math.grin.edu/~rebelsky/courses/cs152/98s/home/rebelsky/public_html/courses/cs152/98s/outlines/outline.26.html source text last modified tue jan 12 11:52:24 1999.
+when we're done copying  elements, we can simply pull them out of the buckets in order (since the  buckets are ordered).
+i <  possible_place_values; ++i) { addelements(buckets[i]); } } //
+b <  # of places in the sequence representation of * the data type * post: for all  i, the pth place in v[i] <= the pth place in v[i+1] **/ public static void  splitandjoin(int p) { // create the set of buckets vector[] buckets =
+silly sort here is an interesting sorting algorithm that relies on limitations to  the input to ensure quicker sorting.
+sillysort what is the running time of this algorithm?
+b < # of places in the sequence representation of * the data type * post: for all i, the pth place in v[i] <= the pth place in v[i+1] **/ public static void splitandjoin(int p) { // create the set of buckets vector[] buckets =
+a careful analysis will show you that if you use fewer steps, you won't have been able to compare each element to every other element (directly or indirectly).
+well, there are o(l) rounds, where l is the number of positions in the sequences.
+i < possible_place_values; ++i) buckets[i] = new vector(); //
+i < possible_place_values; ++i) { addelements(buckets[i]); } } //
+[tutorial] [api] outline of class 26: sorting without swapping held: friday, march 6, 1998 - short lab: quicksort - faster sorting methods - silly sort - bucket sort - radix sort - other sorting algorithms administrivia - i have decided not to assign another homework before break since most of you will be working hard on homeworks, essays, and such for your other classes.
+what is the running time?
+recursive case, partition and move on to the next bit splitandjoin(b); return radixsort(b+1); } // radixsort /*
+any or all of the information on  the pages may be incorrect.
+i = 0; i < size(); ++i) { buckets[elementat(i).placevalue(p)].addelement(elementat(i)); } //
+please contact me if you notice errors.
+[tutorial] [api] disclaimer often, these pages were created "on the  fly" with little, if any, proofreading.
+contact our webmaster at rebelsky@math.grin.edu
+splitandjoin what's the running time?
+* * split the elements at the pth position * pre: 0
+however, we can often call l and m constants (e.g., for integers, l is  always 32 and m is always 2), so that's a running time of o(n).
+after each partition, we glue the  partitions back together, smallest to largest.
+*/  public sillysort(int[] stuff) { for (int value = 1; value <= this.size();  ++value) {
+o(n+m), where n is the number of elements and m  is the number of buckets.
+i < possible_place_values;  ++i) buckets[i] = new vector(); //
+it depends on our basic operations.
+< # of places in the sequence representation of * the data type *  pre: this vector has been radix sorted for all 0
+- i wasn't able to get your homeworks graded because i was spending time developing today's lab.
+recursive case,  partition and move on to the next bit splitandjoin(b); return radixsort(b+1); }  // radixsort /*
+- space usage is o(n+m), for the temporary buckets.
+this can save some space, but may then require extra time.
+space usage is o(n+m), for the temporary buckets.
+when we're done copying elements, we can simply pull them out of the buckets in order (since the buckets are ordered).
+- one implementation question that arises is how to implement the buckets, given that the same bucket may hold multiple elements.
+if we know that the elements in our array are in a restricted range, we can do a sort that array without comparing and swapping, if we're willing to use some extra space.
+- it depends on our basic operations.
+as we learn some more data structures, we'll also learn some more sorting  methods that depend on those data structures.
+a simple variation is to have bigger buckets, and recursively sort each  bucket.
+faster sorting methods - we've seen a number of sorting routines.
+pre: each value between 1 and n appears exactly once in the *  array * post: the array contains the same elements and they're sorted.
+if there are two elements that were  never compared, they may not be in the correct place.
+- in psuedo-java, for the boolean case public static void radixsort() { radixsort(v,0); } // radixsort /*
+paritition the vector for(int
+(in the  extreme case, we only use two buckets in each sort or subsort, giving us  something close to quick sort.)
+one implementation question that arises is how to implement the buckets,  given that the same bucket may hold multiple elements.
+stuff[value-1] = value; } / for } //
+each partitioning must maintain the previous partitioning within each new  partition.
+i < p * post: this  vector is radix sorted */ public static void radixsort(place p) { // base case,  we've run out of bits if (p == places_in_element) return; //
+that gives an overall  running time of o(l*(m+n)).
+o(n+m), where n is the number of elements and m is the number of buckets.
+on to introduction to lists back to more sorting techniques outlines: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26  27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 current position in syllabus [instructions] [search] [current] [changes] [syllabus] [handouts] [outlines ]
+we'll leave that  question to the future.
+other sorting algorithms - as we learn some more data structures, we'll also learn some more sorting methods that depend on those data structures.
+- what is the running time?
+if you are restricted to compare and swap, it turns out that you can't do  better than n*log_2(n) steps.
+(yes, but it doesn't seem to be covered in bailey.)
+in psuedo-java, for the boolean case public static void radixsort() { radixsort(v,0); } // radixsort /*
+* * sort an array containing the values 1 ... n. *
+can we do better than o(n*log_2(n))?
+most often, we simply use bits for the partitioning, as these are easiest  to check and use.
+- some are o(n*n) - one (merge sort) is o(n*log_2(n)), but requires significantly extra space.
+splitandjoin - what's the running time?
+in radix sort, one repeatedly partitions the objects  based on one of the elements of the sequence, moving from least significant to  most significant element of the sequence.
+* pre: 0 <= b < # of places in the sequence representation of * the data type * pre: this vector has been radix sorted for all 0
+in each round, we spend o(n) time taking  stuff out of the vector (assuming that we can append to each bucket in constant  time) and o(m+n) time putting stuff back into the vector.
+* *  radix sort the vector, starting with the bth-least significant * bit.
+- a simple variation is to have bigger buckets, and recursively sort each bucket.
+- one (quicksort) is expected o(n*log_2(n)), but can behave significantly worse.
+faster sorting methods we've seen a number of sorting routines.
+- most often, we simply use bits for the partitioning, as these are easiest to check and use.
+what is the extra space requirement? o(m).
+for part of today's class, we'll work on lab 9, which focuses on the  quicksort algorithm.
+one to look forward to isheap  sort.
+put 'em back together setlength(0); for(int i = 0;
+quicksort work on lab 9 for approximately twenty minutes to improve your understanding of the operation of quicksort.
+e.g., if a precedes b after the first partitioning, and a and b end  up in the same group in the second partitioning, then a must precede b in its  group.
+on to introduction to lists back to more sorting techniques outlines: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 current position in syllabus [instructions] [search] [current] [changes] [syllabus] [handouts] [outlines ]
+if each object to be sorted can be represented as a sequence of values  (e.g., a sequence of digits in a decimal number, a sequence of characters in  words, a sequence of bits in the binary representation of the object) and  sorting can be based on that sequence, then it is possible to sort based on  those sequences.
+i < p * post: this vector is radix sorted */ public static void radixsort(place p) { // base case, we've run out of bits if (p == places_in_element) return; //

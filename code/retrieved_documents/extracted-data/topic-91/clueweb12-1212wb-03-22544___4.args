@@ -1,0 +1,79 @@
+subsampling with shrinkage can further increase the accuracy of the model.
+the former is the number of trees in the forest.
+empirical evidence suggests that small values oflearn_rate favor better test error.[htf2009] recommend to set the learning rate to a small constant (e.g. learn_rate <= 0.1) and choose n_estimators by early stopping.
+the number of weak learners (i.e. regression trees) is controlled by the parametern_estimators; the maximum depth of each tree is controlled via max_depth.
+note that because of inter-process communication overhead, the speedup might not be linear (i.e., usingk jobs will unfortunately not be k times as fast).
+at each iterationn_classes regression trees have to be constructed which makes gbrt rather inefficient for data sets with a large number of classes.
+when training on large datasets, where runtime and memory requirements are important, it might also be beneficial to adjust themin_density parameter, that controls a heuristic for speeding up computations in each tree.
+this usually allows to reduce the variance of the model a bit more, at the expense of a slightly greater increase in bias: >>> from sklearn.cross_validation import cross_val_score >>>from sklearn.datasets import make_blobs >>> from sklearn.ensemble import randomforestclassifier >>> from sklearn.ensemble import extratreesclassifier >>> from sklearn.tree import decisiontreeclassifier >>> x, y = make_blobs(n_samples=10000, n_features=10, centers=100, ... random_state=0) >>> clf =
+subsampling without shrinkage, on the other hand, does poorly.
+in contrast to the original publication [b2001], the scikit-learn implementation combines classifiers by averaging their probabilistic prediction, instead of letting each classifier vote for a single class.
+as a result of this randomness, the bias of the forest usually slightly increases (with respect to the bias of a single non-random tree) but, due to averaging, its variance also decreases, usually more than compensating for the increase in bias, hence yielding an overall better model.
+the plot on the right shows the feature importances which can be optained via thefeature_importance property.
+smaller values oflearn_rate require larger numbers of weak learners to maintain a constant training error.
+plots like these are often used for early stopping.
+parallelization¶ finally, this module also features the parallel construction of the trees and the parallel computation of the predictions through then_jobs parameter.
+the following example shows how to fit a gradient boosting classifier with 100 decision stumps as weak learners: >>> from sklearn.datasets import make_hastie_10_2 >>> from sklearn.ensemble import gradientboostingclassifier >>> x, y = make_hastie_10_2(random_state=0) >>> x_train, x_test = x[:2000], x[2000 :] >>> y_train, y_test = y[:2000], y[2000:] >>> clf = gradientboostingclassifier(n_estimators=100, learn_rate=1.0, ... max_depth=1, random_state=0).fit(x_train, y_train) >>> clf.score(x_test, y_test) 0.913...
+the natural choice for regression due to its superior computational properties.
+empirical evidence suggests that small values oflearn_rate favor better test error.[htf2009] recommend to set the learning rate to a small constant (e.g. learn_rate <= 0.1) and choose n_estimators by early stopping.
+the figure below shows the results of applying gradientboostingregressor with least squares loss and 500 base learners to the boston house-price dataset (seesklearn.datasets.load_boston).
+in addition, when splitting a node during the construction of the tree, the split that is chosen is no longer the best split among all features.
+note that because of inter-process communication overhead, the speedup might not be linear (i.e., usingk jobs will unfortunately not be k times as fast).
+the natural choice for regression due to its superior computational properties.
+at each iteration the base classifier is trained on a fractionsubsample of the available training data.
+the disadvantages of gbrt are: - scalability, due to the sequential nature of boosting it can hardly be parallelized.
+as other classifiers, forest classifiers have to be fitted with two arrays: an array x of size[n_samples, n_features] holding the training samples, and an array y of size[n_samples] holding the target values (class labels) for the training samples: >>> from sklearn.ensemble import randomforestclassifier >>>x =
+gradient tree boosting uses decision trees of fixed size as weak learners.
+if n_jobs=k then computations are partitioned into k jobs, and run on k cores of the machine.
+if n_jobs=k then computations are partitioned into k jobs, and run on k cores of the machine.
+the plot on the left shows the train and test error at each iteration.
+subsampling with shrinkage can further increase the accuracy of the model.
+classification¶ gradientboostingclassifier supports both binary and multi-class classification via the deviance loss function (loss='deviance').
+we can clearly see that shrinkage outperforms no-shrinkage.
+in random forests (see randomforestclassifier and randomforestregressor classes), each tree in the ensemble is built from a sample drawn with replacement (i.e., a bootstrap sample) from the training set.
+ifn_jobs=-1 then all cores available on the machine are used.
+the advantages of gbrt are: natural handling of data of mixed type (= heterogeneous features) predictive power robustness to outliers in input space (via robust loss functions)
+plots like these are often used for early stopping.
+in contrast to the original publication [b2001], the scikit-learn implementation combines classifiers by averaging their probabilistic prediction, instead of letting each classifier vote for a single class.
+the number of weak learners (i.e. regression trees) is controlled by the parametern_estimators; the maximum depth of each tree is controlled via max_depth.
+decision trees have a number of abilities that make them valuable for boosting, namely the ability to handle data of mixed type and the ability to model complex functions.
+significant speedup can still be achieved though when building a large number of trees, or when building a single tree requires a fair amount of time (e.g., on large datasets).
+the module sklearn.ensemble provides methods for both classification and regression via gradient boosted regression trees.
+the following example shows how to fit a gradient boosting classifier with 100 decision stumps as weak learners: >>> from sklearn.datasets import make_hastie_10_2 >>> from sklearn.ensemble import gradientboostingclassifier >>> x, y = make_hastie_10_2(random_state=0) >>> x_train, x_test = x[:2000], x[2000 :] >>> y_train, y_test = y[:2000], y[2000:] >>> clf =
+by contrast, in boosting methods, models are built sequentially and one tries to reduce the bias of the combined model.
+in addition, note that bootstrap samples are used by default in random forests ( bootstrap=true) while the default strategy is to use the original dataset for building extra-trees (bootstrap=false).
+significant speedup can still be achieved though when building a large number of trees, or when building a single tree requires a fair amount of time (e.g., on large datasets).
+finally, this module also features the parallel construction of the trees and the parallel computation of the predictions through then_jobs parameter.
+by contrast, in boosting methods, models are built sequentially and one tries to reduce the bias of the combined model.
+on average, the combined model is usually better than any of the single model because its variance is reduced.
+when training on large datasets, where runtime and memory requirements are important, it might also be beneficial to adjust themin_density parameter, that controls a heuristic for speeding up computations in each tree.
+this means a diverse set of classifiers is created by introducing randomness in the classifier construction.
+smaller values oflearn_rate require larger numbers of weak learners to maintain a constant training error.
+at each iteration the base classifier is trained on a fractionsubsample of the available training data.
+on average, the combined model is usually better than any of the single model because its variance is reduced.
+as other classifiers, forest classifiers have to be fitted with two arrays: an array x of size[n_samples, n_features] holding the training samples, and an array y of size[n_samples] holding the target values (class labels) for the training samples: >>> from sklearn.ensemble import randomforestclassifier >>>x =
+as a result of this randomness, the bias of the forest usually slightly increases (with respect to the bias of a single non-random tree) but, due to averaging, its variance also decreases, usually more than compensating for the increase in bias, hence yielding an overall better model.
+empiricial good default values are max_features=n_features for regression problems, and max_features=sqrt(n_features) for classification tasks (where n_features is the number of features in the data).
+the parameter learn_rate strongly interacts with the parameter n_estimators , the number of weak learners to fit.
+at each iterationn_classes regression trees have to be constructed which makes gbrt rather inefficient for data sets with a large number of classes.
+the plot on the right shows the feature importances which can be optained via thefeature_importance property.
+this means a diverse set of classifiers is created by introducing randomness in the classifier construction.
+gradientboostingclassifier supports both binary and multi-class classification via the deviance loss function (loss='deviance').
+in addition, when splitting a node during the construction of the tree, the split that is chosen is no longer the best split among all features.
+the module sklearn.ensemble provides methods for both classification and regression via gradient boosted regression trees.
+the larger the better, but also the longer it will take to compute.
+in addition, note that results will stop getting significantly better beyond a critical number of trees.
+the steepest descent direction is the negative gradient of the loss function evaluated at the current model which can be calculated for any differentiable loss function: where the step length is choosen using line search: the algorithms for regression and classification only differ in the concrete loss function used.
+we can clearly see that shrinkage outperforms no-shrinkage.
+random forests¶ in random forests (see randomforestclassifier and randomforestregressor classes), each tree in the ensemble is built from a sample drawn with replacement (i.e., a bootstrap sample) from the training set.
+decision trees have a number of abilities that make them valuable for boosting, namely the ability to handle data of mixed type and the ability to model complex functions.
+the larger the better, but also the longer it will take to compute.
+in addition, note that bootstrap samples are used by default in random forests ( bootstrap=true) while the default strategy is to use the original dataset for building extra-trees (bootstrap=false).
+the plot on the left shows the train and test error at each iteration.
+in addition, note that results will stop getting significantly better beyond a critical number of trees.
+the disadvantages of gbrt are: scalability, due to the sequential nature of boosting it can hardly be parallelized.
+empiricial good default values are max_features=n_features for regression problems, and max_features=sqrt(n_features) for classification tasks (where n_features is the number of features in the data).
+this usually allows to reduce the variance of the model a bit more, at the expense of a slightly greater increase in bias: >>> from sklearn.cross_validation import cross_val_score >>>from sklearn.datasets import make_blobs >>> from sklearn.ensemble import randomforestclassifier >>> from sklearn.ensemble import extratreesclassifier >>> from sklearn.tree import decisiontreeclassifier >>> x, y = make_blobs(n_samples=10000, n_features=10, centers=100, ... random_state=0) >>> clf =
+the steepest descent direction is the negative gradient of the loss function evaluated at the current model which can be calculated for any differentiable loss function: where the step length is choosen using line search: the algorithms for regression and classification only differ in the concrete loss function used.
+the advantages of gbrt are: - natural handling of data of mixed type (= heterogeneous features) - predictive power - robustness to outliers in input space (via robust loss functions)
+the figure below shows the results of applying gradientboostingregressor with least squares loss and 500 base learners to the boston house-price dataset (seesklearn.datasets.load_boston).

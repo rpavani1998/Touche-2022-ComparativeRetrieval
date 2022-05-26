@@ -1,0 +1,247 @@
+this typically means the geometry needs to be transformed multiple times and sent to the hardware card for each pass.
+because your app does its own transform, and supplies screen-space coordinates to the opengl.
+one way around this is to temporarily open a dummy window when your application starts up, then open a further window set up according to the hardware available.
+with a modelview matrix that passes z straight through (such as the two above), you can set the near and far fog values according to the range of z values that come out of your transform.
+the "red book" is a must have for all opengl programmers.
+opengl is a used to draw images on the screen, not to do general geometry manipulation.
+mesa is issued with full source code under gpl and runs on a huge range of operating systems: unix/x11, linux, amiga, apple macintosh, beos, next, os/2, ms-dos, vms, and windows 95/nt mesa is also hardware accelerated on 3dfx voodoo and voodoo rush (at time of writing) -
+if an opengl driver is available on the system then the library will automatically call microsoft's library so that the driver will be invoked during rendering.
+every few months new drivers are released that could potentially turn a performance pig into a greyhound.
+mesa is issued with full source code under gpl and runs on a huge range of operating systems: unix/x11, linux, amiga, apple macintosh, beos, next, os/2, ms-dos, vms, and windows 95/nt mesa is also hardware accelerated on 3dfx voodoo and voodoo rush (at time of writing) -
+for #5, there are a few cards out there with limited blending capability.
+the "red book" is a must have for all opengl programmers.
+if you want to (say) switch from microsoft opengl to sgi opengl, then you need to use tlib.exe to remove the dll's from import32.lib, some notes are included in the files in the above directory.
+the opengl superbible contains some of the same information from the "red book", some information from the "blue book" and sets up opengl rendering under many different environments under windows (win32, mfc, owl, etc).
+quoting the author of mesa (brian paul) from his mesa homepage (http://www.mesa3d.org): "mesa is a 3-d graphics library which uses the opengl api (application programming interface).
+opengl miniports are there to support games such as quake, and they will usually only support a small subset of opengl commands.
+do a search for "opengl bmp" and you'll turn up some good info.
+every few months a new card comes along that looks real cool.
+software rendering with the ms libraries is very slow compared to custom software rendering engines.
+the best sample is michael gold's "rasonly.c" - available at: http://www.berkelium.com/opengl/examples/index.html ---------------------------------------------------------------------- section 5.
+you _can_ supply coordinates with (w == 1.0f), if you're prepared to do the perspective divide yourself.
+for instance, opengl programming in java may well become a hot topic soon.
+since the voodoo1/voodoo2 is 3d only, you do not have access to the 2d gdi functions to allow windows to draw your pointer.
+if you do have hardware accelerated transforms then your data needs to be sent over the bus to the card, transformed, then sent back.
+a mouse pointer is simply a 2d overlay, and can be drawn with a texture mapped quad (see subject 9.01 and 9.02), or as flat shaded triangles as in the sample below.
+visual c++ linking any of the libraries with microsoft visual c++ is as easy as changing the linked libraries.
+if you do this, you can supply texture coordinates with gltexcoord2fv().
+you can get access to the contents of those buffers by using glreadpixels() but it is slow.
+vendors also often provide their own extensions; check their documentation for more information, use glgetstring to verify their existence, and use the appropriate function to call the extension (via wglgetprocaddress under windows).
+with a modelview matrix that passes z straight through (such as the two above), you can set the near and far fog values according to the range of z values that come out of your transform.
+old drivers under 95 may require a restart if you try to change the bit depth so it is best to have the bit depth set to the desired level before running the application.
+however, you might miss out on acceleration (for a similar reason to part 4 above), plus this approach makes supplying perspective-correct texture coordinates a headache.
+if (for example) there is fast transform hardware, then it would probably be a good idea to use it.
+added more info about multi-texture techniques.
+unlike the sgi libraries, the microsoft ones will directly make use of any available hardware.
+you _can_ supply coordinates with (w == 1.0f), if you're prepared to do the perspective divide yourself.
+a simple, cascading pop-up menu facility.
+furthermore, mesa cannot claim opengl conformance since the conformance tests are only available to opengl licensees.
+in-core support for thread-safeness has also been implemented enabling developers to take full advantage of java's powerful multi-threading.
+to effect the high-performance rendering, magician interfaces directly with existing opengl installations in the form of native code.
+some hardware can rasterize primitives that go outside the viewport for free, so it's not worthwhile to do clipping on the host.
+changes in the near z will have much larger effects than changes in the far z. this will fix most problems.
+while the emphasis of this list is on game programming, general opengl programming information and examples are welcome as well.
+general topics relating to programming 3d games are also welcome.
+access to these buffers belongs in the windowing system (through directdraw or something similar) and not in opengl.
+multi-texture produces the same or similar effects as multi-pass, but in a single pass.
+however, the software rendering is far in advance of the microsoft implementation (for political reasons) and some ihvs are basing their opengl libraries around this version, 3dfx for example.
+a.01 added links to opengl books online.
+fog the degree of fogging is calculated according to the eye-coordinate's z component.
+other glut questions are answered in the glut faq which is distributed with the glut library.
+opengl is a used to draw images on the screen, not to do general geometry manipulation.
+for instance, requesting a 1024x768 16 bit double-buffered rendering context with a 16 bit z-buffer will put you into software emulation mode on a 4 meg riva 128 (it would require about 4.7 megs of video memory).
+for this reason, you might as well leave clipping to opengl.
+this faq introduces many useful techniques as well as listing the most important books and links that no one should be without.
+you should also set your include path so that sgi's header files have precedence over microsoft's.
++ 5.05: rendering to multiple windows under win32 (or mfc) doesn't work.
+you cannot mix directdraw or direct3d with opengl, but all of the others can be used without a problem.
+most consumer cards have a relatively low precision z-buffer (16 bit) so you need to be careful when setting up your projection so you don't make the z range too large.
+most opengl implementations, including sgi's for windows, have extremely efficient clip-check code.
+usually bringing your 3dfx window into the foreground will solve the problem, but if anyone has good solutions for many of sgi's example programs perhaps they could send them in.
+you should also set your include path so that sgi's header files have precedence over microsoft's.
+every few months a new card comes along that looks real cool.
+if you do have hardware accelerated transforms then your data needs to be sent over the bus to the card, transformed, then sent back.
+this faq introduces many useful techniques as well as listing the most important books and links that no one should be without.
+however, you might miss out on acceleration (for a similar reason to part 4 above), plus this approach makes supplying perspective-correct texture coordinates a headache.
+old drivers under 95 may require a restart if you try to change the bit depth so it is best to have the bit depth set to the desired level before running the application.
+since sgi's opengl for windows library overloads the choosepixelformat() function in gdi you need to make sure that you link the libraries in the right order so you don't pick up the wrong version of choosepixelformat().
+since most ihvs expect to provide full opengl 1.1 compliance miniports are not expected to be so useful in the future.
+as a result, even with hardware geometry it will probably be faster to do the transforms yourself.
+opengl will clip it, or not, as the hardware requires.
+access to these buffers belongs in the windowing system (through directdraw or something similar) and not in opengl.
+the "green book" uses glut and as such is useful for more platforms than x-windows.
+this allows you near full use of windows functions for debugging, though there can be problems with the 3dfx not knowing it's screen/window is visible (another dreaded black screen problem).
+this version of silicon graphics' opengl library for windows relies on microsoft's opengl library for hardware acceleration.
+* the microsoft implementation can cause undefined exceptions when run under the bcb pro debugger.
+you would also be put into software, or the creation of the context may fail if you request a 24 bit frame buffer on the same card.
+the opengl superbible contains some of the same information from the "red book", some information from the "blue book" and sets up opengl rendering under many different environments under windows (win32, mfc, owl, etc).
+the mail server itself (check the help for the mail server for details).
+because your app does its own transform, and supplies screen-space coordinates to the opengl.
+other glut questions are answered in the glut faq which is distributed with the glut library.
+the source code to everything in the red book is available at: http://trant.sgi.com/opengl/examples/redbook/redbook.html specifically the pickdepth.c example.
+questions on topics such as collision detection are too large to answer here.
+you can get access to the contents of those buffers by using glreadpixels() but it is slow.
+you cannot mix directdraw or direct3d with opengl, but all of the others can be used without a problem.
+a.01 added links to opengl books online.
+this allows you near full use of windows functions for debugging, though there can be problems with the 3dfx not knowing it's screen/window is visible (another dreaded black screen problem).
+for #5, there are a few cards out there with limited blending capability.
+it allows a pc with no dedicated 3d graphics hardware to execute opengl applications at exceptional levels of performance and complements accelerated opengl products available from numerous 3d graphics hardware vendors.
+also make sure that opengl.lib and glu.lib precede gdi32.lib in the library list.
+light maps are a set of textures that are blended with the normal textures in the scene to produce lighting effects.
+the superbible is based on opengl 1.0, but is still quite useful.
+you would also be put into software, or the creation of the context may fail if you request a 24 bit frame buffer on the same card.
+the "green book" uses glut and as such is useful for more platforms than x-windows.
+fog the degree of fogging is calculated according to the eye-coordinate's z component.
+"most applications written for opengl can be recompiled for mesa without making any source code changes."
+usually bringing your 3dfx window into the foreground will solve the problem, but if anyone has good solutions for many of sgi's example programs perhaps they could send them in.
+this is the prefered method of picking, but may not be practical for all applications.
+for instance, opengl programming in java may well become a hot topic soon.
+with multi-texturing the geometry only needs to be sent to the hardware once.
+you can get the code from: ftp://ftp.cs.unc.edu/pub/users/narkhede/triangulation.tar.gz
+if you want areas of the quads to be transparent the textures should be rgba with the alpha used to create areas of transparency.
+this means that you don't actually need to link to the libs using c++ builder.
+this typically means the geometry needs to be transformed multiple times and sent to the hardware card for each pass.
+support for bitmap and stroke fonts.
+* you need to mask floating point exceptions by including the following line in your initialization routines: _control87(mcw_em, mcw_em); mcd_em should be defined in float.h failing to do this results in spurious floating point exceptions, when using lighting or normalization in particular.
+mesa cannot be called an implementation of opengl since i did not obtain an opengl license from sgi.
+tip2 : use implib.exe to generate a lib from a dll, frequently people distribute code with lib's in msvc format so borland users get stuck.
+do a search for "opengl bmp" and you'll turn up some good info.
+this is the prefered method of picking, but may not be practical for all applications.
+2nd monitor debugging ~~~~~~~~~~~~~~~~~~~~~ one nice thing about 3dfx cards is that you can plug a 2nd vga monitor into the output of the 3dfx card while keeping your main monitor attached to your primary video card.
+" ---------------------------------------------------------------------- subject 2.03: vendor specific opengl ports and miniports as well as the main microsoft and sgi implementations hardware vendors may ship their own opengl ports based on either of the aforementioned drivers.
+quoting the author of mesa (brian paul) from his mesa homepage (http://www.mesa3d.org): "mesa is a 3-d graphics library which uses the opengl api (application programming interface).
+the next version of silicon graphics' library will be able to load opengl drivers directly."
+lighting and fog (and to some extent textures and z-buffer information) are based on calculations that require information about the camera and the model rotations, but need to ignore any projection information (typically perspective).
+so far i haven't been incredibly impressed with any game development books i've read or seen.
+the toolkit supports the following functionality: multiple windows for opengl rendering.
+additional developer features include in-built interactive tracing and profiling of opengl calls.
+this is slower than full-screen rendering, but essential when trying to debug on a single monitor setup.
+if an opengl driver is available on the system then the library will automatically call microsoft's library so that the driver will be invoked during rendering.
+to effect the high-performance rendering, magician interfaces directly with existing opengl installations in the form of native code.
+in the developers section you will find links to many useful places there are several useful usenet groups, including: comp.graphics.api.opengl comp.graphics.algorithms rec.games.programmer
+other mesa questions are answered in the mesa faq at: http://www.mesa3d.org/mesa/mesafaq.html mesa can be obtained from: http://www.mesa3d.org there is a mesa mailing list, to subscribe, send email to majordomo@iqm.unicamp.br with this as the body of the message: subscribe mesa your-email-address ---------------------------------------------------------------------- subject 2.06: what is glut?
+the best source for general graphics algorithm information is the comp.graphics.algorithms faq, posted bimonthly on the newsgroup of that name.
+this is most commonly caused by trying to place the camera position and orientation into the projection matrix.
+also make sure that opengl.lib and glu.lib precede gdi32.lib in the library list.
+the voodoo series from 3dfx cannot render into a gdi window by itself, however you can use winglide (http://www.nullsoft.com/winglide.html) to automatically copy the 3dfx framebuffer to your 2d framebuffer so it will render to a window.
+most opengl implementations, including sgi's for windows, have extremely efficient clip-check code.
+the ongoing religious war between opengl and direct3d is best left somewhere else (rec.games.programmer is a likely candidate ;-).
+the advanced rendering course notes hosted at the sgi website offer good tutorials into opengl programming: http://www.sgi.com/technology/opengl/advanced97/notes/notes.html http://www.opengl.org:
+t% the user's previous settings are therefore kept in place.
+nb: you must have an existing gl context or your call to glgetstring will not be valid, though your target window may to some extent be defined by the hardware available to the user.
+opengl miniports are there to support games such as quake, and they will usually only support a small subset of opengl commands.
+the best way to change resolution under windows is to use changedisplaysettings().
+the best source for general graphics algorithm information is the comp.graphics.algorithms faq, posted bimonthly on the newsgroup of that name.
+clear the depth buffer.
+you can't get direct access through opengl.
+vendors also often provide their own extensions; check their documentation for more information, use glgetstring to verify their existence, and use the appropriate function to call the extension (via wglgetprocaddress under windows).
+one way around this is to temporarily open a dummy window when your application starts up, then open a further window set up according to the hardware available.
+software rendering with the ms libraries is very slow compared to custom software rendering engines.
++ 5.05: rendering to multiple windows under win32 (or mfc) doesn't work.
+casting a ray for the mouse point into the scene and checking colisions between the ray and the geometry in the scene.
+this means that you don't actually need to link to the libs using c++ builder.
+vendor specific opengl ports and miniports as well as the main microsoft and sgi implementations hardware vendors may ship their own opengl ports based on either of the aforementioned drivers.
+quoting the author of glut (mark kilgard) from his glut homepage (http://reality.sgi.com/mjk_asd/spec3/spec3.html): "the opengl utility toolkit (glut) is a programming interface with ansi c and fortran bindings for writing window system independent opengl programs.
+if you don't have hardware accelerated geometry then all you are doing is adding a layer of overhead to get the computed values.
+this version of silicon graphics' opengl library for windows relies on microsoft's opengl library for hardware acceleration.
+furthermore, mesa cannot claim opengl conformance since the conformance tests are only available to opengl licensees.
+every few months new drivers are released that could potentially turn a performance pig into a greyhound.
+usually this means that two textures are combined with some form of blending to produce a single output pixel.
+multi-texture produces the same or similar effects as multi-pass, but in a single pass.
+so far i haven't been incredibly impressed with any game development books i've read or seen.
+for this reason, you might as well leave clipping to opengl.
+most likely you have requested a pixel format that is unsupported by your current driver or the requested format cannot fit in the video memory of your card.
+if you use opengl to do the transforms for your collision detection or other things you will need to use the feedback mechanism to get the transformed values back into your code.
+unlike the sgi libraries, the microsoft ones will directly make use of any available hardware.
+search e.g. for "subject 2.04" to find that item.
+the best way is to use an orthographic projection and render the overlays as texture mapped quads.
+tip2 : use implib.exe to generate a lib from a dll, frequently people distribute code with lib's in msvc format so borland users get stuck.
+in-core support for thread-safeness has also been implemented enabling developers to take full advantage of java's powerful multi-threading.
+the "blue book is available online as web pages or help files so is only really required for people who prefer "dead tree format".
+as a result, even with hardware geometry it will probably be faster to do the transforms yourself.
+if you want to (say) switch from microsoft opengl to sgi opengl, then you need to use tlib.exe to remove the dll's from import32.lib, some notes are included in the files in the above directory.
+with multi-texturing the geometry only needs to be sent to the hardware once.
+ron fosner seems to know quite a bit about it and might be able to answer any specific questions you may have.
+they do not dynamically link to the opengl32.dll, they use the windows functions loadlibrary and getprocaddress to manually load the appropriate dll and get the address of each function.
+this is intended as a resource for all levels of opengl programmers, from beginner to expert.
+in general it is best to push the near z as far out as possible, and bring in the far z as close as possible.
+"most applications written for opengl can be recompiled for mesa without making any source code changes."
+clear the frame/depth buffers.
+if you have a large z range to deal with you may be able to use a trick to get around the fighting.
+a mouse pointer is simply a 2d overlay, and can be drawn with a texture mapped quad (see subject 9.01 and 9.02), or as flat shaded triangles as in the sample below.
+visual c++ linking any of the libraries with microsoft visual c++ is as easy as changing the linked libraries.
+the "blue book is available online as web pages or help files so is only really required for people who prefer "dead tree format".
+this is most commonly caused by trying to place the camera position and orientation into the projection matrix.
+mesa cannot be called an implementation of opengl since i did not obtain an opengl license from sgi.
+general topics relating to programming 3d games are also welcome.
+since sgi's opengl for windows library overloads the choosepixelformat() function in gdi you need to make sure that you link the libraries in the right order so you don't pick up the wrong version of choosepixelformat().
+in the developers section you will find links to many useful places there are several useful usenet groups, including: comp.graphics.api.opengl comp.graphics.algorithms rec.games.programmer
+since most ihvs expect to provide full opengl 1.1 compliance miniports are not expected to be so useful in the future.
+casting a ray for the mouse point into the scene and checking colisions between the ray and the geometry in the scene.
+for instance, requesting a 1024x768 16 bit double-buffered rendering context with a 16 bit z-buffer will put you into software emulation mode on a 4 meg riva 128 (it would require about 4.7 megs of video memory).
+if you do this, you can supply texture coordinates with gltexcoord2fv().
+opengl will clip it, or not, as the hardware requires.
+nb: you must have an existing gl context or your call to glgetstring will not be valid, though your target window may to some extent be defined by the hardware available to the user.
+they do not dynamically link to the opengl32.dll, they use the windows functions loadlibrary and getprocaddress to manually load the appropriate dll and get the address of each function.
+since so much of the installed base consists of intel pcs running win32 platforms, the emphasis will probably be on that environment and c/c++.
+2nd monitor debugging ~~~~~~~~~~~~~~~~~~~~~ one nice thing about 3dfx cards is that you can plug a 2nd vga monitor into the output of the 3dfx card while keeping your main monitor attached to your primary video card.
+the voodoo series from 3dfx cannot render into a gdi window by itself, however you can use winglide (http://www.nullsoft.com/winglide.html) to automatically copy the 3dfx framebuffer to your 2d framebuffer so it will render to a window.
+there is a glut mailing list, to subscribe, send email to majordomo@perp.com with a body saying "subscribe glut".
+if you don't have hardware accelerated geometry then all you are doing is adding a layer of overhead to get the computed values.
+glut is copyright material and not in the public domain, but it is freely distributable without licensing fees and comes with complete source code.
+a comp.graphics.api.opengl posting by john biddiscombe, j.biddiscombe@rl.ac.uk, includes the following tips: tip : c++builder uses a whole load of lib's in the cbuilder/lib directory, these libs, in particular import32.lib already contain the opengl32.lib and glu32.lib inside them.
+there are also archives available through the mail server itself (check the help for the mail server for details).
+light maps are a set of textures that are blended with the normal textures in the scene to produce lighting effects.
+there is a glut mailing list, to subscribe, send email to majordomo@perp.com with a body saying "subscribe glut".
+in the message body (not subject), mail the message to: listserv@fatcity.com <-- note exact spelling of 'listserv' to unsubscribe, use the same address above, but use the command: unsub opengl-gamedev-l if you need further assistance, send a message to: opengl-gamedev-request@fatcity.com ---------------------------------------------------------------------- subject 1.02: are the postings to the mailing list archived?
+however, the software rendering is far in advance of the microsoft implementation (for political reasons) and some ihvs are basing their opengl libraries around this version, 3dfx for example.
+delphi tbd ---------------------------------------------------------------------- subject 3.04: visual basic patrice scribes directx/opengl for vb site should be able to answer most questions: http://www.chez.com/scribe/ ---------------------------------------------------------------------- subject 3.05: java quoting from the press release from arcane technologies ltd: "magician allows developers to write portable, high-performance opengl applications using the java programming language.
+additional developer features include in-built interactive tracing and profiling of opengl calls.
+the ongoing religious war between opengl and direct3d is best left somewhere else (rec.games.programmer is a likely candidate ;-).
+my objects appear to be "fighting" in the z-buffer.
+* you need to mask floating point exceptions by including the following line in your initialization routines: _control87(mcw_em, mcw_em); mcd_em should be defined in float.h failing to do this results in spurious floating point exceptions, when using lighting or normalization in particular.
+in the message body (not subject), mail the message to: listserv@fatcity.com <-- note exact spelling of 'listserv' to unsubscribe, use the same address above, but use the command: unsub opengl-gamedev-l if you need further assistance, send a message to: opengl-gamedev-request@fatcity.com ----------------------------------------------------------------------
+it allows a pc with no dedicated 3d graphics hardware to execute opengl applications at exceptional levels of performance and complements accelerated opengl products available from numerous 3d graphics hardware vendors.
+changed items this posting (|): 1.02 added archive info 1.05 added algorithm mailing list info 3.05 added link to the opengl-java faq 5.02 changed wording slightly to be more accurate 5.03 added info 6.01 added info 7.01 added info 7.02 added info 8.01 changed code for getting info about screen width / height 9.07
+if (for example) there is fast transform hardware, then it would probably be a good idea to use it.
+since the voodoo1/voodoo2 is 3d only, you do not have access to the 2d gdi functions to allow windows to draw your pointer.
+search e.g. for "subject 2.04" to find that item.
+opengl does not provide any interface for accessing this memory directly.
+a comp.graphics.api.opengl posting by john biddiscombe, j.biddiscombe@rl.ac.uk, includes the following tips: tip : c++builder uses a whole load of lib's in the cbuilder/lib directory, these libs, in particular import32.lib already contain the opengl32.lib and glu32.lib inside them.
+ron fosner seems to know quite a bit about it and might be able to answer any specific questions you may have.
+changes in the near z will have much larger effects than changes in the far z. this will fix most problems.
+the advanced rendering course notes hosted at the sgi website offer good tutorials into opengl programming: http://www.sgi.com/technology/opengl/advanced97/notes/notes.html http://www.opengl.org:
+this is intended as a resource for all levels of opengl programmers, from beginner to expert.
+since so much of the installed base consists of intel pcs running win32 platforms, the emphasis will probably be on that environment and c/c++.
+if you have a large z range to deal with you may be able to use a trick to get around the fighting.
+lighting and fog (and to some extent textures and z-buffer information) are based on calculations that require information about the camera and the model rotations, but need to ignore any projection information (typically perspective).
+the best way to change resolution under windows is to use changedisplaysettings().
+reading data back from the card is typically very slow.
+added more info about multi-texture techniques.
+utility routines to generate various solid and wire frame objects.
+if you want areas of the quads to be transparent the textures should be rgba with the alpha used to create areas of transparency.
+the next version of silicon graphics' library will be able to load opengl drivers directly."
+delphi tbd ---------------------------------------------------------------------- subject 3.04: visual basic patrice scribes directx/opengl for vb site should be able to answer most questions: http://www.chez.com/scribe/ ---------------------------------------------------------------------- subject 3.05: java quoting from the press release from arcane technologies ltd: "magician allows developers to write portable, high-performance opengl applications using the java programming language.
+while the emphasis of this list is on game programming, general opengl programming information and examples are welcome as well.
+the best sample is michael gold's "rasonly.c" - available at: http://www.berkelium.com/opengl/examples/index.html ---------------------------------------------------------------------- section 5.
+usually this means that two textures are combined with some form of blending to produce a single output pixel.
+most consumer cards have a relatively low precision z-buffer (16 bit) so you need to be careful when setting up your projection so you don't make the z range too large.
+support for bitmap and stroke fonts.
+this is slower than full-screen rendering, but essential when trying to debug on a single monitor setup.
+the toolkit supports the following functionality: multiple windows for opengl rendering.
+my objects appear to be "fighting" in the z-buffer.
+some hardware can rasterize primitives that go outside the viewport for free, so it's not worthwhile to do clipping on the host.
+you can't get direct access through opengl.
+changed items this posting (|): 1.02 added archive info 1.05 added algorithm mailing list info 3.05 added link to the opengl-java faq 5.02 changed wording slightly to be more accurate 5.03 added info 6.01 added info 7.01 added info 7.02 added info 8.01 changed code for getting info about screen width / height 9.07
+* the microsoft implementation can cause undefined exceptions when run under the bcb pro debugger.
+multi-pass can be done with standard blending and rendering techniques.
+most likely you have requested a pixel format that is unsupported by your current driver or the requested format cannot fit in the video memory of your card.
+utility routines to generate various solid and wire frame objects.
+in general it is best to push the near z as far out as possible, and bring in the far z as close as possible.
+glut is copyright material and not in the public domain, but it is freely distributable without licensing fees and comes with complete source code.
+quoting the author of glut (mark kilgard) from his glut homepage (http://reality.sgi.com/mjk_asd/spec3/spec3.html): "the opengl utility toolkit (glut) is a programming interface with ansi c and fortran bindings for writing window system independent opengl programs.
+you can get the code from: ftp://ftp.cs.unc.edu/pub/users/narkhede/triangulation.tar.gz
+if you use opengl to do the transforms for your collision detection or other things you will need to use the feedback mechanism to get the transformed values back into your code.
+other mesa questions are answered in the mesa faq at: http://www.mesa3d.org/mesa/mesafaq.html mesa can be obtained from: http://www.mesa3d.org
+the best way is to use an orthographic projection and render the overlays as texture mapped quads.
+questions on topics such as collision detection are too large to answer here.

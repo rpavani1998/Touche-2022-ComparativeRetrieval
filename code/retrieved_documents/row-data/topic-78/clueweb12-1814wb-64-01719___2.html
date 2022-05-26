@@ -1,0 +1,191 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Algorithms</title>
+<body>
+<b>The JavaTM Tutorial</b> <br>
+Start of Tutorial &gt; Start of Trail Search 
+<br>Feedback Form <br>
+<br>
+<br>
+<b>Trail</b>: Collections 
+<h2> Lesson: Algorithms </h2> 
+<blockquote> The <em>polymorphic algorithms</em> described here are pieces of 
+reusable functionality provided by the Java platform. All of them come from the
+<code>Collections</code>  class, and all take the form of static methods whose 
+first argument is the collection on which the operation is to be performed. The 
+great majority of the algorithms provided by the Java platform operate on<code>
+List</code>  instances, but a few of them operate on arbitrary <code>Collection
+</code>  instances. This section briefly describes the following algorithms: 
+<ul> 
+<li>Sorting</li> 
+<li>Shuffling</li> 
+<li>Routine Data Manipulation</li> 
+<li>Searching</li> 
+<li>Composition</li> 
+<li>Finding Extreme Values</li> </ul> </blockquote> 
+<h3>Sorting</h3> 
+<blockquote> The <code>sort</code> algorithm reorders a <code>List</code> so 
+that its elements are in ascending order according to an ordering relationship. 
+Two forms of the operation are provided. The simple form takes a<code>List
+</code> and sorts it according to its elements' <em>natural ordering</em>. If 
+you're unfamiliar with the concept of natural ordering, read theObject Ordering 
+ section.
+<p> The <code>sort</code> operation uses a slightly optimized <em>merge sort
+</em> algorithmwhich is fast and stable: </p> 
+<ul> 
+<li><b>Fast</b>: It is guaranteed to run in <code>n log(n)</code> time and 
+runs substantially faster on nearly sorted lists. Empirical tests showed it to 
+be as fast as a highly optimized quicksort. A quicksort is generally considered 
+to be faster than a merge sort but isn't stable and doesn't guarantee<code>n 
+log(n)</code> performance. </li> 
+<li><b>Stable</b>: It doesn't reorder equal elements. This is important if you 
+sort the same list repeatedly on different attributes. If a user of a mail 
+program sorts the inbox by mailing date and then sorts it by sender, the user 
+naturally expects that the now-contiguous list of messages from a given sender 
+will (still) be sorted by mailing date. This is guaranteed only if the second 
+sort was stable.</li> </ul> The following <code>trivial program</code>  prints 
+out its arguments in lexicographic (alphabetical) order.
+<blockquote> 
+<pre> import java.util.*; public class Sort { public static void main(String 
+args[]) { List&lt;String&gt; l = Arrays.asList(args); Collections.sort(l); 
+System.out.println(l); } }</pre> </blockquote> Let's run the program. 
+<blockquote> 
+<pre> % java Sort i walk the line </pre> </blockquote> The following output is 
+produced.
+<blockquote> 
+<pre> [i, line, the, walk] </pre> </blockquote> The program was included only 
+to show you that algorithms really are as easy to use as they appear to be.
+<p> The second form of <code>sort</code> takes a <code>Comparator</code> in 
+addition to a<code>List</code> and sorts the elements with the <code>Comparator
+</code>. Suppose you want to print out the anagram groups from our earlier 
+example in reverse order of size &#151; largest anagram group first. The 
+example that follows shows you how to achieve this with the help of the second 
+form of the<code>sort</code> method. </p> 
+<p> Recall that the anagram groups are stored as values in a <code>Map</code>, 
+in the form of<code>List</code> instances. The revised printing code iterates 
+through the<code>Map</code>'s values view, putting every <code>List</code> that 
+passes the minimum-size test into a<code>List</code> of <code>List</code>s. 
+Then the code sorts this<code>List</code>, using a <code>Comparator</code> that 
+expects<code>List</code> instances, and implements reverse size-ordering. 
+Finally, the code iterates through the sorted<code>List</code>, printing its 
+elements (the anagram groups). The following code replaces the printing code at 
+the end of the<code>main</code> method in the <code>Anagrams</code> example. 
+</p> 
+<blockquote> 
+<pre> //Make a List of all anagram groups above size threshold. 
+List&lt;List&lt;String&gt;&gt; winners = new 
+ArrayList&lt;List&lt;String&gt;&gt;(); for (List&lt;String&gt; l : m.values()) 
+if (l.size() &gt;= minGroupSize) winners.add(l); //Sort anagram groups 
+according to size Collections.sort(winners, new 
+Comparator&lt;List&lt;String&gt;&gt;() { public int compare(List&lt;String&gt; 
+o1, List&lt;String&gt; o2) { return o2.size() - o1.size(); } }); //Print 
+anagram groups. for (List&lt;String&gt; l : winners) 
+System.out.println(l.size() + &quot;: &quot; + l);</pre> </blockquote> Running 
+<code>the program</code>  on the <code>same dictionary</code>  in The Map 
+Interface  section, with the same minimum anagram group size (eight), produces 
+the following output.
+<blockquote> 
+<pre> 12: [apers, apres, asper, pares, parse, pears, prase, presa, rapes, 
+reaps, spare, spear] 11: [alerts, alters, artels, estral, laster, ratels, 
+salter, slater, staler, stelar, talers] 10: [least, setal, slate, stale, steal, 
+stela, taels, tales, teals, tesla] 9: [estrin, inerts, insert, inters, niters, 
+nitres, sinter, triens, trines] 9: [capers, crapes, escarp, pacers, parsec, 
+recaps, scrape, secpar, spacer] 9: [palest, palets, pastel, petals, plates, 
+pleats, septal, staple, tepals] 9: [anestri, antsier, nastier, ratines, 
+retains, retinas, retsina, stainer, stearin] 8: [lapse, leaps, pales, peals, 
+pleas, salep, sepal, spale] 8: [aspers, parses, passer, prases, repass, spares, 
+sparse, spears] 8: [enters, nester, renest, rentes, resent, tenser, 
+ternes,&nbsp;treens] 8: [arles, earls, lares, laser, lears, rales, reals, 
+seral] 8: [earings, erasing, gainers, reagins, regains, reginas, searing, 
+seringa] 8: [peris, piers, pries, prise, ripes, speir, spier, spire] 8: [ates, 
+east, eats, etas, sate, seat, seta, teas] 8: [carets, cartes, caster, caters, 
+crates, reacts, recast,&nbsp;traces]</pre> </blockquote> </blockquote> 
+<h3>Shuffling</h3> 
+<blockquote> The <code>shuffle</code> algorithm does the opposite of what 
+<code>sort</code> does, destroying any trace of order that may have been 
+present in a<code>List</code>. That is, this algorithm reorders the <code>List
+</code> based on input from a source of randomness such that all possible 
+permutations occur with equal likelihood, assuming a fair source of randomness. 
+This algorithm is useful in implementing games of chance. For example, it could 
+be used to shuffle a<code>List</code> of <code>Card</code> objects representing 
+a deck. Also, it's useful for generating test cases.
+<p> This operation has two forms: (1) it takes a <code>List</code> and uses a 
+default source of randomness, and (2) it requires the caller to provide aRandom 
+object to use as a source of randomness. The code for this algorithm is used as 
+an example in the<code>List</code> section. </p> </blockquote> 
+<h3>Routine Data Manipulation</h3> 
+<blockquote> The <code>Collections</code> class provides five algorithms for 
+doing routine data manipulation on<code>List</code> objects, all of which are 
+pretty straightforward:
+<ul> 
+<li> <code>reverse</code> &#151; reverses the order of the elements in a <code>
+List</code>. 
+<p> </p></li> 
+<li> <code>fill</code> &#151; overwrites every element in a <code>List</code> 
+with the specified value. This operation is useful for reinitializing a<code>
+List</code>. 
+<p> </p></li> 
+<li> <code>copy</code> &#151; takes two arguments, a destination <code>List
+</code> and a source <code>List</code>, and copies the elements of the source 
+into the destination, overwriting its contents. The destination<code>List</code>
+ must be at least as long as the source. If it is longer, the remaining 
+elements in the destination<code>List</code> are unaffected. 
+<p> </p></li> 
+<li> <code>swap</code> &#151; swaps the elements at the specified positions in 
+a<code>List</code>. 
+<p> </p></li> 
+<li> <code>addAll</code> &#151; adds all the specified elements to a <code>
+Collection</code>. The elements to be added may be specified individually or as 
+an array.</li> </ul> </blockquote> 
+<h3>Searching</h3> 
+<blockquote> The <code>binarySearch</code> algorithm searches for a specified 
+element in a sorted<code>List</code>. This algorithm has two forms. The first 
+takes a<code>List</code> and an element to search for (the &quot;search 
+key&quot;). This form assumes that the<code>List</code> is sorted in ascending 
+order according to the natural ordering of its elements. The second form takes a
+<code>Comparator</code> in addition to the <code>List</code> and the search 
+key, and assumes that the<code>List</code> is sorted into ascending order 
+according to the specified<code>Comparator</code>. The <code>sort</code> 
+algorithm can be used to sort the<code>List</code> prior to calling <code>
+binarySearch</code>. 
+<p> The return value is the same for both forms. If the <code>List</code> 
+contains the search key, its index is returned. If not, the return value is
+<code>(-(insertion point) - 1)</code>, where the insertion point is the point 
+at which the value would be inserted into the<code>List</code>, or the index of 
+the first element greater than the value or<code>list.size()</code> if all 
+elements in the<code>List</code> are less than the specified value. This 
+admittedly ugly formula guarantees that the return value will be<code>&gt;= 0
+</code> if and only if the search key is found. It's basically a hack to 
+combine a Boolean<code>(found)</code> and an integer <code>(index)</code> into 
+a single<code>int</code> return value. </p> 
+<p> The following idiom, usable with both forms of the <code>binarySearch
+</code> operation, looks for the specified search key and inserts it at the 
+appropriate position if it's not already present.</p> 
+<blockquote> 
+<pre> int pos = Collections.binarySearch(list, key); if (pos &lt; 0) 
+l.add(-pos-1);</pre> </blockquote> </blockquote> 
+<h3>Composition</h3> 
+<blockquote> The frequency and disjoint algorithms test some aspect of the 
+composition of one or more<code>Collections</code>: 
+<ul> 
+<li><code>frequency</code> &#151; counts the number of times the specified 
+element occurs in the specified collection</li> 
+<li><code>disjoint</code> &#151; determines whether two <code>Collections
+</code> are disjoint; that is, whether they contain no elements in common </li> 
+</ul> </blockquote> 
+<h3>Finding Extreme Values</h3> 
+<blockquote> The <code>min</code> and the <code>max</code> algorithms return, 
+respectively, the minimum and maximum element contained in a specified<code>
+Collection</code>. Both of these operations come in two forms. The simple form 
+takes only a<code>Collection</code> and returns the minimum (or maximum) 
+element according to the elements' natural ordering. The second form takes a
+<code>Comparator</code> in addition to the <code>Collection</code> and returns 
+the minimum (or maximum) element according to the specified<code>Comparator
+</code>. </blockquote> <br>
+Start of Tutorial &gt; Start of Trail Search <br>
+
+Feedback Form <br>
+<br>
+
+<p> Copyright 1995-2005 Sun Microsystems, Inc. All rights reserved. </p> 
+</body>

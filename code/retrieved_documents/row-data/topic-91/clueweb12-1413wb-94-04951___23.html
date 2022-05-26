@@ -1,0 +1,433 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Ensemble Learning</title>
+<body>
+<br>
+<br>
+<br>
+ Subscriber : Carnegie Mellon University &raquo; LOG IN <br>
+<br>
+<ul> 
+<li>Home</li> 
+<li>Library 
+<ul> 
+<li>Journals</li> 
+<li>Books</li> 
+<li>Reference Works</li> 
+<li>Conference Materials</li> </ul></li> 
+<li>What's New 
+<ul> 
+<li>News</li> 
+<li>Jobs</li> 
+<li>Calls For Papers</li> </ul></li> 
+<li>Departments 
+<ul> 
+<li>OpenCourseWare</li> 
+<li>The Brain Sciences at MIT</li> 
+<li>Multimedia</li> </ul></li> 
+<li>For Librarians</li> </ul>  space <br>
+&nbsp; <br>
+Advanced Search <br>
+<br>
+<br> <br>
+<br>
+<br>
+<br>
+&nbsp; Handbook of Brain Theory and Neural Networks : 
+Table of Contents : Ensemble Learning <br>
+&laquo;&laquo;&nbsp;Previous 
+Next&nbsp;&raquo;&raquo; <br>
+&nbsp; 
+<h1>Ensemble Learning</h1>
+<h2>  Thomas G.  Dietterich </h2> 
+<h2>Introduction</h2> Introduction 
+<p><i>Learning</i> describes many different activities, ranging from Concept 
+Learning (q.v.) to Reinforcement Learning (q.v.). The best understood form of 
+statistical learning is known as<i>supervised learning</i> (see Learning and 
+Statistical Inference). In this setting, each data point consists of a vector 
+of features (denoted<b>x</b>) and a class label <i>y</i>, and it is assumed 
+that there is some underlying function<i>f</i> such that <i>y</i> = <i>f</i>(<b>
+x</b>) for each training data point (<b>x</b>, <i>y</i>). The goal of the 
+learning algorithm is to find a good approximation<i>h</i> to <i>f</i> that can 
+be applied to assign labels to new<b>x</b> values. The function <i>h</i> is 
+called a<i>classifier</i>, because it assigns class labels <i>y</i> to input 
+data points<b>x</b>. Supervised learning can be applied to many problems, 
+including handwriting recognition, medical diagnosis, and part-of-speech 
+tagging in language processing.</p> 
+<p>Ordinary machine learning algorithms work by searching through a space of 
+possible functions, called<i>hypotheses</i>, to find the one function, <i>h</i>
+, that is the best approximation to the unknown function<i>f</i>. To determine 
+which hypothesis<i>h</i> is best, a learning algorithm can measure how well <i>h
+</i> matches <i>f</i> on the training data points, and it can also assess how 
+consistent<i>h</i> is with any available prior knowledge about the problem.</p> 
+<p>As an example, consider the problem of learning to pronounce the letter <i>k
+</i> in English. Consider the words <i>desk</i>, <i>think</i>, and <i>hook</i>, 
+where the<i>k</i> is pronounced, and the words <i>back</i>, <i>quack</i>, and 
+<i>knave</i>, where the <i>k</i> is silent (in <i>back</i> and <i>quack</i>, we 
+will suppose that the<i>c</i> is responsible for the <i>k</i> sound). Suppose 
+we define a vector of features that consists of the two letters prior to the<i>k
+</i> and the two letters that follow the <i>k</i>. Then each of these words can 
+be represented by the following data points:</p> <i>x</i> 1 <i>x</i> 2 <i>x</i> 
+3 <i>x</i> 4 <i>y</i>  e  s  _  _  +1  i  n  _  _  +1  o  o  _  _  +1  a  c  _  
+_  &minus;1  a  c  _  _  &minus;1  _  _  n  a  &minus;1 
+<p>where <i>y</i> = +1 if <i>k</i> is pronounced and &minus;1 if <i>k</i> is 
+silent, and where &ldquo;_&rdquo; denotes positions beyond the ends of the word.
+</p> 
+<p>One of the most efficient and widely applied learning algorithms searches 
+the hypothesis space consisting of decision trees. Figure 1  shows a decision 
+tree that explains the data points given above. This tree can be used to 
+classify a new data point as follows. Starting at the so-called root (i.e., 
+top) of the tree, we first check whether<i>x</i>2 = <i>c</i>. If so, then we 
+follow the left (&ldquo;yes&rdquo;) branch to the<i>y</i> = &minus;1 
+&ldquo;leaf,&rdquo; which predicts that<i>k</i> will be silent. If not, we 
+follow the right (&ldquo;no&rdquo;) branch to another test: Is<i>x</i>3 = <i>n
+</i>? If so, we follow the left branch to another <i>y</i> = &minus;1 leaf. If 
+not, we follow the right branch to the<i>y</i> = +1 leaf, where the tree 
+indicates that<i>k</i> should be pronounced.</p> 
+<p> <strong>Figure 1</strong>.&nbsp;&nbsp; A decision tree for pronouncing the 
+letter<i>k</i>. First, feature <i>x</i>2 is tested to see if it is the letter 
+<i>c</i>. If not, the feature <i>x</i>3 is tested to see if it is the letter <i>
+n</i>. <i>K</i> is pronounced only if <i>x</i>2 is not <i>c</i> and <i>x</i>3 
+is not<i>n</i>. </p> <br>
+
+<p>A decision tree learning algorithm searches the space of such trees by 
+first considering trees that test only one feature (in this case<i>x</i>2 was 
+chosen) and making an immediate classification. Then they consider expanding 
+the tree by replacing one of the leaves by a test of a second feature (in this 
+case, the right leaf was replaced with a test of<i>x</i>3). Various heuristics 
+are applied to choose which test to include in each iteration and when to stop 
+growing the tree. For a good discussion of decision trees, see the books by 
+Quinlan (1993) and  Breiman et al. (1984) .</p> 
+<p>In addition to decision trees, there are many other representations for 
+hypotheses that have been studied, includingPerceptrons, Adalines, and 
+Backpropagation (q.v.), Radial Basis Function Networks (q.v.), Gaussian 
+Processes (q.v.), graphical models, Helmholtz machines, and Support Vector 
+Machines (q.v.). In all cases, these algorithms find one best hypothesis <i>h
+</i> and output it as the &ldquo;solution&rdquo; to the learning problem.</p> 
+<p>Ensemble learning algorithms take a different approach. Rather than finding 
+one best hypothesis to explain the data, they construct a<i>set</i> of 
+hypotheses (sometimes called a<i>committee</i> or <i>ensemble</i>) and then 
+have those hypotheses &ldquo;vote&rdquo; in some fashion to predict the label 
+of new data points. More precisely, an ensemble method constructs a set of 
+hypotheses {<i>h</i>1, &hellip; , <i>hK</i>}, chooses a set of weights {<i>w</i>
+1, &hellip; , <i>wK</i>}, and constructs the &ldquo;voted&rdquo; classifier <i>H
+</i>(<b>x</b>) = <i>w</i>1<i>h</i>1(<b>x</b>) + &middot; &middot; &middot; + <i>
+wK</i><i>hK</i>(<b>x</b>). The classification decision of the combined 
+classifier<i>H</i> is +1 if <i>H</i>(<b>x</b>) &ge; 0 and &minus;1 otherwise.
+</p> 
+<p>Experimental evidence has shown that ensemble methods are often much more 
+accurate than any single hypothesis. Freund and Schapire (1996)  showed 
+improved performance on 22 benchmark problems, equal performance on one 
+problem, and worse performance on four problems. These and other studies are 
+summarized in Dietterich (1997) .</p> 
+<h2>Why Ensemble Methods Work</h2> 
+<p>Learning algorithms that output only a single hypothesis suffer from three 
+problems that can be partly overcome by ensemble methods: the statistical 
+problem, the computational problem, and the representation problem.</p> 
+<p>The statistical problem arises when the learning algorithm is searching a 
+space of hypotheses that is too large for the amount of available training 
+data. In such cases, there may be several different hypotheses that all give 
+the same accuracy on the training data, and the learning algorithm must choose 
+one of these to output. There is a risk that the chosen hypothesis will not 
+predict future data points well. A simple vote of all of these equally good 
+classifiers can reduce this risk.</p> 
+<p>The computational problem arises when the learning algorithm cannot 
+guarantee finding the best hypothesis within the hypothesis space. In neural 
+network and decision tree algorithms, for example, the task of finding the 
+hypothesis that best fits the training data is computationally intractable, so 
+heuristic methods must be employed. These heuristics (such as gradient descent) 
+can get stuck in local minima and hence fail to find the best hypothesis. As 
+with the statistical problem, a weighted combination of several different local 
+minima can reduce the risk of choosing the wrong local minimum to output.</p> 
+<p>Finally, the representational problem arises when the hypothesis space does 
+not contain any hypotheses that are good approximations to the true function<i>f
+</i>. In some cases, a weighted sum of hypotheses expands the space of 
+functions that can be represented. Hence, by taking a weighted vote of 
+hypotheses, the learning algorithm may be able to form a more accurate 
+approximation to<i>f</i>.</p> 
+<p>A learning algorithm that suffers from the statistical problem is said to 
+have high<i>variance</i>. An algorithm that exhibits the computational problem 
+is sometimes described has having<i>computational variance</i>. And a learning 
+algorithm that suffers from the representational problem is said to have high<i>
+bias</i>. Hence, ensemble methods can reduce both the bias and the variance of 
+learning algorithms. Experimental measurements of bias and variance have 
+confirmed this.</p> 
+<h2>Review of Ensemble Algorithms</h2> 
+<p>Ensemble learning algorithms work by running a base learning algorithm 
+multiple times, and forming a vote out of the resulting hypotheses. There are 
+two main approaches to designing ensemble learning algorithms.</p> 
+<p>The first approach is to construct each hypothesis independently in such a 
+way that the resulting set of hypotheses is accurate and diverse, that is, each 
+individual hypothesis has a reasonably low error rate for making new 
+predictions and yet the hypotheses disagree with each other in many of their 
+predictions. If such an ensemble of hypotheses can be constructed, it is easy 
+to see that it will be more accurate than any of its component classifiers, 
+because the disagreements will cancel out. Such ensembles can overcome both the 
+statistical and computational problems discussed above.</p> 
+<p>The second approach to designing ensembles is to construct the hypotheses 
+in a coupled fashion so that the weighted vote of the hypotheses gives a good 
+fit to the data. This approach directly addresses the representational problem 
+discussed above.</p> 
+<p>We will discuss each of these two approaches in turn.</p> 
+<h3>Methods for Independently Constructing Ensembles</h3> 
+<p>One way to force a learning algorithm to construct multiple hypotheses is 
+to run the algorithm several times and provide it with somewhat different 
+training data in each run. For example, Breiman (1996)  introduced the bagging (
+<i>b</i>ootstrap <i>agg</i>regat<i>ing</i>) method, which works as follows. 
+Given a set of<i>m</i> training data points, bagging chooses in each iteration 
+a set of data points of size<i>m</i> by sampling uniformly with replacement 
+from the original data points. This creates a resampled data set in which some 
+data points appear multiple times and other data points do not appear at all. 
+If the learning algorithm is<i>unstable</i>&mdash;that is, if small changes in 
+the training data lead to large changes in the resulting hypothesis&mdash; then 
+bagging will produce a diverse ensemble of hypotheses.</p> 
+<p>A second way to force diversity is to provide a different subset of the 
+input features in each call to the learning algorithm. For example, in a 
+project to identify volcanoes on Venus, Cherkauer (1996)  trained an ensemble 
+of 32 neural networks. The 32 networks were based on eight different subsets of 
+the 119 available input features and four different network sizes. The input 
+feature subsets were selected (by hand) to group together features that were 
+basedon different image processing operations (such as principal component 
+analysis and the fast Fourier transform). The resulting ensemble classifier was 
+significantly more accurate than any of the individual neural networks.</p> 
+<p>A third way to force diversity is to manipulate the output labels of the 
+training data. Dietterich and Bakiri (1995)  describe a technique called 
+error-correcting output coding. Suppose that the number of classes,<i>C</i>, is 
+large. Then new learning problems can be constructed by randomly partitioning 
+the<i>C</i> classes into two subsets, <i>Ak</i> and <i>Bk</i>. The input data 
+can then be relabeled so that any of the original classes in set<i>Ak</i> are 
+given the derived label &minus;1 and the original classes in set<i>Bk</i> are 
+given the derived label +1. This relabeled data is then given to the learning 
+algorithm, which constructs a classifier<i>hk</i>. By repeating this process <i>
+K</i> times (generating different subsets <i>Ak</i> and <i>Bk</i>), an ensemble 
+of<i>K</i> classifiers <i>h</i>1, &hellip; , <i>hK</i> is obtained.</p> 
+<p>Now, given a new data point <b>x</b>, how should it be classified? The 
+answer is to have each<i>hk</i> classify <b>x</b>. If <i>hk</i>(<b>x</b>) = 
+&minus;1, then each class in<i>Ak</i> receives a vote. If <i>hk</i>(<b>x</b>) = 
++1, then each class in<i>Bk</i> receives a vote. After each of the <i>K</i> 
+classifiers has voted, the class with the highest number of votes is selected 
+as the prediction of the ensemble.</p> 
+<p>An equivalent way of thinking about this method is that each class <i>j</i> 
+is encoded as a<i>K</i>-bit codeword <i>Cj</i>, where bit <i>k</i> is 1 if <i>j
+</i> &isin; <i>Bk</i> and 0 otherwise. The <i>k</i>th learned classifier 
+attempts to predict bit<i>k</i> of these codewords (a prediction of &minus;1 is 
+treated as a binary value of 0). When the<i>L</i> classifiers are applied to 
+classify a new point<b>x</b>, their predictions are combined into a <i>K</i>
+-bit binary string. The ensemble&rsquo;s prediction is the class<i>j</i> whose 
+codeword<i>Cj</i> is closest (measured by the number of bits that agree) to the 
+<i>K</i>-bit output string. Methods for designing good error-correcting codes 
+can be applied to choose the codewords<i>Cj</i> (or, equivalently, subsets <i>Ak
+</i> and <i>Bk</i>). Dietterich and Bakiri (1995) report that this technique 
+improves the performance of both decision-tree and backpropagation learning 
+algorithms on a variety of difficult classification problems.</p> 
+<p>A fourth way of generating accurate and diverse ensembles is to inject 
+randomness into the learning algorithm. For example, the backpropagation 
+algorithm can be run many times, starting each time from a different random 
+setting of the weights. Decision tree algorithms can be randomized by adding 
+randomness to the process of choosing which feature and threshold to split on. 
+Dietterich (2000) showed that randomized trees gave significantly improved 
+performance on 14 out of 33 benchmark tasks (and no change on the remaining 19 
+tasks).</p> 
+<p>  Ho (1998)  introduced the random subspace method for growing collections 
+of decision trees (&ldquo;decision forests&rdquo;). This method chooses a 
+random subset of the features at each node of the tree, and constrains the 
+tree-growing algorithm to choose its splitting rule from among this subset. She 
+reports improved performance on 16 benchmark data sets. Breiman (2001)  
+combines bagging with the random subspace method to grow random decision 
+forests that give excellent performance.</p> 
+<h3>Methods for Coordinated Construction of Ensembles</h3> 
+<p>In all of the methods described above, each hypothesis <i>hk</i> in the 
+ensemble is constructed independently of the others by manipulating the inputs, 
+the outputs, or the features, or by injecting randomness. Then an unweighted 
+vote of the hypotheses determines the final classification of a data point.</p> 
+<p>A contrasting view of an ensemble is that it is an <i>additive model</i>, 
+that is, it predicts the class of a new data point by taking a weighted sum of 
+a set of component models. This view suggests developing algorithms that choose 
+the component models and the weights so that the weighted sum fits the data 
+well. In this approach, the choice of one component hypothesis influences the 
+choice of other hypotheses and of the weights assigned to them. In statistics, 
+such ensembles are known as<i>generalized additive models</i> (  Hastie and 
+Tibshirani, 1990).</p> 
+<p>The Adaboost algorithm, introduced by  Freund and Schapire (1996 ,  1997) , 
+is an extremely effective method for constructing an additive model. It works 
+by incrementally adding one hypothesis at a time to an ensemble. Each new 
+hypothesis is constructed by a learning algorithm that seeks to minimize the 
+classification error on a<i>weighted</i> training data set. The goal is to 
+construct a weighted sum of hypotheses such that<i>H</i>(<b>x</b><i>i</i>) = 
+&sum;<i>k</i><i>wk</i><i>hk</i>(<b>x</b><i>i</i>) has the same sign as <i>yi</i>
+, the correct label of<b>x</b><i>i</i>.</p> 
+<p>The algorithm operates as follows. Let <i>dk</i>(<b>x</b><i>i</i>) be the 
+weight on data point<b>x</b><i>i</i> during iteration <i>k</i> of the 
+algorithm. Initially, all training data points<i>i</i> are given a weight <i>d
+</i>1(<b>x</b><i>i</i>) = 1/<i>m</i>, where <i>m</i> is the number of data 
+points. In iteration<i>k</i>, the underlying learning algorithm constructs 
+hypothesis<i>hk</i> to minimize the weighted training error. The resulting 
+weighted error is<i>r</i> = &sum;<i>i</i><i>d</i>(<b>x</b><i>i</i>)<i>yi</i><i>h
+k</i>(<b>x</b><i>i</i>), where <i>hk</i>(<b>x</b><i>i</i>) is the label 
+predicted by hypothesis<i>hk</i>. The weight assigned to this hypothesis is 
+computed by</p> 
+<p>To compute the weights for the next iteration, the weight of training data 
+point<i>i</i> is set to</p> 
+<p>where <i>Zk</i> is chosen to make <i>d</i><i>k</i>+1 sum to 1.</p> 
+<p>  Breiman (1997)  showed that this algorithm is a form of gradient 
+optimization in function space with the goal of minimizing the objective 
+function</p> 
+<p>The quantity <i>yi</i><i>H</i>(<b>x</b><i>i</i>) is called the <i>margin</i>
+, because it is the amount by which<b>x</b><i>i</i> is correctly classified. If 
+the margin is positive, then the sign of<i>H</i>(<b>x</b><i>i</i>) agrees with 
+the sign of<i>yi</i>. Minimizing <i>J</i> causes the margin to be maximized.  
+Friedman, Hastie, and Tibshirani (2000) expand on Breiman&rsquo;s analysis from 
+a statistical perspective.</p> 
+<p>In most experimental studies (  Freund and Schapire, 1996 ;  Bauer and 
+Kohavi, 1999;  Dietterich, 2000 ), Adaboost (and algorithms based on it) gives 
+the best performance on the vast majority of data sets. The primary exception 
+are data sets in which there is a high level of mislabeled training data 
+points. In such cases, Adaboost will put very high weights on the noisy data 
+points and learn very poor classifiers. Current research is focusing on methods 
+for extending Adaboost to work in high noise settings.</p> 
+<p>The exact reasons for Adaboost&rsquo;s success are not fully understood. 
+One line of explanation is based on the margin analysis developed by Vapnik 
+(1995) and extended by  Schapire et al. (1998) . This work shows that the error 
+of an ensemble on new data points is bounded by the fraction of training data 
+points for which the margin is less than some quantity &Theta; &gt; 0 plus a 
+term that grows as</p> 
+<p>ignoring constant factors and some log terms. In this formula, <i>m</i> is 
+the number of training data points, and<i>d</i> is a measure of the expressive 
+power of the hypothesis space from which the individual classifiers are drawn, 
+known as the VC-dimension. The value of &Theta; can be chosen to minimize the 
+value of this expression.</p> 
+<p>Intuitively, this formula says that if the ensemble learning algorithm can 
+achieve a large &ldquo;margin of safety&rdquo; on each training data point 
+while using only a weighted sum of simple classifiers,then the resulting voted 
+classifier is likely to be very accurate. Experimentally, Adaboost has been 
+shown to be very effective at increasing the margins on the training data 
+points; this result suggests that Adaboost will make few errors on new data 
+points.</p> 
+<p>There are three ways in which this analysis has been criticized. First, the 
+bound is not tight, so it may be hiding the real explanation for 
+Adaboost&rsquo;s success. Second, even when Adaboost is applied to large 
+decision trees and neural networks, it is observed to work very well even 
+though these representations have high VC-dimension. Third, it is possible to 
+design algorithms that are more effective than Adaboost at increasing the 
+margin on the training data, but these algorithms exhibit worse performance 
+than Adaboost when applied to classify new data points.</p> 
+<h3>Related Nonensemble Learning Methods</h3> 
+<p>In addition to the ensemble methods described here, there are other 
+nonensemble learning algorithms that are similar. For example, any method for 
+constructing a classifier as a weighted sum of basis functions (see, e.g.,
+Radial Basis Function Networks) can be viewed as an additive ensemble where 
+each individual basis function forms one of the hypotheses.</p> 
+<p>Another closely related learning algorithm is the hierarchical 
+mixture-of-experts method (seeModular and Hierarchical Learning Systems). In a 
+hierarchical mixture, individual hypotheses are combined by a gating network 
+that decides, based on the features of the data point, what weights should be 
+employed. This differs from Adaboost and other additive ensembles, where the 
+weights are determined once during training and then held constant thereafter.
+</p> 
+<h2>Discussion</h2> 
+<p>The majority of research into ensemble methods has focused on constructing 
+ensembles of decision trees. Decision tree learning algorithms are known to 
+suffer from high variance, because they make a cascade of choices (of which 
+variable and value to test at each internal node in the decision tree) such 
+that one incorrect choice has an impact on all subsequent decisions. In 
+addition, because the internal nodes of the tree test only a single variable, 
+this creates axis-parallel rectangular decision regions that can have high 
+bias. Consequently, ensembles of decision tree classifiers perform much better 
+than individual decision trees. Recent experiments suggest that Breiman&rsquo;s 
+combination of bagging and the random subspace method is the method of choice 
+for decision trees: it gives excellent accuracy and works well even when there 
+is substantial noise in the training data.</p> 
+<p>If the base learning algorithm produces less expressive hypotheses than 
+decision trees, then the Adaboost method is recommended. Many experiments have 
+employed so-called decision stumps, which are decision trees with only one 
+internal node. In order to learn complex functions with decision stumps, it is 
+important to exploit Adaboost&rsquo;s ability to directly construct an additive 
+model. This usually gives better results than bagging and other 
+accuracy/diversity methods. Similar recommendations apply to ensembles 
+constructed using the naive Bayes and Fisher&rsquo;s linear discriminant 
+algorithms. Both of these learn a single linear discrimination rule. The 
+algorithms are very stable, which means that even substantial (random) changes 
+to the training data do not cause the learned discrimination rule to change 
+very much. Hence, methods like bagging that rely on instability do not produce 
+diverse ensembles.</p> 
+<p>Because the generalization ability of a single feedforward neural network 
+is usually very good, neural networks benefit less from ensemble methods. 
+Adaboost is probably the best method to apply, but favorable results have been 
+obtained just by training several networks from different random starting 
+weight values, and bagging is also quite effective.</p> 
+<p>For multiclass problems, the error-correcting output coding algorithm can 
+produce good ensembles. However, because the output coding can create difficult 
+two-class learning problems, it is important that the base learner be very 
+expressive. The best experimental results have been obtained with very large 
+decision trees and neural networks. In addition, the base learning algorithm 
+must be sensitive to the encoding of the output values. The nearest neighbor 
+algorithm does not satisfy this constraint, because it merely identifies the 
+training data point<b>x</b><i>i</i> nearest to the new point <b>x</b> and 
+outputs the corresponding value<i>yi</i> as the prediction for <i>h</i>(<b>x</b>
+), regardless of how<i>yi</i> is encoded. Current research is exploring ways of 
+integrating error-correcting output codes directly into the Adaboost algorithm.
+</p> 
+<p><strong>Road Map</strong>: Learning in Artificial Networks</p>
+<p><strong>Related Reading</strong>: Modular and Hierarchical Learning Systems
+&nbsp;&#9826;&nbsp;Radial Basis Function Networks</p>
+<h2>References</h2> 
+<p>Bauer, E., and Kohavi, R., 1999, An empirical comparison of voting 
+classification algorithms: Bagging, boosting, and variants,<i>Machine Learn.</i>
+, 36:105&ndash;139.</p> 
+<p>Breiman, L., 1996, Bagging predictors, <i>Machine Learn.</i>, 
+24:123&ndash;140.&nbsp;&#9670;</p> 
+<p>Breiman, L., 1997, <i>Arcing the Edge</i>, Technical Report 486, Department 
+of Statistics, University of California, Berkeley. Available:
+http://citeseer.nj.nec.com/breiman97arcing.html&nbsp;.</p> 
+<p>Breiman, L., 2001, Random forests, <i>Machine Learn.</i>, 45:5&ndash;32.</p>
+<p>Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J., 1984, <i>
+Classification and Regression Trees</i>, Monterey, CA: Wadsworth and 
+Brooks.&nbsp;&#9670;</p> 
+<p>Cherkauer, K. J., 1996, Human expert-level performance on a scientific 
+image analysis task by a system using combined artificial neural networks, in<i>
+Working Notes of the AAAI Workshop on Integrating Multiple Learned Models</i> 
+(P. Chan, Ed.), Menlo Park, CA: AAAI Press, pp. 15&ndash; 21.</p> 
+<p>Dietterich, T. G., 2000, An experimental comparison of three methods for 
+constructing ensembles of decision trees: Bagging, boosting, and randomization,
+<i>Machine Learn.</i>, 40:139&ndash;158.</p> 
+<p>Dietterich, T. G., 1997, Machine learning research: Four current directions,
+<i>AI Magazine</i>, 18:97&ndash;136.&nbsp;&#9670;</p> 
+<p>Dietterich, T. G., and Bakiri, G., 1995, Solving multiclass learning 
+problems via error-correcting output codes,<i>J. Artif. Intell. Res.</i>, 
+2:263&ndash;286.</p> 
+<p>Freund, Y., and Schapire, R. E., 1996, Experiments with a new boosting 
+algorithm, in<i>Procedings of the 13th International Conference on Machine 
+Learning</i>, San Francisco: Morgan Kaufmann, pp. 148&ndash;156.</p> 
+<p>Freund, Y., and Schapire, R. E., 1997, A decision-theoretic generalization 
+of on-line learning and an application to boosting,<i>J. Comput. Syst. Sci.</i>
+, 55:119&ndash;139.</p> 
+<p>Friedman, J. H., Hastie, T., and Tibshirani, R., 2000, Additive logistic 
+regression: A statistical view of boosting,<i>Ann. Statist.</i>, 
+28:337&ndash;407.&nbsp;&#9670;</p> 
+<p>Hastie, T. J., and Tibshirani, R. J., 1990, <i>Generalized Additive Models
+</i>, London: Chapman and Hall.&nbsp;&#9670;</p> 
+<p>Ho, T. K., 1998, The random subspace method for constructing decision 
+forests,<i>IEEE Trans. Pattern Anal. Machine Intell.</i>, 20:832&ndash;844.</p> 
+<p>Quinlan, J. R., 1993, <i>C4.5: Programs for Empirical Learning</i>, San 
+Francisco: Morgan Kaufmann.&nbsp;&#9670;</p> 
+<p>Schapire, R. E., Freund, Y., Bartlett, P., and Lee, W. S., 1998, Boosting 
+the margin: A new explanation for the effectiveness of voting methods,<i>Ann. 
+Statisti.</i>, 26:1651&ndash;1686.</p> 
+<p>Vapnik, V., 1995, <i>The Nature of Statistical Learning Theory</i>, New 
+York: Springer-Verlag.</p> &nbsp; <br>
+<br>
+<br>
+&laquo;&laquo;&nbsp;Previous 
+Next&nbsp;&raquo;&raquo; <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Terms of Use | Privacy 
+Policy | Contact | FAQ <br>
+ &copy; 2010 The MIT Press <br>
+<br>
+<br>
+
+</body>

@@ -1,0 +1,522 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Merge sort</title>
+<body>
+<br>
+
+<h1>Merge sort</h1> 
+<ul> 
+<li>Page</li> 
+<li>Discussion</li> 
+<li>Edit</li> 
+<li>History</li> </ul> Search &nbsp; <br>
+
+<ul> 
+<li>Personal tools 
+<ul> 
+<li>Log in / create account</li> </ul> </li> 
+<li>Navigation 
+<ul> 
+<li>Main Page</li> 
+<li>Community portal</li> 
+<li>Recent changes</li> 
+<li>Random page</li> </ul> </li> 
+<li>Largest Languages 
+<ul> 
+<li>Java</li> 
+<li>C</li> 
+<li>OCaml</li> 
+<li>Perl</li> </ul> </li> 
+<li>Toolbox 
+<ul> 
+<li>What links here</li> 
+<li>Related changes</li> 
+<li>Special pages</li> </ul> </li> </ul> <br>
+
+<h1>Merge sort</h1> 
+<h3>From CodeCodex</h3> 
+<p>Merge sort examples in 24 languages. </p> <b>Related content:</b> <br>
+
+<ul> 
+<li> Bogosort </li> 
+<li> Bubble sort </li> 
+<li> Heapsort </li> 
+<li> Introsort </li> 
+<li> Insertion sort </li> 
+<li> <strong>Merge sort</strong> </li> 
+<li> Quicksort </li> 
+<li> Selection sort </li> 
+<li> Shell sort </li> 
+<li> Sort an array </li> </ul> <br>
+<br>
+
+<p><br>
+</p> 
+<h2>Contents</h2> 
+<ul> 
+<li>1 Implementations 
+<ul> 
+<li>1.1 Pseudocode</li> 
+<li>1.2 Ada</li> 
+<li>1.3 C</li> 
+<li>1.4 C++</li> 
+<li>1.5 C#</li> 
+<li>1.6 Common Lisp</li> 
+<li>1.7 Eiffel</li> 
+<li>1.8 Erlang</li> 
+<li>1.9 Fortran</li> 
+<li>1.10 Groovy</li> 
+<li>1.11 Haskell</li> 
+<li>1.12 Java</li> 
+<li>1.13 JavaScript</li> 
+<li>1.14 Miranda</li> 
+<li>1.15 OCaml</li> 
+<li>1.16 Opal</li> 
+<li>1.17 Perl</li> 
+<li>1.18 PHP</li> 
+<li>1.19 Prolog</li> 
+<li>1.20 Python</li> 
+<li>1.21 Ruby</li> 
+<li>1.22 Scheme</li> 
+<li>1.23 Seed7</li> 
+<li>1.24 Tcl</li> 
+<li>1.25 Standard ML</li> </ul> </li> 
+<li>2 Analysis</li> 
+<li>3 Optimizing Merge Sort</li> 
+<li>4 Comparison with other Sort Algorithms</li> 
+<li>5 Utility in Online Sorting</li> </ul> <br>
+<br>
+
+<h2>[edit] Implementations</h2> 
+<h3>[edit] Pseudocode</h3> 
+<pre><b>function</b> mergesort(m) <b>var</b> <i>list</i> left, right <b>if</b> 
+length(m) &le; 1<b>return</b> m <b>else</b> middle = length(m) / 2 <b>for each
+</b> x <b>in</b> m <b>up to</b> middle add x to left <b>for each</b> x <b>in</b>
+ m<b>after</b> middle add x to right left = mergesort(left) right = 
+mergesort(right) result = merge(left, right)<b>return</b> result </pre> 
+<p>There are several variants for the merge() function, the simplest variant 
+could look like this:</p> 
+<pre><b>function</b> merge(left,right) <b>var</b> <i>list</i> result <b>while
+</b> length(left) &gt; 0 <b>and</b> length(right) &gt; 0 <b>if</b> first(left) 
+&le; first(right) append first(left) to result left = rest(left)<b>else</b> 
+append first(right) to result right = rest(right)<b>if</b> length(left) &gt; 0 
+append left to result<b>if</b> length(right) &gt; 0 append right to result <b>
+return</b> result </pre> 
+<h3>[edit] Ada</h3> 
+<p>Ada implementation uses type Data_T for the data array. </p> 
+<pre> function Mergesort (Data&nbsp;: in Data_T) return Data_T is begin if 
+Data'Length &lt;= 1 then return Data; else declare Middle&nbsp;: 
+Integer&nbsp;:= (Data'First + Data'Last) / 2; Left &nbsp;: Data_T&nbsp;:= Data 
+(Data'First .. Middle); Right&nbsp;: Data_T&nbsp;:= Data (Middle + 1 .. 
+Data'Last); begin Left &nbsp;:= Mergesort (Left); Right&nbsp;:= Mergesort 
+(Right); return Merge(Left, Right); end; end if; end Mergesort;</pre> 
+<p>Definition of the <i>Merge</i> function: </p> 
+<pre> function Merge (Left&nbsp;: Data_T; Right&nbsp;: Data_T) return Data_T 
+is Result&nbsp;: Data_T (1 .. Left'Length + Right'Length); L&nbsp;: 
+Integer&nbsp;:= Left'First; R&nbsp;: Integer&nbsp;:= Right'First; I&nbsp;: 
+Integer&nbsp;:= Result'First; begin while L &lt;= Left'Last and R &lt;= 
+Right'Last loop if Left(L) &lt;= Right(R) then Result(I)&nbsp;:= Left(L); 
+L&nbsp;:= L + 1; I&nbsp;:= I + 1; else Result(I)&nbsp;:= Right(R); R&nbsp;:= R 
++ 1; I&nbsp;:= I + 1; end if; end loop; if L &lt;= Left'Last then 
+Result(I..Result'Last)&nbsp;:= Left(L..Left'Last); end if; if R &lt;= 
+Right'Last then Result(I..Result'Last)&nbsp;:= Right(R..Right'Last); end if; 
+return Result; end Merge;</pre> 
+<h3>[edit] C</h3> 
+<pre> // Mix two sorted tables in one and split the result into these two 
+tables. int *Mix(int *tab1,int *tab2,int count1,int count2) { int i,i1,i2; i = 
+i1 = i2 = 0; int * temp = (int *)malloc(sizeof(int)*(count1+count2)); 
+while((i1&lt;count1) &amp;&amp; (i2&lt;count2)) { while((i1&lt;count1) 
+&amp;&amp; (*(tab1+i1)&lt;=*(tab2+i2))) { *(temp+i++) = *(tab1+i1); i1++; } if 
+(i1&lt;count1) { while((i2&lt;count2) &amp;&amp; (*(tab2+i2)&lt;=*(tab1+i1))) { 
+*(temp+i++) = *(tab2+i2); i2++; } } } 
+memcpy(temp+i,tab1+i1,(count1-i1)*sizeof(int)); 
+memcpy(tab1,temp,count1*sizeof(int)); 
+memcpy(temp+i,tab2+i2,(count2-i2)*sizeof(int)); 
+memcpy(tab2,temp+count1,count2*sizeof(int)); // These two lines can be: // 
+memcpy(tab2,temp+count1,i2*sizeof(int)); free(temp); } // MergeSort a table of 
+integer of size count. // Never tested. void MergeSort(int *tab,int count) { if 
+(count==1) return; MergeSort(tab,count/2); MergeSort(tab+count/2,(count+1)/2); 
+Mix(tab,tab+count/2,count/2,(count+1)/2); }</pre> 
+<p><br>
+</p> 
+<h3>[edit] C++</h3> 
+<p>Here is a recursive implementation of the merge sort using STL vectors 
+(This is a naive implementation):</p> 
+<pre> //! \brief Performs a recursive merge sort on the given vector //! 
+\param vec The vector to be sorted using the merge sort //! \return The sorted 
+resultant vector after merge sort is //! complete. vector&lt;int&gt; 
+merge_sort(vector&lt;int&gt;&amp; vec) { // Termination condition: List is 
+completely sorted if it // only contains a single element. if(vec.size() == 1) 
+{ return vec; } // Determine the location of the middle element in the vector 
+std::vector&lt;int&gt;::iterator middle = vec.begin() + (vec.size() / 2); 
+vector&lt;int&gt; left(vec.begin(), middle); vector&lt;int&gt; right(middle, 
+vec.end()); // Perform a merge sort on the two smaller vectors left = 
+merge_sort(left); right = merge_sort(right); return merge(left, right); }</pre> 
+<p>And here is the implementation of the merge function: </p> 
+<pre> //! \brief Merges two sorted vectors into one sorted vector //! \param 
+left A sorted vector of integers //! \param right A sorted vector of integers 
+//! \return A sorted vector that is the result of merging two sorted //! 
+vectors. vector&lt;int&gt; merge(const vector&lt;int&gt;&amp; left, const 
+vector&lt;int&gt;&amp; right) { // Fill the resultant vector with sorted 
+results from both vectors vector&lt;int&gt; result; unsigned left_it = 0, 
+right_it = 0; while(left_it &lt; left.size() &amp;&amp; right_it &lt; 
+right.size()) { // If the left value is smaller than the right it goes next // 
+into the resultant vector if(left[left_it] &lt; right[right_it]) { 
+result.push_back(left[left_it]); left_it++; } else { 
+result.push_back(right[right_it]); right_it++; } } // Push the remaining data 
+from both vectors onto the resultant while(left_it &lt; left.size()) { 
+result.push_back(left[left_it]); left_it++; } while(right_it &lt; right.size()) 
+{ result.push_back(right[right_it]); right_it++; } return result; }</pre> 
+<p>Here's another recursive implementation of the mergesort using arrays of 
+variable length</p> 
+<pre> #include &lt;iostream&gt; using namespace std; void merge(int a[], const 
+int low, const int mid, const int high) { // Variables declaration. int * b = 
+new int[high+1-low]; int h,i,j,k; h=low; i=0; j=mid+1; // Merges the two 
+array's into b[] until the first one is finish 
+while((h&lt;=mid)&amp;&amp;(j&lt;=high)) { if(a[h]&lt;=a[j]) { b[i]=a[h]; h++; 
+} else { b[i]=a[j]; j++; } i++; } // Completes the array filling in it the 
+missing values if(h&gt;mid) { for(k=j;k&lt;=high;k++) { b[i]=a[k]; i++; } } 
+else { for(k=h;k&lt;=mid;k++) { b[i]=a[k]; i++; } } // Prints into the original 
+array for(k=0;k&lt;=high-low;k++) { a[k+low]=b[k]; } delete[] b; } void 
+merge_sort(int a[], const int low, const int high) // Recursive sort ... { int 
+mid; if(low&lt;high) { mid=(low+high)/2; merge_sort(a, low,mid); merge_sort(a, 
+mid+1,high); merge(a, low,mid,high); } } int _tmain(int argc, _TCHAR* argv[]) { 
+int arraySize; // a[] is the array to be sorted. ArraySize is the size of a[] 
+... merge_sort(a, 0, (arraySize-1) ); // would be more natural to use 
+merge_sort(a, 0, arraySize ), so please try&nbsp;;-) // some work return 0; }
+</pre> 
+<h3>[edit] C#</h3> 
+<pre> public IList MergeSort(IList list) { if (list.Count &lt;= 1) return 
+list; int mid = list.Count / 2; IList left = new ArrayList(); IList right = new 
+ArrayList(); for (int i = 0; i &lt; mid; i++) left.Add(list[i]); for (int i = 
+mid; i &lt; list.Count; i++) right.Add(list[i]); return Merge(MergeSort(left), 
+MergeSort(right)); } public IList Merge(IList left, IList right) { IList rv = 
+new ArrayList(); while (left.Count &gt; 0 &amp;&amp; right.Count &gt; 0) if 
+(((IComparable)left[0]).CompareTo(right[0]) &gt; 0) { rv.Add(right[0]); 
+right.RemoveAt(0); } else { rv.Add(left[0]); left.RemoveAt(0); } for (int i = 
+0; i &lt; left.Count; i++) rv.Add(left[i]); for (int i = 0; i &lt; right.Count; 
+i++) rv.Add(right[i]); return rv; }</pre> 
+<h3>[edit] Common Lisp</h3> 
+<pre> ;;; Helper function to tell us if a given sequence has just one element. 
+(defun single (sequence) (if (consp sequence) (not (cdr sequence)) (= (length 
+sequence) 1))) ;;; Sequence can be a vector or a list. Note that this means 
+that this ;;; code isn't optimized for any of those. (defun merge-sort 
+(sequence) (if (or (null sequence) (single sequence)) sequence (let ((half 
+(truncate (/ (length sequence) 2)))) &nbsp;;; MERGE is a standard common-lisp 
+function, which does just &nbsp;;; what we want. (merge (type-of sequence) 
+(merge-sort (subseq sequence 0 half)) (merge-sort (subseq sequence half)) 
+#'&lt;))))</pre> 
+<h3>[edit] Eiffel</h3> 
+<pre> class APPLICATION create make feature -- Initialization make is -- do 
+end feature -- Algorithm mergesort(a:ARRAY[INTEGER]; l,r:INTEGER) is -- 
+Recursive mergesort local m: INTEGER do if l&lt;r then m&nbsp;:= (l+r)//2 
+mergesort(a,l, m) mergesort(a,m+1,r) merge(a,l,m,r) end end feature -- Utility 
+feature merge(a:ARRAY[INTEGER]; l,m,r: INTEGER) is -- The merge feature of all 
+mergesort variants local b: ARRAY[INTEGER] h,i,j,k: INTEGER do i&nbsp;:= l 
+j&nbsp;:= m+1 k&nbsp;:= l create b.make (l, r) from until i &gt; m or j &gt; r 
+loop -- begins the merge and copies it into an array &quot;b&quot; if a.item 
+(i) &lt;= a.item (j) then b.item (k)&nbsp;:= a.item (i) i&nbsp;:= i +1 elseif 
+a.item (i) &gt; a.item (j) then b.item (k)&nbsp;:= a.item (j) j&nbsp;:= j+1 end 
+k&nbsp;:= k+1 end -- Finishes the copy of the uncopied part of the array if i 
+&gt; m then from h&nbsp;:= j until h &gt; r loop b.item (k+h-j)&nbsp;:= a.item 
+(h) h&nbsp;:= h+1 end elseif j &gt; m then from h&nbsp;:= i until h &gt; m loop 
+b.item (k+h-i)&nbsp;:= a.item (h) h&nbsp;:= h+1 end end -- &quot;begins the 
+copy to the real array&quot; from h&nbsp;:= l until h &gt; r loop a.item 
+(h)&nbsp;:= b.item (h) h&nbsp;:= h+1 end end feature -- Attributes array: 
+ARRAY[INTEGER]</pre> 
+<h3>[edit] Erlang</h3> 
+<pre> merge_sort(List) when length(List) =&lt; 1 -&gt; List; merge_sort(List) 
+-&gt; {Left, Right} = lists:split(length(List) div 2, List), 
+lists:merge(merge_sort(Left), merge_sort(Right)).</pre> 
+<h3>[edit] Fortran</h3> 
+<pre> subroutine Merge(A,NA,B,NB,C,NC) integer, intent(in)&nbsp;:: NA,NB,NC 
+&nbsp;! Normal usage: NA+NB = NC integer, intent(in out)&nbsp;:: A(NA) &nbsp;! 
+B overlays C(NA+1:NC) integer, intent(in) &nbsp;:: B(NB) integer, intent(in 
+out)&nbsp;:: C(NC) integer&nbsp;:: I,J,K I = 1; J = 1; K = 1; do while(I &lt;= 
+NA .and. J &lt;= NB) if (A(I) &lt;= B(J)) then C(K) = A(I) I = I+1 else C(K) = 
+B(J) J = J+1 endif K = K + 1 enddo do while (I &lt;= NA) C(K) = A(I) I = I + 1 
+K = K + 1 enddo return end subroutine merge recursive subroutine 
+MergeSort(A,N,T) integer, intent(in)&nbsp;:: N integer, dimension(N), intent(in 
+out)&nbsp;:: A integer, dimension((N+1)/2), intent (out)&nbsp;:: T 
+integer&nbsp;:: NA,NB,V if (N &lt; 2) return if (N == 2) then if (A(1) &gt; 
+A(2)) then V = A(1) A(1) = A(2) A(2) = V endif return endif NA=(N+1)/2 NB=N-NA 
+call MergeSort(A,NA,T) call MergeSort(A(NA+1),NB,T) if (A(NA) &gt; A(NA+1)) 
+then T(1:NA)=A(1:NA) call Merge(T,NA,A(NA+1),NB,A,N) endif return end 
+subroutine MergeSort program TestMergeSort integer, parameter&nbsp;:: N = 8 
+integer, dimension(N)&nbsp;:: A = (/ 1, 5, 2, 7, 3, 9, 4, 6 /) integer, 
+dimension ((N+1)/2)&nbsp;:: T call MergeSort(A,N,T) 
+write(*,'(A,/,10I3)')'Sorted array&nbsp;:',A end program TestMergeSort</pre> 
+<h3>[edit] Groovy</h3> 
+<pre> def mergeSort(list){ if( list.size() &lt;= 1) return list center = 
+list.size() / 2 left = list[0..center] right = list[center..list.size()] 
+merge(mergeSort(left), mergeSort(right)) } def merge(left, right){ sorted = [] 
+while(left.size() &gt; 0 || right.size() &gt; 0) if(left.get(0) &lt;= 
+right.get(0)){ sorted &lt;&lt; left }else{ sorted &lt;&lt; right } sorted = 
+sorted + left + right }</pre> 
+<h3>[edit] Haskell</h3> 
+<pre> sort&nbsp;:: Ord a =&gt; [a] -&gt; [a] sort [] = [] sort [x] = [x] sort 
+xs = merge (sort left) (sort right) where (left, right) = splitAt (length xs 
+`div` 2) xs merge [] xs = xs merge xs [] = xs merge (x:xs) (y:ys) | x &lt;= y = 
+x&nbsp;: merge xs (y:ys) | otherwise = y&nbsp;: merge (x:xs) ys</pre> 
+<h3>[edit] Java</h3> 
+<pre> public int[] mergeSort(int array[]) { if(array.length &gt; 1) { int 
+elementsInA1 = array.length/2; int elementsInA2 = array.length - elementsInA1; 
+int arr1[] = new int[elementsInA1]; int arr2[] = new int[elementsInA2]; for(int 
+i = 0; i &lt; elementsInA1; i++) arr1[i] = array[i]; for(int i = elementsInA1; 
+i &lt; elementsInA1 + elementsInA2; i++) arr2[i - elementsInA1] = array[i]; 
+arr1 = mergeSort(arr1); arr2 = mergeSort(arr2); int i = 0, j = 0, k = 0; 
+while(arr1.length&nbsp;!= j &amp;&amp; arr2.length&nbsp;!= k) { if(arr1[j] 
+&lt;= arr2[k]) { array[i] = arr1[j]; i++; j++; } else { array[i] = arr2[k]; 
+i++; k++; } } while(arr1.length&nbsp;!= j) { array[i] = arr1[j]; i++; j++; } 
+while(arr2.length&nbsp;!= k) { array[i] = arr2[k]; i++; k++; } } return array; }
+</pre> 
+<h3>[edit] JavaScript</h3> 
+<pre> function merge_sort(arr) { var l = arr.length, m = Math.floor(l/2); if 
+(l &lt;= 1) return arr; return merge(merge_sort(arr.slice(0, m)), 
+merge_sort(arr.slice(m))); } function merge(left,right) { var result = []; var 
+ll = left.length, rl = right.length; while (ll &gt; 0 &amp;&amp; rl &gt; 0) { 
+if (left[0] &lt;= right[0]) { result.push(left.shift()); ll--; } else { 
+result.push(right.shift()); rl--; } } if (ll &gt; 0) { 
+result.push.apply(result, left); } else if (rl &gt; 0) { 
+result.push.apply(result, right); } return result; }</pre> 
+<h3>[edit] Miranda</h3> 
+<pre> sort [] = [] sort [x] = [x] sort array = merge (sort left) (sort right) 
+where left = [array!y | y &lt;- [0..mid]] right = [array!y | y &lt;- 
+[(mid+1)..max]] max = #array - 1 mid = max div 2</pre> 
+<h3>[edit] OCaml</h3> 
+<p>Function to merge a pair of sorted lists: </p> 
+<pre> # let rec merge = function | list, [] | [], list -&gt; list | h1::t1, 
+h2::t2 -&gt; if h1 &lt;= h2 then h1&nbsp;:: merge (t1, h2::t2) else h2&nbsp;:: 
+merge (h1::t1, t2) &nbsp;;; val merge&nbsp;: 'a list * 'a list -&gt; 'a list = 
+&lt;fun&gt;</pre> 
+<p>This function is included in the OCaml stdlib as List.merge but is also 
+included here for clarity. Function to halve a list:</p> 
+<pre> # let rec halve = function | [] | [_] as t1 -&gt; t1, [] | h::t -&gt; 
+let t1, t2 = halve t in h::t2, t1 &nbsp;;; val halve&nbsp;: 'a list -&gt; 'a 
+list * 'a list = &lt;fun&gt;</pre> 
+<p>Function to merge sort a list: </p> 
+<pre> # let rec merge_sort = function | [] | [_] as list -&gt; list | list 
+-&gt; let l1, l2 = halve list in merge (merge_sort l1, merge_sort l2) ;; val 
+sort&nbsp;: 'a list -&gt; 'a list = &lt;fun&gt;</pre> 
+<p>For example: </p> 
+<pre> # merge_sort [6; 7; 0; 8; 3; 2; 4; 9; 5; 1];; -&nbsp;: int list = [0; 1; 
+2; 3; 4; 5; 6; 7; 8; 9]</pre> 
+<h3>[edit] Opal</h3> 
+<p>Signature: </p> 
+<pre> SIGNATURE Merge[alpha,&lt;] IMPORT Array[alpha] ONLY array Seq ONLY seq 
+Nat ONLY nat SORT alpha FUN &lt;&nbsp;: alpha ** alpha -&gt; bool FUN 
+mergeSort: seq[alpha] -&gt; seq[alpha]</pre> 
+<p>Implementation </p> 
+<pre> IMPLEMENTATION Merge[alpha,&lt;] IMPORT Array[alpha] COMPLETELY Seq 
+COMPLETELY Nat COMPLETELY Bool COMPLETELY FUN merge: seq[alpha] ** seq[alpha] 
+-&gt; seq[alpha] DEF merge((&lt;&gt;),B) == B DEF merge(A,(&lt;&gt;)) == A DEF 
+merge(A AS (a::as),B AS (b::bs) ) == IF a &lt; b THEN a::merge(as,B) ELSE 
+b::merge(A,bs) FI DEF mergeSort(&lt;&gt;) == &lt;&gt; DEF mergeSort(A AS 
+(a::(&lt;&gt;))) == A DEF mergeSort(lst) == LET half == #(lst)/2 (a,b) == 
+split(half,lst) IN merge(mergeSort(a),mergeSort(b))</pre> 
+<h3>[edit] Perl</h3> 
+<p>FYI as of perl's built-in sort is merge sort by default. </p> 
+<pre> #!/usr/bin/perl use strict; use warnings; sub mergesort; # to suppress 
+prototype warnings sub mergesort(&amp;@) { my $comp = shift; return @_ if @_ 
+&lt;= 1; my @tail = splice @_, @_ &gt;&gt; 1; merge( $comp, [ mergesort $comp, 
+@_ ], [ mergesort $comp, @tail ] ); } sub merge { my ( $comp, $head, $tail ) = 
+@_; my @ret; while ( @$head &amp;&amp; @$tail ) { push @ret, ( $comp-&gt;( 
+$head-&gt;[0], $tail-&gt;[0] ) &lt; 0 &nbsp;? shift @$head &nbsp;: shift @$tail 
+); } push @ret, @$head, @$tail; @ret; } my @rnd = map { int( rand 100 ) } 1 .. 
+20; print join( &quot;,&quot;, @rnd ), &quot;\n&quot;; print join( 
+&quot;,&quot;, mergesort { $_[0] &lt;=&gt; $_[1] } @rnd ), &quot;\n&quot;; 
+print join( &quot;,&quot;, sort { $a &lt;=&gt; $b } @rnd ), &quot;\n&quot;;
+</pre> 
+<h3>[edit] PHP</h3> 
+<pre> function merge_sort(&amp;$arrayToSort) { if (sizeof($arrayToSort) &lt;= 
+1) return $arrayToSort; // split our input array into two halves // left... 
+$leftFrag = array_slice($arrayToSort, 0, (int)(count($arrayToSort)/2)); // 
+right... $rightFrag = array_slice($arrayToSort, (int)(count($arrayToSort)/2)); 
+// RECURSION // split the two halves into their respective halves... $leftFrag 
+= merge_sort($leftFrag); $rightFrag = merge_sort($rightFrag); $returnArray = 
+merge($leftFrag, $rightFrag); return $returnArray; } function merge(&amp;$lF, 
+&amp;$rF) { $result = array(); // while both arrays have something in them 
+while (count($lF)&gt;0 &amp;&amp; count($rF)&gt;0) { if ($lF[0] &lt;= $rF[0]) { 
+array_push($result, array_shift($lF)); } else { array_push($result, 
+array_shift($rF)); } } // did not see this in the pseudo code, // but it became 
+necessary as one of the arrays // can become empty before the other 
+array_splice($result, count($result), 0, $lF); array_splice($result, 
+count($result), 0, $rF); return $result; }</pre> 
+<h3>[edit] Prolog</h3> 
+<p>This is an ISO-Prolog compatible implementation of merge sort with the 
+exception of the predicates append/3 and length/2 which, while not prescribed 
+by the ISO standard, are available in virtually all Prolog implementations.</p> 
+<pre>% Merge-Sort: ms(+Source,&nbsp;?Result) ms(Xs, Rs)&nbsp;:- length(Xs, L), 
+( L &lt; 2 -&gt; Rs = Xs &nbsp;; Split is L//2, length(Front0, Split), 
+append(Front0, Back0, Xs), ms(Front0, Front), ms(Back0, Back), merge(Front, 
+Back, Rs) ). % Merge of lists: merge(+List1, +List2, -Result) merge([], Xs, 
+Xs)&nbsp;:-&nbsp;!. merge(Xs, [], Xs)&nbsp;:-&nbsp;!. merge([X|Xs], [Y|Ys], 
+Zs)&nbsp;:- ( X @=&lt; Y -&gt; Zs = [X|Rest], merge(Xs, [Y|Ys], Rest) &nbsp;; 
+Zs = [Y|Rest], merge([X|Xs], Ys, Rest) ).</pre> 
+<h3>[edit] Python</h3> 
+<pre> def mergesort(arr): if len(arr) == 1: return arr m = len(arr) / 2 l = 
+mergesort(arr[:m]) r = mergesort(arr[m:]) if not len(l) or not len(r): return l 
+or r result = [] i = j = 0 while (len(result) &lt; len(r)+len(l)): if l[i] &lt; 
+r[j]: result.append(l[i]) i += 1 else: result.append(r[j]) j += 1 if i == 
+len(l) or j == len(r): result.extend(l[i:] or r[j:]) break return result</pre> 
+<h3>[edit] Ruby</h3> 
+<pre> def mergesort(list) return list if list.size &lt;= 1 mid = list.size / 2 
+left = list[0, mid] right = list[mid, list.size] merge(mergesort(left), 
+mergesort(right)) end def merge(left, right) sorted = [] until left.empty? or 
+right.empty? if left.first &lt;= right.first sorted &lt;&lt; left.shift else 
+sorted &lt;&lt; right.shift end end sorted.concat(left).concat(right) end</pre> 
+<h3>[edit] Scheme</h3> 
+<pre> (define (loe p1 p2);;implements less than or equal (&lt;= (cdr p1) (cdr 
+p2))) (define (mergesort L) (cond ((= (length L) 0) '()) ((= (length L) 1) L); 
+the 1 element list is sorted ((= (length L) 2) (if (&lt; (cdar L) (cdar (cdr 
+L))) L (list (car (cdr L)) (car L));;special case for len 2 list ) ) (else 
+(mergelist (mergesort (firstn L (/ (length L) 2))) (mergesort (lastn L (/ 
+(length L) 2))) );;recursively call mergesort on both halves ) ) ) (define 
+(firstn L N) ;;pre: N not bigger than size of L (cond ((= N 0) '()) ((or (= N 
+1) (&lt; N 2)) (list (car L))) (else (cons (car L) (firstn (cdr L) (- N 1)))) ) 
+) (define (lastn L N) ;;pre: N not bigger than size of L (cond ((= N 0) L) 
+((or(= N 1) (&lt; N 2)) (cdr L)) (else (lastn (cdr L) (- N 1))) ) ) (define 
+(mergelist primero segundo) ;;;pre: primero and segundo are lists sorted in 
+increasing order ;;;post: returns a single sorted list containing the elements 
+of primero and segundo (cond ((null? primero) segundo);;first base case ((null? 
+segundo) primero);;second base case ((loe (car primero) (car segundo)) (cons 
+(car primero) (mergelist (cdr primero) segundo);;first main case )) ((&gt; 
+(cdar primero) (cdar segundo)) (cons (car segundo) (mergelist primero (cdr 
+segundo));;second main case ) ) ) )</pre> 
+<h3>[edit] Seed7</h3> 
+<p>Version without additional storage </p> 
+<pre> const proc: mergeSort (inout array elemType: arr, in var integer: lo, in 
+integer: hi) is func local var integer: mid is 0; var elemType: help is 
+elemType.value; var integer: k is 0; begin if lo &lt; hi then mid&nbsp;:= (lo + 
+hi) div 2; mergeSort(arr, lo, mid); mergeSort(arr, succ(mid), hi); incr(mid); 
+while lo &lt; mid and mid &lt;= hi do if arr[lo] &lt;= arr[mid] then incr(lo); 
+else help&nbsp;:= arr[mid]; for k range mid downto succ(lo) do arr[k]&nbsp;:= 
+arr[pred(k)]; end for; arr[lo]&nbsp;:= help; incr(lo); incr(mid); end if; end 
+while; end if; end func; const proc: mergeSort (inout array elemType: arr) is 
+func begin mergeSort(arr, 1, length(arr)); end func;</pre> 
+<p>Original source: [1] </p> 
+<p>Version with additional storage </p> 
+<pre> const proc: mergeSort2 (inout array elemType: arr, in integer: lo, in 
+integer: hi, inout array elemType: scratch) is func local var integer: mid is 
+0; var integer: k is 0; var integer: t_lo is 0; var integer: t_hi is 0; begin 
+if lo &lt; hi then mid&nbsp;:= (lo + hi) div 2; mergeSort2(arr, lo, mid, 
+scratch); mergeSort2(arr, succ(mid), hi, scratch); t_lo&nbsp;:= lo; 
+t_hi&nbsp;:= succ(mid); for k range lo to hi do if t_lo &lt;= mid and (t_hi 
+&gt; hi or arr[t_lo] &lt; arr[t_hi]) then scratch[k]&nbsp;:= arr[t_lo]; 
+incr(t_lo); else scratch[k]&nbsp;:= arr[t_hi]; incr(t_hi); end if; end for; for 
+k range lo to hi do arr[k]&nbsp;:= scratch[k]; end for; end if; end func; const 
+proc: mergeSort2 (inout array elemType: arr) is func local var array elemType: 
+scratch is 0 times elemType.value; begin scratch&nbsp;:= length(arr) times 
+elemType.value; mergeSort2(arr, 1, length(arr), scratch); end func;</pre> 
+<p>Original source: [2] </p> 
+<h3>[edit]  Tcl </h3> 
+<pre> proc mergesort list { set len [llength $list] if {$len &lt;= 1} {return 
+$list} set middle [expr {$len / 2}] set left [lrange $list 0 [expr {$middle - 
+1}]] set right [lrange $list $middle end] return [merge [mergesort $left] 
+[mergesort $right]] } proc merge {left right} { set res {} while {[set lleft 
+[llength $left]] &gt; 0 &amp;&amp; [set lright [llength $right]] &gt; 0} { if 
+{[lindex $left 0] &lt;= [lindex $right 0]} { set left [lassign $left value] } 
+else { set right [lassign $right value] } lappend res $value } if {$lleft &gt; 
+0} {lappend res {*}$left} if {$lright &gt; 0} {set res [concat $res $right]} 
+return $res }</pre> 
+<h3>[edit]  Standard ML</h3> 
+<pre> fun mergesort [] = [] | mergesort [x] = [x] | mergesort lst = let fun 
+merge ([],ys) = ys (*merges two sorted lists to form a sorted list *) | merge 
+(xs,[]) = xs | merge (x::xs,y::ys) = if x&lt;y then x::merge (xs,y::ys) else 
+y::merge (x::xs,ys) &nbsp;; val half = length(lst) div 2; in merge (mergesort 
+(List.take (lst, half)),mergesort (List.drop (lst, half))) end ;</pre> 
+<h2>[edit] Analysis</h2> 
+<p>In sorting n items, merge sort has an average and worst-case performance of 
+O(n log n). If the running time of merge sort for a list of length n is T(n), 
+then the recurrence T(n) = 2T(n/2) + n follows from the definition of the 
+algorithm (apply the algorithm to two lists of half the size of the original 
+list, and add the n steps taken to merge the resulting two lists). The closed 
+form follows from the master theorem.</p> 
+<p>In the worst case, merge sort does exactly (n &lceil;log n&rceil; - 
+2&lceil;log n&rceil; + 1) comparisons, which is between (n log n - n + 1) and 
+(n log n - 0.9139&middot;n + 1) [logs are base 2]. Note, the worst case number 
+given here does not agree with that given in Knuth's Art of Computer 
+Programming, Vol 3. The discrepancy is due to Knuth analyzing a variant 
+implementation of merge sort that is slightly sub-optimal.</p> 
+<p>For large n and a randomly ordered input list, merge sort's expected 
+(average) number of comparisons approaches &alpha;&middot;n fewer than the 
+worst case, where &alpha; = -1 + &sum; 1/(2k +1), k = 0 &rarr; &infin;, &alpha; 
+&asymp; 0.2645.</p> 
+<p>In the worst case, merge sort does about 39% fewer comparisons than 
+quicksort does in the average case; merge sort always makes fewer comparisons 
+than quicksort, except in extremely rare cases, when they tie, where merge 
+sort's worst case is found simultaneously with quicksort's best case. In terms 
+of moves, merge sort's worst case complexity is O(n log n)&mdash;the same 
+complexity as quicksort's best case, and merge sort's best case takes about 
+half as many iterations as the worst case.</p> 
+<p>Recursive implementations of merge sort make 2n - 1 method calls in the 
+worst case, compared to quicksort's n, thus has roughly twice as much recursive 
+overhead as quicksort. However, iterative, non-recursive, implementations of 
+merge sort, avoiding method call overhead, are not difficult to code. Merge 
+sort's most common implementation does not sort in place, meaning memory the 
+size of the input must be allocated for the sorted output to be stored in. 
+Sorting in-place is possible but requires an extremely complicated 
+implementation and hurts performance.</p> 
+<p>Merge sort is much more efficient than quicksort if the data to be sorted 
+can only be efficiently accessed sequentially, and is thus popular in languages 
+such as Lisp, where sequentially accessed data structures are very common. 
+Unlike some (inefficient) implementations of quicksort, merge sort is a stable 
+sort as long as the merge operation is implemented properly.</p> 
+<h2>[edit] Optimizing Merge Sort</h2> 
+<p>This might seem to be of historical interest only, but on modern computers, 
+locality of reference is of paramount importance in software optimization, 
+because multi-level memory hierarchies are used. In some sense, main RAM can be 
+seen as a fast tape drive, level 3 cache memory as a slightly faster one, level 
+2 cache memory as faster still, and so on. In some circumstances, cache 
+reloading might impose unacceptable overhead and a carefully crafted merge sort 
+might result in a significant improvement in running time. This opportunity 
+might change if fast memory becomes very cheap again, or if exotic 
+architectures like the Tera MTA become commonplace.</p> 
+<p>Designing a merge sort to perform optimally often requires adjustment to 
+available hardware, eg. number of tape drives, or size and speed of the 
+relevant cache memory levels.</p> 
+<h2>[edit] Comparison with other Sort Algorithms</h2> 
+<p>Although heap sort has the same time bounds as merge sort, it requires only 
+&Omega;(1) auxiliary space instead of merge sort's &Omega;(n), and is 
+consequently often faster in practical implementations. Quicksort, however, is 
+considered by many to be the fastest general-purpose sort algorithm in 
+practice. Its average-case complexity is O(n log n), with a much smaller 
+coefficient, in good implementations, than merge sort's, even though it is 
+quadratic in the worst case. On the plus side, merge sort is a stable sort, 
+parallelizes better, and is more efficient at handling slow-to-access 
+sequential media. Merge sort is often the best choice for sorting a linked 
+list: in this situation it is relatively easy to implement a merge sort in such 
+a way that it does not require &Omega;(n) auxiliary space (instead only 
+&Omega;(1)), and the slow random-access performance of a linked list makes some 
+other algorithms (such as quick sort) perform poorly, and others (such as 
+heapsort) completely impossible.</p> 
+<p>As of Perl 5.8, merge sort is its default sorting algorithm (it was 
+quicksort in previous versions of Perl). In Java, the Arrays.sort() methods use 
+mergesort and a tuned quicksort depending on the datatypes.</p> 
+<h2>[edit] Utility in Online Sorting</h2> 
+<p>Mergesort's merge operation is useful in online sorting, where the list to 
+be sorted is received a piece at a time, instead of all at the beginning. In 
+this application, we sort each new piece that is received using any sorting 
+algorithm, and then merge it into our sorted list so far using the merge 
+operation. However, this approach can be expensive in time and space if the 
+received pieces are small compared to the sorted list &mdash; a better approach 
+in this case is to store the list in a self-balancing binary search tree and 
+add elements to it as they are received.</p>  Retrieved from &quot; 
+http://www.codecodex.com/wiki/Merge_sort&quot; <br>
+Categories: Sort algorithms 
+|Recursion | Pseudocode | Ada | C | C++ | Common Lisp | Eiffel | Erlang | 
+Fortran | Groovy | Haskell | Java | JavaScript | Miranda | Objective Caml | Perl
+ |PHP | Prolog | Python | Ruby | Scheme | Seed7 | Standard ML <br>
+<br>
+<br>
+ 
+This page was last modified on 18 January 2012, at 21:52. This page has been 
+accessed 73,552 times. 
+<ul> 
+<li>About CodeCodex</li> 
+<li>Disclaimers</li> </ul> <br>
+<br>
+<br>
+<br>
+
+</body>

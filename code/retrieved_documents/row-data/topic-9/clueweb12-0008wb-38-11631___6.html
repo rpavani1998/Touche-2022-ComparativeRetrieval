@@ -1,0 +1,133 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>LWN: The Microsoft &quot;Linux Myths&quot; document</title>
+<body>
+
+<p> </p> 
+<p> </p> Linux&nbsp;Weekly&nbsp;News<br>
+Daily updates<br>
+Linux Stocks Page
+<br>
+<p> Contact us <br>
+</p> October 6, 1999 <br>
+<br>
+
+<h1>A look at Microsoft's 'Linux Myths'</h1> 
+<p> This week Microsoft took the gloves off and put up this page about 
+&quot;The Five Linux Myths.&quot; It would appear that the long-awaited 
+Microsoft counteroffensive has begun. This is certainly not the last that we 
+will hear from them.</p>
+<p> The document makes a number of points, some of which are better than 
+others. Let's look at a few of them.</p>
+<p> On performance: </p> 
+<blockquote>  The Linux community claims to have improved performance and 
+scalability in the latest versions of the Linux Kernel (2.2), however it's 
+clear that Linux remains inferior to the Windows NT&reg; 4.0 operating system. 
+</blockquote> They cite the June PC Week benchmarks which did indeed show NT 
+performing better. They also fail to note that a number of the performance 
+problems found then have since been fixed. Some of those fixes have been put 
+into the latest 2.2 kernels, and are thus widely available; others remain in 
+the 2.3 tree. For now it is true that mainstream Linux contains some 
+performance problems.
+<p> Microsoft does not address performance on lower-end hardware. </p>
+<p> It is also worth noting that other benchmarks have produced very different 
+results.</p>
+<p> </p> 
+<blockquote>  Linux only supports 2 gigabytes (GB) of RAM on the x86 
+architecture, compared to 4 GB for Windows NT 4.0. The largest file size Linux 
+supports is 2 GB versus 16 terabytes (TB) for Windows NT 4.0. The Linux SWAP 
+file is limited to 128 MB RAM. In addition, Linux does not support many of the 
+modern operating system features that Windows NT 4.0 has pioneered such as 
+asynchronous I/O, completion ports, and fine-grained kernel locks. </blockquote>
+ Linux can support 4GB with a commercially-supported patch. The file size limit 
+is real (on 32-bit systems), and is a bit of a thorny problem - the 2.4 kernel 
+will not fix it. The swap file limit claim is simply false as of 2.2.0 (and 
+even with previous versions one could use multiple swap files). Asynchronous 
+I/O is being worked on, and can also be done now via threads - there is 
+disagreement over whether other approaches such as completion ports truly 
+provide better performance. Locking in the kernel is increasingly fine grained, 
+though there are limits to what can be safely accomplished via that path.
+<blockquote>  The Linux community continues to promise major SMP and 
+performance improvements. They have been promising these since the development 
+of the 2.0 Kernel in 1996. Delivering a scalable system is a complex task and 
+it's not clear that the Linux community can solve these issues easily or 
+quickly. </blockquote> 2.2 delivered quite a few improvements; 2.4 will deliver 
+quite a few more.
+<blockquote>  The Linux community likes to talk about Linux as a stable and 
+reliable operating system, yet there is no real world data or metrics and very 
+limited customer evidence to back up these claims. </blockquote> This seems a 
+little strange, given the large number of high profile, Linux-based web sites 
+out there.
+<blockquote>  Linux lacks a commercial quality Journaling File System. 
+</blockquote> True - for now. Shortly Linux will have three such file systems, 
+however. Microsoft also claims that Linux high-availability and clustering are 
+&quot;immature,&quot; which has a certain basis in truth. Linux clustering is 
+also highly successful in many situations.
+<blockquote>  The Linux community will talk about the free or low-cost nature 
+of Linux. It's important to understand that licensing cost is only a small part 
+of the overall decision-making process for customers. </blockquote> The free 
+(beer) side of Linux is compelling, but is far from the most important feature 
+of the operating system. Nonetheless, it is important. Not only for the reduced 
+direct costs, but also the elimination of the (many) hassles of dealing with 
+proprietary software licenses. Microsoft's claims of lower cost of ownership 
+for NT fly in the face of the experience of large numbers of system and network 
+administrators.
+<p> Microsoft, of course, completely avoids the issue of freedom, since they 
+have no answer to that one.</p> 
+<blockquote>  The very definition of Linux as an Open Software effort means 
+that commercial companies like Red Hat will make money by charging for 
+services. Therefore, commercial support services for Linux will be fee-based 
+and will likely be priced at a premium. </blockquote> ...as opposed to the 
+wonderful free support services for Windows NT...
+<blockquote>  Linux is a higher risk option than Windows NT. </blockquote> 
+This is the NT that is<i>years</i> late? The one with more than 30 million 
+lines of new code? NT looks pretty risky to many of us.
+<blockquote>  All systems are vulnerable to security issues, however it's 
+important to note that Linux uses the same security model as the original UNIX 
+implementations- a model that was not designed from the ground up to be secure. 
+</blockquote> One could also argue that Window - even NT - was not designed for 
+multi-user environments and the the need to protect users - and programs - from 
+each other.
+<blockquote>  Linux security is all-or-nothing. Administrators cannot delegate 
+administrative privileges: a user who needs any administrative capability must 
+be made a full administrator, which compromises best security practices. 
+</blockquote> There is some truth here. The &quot;superuser&quot; model has a 
+number of problems, and utilities like &quot;sudo&quot; are a sort of fragile 
+kludge made necessary by this model. The Linux kernel has increasing support 
+for capabilities, which provide the sort of fine-grained privileges needed, but 
+support for capabilities at the user level will be a while in coming. Access 
+control lists (ACLs) are also in development and in a testing mode.
+<blockquote>  Linux system administrators must spend huge amounts of time 
+understanding the latest Linux bugs and determining what to do about them. This 
+is made complex due to the fact that there isn't a central location for 
+security issues to be reported and fixed. </blockquote> They must sign up for 
+their distribution's security announcement list, and apply the updated packages 
+when they are released. The time gets significant when there are large numbers 
+of systems to update, but that is true of NT &quot;service packs&quot; as well. 
+Microsoft makes no mention of the difference in turnaround times - Linux bugs 
+are fixed much more quickly.
+<p> We also humbly suggest the LWN security page as a central place to look to 
+keep up on security issues.</p>
+<p> </p> 
+<blockquote>  Linux as a desktop operating system makes no sense. A user would 
+end up with a system that has fewer applications, is more complex to use and 
+manage, and is less intuitive. </blockquote> Many users find a Linux desktop to 
+be most sensible, and many more will with each new release of the system. The 
+number of applications does not matter - it's whether the particular 
+applications needed by the user are available that makes a difference. For some 
+users, Linux will make a better desktop, for others it &quot;makes no 
+sense.&quot;
+<p> As can be seen, Microsoft's document is partially truthful, partially not. 
+It is not, in general, blatantly dishonest. It points at places where work 
+needs to be done. There is little here that is not well on the way toward being 
+solved. Given the pace of development in the Linux world, Microsoft's document 
+will be obsolete very soon.</p>
+<p> <i>--jc</i> </p>
+<p> Thanks to Lenz Grimmer, Andi Kleen, and Raymond Ingles for suggestions 
+that have improved this page.</p> <br>
+<br>
+
+<p>  Copyright 1999 Eklektix, Inc. all rights reserved. <br>
+ Linux &reg; is a 
+registered trademark of Linus Torvalds</p> 
+</body>

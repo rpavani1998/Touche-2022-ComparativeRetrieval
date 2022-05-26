@@ -1,0 +1,381 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Do Splitting Rules Really Matter?  |  Salford Systems</title>
+<body>
+<br>
+<br>
+<br>
+
+<ul> 
+<li>Home</li> 
+<li>Products 
+<ul> 
+<li>SPM (New) 
+<ul> 
+<li>SPM Features</li> </ul></li> 
+<li>CART</li> 
+<li>MARS</li> 
+<li>TreeNet</li> 
+<li>Random Forests</li> 
+<li>LOGIT</li> </ul></li> 
+<li>Services 
+<ul> 
+<li>Consulting</li> 
+<li>Rapid Response Data Mining</li> 
+<li>Custom Programming</li> </ul></li> 
+<li>Training 
+<ul> 
+<li>Courses 
+<ul> 
+<li>Getting Started with Data Mining</li> 
+<li>CART</li> 
+<li>Advanced CART</li> 
+<li>MARS</li> 
+<li>TreeNet</li> 
+<li>RandomForests</li> 
+<li>Salford Predictive Modeler</li> </ul></li> 
+<li>Schedule</li> 
+<li>Customized Onsite</li> 
+<li>Webcasts</li> 
+<li>Training Registration</li> 
+<li>Training Videos</li> </ul></li> 
+<li>Events</li> 
+<li>Blog 
+<ul> 
+<li>Dan Steinberg</li> 
+<li>Company</li> </ul></li> 
+<li>Video 
+<ul> 
+<li>Introductory</li> 
+<li>Conference</li> 
+<li>One Hour</li> 
+<li>Training</li> 
+<li>Tutorials</li> </ul></li> 
+<li>Resources 
+<ul> 
+<li>White Papers</li> 
+<li>Case Studies</li> 
+<li>Publications</li> 
+<li>Library</li> 
+<li>Walkabouts</li> 
+<li>Conference Video</li> 
+<li>Slide Archive</li> </ul></li> 
+<li>Support 
+<ul> 
+<li>FAQs 
+<ul> 
+<li>SPM</li> 
+<li>CART</li> 
+<li>MARS</li> 
+<li>TreeNet</li> 
+<li>RandomForests</li> </ul></li> 
+<li>Tutorials</li> </ul></li> 
+<li>Company 
+<ul> 
+<li>About Us</li> 
+<li>Awards</li> 
+<li>News</li> 
+<li>Events</li> 
+<li>Worldwide Partners</li> 
+<li>Careers</li> </ul></li> 
+<li>Contact Us</li> </ul> <br>
+
+<h3>Resources</h3> 
+<ul> 
+<li>White Papers</li> 
+<li>Case Studies</li> 
+<li>Publications</li> 
+<li>Library</li> 
+<li>Walkabouts</li> 
+<li>Conference Video</li> </ul> 
+<h3>Products</h3> 
+<ul> 
+<li>SPM (New) 
+<ul> 
+<li>SPM Features</li> </ul></li> 
+<li>CART</li> 
+<li>MARS</li> 
+<li>TreeNet</li> 
+<li>RandomForests</li> 
+<li>LOGIT</li> </ul> Company Blog <br>
+<br>
+
+<h3>Upcoming Tradeshows</h3> 
+<ul> 
+<li>ASA Statistical Practice <br>
+February 16, 2012 - February 18, 2012 <br>
+ 
+Orlando, FL, Booth 12</li> 
+<li>Predictive Analytics World <br>
+March 05, 2012 - March 09, 2012 <br>
+ San 
+Francisco, CA Booth 224</li> 
+<li>Statistical Learning and Data Mining III <br>
+March 15, 2012 - March 16, 
+2012 <br>
+ Palo Alto, CA, Booth TBA </li> 
+<li>INFORMS OR <br>
+April 15, 2012 - April 17, 2012 <br>
+ Huntington Beach, CA 
+Software Workshop April 15, 1-2:45pm Booth 6</li> 
+<li>JSM <br>
+July 28, 2012 - August 02, 2012 <br>
+ San Diego, CA, Booth TBA 
+</li> </ul> View full calendar <br>
+Home Resources  White Papers <br>
+<br>
+ Do 
+Splitting Rules Really Matter? <br>
+<br>
+
+<h3>Introduction</h3> 
+<p>Do decision-tree splitting criteria matter? Contrary to popular opinion in 
+data mining circles, our experience indicates that splitting criteria do 
+matter; in fact, the difference between using the right rule and the wrong rule 
+could add up to millions of dollars of lost opportunity.<br>
+<br>
+So, why 
+haven't the differences been noticed? The answer is simple. When data sets are 
+small and highly-accurate trees can be generated easily, the particular 
+splitting rule does not matter. When your golf ball is one inch from the cup, 
+which club or even which end you use is not important because&nbsp;you will be 
+able to sink the ball in one stroke. Unfortunately, previous examinations of 
+splitting rule performance, the ones that found no differences, did not look at 
+data-mining problems with large data sets where obtaining a good answer is 
+genuinely difficult.<br>
+<br>
+When you are trying to detect fraud, identify 
+borrowers who will declare bankruptcy in the next 12 months, target a direct 
+mail campaign, or tackle other real-world business problems that do not admit 
+of 90+ percent accuracy rates (with currently available data), the splitting 
+rule you choose could materially affect the accuracy and value of your decision 
+tree. Further, even when different splitting rules yield similarly accurate 
+classifiers, the differences between them may still matter. With multiple 
+classes, you might care how the errors are distributed across classes. Between 
+two trees with equal overall error rates, you might prefer a tree that performs 
+better on a particular class or classes. If the purpose of a decision tree is 
+to yield insight into a causal process or into the structure of a database, 
+splitting rules of similar accuracy can yield trees that vary greatly in their 
+usefulness for interpreting and understanding the data.<br>
+<br>
+This paper 
+explores the key differences between three important splitting criteria:&nbsp; 
+Gini, Twoing and Entropy, for three- and greater-level classification trees, 
+and suggests how to choose the right one for a particular problem type. 
+Although we can make recommendations as to which splitting rule is best suited 
+to which type of problem, it is good practice to always use several splitting 
+rules and compare the results. You should experiment with several different 
+splitting rules and should expect different results from each. As you work with 
+different types of data and problems, you will begin to learn which splitting 
+rules typically work best for specific problem types. Nevertheless, you should 
+never rely on a single rule alone; experimentation is always wise.</p> 
+<h3>Gini, Twoing, and Entropy</h3> 
+<p>The best known rules for binary recursive partitioning are Gini, Twoing, 
+and Entropy. Because each rule represents a different philosophy as to the 
+purpose of the decision tree, each grows a different style of tree.</p> 
+<p><strong>Gini Splitting Rule</strong></p> 
+<p>Gini looks for the largest class in your database (e.g., class A) and 
+strives to isolate it from all other classes. For example, with four Classes, 
+A, B, C, and D, representing 40, 30, 20, and 10 percent of the data, 
+respectively, the Gini rule would immediately attempt to pull out the Class A 
+records into one node. Of course, such a separation may not be possible using 
+the available data, but, if it is, the Gini opts for that split. The diagram 
+below shows the best possible Gini split for these data.</p> 
+<p></p> 
+<p><br>
+<br>
+Once the first split is made, Gini continues attempting to split 
+the data that require further segmentation, i.e., the right child node that 
+contains Classes B, C and D. Using the same strategy, Gini attempts to pull out 
+all the Class B records, separating them from the other classes in the node. 
+Gini then tackles the last heterogeneous node, striving to separate Class C 
+from Class D. If the GINI rule is successful, the final tree would contain four 
+&quot;pure&quot; child nodes:</p> 
+<p></p> 
+<p><br>
+<br>
+A pure decision tree such as the above is attainable only in very 
+rare circumstances; in most real world applications, database fields that 
+clearly partition class from class are not available. If they were, no one 
+would ever receive an unwelcome direct mail piece and bank losses on bad debts 
+would be zero. Therefore, we cannot expect to grow trees like the one above 
+routinely; however, Gini will try to come as close as possible to this ideal. A 
+hypothetical example of a more realistic decision tree grown by Gini is 
+displayed below. While imperfect, it is still an unusually accurate tree.</p> 
+<p></p> 
+<p><br>
+<br>
+So what is Gini trying to do? Gini attempts to separate classes 
+by focusing on one class at a time. It will always favor working on the largest 
+or, if you use costs or weights, the most &quot;important&quot; class in a 
+node. While this approach might seem short sighted, Gini performance is 
+frequently so good that you should always experiment with it to see how well it 
+does. Gini is the default rule in CART precisely because it is so often the 
+best splitting rule.<br>
+<br>
+<br>
+<strong>Twoing and Entropy Splitting Rules
+</strong> <br>
+<br>
+The philosophy of Twoing is far different than that of 
+Gini. Rather than initially pulling out a single class, Twoing first segments 
+the classes into two groups, attempting to find groups that together add up to 
+50 percent of the data. Twoing then searches for a split to separate the two 
+subgroups. The diagram below shows the best possible split the Twoing rule 
+could find.</p> 
+<p></p> 
+<p><br>
+<br>
+Again, this is an ideal split. It is unlikely that any real-world 
+database would allow you to cleanly separate four important classes into two 
+subgroups in this way. However, splits that approach this ideal might be 
+possible, and these are the splits that Twoing seeks to find. The Entropy rule, 
+which is very similar to Twoing in practice, strives for similar splits.<br>
+
+<br><br>
+<strong>Variations on Twoing</strong> <br>
+<br>
+An important variation 
+of the Twoing rule is Power-Modified Twoing, which places an even heavier 
+weight on splitting the data in a node into two equal-sized partitions. When 
+the perfect splits illustrated above are available, Twoing and Power-Modified 
+Twoing will select the same split. When only imperfect partitions are 
+available, Power-Modified Twoing is more likely to generate a near 50-50 
+partition of the data than is simple Twoing.</p> 
+<h3>General Rules of Thumb</h3> 
+<p>The following rules of thumb are based on our experience in the 
+telecommunications, banking, and market research arenas, and may not apply 
+literally to other subject matters or even other data sets. Nevertheless, they 
+represent such a consistent set of empirical findings that we expect them to 
+continue to hold in other domains and data sets.<br>
+<br>
+For a two-level 
+dependent variable that can be predicted with a relative error of less than 
+0.50, the Gini splitting rule is typically best. For a two-level dependent 
+variable that can be predicted with a relative error of 0.80 or higher, 
+Power-Modified Twoing tends to perform best. For target variables with four to 
+nine levels, Twoing has a good chance of being the best splitting rule. For 
+higher-level categorical dependent variables with 10 or more levels, Twoing or 
+Power- Modified Twoing is often considerably more accurate than Gini. Take the 
+last rule of thumb, for example. A data-mining project concerning consumer 
+choice from a set of 28 vehicles is a typical example of the substantial 
+differences that can be observed across alternative splitting rules. The list 
+of variables in this exercise was quite limited; in particular, the trees 
+needed to be grown without reference to important drivers of choice such as 
+income or price, so the level of accuracy attainable was expected to be low. In 
+the first run, using CART's default criterion, the Gini rule grew an 89-node 
+tree with a relative error of 0.919. The second run, using CART's Twoing rule, 
+grew a tree with 50 nodes with a relative error of 0.876.<br>
+<br>
+Reviewing 
+the tree sequences below, one can see that the Twoing rule makes a better first 
+split and continues to pull ahead of Gini on progressively larger trees. 
+Although the second tree also has quite a high error rate in percentage of 
+error terms, it is a dramatic improvement over the first. In this example of 
+vehicle choice, the Twoing rule was the winner; in other data sets, the winner 
+might be Power-Modified Twoing, Gini, or yet another rule.</p> 
+<p>&nbsp;</p> 
+<p>CART Tree Sequence for 28 Level Target Variable Using GINI</p> # of Terminal
+<br>Tree Nodes Test Set<br>
+Relative Cost Resubstitution<br>
+Relative Cost 
+Complexity<br>
+Parameter <br>
+100 0.91973 +/- 0.00636 0.80182 0.00076 <br>
+95 
+0.92016 +/- 0.00636 0.80591 0.00079 <br>
+94 0.92054 +/- 0.00636 0.80678 0.00085 
+<br> 89** (optimal) 0.91921 +/- 0.00636 0.81140 0.00090 <br>
+88 0.92348 +/- 
+0.00636 0.81238 0.00095 <br>
+78 0.92498 +/- 0.00630 0.82236 0.00097 <br>
+70 
+0.92259 +/- 0.00639 0.83084 0.00103 <br>
+19 0.94185 +/- 0.00657 0.90447 0.00236 
+<br> 18 0.94393 +/- 0.00649 0.90696 0.00241 <br>
+17 0.94393 +/- 0.00649 0.90970 
+0.00265 <br>
+13 0.94903 +/- 0.00650 0.92238 0.00306 <br>
+4 0.97052 +/- 0.00640 
+0.95574 0.00358 <br>
+3 0.97227 +/- 0.00566 0.96447 0.00843 <br>
+2 0.97795 +/- 
+0.00399 0.97884 0.01386 <br>
+1 1.00000 +/- 0.00004 1.00000 0.02042 <br>
+<br>
+
+<br><br>
+<br>
+
+<p>CART Tree Sequence for 28 Level Target Variable Using TWOING</p> # of 
+Terminal<br>
+Tree Nodes Test Set<br>
+Relative Cost Resubstitution<br>
+Relative 
+Cost Complexity<br>
+Parameter <br>
+55 0.88054 +/- 0.00643 0.77145 0.00112 <br>
+
+54 0.88067 +/- 0.00648 0.772064 0.00116 <br>
+53 0.88067 +/- 0.00648 0.77384 
+0.00117 <br>
+51 0.87681 +/- 0.00657 0.77632 0.00121 <br>
+50** (optimal) 0.87623 
++/- 0.00660 0.77764 0.00128 <br>
+45 0.87697 +/- 0.00653 0.78517 0.00146 <br>
+43 
+0.87697 +/- 0.00653 0.78819 0.00147 <br>
+40 0.88095 +/- 0.00648 0.79281 0.00150 
+<br> 15 0.88822 +/- 0.00703 0.84970 0.00351 <br>
+14 0.89282 +/- 0.00698 0.85413 
+0.00428 <br>
+7 0.90537 +/- 0.00544 0.89082 0.00585 <br>
+5 0.91961 +/- 0.00513 
+0.90667 0.00765 <br>
+4 0.93286 +/- 0.00490 0.92311 0.01586 <br>
+3 0.94789 +/- 
+0.00380 0.94347 0.01964 <br>
+2 0.96803 +/- 0.00217 0.96833 0.02398 <br>
+1 
+1.00000 +/- 0.00004 1.00000 0.03055 <br>
+<br>
+
+<h3><br>
+Conclusion</h3> 
+<p>Which splitting rule you choose when growing a decision tree does matter; 
+sometimes the differences between rules will be modest and at other times 
+profound. While we have found numerous examples where judicious choice of a 
+splitting rule reduces the error rate of a classification tree by five to ten 
+percent,&nbsp;the differences go beyond accuracy. Even when the overall 
+accuracy of two trees grown by different splitting rules is identical, the 
+usefulness of the trees for revealing data structure can be quite different. 
+There will also be times when the value of a decision tree is determined by how 
+rich the best nodes are in certain values of the target variable, and the 
+overall accuracy of the tree is irrelevant. In such circumstances, the 
+difference between Gini and Twoing could easily be the difference between 
+success and failure (e.g., in the case of fraud detection).<br>
+<br>
+Given that 
+there is no one best splitting rule for all problem types or all purposes, it 
+is important that the decision-tree tool you employ offer several proven 
+splitting rules with distinct styles and operating characteristics.<br>
+<br>
+
+<br>Further Reading: <br>
+<br>
+Breiman, L., J. Friedman, R. Olshen and C. Stone.
+<em>Classification and Regression Trees</em>, Pacific Grove: Wadsworth, 1984. 
+<br><br>
+Breiman, L. <em>Some Properties of Splitting Criteria</em>, Statistics 
+Department, University of California, Berkeley. 1992.</p> <br>
+<br>
+&nbsp; <br>
+
+ Copyright &copy; 2012 Salford Systems. All Rights Reserved. 
+<ul> 
+<li>Privacy Policy</li> 
+<li>Contact</li> 
+<li>Site Map</li> 
+<li>Terms &amp; Conditions</li> </ul> <br>
+
+</body>

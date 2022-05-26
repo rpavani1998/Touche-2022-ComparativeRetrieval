@@ -1,0 +1,115 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Project 1: QuickSort</title>
+<body>
+
+<h1>Project 1: QuickSort</h1> 
+<p> The goal of this project is reinforce the work on sorting arrays by 
+implementing the quicksort algorithm and to conduct a careful emperical study 
+of the relative performace of sorting algorithms.</p> 
+<h2> 1. Introduction</h2> 
+<p>Recall the difference between insertion and selection sorts. Although they 
+share the same basic pattern (repeatedly move an element from the unsorted 
+section to the sorted section), we have</p> 
+<p>Insertion </p> 
+<ul> 
+<li>Take the next unsorted item (easy) </li> 
+<li>put it in the right place (hard) </li> </ul> 
+<p></p> 
+<p>Selection </p> 
+<ul> 
+<li>Take the smallest unsorted item (hard) </li> 
+<li>put it in the next place (easy) </li> </ul> 
+<p></p> 
+<p>Now, consider the basic pattern of merge sort:</p> 
+<ul> 
+<li>split </li> 
+<li>sort the pieces recursively </li> 
+<li>reunite </li> </ul> 
+<p>More specifically, merge sort splits the array simplistically (it's the 
+&quot;easy&quot; part). The reuniting is complicated. What if there were a 
+sorting algorithm that had the same basic pattern as merge sort, but stood in 
+analogy to merge sort as selection stands towards insertion? In other words, 
+could there be a recursive, divide-and-conquer, sorting algorithm for which the
+<i>splitting</i> is the hard part, but leaves an easy or trivial <i>reuniting
+</i> at the end?</p> 
+<p>To design such an algorithm, let's take another look at what merge sort 
+does. Since the splitting is trivial, the interesting parts are the recursive 
+sorting and the reuniting. The recursive call sorts the subarrays<i>internally
+</i>, that is, each subarray is turned into a sorted subarray. The reuniting 
+sorts the subarrays<i>with respect to each other</i>, that is, it moves 
+elements between subarrays, so the entire range is sorted.</p> 
+<p>To rephrase our earlier question, the analogue to mergesort would be an 
+algorithm that sorts the subarrays with respect to each other<i>before</i> 
+sorting each subarray. Then reuniting them is trivial. The algorithm is called 
+&quot;quicksort,&quot; and as its name suggests, it is a very good sorting 
+algorithm.</p> 
+<p>Here's a big picture view of it. Suppose we have an array, as pictured 
+below. We pick one element,<i>x</i>, and delegate it as the &quot;pivot.&quot; 
+In many formulations of array-based quicksort, the last element is used as the 
+pivot (though it doesn't need to be the last).</p> 
+<p> Then we separate the other elements based on whether they are greater than 
+or less than the pivot, placing the pivot in the middle.</p> 
+<p>In a closer look, while we do this partitioning of the array, we maintain 
+three portions of the array: the (processed) elements that are less than the 
+pivot, the (processed) elements that are greater than the pivot, and the 
+unprocessed elements. (In a way, the pivot itself constitutes a fourth 
+portion.) The indices<i>i</i> and <i>j</i> mark the boundaries between portions:
+<i>i</i> is the last position of the portion less than the pivot and <i>j</i> 
+is the first position in the unprocessed portion. Initially, the &quot;less 
+than&quot; and &quot;greater than&quot; portions are empty.</p> 
+<p>During each step in the partitioning, the element at position <i>j</i> is 
+examined. It is either brought into the &quot;greater than&quot; portion 
+(simply by incrementing<i>j</i>) or brought into the &quot;less than&quot; 
+portion (by doing a swap and incrementing both<i>i</i> and <i>j</i>).</p> 
+<p>(Think about that very carefully; it's the core and most difficult part of 
+this project.)</p> 
+<p>At the end, the unprocessed portion is empty.</p> 
+<p>All that's left is to move the pivot in between the two portions, using a 
+swap. We're then set to do the recursive calls on each portion.</p> 
+<h2>2. Setup</h2> 
+<p>Make a directory for this class (if you haven't already). Make a new 
+directory for this project. Then copy into it some starter code, which will be 
+similar to the code you started with in lab.</p> 
+<p></p> 
+<pre> cd 245 mkdir proj1 cd proj1 cp /homes/tvandrun/Public/cs245/proj1/* . 
+</pre> 
+<h2>3. Implementing quicksort</h2> 
+<p> Notice there are two functions with <code>quickSort</code> in their name. 
+The second function corresponds to the prototype for quick sort found in<code>
+sorts.h</code> and used in the driver <code>sDriver.c</code> It is finished. It 
+starts the recursive process by calling<code>quickSortR()</code>, which is the 
+one you need to finish.</p> 
+<p>Notice that <code>quickSortR()</code> takes not only an array but also a 
+starting point and a stopping point in the array. It is only sorting a given 
+range in the array. Both functions return an int to be consistent with the 
+other functions, all of which return the number of comparisons.</p> 
+<h2>4. Experiments</h2> 
+<p>As we have been talking about in class, merge sort and quick sort are in 
+different &quot;complexity classes&quot; in terms of the their worst case 
+performance. Merge sort is<i>O</i>(<i>n</i> lg <i>n</i>), whereas quicksort is 
+<i>O</i>(<i>n</i>^2). (<i>O</i>(<i>n</i> lg <i>n</i>) is faster). However, 
+these are worst cases; we might find that experimentally one of the algorithms 
+may behave better on average.</p> 
+<p>Write a program or programs to automate experiments to compare the running 
+time and<i>number of comparisons</i> for quicksort, mergesort, shell sort, and 
+one of the other sorts (selection, insertion, or one of the bubbles)</p> 
+<p>This time, instead of counting comparisons, we'll take actual time 
+measurements.<code>arrayUtil</code> has a function <code>getTimeMillis()</code>
+. It returns the number of milliseconds that have elapsed since midnight, Jan 
+1, 1970---the standard way to do time keeping on many computer platforms. By 
+calling this function before and after sorting and taking the difference, we 
+can compute how long it takes to sort.</p> 
+<p> Use several different arrays of several sizes, and compare the results for 
+the different algorithms.</p> 
+<h2>6. To turn in</h2> 
+<p>Write a few paragraphs explaining how you did your experiment and what your 
+findings are. Present your data using a table and one or more graphs.</p> 
+<p>Turn in your code, results, and write-up by copying them to a turnin 
+directory I have prepared for you. Please turn in an entire directory. For 
+example, if you make a directory called<code>proj1-turnin</code> containing all 
+the files you want to turn in, then copy this using</p> 
+<pre> cp -r proj1-turnin /cslab.all/ubuntu/cs245/turnin/(your user id) </pre> 
+<p><b>DUE:</b> Monday, Jan 30, 5:00 pm.</p> Thomas VanDrunen  Last modified: 
+Thu Jan 19 09:27:30 CST 2012 
+</body>

@@ -1,0 +1,222 @@
+in addition to the datasets from the uci repository, we tested our method on datasets in the field of bioinformatics.
+this is possible due to binary class attribute that still allows effective trees that are much smaller than the original pruned j48 trees.
+in rare cases, where binary splits are not enough, vtj48 tries to increase minimal number of objects in leaves.
+boundaries for confidence factor optimization are set at 0 and 0.5 (starting value in vtj48 and the maximal allowed setting in j48).
+the only exceptions are the dimersclustem14 and trimershydro datasets, on which the tree size increased.
+in addition, from our own and experience of our colleagues, we know that, although we live in a digital age, we still meet a lot of experts in different domains who prefer to have the final decision tree printed out on a sheet of paper.
+one can notice the extremely complex original decision tree, which is the result of the high number of classes.
+although we did not expected significant differences in classification performance, the results demonstrate a significant increase of accuracy in less complex visually tuned decision trees.
+the pseudocode infigure 1 describes the reduction of the tree size process as implemented in vtj48.
+the duration from the start of the tree building process to the point when the decision tree was displayed on a single screen, was stored for further analysis.
+top 5 rules with the highest support in all features extracted from j48 and vtj48 decision trees.doi:10.1371/journal.pone.0033812.t009 to test the effectiveness of the vtj48 method in terms of usability, a weka package was developed implementing the visually constrained tree building algorithm.
+although this paper presents the automated visual tuning on c4.5 decision trees, it would be possible to adapt the vtdt principles to any other decision tree building algorithm that requires tuning of parameters to achieve optimal results.
+huysmans et al.[27] observe that currently, most research focuses on improving the accuracy or precision of predictive models and comparatively little research has been undertaken to increase their comprehensibility to the analyst or end-user.
+to obtain simpler models where leafs contain higher number of samples, it is possible to set the minimal number of objects in a single leaf.
+figure 4 clearly shows that tree building times were shorter for vtj48 method on all datasets.
+by reducing the size and complexity of decision trees to fit the predefined screen resolution or paper size one is expecting significantly lower classification accuracy, especially in initially very large decision trees.
+following this process one can easily extract classification rules that can be readily be expressed so that humans can understand them.
+oates and jensen[16] studied the influence of database size on decision tree complexity.
+with confidence factor set to 0.5 such tree will usually grow over the predefined boundaries.
+2 shows the original tree and the visually tuned tree.
+they demonstrated that the tree size strongly depends on the training set size.
+e-mail: gregor.stiglic@uni-mb.si decision trees are one of the most popular classification techniques in data mining[1].
+comparison of decision tree dimensions on 40 uci datasets including the number of leaves.doi:10.1371/journal.pone.0033812.t003 table 4.
+in comparison to protein and uci datasets it is evident that gene expression problems do not create very large tree, therefore the reduction in size, when vtj48 is used is not that big.
+authors would like to thank geoffrey i. webb for his helpful discussion on decision trees and binary classification problems.
+the chosen dimensions can also be displayed on most computer monitors in use today.
+this is an open-access article distributed under the terms of the creative commons attribution license, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.
+to allow automated tuning in weka, a package called visually tuned j48 (vtj48, available at http://ri.fzv.uni-mb.si/vtj48/) was developed during this study.
+we used several different datasets to test this assumption.
+it aims to make the data mining process simpler for data mining project teams, especially when they have to evaluate significant number of decision trees.
+additionally, classification accuracy (acc) and area under roc curve (auc) were calculated using 20 runs of 10-fold cross-validation on all datasets to observe differences in classification performance.
+however, it is possible to change the default values for dimensions of the resulting window that represent boundaries of the vtj48 decision tree.
+table 6 shows accuracy and auc for the evaluation of classification performance on protein datasets.
+the first tree in each example is the result of j48 using default settings, and the second tree is the result of vtj48.the dataset in the first example is the letter dataset from the uci repository.
+by tuning the parameters, without interfering with the internal decision tree building process and constraining the tuning only by the dimensions of the decision tree, the bias of influencing the classification performance is avoided.
+this is especially true for most of the protein and gene expression datasets, where the performance improvements were significant.
+the second example presents two decision trees built on the protein solubility dataset with all features (figure 3).
+from the research and also from the practical usability point of view, it would be important to extend this study and consequently develop a weka package that would allow simultaneous tuning of different decision tree models (e.g. cart[4]).
+decision tree complexity has been studied in terms of reducing the complexity and maintaining or improving the accuracy at the same time.
+the results showed that users prefer decision tables, followed by decision trees to other compared knowledge representations, but authors admitted that only inexperienced users were included in the study.
+in addition, the tests were done on two types of datasets where decision trees can be applied in the field of bioinformatics - i.e., 21 protein solubility datasets and 9 gene expression analysis datasets.
+conclusionsthe empirical results demonstrate that by building  simple models constrained by predefined visual boundaries, one not only  achieves good comprehensibility, but also very good classification performance  that does not differ from usually more complex models built using default  settings of the classical decision tree algorithm.
+more precisely, it focuses on c4.5's implementation in the weka machine learning framework[29], where it is referred to as j48.
+an experiment to compare the duration of building decision trees using the j48 and vtj48 weka packages in weka explorer was set up.
+comparison of the original j48 decision tree (upper image) and visually tuned version from vtj48 (lower image) on the letter dataset.doi:10.1371/journal.pone.0033812.g001
+one could also call this type of decision tree induction “one-button decision trees” as there is no need to tune the parameters and build multiple decision trees anymore.
+this paper presents an extension to an existing machine learning environment and a study on visual tuning of decision tree classifiers.
+by lowering the threshold one is applying more pruning and consequently generates more general models.
+however, there are also studies that demonstrate the contrary - i.e., growing the trees will improve the classification performance[41].
+in this section we demonstrate two examples, each of them with two decision trees built on a single dataset.
+samples consisting of original 54,681 expression measurements from human genome u133 plus 2.0 array genechip were reduced to 10,935 (20%) gene expression measurements that represent attributes of 9 datasets.
+the empirical results demonstrate that by building simple models constrained by predefined visual boundaries, one not only achieves good comprehensibility, but also very good classification performance that does not differ from usually more complex models built using default settings of the classical decision tree algorithm.
+feature datasets used in protein solubility classification.doi:10.1371/journal.pone.0033812.t002 comprehensible classifiers can provide an important insight in gene expression analysis studies.
+as already mentioned, one should be cautious when interpreting the results above, since accuracy is not a well suited performance measure in cases of unbalanced multi-class datasets.
+as suggested in[38], the wilcoxon signed ranks test was used to assess statistical significance of difference in performance and complexity of the decision tree.
+methodsthis paper presents an extension to an existing  machine learning environment and a study on visual tuning of decision tree  classifiers.
+in comparison to classical weka decision tree visualization, we changed the shape of internal nodes to allow more space on both sides of nodes.
+performed the experiments: gs.
+to avoid bias in  classification, no classification performance measure is used during the tuning  of the model that is constrained exclusively by the dimensions of the produced  decision tree.
+when decision trees are used in knowledge discovery, one should usually include domain experts in the analysis process.
+they empirically investigated suitability of decision tables, (binary) decision trees, propositional rules, and oblique rules in environments where interpretability of models is of high importance.
+in such cases the complexity of decision trees, which is usually measured as the number of nodes or the number of rules that can be extracted from a tree, is of high importance and can influence the evaluation of the discovered knowledge by domain experts[14].
+the proposed project uses three measures to evaluate appropriateness of the decision trees: stability, simplicity and discriminatory power.
+observing the complexity of built decision trees one should also note that vtj48 starts the tuning process of confidence factor at 0.5, whereas j48 starts at 0.25 resulting in more complex vtj48 decision trees that still fit into predefined visual boundaries.
+notes and corrections can include the following markup tags: emphasis: ''italic'' '''bold ''' '''''bold italic'''''
+basic size related measures like width and height of decision tree in pixels, number of leaves and number of nodes were calculated for each decision tree on each dataset.
+funding: the authors have no funding or support to report.
+fourteen master students, all enrolled in a bioinformatics program, were recruited to take part in the experiment.
+three different datasets from the uci repository (balance-scale, credit-g, and splice) were chosen based on their complexity where the need for tuning the tree models is more likely to be necessary.
+since the visually tuned tree does not cover all the possible classes, it cannot achieve competitive classification accuracy.
+to sum it up, it all depends on how a simple model is defined.
+altogether, in the uci datasets evaluation, there are 30 datasets where vtj48 optimized a decision tree by reducing the number of leaves to fit into predefined dimensions.
+tuning of confidence factor is done once again.
+since all these datasets present a binary classification problem, accuracy and acc are more appropriate measurements when compared to the uci datasets.
+as expected, in most cases, the original j48 decision tree vastly exceeded the predefined display resolution of 1280×800 pixels (table 3 and table 4 ).
+however, decision trees of this size and high number of classes are inappropriate for extraction of rules and presentation to end-user.
+some of the areas where visual tuning could also be applied are comprehensible ensembles of classifiers or variations of decision tree models (e.g, alternating decision trees[42]).
+research article comprehensive decision tree models in bioinformatics purposeclassification is an important and widely used machine learning  technique in bioinformatics.
+bohanec and bratko[15] studied the difference between pruning a decision tree for better approximation of the target concept and pruning the decision tree to make it practical for communication and understanding by the user.
+two types of pruning are available - i.e., subtree replacement and subtree raising.
+the aspect ratio of this resolution is 16:10 (1.60) and comes very close to aspect ratio of a4 paper dimensions (approx 1.41).
+initially, the tests were performed on 40 datasets from the well-known machine learning repository.
+other: ^^superscript^^ ~~subscript~~ ratings can include the following markup tags: emphasis: ''italic'' '''bold ''' '''''bold italic'''''
+doi:10.1371/journal.pone.0033812 editor: ahmed moustafa, american university in cairo, egypt received: october 31, 2011; accepted: february 17, 2012;published: march 30, 2012 copyright: © 2012 stiglic et al.
+comparison of durations for different datasets.doi:10.1371/journal.pone.0033812.g003
+one of the main reasons for this is decision trees' ability to represent the results in a simple decision tree format which is easy to interpret for experts, as they can see the structure of decisions in the classifying process.
+simplicity, or equivalently complexity is further divided in the number of rules that can be extracted from the tree and the average length of the extracted rules.
+comparison of classification performance (20 runs of 10-fold cross-validation) on the gemler datasets.doi:10.1371/journal.pone.0033812.t008 statistical significance testing was done on all 20 cross-validation run results for 30 bioinformatics datasets together using wilcoxon signed-rank test.
+therefore we did another test where only 16 binary class datasets were used and found out that there are no statistically significant differences present (p = 0.320).table 3 demonstrates a big difference in decision tree size (number of leaves) comparing j48 to vtj48 decision trees.
+however, as shown by the the user study, it still saves a lot of time in comparison to manual tuning and fitting of the decision tree to desired dimensions.
+in addition to their simplicity, building decision trees is often a less time consuming classification process compared to other classification techniques[2], and decision tree rules can be directly used as statements in a database access language (e.g. sql).
+it is also important to take care of the decision trees that would be too pruned when using the default parameters of decision tree induction method.
+from the knowledge discovery perspective, the ability to track and evaluate every step in the decision-making process is one of the most important factors for trusting the decisions gained from data-mining methods.
+it can be observed that j48 produces more complex rules with a higher number of conditions which use attributes from more different alphabets.
+unfortunately, the proposed decision tree tuning suffers from the high time complexity in comparison to classical decision tree that is built only once.
+forty uci repository [30] datasets retrieved from the weka website were used to evaluate the classification performance of the vtdts.
+it can be noticed that the size was reduced on the majority of the feature datasets.
+in rare cases the default settings of vtj48 algorithm will produce an extremely small tree consisting of just one or even without splitting nodes.
+although current state-of-the art classifiers (e.g. support vector machines[11]) or ensembles of classifiers (e.g. random forest [12] or rotation forest[13]) significantly outperform classical decision tree classification models in terms of classification accuracy or other classification performance metrics, they are not suitable for knowledge discovery process.
+this time a linear hill-climbing approach is used to increase the minimal number of objects in leaves, because there is no need to tune confidence factor in an unpruned decision tree.
+in contrast to classical machine learning benchmarking datasets, we observe  higher accuracy gains in bioinformatics datasets.
+in this case the accuracy and auc were both improved significantly, when the size of the decision tree model was reduced.
+gemler datasets used in this study were created by selecting one out of 9 groups of samples in so called one-versus-all binary classification setting.
+in addition, several commercial products use decision trees for knowledge discovery, predictive analysis and other purposes.
+[23], concentric circles [24], [25] , and many others have been proposed in the past.
+this method helps data analysts in building effective decision tree representations with spending less time on setting and tuning the parameters of decision tree induction algorithm when compared to classical methods.
+several attempts to classify and predict protein solubility have been made[33]–[36].
+the evaluation was done on 30 datasets from the following two areas in bioinformatics: protein solubility classification and gene expression analysis.
+the results are similar for auc where j48 wins on 5 datasets, while vtj48 wins on 16 datasets.
+therefore, many approaches that are based on removing training instances prior to tree construction[17], [18], [19] could result in smaller trees just because of the training set reduction.
+the default j48 decision tree in weka uses pruning based on subtree raising, confidence factor of 0.25, minimal number of objects is set to 2, and nodes can have multiple splits.
+comparison of decision tree dimensions on the gemler datasets including the number of leaves.doi:10.1371/journal.pone.0033812.t007 table 8 shows accuracy and auc for the evaluation of classification performance for the gemler datasets and also demonstrates that the performance actually increases if we use simpler (i.e., smaller) decision tree models.
+although we did not expect such significant differences between results in favor of vtj48, it is obvious that vtj48 is well suited for datasets with binary class attributes and a high number of possibly redundant attributes.
+this setting forces the splitting of nodes to only two branches instead of multiple splits.
+subtree raising uses a technique where a node may be moved upwards towards the root of the tree, replacing other nodes along the way during a process of pruning.
+therefore, in most cases the final decision trees will be presented to domain experts for evaluation of extracted knowledge – i.e., rules that can be derived from a decision tree.
+due to their popularity and a need to build simple decision trees with as little effort as possible, this paper proposes a novel method called visual tuning of decision trees (vtdt).
+unsupervised highest variance filter was chosen to avoid the so called “selection bias” when reducing the number of attributes by eliminating the measurements with extremely low variance.
+in case of protein solubility datasets, there were 20 datasets where the complexity of the tree was reduced and only one case where it increased.
+in some extreme cases the width of the decision tree exceeded the predefined dimension by more than 10-fold (letter, audiology, soybean).
+moreover, when auc is observed, visually tuned models, that are usually also much simpler than large default models, performed better on majority of datasets.
+comparison of classification performance (20 runs of 10-fold cross-validation) on 40 uci datasets.doi:10.1371/journal.pone.0033812.t005 table 4 shows the average decision tree dimensions for the protein datasets including the average number of leaves.
+to evaluate the proposed method we compared the classification performance and size of the classical c4.5 trees (j48) with the visually tuned c4.5 trees (vtj48).
+to avoid bias in classification, no classification performance measure is used during the tuning of the model that is constrained exclusively by the dimensions of the produced decision tree.
+researchers and other end-users of machine learning software often prefer to work with comprehensible models where knowledge extraction and explanation of reasoning behind the classification model are possible.
+decision trees can be built with several different approaches where the most popular are c4.5[3] and cart
+their study focused on developing algorithms for obtaining the smallest pruned decision trees that represent concepts within some chosen accuracy.
+the result of the vtdt method is a decision tree that can be printed out on a single page or displayed on a computer screen without the need for scrolling or zooming.
+each of the tests was assessed at a significance level of 95%.
+in the case of vtdts, we should probably state that if the model is simple enough (i.e., fits into our predefined visual boundaries), it will produce good or even better results than most of the more complex models.
+it is evident that low error rates on the training set do not guarantee good classification performance on the test set.
+based on these results, one could conclude that simpler models usually produce at least comparable results if not better.
+in addition, our study  demonstrates the suitability of visually tuned decision trees for datasets with  binary class attributes and a high number of possibly redundant attributes that  are very common in bioinformatics.
+the proposed method in this paper presents an automated tuning process for the widely used c4.5 decision tree, which was developed by quinlan[3].
+in the case of vtj48, this simply meant setting the desired resolution parameters.
+tuning of parameters in vtj48 is done using adapted binary search where confidence factor of pruning is optimized until highest acceptable value of this parameter is found.
+the results of our study confirmed there is no statistically significant difference in predictive performance between the decision trees built using default values and the ones that were built using the proposed process of visual tuning.
+increase of the tree size occurred in cases when there were only one or two leaves produced using default settings of j48, pruning was automatically turned off in vtj48 resulting in more complex decision trees.
+however, it has to be noted that a larger sample of datasets would be needed to draw more reliable conclusions.
+researchers and other end-users of machine  learning software often prefer to work with comprehensible models where  knowledge extraction and explanation of reasoning behind the classification  model are possible.
+although we did not expected significant  differences in classification performance, the results demonstrate a  significant increase of accuracy in less complex visually tuned decision trees.
+after a brief introduction to the vtj48 weka package, the participants were given the datasets and were asked to build a comprehensible decision tree from each dataset using both, j48 and vtj48 methods.
+examples of such techniques are decision trees that possess an important advantage in comparison with competitive classification methods - i.e., the symbolic representation of the extracted knowledge.
+comparison of original j48 decision tree and visually tuned version from vtj48 on all features dataset.doi:10.1371/journal.pone.0033812.g002
+resultsthe proposed visual tuning of decision trees was evaluated  on 40 datasets containing classical machine learning problems and 31 datasets  from the field of bioinformatics.
+again, the wilcoxon signed ranks test was used to assess statistical significance of difference in performance and complexity of the decision tree.
+this has also been shown in many other studies related to the occam's razor theory [39], [40].
+therefore, in cases of decision trees with only one or two leaves, an approach using unpruned decision tree is used.
+basic information including the information on attributes that can influence the size of a decision tree for all datasets is presented intable 1.
+comparison of classification performance (20 runs of 10-fold cross-validation) on the protein datasets.doi:10.1371/journal.pone.0033812.t006 table 7 shows the average decision tree dimensions for the 9 gemler datasets including the average number of leaves.
+altogether 1545 samples are divided in the following groups by tumor type: breast (344 samples), colon (286), kidney (260), ovary (198), lung (126), uterus (124), omentum (77), prostate (69) and endometrium (61).
+in general, subtree raising is computationally more complex than subtree replacement where the nodes in a decision tree can be replaced by leafs.
+default values for maximal dimensions of the decision tree are set to 1280×800 pixels corresponding to the widescreen extended graphics array (wxga) video standard.
+different visual representations of decision trees like the classical node-link diagrams[20],
+another setting influencing the pruning process is confidence factor that represents a threshold of allowed inherent error in data while pruning the decision tree.
+the class value assigned will be that labeling the leaf.
+all parameters, mentioned in the previous paragraph, are automatically tuned in vtj48 to allow the so called “one-button data mining”.
+conceived and designed the experiments: gs sk ip pk.
+statistical significance testing shows that j48 significantly outperforms vtj48 in accuracy (p = 0.022), while there is no significant difference in results of auc (p = 0.766).
+in this paper we evaluated the visual tuning strategy only on c4.5 decision trees.
+the final setting that can be used to tune the visual outlook of the tree is called binary splits selection.
+this setting can also be used in tuning to achieve simpler and smaller decision trees.
+the database contains 1,625 proteins, out of which 782 are insoluble and 843 are soluble proteins.
+different measures were observed for j48 decision tree using default settings and vtj48 decision tree on all datasets.
+additionally, the participants were instructed to optimize each decision tree to fit to a single computer screen to allow optimal comprehensibility.
+the motivation for this research comes from the need to build  effective and easily interpretable decision tree models by so called one-button  data mining approach where no parameter tuning is needed.
+more extensive search could have been chosen, but in such case one should expect a significant increase in the time complexity of the tuning process.
+pseudocode of decision tree reduction in visually tuned j48.doi:10.1371/journal.pone.0033812.g004
+these models combine boosted decision stumps in a structure where visual constraints could be beneficial for the end-user in different areas of bioinformatics.
+the motivation for this research comes from the need to build effective and easily interpretable decision tree models by so called one-button data mining approach where no parameter tuning is needed.
+in cases where initial confidence factor tuning cannot build an acceptable decision tree, binary splits are turned on.
+a major consideration in evaluation of decision trees is also how efficiently they use screen space to communicate the tree information[26].
+this dataset contains 26 class values which represent 26 capital letters in the english alphabet.
+the basic idea of the decision tree format is to construct a tree whose leaves are labeled with a particular value for the class attribute and whose inner nodes represent descriptive attributes.
+a multi-criteria approach to evaluation of decision trees that also includes size of the built decision trees was proposed by osei-bryson[28].
+additionally, a user study  was carried out to confirm the assumption that the tree tuning times are  significantly lower for the proposed method in comparison to manual tuning of  the decision tree.
+this study focused on evaluation of decision tree performance when useful and comprehensible decision trees are needed.
+through application of decision trees to different fields of research and their use in open source and commercial software for machine learning and data mining, it has been demonstrated that end-users still prefer node-link diagrams although their space covering is not optimal.
+decision trees, along with rule-based classifiers, represent a group of classifiers that perform classification by a sequence of simple, easy-to-understand tests whose semantics are intuitively clear to domain experts[10].
+from the analyst's perspective it is very important that the produced representation of the decision tree allows effective communication with end-users (i.e. customers) or domain experts in cases of decision tree applications in research.
+other: ^^superscript^^ ~~subscript~~ all site content, except where otherwise noted, is licensed under a creative commons attribution license.
+this parameter ( m) is increased from 2 until m<n in steps of m2, wheren is number of all samples in the training set.
+in this study we used 9 gene expression machine learning repository (gemler) datasets[37].
+when observing the accuracy win/draw/lose record, one can notice that j48 wins on 5 datasets, while vtj48 managed to outperform j48 on 15 datasets.
+the numbers at the end of mono-, di- and tri-mer attribute names (e.g. the number 34 in monomersclustem17_34) distinguish attributes inside different alphabets.
+in the case of j48 classifiers, this meant tuning the binary splits, minimal number of objects, and pruning parameters.
+given an inner node n, the children of n correspond to different possible values of the associated descriptive attribute.
+citation: stiglic g, kocbek s, pernek i, kokol p (2012) comprehensive decision tree models in bioinformatics.
+basic information on 40 datasets from uci repository used in this study including information about number of instances, attributes, classes, length of longest attribute name (lan) and length of the longest nominal attribute value (lav).doi:10.1371/journal.pone.0033812.t001
+we calculated 21 feature datasets for each of these proteins as shown intable 2.
+analyzed the data: gs sk ip.
+additionally, a user study was carried out to confirm the assumption that the tree tuning times are significantly lower for the proposed method in comparison to manual tuning of the decision tree.
+due to their popularity, decision trees have been applied to different research fields including bioinformatics[5], [6] , medicine[7] and image classification [8].
+it is important to note that vtdt approach only helps the end-user in tuning the decision tree building parameters and does not propose a novel decision tree building algorithm.
+comparing accuracy using win/draw/lose record one can observe j48 wins on 21 datasets, while vtj48 managed to outperform j48 on 16 datasets.
+comparison of decision tree dimensions on the protein feature datasets including the number of leaves.doi:10.1371/journal.pone.0033812.t004 accuracy and auc (table 5) were used for evaluation of classification performance, although due to the high number of multiclass datasets, it is debatable whether accuracy is the right measure for classification performance.
+this step usually significantly reduces horizontal dimensions of the tuned decision tree.
+the character images were based on 20 different fonts and each letter within these 20 fonts was randomly distorted to produce 20.000 instances with 16 attributes.
+there are multiple settings that can influence the size of the generated decision tree.
+we can once again conclude that in most cases, at least in protein solubility domain, more complex trees result in overfitting to training samples.
+in 8 cases vtj48 produced decision trees with more leaves than the original j48 method.
+these numeric features have shown to be influential in protein solubility prediction in previous works, where: table 2.
+in order to test the statistical significance of the obtained results, the wilcoxon signed-rank test was chosen to compare the distributions of tree building times and accuracies for different tree building methods.
+although it would be possible to use the original weka source code to display decision trees, some adaptations to original decision tree visualization methods had to be done to allow better covering of space for nodes and leaves.
+in contrast to classical machine learning benchmarking datasets, we observe higher accuracy gains in bioinformatics datasets.
+to assess our method, we used the esol database (available athttp://tp-esol.genes.nig.ac.jp/) which includes information about protein solubility of the entire ensemble of e.coli proteins.
+for instance, knowledgeseeker[9] offers business intelligence software for customer analytics and marketing analytics.
+more precisely, strict boundaries for width and height of built decision trees were set to produce more comprehensible trees.
+similar changes in tree complexity were observed in gene expression problems, where complexity increased only in 2 out of 10 datasets.
+in addition, to demonstrate the most significant rules from both decision trees infigure 3, we extracted top 5 rules according to their support in training set (table 9).
+competing interests: the authors have declared that no competing interests exist.
+protein solubility is an important protein property since low protein solubility can lead to several diseases[31] or affect isolation of proteins from complex mixtures[32].
+tree building times were not significantly different for the splice dataset (p = 0.396), however, the mean tree building time was still 33.14 seconds shorter for the vtj48 method.
+additionally, we reduced the height of the trees with reduction of the vertical distance between nodes by 50%.
+the medians of tree building times for the j48 and vtj48 methods were significantly different for two datasets (balance-scale: p = 0.002, credit-g: p = 0.020).
+in addition, our study demonstrates the suitability of visually tuned decision trees for datasets with binary class attributes and a high number of possibly redundant attributes that are very common in bioinformatics.
+in case of accuracy (p = 0.002) and auc (p = 0.001) the vtj48 trees significantly outperformed j48 trees.
+on the other hand, top 5 rules from vtj48 tree cover much more samples (70.6%) than top 5 rules derived from j48 (36.6%).
+open access research article jump to gregor stiglic1,2*, simon kocbek1, igor pernek1, peter kokol1,2 1 faculty of health sciences, university of maribor, maribor, slovenia,2 faculty of electrical engineering and computer science, university of maribor, maribor, slovenia classification is an important and widely used machine learning technique in bioinformatics.
+wrote the paper: gs sk ip pk.
+the proposed visual tuning of decision trees was evaluated on 40 datasets containing classical machine learning problems and 31 datasets from the field of bioinformatics.
+once a decision tree is built, determining the class value for a new instance is achieved by following a path from the root to a leaf according to the values of the descriptive attributes of the instance.

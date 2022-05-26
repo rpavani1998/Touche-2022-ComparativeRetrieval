@@ -1,0 +1,363 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Linux, OpenBSD, Windows Server Comparison: Linux Security</title>
+<body>
+&nbsp; <b>GeodSoft</b> <br>
+<br>
+<br>
+<br>
+
+<h1>Linux, OpenBSD, Windows Server Comparison: Linux Security</h1> 
+<ul> 
+<li>Firewall in Red Hat 7.1 Install</li> 
+<ul> 
+<li>Firewall Problems</li> 
+<li>OpenBSD Firewalls</li> 
+<li>Back to Linux Firewall</li> </ul> 
+<li>Default Install Conclusions</li> </ul> 
+<h2>Linux: A Security Middle Ground</h2> 
+<p> As OpenBSD is widely acknowledged as very secure and Windows NT and 2000 
+come with minimal security following a default install, it's not surprising 
+that Linux falls somewhere between. As Linux comes in a variety of forms called 
+distributions, there is much variability as to just how secure a default Linux 
+install is. At one end are products like Corel Linux that effectively turn off 
+security. It sets up both root and an additional user with no passwords; there 
+is no option to enter passwords and no instructions how to enter them 
+afterwards. There is no shadow password file. It also sets up no networking, so 
+the machine is accessible only locally following the install. Still it's a 
+horrible example for users who will often be new to the UNIX world to suggest 
+users and root don't need passwords. At the other end are Linux versions such 
+as Trustix and EnGarde that are pre-configured to be secure and go further than 
+OpenBSD in disabling and or not installing services.</p>
+<p> By far the most widely distributed version of Linux today is Red Hat. The 
+current version of Red Hat is 7.1. I first installed 6.1. I thought it was to 
+be an experimental machine and loaded it with packages from both the 
+workstation and server install. When the system came up, a number of services 
+were running including telnet and FTP. There was little security provided by 
+the install except the root and user passwords that were entered as part of the 
+install. I never tried, so I don't know if the system would have accepted blank 
+passwords.</p>
+<p> File and directory permissions were typical of contemporary UNIX systems, 
+reasonable but not as tight as they could be. Like most UNIX systems, including 
+even OpenBSD to a limited extent, system files are generally world readable. 
+While some need to be for the correct operation of the system, many do not. 
+Having these world readable gives an intruder little advantage in either 
+gaining access to the system or elevating access once they have limited (non 
+root user) access. Having these files world readable gives a non privileged 
+user the opportunity to look for potential weakness and to learn information 
+useful in covering their tracks in the event they do elevate access. Non 
+privileged user explorations are likely to go unnoticed on a busy system. If 
+these files were only readable by root, all the exploration would need to be 
+done after achieving root access and as root, increasing the chances of 
+detection.</p>
+<p> Still, if sound passwords are used for root and any users who can su or 
+sudo to root, and default file and directory permissions are not loosened, it 
+would be fair to describe a default Linux (most distributions) and most default 
+UNIX installs as partly or moderately secure whereas default Windows NT and 
+2000 server installs are unsecured.</p>
+<p> One additional step, turning off all unused or unneeded services will 
+significantly increase Linux security. This is simple, as a &quot;netstat 
+-an&quot; or port scan from another nearby system will quickly reveal all open 
+ports. UNIX services tend to be very easy to disable as there is typically one 
+executable file per service that normally only uses one port to listen on.</p>
+<p> In contrast, Windows services such as NetBIOS are more like a collection 
+of related services. Parts of a service may be implemented in multiple 
+executable files and a single file may contain parts of more than one service. 
+Different NetBIOS related functions use ports from 135 to 139 and both TCP and 
+UDP. On any UNIX system it's simple to disable NFS file sharing without 
+impacting any other functions. On a Windows NT and presumably 2000 Server, 
+though all disk shares on a system may be disabled, there is no way to disable 
+disk sharing as a service without also disabling printer sharing and several 
+other related NetBIOS services. It's this kind of confused design, akin to the 
+registry and directory design, that makes it very difficult to make a Windows 
+server system highly secure to perform a limited set of functions, without 
+risking turning off services required by necessary functions.</p> 
+<h3>Firewall in Red Hat 7.1 Install</h3> 
+<p> Red Hat 6.2 was similar to 6.1. I never tried 7.0 but significant 
+improvements were included in 7.1. The core of the install has much in common 
+with earlier versions. If you don't select a server install, typical server 
+daemons such as httpd and ftpd are not running following the install. The NFS 
+related services are set up by default. The most important change is the 
+inclusion of basic firewall configuration during the install.</p>
+<p> I changed the firewall settings from the default &quot;medium&quot; level 
+to &quot;high&quot; ignoring the &quot;low&quot; option and enable incoming SSH 
+connections. The result was a system highly resistant to most network based 
+attacks, at the end of the install. I ran an nmap scan from another machine on 
+the same network segment. The new Red Hat system would respond to pings, so 
+nmap could determine there was a system there. Otherwise it could learn nothing 
+from the system. All ports were blocked. It could not determine the operating 
+system with the OS finger printing feature.</p>
+<p> There is nothing comparable in Windows NT or 2000 without obtaining a 
+third party personal firewall such as Zone Alarm or Norton's firewall product. 
+XP is to be released with a basic stateful firewall. As configured the Red Hat 
+firewall is strict about inbound traffic and permissive about outbound traffic. 
+It's my understanding the XP firewall will be similar but lack the capabilities 
+included with the Linux firewalls that allow flexible control of outbound 
+traffic, if you understand firewalls.</p>
+<p> Underneath, none of the security basics were changed. For example Sendmail 
+and NFS related services were started. The firewall is like wrapping a single 
+layer shell around the system. It's very tough but if something does break it 
+or somehow get through there are only standard UNIX security protections in 
+place.</p>
+<p> The firewall is able to provide this degree of protection by using what's 
+called stateful inspection. Traffic that is started from the inside is allowed 
+out and most replies to inside traffic are allowed to return. No traffic 
+started from the outside is allowed in. With this approach there is little need 
+to deal with specific ports or services. It's the closest thing there is to an 
+instant security policy that is both functional and reasonably secure.</p>
+<p> The firewall included with Red Hat 7.1 is likely to break some protocols 
+that include separate communication channels started by an outside server. It 
+did prevent an ntpd server using the UDP protocol added after the install, from 
+working, until the firewall rule set was manually adjusted.</p>
+<p> If you bring in a virus or Trojan horse via e-mail or a download, there is 
+nothing to stop outbound communications initiated by such programs. Since all 
+important virus and trojans for the past several years have been directly 
+related to Microsoft products, this is unlikely to be practical issue on Linux 
+systems. Further, if standard UNIX practices are followed and users normally 
+login as non privileged users and not as root, hostile code will be severely 
+hampered in it's ability to do damage.</p>
+<p> I understand the virus and Trojan horse issues will apply to the firewall 
+included with XP but that it lacks the ability to be configured to control such 
+programs. I've read that Microsoft is not enabling as many services in XP but 
+otherwise security will be even worse, at least on the consumer version of XP. 
+All users will by default, operate as administrators. XP will rely almost 
+entirely on the firewall for security.</p>
+<p> As a practical matter, using the stricter firewall rules provided in the 
+Red Hat 7.1 install, creates a system that in some important ways is more 
+secure than any but a handful of systems available. In some ways, it's arguably 
+more secure than the default OpenBSD install, as significantly fewer services 
+are visible from the outside.</p> 
+<h4>Firewall Problems</h4> 
+<p> There are however some problems with the firewall install. First, the 
+older IPchains is installed rather than the newer IP Table supported by the 
+Linux 2.4 kernel. The Red Hat site says this is for compatibility and links to 
+a number of sites related to both firewalls. I saw no direct explanation how to 
+switch from one to the other.</p>
+<p> If you were doing a 7.1 upgrade over a previous system that did not 
+include IP Table, then keeping an IPchains configuration would make sense. On a 
+new 7.1 install, installing already obsolete software which must be manually 
+upgraded before the next upgrade, makes no sense. This is the stupidest thing 
+I've seen in the current Red Hat install and the explanation on the web site 
+strikes me as dishonest.</p>
+<p> Further, the KDE System, Firewall control panel does not lead to the 
+existing firewall rules. The Red Hat site, in its 7.1 &quot;Gotchas and 
+Workarounds&quot; section, under Firewall Configuration tells what program root 
+must run to configure the installed ipchains firewall. This only works when 
+logged in as root and not via su. For anyone used to doing custom firewall 
+configurations, the Firewall Setup program choices are exceptionally limited. 
+Fortunately, they allow enough, that by manually examining the changes made, a 
+knowledgeable user can do something useful by ignoring the warning not to 
+manually edit the configuration file.</p>
+<p> For example the Setup tool only provides the ability to allow or disallow 
+a port (or service) and protocol. No source or destination addresses can be 
+controlled and all are allowed. After looking at the configuration file, it's 
+pretty obvious where the addresses go as the &quot;-s 0/0 -d 0/0&quot; are 
+included in a new rule. Looking at existing rules, it's clear &quot;- s&quot; 
+is source and &quot;-d&quot; is destination and that dotted decimal addresses 
+with slash notation netmasks are expected. An optional port number immediately 
+follows the address, separated by a space. Ipchains requires an initialization 
+script to process the configuration file.</p>
+<p> Actually ipchains is a utility that's an interface to the firewall built 
+into the kernel. The script creates some standard sequences of ipchains actions 
+(start, restart, stop, etc.). The configuration file is just a list of ipchains 
+parameters applied sequentially, so for example after flushing existing rules, 
+the &quot;configuration&quot; file is read and each new rule appended.</p>
+<p> Conceptually IP Filter, provided with OpenBSD, is simpler in that an 
+entire rule set is defined in a text file according to a standard format, and 
+when told, the firewall process reads the file directly. The ipf interface 
+command includes a flush option, but having the rules in a file avoids the need 
+to write scripts that contain logic to verify the presence of configuration 
+files and create loops to process these files.</p>
+<p> I hope the Linux KDE system control panel is tied to the new IP Tables 
+firewall that is not enabled during the install, and that there is better user 
+control once IP Tables is enabled.</p> 
+<h4>OpenBSD Firewalls</h4> 
+<p> Like Linux firewalls, OpenBSD firewalls are not for those dependent on GUI 
+interfaces either. It's not enabled by default and when it is turned on the 
+provided default rule set allows all traffic. A number of sample rule sets are 
+also provided. The rules are slightly more straightforward and logical than 
+ipchains and no additional script is required to activate the rules once 
+defined. A utility, properly described by a man page, and with reasonably 
+simple flags, applies the IP Filter rules once they are defined.</p>
+<p> Setting up an OpenBSD firewall will require reading some documentation. 
+There are several key documents, linked to from mypage on IP Filter, that 
+describe how to set up a firewall on OpenBSD. There are about 50 pages of 
+essential reading. (As the Packet Filter firewall scheduled to replace IP 
+Filter is supposed to be functionally identical, the same documents should 
+remain useful.) My first firewall attempts were successful and with the reading 
+that I had to do to make the firewall work, I'd gained a good start on 
+understanding both the theory and practice of firewalls. My TCP/IP 
+understanding also increased significantly. A firewall appliance may be easier 
+to set up and a very high end commercial firewall may have a larger integrated 
+feature set but you'll have to accept that the firewall does what you think it 
+does largely on faith, because much like Windows, these products are designed 
+to hide the messy, i.e., technical, details of what they do an how they work 
+from their users.</p> 
+<h4>Back to Linux Firewall</h4> 
+<p> Except for the latest version of Red Hat Linux wrapping a security shell 
+around the product, Linux is by default less secure than OpenBSD for a number 
+of reasons. For starters, the toughness of the shell depends on user choices 
+and provides limited flexibility. For example I installed NTP 4, (ntpd), on the 
+Linux workstation but it would not work. It ran but never synchronized the time 
+or set the drift. While looking at the logs for one of the other machines, I 
+saw repeated connection refused messages in reference to the workstation. Ntpd 
+was running but communications from the other servers were being blocked.</p>
+<p> I was wrong about my initial reading of the default firewall rules. They 
+were not entirely stateful or the ntpd server answers to the workstation 
+queries would have been allowed back in. I had to explicitly allow inbound UDP 
+traffic on port 123 for the workstation. Though I'd never worked with ipchains 
+before, it took less than an hour to figure out but that's still a lot of time 
+for the size of the task. It was more than three times, perhaps five times as 
+long as it took to install NTP in the first place, and longer if you count the 
+time spent trying to figure out why ntpd was not working on the Linux 
+workstation in the first place.</p>
+<p> Another reason Linux is less secure than OpenBSD is so much more is 
+included with it. The OpenBSD install for Intel architecture fits on one CD 
+with room for the source tree and about three other platforms on the same CD. 
+The core of Red Hat Linux install now takes two CDs. The top of the line 
+product includes five additional CDs. A basic OpenBSD install is less than 
+200MB and a stripped install can be a little over 100. A basic Red Hat Linux 
+install is about 500MB and can easily go over 1GB if many optional components 
+are added.</p> 
+<h3>Default Install Conclusions</h3> 
+<p> The default OpenBSD install is much more secure but also much less 
+functional than a Windows NT or 2000 default install and most Linux installs 
+occupy a middle ground in both regards. With the addition of a Firewall 
+included as part of the install, if the users change the default options and 
+select the maximum firewall security choices on the Red Hat 7.1, a new Linux 
+system can at the conclusion of the install, be in some ways more secure than a 
+newly installed OpenBSD.</p>
+<p> After any firewall setting issues are addressed, OpenBSD is a more secure 
+system than standard distributions of Linux. Both OpenBSD and Linux, with 
+relatively standard and similar steps, can be made significantly more secure. 
+It is not difficult to turn either into a secure, very narrowly purposed 
+machine that cannot easily be used for other functions. It takes a moderate 
+amount of work to improve the default Windows security settings to approximate 
+Linux default security characteristics and much more to try to achieve security 
+comparable to OpenBSD.</p>
+<p> The biggest difference between OpenBSD and Linux are the number of bugs in 
+the underlying systems. As Linux has so many more bugs, new security exploits 
+that take advantage of those bugs will continue to be found at significantly 
+higher rates than for OpenBSD. As Windows appears to even more bugs than Linux, 
+it's unlikely to ever approach OpenBSD security characteristics.</p>
+<p> Though theoretically, Windows servers have significantly longer security 
+related feature lists than any standard UNIX system, implementation issues 
+prevent the effective use of these features. An excellent file and directory 
+security system is defeated by the option to use an alternate non secure FAT 
+file system, default settings that effectively turn off security when the 
+secure NTFS system is selected and a lack of tools to efficiently control file 
+and directory permissions. Other implementation issues make it effectively 
+impossible to disable unneeded functions without also disabling necessary ones. 
+Default security for Windows NT and 2000 are a distant third to both OpenBSD 
+and Linux.</p> <b> &lt;P  Break-In Numbers &lt;<br>
+ ^ Contents ^<br>
+ &gt;  
+Intrinsic Comparison N&gt; </b> 
+<p> Top of Page - Site Map</p> 
+<p> Copyright &copy; 2000 - 2006 by George Shaffer. This material may be 
+distributed only subject to theterms and conditions set forth on 
+http://GeodSoft.com/terms.htm. These terms are subject to change. Distribution 
+is subject to the then current terms, or at the choice of the distributor, 
+those defined in a verifiably dated printout or electronic copy of 
+http://GeodSoft.com/terms.htm at the time of the distribution. Distribution of 
+substantively modified versions of GeodSoft content is prohibited without the 
+explicit permission of George Shaffer. Distribution of the work or derivatives 
+of the work, in whole or in part, for commercial purposes is prohibited unless 
+prior permission is obtained from George Shaffer. Distribution in accordance 
+with these terms, for private, unrestricted and uncompensated public access, 
+non profit, or internal company use is allowed.<br>
+<br>
+</p> <br>
+<br>
+ &nbsp; 
+Home &gt;<br>
+Reviews &amp; Commentary &gt;<br>
+OS Server Comparison &gt;<br>
+
+linux.htm <br>
+<br>
+<b>&lt;P</b>  Break-In Numbers <br>
+<b>N&gt;</b>  Intrinsic 
+Comparison <br>
+<br>
+<b>What' s New</b><br>
+<b>How-To</b><br>
+<b>Opinion</b><br>
+<b>Book</b><br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br> Email address <br>
+<br>
+ Site map: <br>
+Home<br>
+What's New<br>
+About 
+GeodSoft<br>
+ - Large Web Project<br>
+ - Designing GeodSoft<br>
+ - Building 
+GeodSoft<br>
+How-To<br>
+ - Style Sheets (CSS)<br>
+ - Time Synchronization<br>
+ -
+Secure Shell (SSH)<br>
+ - 10 Security Steps<br>
+ - Good Passwords<br>
+ - Dual 
+Boot Open Source<br>
+ - Harden OpenBSD<br>
+ - Intrusion Detection<br>
+Reviews 
+&amp; Commentary<br>
+ - Bogus PHP Bug<br>
+ - Product Packages<br>
+ - Software 
+Licenses<br>
+ - Corel Linux<br>
+ - Open Source Limits<br>
+ - Server Comparison
+<br> - - Introduction<br>
+ - - Application Contents<br>
+ - - Reliability 
+Contents<br>
+ - - Security Contents<br>
+ - - - Security Introduction<br>
+ - - - 
+Windows Security<br>
+ - - - OpenBSD Security<br>
+ - - - Break In Numbers<br>
+ - 
+- -Linux Security<br>
+ - - - Intrinsic Comparison<br>
+ - - - Development Model
+<br> - - - Security Summary<br>
+ - - Scalability<br>
+ - - Usability Contents<br>
+ - -Staff Issues<br>
+ - - Total Cost Ownership<br>
+ - - Recommendations<br>
+
+Book: Assn. Webs<br>
+ - Introduction<br>
+ - Network &amp; Web Basics<br>
+ - 
+Assn. Computer Security<br>
+ - Publishing Myth<br>
+Terms of Use<br>
+Privacy 
+Policy<br>
+<br>
+Password Generator<br>
+Password Evaluator<br>
+<br>
+<br>
+<br>
+
+<br> <br>
+<br>
+ Copyright  &copy; 2000-2006, George Shaffer.  Terms and 
+Conditions of Use. <br>
+<br>
+
+</body>

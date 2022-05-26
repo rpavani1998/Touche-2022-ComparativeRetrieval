@@ -1,0 +1,523 @@
+for some reason there seems to be much less difficulty with having split() as a string method, since in that case it is easy to see that "1, 2, 4, 8, 16".split(", ") is an instruction to a string literal to return the substrings delimited by the given separator (or, by default, arbitrary runs of white space).
+if that object is changed, like the dictionary in this example, subsequent calls to the function will refer to this changed object.
+objects referenced from the global namespaces of python modules are not always deallocated when python exits.
+functions which  operate on this output would generally not break if you added another file or  two to the directory.
+python’s high level data types, dynamic typing of objects and run-time invocation of the interpreter (usingeval() or exec()) together mean that a “compiled” python program would probably consist mostly of calls into the python run-time system, even for seemingly simple operations likex+1.
+python is, however, aggressive about cleaning up memory on exit and does try to destroy every single object.
+dictionaries: [1, 2, 3,] ('a', 'b', 'c',)
+return _cache[( arg1, arg2)] # calculate the value result = ...
+note that the main script executed by python, even if its filename ends in .py, is not compiled to a .pyc file.
+why does python allow commas at the end of lists and tuples?
+writing test suites is very helpful, and you might want to design your code with an eye to making it easily tested.
+this function creates a new list from a provided iterable, sorts it and returns it.
+instead, usenone as the default value and inside the function, check if the parameter isnone and create a new list/dictionary/whatever if it is.
+python uses dynamic types.
+lists are mutable,  meaning that you can always change a list’s elements.
+this type of bug commonly bites neophyte programmers.
+make a copy when using a list as a key.
+.2 equals 2/10 equals 1/5, resulting in the binary fractional number 0.001100110011001...
+an appropriate testing discipline can help build large complex applications in python as well as having interface specifications would.
+these rules work well when r-strings are used for their intended purpose.
+the best approach is to use iterators, making it possible to loop through  objects using thefor statement.
+why can’t i use an assignment in an expression?
+those variables to which a value is assigned in a function body (and that aren’t explicitly declared global), there has to be some way to tell the interpreter that an assignment was meant to assign to an instance variable instead of to a local variable, and it should preferably be syntactic (for efficiency reasons).
+there’s an alternative way of spelling this that seems attractive but is generally less robust than the “while true” solution: line = f.readline()
+98767 - len(l)*555 for i, el in enumerate(l): try: result = result + (hash(el) % 9999999)
+to put it another way, local variables and  instance variables live in two different namespaces, and you need to tell  python which namespace to use.
+accidentally omitting the comma can lead to errors that are hard to  diagnose.
+note for string operations, python has moved from external functions (the string module) to methods.
+a floating point number’s repr() function prints as many digits are necessary to makeeval(repr(f))
+it is impossible to know in advance which attribute will be referenced at runtime.
+in order to remind you of that fact, it does not return the sorted list.
+why can’t raw strings (r-strings) end with a backslash?¶ more precisely, they can’t end with an odd number of backslashes: the  unpaired backslash at the end escapes the closing quote character, leaving an  unterminated string.
+if that wasn’t the case, you coded it like this: if mydict.has_key(key): value = mydict[key] else: mydict[key] = getvalue( key) value =
+python’s lists are really variable-length arrays, not lisp-style linked lists.
+in fact, it can be  better because an interface specification cannot test certain properties of a  program.
+join() is a string method because in using it you are telling the separator  string to iterate over a sequence of strings and insert itself between adjacent  elements.
+the first runs along the lines of: “it looks really ugly using a method of a string literal (string constant)”, to which the answer is that it might, but a string literal is just a fixed value.
+why must dictionary keys be immutable?¶ the hash table implementation of dictionaries uses a hash value calculated  from the key value to find the key.
+42 function(args).mydict[index][index].c = 63 write this: ref = function(args).mydict[index][index] ref.a = 21 ref.b = 42
+for example, theappend() method is expected to add new elements to the  end of some internal list; an interface specification cannot test that your append() implementation will actually do this correctly, but it’s trivial  to check this property in a test suite.
+can’t you emulate threads in the interpreter instead of relying on  an os-specific thread implementation?
+in jython, the following code (which is fine in cpython) will probably run out of file descriptors long before it runs out of memory: for file in very_long_list_of_files: f = open(file) c = f.read(1)
+since there are no begin/end brackets there cannot be a disagreement  between grouping perceived by the parser and the human reader.
+this makes it impossible to know, from a simple reading, what attribute is being referenced: a local one, a global one, or a member attribute?
+it is impossible to know in advance which  attribute will be referenced at runtime.
+however, there is nothing in python that tells the  interpreter this.
+for example, here’s how to iterate over the keys of a  dictionary in sorted order: for key in sorted(mydict): ... # do whatever with mydict[key]...
+python 2.6 adds an abc module that lets you define abstract base classes (abcs).
+don’t do this unless  you are prepared to think hard about the requirements and the consequences of  not meeting them correctly.
+some decimal numbers can’t be represented exactly in binary, resulting in small roundoff errors.
+mean that a “compiled” python program would probably consist mostly  of calls into the python run-time system, even for seemingly simple operations  likex+1.
+there have been some proposals for switch statement syntax, but there is no  consensus (yet) on whether and how to do range tests.
+instead, usenone as the default value and inside the  function, check if the parameter isnone and create a new  list/dictionary/whatever if it is.
+similar methods exist for bytes and bytearray objects.
+for example, a cartesian coordinate is appropriately represented as a tuple of two or three numbers.
+if you tried to look up the old value it wouldn’t be found either, because the value of the object found in that hash bin would be different.
+for example,  a cartesian coordinate is appropriately represented as a tuple of two or three  numbers.
+this makes indexing a list a[i] an operation whose cost is independent of the size of the list or the value of the index.
+although it is binary compatible with  standard python, it’s still unclear whether stackless will make it into  the core – maybe it’s just too revolutionary.
+if you want a dictionary indexed with a list, simply convert the list to a tuple first; the functiontuple(l) creates a tuple with the same entries as the listl. tuples are immutable and can therefore be used as dictionary keys.
+the implementation uses a contiguous array of references to other  objects, and keeps a pointer to this array and the array’s length in a  list head structure.
+traditional gc also becomes a problem when python is embedded into other applications.
+this also has the side-effect of increasing execution speed because name  bindings are resolved at run-time in python, and the second version only needs  to perform the resolution once.
+for example,os.listdir('.') returns a list of strings representing the files in the current directory.
+can python be compiled to machine code, c or some other language?¶ not easily.
+most of these new methods have been widely accepted, but the one which appears to make some programmers feel uncomfortable is: ", ".join(['1', '2', '4', '8', '16']) which gives the result: "1, 2, 4, 8, 16" there are two common arguments against this usage.
+lists, on the other hand, are more like arrays in other languages.
+but since whoever changes the key object can’t tell that it was being used as a dictionary key, it can’t move the entry around in the dictionary.
+similarly, for using instance variables, having to writeself.var means that  references to unqualified names inside a method don’t have to search the  instance’s directories.
+in situations where performance matters, making a copy of the list just to  sort it would be wasteful.
+default values are created exactly once, when the function is defined.
+how does python manage memory?¶
+this is not what happens.
+there are also certain bits of memory that are allocated by the c library that are impossible to free (e.g. a tool like purify will complain about these).
+for some reason there seems to be much less difficulty with having split() as a string method, since in that case it is easy to see that "1, 2, 4, 8, 16".split(", ") is an instruction to a string literal to return the substrings delimited by  the given separator (or, by default, arbitrary runs of white space).
+why doesn’t python have a “with” statement for attribute  assignments?
+the first runs along the lines of: “it looks really ugly using a  method of a string literal (string constant)”, to which the answer is  that it might, but a string literal is just a fixed value.
+why are there separate tuple and list data types?¶ lists and tuples, while similar in many respects, are generally used in  fundamentally different ways.
+for example, don’t write: def foo(mydict={}): ... but:
+would raise a keyerror exception because the id of the [1, 2] used in the  second line differs from that in the first line.
+floating point numbers only have 32 or 64 bits of precision, so the digits  are cut off at some point, and the resulting number is 0.199999999999999996 in  decimal, not 0.2.
+furthermore it must always be the case that if o1 == o2 (ie o1.__eq__(o2) is true) then hash(o1)
+how are lists implemented?¶ python’s lists are really variable-length arrays, not lisp-style  linked lists.
+this may happen if there are circular references.
+why is join() a string method instead of a list or tuple method?¶ strings became much more like other standard types starting in python 1.6,  when methods were added which give the same functionality that has always been  available using the functions of the string module.
+programming faq library and extension faq enter search terms or a module, class or function name.
+the str() function prints fewer digits and this often results in the more sensible number that was probably intended: >>> 1.1 - 0.9 0.20000000000000007 >>> print(1.1 - 0.9) 0.2 one of the consequences of this is that it is error-prone to compare the result of some computation to a float with==. tiny inaccuracies may mean that == fails.
+other.the_list def __
+people are often very surprised by results like this: >>> 1.2 - 1.0 0.199999999999999996 and think it is a bug in python.
+r"\this\is\my\dos\dir\
+only immutable  elements can be used as dictionary keys, and hence only tuples and not lists  can be used as keys.
+why are default values shared between objects?¶ this type of bug commonly bites neophyte programmers.
+mydict[key] for this specific case, you could also use value = dict.setdefault(key,  getvalue(key)), but only if the getvalue() call is cheap enough because it is  evaluated in all cases.
+def  expensive (arg1, arg2, _cache={}): if (arg1, arg2) in _cache:
+20 lines of python can do a lot more work than 20 lines of c. this is not solely due to the lack of begin/end brackets – the lack of declarations and the high-level data types are also responsible – but the indentation-based syntax certainly helps.
+these rules work  well when r-strings are used for their intended purpose.
+if you’re trying to build windows pathnames, note that all windows system calls accept forward slashes too: f = open("/mydir/file.txt") # works fine!
+jython uses the same strategy for  compiling to java bytecode.
+of course python allows you to be sloppy and not write test cases at all.
+notice further how a colon sets off the example in this faq answer; it’s a standard usage in english.
+unlike lambda forms in other  languages, where they add functionality, python lambdas are only a shorthand  notation if you’re too lazy to define a function.
+you can use exceptions to provide a “structured goto” that even  works across function calls.
+why must dictionary keys be immutable?
+functions are already first class objects in python, and can be declared in a local scope.
+guido van rossum believes that using indentation for grouping is extremely elegant and contributes a lot to the clarity of the average python program.
+it has bits of assembler  code formost common platforms, not for all of them, and although it is  mostly transparent, it isn’t completely transparent; patches are required  to get python to work with it.)
+if you’re used to reading and writing code that uses one style, you will  feel at least slightly uneasy when reading (or being required to write) another  style.
+there is a trick to get around this if you need to, but use it at your own risk: you can wrap a mutable structure inside a class instance which has both a __eq__() and a __hash__() method.
+thecollections modules defines a set of useful abcs such asiterable, container, and mutablemapping.
+other languages, such as object pascal, delphi, and c++, use static types, so it’s possible to know, in an unambiguous way, what member is being assigned to.
+python lets you add a trailing comma at the end of lists, tuples, and dictionaries: [1, 2, 3,] ('a', 'b', 'c',) d = {
+the functions have to remain to  avoid massive code breakage.
+there is a trick to get around this if you need to, but use it at your own  risk: you can wrap a mutable structure inside a class instance which has both a __eq__() and a __hash__() method.
+python lambda forms cannot contain statements because python’s syntactic framework can’t handle statements nested inside expressions.
+the second objection is typically cast as: “i am really telling a  sequence to join its members together with a string constant”.
+finally, for instance variables it solves a syntactic problem with assignment: since local variables in python are (by definition!)
+dictionaries work by computing a hash code for each key stored in the  dictionary using thehash() built-in function.
+why are colons required for the if/while/def/class statements?¶ the colon is required primarily to enhance readability (one of the results  of the experimental abc language).
+why is join() a string method instead of a list or tuple method?
+therefore, a complete threads implementation requires  thread support for c. answer 2: fortunately, there is stackless python, which has a completely  redesigned interpreter loop that avoids the c stack.
+the  standard c implementation of python uses reference counting to detect  inaccessible objects, and another mechanism to collect reference cycles,  periodically executing a cycle detection algorithm which looks for inaccessible  cycles and deletes the objects involved.
+therefore the only advantage of using a lambda form instead of a locally-defined function is that you don’t need to invent a name for the function – but that’s just a local variable to which the function object (which is exactly the same type of object that a lambda form yields) is assigned!
+unlike lambda forms in other languages, where they add functionality, python lambdas are only a shorthand notation if you’re too lazy to define a function.
+for example, file objects support the iterator protocol, so you can write simply: for line in f: ... # do something with line...
+usually main scripts are quite short, so this doesn’t cost much speed.
+jython relies on the java runtime so the jvm’s garbage collector is used.
+"[:-1] dir = "\\this\\is\\my\\dos\\dir\\ " why doesn’t python have a “with” statement for attribute  assignments?¶ python has a ‘with’ statement that wraps the execution of a  block, calling code on the entrance and exit from the block.
+why are there separate tuple and list data types?
+see, for example,cython, pyrex and weave.
+this is particularly useful for__init__() methods, and in general in cases where a derived class method wants to extend the base class method of the same name and thus has to call the base class method somehow.
+there are also certain bits of memory that are allocated by the c  library that are impossible to free (e.g. a tool like purify will complain  about these).
+you must then make sure that the hash value for all such wrapper objects that reside in a dictionary (or other hash based structure), remain fixed while the object is in the dictionary (or other structure).
+if you tried to look up the old value it wouldn’t be  found either, because the value of the object found in that hash bin would be  different.
+it has bits of assembler code formost common platforms, not for all of them, and although it is mostly transparent, it isn’t completely transparent; patches are required to get python to work with it.)
+can’t you emulate threads in the interpreter instead of relying on  an os-specific thread implementation?¶
+functions were used for those operations that  were generic for a group of types and which were intended to work even for  objects that didn’t have methods at all (e.g. tuples).
+the major reason is history.
+changes to mutable objects such as dictionaries, lists, and class instances can lead to confusion.
+if there is a global variable named “x”, will it be used  inside the with block?
+if you’re used to reading and writing code that uses one style, you will feel at least slightly uneasy when reading (or being required to write) another style.
+but  functions for other (e.g. len(list))?¶ the major reason is history.
+most are hacks that save some typing but use arbitrary or cryptic syntax or keywords, and fail the simple criterion for language change proposals: it should intuitively suggest the proper meaning to a human reader who has not yet been introduced to the construct.
+but  functions for other (e.g. len(list))?
+how fast are exceptions?
+more precisely, they can’t end with an odd number of backslashes: the unpaired backslash at the end escapes the closing quote character, leaving an unterminated string.
+allowing the trailing comma may also make programmatic code generation  easier.
+mark lists as read-only once they are used as a dictionary key.
+if the key were a mutable object, its value could change, and thus its hash could also change.
+entering anything as a key into a dictionary would require marking all objects reachable from there as read-only – and again, self-referential objects could cause an infinite loop.
+changes to mutable objects such as dictionaries, lists,  and class instances can lead to confusion.
+in return, they allow you to pass on the string quote character by escaping it with a backslash.
+one increasingly popular technique, test-directed development, calls for writing parts of the test suite first, before you write any of the actual code.
+right now, python works  with anything that implements malloc() and free() properly.
+in decimal math, there are many numbers that can’t be represented  with a fixed number of decimal digits, e.g. 1/3 = 0.3333333333.......
+such processors consider an unmatched trailing backslash to be an  error anyway, so raw strings disallow that.
+def dispatch(self, value): method_name = 'visit_' + str(value) method =
+you could use a global variable containing a dictionary instead of the default value; it’s a matter of taste.
+several projects described in the python newsgroup or at past python  conferences have shown that this approach is feasible, although the speedups  reached so far are only modest (e.g. 2x).
+using the explicitself.var solves this nicely.
+def expensive (arg1, arg2, _cache={}): if (arg1, arg2) in _cache: return _cache[( arg1, arg2)] # calculate the value result = ...
+if expected_result-epsilon ).
+the only difference is that loading code from a  .pyc file is faster than parsing and translating a .py file, so the presence of  precompiled .pyc files improves the start-up time of python scripts.
+write this: ref = function(args).mydict[index][index] ref.a = 21 ref.b = 42
+most of these new methods  have been widely accepted, but the one which appears to make some programmers  feel uncomfortable is: ", ".join(['1', '2', '4', '8', '16']) which gives the result: "1, 2, 4, 8, 16" there are two common arguments against this usage.
+lists are mutable, meaning that you can always change a list’s elements.
+notice further how a  colon sets off the example in this faq answer; it’s a standard usage in  english.
+this would allow  a class of hard-to-track bugs in programs when you forgot or modified a list by  accident.
+the doctest and unittest modules or third-party test frameworks can be used to construct exhaustive test suites that exercise every line of code in a module.
+this doesn’t work because if you construct a new list with the same value it won’t be found; e.g.: mydict =
+why are colons required for the if/while/def/class statements?
+there have been some proposals for switch statement syntax, but there is no consensus (yet) on whether and how to do range tests.
+this makes indexing a list a[i] an operation whose cost is independent of  the size of the list or the value of the index.
+accidentally omitting the comma can lead to errors that are hard to diagnose.
+instead, you have to check that the difference between the two numbers is less than a certain threshold: epsilon = 0.0000000000001 # tiny allowed error expected_result = 0.4
++ i * 333 return result note that the hash computation is complicated by the possibility that some members of the list may be unhashable and also by the possibility of arithmetic overflow.
+what should happen if “a” is, let us say, an integer?
+this function creates a new list from a provided iterable, sorts it and  returns it.
+then, when you try to look up the same object in the dictionary it won’t be found because its hash value is different.
+it is often expected that a function call creates new objects for default values.
+why are floating point calculations so inaccurate?¶ people are often very surprised by results like this: >>> 1.2 - 1.0 0.199999999999999996 and think it is a bug in python.
+.2 equals 2/10 equals  1/5, resulting in the binary fractional number 0.001100110011001...
+many feel that exceptions can conveniently emulate all reasonable uses of the “go” or “goto” constructs of c, fortran, and other languages.
+in fact, implementing len(), max(), min() as a built-in function is actually less code than implementing them as methods for each type.
+you can do this easily enough with a sequence of if... elif...
+assuming that you’re storing keys that all have different hash values, this means that dictionaries take constant time – o(1), in computer science notation – to retrieve a key.
+class listwrapper: def __init__(self, the_list): self.the_list = the_list def __eq__(self, other): return self.the_list
+one increasingly popular technique,  test-directed development, calls for writing parts of the test suite first,  before you write any of the actual code.
+a good test suite for a module can both provide a regression test and serve as a module interface specification and a set of examples.
+some cleverness is applied to improve the performance of appending items  repeatedly; when the array must be grown, some extra space is allocated so the  next few times don’t require an actual resize.
+an interesting phenomenon is that most experienced python programmers  recognize thewhile true idiom and don’t seem to be missing the assignment  in expression construct much; it’s only newcomers who express a strong  desire to add this to the language.
+this is called “memoizing”, and can be implemented like this: # callers will never provide a third parameter for this function.
+join() is a string method because in using it you are telling the separator string to iterate over a sequence of strings and insert itself between adjacent elements.
+class listwrapper: def __init__(self, the_list): self.the_list = the_list  def __eq__(self, other): return self.the_list ==
+it also invalidates an important invariant of dictionaries: every value ind.keys() is usable as a key of the dictionary.
+you can then useisinstance() and issubclass() to check whether an  instance or a class implements a particular abc.
+for one thing, this is not a c standard feature and hence it’s not portable.
+'12'} print(mydict[[1, 2]])
+python’s dictionaries are implemented as resizable hash tables.
++ i * 333 return result note that the hash computation is complicated by the possibility that some  members of the list may be unhashable and also by the possibility of arithmetic  overflow.
+it is compiled to bytecode, but the bytecode is not saved to a file.
+mydict[key] for this specific case, you could also use value = dict.setdefault(key, getvalue(key)), but only if the getvalue() call is cheap enough because it is evaluated in all cases.
+when you have a function that’s time-consuming to compute, a common technique is to cache the parameters and the resulting value of each call to the function, and return the cached value if the same value is requested again.
+you could use a global variable containing a dictionary instead of the  default value; it’s a matter of taste.
+but since whoever changes  the key object can’t tell that it was being used as a dictionary key, it  can’t move the entry around in the dictionary.
+see, for example,cython,  pyrex and weave.
+for example,os.listdir('.') returns a list of  strings representing the files in the current directory.
+one of the consequences of this is that it is error-prone to compare the  result of some computation to a float with==. tiny inaccuracies may mean that ==
+f true for any float f.
+similarly, for using instance variables, having to writeself.var means that references to unqualified names inside a method don’t have to search the instance’s directories.
+(jim hugunin has demonstrated that in combination with whole-program analysis, speedups of 1000x are feasible for small demo programs.
+raw strings were designed to ease creating input for processors (chiefly  regular expression engines) that want to do their own backslash escape  processing.
+in versions of python prior to 2.0 it was common to use this  idiom: try: value = mydict[key] except keyerror: mydict[key] = getvalue(key)
+none): if mydict is none: mydict = {} # create a new dict  for local namespace this feature can be useful.
+in return, they allow you to pass  on the string quote character by escaping it with a backslash.
+seepep 275 for complete details and the current status.
+those  variables to which a value is assigned in a function body (and that  aren’t explicitly declared global), there has to be some way to tell the  interpreter that an assignment was meant to assign to an instance variable  instead of to a local variable, and it should preferably be syntactic (for  efficiency reasons).
+def dispatch(self, value): method_name =
+some cleverness is applied to improve the performance of appending items repeatedly; when the array must be grown, some extra space is allocated so the next few times don’t require an actual resize.
+then, when you try to look  up the same object in the dictionary it won’t be found because its hash  value is different.
+the hash code is then used to calculate a location in an internal  array where the value will be stored.
+in versions of python prior to 2.0 it was common to use this idiom: try: value = mydict[key] except keyerror:
+there are also several programs which make it easier to intermingle python  and c code in various ways to increase performance.
+floating point numbers only have 32 or 64 bits of precision, so the digits are cut off at some point, and the resulting number is 0.199999999999999996 in decimal, not 0.2.
+tuples are immutable, meaning that once a tuple has been created, you can’t replace any of its elements with a new value.
+in order to avoid the overhead of repeatedly parsing and translating modules that rarely change, this byte code is written into a file whose name ends in ”.pyc” whenever a module is parsed.
+why are python strings immutable?
+in order to avoid the overhead of repeatedly parsing and translating  modules that rarely change, this byte code is written into a file whose name  ends in ”.pyc” whenever a module is parsed.
+the problem  is that it’s not just the top-level object that could change its value;  you could use a tuple containing a list as a key.
+getattr(self, method_name) method() it’s suggested that you use a prefix for the method names, such as visit_ in this example.
+for python, many of the advantages of interface specifications can be obtained by an appropriate test discipline for components.
+this way, you won’t be fooled into accidentally overwriting a list when you need a sorted copy but also need to keep the unsorted version around.
+instead of: function(args).mydict[index][index].a = 21 function(args).mydict[index][ index].b = 42 function(args).mydict[index][index].c = 63
+however, there is nothing in python that tells the interpreter this.
+therefore the only advantage of using a lambda form instead of a  locally-defined function is that you don’t need to invent a name for the  function – but that’s just a local variable to which the function  object (which is exactly the same type of object that a lambda form yields) is  assigned!
+why doesn’t list.sort() return the sorted list?
+this is particularly useful  for__init__() methods, and in general in cases where a derived class method  wants to extend the base class method of the same name and thus has to call the  base class method somehow.
+the second time,mydict contains two items because when foo() begins executing, mydict starts out with an item already in it.
+compute something ...
+some language have  a construct that looks like this: with obj: a = 1 # equivalent to obj.a =
+you can use exceptions to provide a “structured goto” that even works across function calls.
+this difference can cause some subtle porting problems if your python  code depends on the behavior of the reference counting implementation.
+if  you want to write code that will work with any python implementation, you  should explicitly close the file or use thewith statement; this will work  regardless of gc: for file in very_long_list_of_files: with open(file) as f: c = f.read(1)
+because of this feature, it is good programming practice to not use mutable objects as default values.
+getattr(self, method_name) method() it’s suggested that you use a prefix for the method names, such as  visit_ in this example.
+jython uses the same strategy for compiling to java bytecode.
+hash__( self): l = self.the_list result =
+a floating point number’s repr() function prints as many digits are  necessary to makeeval(repr(f))
+an interface specification for a module as provided by languages such as c++ and java describes the prototypes for the methods and functions of the module.
+they tend to hold a varying number of objects all of which have the same type and which are operated on one-by-one.
+many alternatives have been proposed.
+in fact, implementing len(), max(), min() as a built-in function is  actually less code than implementing them as methods for each type.
+'visit_' + str(value) method =
+internally, python source code is always translated into a bytecode  representation, and this bytecode is then executed by the python virtual  machine.
+* 1001 + i except exception: result  =
+what should happen if “a” is, let us say, an  integer?
+this has nothing to do with python, but with how the underlying c platform handles floating point numbers, and ultimately with the inaccuracies introduced when writing down numbers as a string of a fixed number of digits.
+for example, theappend() method is expected to add new elements to the end of some internal list; an interface specification cannot test that your append() implementation will actually do this correctly, but it’s trivial to check this property in a test suite.
+see the next question.
+another minor reason is that the colon makes it easier for editors with syntax highlighting; they can look for colons to decide when indentation needs to be increased instead of having to do a more elaborate parsing of the program text.
+traditional gc also becomes a problem when python is embedded into other  applications.
+in the case of listwrapper, whenever the wrapper object is in a dictionary the wrapped list must not change to avoid anomalies.
+98767 - len(l)*555 for i, el in enumerate(l):  try: result = result + (hash(el) % 9999999)
+answer 1: unfortunately, the interpreter pushes at least one c stack frame for each python stack frame.
+why is there no goto?
+allow lists as keys but tell the user not to modify them.
+you can then useisinstance() and issubclass() to check whether an instance or a class implements a particular abc.
+there is no performance difference once the .pyc file has been loaded, as the bytecode read from the .pyc file is exactly the same as the bytecode created by direct translation.
+occasionally c  programmers will encounter a fragment of code like this: if (x  y. because there are no begin/end brackets, python is much less prone to  coding-style conflicts.
+while line: ... # do something with line... line = f. readline() the problem with this is that if you change your mind about exactly how you get the next line (e.g. you want to change it intosys.stdin.readline()) you have to remember to change two places in your program – the second occurrence is hidden at the bottom of the loop.
+consider yourself warned.
+why are default values shared between objects?
+the problem is that it’s not just the top-level object that could change its value; you could use a tuple containing a list as a key.
+this may happen if there are circular  references.
+instead of: function(args).mydict[index][index].a = 21 function(args).mydict[index][ index].b =
+only immutable elements can be used as dictionary keys, and hence only tuples and not lists can be used as keys.
+== hash(o2) (ie, o1.__hash__()
+even  modules which use complex external interfaces can often be tested in isolation  using trivial “stub” emulations of the external interface.
+for instance, take the following incomplete snippet: def foo(a): with a: print(x) the snippet assumes that “a” must have a member attribute called “x”.
+some language have a construct that looks like this: with obj: a = 1 # equivalent to obj.a =
+for example: class label: pass # declare a label try: ... if (condition): raise label() # goto label ... except label: # where to goto pass ...
+for one thing, this is not a c standard feature and hence it’s not  portable.
+(jim hugunin has demonstrated that in combination  with whole-program analysis, speedups of 1000x are feasible for small demo  programs.
+table of contents why does python use indentation for grouping of statements?
+most are hacks that save some typing  but use arbitrary or cryptic syntax or keywords, and fail the simple criterion  for language change proposals: it should intuitively suggest the proper meaning  to a human reader who has not yet been introduced to the construct.
+why isn’t all memory freed when python exits?
+ideally, a function should fit on  one screen (say, 20-30 lines).
+= 0, which assigns 0 to the variable x, was  written while the comparisonx == 0 is certainly what was intended.
+while in a standalone python it’s fine to replace the  standard malloc() and free() with versions provided by the gc library, an  application embedding python may want to have itsown substitute for  malloc() and free(), and may not want python’s.
+compared to b-trees, this gives better performance for lookup (the most common operation by far) under most circumstances, and the implementation is simpler.
+if you want to write code that will work with any python implementation, you should explicitly close the file or use thewith statement; this will work regardless of gc: for file in very_long_list_of_files: with open(file) as f: c = f.read(1)
+python 2.6 adds an abc module that lets you define abstract base classes  (abcs).
+in decimal math, there are many numbers that can’t be represented with a fixed number of decimal digits, e.g. 1/3 = 0.3333333333.......
+there are also several programs which make it easier to intermingle python and c code in various ways to increase performance.
+if you fail to meet  these restrictions dictionaries and other hash based structures will misbehave.
+tuples are immutable, meaning that once a tuple has been created, you  can’t replace any of its elements with a new value.
+in jython, the following code (which is fine in cpython) will probably run  out of file descriptors long before it runs out of memory: for file in very_long_list_of_files: f = open(file) c = f.read(1)
+occasionally c programmers will encounter a fragment of code like this: if (x  y. because there are no begin/end brackets, python is much less prone to coding-style conflicts.
+without such a prefix, if values are coming from an untrusted source, an attacker would be able to call any method on your object.
+right now, python works with anything that implements malloc() and free() properly.
+it’s still experimental but looks very promising.
+the details of python memory management depend on the implementation.
+the hash code varies widely depending on the key; for example, “python” hashes to -539294296 while “python”, a string that differs by a single bit, hashes to 1142331976.
+mydict[key] this only made sense when you expected the dict to have the key almost all the time.
+python’s high level data types, dynamic typing of objects  and run-time invocation of the interpreter (usingeval() or exec()) together
+1 total = total + 1 # obj.total =  obj.total + 1 in python, such a construct would be ambiguous.
+as you see, the dynamic nature of python makes such  choices much harder.
+there is no performance difference once the .pyc file has been loaded, as  the bytecode read from the .pyc file is exactly the same as the bytecode  created by direct translation.
+it  also means that no sorted order of the keys is maintained, and traversing the  array as the.keys() and .items() do will output the dictionary’s content  in some arbitrary jumbled order.
+there is also a  tool, pychecker, which can be used to find problems due to subclassing.
+many feel that exceptions can conveniently emulate  all reasonable uses of the “go” or “goto” constructs of  c, fortran, and other languages.
+for example: x = [ "fee", "fie" "foo", "fum" ] this list looks like it has four elements, but it actually contains three:  “fee”, “fiefoo” and “fum”.
+lists and tuples, while similar in many respects, are generally used in fundamentally different ways.
+for example: def function_1(...): ... functions = {'a': function_1, 'b': function_2, 'c': self.method_1, ...} func = functions[value] func() for calling methods on objects, you can simplify yet further by using the getattr() built-in to retrieve methods with a particular name: def visit_a(self, ...): ... ...
+there is also a tool, pychecker, which can be used to find problems due to subclassing.
+in  order to remind you of that fact, it does not return the sorted list.
+this doesn’t work because the list, being a mutable object, could contain a reference to itself, and then the copying code would run into an infinite loop.
+in other words, dictionary  keys should be compared using==, not using is.
+note that the main script executed by python, even if its filename ends in  .py, is not compiled to a .pyc file.
+default values are created exactly once, when  the function is defined.
+for example: x = [ "fee", "fie" "foo", "fum" ] this list looks like it has four elements, but it actually contains three: “fee”, “fiefoo” and “fum”.
+a try/except block is extremely efficient.
+many python modules can be run as a script to provide a simple “self test.”
+while in a standalone python it’s fine to replace the standard malloc() and free() with versions provided by the gc library, an application embedding python may want to have itsown substitute for malloc() and free(), and may not want python’s.
+it also means that no sorted order of the keys is maintained, and traversing the array as the.keys() and .items() do will output the dictionary’s content in some arbitrary jumbled order.
+to put it another way, local variables and instance variables live in two different namespaces, and you need to tell python which namespace to use.
+it is also  convenient to have a function that can readily be applied to an amorphous  collection of objects when you use the functional features of python (map(),  apply() et al).
+since there are no begin/end brackets there cannot be a disagreement between grouping perceived by the parser and the human reader.
+when you have a literal value for a list, tuple, or dictionary spread across multiple lines, it’s easier to add more elements because you don’t have to remember to add a comma to the previous line.
+why can’t lambda forms contain statements?¶ python lambda forms cannot contain statements because python’s  syntactic framework can’t handle statements nested inside expressions.
+thegc module provides functions to  perform a garbage collection, obtain debugging statistics, and tune the  collector’s parameters.
+they  tend to hold a varying number of objects all of which have the same type and  which are operated on one-by-one.
+design and history faq¶ why does python use indentation for grouping of statements?¶ guido van rossum believes that using indentation for grouping is extremely  elegant and contributes a lot to the clarity of the average python program.
+therefore, a complete threads implementation requires thread support for c. answer 2: fortunately, there is stackless python, which has a completely redesigned interpreter loop that avoids the c stack.
+why does python allow commas at the end of lists and tuples?¶ python lets you add a trailing comma at the end of lists, tuples, and
+you  have to remember to change two places in your program – the second  occurrence is hidden at the bottom of the loop.
+r"\this\is\my\dos\dir\ "[:-1] dir = "\\this\\is\\my\\dos\\dir\\ " python has a ‘with’ statement that wraps the execution of a block, calling code on the entrance and exit from the block.
+"a": [1, 5], "b": [6 , 7], # last trailing comma is optional but good style } there are several reasons to allow this.
+finally, for instance variables it solves a syntactic problem with  assignment: since local variables in python are (by definition!)
+one can  quibble about individual cases but it’s a part of python, and it’s  too late to make such fundamental changes now.
+of course python allows you to be  sloppy and not write test cases at all.
+for example, here’s how to iterate over the keys of a dictionary in sorted order: for key in sorted(mydict): ... # do whatever with mydict[key]...
+see the proceedings from the1997 python conference for more  information.)
+why doesn’t list.sort() return the sorted list?¶
+in python 2.4 a new built-in function – sorted() – has been  added.
+even modules which use complex external interfaces can often be tested in isolation using trivial “stub” emulations of the external interface.
+many feel that compile-time enforcement of interface specifications helps in the construction of large programs.
+functions were used for those operations that were generic for a group of types and which were intended to work even for objects that didn’t have methods at all (e.g. tuples).
+member attributes may be added or removed from objects on the fly.
+why can’t i use an assignment in an expression?¶ many people used to c or perl complain that they want to use this c idiom: while (line = readline(f)) { // do something with line } where in python you’re forced to write this: while true: line = f.readline() if not line: break ... # do something  with line the reason for not allowing assignment in python expressions is a common,  hard-to-find bug in those other languages, caused by this construct: if (x = 0) { // error handling } else { // code that only works for  nonzero x } the error is a simple typo: x
+for example: def function_1(...): ... functions = {'a': function_1, 'b': function_2,  'c': self.method_1, ...} func = functions[value] func() for calling methods on objects, you can simplify yet further by using the  getattr() built-in to retrieve methods with a particular name: def visit_a(self, ...): ... ...
+this is called “memoizing”,  and can be implemented like this: # callers will never provide a third parameter for this function.
+dictionaries work by computing a hash code for each key stored in the dictionary using thehash() built-in function.
+the hash table implementation of dictionaries uses a hash value calculated from the key value to find the key.
+see the proceedings from the1997 python conference for more information.)
+the implementation uses a contiguous array of references to other objects, and keeps a pointer to this array and the array’s length in a list head structure.
+if you fail to meet these restrictions dictionaries and other hash based structures will misbehave.
+note for string operations, python has moved from external functions (the string  module) to methods.
+why can’t lambda forms contain statements?
+if you want a dictionary indexed with a list, simply convert the list to a  tuple first; the functiontuple(l) creates a tuple with the same entries as the  listl. tuples are immutable and can therefore be used as dictionary keys.
+internally, python source code is always translated into a bytecode representation, and this bytecode is then executed by the python virtual machine.
+strings became much more like other standard types starting in python 1.6, when methods were added which give the same functionality that has always been available using the functions of the string module.
+this difference can cause some subtle porting problems if your python code depends on the behavior of the reference counting implementation.
+it is often expected that a function call creates new objects for default  values.
+always adding  the comma avoids this source of error.
+using gc, this is not guaranteed.
+a good test suite for a module can both provide a regression test and serve  as a module interface specification and a set of examples.
+when items are appended or inserted, the array of references is resized.
+consider this function: def foo(mydict={}): # danger: shared reference to one dict for all calls ... compute something ...
+the lines can  also be sorted in your editor without creating a syntax error.
+[1, 2]: '12'} print(mydict[[1, 2]]) would raise a keyerror exception because the id of the [1, 2] used in the second line differs from that in the first line.
+when you have a function that’s  time-consuming to compute, a common technique is to cache the parameters and  the resulting value of each call to the function, and return the cached value  if the same value is requested again.
+functions which operate on this output would generally not break if you added another file or two to the directory.
+usually main scripts are quite short, so this  doesn’t cost much speed.
+this doesn’t allow you to jump into the middle of a loop, but that’s usually considered an abuse of goto anyway.
+this way,  you won’t be fooled into accidentally overwriting a list when you need a  sorted copy but also need to keep the unsorted version around.
+this method can be used with any argument which obeys the rules for sequence objects, including any new classes you might define yourself.
+python is, however, aggressive about cleaning up memory on exit  and does try to destroy every single object.
+in the case of listwrapper, whenever the wrapper object is in a dictionary  the wrapped list must not change to avoid anomalies.
+the best approach is to use iterators, making it possible to loop through objects using thefor statement.
+c++ does this through declarations, but python doesn’t have declarations and it would be a pity having to introduce them just for this purpose.
+assuming that you’re storing keys  that all have different hash values, this means that dictionaries take constant  time – o(1), in computer science notation – to retrieve a key.
+when you have a literal value for a list, tuple, or dictionary spread  across multiple lines, it’s easier to add more elements because you  don’t have to remember to add a comma to the previous line.
+also, extensions can call back into python at  almost random moments.
+the hash code varies widely  depending on the key; for example, “python” hashes to -539294296  while “python”, a string that differs by a single bit, hashes to  1142331976.
+ideally, a function should fit on one screen (say, 20-30 lines).
+1 total = total + 1 # obj.total = obj.total + 1 in python, such a construct would be ambiguous.
+why am i getting strange results with simple arithmetic operations?
+the hash code is then used to calculate a location in an internal array where the value will be stored.
+how do you specify and enforce an interface spec in python?
+why isn’t all memory freed when python exits?¶ objects referenced from the global namespaces of python modules are not  always deallocated when python exits.
+there’s an alternative way of spelling this that seems attractive but  is generally less robust than the “while true” solution: line = f.readline()
+this would allow a class of hard-to-track bugs in programs when you forgot or modified a list by accident.
+in other words, dictionary keys should be compared using==, not using is.
+the primary benefit of “with” and similar language features  (reduction of code volume) can, however, easily be achieved in python by  assignment.
+in c there are many different ways to place the braces.
+expensive computation ...
+in fact, it can be better because an interface specification cannot test certain properties of a program.
+thegc module provides functions to perform a garbage collection, obtain debugging statistics, and tune the collector’s parameters.
+b: print(a) notice how the second one is slightly easier to read.
+this method can be used with any argument which obeys the rules for  sequence objects, including any new classes you might define yourself.
+mydict[key] = value return mydict
+this makes programs considerably longer and wastes valuable screen space, making it harder to get a good overview of a program.
+it is also convenient to have a function that can readily be applied to an amorphous collection of objects when you use the functional features of python (map(), apply() et al).
+this  makes programs considerably longer and wastes valuable screen space, making it  harder to get a good overview of a program.
+functions are already first class objects in python, and can be declared in  a local scope.
+therefore,list.sort() sorts the list in place.
+20 lines of python can do a lot more work than  20 lines of c. this is not solely due to the lack of begin/end brackets –  the lack of declarations and the high-level data types are also responsible  – but the indentation-based syntax certainly helps.
+answer 1: unfortunately, the interpreter pushes at least one c stack frame  for each python stack frame.
+the first time you call this function, mydict contains a single item.
+the primary benefit of “with” and similar language features (reduction of code volume) can, however, easily be achieved in python by assignment.
+by definition, immutable objects such as numbers, strings, tuples, and none , are safe from change.
+using the current reference counting and destructor scheme, each new assignment to f closes the previous file.
+such processors consider an unmatched trailing backslash to be an error anyway, so raw strings disallow that.
+how does python manage memory?
+however, in python, this is not a serious problem.
+how are lists implemented?
+many people used to c or perl complain that they want to use this c idiom: while (line = readline(f)) { // do something with line } where in python you’re forced to write this: while true: line = f.readline() if not line: break ... # do something with line the reason for not allowing assignment in python expressions is a common, hard-to-find bug in those other languages, caused by this construct: if (x = 0) { // error handling } else { // code that only works for nonzero x } the error is a simple typo: x = 0, which assigns 0 to the variable x, was written while the comparisonx == 0 is certainly what was intended.
+this also has the side-effect of increasing execution speed because name bindings are resolved at run-time in python, and the second version only needs to perform the resolution once.
+an appropriate testing discipline can help build large complex applications  in python as well as having interface specifications would.
+as you see, the dynamic nature of python makes such choices much harder.
+this doesn’t work because if  you construct a new list with the same value it won’t be found; e.g.: mydict =
+if the methods are to be allowed on names bound to strings there is no logical reason to make them unavailable on literals.
+* 1001 + i except exception: result =
+while line: ... # do something with line... line = f. readline() the problem with this is that if you change your mind about exactly how you  get the next line (e.g. you want to change it intosys.stdin.readline())
+compared to b-trees, this gives better performance for lookup (the most common  operation by far) under most circumstances, and the implementation is simpler.
+print(1.1 - 0.9)  0.2
+entering anything as a key  into a dictionary would require marking all objects reachable from there as  read-only – and again, self-referential objects could cause an infinite  loop.
+can python be compiled to machine code, c or some other language?
+many python modules  can be run as a script to provide a simple “self test.”
+most people learn to love this feature after a while.
+this is the main point of static typing – the compiler always knows the scope of every variable at compile time.
+don’t do this unless you are prepared to think hard about the requirements and the consequences of not meeting them correctly.
+allowing the trailing comma may also make programmatic code generation easier.
+why does python use methods for some functionality (e.g. list.index())
+another minor reason is that the colon makes it easier for editors with  syntax highlighting; they can look for colons to decide when indentation needs  to be increased instead of having to do a more elaborate parsing of the program  text.
+one can quibble about individual cases but it’s a part of python, and it’s too late to make such fundamental changes now.
+without such a prefix, if values are coming from an  untrusted source, an attacker would be able to call any method on your object.
+for instance, take the following incomplete snippet: def foo(a): with a: print(x) the snippet assumes that “a” must have a member attribute  called “x”.
+thecollections modules defines  a set of useful abcs such asiterable, container, and mutablemapping.
+for cases where you need to choose from a very large number of  possibilities, you can create a dictionary mapping case values to functions to  call.
+similar  methods exist for bytes and bytearray objects.
+why is there no goto?¶
+(yes, we know about the boehm gc library.
+if that object is changed, like the dictionary in this  example, subsequent calls to the function will refer to this changed object.
+consider this: if a == b print(a) versus if a ==
+if you’re trying to build windows pathnames, note that all windows  system calls accept forward slashes too: f = open("/mydir/file.txt") # works fine!
+actually catching an exception  is expensive.
+member attributes may be added or  removed from objects on the fly.
+if you’re trying to build a pathname for a dos command, try e.g. one  of dir = r"\this\is\my\dos\dir" "\\" dir =
+mydict[key] = getvalue(key) value =
+tuples can be thought of as being similar to pascal records or c structs; they’re small collections of related data which may be of different types which are operated on as a group.
+for cases where you need to choose from a very large number of possibilities, you can create a dictionary mapping case values to functions to call.
+== o2.__hash__()),  regardless of whether the object is in a dictionary or not.
+if the key were a mutable object, its value  could change, and thus its hash could also change.
+the str() function  prints fewer digits and this often results in the more sensible number that was  probably intended: >>> 1.1 - 0.9 0.20000000000000007 >>>
+writing test suites is very helpful, and you might want to design your code  with an eye to making it easily tested.
+in situations where performance matters, making a copy of the list just to sort it would be wasteful.
+also, extensions can call back into python at almost random moments.
+some unacceptable solutions that have been proposed: hash lists by their address (object id).
+when the corresponding .py file is changed, it is parsed and translated again and the .pyc file is rewritten.
+if there is a global variable named “x”, will it be used inside the with block?
+for example, file objects support the  iterator protocol, so you can write simply: for line in f: ... # do something with line...
+if  desired, the lib/compileall.py module can be used to create valid .pyc files  for a given set of modules.
+instead, you have to check that the difference between the two numbers  is less than a certain threshold: epsilon = 0.0000000000001 # tiny allowed error expected_result = 0.4 if  expected_result-epsilon ).
+many feel that compile-time enforcement of interface specifications  helps in the construction of large programs.
+the doctest and unittest modules or third-party test frameworks can be used to  construct exhaustive test suites that exercise every line of code in a module.
+why isn’t there a switch or case statement in python?¶ you can do this easily enough with a sequence of if... elif...
+if you’re trying to build a pathname for a dos command, try e.g. one of dir = r"\this\is\my\dos\dir" "\\" dir =
+you must then make sure that the hash value  for all such wrapper objects that reside in a dictionary (or other hash based  structure), remain fixed while the object is in the dictionary (or other  structure).
+why isn’t there a switch or case statement in python?
+when the corresponding  .py file is changed, it is parsed and translated again and the .pyc file is  rewritten.
+raw strings were designed to ease creating input for processors (chiefly regular expression engines) that want to do their own backslash escape processing.
+how are dictionaries implemented?¶ python’s dictionaries are implemented as resizable hash tables.
+why doesn’t python use a more traditional garbage collection scheme?
+the internal representation of floating point numbers uses a fixed number  of binary digits to represent a decimal number.
+this makes it impossible to know, from a  simple reading, what attribute is being referenced: a local one, a global one,  or a member attribute?
+consider this  function: def foo(mydict={}): # danger: shared reference to one dict for all calls  ...
+many coding styles place begin/end brackets on a line by themselves.
+it’s still  experimental but looks very promising.
+however,len() is still a function.
+the second objection is typically cast as: “i am really telling a sequence to join its members together with a string constant”.
+if the methods are  to be allowed on names bound to strings there is no logical reason to make them  unavailable on literals.
+the standard c implementation of python uses reference counting to detect inaccessible objects, and another mechanism to collect reference cycles, periodically executing a cycle detection algorithm which looks for inaccessible cycles and deletes the objects involved.
+jython relies on the java runtime so the jvm’s garbage collector is  used.
+an interesting phenomenon is that most experienced python programmers recognize thewhile true idiom and don’t seem to be missing the assignment in expression construct much; it’s only newcomers who express a strong desire to add this to the language.
+it is compiled to bytecode, but the  bytecode is not saved to a file.
+always adding the comma avoids this source of error.
+why must ‘self’ be used explicitly in method definitions and  calls?
+in the absence of circularities, python programs do not need to manage  memory explicitly.
+in base 2, 1/2 = 0.1, 1/4 = 0.01, 1/8 = 0.001, etc.
+value = mydict[key] this only made sense when you expected the dict to have the key almost all  the time.
+this doesn’t work because the  list, being a mutable object, could contain a reference to itself, and then the  copying code would run into an infinite loop.
+other languages, such as object pascal, delphi, and c++, use static types,  so it’s possible to know, in an unambiguous way, what member is being  assigned to.
+using the current reference counting and destructor scheme, each new  assignment to f closes the previous file.
+the  second time,mydict contains two items because when foo() begins executing,  mydict starts out with an item already in it.
+some decimal numbers  can’t be represented exactly in binary, resulting in small roundoff  errors.
+why can’t raw strings (r-strings) end with a backslash?
+== o2.__hash__()), regardless of whether the object is in a dictionary or not.
+actually catching an exception is expensive.
+this doesn’t allow you to jump into the middle of a loop, but  that’s usually considered an abuse of goto anyway.
+why are floating point calculations so inaccurate?
+none): if mydict is none: mydict = {} # create a new dict for local namespace this feature can be useful.
+how fast are exceptions?¶ a try/except block is extremely efficient.
+tuples can be thought of as being similar to  pascal records or c structs; they’re small collections of related data  which may be of different types which are operated on as a group.
+for python, many of the advantages of interface specifications can be  obtained by an appropriate test discipline for components.
+although it is binary compatible with standard python, it’s still unclear whether stackless will make it into the core – maybe it’s just too revolutionary.
+the colon is required primarily to enhance readability (one of the results of the experimental abc language).
+c++ does this through declarations, but python  doesn’t have declarations and it would be a pity having to introduce them  just for this purpose.
+several projects described in the python newsgroup or at past python conferences have shown that this approach is feasible, although the speedups reached so far are only modest (e.g. 2x).
+in python 2.4 a new built-in function – sorted() – has been added.
+the functions have to remain to avoid massive code breakage.
+the only difference is that loading code from a .pyc file is faster than parsing and translating a .py file, so the presence of precompiled .pyc files improves the start-up time of python scripts.
+this has nothing to do  with python, but with how the underlying c platform handles floating point  numbers, and ultimately with the inaccuracies introduced when writing down  numbers as a string of a fixed number of digits.
+the lines can also be sorted in your editor without creating a syntax error.
+it also invalidates an important invariant of dictionaries: every  value ind.keys() is usable as a key of the dictionary.
+why am i getting strange results with simple arithmetic operations?¶ see the next question.
+how do you specify and enforce an interface spec in python?¶ an interface specification for a module as provided by languages such as  c++ and java describes the prototypes for the methods and functions of the  module.
+if desired, the lib/compileall.py module can be used to create valid .pyc files for a given set of modules.
+in the absence of circularities, python programs do not need to manage memory explicitly.
+because of this feature, it is good programming practice to not use mutable  objects as default values.
+_cache [(arg1, arg2)] = result # store result in the cache return result
+if you want to force python to delete certain things on deallocation use the atexit module to run a function that will force those deletions.
+the internal representation of floating point numbers uses a fixed number of binary digits to represent a decimal number.

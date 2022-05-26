@@ -1,0 +1,368 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Algorithm of the Week: Radix Sort | PHP Zone</title>
+<body>
+LOG IN or JOIN <br>
+
+<ul> 
+<li>Home</li> 
+<li>Refcardz</li> 
+<li>Microzones 
+<ul> 
+<li>Cloud Zone</li> 
+<li>NoSQL Zone</li> 
+<li>HTML5 Zone</li> 
+<li>DevOps Zone</li> 
+<li>Enterprise Integration</li> 
+<li>Solr-Lucene</li> 
+<li>Windows Phone</li> 
+<li>.NET Zone</li> 
+<li>Python Zone</li> </ul> </li> 
+<li>Zones 
+<ul> 
+<li>Agile Zone</li> 
+<li>Mobile Zone</li> 
+<li>Javalobby</li> 
+<li>Web Builder Zone</li> 
+<li>IDEs and Tools 
+<ul> 
+<li>Eclipse Zone</li> 
+<li>JetBrains Zone</li> 
+<li>NetBeans Zone</li> </ul> </li> 
+<li>Languages 
+<ul> 
+<li>PHP Zone</li> 
+<li>Groovy Zone</li> </ul> </li> 
+<li>Architects Zone</li> 
+<li>Book Zone</li> 
+<li>Server Zone</li> </ul> </li> 
+<li>Library</li> 
+<li>Links</li> 
+<li>Snippets</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Python 
+Zone <br>
+<strong>Did you know? DZone has great portals for Python, Cloud, NoSQL
+, andHTML5!</strong> Python Zone is brought to you in partnership with: <br>
+
+<br> <b>Stoimen Popov</b> 
+<ul> 
+<li>Bio</li> 
+<li>Website</li> 
+<li>@stoimenpopov </li> 
+<li> </li> 
+<li> </li> </ul> 
+<p> I've been working on web based projects built mainly with PHP and 
+JavaScript, where I mostly use Zend Framework and jQuery. I am interested in 
+any webpage optimizations techniques - for a faster web! Stoimen is a DZone MVB 
+and is not an employee of DZone and has posted 61 posts at DZone. You can read 
+more from them attheir website. View Full User Profile</p> 
+<h1>Algorithm of the Week: Radix Sort</h1>  03.20.2012  Email <br>
+ Views: 5457
+<br> 
+<ul> 
+<li> </li> 
+<li>Tweet</li> 
+<li> </li> 
+<li></li> 
+<li> </li> 
+<li> </li> </ul> <em>This content is part of the Python Zone, which is 
+presented to you by DZone andNew Relic. Visit the Python Zone for news, tips, 
+and tutorials on the Python programming language.&nbsp; New Relic provides the 
+resources and best practices to help you monitor these applications. </em> 
+<h3>Recommended Links</h3> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> 
+<p>Like this piece? Share it with your friends:</p> | More <br>
+<br>
+
+<p>Algorithms always depend on the input. We saw that general purpose sorting 
+algorithms like insertion sort, bubble sort andquicksort can be very efficient 
+in some cases and inefficient in others. Indeed,insertion and bubble sort are 
+considered slow, with a best-case complexity of O(n2), but they are quite 
+effective when the input is fairly sorted. So, when you have a sorted array and 
+you add some &ldquo;new&rdquo; values to the array you can sort it quite 
+effectively with insertion sort. On the other hand, quicksort is considered one 
+of the best general purpose sorting algorithms, but while it&rsquo;s a great 
+algorithm when the data is randomized, it&rsquo;s practically as slow as bubble 
+sort when the input is almost or fully sorted.</p> 
+<p>Now we see that the effectiveness of algorithms depends greatly on the 
+input. For input that is almost sorted, insertion sort may be preferred instead 
+of quicksort, which is generally a faster algorithm.</p> 
+<p>Because the input is so important for an algorithm's efficiency, we may ask 
+if there are any sorting algorithms that are faster than O(n.log(n)), which is 
+the average-case complexity for merge sort and quicksort. And the answer is yes 
+there are faster, linear complexity algorithms, that can sort data faster than 
+quicksort, merge sort and heapsort. But there are some constraints!</p> 
+<p>Everything sounds great but we can&rsquo;t sort any particular data with 
+linear complexity, so the question is what rules must the input follow in order 
+to be sorted in linear time?</p> 
+<p>Such an algorithm that is capable of sorting data in linear O(n) time is 
+radix sort and the domain of the input is restricted &ndash; it must consist 
+only of integers.</p> 
+<h2>Overview</h2> 
+<p>Let&rsquo;s say we have an array of integers which is not sorted. Because 
+it consists only of integers and because array keys are integers in programming 
+languages we can implement radix sort.</p> 
+<p>First for each value of the input array we put the value of &ldquo;1&rdquo; 
+on the key-th place of the temporary array as explained on the following 
+diagram.<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ If there are repeating values in the 
+input array, we increment the corresponding value in the temporary array. After 
+&ldquo;initializing&rdquo; the temporary array with one pass (with linear 
+complexity) we can sort the input.<br>
+<br>
+<br>
+</p> 
+<h2>Implementation</h2> 
+<p>Implementing radix sort is in fact very easy, which is great. The thing is 
+that old-school programming languages weren&rsquo;t very flexible and we needed 
+to initialize the entire temporary array. That leads to another problem &ndash; 
+we must know the interval of values from the input. Fortunately, modern 
+programming languages and libraries are more flexible so we can initialize our 
+temporary array even if we don&rsquo;t know the interval of input values, as in 
+the example bellow. Indeed, PHP is flexible enough to build-up arrays in the 
+memory without knowing their size in advance.</p> 
+<pre>$list = array(4, 3, 5, 9, 7, 2, 4, 1, 6, 5); function radix_sort($input) 
+{ $temp = $output = array(); $len = count($input); for ($i = 0; $i &lt; $len; 
+$i++) { $temp[$input[$i]] = ($temp[$input[$i]] &gt; 0) ? ++$temp[$input[$i]] : 
+1; } ksort($temp); foreach ($temp as $key =&gt; $val) { if ($val == 1) { 
+$output[] = $key; } else { while ($val--) { $output[] = $key; } } } return 
+$output; } // 1, 2, 3, 4, 4, 5, 5, 6, 7, 9 print_r(radix_sort($list));</pre>The 
+problem is that PHP needs ksort &ndash; which is completely foolish as 
+we&rsquo;re trying to sort an array using &ldquo;another&rdquo; sorting method, 
+but to overcome this you must know the interval of values in advance and 
+initialize a temporary array with 0s, as in the example bellow.<br>
+
+<pre>define(MIN, 1); define(MAX, 9); $list = array(4, 3, 5, 9, 7, 2, 4, 1, 6, 
+5); function radix_sort(&amp;$input) { $temp = array(); $len = count($input); 
+// initialize with 0s $temp = array_fill(MIN, MAX-MIN+1, 0); foreach ($input as 
+$key =&gt; $val) { $temp[$val]++; } $input = array(); foreach ($temp as $key 
+=&gt; $val) { if ($val == 1) { $input[] = $key; } else { while ($val--) { 
+$input[] = $key; } } } } // 4, 3, 5, 9, 7, 2, 4, 1, 6, 5 var_dump($list); 
+radix_sort(&amp;$list); // 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 var_dump($list);</pre>
+Here the input is modified during the sorting process and it&rsquo;s used as a 
+result.
+<h2>Complexity</h2> 
+<p>The complexity of radix sort is linear, which in terms of omega means O(n). 
+That is a great benefit in performance compared to O(n.log(n)) or even worse 
+with O(n2) as we can see in the following chart.<br>
+<br>
+</p> 
+<h2>Why Use Radix Sort</h2> 
+<h3><br>
+1. It&rsquo;s fast</h3> 
+<p>Radix sort is very fast compared to other sorting algorithms as we saw on 
+the diagram above. This algorithm is very useful in practice because in 
+practice we often sort sets of integers.<br>
+<br>
+<br>
+</p> 
+<h3>2. It&rsquo;s easy to understand and implement</h3> 
+<p>Even a beginner can understand and implement radix sort, which is great. 
+You need no more than a few loops to implement it.</p> 
+<h2>Why NOT using radix sort</h2> 
+<h3><br>
+1. Works only with integers</h3> 
+<p>If you&rsquo;re not sure about the input, you're better off not using radix 
+sort. We may think that our input consists only of integers and we can go for 
+radix sort, but what if in the future someone passes floats or strings to our 
+routine.<br>
+<br>
+<br>
+</p> 
+<h3>2. Requires additional space</h3> 
+<p>Radix sort needs additional space &ndash; at least as much as the input.</p>
+<h2>Final Words</h2> 
+<p>Radix sort is restricted by the input&rsquo;s domain, but I must say that 
+in practice there are tons of cases where only integers are sorted. This is 
+when we get some data from the db based on primary keys &ndash; typically 
+primary in database tables are integers as well. So practically there are lots 
+of cases of sorting integers, so radix sort may be one very, very useful 
+algorithm and it is so cool that it is also easy to implement.</p>  Tags: 
+<ul> 
+<li>Algorithms</li> 
+<li>Tutorial</li> 
+<li>Python</li> 
+<li>PHP</li> 
+<li>Groovy</li> </ul> Published at DZone with permission of Stoimen Popov, 
+author and DZone MVB (source). <br>
+
+<p><em>(Note: Opinions expressed in this article and its replies are the 
+opinions of their respective authors and not those of DZone, Inc.)</em></p> 
+Python is a fast, powerful, dynamic, and versatile programming language that is 
+being used in a variety ofapplication domains. It has flourished as a 
+beginner-friendly language that is penetrating more and more industries. The
+Python Zoneis a community that features a diverse collection of news, 
+tutorials, advice, and opinions about Python and Django. The Python Zone is 
+sponsored byNew Relic, the all-in-one web application performance tool that 
+lets yousee performance from the end user experience, through servers, and down 
+to the line of application code.<br>
+
+<ul> 
+<li>Got a story? Tell us!</li> 
+<li> </li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> </ul> 
+<h3>Recommended Links</h3> 
+<h4>Pros and Cons of SaaS Performance Monitoring</h4> 
+<h4>&quot;AppOps&quot;: The New Frontier in APM</h4> 
+<h4>Groupon: Dealing with Massive User Load</h4> 
+<h4>What Browser Really is The Fastest?</h4> 
+<h4>How Mashable Delivers a Quality UX</h4> <br>
+<br>
+
+<h2>Spotlight Features</h2> 
+<h2>Cretaceous COBOL Can Spawn Jurassic Java</h2> 
+<h2>How Twitter Does MySQL - Get Their Fork</h2> 
+<h2>Heterogeneous Computing Is Here, Now</h2> 
+<h2>BIRT 3.7 Report Design Refcard - Meet the Author: Michael Williams</h2> 
+<ul> 
+<h2>Popular at DZone</h2> 
+<li>1:The PHP Hammer (if PHP were a hammer...)</li> 
+<li>2:Limit Wordpress Search To Post Titles</li> 
+<li>3:Eliminar &iacute;tems vac&iacute;os de un array multidimensional en PHP
+</li> 
+<li>4:Overloading - The PHP Way</li> 
+<li>5:An Intro to Virtual Proxies, Part 1</li> 
+<li>6:Top 10 Useful Debugging Tips in eZ Publish</li> 
+<li>7:Maintaining your Server with Command Line PHP</li> See more popular at 
+DZone <br>
+Subscribe to the RSS feed </ul> Around the DZone Network WEB BUILDER 
+<br><br>
+Newly Hatched Python Tools for You <br>
+.NET <br>
+<br>
+How Content 
+Negotiation Works in ASP.NET Web A... <br>
+MOBILE <br>
+<br>
+EvenTiles from 
+Start to Finish: 256-MB Windows Pho... <br>
+JAVALOBBY <br>
+<br>
+Implementing 
+Your Own &quot;SOA&quot; Registry: the Maven Wa... <br>
+JAVALOBBY <br>
+<br>
+
+Beer and Pizza with Facebook: Learning Their Secre... <br>
+WEB BUILDER <br>
+<br>
+The Developer&rsquo;s Guide to HTML5 Canvas <br>
+You Might Also Like 
+<ul> 
+<li>What Happened When We Loaded Every Music CD in Existence into RavenDB</li> 
+<li>An Introduction to NoSQL Patterns</li> 
+<li>Is This The IDE You've Been Looking For? </li> 
+<li>Java Based Startups - We Want To Hear From You</li> 
+<li>Algorithm of the Week: Boyer-Moore String Searching</li> 
+<li>Integrate Your Enterprise Apps 'Like a Boss'</li> 
+<li>Developer Productivity is Important - Reality or Myth?</li> 
+<li>Oracle v Google Trial Day 2: Ellison Testifies</li> 
+<li>The Visitor Pattern Re-visited</li> 
+<li>Beer and Pizza with Facebook: Learning Their Secrets...</li> 
+<li>Our Simple Jenkins Configuration and Deployment</li> 
+<li>Spring Integration Project Creation VS. Apache Camel Project Creation</li> 
+<li>Heterogeneous Computing Is Here, Now</li> 
+<li>How to Use Three.js, a Lightweight 3D Library, with Neo4j</li> 
+<li>Cretaceous COBOL Can Spawn Jurassic Java</li> </ul> Popular on PHP Zone 
+<ul> 
+<li>PHP Redirect Function</li> 
+<li>Execute a HTTP POST Using PHP CURL</li> 
+<li>Top 10 PHP Frameworks</li> 
+<li>The Architecture of Flex and PHP Applications</li> 
+<li>PHP Email Validator - Email MX DNS Record Check</li> 
+<li>PHP Code: Top Ten Security Vulnerabilities</li> 
+<li>Setting Up A WAMP,phpMyAdmin, Wordpress development environment</li> 
+<li>PHP Force Download - Keep Up With What's Going Down</li> </ul> Latest 
+Articles 
+<ul> 
+<li>Improbing the RavenDB Indexing Process</li> 
+<li>A Custom Property in Spring</li> 
+<li>jDBI: A Simple Convenience Layer on Top of JDBC</li> 
+<li>Get You Some Azure, Windows Phone, and Windows 8 Sample Apps </li> 
+<li>Python Screencast: Install/Setup &quot;SST Web Test Framework&quot; on 
+Ubuntu 12.04</li> 
+<li>10 Quick Real-World Windows Phone Developer Performance Tuning Tips</li> 
+<li>Demo of Handlebars, and Why You Should Consider a Templating Engine</li> 
+<li>LWE 2.1 Adds Support for Drools + Crawler Scheduling</li> </ul> 
+<h2>Spotlight Resources</h2> <br>
+
+<h3>BIRT 3.7 Report Design: Eclipse-Based BI and Big Data Visualization</h3>  
+Eclipse Business Intelligence and Reporting Tools (BIRT) is an open source, 
+Eclipse-based reporting system that integrates with your Java/J2EE... <br>
+
+<h3>Getting Started with Cloud Computing</h3> 
+<p>If you are looking for more information on Cloud Computing then this DZone 
+Refcard is for you. Get an in depth comparison on three different Cloud...</p> 
+<br> 
+<h3>Google App Engine for Java</h3> 
+<p>This DZone Refcard provides an in depth introduction to the cloud computing 
+technology, Google App Engine. Covering everything from the basics...</p> <br>
+
+<br> <br>
+<br>
+<br>
+
+<ul> 
+<li>DZone 
+<ul> 
+<li>Refcardz</li> 
+<li>Book Reviews</li> 
+<li>Tech Library</li> 
+<li>IT Questions</li> 
+<li>Snippets</li> 
+<li>My Profile</li> 
+<li>About DZone</li> 
+<li>Advertise</li> 
+<li>Tools &amp; Buttons</li> 
+<li>Send Feedback</li> </ul></li> 
+<li>Topics 
+<ul> 
+<li>HTML5</li> 
+<li>WP7</li> 
+<li>Cloud</li> 
+<li>Mobile</li> 
+<li>.NET</li> 
+<li>Python</li> 
+<li>Java</li> 
+<li>PHP</li> 
+<li>Solr-Lucene</li> 
+<li>Eclipse</li> 
+<li>JetBrains</li> 
+<li>NetBeans</li> 
+<li>Agile</li> 
+<li>DevOps</li> </ul></li> </ul> 
+<ul> 
+<li> Follow Us 
+<ul> 
+<li> </li> 
+<li> Google + </li> 
+<li> Facebook </li> 
+<li> LinkedIn </li> 
+<li> Twitter </li> </ul> </li> </ul>  Controlling complexity is the essence of 
+computer programming.<br>
+ &mdash; Brian Kernigan <br>
+Advertising - Terms of 
+Service - Privacy - &copy; 1997-2012, DZone, Inc. <br>
+<br>
+
+</body>

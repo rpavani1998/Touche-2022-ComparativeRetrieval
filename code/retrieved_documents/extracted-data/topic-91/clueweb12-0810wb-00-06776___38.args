@@ -1,0 +1,131 @@
+it does not provide any ml algorithms, has no gui, and it is restricted to experiments that fulfill a certain uniformity.
+- warning when people have old cache entries.
+(olivier d.) - fix crash when a broadcasted constant was used as input of an elemwise op and needed to be upcasted to match the op's output.
+changes: - experiments can now be invoked from the command line - experiments can now be "scripted" - mmlf experimenter contains now basic module for statistical hypothesis testing - mmlf explorer can now visualize the model that has been learned by an agent - authors: jan hendrik metzen, mark edgington - license: gpl version 3 or later - programming language: python - operating system: agnostic - data formats:
+the inner function (that scan receives) should return its outputs and updates following this order: [outputs], [updates], [condition].
+(frederic) - theano config option "home" is not used anymore as it was redundant with "base_compiledir".
+cheng soon ong - license: gpl version 3 or later - programming language: python, cython, fortran - operating system: agnostic - data formats: matlab, numpy - tags: kernel learning libdai 0.3.0 by jorism - july 12, 2011, 17:08:54 cet [ ] 17881 views, 3383 downloads, 2 subscriptions rating (based on 1 vote) about: libdai provides free & open source implementations of various (approximate) inference methods for graphical models with discrete variables, including bayesian networks and markov random fields.
+this is currently used only by cuda, but if we use library that are only headers, this can be useful.
+(james) - now all tests pass with the linker=cvm flags.
+- loe(acc): linear order effect in acc was added to confusionmatrix to detect trends in performances across splits.
+thanks max planck society for previously hosting the site.
+(razvan, reported by michael forbes) - scan.infer_shape now works correctly when working with a condition for the number of loops.
+3 enables all warnings (python, numpy, and pymvpa) - :file: doc/examples/nested_cv.py example (adopted from 0.5) - introduced base class :class: ~mvpa.clfs.base.
+it provides high-level abstraction of typical processing steps (e.g. data preparation, classification, feature selection, [...]
+the aim is to provide reusable components that can be quickly applied to machine learning problems.
+- :file: tools/niils -- little tool to list details (dimensionality, scaling, etc) of the files in nibabel-supported formats.
+interface bug fix: - rop in some case should have returned a list of one theano variable, but returned the variable itself.
+(james) - on windows, the default compiledir changed to be local to the computer/user and not transferred with roaming profile.
+it support testing the full and structured gradient.
+(frederic, james) - argmax dtype to int64 (olivier) - improved docstring and basic tests for the tile op (david).
+(james) crashes fixed: t.mean crash at graph building time.
+consequently, the "nosplitting" mode of splitter got removed at the same time.
+the keys in our cache now store the hash of constants and not the constant values themselves.
+- splitter now handles attribute value none for splitting properly.
+it should reduce run-time impact of debug() calls in regular, non -o mode of python operation.
+(frederic) execution crash fix in advancedsubtensor1 on 32 bit computers.
+additional properties to access initial constructor arguments were added to variety of classes.
+- new functionality - added a repeater node to yield a dataset multiple times and sifter node to exclude some datasets.
+agnostic - tags: workflow mdp modular toolkit for data processing 3.2 by otizonaizit - october 24, 2011, 15:43:59 cet [ ] 10753 views, 3002 downloads, 1 subscription rating (based on 3 votes)
+- repeatedmeasure has a new 'concat_as' argument that allows results to be concatenated along the feature axis.
+- 'theano-cache list' lists key files bigger than 1m (frederic b.) - 'theano-cache list' prints an histogram of the number of keys per compiled module (frederic b.)
+- intdiv c code (faster and allow this elemwise to be fused with other elemwise) (pascal) - internal filter_variable mechanism in type.
+- @reseed_rng to guarantee consistent random data given initial seeding.
+on the other hand, it makes no assumptions on the type of task.
+- fixes - compatible with the new shogun 1.x series - compatible with the new h5py 2.x series - mvpa-prep-fmri -- various compatibility fixes and smoke testing - deepcopying :class: summarystatistics during add - enhancements - tutorial uses :mod: mvpa2.tutorial_suite now - better suppression of r warnings when needed - internal attributes of many classes were exposed as properties - more unification of __repr__ for many classes - 0.6.0~rc4 (wed, jun 14 2011) - fixes - finished transition to :mod: nibabel conventions in plot_lightbox - addressed :mod: matplotlib.hist api change - various adjustments in the tests batteries (:mod: nibabel 1.1.0 compatibility, etc) - new functionality - explicit new argument flatten to from_wizard -- default behavior changed if mapper was provided as well - enhancements - elaborated __str__ and __repr__ for some classifiers and measures - 0.6.0~rc3 (thu, apr 12 2011) - fixes - bugfixes regarding the interaction of flattenmapper and boxcarmapper that affected event-related analyses.
+the buidbot now raises optimization/shape errors instead of just printing a warning.
+(frederic) - do not request to load the gpu module by default in scan module.
+(olivier, pascal) - when using a gpu, detect faulty nvidia drivers.
+sandbox: cvm interface more consistent with current linker.
+(pascal) more cases supported in advancedincsubtensor1.
+furthermore it is easily extensible and allows to automate benchmarking of different agents.
+one can skip any of the three if not used, but the order has to stay unchanged.
+fix dot22scalar cast of integer scalars (justin bayer, frederic, olivier) fix runtime crash in gemm, dot22.
+defaults to "warn" (same as previous behavior): it prints a warning when an error occurs when inferring the shape of some apply node.
+deep learning tutorials illustrate deep learning with theano.
+faulty drivers results in in wrong results for reduce operations.
+others: - better error messages in many places.
+- gradient with respect to outputs using multiple taps (reported by timothy, fix by razvan) before : it used to return wrong values now : do the right thing.
+- collection s were provided with adequate (deep|)copy .
+(frederic, reported by sander dieleman) - theoretical bug: in some case we could have gpusum return bad value.
+(james) now all tests pass with the linker=cvm flags.
+(frederic) - tensorvariable.zeros_like() and sparsevariable.zeros_like() - theano.sandbox.cuda.cuda_ndarray.cuda_ndarray.device_properties() (frederic) - theano.sandbox.cuda.cuda_ndarray.cuda_ndarray.mem_info() return free and total gpu memory (frederic) - theano flags compiledir_format.
+plr robustification - enhancements - enforce suppression of numpy warnings while running unittests.
+(ian, frederic) - do not call gemm with strides 0, some blas refuse it.
+fix crash when a broadcasted constant was used as input of an elemwise op and needed to be upcasted to match the op's output.
+if you use it, theano will now raise an error.
+the grad is now disabled and returns an error.
+(many people) - add a warning about numpy bug when using advanced indexing on a tensor with more than 232 elements (the resulting array is not correctly filled and ends with zeros).
+to allow attaching metrics (e.g. traceback, timestamps) to regular output printed to stdout - new set of decorators to help with unittests - @nodebug to disable specific debug targets for the duration of the test.
+- crossvalidation can now take a custom splitter instance.
+sandbox: - cvm interface more consistent with current linker.
+so the sum could be slower, but will be more resistent to overflow.
+- update-* makefile rules automatically should fast-forward corresponding website-updates branch - mvpa_tests_verbosity controls also :mod: numpy warnings now.
+- save memory optimization of scan (reported by timothy and nicolas bl, fix by razvan) before : for certain corner cases used to result in a runtime shape error now : do the right thing.
+(sebastian urban) - ifelse now allows to have a list/tuple as the result of the if/else branches.
+- @with_tempfile to provide a tempfile name which would get removed upon completion (test success or failure) - dropping daily testing of maint/0.5 branch -- rip.
+changes: use float (32 bit) instead of double (64 bit) to store ratings and model parameters; incremental update api now accepts several feedback events at once; new rating predictor svd++; merge logisticregressionmatrixfactorization and multicorematrixfactorization into biasedmatrixfactorization; plenty of small enhancements, fixes, polishing - authors: zeno gantner, steffen rendle, christoph freudenthaler - license: gpl version 3 or later - programming language: python, perl, ruby, csharp, fsharp - operating system: linux, windows, solaris, mac os x - data formats: csv, tab separated, sql - tags: gradient based learning, large scale learning, algorithms, data mining, evaluation, supervised learning, collaborative filtering, matrix factorization, recommender systems, knn, library, dotnet, mono pattern 2.3 by tomdesmedt - february 26, 2012, 00:27:51 cet [ ] 323 views, 54 downloads, 7 subscriptions about: "pattern" is a web mining module for python.
+note: the reported case of this bug was happening in conjunction with the save optimization of scan that give run time errors.
+python machine learning toolkit changes: - added a new module: milk.ext.jugparallel to interface with jug (http://luispedro.org/software/jug).
+(david w.f.) - added theano.sparse.verify_grad_sparse to easily allow testing grad of sparse op.
+the gradient has been disabled for the time being as it only implemented (incorrectly) one special case.
+this is a special release, because it has never seen the general public.
+(razvan) - added how to wrap in theano an existing python function (in numpy, scipy, ...).
+(yann dauphin) - optimized to usmm and usmmcscdense in some case (yann) - note: theano.dot and theano.sparse.structured_dot() always had a gradient with the same sparsity pattern as the inputs.
+(frederic) - refactored gpu installation of theano.
+(razvan) new features: - advancedincsubtensor grad defined and tested (justin bayer) - adding 1d advanced indexing support to inc_subtensor and set_subtensor (james bergstra) - tensor.{zeros,ones}_like now support the dtype param as numpy (frederic) - added configuration flag "exception_verbosity" to control the verbosity of exceptions (ian) - theano-cache list: list the content of the theano cache (frederic) - theano-cache unlock: remove the theano lock (olivier) - tensor.ceil_int_div to compute ceil(a / float(b)) (frederic) - maxandargmax.grad now works with any axis (the op supports only 1 axis) (frederic) - used by tensor.{max,min,max_and_argmax} - tensor.{all,any} (razvan) - tensor.roll as numpy: (matthew rocklin, david warde-farley) - theano with gpu works in some cases on windows now.
+(guillaume) made the optimization process faster.
+numpy has a bug in the reduction code that made it crash.
+- it makes use of gpu shared variable more transparent with theano.function updates and givens parameter.
+(david, olivier) - doc on the rop function (ian) - added how to use scan to loop with a condition as the number of iteration.
+- all attribute are now reported in sorted order when printing a dataset.
+- scan grad when the input of scan has sequences of different lengths.
+(james, pascal) - theano.grad() now also work with sparse variable.
+bug fixes (incorrect results): - on cpu, if the convolution had received explicit shape information, they where not checked at runtime.
+(olivier) - sparse_variable[n, n] now works (li yao, frederic) - sparse_variable[m:n, o:p] now works (li yao, frederic, pascal) m, n, o, and p can be python int or scalar tensor variables, none, or omitted (sparse_variable[:, :m] or sparse_variable[:m, n:] work).
+this caused wrong result if the input shape was not the one expected.
+(ian g.) known bugs: - careduce with nan in inputs don't return the good output ( ticket _).
+moreover, the default splitter of crossvalidation is more robust in terms of number and type of created splits for common usage patterns (i.e. together with partitioners).
+it bundles tools for data retrieval, text analysis, clustering and classification, and data visualization.
+this makes it easy to parallelise things such as n-fold cross validation (each fold runs on its own processor) or multiple kmeans random starts.
+- gpuadvancedsubtensor1 supports broadcasted dimensions.
+pp wrappers to new versions - do not leave temporary files around after testing - refactoring and cleaning up of html exporting features - improve export of signature and doc-string to public methods - fixed and updated fasticanode to closely resemble the original matlab version (thanks to ben willmore) - support for new numpy version - new neuralgasnode
+this was detected when running theano tests.
+none - tags: clustering, nips2008, hierarchical kmeans, kdtree, nearest neighbors optwok 0.2.1 by ong - july 21, 2011, 20:39:12 cet [ ] 1872 views, 277 downloads, 1 subscription about: a collection of python code to perform research in optimization.
+to get better overview of high level changes see :ref: release notes for 0.5 and :ref: 0.6 as well as summaries of release candidates below - fixes (23 bf commits) - significance level in the right tail was fixed to include the value tested -- otherwise resulted in optimistic bias (or absurdly high significance in improbable case if all estimates having the same value) - compatible with the upcoming ipython 0.12 and renamed sklearn (fixes #57) - do not double-train slave classifiers while assessing sensitivities (fixes #53) - enhancements (30 enh + 3 nf commits) - resolving voting ties in knn based on mean distance, and randomly in smlr - :class: knn's ca.estimates now contains dictionaries with votes for each class - consistent zscoring in :class: hyperalignment - 2.0.0~rc5 (wed, oct 19 2011)
+- they must have the same length and corresponding type (razvan) - argmax output dtype is now int64 instead of int32.
+none - tags: shogun, python, eeg, classification, regression, support vector machines, k nearest neighbor classification, pca, rfe, neuroscience, fmri ,framework, gpr, lars, smlr, meg openopt 0.37 by dmitrey - december 15, 2011, 17:47:08 cet [ ] 18297 views, 4214 downloads, 1 subscription rating (based on 2 votes) about: universal python-written numerical optimization toolbox.
+changes: theano 0.5 (23 february 2012) highlight: - moved to github: http://github.com/theano/theano/ - old trac ticket moved to assembla ticket: http://www.assembla.com/spaces/theano/tickets - theano vision: http://deeplearning.net/software/theano/introduction.html#theano-vision (many people) - theano with gpu works in some cases on windows now.
+login 20 projects found that use python as the programming language.
+most notably, this version was to first to come with a comprehensive two-day workshop/tutorial.
+the scikit-learn aims to provide state of the art standard machine learning algorithms in python.
+you can specify the output dtype with a new dtype parameter to sum.
+none - tags: reinforcement learning, optimization, evolution, toolbox, neuroevolution flann, fast library for approximate nearest neighbors 1.6.11 by mariusmuja - september 12, 2011, 22:32:29 cet [ ] 12079 views, 1697 downloads, 1 subscription about: flann is a library for performing fast approximate nearest neighbor searches in high dimensional spaces.
+- fmri_dataset now also stores the input image type.
+numpy has a bug in the reduction code that made it crash.
+(frederic) - execution crash fix in advancedsubtensor1 on 32 bit computers.
+(david) - fix pydotprint with a function compiled with a profilemode (frederic) - was broken with change to the profiler.
+- searchlight now has the ability to mark the center/seed of an roi in with a feature attribute in the generated datasets.
+and dataset was refactored to use collection s copy method.
+(james) crashes fixed: - t.mean crash at graph building time.
+so if you didn't manually disable the same memory optimization (number in the list4), you are fine if you didn't manually request multiple taps.
+, gpualloc are not always pre-computed (constant_folding optimization) at compile time if all their inputs are constant.
+this is targeted at a research and rapid prototyping audience.
+dynamically generates cpu and gpu modules for good performance.
+(frederic) - better pycuda tests (frederic) - check_blas.py now accept the shape and the number of iteration as parameter (frederic) - fix opt warning when the opt shapeopt is disabled (enabled by default)
+the default behavior, stacking as multiple samples, is unchanged.
+- crossvalidation takes any custom node as errorfx argument.
+(pascal) gpu compilation crash on macos x. (olivier) support for osx enthought python distribution 7.x.
+(olivier d.) - scan interface changes: (razvan pascanu) - the use of return_steps for specifying how many entries of the output to return has been removed.
+(sometimes we used to catch interrupts) (frederic, david, ian, olivier) - better support for utf string.
+learnererror for classifiers' exceptions (adopted from 0.5) - adjusted example data to live upto nibabel's warranty of nifti standard-compliance - more robust operation of mc iterations -- skip iterations where classifier experienced difficulties and raise an exception (e.g. due to degenerate data)
+- tensor.tensordot can now be moved to gpu (sander dieleman, pascal, based on code from tijmen tieleman's gnumpy, http://www.cs.toronto.edu/~tijmen/gnumpy.html)
+this hid a bug in the grad of images2neibs.
+(ian g.) known bugs: careduce with nan in inputs don't return the good output (ticket _).
+this is significantly more efficient for big constant arrays.
+(guillaume) - made the optimization process faster.
+(david) scan fixes: - computing grad of a function of grad of scan (reported by justin bayer, fix by razvan) before : most of the time crash, but could be wrong value with bad number of dimensions (so a visible bug)
+sandbox new features (not enabled by default): curand_randomstreams for uniform and normal (not picklable, gpu only
+(sebastian urban) - faster dot() call: new/better direct call to cpu and gpu ger, gemv, gemm and dot(vector, vector).
+(razvan) - new min_informative_str() function to print graph.
+images2neibs grad was returning a wrong value.

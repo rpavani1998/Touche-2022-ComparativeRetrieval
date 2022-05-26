@@ -1,0 +1,145 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>RSS Reader in Python - Building an RSS Reader With Python - Python Iterator for an RSS Reader in Python</title>
+<body>
+
+<ol> 
+<li>About.com</li> 
+<li>Computing &amp; Technology</li> 
+<li>Python</li> </ol> <br>
+<br>
+Python <br>
+Search<br>
+
+<ul> 
+<li>Python</li> 
+<li>Basic Python</li> 
+<li>Intermediate Python</li> 
+<li>Pro Python</li> 
+<li></li> </ul> 
+<ul> 
+<li>Share</li> 
+<li></li> </ul> 
+<p><b>Discuss</b> in our forum</p> 
+<h1>Part 2: Getting Feed Information From the Data File With&nbsp;Python</h1> 
+<p>From&nbsp;Al Lukaszewski,&nbsp;former&nbsp;About.com Guide</p>  See More 
+About: 
+<ul> 
+<li>python tutorials</li> 
+<li>web programming</li> 
+<li>rss reader</li> 
+<li>advanced projects</li> 
+<li>iterators</li> </ul> 
+<h4><b>8</b> of <b>9</b></h4> Previous Next <br>
+ Using a Python&nbsp;Iterator 
+<p> Now, for the loop. It is essentially the same loop that I analyse in  my 
+tutorial on reading a file all-at-once. The code looks like this: </p> 
+<pre><code> while line: &Acirc; &Acirc; &Acirc; &Acirc; data = 
+string.split(line, ';') &Acirc; &Acirc; &Acirc; &Acirc; feedname = data[0] 
+&Acirc; &Acirc; &Acirc; &Acirc; address = data[1] &Acirc; &Acirc; &Acirc; 
+&Acirc; record[feedname] = address &Acirc; &Acirc; &Acirc; &Acirc; line = 
+datafile.readline()</code></pre> 
+<p></p> 
+<p> In using the <b>string</b> library function <b>split</b>, we pass the 
+string to be split followed by its delimiter. The result is a list of values 
+being passed to the variable, here<b>data</b>. From then we can assign values 
+to different variables, thus allowing us to use the feed's name as the key and 
+the feed's address as the value.</p> 
+<p> At the end of it, one has a dictionary called <b>record</b> that holds 
+each line of the file. The site name of the feed is the key, and the value of 
+each key is the address of that site's RSS file. If you are at all unclear 
+about dictionary keys and values, you should read my treatment of Python data 
+types. </p> 
+<p> The value of the dictionary <b>record</b> is then returned as the output 
+of the function.</p> 
+<p> But, you might say, won't the <b>feedname</b> variable interfere or 
+replace the<b>feedname</b> variable that we defined in the beginning? No. In 
+Python, variables have an aspect called<i> scope </i> that allows variables 
+defined within functions to exist within those functions and cease to exist 
+when the function ends. As long as we do not call or rely upon the first value
+<b>feedname</b>, Python pays no mind. When the function finishes, the function 
+variable<b>feedname</b> ceases to exist in the <b>mind</b> of the computer. </p>
+<br> Previous 
+<ul> 
+<li>This is NOT the&nbsp;Beginning</li> 
+<li>The Python Bang&nbsp;Line</li> 
+<li>The Tasks This Python Program Must&nbsp;Do</li> 
+<li>Holding the User Data in Python With&nbsp;CGI</li> 
+<li>Holding the User Data in Python With&nbsp;PHP</li> 
+<li>Defining the First Python&nbsp;Function</li> 
+<li>Reading the RSS Feed as a Python File&nbsp;Object</li> 
+<li>Using a Python&nbsp;Iterator</li> 
+<li>Calling Python's Function, Retrieving the Feed&nbsp;Address</li> </ul> Next
+<br>  Related Articles <br>
+
+<ul> 
+<li>Part 2: Getting Feed Information From the Data File With Python</li> 
+<li>Learning Assembler with Delphi - Page 3/5</li> 
+<li>RSS Reader in Python - Building an RSS Reader With Python - Getting the 
+Fee...</li> 
+<li>Pass By Reference - Definition</li> 
+<li>Creating Custom Delphi Components - Inside and Out - Page 3/9</li> </ul> 
+<br> <br>
+ Explore Python  Must Reads 
+<ul> 
+<li>What is Python?</li> 
+<li>Learn Python</li> 
+<li>Hello, World!</li> 
+<li>Python 3.0 </li> 
+<li>Regular Expressions</li> </ul>  Most Popular 
+<ul> 
+<li>&quot;Hello, World!&quot;</li> 
+<li>Line-By-Line File Analysis</li> 
+<li>What is Python?</li> 
+<li>Python Text Editors</li> 
+<li>String Methods - 1 of 2</li> </ul>  See More About: 
+<ul> 
+<li>python tutorials</li> 
+<li>web programming</li> 
+<li>rss reader</li> 
+<li>advanced projects</li> 
+<li>iterators</li> </ul>  By Category <br>
+
+<ul> 
+<li>Beginning Python</li> 
+<li>Python 3.0</li> 
+<li>Python Library</li> 
+<li>Regular Expressions</li> 
+<li>Web Development</li> 
+<li>Advanced Python</li> 
+<li>Database Programming</li> 
+<li>Networking</li> 
+<li>ScripTips</li> 
+<li>Python Jobs</li> 
+<li>Programming Glossary</li> 
+<li>Suggested Resources</li> </ul> <br>
+Python <br>
+
+<ol> 
+<li>About.com</li> 
+<li>Computing &amp; Technology</li> 
+<li>Python</li> </ol> 
+<ul> 
+<li>Most Popular</li> 
+<li>Latest Articles</li> 
+<li>RSS</li> </ul> 
+<ul> 
+<li>Advertise on About.com</li> 
+<li>Our Story</li> 
+<li>News &amp; Events</li> 
+<li>Work at About</li> 
+<li>SiteMap</li> 
+<li>All Topics</li> 
+<li>Reprints</li> 
+<li>Help</li> </ul> 
+<ul> 
+<li>Write for About</li> 
+<li>User Agreement</li> 
+<li>Ethics Policy</li> 
+<li>Patent Info.</li> 
+<li>Privacy Policy</li> 
+<li>Your Ad Choices</li> </ul> 
+<p>&copy;2012 About.com. All rights reserved.&nbsp;</p> 
+<p>A part of&nbsp;The New York Times Company.</p> <br>
+
+</body>

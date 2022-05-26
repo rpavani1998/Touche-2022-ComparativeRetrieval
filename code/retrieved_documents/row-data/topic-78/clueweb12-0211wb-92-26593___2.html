@@ -1,0 +1,156 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>CSC-152 98S : Outline of Class 26: Sorting Without Swapping</title>
+<body>
+
+<p> Fundamentals of Computer Science II (CSC-152 98S) </p> 
+<p> [Instructions] [Search] [Current] [Changes] [Syllabus] [Handouts] [Outlines
+] [Labs] [Assignments] [Examples] [Bailey Docs] [SamR Docs] [Tutorial] [API] 
+</p> <br>
+
+<h1>Outline of Class 26: Sorting Without Swapping</h1> 
+<p> <strong>Held</strong>: Friday, March 6, 1998 </p> 
+<ul> 
+<li>Short lab: Quicksort </li> 
+<li>Faster Sorting Methods 
+<ul> 
+<li>Silly Sort </li> 
+<li>Bucket Sort </li> 
+<li>Radix Sort </li> 
+<li>Other sorting algorithms </li> </ul> </li> </ul> 
+<p> </p> 
+<h2>Administrivia</h2> 
+<ul> 
+<li> I have decided not to assign another homework before break since most of 
+you will be working hard on homeworks, essays, and such for your other classes.
+</li> 
+<li> Those of you who want more programming to do please come and see me. </li>
+<li> I wasn't able to get your homeworks graded because I was spending time 
+developing today's lab.</li> 
+<li> For part of today's class, we'll work on lab 9, which focuses on the 
+quicksort algorithm.</li> </ul> 
+<p> </p> 
+<h2>Short lab: Quicksort</h2> 
+<p> Work on lab 9 for approximately twenty minutes to improve your 
+understanding of the operation of quicksort.</p> 
+<h2>Faster Sorting Methods</h2> 
+<ul> 
+<li> We've seen a number of sorting routines. 
+<ul> 
+<li> Some are O(n*n) </li> 
+<li> One (merge sort) is O(n*log_2(n)), but requires significantly extra space.
+</li> 
+<li> One (quicksort) is expected O(n*log_2(n)), but can behave significantly 
+worse.</li> </ul> </li> 
+<li> Can we do better than O(n*log_2(n))? </li> 
+<li> It depends on our basic operations. </li> 
+<li> If you are restricted to compare and swap, it turns out that you can't do 
+better than n*log_2(n) steps. Why not? A careful analysis will show you that if 
+you use fewer steps, you won't have been able to compare each element to every 
+other element (directly or indirectly). If there are two elements that were 
+never compared, they may not be in the correct place.</li> 
+<li> So, can we throw away our comparisons of elements and swaps? </li> 
+<li> (Yes, but it doesn't seem to be covered in Bailey.) </li> </ul> 
+<p> </p> 
+<h3>Silly Sort</h3> 
+<ul> 
+<li> Here is an interesting sorting algorithm that relies on limitations to 
+the input to ensure quicker sorting.
+<pre> /** * Sort an array containing the values 1 ... n. * pre: The array is 
+of size n. * pre: Each value between 1 and n appears exactly once in the * 
+array * post: The array contains the same elements and they're sorted. */ 
+public sillySort(int[] stuff) { for (int value = 1; value &lt;= this.size(); 
+++value) { stuff[value-1] = value; } / for } // sillySort</pre> </li> 
+<li> What is the running time of this algorithm? </li> 
+<li> Why is this an unsatisfying algorithm? </li> </ul> 
+<p> </p> 
+<h3>Bucket Sort</h3> 
+<ul> 
+<li> If we know that the elements in our array are in a restricted range, we 
+can do a sort that array without comparing and swapping, if we're willing to 
+use some extra space.</li> 
+<li> In <strong>bucket sort</strong>, we build a set of buckets that 
+correspond to the range of elements. We then step through our array, copying or 
+moving each element to the appropriate bucket. When we're done copying 
+elements, we can simply pull them out of the buckets in order (since the 
+buckets are ordered).</li> 
+<li> What is the running time? O(n+m), where n is the number of elements and m 
+is the number of buckets.</li> 
+<li> What is the extra space requirement? O(m). </li> 
+<li> A simple variation is to have bigger buckets, and recursively sort each 
+bucket. This can save some space, but may then require extra time. (In the 
+extreme case, we only use two buckets in each sort or subsort, giving us 
+something close to quick sort.)</li> 
+<li> One implementation question that arises is how to implement the buckets, 
+given that the same bucket may hold multiple elements. We'll leave that 
+question to the future.</li> </ul> 
+<p> </p> 
+<h3>Radix Sort</h3> 
+<ul> 
+<li> If each object to be sorted can be represented as a sequence of values 
+(e.g., a sequence of digits in a decimal number, a sequence of characters in 
+words, a sequence of bits in the binary representation of the object) and 
+sorting can be based on that sequence, then it is possible to sort based on 
+those sequences.</li> 
+<li> In <strong>radix sort</strong>, one repeatedly partitions the objects 
+based on one of the elements of the sequence, moving from least significant to 
+most significant element of the sequence. After each partition, we glue the 
+partitions back together, smallest to largest.</li> 
+<li> Each partitioning must maintain the previous partitioning within each new 
+partition. E.g., if a precedes b after the first partitioning, and a and b end 
+up in the same group in the second partitioning, then a must precede b in its 
+group.</li> 
+<li> Most often, we simply use bits for the partitioning, as these are easiest 
+to check and use.</li> 
+<li> In psuedo-Java, for the boolean case 
+<pre> public static void radixSort() { radixSort(v,0); } // radixSort /** * 
+Radix sort the vector, starting with the bth-least significant * bit. * pre: 0 
+&lt;= b &lt; # of places in the sequence representation of * the data type * 
+pre: this vector has been radix sorted for all 0 &lt;= i &lt; p * post: this 
+vector is radix sorted */ public static void radixSort(place p) { // Base case, 
+we've run out of bits if (p == PLACES_IN_ELEMENT) return; // Recursive case, 
+partition and move on to the next bit splitAndJoin(b); return radixSort(b+1); } 
+// radixSort /** * Split the elements at the pth position * pre: 0 &lt;= b &lt; 
+# of places in the sequence representation of * the data type * post: For all 
+i, the pth place in v[i] &lt;= the pth place in v[i+1] **/ public static void 
+splitAndJoin(int p) { // Create the set of buckets Vector[] buckets = new 
+Vector[POSSIBLE_PLACE_VALUES]; for(int i = 0; i &lt; POSSIBLE_PLACE_VALUES; 
+++i) buckets[i] = new Vector(); // Paritition the vector for(int i = 0; i &lt; 
+size(); ++i) { buckets[elementAt(i).placeValue(p)].addElement(elementAt(i)); } 
+// Put 'em back together setLength(0); for(int i = 0; i &lt; 
+POSSIBLE_PLACE_VALUES; ++i) { addElements(buckets[i]); } } // splitAndJoin</pre>
+</li> 
+<li> What's the running time? Well, there are O(l) rounds, where l is the 
+number of positions in the sequences. In each round, we spend O(n) time taking 
+stuff out of the vector (assuming that we can append to each bucket in constant 
+time) and O(m+n) time putting stuff back into the vector. That gives an overall 
+running time of O(l*(m+n)).</li> 
+<li> However, we can often call l and m constants (e.g., for integers, l is 
+always 32 and m is always 2), so that's a running time of O(n).</li> 
+<li> Space usage is O(n+m), for the temporary buckets. </li> </ul> 
+<p> </p> 
+<h3>Other sorting algorithms</h3> 
+<ul> 
+<li> As we learn some more data structures, we'll also learn some more sorting 
+methods that depend on those data structures. One to look forward to is<em>heap 
+sort</em>. </li> </ul> 
+<p> On to Introduction to Lists<br>
+ Back to More Sorting Techniques<br>
+ 
+Outlines: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53
+<br>Current position in syllabus </p> 
+<p> [Instructions] [Search] [Current] [Changes] [Syllabus] [Handouts] [Outlines
+] [Labs] [Assignments] [Examples] [Bailey Docs] [SamR Docs] [Tutorial] [API] 
+</p> 
+<p><strong>Disclaimer</strong> Often, these pages were created &quot;on the 
+fly&quot; with little, if any, proofreading. Any or all of the information on 
+the pages may be incorrect. Please contact me if you notice errors.</p> 
+<p>This page may be found at 
+http://www.math.grin.edu/~rebelsky/Courses/CS152/98S/home/rebelsky/public_html/Courses/CS152/98S/Outlines/outline.26.html
+</p> 
+<p>Source text last modified Tue Jan 12 11:52:24 1999.</p> 
+<p>This page generated on Mon Jan 25 09:49:25 1999 by SiteWeaver. Validate 
+this page. </p> 
+<p>Contact our webmaster at rebelsky@math.grin.edu</p> 
+</body>

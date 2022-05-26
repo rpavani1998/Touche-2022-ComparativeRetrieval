@@ -1,0 +1,942 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>OpenGL++-relevant ARB Meeting Notes</title>
+<body>
+
+<h2> ARB Meeting Notes</h2> 
+<h3> August 20-21, 1996</h3> 
+http://www.opengl.org/ARB/Notes/meeting_notes_2-26-96.html
+<h3> Cosmo 3D</h3> John: Cosmo 3D does not include Cosmo OpenGL. It will use 
+the resident OpenGL.
+<p>John: SGI has been working on merging Inventor and Performer. Cosmo 3D is a 
+subset of this merged API that will be released in the future. It reads and 
+writes VRML<br>
+2.0 files and renders using OpenGL. SGI has brought these ideas 
+to the Java3D discussions. SGI is saying that Cosmo 3D is a Java 3D 
+implementation. One of the things<br>
+that is still being worked out is how the 
+Cosmo 3D architecture will be evolved. Another is how SGI would provide a 
+sample implementation or other assistance to other<br>
+vendors. Cosmo 3D does 
+not depend on any proprietary extensions. It runs on top of standard OpenGL. 
+SGI also has a 3D browser plug-in called Cosmo player.</p> 
+<p>Otto: Replacing Microsoft OpenGL is essentially replacing a system 
+component of our OS which is not a good thing. We would not support systems in 
+which one of our<br>
+DLLs has been overwritten. </p> 
+<p>Jim: Is the spec available? </p> 
+<p>John: The current spec is a little out of date. I'll try to get an 
+up-to-date spec to people within a few days.<br>
+&nbsp; </p> 
+<h3> December 9-10, 1996</h3> 
+http://www.opengl.org/ARB/Notes/meeting_notes.html
+<h3> Scene Graph Standard for OpenGL</h3> Mark Segal presented SGI's ideas on 
+creating a scene graph manipulation toolkit for OpenGL.
+<p>Why A Layer Above OpenGL? </p> 
+<ul> 
+<li> Makes graphics/visualization applications easier to program and work well
+</li> 
+<ul> 
+<li> library can optimize performance using info available only at a higher 
+level</li> 
+<li> allow for MP rendering/manipulation)</li> </ul> 
+<li> Systems implementors can take a more systems approach</li> 
+<li> One scene graph (platform for audio/video integration)</li> </ul> Cosmo3D 
+<ul> 
+<li> SGI's current scene graph manipulation toolkit</li> 
+<li> Encapsulates SGI's graphics/visualization experience beyond OpenGL</li> 
+<li> OpenGL and Inventor</li> 
+<ul> 
+<li> Inventor -- makes 3D easy to use</li> 
+<li> Performer -- high performance visualization for vis sim</li> 
+<li> both support scene graphs</li> </ul> </ul> Inventor 
+<ul> 
+<li> Scene graph designed for interaction</li> 
+<ul> 
+<li> provides powerful manipulators</li> 
+<li> very extensible</li> 
+<li> very general</li> 
+<li> not designed for high performance</li> 
+<li> not designed for MP</li> 
+<li> C++ based toolkit</li> </ul> </ul> Performer 
+<ul> 
+<li> Scene graph designed for performance</li> 
+<ul> 
+<li> targeted to specific market: visual simulation</li> 
+<li> first priority is high performance</li> 
+<li> MP is supported</li> 
+<li> not very extensible</li> 
+<li> little UI support</li> </ul> </ul> Why Not Performer/Inventor 
+<ul> 
+<li> Performer isn't flexible enough</li> 
+<li> Inventor isn't efficient enough</li> 
+<li> Neither has a spec</li> 
+<li> Cosmo3D provides a foundation for Performer, Inventor, others</li> </ul> 
+Cosmo3D Is...
+<ul> 
+<li> Scene graph manipulation toolkit</li> 
+<li> Provides means for scene graph behavior</li> 
+<li> Conveniently supports VRML 2.0 browsers</li> 
+<li> C++ library; generated Java bindings</li> 
+<li> Extensible at run-time and compile-time</li> 
+<li> Provides hooks for MP implementations and applications</li> 
+<li> Exposes basic OpenGL types/structures</li> 
+<li> Allows apps to bypass it for direct OpenGL use</li> 
+<li> Provides hooks for audio and video generation</li> </ul> Cosmo3D Is Not...
+<ul> 
+<li> An application</li> 
+<li> a GUI</li> 
+<li> A file format</li> 
+<li> Tied to a particular file format</li> 
+<li> Inventor (no manipulators)</li> 
+<li> Performer</li> 
+<li> Tied to a particular OS or window system</li> </ul> Cosmo3D So Far 
+<ul> 
+<li> Scene graph: DAG</li> 
+<li> Nodes</li> 
+<ul> 
+<li> Internal nodes - transform, LOD, etc.</li> 
+<li> Leaves - geometry, appearance</li> </ul> 
+<li> Actions</li> 
+<ul> 
+<li> Draw</li> 
+<li> Pick/Intersect</li> 
+<li> Sound</li> </ul> </ul> Fields, Routes, and Engines 
+<ul> 
+<li> Nodes are parameterized by &quot;fields&quot;</li> 
+<li> Fields can be wired together with &quot;routes&quot;</li> 
+<ul> 
+<li> Implements basic behaviors</li> 
+<li> &quot;Engines&quot; may be used for more complex behaviors</li> </ul> 
+<li> Can be expensive to use (implementation careful to incur cost only when 
+used)</li> </ul> Some Other Related Work 
+<ul> 
+<li> Cosmo3D supports VRML scene graphs</li> 
+<ul> &nbsp; 
+<li> many modes are the same/similar</li> 
+<li> engines support scripts</li> 
+<li> VRML was influenced by Performer/Inventor</li> </ul> 
+<li> Java3D</li> 
+<ul> &nbsp; 
+<li> Have worked with Sun</li> 
+<li> Cosmo3D designed for auto Java bindings</li> </ul> </ul> What We Need 
+<ul> 
+<li> A substrate for visualization applications and toolkits</li> 
+<li> A scene graph toolkit that admits efficient implementations and provides 
+the high quality of OpenGL</li> 
+<li> Extensibility (Run-time vs. compile-time extensions)</li> 
+<li> A specification!</li> </ul> Kurt: I think this group should work on this 
+problem because the group has shown that it is able to work together to advance 
+technology. It is also clear that this area will affect the evolution of OpenGL.
+<p>Hock: Will other proposals be entertained? </p> 
+<p>Kurt: Absolutely. This was not an &quot;SGI proposal&quot; to do Cosmo3D. 
+We just wanted to tell people what we're doing in this area and find out if the 
+ARB wanted to develop a specification for this type of functionality.</p> 
+<p>Kurt: SGI's goal is to create an environment in which applications could 
+use a variety of libraries (where OpenGL provides the common foundation) to 
+accomplish their tasks. Right now, SGI customers have to make a choice about 
+which library to use, and the libraries don't interact with each other.</p> 
+<p>Hock: When could this be shipped? </p> 
+<p>Kurt: This group could do a spec in about a year, I think? </p> 
+<p>Hock: So commercial products would not be available till '98? </p> 
+<p>Kurt: It may not be like OpenGL because it doesn't require hardware 
+acceleration...companies may be able to ship it more quickly. A sample 
+implementation may not require as much re-implementation as an OpenGL 
+implementation.</p> 
+<p>Kevin R.: Shouldn't we make sure this can be layered on top of other 
+graphics APIs?</p> 
+<p>Kurt: Yes we should. It seems likes it would be in the best interests of 
+this group to define something that works really well on OpenGL. As you write a 
+tighter and tighter spec, you find yourself making really hard choices.</p> 
+<p>Kevin R.: Should this group do this or should another body be formed? </p> 
+<p>Kurt: This group needs to think about that. I would prefer not to go 
+through the licensing effort again, since it was really, really difficult to 
+get legal agreements in place between a number of companies.</p> 
+<p>Kurt: As the level of the functionality provided by a vendor increases, it 
+becomes possible for that vendor to &quot;hide&quot; access to extensions. This 
+can be a way to provide more and more capabilities to applications without 
+requiring them to access extensions directly.</p> 
+<p>Bill A.: E&amp;S has a product in this area (Integrator), so we'd be very 
+interested in seeing this evolve in a way that is consistent with what we 
+already support.</p> 
+<p>Igor: Intel has a library (Intel Scene Manager) that addresses similar 
+concepts.</p> 
+<p>Dick: Would SGI turn over the technology to the ARB? </p> 
+<p>Kurt: We have to be careful to turn over only our technology, but yes, that 
+would be an easy discussion to have. We're also ready to turn over the manpower 
+to implement whatever spec the ARB came up with.</p> 
+<p>Kurt: I would propose that we not make the list too long for what we're 
+trying to accomplish in the first release. We should have a long list of things 
+that we'd like to do eventually and we should think about those things as we 
+write the spec, but we need to bite off a reasonable chunk for the first 
+release.</p> 
+<p>Jim: Some ISV's have their own scene graph stuff -- PTC has their own. </p> 
+<p>Kurt: We've heard vendors say, &quot;We have this scene graph stuff and 
+we'd really like not to.&quot;</p> 
+<p>Hock: I'd like to see this layered on OpenGL, like GLU. </p> 
+<p>Kurt: There are two examples: GLU and GLS. I think that this is more like 
+GLS. GLU is a required part of the OpenGL environment.</p> 
+<p>Fred: Does GLU or another higher level library take advantage of 
+undocumented hooks in your OpenGL implementation?</p> 
+<p>Kurt: No. All access is through documented entry points in OpenGL or 
+extensions.</p> 
+<p>Otto: How soon could a sample implementation be done by SGI? </p> 
+<p>Kurt: We're in the (unfortunate) position of being able to provide an 
+implementation sooner than a spec. We need to get the cart back before the 
+horse and make sure we do a spec that contains what we want. On the other hand, 
+since we have an implementation in progress, this stuff isn't just a bunch of 
+hot air.</p> 
+<p>Straw poll: Would you be in favor of having the ARB own the specification 
+of a scene graph standard? 21 in favor, 2 not interested, 1 concerned with 
+whether its possible to do this in a timely fashion.</p> 
+<p>Bill: This seems ambitious, it doesn't seem like a group as large as this 
+can make timely progress.</p> 
+<p>Kurt: Point well taken, we need to consider what sort of process could make 
+this happen effectively.</p> 
+<p>Mark: We could have an implementation in a couple months. I'm working on 
+the spec, and if I continue working on it myself, I can perhaps have something 
+in a couple months.</p> 
+<p>Kevin R.: Sun is working with SGI, Intel, and Apple to define Java3D. Hope 
+to have a spec in early Jan. Will go for public review after review by partners.
+</p> 
+<p>Mark: Fields and routes are in VRML 2.0 but not in the current Java3D spec. 
+</p> 
+<p>Kevin R.: Part of our desire to get the spec out early in '97 is to resolve 
+issues on how Java3D and Cosmo3D are related.</p> 
+<p>Steve W.: I know of at least a couple of vendors that are attempting to 
+develop products like this. This doesn't say that we shouldn't go ahead, but it 
+could be a significant barrier.</p> 
+<p>Straw poll: Which ARB companies would like to see the ARB control the spec 
+for a scene graph library? Let's assume that the licensing terms are 
+attractive. Seven. Who's confident they will not vote for it? One. And one 
+abstention.</p> 
+<p>General feeling around to see how to proceed. </p> 
+<p>Actions: </p> 
+<ul> 
+<li> Hone list of what it is and what it isn't</li> 
+<li> Have companies that have done this share their experiences, documents, 
+etc.</li> 
+<li> Interact with Mark</li> </ul> Initial email discussions will be conducted 
+over the opengl-arbgoers list. Paula will send out the current opengl-arbgoers 
+mailing list so people can see who's on it.<br>
+&nbsp; 
+<h3> February 17-19, 1997</h3> http://www.opengl.org/ARB/Notes/arb-feb.html 
+<h3> OpenGL++</h3> Mark Segal gave a presentation to motivate the need for a 
+higher-level toolkit library
+<p>Slide #1: Why a higher-level API? </p> 
+<ul> 
+<li> Easier to use &amp; get effective results</li> 
+<ul> 
+<li> library does platform-specific operations, e.g., compilation, culling, 
+multiprocessing, draw order sorting</li> </ul> 
+<li> Allows system implementors to take a systems approach</li> 
+<li> One scene graph</li> 
+<ul> 
+<li> geometry, audio, video</li> </ul> 
+<li> ISV's want one standard</li> </ul> Slide #2: What's the right level? 
+<ul> 
+<li> OpenGL is too low</li> 
+<li> Performance/flexibility tradeoffs</li> 
+<li> Provide the substrate for more complex functionality</li> 
+<ul> 
+<li> domain specific extensions, e.g., visual simulation or image processing
+</li> </ul> 
+<li> A scene graph library</li> </ul> Slide #3: Why the OpenGL ARB? 
+<ul> 
+<li> OpenGL++ is tied to OpenGL</li> 
+<li> Ready-made standards body for a 3D API</li> 
+<li> Reasonable standardization benefits all</li> 
+<li> Good for OpenGL</li> </ul> Dick Jay: We think that the OpenGL ARB is very 
+good at what the ARB does. A scene graph API is a large undertaking, and we 
+would hate to see the ARB's current work &quot;diluted&quot; by such a new 
+effort.
+<p>John S.: It's not necessarily the case that we would dedicate a large 
+portion of the ARB agenda to this. There may be another group with significant 
+overlap in membership with this group that meets to discuss the detailed 
+issues. Perhaps there's only a subcommittee report at each meeting.</p> 
+<p>Kurt: We need to learn to work smarter and be more organized. We could come 
+to meetings more prepared, have subcommittees, delegate, etc.</p> 
+<p>Jon: There are three different approaches that are possible, (A) codifying 
+existing efforts, (B) creating something from scratch, or (C) creating 
+something from competing efforts.&nbsp; The group needs to decide which to 
+pursue.</p> 
+<p>Igor: It's not that clear that we could do a good job at the scene graph 
+level since most people here are hardware/system vendors.</p> 
+<p>Micheal: The reason to embark on a standards effort is that everyone who 
+participates thinks they will benefit in some material way by the results of 
+standardization. There are lots of opportunities to provide optimization value 
+with a scene graph API that aren't available in OpenGL.</p> 
+<p>Steve: A scene graph API requires a lot more ISV input than the OpenGL API 
+level.</p> 
+<p>Dick: I really think that this group only has a part of the membership 
+needed to be successful at the scene graph level. We need a lot more input and 
+representation from the user community.</p> 
+<p>Paula: But we all work with ISVs and get input from them on an ongoing 
+basis.</p> 
+<p>Steve: The difference between this and the original OpenGL effort is that 
+no ISV's were doing rasterization on their own when OpenGL came along, but 
+there are a lot of ISV's who have been doing their own scene graph code.</p> 
+<p>Paula: Do we really need direct involvement of the ISV's? I don't think so. 
+We just need to get their requirements.</p> 
+<p>Steve: I'd like to get at least a first round of requirements input from 
+ISV's.</p> 
+<p>Slide #4: OpenGL++ must... </p> 
+<ul> 
+<li> Be compatible with OpenGL</li> 
+<li> Allow access to OpenGL if OpenGL is present</li> 
+<li> Be extensible at link time and at run time</li> 
+<li> Support diverse scene graph file formats, including VRML 2.0</li> 
+<li> Support automatic scene graph behaviors (fields &amp; routes)</li> 
+<li> Work from PC software to high-end hardware</li> 
+<li> Support multiprocessing/multicontext</li> 
+<li> Manage graphics-related system resources</li> 
+<li> Have a specification</li> 
+<li> Be an open standard</li> 
+<li> Happen soon</li> 
+<li> Support movies, audio, live video, live audio</li> 
+<li> Use OpenGL effectively</li> 
+<li> Have more than one language binding</li> 
+<li> Be testable/tested</li> </ul> Bill A.: This also needs to play in the 
+world of the Internet. This could include supporting common file formats, level 
+of detail, just-in-time polygon delivery, etc.
+<p>Steve: How many people are already shipping products that address some of 
+these requirements? We need to develop a good migration story for the customers 
+of these existing products.</p> 
+<p>Jon: There is rich set of things that can be addressed by a scene graph 
+API. Therefore there is a rich solution space, and vendors are poised to 
+deliver a variety of solutions. It will be difficult to go deep into a 
+discussion of the requirements because each vendor will have customer 
+requirements that might only be discussed under non-disclosure.</p> 
+<p>Mark: I hope that we can distill the requirements without the need to look 
+at every application or market-specific toolkit that could be built on top.</p> 
+<p>Steve: I've talked to vendors recently who have said,&quot;You know, we're 
+already doing that stuff and we think we can do it better than any general 
+purpose vendor.&quot; I think we really need to understand what these folks are 
+doing.</p> 
+<p>Drew: Which language bindings are important? C++ and Java might be 
+sufficient, but does anyone want support for any other languages? Perhaps a 
+more language-independent object model should be developed.</p> 
+<p>Slide #5: OpenGL++ must not... </p> 
+<ul> 
+<li> Mandate a file format</li> 
+<li> Be tied to a particular OS or window system</li> </ul> Slide #6: Required 
+Features
+<ul> 
+<li> Scene graph</li> 
+<ul> 
+<li> internal nodes: transform, etc.</li> 
+<li> leaves: materials, lights, textures, shapes, audio</li> </ul> 
+<li> Run time type system</li> 
+<li> Traversal mechanism</li> 
+<li> Events, windowing</li> </ul> Slide #7: Schedule 
+<ul> 
+<li> 6 months to specification and sample implementation</li> </ul> Fred: How 
+confident are you of making this schedule?
+<p>Mark: It's aggressive but doable if we manage what we consider for the 
+first version.</p> 
+<p>Bill A.:Is there a point at which this is so late that it's no longer 
+interesting?</p> 
+<p>Michael: It will always be interesting, but if we can move quickly, we can 
+have a single solution that everyone supports. It's so interesting that in a 
+year, people will have their own ways to solve this problem and the market will 
+be faced with a bunch of incompatible solutions to the same problem.</p> 
+<p>Slide #8: OpenGL++ </p> 
+<ul> 
+<li> Fields</li> 
+<li> Run-time type system</li> 
+<li> Scene graph</li> 
+<ul> 
+<li> internal nodes: transform, detail, switch</li> 
+<li> leaves: geosets, indexed geosets, appearance, sounds</li> </ul> 
+<li> Traversal</li> 
+<ul> 
+<li> provided: draw, probe, event, sound</li> </ul> 
+<li> Engines &amp; Routes</li> 
+<li> OpenGL++ stuff: interaction</li> </ul> During the course of the 
+discussion, the following list of scene graph issues was developed:
+<ul> 
+<li> Added workload for ARB</li> 
+<li> Relevant experience in ARB</li> 
+<li> Adequate representation of ISV's</li> 
+<li> Need goal definition up front</li> 
+<li> What is approach?</li> 
+<ul> 
+<li> something new</li> 
+<li> picking from competing choices</li> </ul> 
+<li> Scene graph is not differentiated (performance) on platforms</li> 
+<li> Too many requirements? Tied to specific markets?</li> 
+<li> Useful for:</li> 
+<ul> 
+<li> system (integrate applications)</li> 
+<li> hardware (drive it &quot;better&quot;)</li> 
+<li> note: This layer hides many EXT problems from ISV's</li> </ul> 
+<li> Architectural structure -TBD</li> 
+<li> Binding issues - C++, Java</li> 
+<ul> 
+<li> Consider standard object-oriented methods (CORBA/com)</li> </ul> 
+<li> Extensibility vs. performance</li> 
+<li> Should OGL be the goal for all vendors (what is the underlying API?)</li> 
+<li> Should reaching around to the underlying layer be a goal?</li> 
+<li> Scalability - to extreme high end</li> </ul> John S.: Are we at the point 
+where we can decide whether we can agree to move forward on this?
+<p>Steve: How does this relate to Cosmo3D? </p> 
+<p>Mark: Cosmo3D started out being a VRML toolkit. We think we need to get 
+some of the VRML stuff out and add some other stuff, since we want to do a lot 
+more than VRML in OpenGL++.</p> 
+<p>Bill A.: How does the Cosmo3D implementation fit in? </p> 
+<p>Mark: I've told the development team that we'll be throwing away the 
+Cosmo3D implementatoin and starting over. But from a practical standpoint, 
+we'll leverage the code as much as we can.</p> 
+<p>Kurt: SGI believes that we have to move forward in this area, and we are 
+moving forward. We're willing to change what we have in order to make it 
+acceptable to other companies, but we're moving ahead regardless because we 
+believe that this is the right way to go.</p> 
+<p>Michael: It's not &quot;Unity or failure&quot;, but &quot;Unity or 
+something else that isn't quite as good.&quot;</p> 
+<p>Steve: Each of us who already has an investment in this area has to 
+consider how much we are willing to modify, integrate, or rework in order to 
+take advantage of the opportunity to cooperate on a standard.</p> 
+<p>Kevin R.: I'm concerned about the issue of extensibility vs. performance, 
+and about how &quot;OpenGL-centric&quot; this effort should be. Should 
+&quot;reaching around&quot; this library to OpenGL be a goal?</p> 
+<p>Michael: I believe this level should be very OpenGL-centric. I also think 
+it's critical to allow applications to&quot;reach around&quot; and access 
+OpenGL. It can be quite frustrating for an application to be locked into access 
+through a higher-level API with no way to do things that the underlying layer 
+could accomplish.</p> 
+<p>Hanspeter: Can you comment on the breadth you are attempting to address? 
+You say you want to support audio rendering, but audio rendering can have very 
+different requirements than visual rendering. I've also seen people wanting to 
+do haptic rendering. Will you consider all of this?</p> 
+<p>Mark: We need to bite off a limited set of things at first, and try to 
+build a framework that could incorporate new things over time.</p> 
+<p>Questions/Concerns: </p> 
+<ul> 
+<li> Extensibility vs. Performance</li> 
+<li> Should OpenGL be the goal for all vendors?</li> 
+<li> Should &quot;reaching around&quot; to OpenGL be a goal?</li> 
+<li> Scalability</li> 
+<li> Will we get buy-in from ISV's?</li> </ul> Steve: We have a dilemma in our 
+environment. We've added a triangle interface to Direct3D in order to improve 
+the compatibility with our OpenGL. But all of the audio and video support in 
+our environment comes from the ActiveAnimation side of our environment. If we 
+are too OpenGL-centric with this effort, it seems like it would drive a wedge 
+between our ActiveX and OpenGL efforts at a time when we're looking ways to tie 
+them more closely together.
+<p>A straw poll of the organizations present was conducted in order to 
+determine the level of interest in moving ahead with this proposal as an ARB 
+activity:</p> 
+<p>IBM (Bimal): We're definitely interested in pursuing this. </p> 
+<p>Intergraph (Dale): We think this is a good thing. We have an issue with 
+some ongoing work. I think this is the right body to work on it. We're for it, 
+just need to figure out how to merge it into our business plans.</p> 
+<p>AccelGraphics (Fred): We'd like to see the effort proceed. This is the 
+right group. We'd like to make sure the various goals are met, e.g., working 
+out the issues with ActiveAnimation.</p> 
+<p>Microsoft (Steve): We have some dilemmas. How it relates to 
+ActiveAnimation, other APIs, and to ongoing efforts with some partners. We do 
+want to support a standard in this area. We have to learn from our ISVs. We 
+need to talk over things back at the office before we can decide.</p> 
+<p>3Dlabs (Jeremy): We support this. We've been looking for something to solve 
+some of the problems that this addresses. This kind of effort will help 
+promote/enable applications.</p> 
+<p>Real3D (Richard): We think it's a good idea to support a low-level scene 
+graph API as long as it isn't too thick. We believe in making this library 
+OpenGL-specific. We like the idea of having an ARB-sanctioned standard in this 
+area. A low-level standard would benefit new application development.</p> 
+<p>HP (Jon): We really do care about this area. There's a lot of opportunity 
+for adding value in this middleware area. We need some time for internal 
+discussions before we can say yes or no. We have multiple support issues to 
+consider including support across workstations and PC's.</p> 
+<p>DEC (Bill C.): We're less concerned about having something in six months 
+than in getting the right answer. We like the direction of the OpenGL++ layer 
+heading towards something lower level than we first envisioned. The work needs 
+to be done close to the ARB. We're concerned about whether the bylaws as 
+currently written allow us to work on things other than OpenGL. We think that 
+the ARB needs to continue to develop OpenGL to support things that are needed 
+by libraries like OpenGL++. Need some time to go back and have some internal 
+discussions.</p> 
+<p>Intel (Igor): We're very much committed to having a standard scene graph 
+API. We're committed to Java3D. We're not ready to say this has to be OpenGL or 
+nothing. This might not be the right group to develop this. We're concerned 
+about making the API flexible enough to address all of the things we'd like to 
+do. More time would help in order to work things out internally.</p> 
+<p>MERL (Hanspeter): An open standard is something we would welcome. My 
+concern is on the architectural level: could all of the kind of things that we 
+do fit into the framework of OpenGL++? We'd like to contribute to this effort 
+if we can. (Big multiuser systems, volume rendering, haptic rendering)</p> 
+<p>TGS (Dick): I need to talk to my bosses and such. We still have the concern 
+about the workload for the ARB. If the ARB is going to take this on, it will 
+have to organize itself so that the current work and this new work can be 
+supported. I think an API at this level is useful, particularly if it is a thin 
+layer like we've discussed. It's not the next Inventor, it's the thing that 
+will be used to build the next Inventor, and that's nice because it leaves us 
+something to do.</p> 
+<p>E&amp;S (Bill): We have some technology in Integrator, but do not view this 
+as a competitor. The scene graph capabilities are only part of what Integrator 
+does. We're not intending to push our technology for anything more than solving 
+our problems. We'd like to be involved...our commitment would vary depending on 
+the success we foresee.</p> 
+<p>Sun (Kevin R.): We are focusing our efforts on something other than what's 
+been proposed here - Java3D. We're about ready to release a spec. We're not 
+neccessarily interested in pursuing an OpenGL++ effort right now, since it will 
+be a distraction to our Java3D effort. Don't mistake that for lack of interest 
+though, if the ARB moves forward, we'll participate.</p> 
+<p>SGI (Kurt): We're excited to move forward. It's exciting to hear the level 
+of support for this effort.</p> 
+<p>Some folks need to go back and engage in discussions about whether this 
+makes sense for their business. Others want to move ahead with technical 
+comment and discussion of goals.</p> 
+<p>John S. takes the action item to answer the question about whether the 
+bylaws permit the ARB to work on a new spec such as this.</p> 
+<p>Rob: Could Microsoft, HP, Sun, or anyone else contribute an alternative 
+solution that would meet these goals?</p> 
+<p>Kevin R.: I could commit to finding out whether we're prepared to offer 
+Java3D as a solution.</p> 
+<p>Jon: HP can check into what's possible to offer. </p> 
+<p>Igor: We have a proposal to contribute. </p> 
+<p>Kurt: SGI is prepared to offer up technology unconditionally. We understand 
+that we lose control when it is given to the ARB. Other vendors should make it 
+clear what strings (if any) are attached when they offer up technology.&nbsp; 
+For instance, the ARB needs to know whether the technology must be taken as is 
+or if it can be used as the starting point to develop whatever the ARB thinks 
+is the right solution.</p> 
+<p>Bill C.: Does SGI intend to charge additional licensing fees for this? </p> 
+<p>Kurt: The trend in our licensing is downward. We're not attempting to make 
+an income on this stuff.</p> 
+<p>John S.: Licensees shouldn't expect to have to pay anything more for this 
+stuff.</p> 
+<p>Michael: If we do a sample implementation and have an engineer or two 
+supporting it all the time, then it would seem to be reasonable to have a 
+maintenance/support fee.</p> 
+<p>Is there anyone in the room who does not want to take a vote on March 7th 
+on whether the ARB should move forward on developing a scene graph API? No.</p> 
+<h3> May 12-14, 1997</h3> http://www.opengl.org/ARB/Notes/arb-may.html 
+<h3> OpenGL++</h3> 
+<h4> Overview of Ogl++ Day</h4> 
+<ol> 
+<li> Recap from Feb. and update from members</li> 
+<li> How do we support multiple APIs?</li> 
+<li> Process discussion</li> 
+<li> Brain dump from David/Mark about design status</li> 
+<li> Spec walk-through with comments</li> </ol> 
+<h4> Recap February ARB meeting and update from members</h4> John: Decision 
+was to go forward in off-line e-mail vote. Now, we have to figure out how.
+<ul> 
+<li> Is it possible to depart from another point than current spec?</li> 
+<li> Is 1 day ARB meeting enough?</li> </ul> Mark: Not workable. Need to find 
+a way to move forward.
+<p>Mark: Since last time, we've been investigating things not yet&nbsp; 
+reflected in the spec such as MP issues,actions, routes &#151; should they 
+intrinsically be built in?&nbsp; Also fixed spelling of propagate.&nbsp; </p> 
+<p>Kevin R.: Since last time, Java3d spec now available to Java licensees. 
+Spec on the web-site. Also definitely plan on creating C++ bindings.</p> 
+<p>(Promoted by questions from Drew, Bimal, and Mark, Kevin R. coughed up the 
+following...)<br>
+Kevin R: In comparing java3d vs ogl++, the following 
+distinctions are noteworthy:</p> 
+<ul> 
+<li> ogl++ layered on top of OpenGL; Java3d is not tied to a single API 
+(support for OpenGL and Direct3D are planned)</li> 
+<li> More of abstraction &#151; no way to jump in the middle</li> 
+<li> ogl++ has direct support for fields and routes</li> 
+<li> ogl++ allows methods to extend traversal</li> </ul> Mark went over goals. 
+These aren't recapped here since they are available in the notes from the Feb 
+17-19 discussion athttp://www.sgi.com/Technology/openGL/arb-feb.html. 
+<p>Jon K.: Aren't important goals: </p> 
+<ul> 
+<li> make is easier to build 3d applications?</li> 
+<li> allow hardware vendors to move up the stack?</li> </ul> 
+<h4> Multiple API Discussion</h4> Discussion began a bit around reviewing 
+topics from last time, such as:
+<ul> 
+<li> Legitimacy of ARB to cover scene graph area at all (raised by Drew, 
+Kevin. Answered by Jon K., John S.)</li> 
+<li> Problems related to the &quot;wrong&quot; attendees being here (some 
+companies have scene graph experts quite distinct from hardware/rendering crowd 
+at the OpenGL ARB).</li> 
+<li> and then: what about multiple API support?</li> </ul> Mark: Clearly 
+interested in supporting multiple APIs. Difficult question is how.<br>
+&nbsp; 
+<br>David B.: Fundamental solution space involves: 
+<ul> 
+<li> Lowest common denominator specification (aka &quot;neutral&quot;)</li> 
+<li> Renderer specific &quot;spec&quot;</li> </ul> Specification vagueness can 
+raise performance costs for converting to renderer format.&nbsp; Renderer 
+specific approach either disallows extensibility or throws its difficulties at 
+the application developer
+<p>Mark: A variant approach is to specify tightly -- but there will be 
+performance costs in converting to the format of the underlying library.</p> 
+<p>Jim: It's highly undesirable to throw the problem back at the application. 
+So let's explore neutral approach.</p> 
+<p>Fred: This is a solvable problem -- if one gives up on flexibility. </p> 
+<p>Paula: Why not just use D3D retained mode? </p> 
+<p>[This was followed by a short detour into the issues of concerning D3D's 
+driver coverage and developer acceptance. Active participants were John S., 
+Phil H., and Paula.]</p> 
+<p>David: One of the highest values of extensibility is for folks to use the 
+latest extensions without a new release of the library. The monolithic 
+Performer approach requires a new release of both libraries. Also, 
+extensibility allows us to give customer's the go-ahead to use mechanisms that 
+&quot;good taste&quot; prevents us from allowing into the library.<br>
+&nbsp; 
+<br>John: There's been a lot of discussion here. We need to break and then vote 
+so we can move on. The underlying requirement was to &quot;not be 
+exclusionary.&quot; The basic choices are:</p> 
+<ul> 
+<li> focus on OpenGL</li> 
+<li> lowest common denominator</li> 
+<li> separate nodes for each renderer</li> 
+<li> extensible only if using OpenGL driver</li> </ul> Bimal: Will anyone step 
+forward to help the specification process for other APIs?
+<p>Mark: This does make the specification process more difficult. Willing to 
+do it -- if this is what folks want.&nbsp; [Silence followed]</p> 
+<p>Straw pool was taken with the results (pls check w/ Paula): </p> 
+<ul> In favor: 19 <br>
+Opposed: 3 (MS, Accelgraphics, Elsa) <br>
+Abstain: 7 
+(intel, sun, hp, &amp; 4 others)</ul> 
+<h4> Process Discussion</h4> [ <i>The process discussion took place at several 
+points during&nbsp; the day. I've rolled them together for the purpose of this 
+write-up.</i>] 
+<p>Tim: Unlike OpenGL, areas of competition/differentiation aren't as clear 
+for a given implementation. Extensions probably have the value, not the API 
+itself.</p> 
+<p>Kurt: Areas of possible differentation are in platform&nbsp; tuning and MP 
+support. With Performer, lots of effort in making it work well for a given 
+platform.</p> 
+<p>Kurt: In order to keep this moving, we need to call a meeting and have an 
+immersive session. And we need to have on-going interaction. My sense is that 
+we need to see a bound in the number of people involved and figure out how to 
+kick off specification effort. The efforts/results of this group need to be 
+visible to this body -- but to be effective the design group needs to be small 
+as well for their working sessions.</p> 
+<p>John: Can I just ask where people stand in participating in the working 
+group?</p> 
+<ul> Phil: 3d labs is in the middle. <br>
+Elsa, HP, Sun, MS: Keep us informed, 
+but...<br>
+PTC: interested, but no resources. <br>
+Digital: Likely to contribute
+<br>Intel: Can contribute. Likely to contribute. <br>
+Mitsubishi, Real3d, IBM: 
+Will participate<br>
+Intergraph: Think we'll participate. </ul> John: Let Mark 
+know if you can give a&nbsp; presentation of your scene graph efforts and your 
+evaluation of its effectiveness. (Scene graph doesn't have to be implemented or 
+shipping.)
+<h4> Mark/David's Overview of Current Specification</h4> [ <i>Notetaker's 
+injection: I'll pretty much avoid repeating what was said because: (A) lots of 
+things presented, and (B) I didn't understand many of them. I've included bits 
+I found both interesting and grokable.</i>] 
+<p>David: Inventor went overboard in the object area. Need support for 
+notification (not in spec yet) and set/get.</p> 
+<p>Valuable to force all geometry and appearance into leaves. OpenInventor 
+programs ended up with lots of separators to wall off state -- which is 
+difficult to optimize around. Performer, on the other hand, was very conscious 
+of how to package state together. They sorted on graphics state to effectively 
+utilize the pipeline.</p> 
+<p>After David presented the &quot;shape&quot; approach, Jim C. chimed in that 
+the one appearance for multiple geometry approach &quot;works for 
+ProDesigner&quot;</p> 
+<p>David: Want to allow multi-pass geometry -- or specific ordering or 
+rendering.</p> 
+<p>David: Traversal model comes from Inventor. Extension mechanism depends on 
+two big things:</p> 
+<ul> 
+<li> new node types</li> 
+<li> new traversals</li> </ul> Also want to preserver binary compatibility. 
+Need to stay away from new release for new extensions.
+<p>Dinner Discussions: IBM rep (Suzy?) proposed and met little opposition with 
+Coyote Cafe as place for the<br>
+night's meal. </p> 
+<h4> Spec walk-through with comments</h4> Feng/Kevin R.: Raised issues around 
+traversal mechanism and hierarchy structure. David responded that they are 
+trying hard to avoid doing things behind the back of the application.&nbsp; 
+Reiterated opposition to a purely static model of the data.
+<p>Kurt: Need goal/non-goal for modelling support. </p> 
+<p>Jan: Leaning away from behavior culling? </p> 
+<p>[Feng rattled off a series of issues. In general, seemed like Mark agreed 
+that the issues needed further discussion.]</p> 
+<ul> 
+<li> Current route support creates burden -- even when field not referenced in 
+routes</li> 
+<li> What about run-time support for sprites?</li> 
+<li> What about extending sphere bound to general notion?</li> 
+<li> Problem w/ abstraction of norma sets/datasets</li> 
+<li> Problem w/ matrix node and transform node. (Mark: should remove these in 
+turn into an &quot;engine&quot;)</li> 
+<li> Why can't we add fields to appearance nodes?</li> </ul> Tim: What about 
+feedback loop? Present in Performer.
+<p>Jim C: Doc feedback: couldn't make heads or tails out of spline engine. </p>
+<p>Jim C: How does one do highlight traversals? (David suggested inserting 
+callbacks that change between traversals.)</p> 
+<p>Feng: Indexed triangle strip set docs incorrect. Cut/paste error. </p> 
+<p>David: Perfomer had limited support for indexing. But people really valued 
+separate<i>color</i> indexing. <br>
+&nbsp; <br>
+Phil: Can we turn some of these 
+objects into display lists?</p> 
+<p>David: Possibly. But OpenInventor had a bad experience with this approach. 
+System design center will by dynamic data over static data.</p> 
+<p>Feng: No notification mechanism in specification. </p> 
+<h4> <i>End of Day 1</i></h4> 
+<h3> September 9-10, 1997</h3> 
+http://www.opengl.org/ARB/Notes/meeting_notes_09-10-97.html
+<h3> OpenGL++</h3> Mark Segal provided an update on the status of 
+OpenGL++.&nbsp; He was not able to have a new version of the spec ready in time 
+for this meeting, but he will be releasing a<br>
+new version of the spec within 
+a month.&nbsp; Some simple demos and simple tests are running. A more final 
+draft specification that could be presented to the ARB should be<br>
+ready by 
+the end of the year.&nbsp; Companies that are participating in the effort are 
+SGI, IBM, Intel, Digital. Mark expects that an alpha-quality implementation 
+will be ready<br>
+by the end of the year.&nbsp; A Beta release would be ready 
+next summer. The group met Monday and spent the day talking about procedural 
+and technical issues.&nbsp; A fair<br>
+amount of time was spent on 
+multithreading issus. The plan is to use Pthreads, which should provide a good 
+implementation across UNIX systems.&nbsp; Mark promised to<br>
+send out the 
+minutes from Monday's meeting.&nbsp; Mark answered several questions about how 
+OpenGL++ compared to DirectModel and Java3D, and which OpenGL<br>
+extensions 
+would be needed (answer: none, just OpenGL 1.1).<br>
+&nbsp; 
+<h3> December 8-9, 1997</h3> 
+http://www.opengl.org/ARB/Notes/meeting_note_09-12-97.html
+<h3> OpenGL++</h3> David Blythe reported on OpenGL++. There's been lots of 
+work, but relatively little communication. A new version of the spec was 
+distributed last week, with big changes including consistent syntax, naming 
+conventions, and terminology for the object concepts. Future spec revisions 
+should come in a more timely fashion.
+<p>Implementation work includes: </p> 
+<ul> 
+<li> Two implementations of concepts for a multithread/multibuffer pipeline 
+model like Performer's APP-CULL-DRAW. They are working on Irix and being ported 
+to NT.</li> 
+<li> File loading for VRML and Optimizer, and a generic object framework for 
+loading images, geometry, audio, and video.</li> 
+<li> A test suite co-developed with the source code, and documentation 
+auto-generated from the source.</li> 
+<li> Support for intersection testing and picking.</li> 
+<li> Benchmarks - OpenGL++ generally comes out slightly faster than Optimizer 
+and slightly slower than Performer.</li> 
+<li> Currently working on state sorting and caching, tesselation, flattening 
+transformations, invalidating state caches, and an event notification structure 
+for invalidation and other purposes.</li> </ul> An alpha version of the spec is 
+expected in mid-January. It will probably be sent to the entire ARB.
+<p>David will try to organize an OpenGL++ subcommittee meeting either this 
+evening, or in early January.</p> 
+<p>Licensing terms are not yet decided. <br>
+&nbsp; </p> 
+<h2> Some interesting emails:</h2> 
+<h3> Mark Kilgard:</h3> To: Multiple recipients of list OPENGL-GAMEDEV-L 
+&lt;OPENGL-GAMEDEV-L@fatcity.com&gt;<br>
+Subject: Re: SGI Optimizer <br>
+From: 
+mjk@fangio.engr.sgi.com (Mark Kilgard)<br>
+Date: Wed, 29 Oct 1997 13:56:30 -0800
+<p>opengl-gamedev, </p> 
+<p>&gt; I've just downloaded a copy of SGI optimizer/cosmo3D libs. I had a look
+<br>&gt; and it looks really like one of the best APIs around for 3D : full 
+OpenGL<br>
+&gt; support, portability and it's Free ! <br>
+&gt; Why is SGI doing 
+this?</p> 
+<p>To promote high-end graphics intensive CAD and 3D modeling <br>
+
+applications.&nbsp; SGI's experience (particularly based on SGI's experience<br>
+with the visual simulation market and IRIS Performer) shows that<br>
+customers 
+and software developers greatly benefit from higher-level<br>
+APIs to that make 
+optimal use of hardware features.</p> 
+<p>In the CAD market, this means a higher-level API that handles <br>
+
+multiprocessing, view frustum culling, occlusion culling, fast picking,<br>
+
+excellent surface trimming, use of OpenGL evalauators, etc.</p> 
+<p>&gt; To counter D3D? </p> 
+<p>No.&nbsp; Direct3D is completely useless for quality CAD and 3D modeling. 
+<br>Direct3D offers neither the performance or quality to do CAD or 3D <br>
+
+modeling well.</p> 
+<p>&gt; OpenInventor costs over a $1000 but <br>
+&gt; then comes Optimizer 
+&quot;totally&quot; free ... well in the current implementation<br>
+&gt; that 
+is, the developper one should cost less than $600. The Docs and<br>
+&gt; sample 
+code doesn't look that bad and I don't know if you really need the<br>
+&gt; 
+dev. kit. Isn't SGI killing off it's OpenInventor/Performer line of<br>
+&gt; 
+products with Optimizer ?</p> 
+<p>No.&nbsp; Open Inventor and IRIS Performer are mature, stable toolkits that 
+<br>serve particular market needs.&nbsp; Visual simulation for IRIS Performer; 
+<br>rapid 3D prototyping and effective user interation for Open Inventor. <br>
+
+OpenGL Optimizer is addressing a whole new high-level 3D domain.</p> 
+<p>&gt; Considering I want to program a 3D game under Windows I think 
+Optimizer is<br>
+&gt; the simplest/cheapest API available ... Am I right ? </p> 
+<p>Game developers may find OpenGL Optimizer interesting for quickly <br>
+
+building game 3D modeling and layout tools, but OpenGL Optimizer is<br>
+
+probably not something anyone is going to use as the basis for a game<br>
+
+engine.&nbsp; Still, building good 3D games involves building good 3D tools,<br>
+and OpenGL Optimzier can help in this area.</p> 
+<p>&gt; I've heard of OpenGL++ which is suppose to be like Optimzer. Does 
+anyone<br>
+&gt; have any other information on this ? </p> 
+<p>The future plan for OpenGL Optimizer is to fit into a standard scene <br>
+
+graph framework called OpenGL++.&nbsp; In the future, OpenGL Optimizer, Open<br>
+Inventor-like manipulators, and IRIS Performer-style visual simulation<br>
+will 
+all be able to exist within a single program and all sharing a<br>
+single 
+effective, portable multiprocessing and graphics model.<br>
+OpenGL++ is an 
+OpenGL Architectural Review Board sponsored standard<br>
+that SGI is working to 
+design in coordination with other ARB members.</p> 
+<p>Much the same way that OpenGL developed from SGI's experience <br>
+
+implementing its predecssor IRIS GL in conjunction with other OpenGL<br>
+ARB 
+partners, OpenGL++ is about designing a standard high-level 3D<br>
+framework 
+based on SGI's 3D toolkit design experience and working with<br>
+other 
+interested industry leaders.&nbsp; Check the quarterly ARB minutes<br>
+
+published on the web to track OpenGL++'s development.</p> 
+<p>For more info on OpenGL Optimzier, check out: </p> 
+<p>&nbsp; http://www.sgi.com/Technology/OpenGL/optimizer/ <br>
+&nbsp; 
+http://www.sgi.com/Technology/OpenGL/optimizer/download.html</p> 
+<p>I hope this helps. </p> 
+<p>- Mark <br>
+&nbsp; </p> 
+<h3> Steve Baker:</h3> To: Multiple recipients of list OPENGL-GAMEDEV-L 
+&lt;OPENGL-GAMEDEV-L@fatcity.com&gt;<br>
+Subject: Re: SGI Optimizer <br>
+From: 
+Steve Baker &lt;sbaker@LINK.COM&gt;<br>
+Date: Wed, 29 Oct 1997 13:56:32 -0800 
+<p>On Wed, 29 Oct 1997, Marc Cardle wrote: </p> 
+<p>&gt; Isn't SGI killing off it's OpenInventor/Performer line of <br>
+&gt; 
+products with Optimizer ?</p> 
+<p>The SGI view (and I think I agree with it) is that Performer, Inventor <br>
+
+and Optimiser are each intended for a different market.</p> 
+<p>Performer is for Visual Simulation (realtime performance - guaranteed <br>
+
+update rates, etc). There is no 'Open Performer' for the PC (yet).</p> 
+<p>Optimiser is for CAD (efficient - but not 'realtime' display of very large 
+<br>data sets) </p> 
+<p>Inventor is for rapid prototyping, presentation graphics, etc. </p> 
+<p>OpenGL++ is intended to be the underlying infrastructure on top of <br>
+
+which the other three are built. It is supposed to be a scene-graph<br>
+API. 
+</p> 
+<p>OpenGL is a non-scene-graph API that OpenGL++ sits on top of. </p> 
+<p>OpenGL++ doesn't exist (yet) since it has to go through OpenGL ARB <br>
+
+approval stages. Cosmo-3D (not Cosmo-GL) was an abortive effort at<br>
+
+producing an OpenGL++ - it got into beta test and was cancelled.<br>
+This means 
+that although Performer, Optimiser and Inventor are all<br>
+available, the 
+common API on which they are ultimately going to be<br>
+based does *not* exist. 
+</p> 
+<p>&gt; Considering I want to program a 3D game under Windows I think 
+Optimizer is<br>
+&gt; the simplest/cheapest API available ... Am I right ? </p> 
+<p>I'd be suprised is an interactive kind of game would be a candidate for <br>
+Optimizer. Performer maybe - OpenGL++ more likely.</p> 
+<p>&gt; I've heard of OpenGL++ which is suppose to be like Optimzer. Does 
+anyone<br>
+&gt; have any other information on this ? </p> 
+<p>This is in the lap of the OpenGL ARB - I havn't checked their latest meeting
+<br>notes - but I don't think they say very much. <br>
+&nbsp; </p> 
+<p>Steve 
+Baker&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+817-619-8776 (Vox/Vox-Mail)<br>
+Hughes Training 
+Inc.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+817-619-4028 (Fax)<br>
+2200 Arlington Downs 
+Road&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SBaker@link.com (eMail)<br>
+Arlington, 
+Texas. TX 76005-6171 SJBaker1@airmail.net (Personal eMail)<br>
+
+http://www.hti.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+http://web2.airmail.net/sjbaker1 (personal)</p> 
+<p>** Beware of Geeks bearing GIF's. * <br>
+&nbsp; <br>
+&nbsp; <br>
+&nbsp; </p>
+<h3> &nbsp;March 9-10, 1998</h3> 
+<h3> Fahrenheit Statements</h3> Kurt Akeley from SGI summarized Fahrenheit. 
+There are three components:
+<ul> 
+<li> An agreement between SGI and Microsoft, parts of which were also with 
+Intel and HP, to define three new APIs:</li> 
+<ul> 
+<li> Low Level - Windows-specific and tightly bound to DirectX</li> 
+<li> Scene Graph - available at least on Windows, Irix, and HP/UX; will run on 
+OpenGL, D3D, and, eventually, FLL</li> 
+<li> Large Model Visualization - based on Scene Graph</li> </ul> 
+<li> SGI and Microsoft working to improve OpenGL support on Windows. This 
+includes higher quality drivers, OpenGL 1.2 drivers, and a new driver license 
+agreement for Windows IHVs.</li> 
+<li> SGI and Microsoft will be less combative in public - there will be no 
+more &quot;official&quot; OpenGL/D3D wars.</li> </ul> SGI felt it was critical 
+to work together with Microsoft, which had not been moving in compatible 
+directions, to be able to build value-added products in the Windows 
+environment. Fahrenheit is a large step in that direction.
+<p>The ARB has made several attempts to get agreement on high-level APIs, and 
+has overall failed, sometimes in a frustrating manner. SGI's experience is that 
+apps need to write to a scene graph to get good performance without 
+micro-optimization. But it's also important to be able to &quot;reach 
+around&quot; the scene graph to the low level. SGI's motivation with Fahrenheit 
+was primarily to get agreement on a good scene graph.</p> 
+<p>What happens with OpenGL and OpenGL++? </p> 
+<ul> 
+<li> Good for OpenGL:</li> 
+<ul> 
+<li> FLL will not be ported outside Windows.</li> 
+<li> Microsoft has committed to supporting OpenGL for a long time - well past 
+FLL introduction.</li> 
+<li> The agreements and the new driver development process will make OpenGL 
+attractive on Windows.</li> </ul> 
+<li> SGI will no longer be able to push OpenGL++ (though they have no 
+objection to others picking up the work). Resources are committed to work with 
+Microsoft and HP on the scene graph and large model visualization APIs.</li> 
+</ul> Steve Wright from Microsoft followed up: 
+<ul> 
+<li> Different groups in MS had different stories. OpenGL was successful at 
+professional apps, but there was tension with the DirectX group. The 
+realignment within MS strengthens the story.</li> 
+<li> Some of you will apply OpenGL in other (non-professional) markets. 
+There's a reasonably good chance of making this work.</li> 
+<li> All managers at least up to the level of Jim Allchin are in favor of 
+indefinite support for OpenGL and ongoing support for cross-platform apps using 
+it.</li> 
+<li> Lots of DDK license agreements have been signed in the last few months 
+since the announcement.</li> 
+<li> Most vendors will want to track FLL as well, but OpenGL isn't going to go 
+away in 3 years.</li> </ul> &nbsp; 
+</body>

@@ -1,0 +1,1729 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>GIS in XML</title>
+<body>
+
+<h1>GIS in XML</h1>  A fascination with XML maps 
+<h2>Leaflet and Census TIGERweb</h2> January 16th, 2012 
+<p><b>Fig 1 &ndash; Sample Leaflet interface to the US Census Bureau&rsquo;s 
+new TIGERweb WMS service with Bing Maps background</b></p> 
+<p>Ref: http://silverlight.onterrasys.com/MapSavvyLeaflet/</p> 
+<p><strong>US Bureau of the Census &ndash; some background</strong></p> 
+<p><strong>1990 Census</strong><br>
+ The 1990 Census line data made a 
+revolutionary leap from GBF-DIME format to TIGER,<em>Topologically Integrated 
+Geographic Encoding and Referencing</em>, and also adopted CD-ROM media 
+distribution. In the early 90&prime;s I wrote a few TIGER translation programs 
+for AutoCAD users and users of a popular (now defunct) desktop GIS package 
+called Atlas*GIS. TIGER was useful for its linear data, but was more often used 
+for the boundary polygons that could be tied to Census population demographic 
+data. The line features of the 1990 TIGER were based on the older 1980 GBF-DIME 
+enhanced with USGS 1:100,000 DLG features. GBF DIME was notable for the tell 
+tale zigzag streets in urban areas.</p> 
+<p><strong>2000 Census</strong><br>
+ By the mid 90&rsquo;s Open GIS Consortium 
+(OGC) was actively working on OpenGIS standards. As the internet continued 
+ramping up, OGC released the OpenGIS Web Map Server (WMS) Specification in 
+2000. Even though Census data releases are a year or so after the actual 
+census, it was several more years before the Census Bureau started 
+investigating alternative WMS services for distributing data. In the meantime 
+boundaries were available for internet and ftp download in ESRI shp and E00 
+formats. This was convenient, but requires self hosting web solutions.</p> 
+<p><strong>2010 Census</strong><br>
+ Ever since the 2000 WMS specification 
+there were hopes for a service distribution of census TIGER/Line. Not until the 
+end of 2011 was this belatedly realized asTIGERweb. But of course by the mid 
+2000s internet mapping began changing radically with the popularity of Google 
+Maps, GPS, Bing Maps, Open Street Maps, and now ubiquitous mobile devices. The 
+Census Bureau will need to continue evolving to meet the challenges of these 
+rapid changes.</p> 
+<p><strong>TIGERweb 2011</strong><br>
+ So why not use the <em>TIGERweb</em> 
+for an experimental look at some more recent web tools?<em>TIGERweb Viewer</em> 
+UI is based on the ESRI Silverlight APIs. Silverlight is a powerful UI 
+technology, but it is destined to be supplanted by html5. As browser market 
+fragmentation and mobile devices force adoption of standards based 
+technologies, proprietary plugins are just not making the transition, at least 
+for public facing web apps.</p> 
+<p><b>Fig 2 &ndash; TIGERweb Viewer based on ESRI Silverlight API</b></p> 
+<p><em>TIGERweb Viewer</em> seems oddly designed. Rather than the clean, spare 
+look popular today,<em>TIGERweb Viewer</em> seems to be a throwback to an 
+earlier internet. Unusual matrice animations with rotating panels and creepy 
+crawling boundary selectors seem a bit out of place in the modern web. Even 
+though technically possible, and simple to implement in Silverlight, such 
+distractions do nothing to make the UI endearing. After the first blink most 
+users will inevitably recall early internet flashing text and PowerPoint decks 
+filled with animated gifs. Anyone remember the irritation of Clippy?</p> 
+<p>However, <em>TIGERweb WMS Service</em> is a wide open door for standards 
+based javascript libraries. One of the more elegant available tools isLeafletJS
+. This is a &ldquo;lightweight&rdquo; js map library that works well with 
+jQuery and abstracts away some of the complexity of supporting a fragmenting 
+mobile browser world.</p> 
+<p>Leaflet is Open Source BSD-licensed with an active contributing community 
+and available ongithub. It uses newer html5 technologies available in A-grade 
+browsers, but includes fall back for older browsers. It&rsquo;s nice to have 
+touch events and thegeolocation api.</p> 
+<p>The Leaflet api provides a convenient L.TileLayer.WMS object that 
+transforms a WMS endpoint into a slippy tile map. Performance isn&rsquo;t as 
+good as a static tile pyramid, but it isn&rsquo;t bad and simplifies life 
+immensely.</p> 
+<pre> var censusTracts = new 
+L.TileLayer.WMS(&quot;http://tigerweb.geo.census.gov/ArcGIS/services/tigerWMS/MapServer/WMSServer&quot;, 
+{ layers: 'Census Tracts', format: 'image/png', transparent: true, attribution: 
+TigerAttribution });</pre> 
+<p><strong>Bing Maps</strong><br>
+ Unlike Google Maps, Microsoft Bing allows 
+licensed access to tile servers. For development, non-profit, and education 
+uses, this is just a matter of registering for aBing key. Adding a Bing Maps 
+layer with Leaflet is possible usinghttps://gist.github.com/1221998. Once this 
+Leaflet Bing extension javascript is referenced into a page, adding Bing Map 
+styles is simply a matter of adding L.TileLayer.Bing.</p> 
+<pre> var BingAerialWithLabels = new L.TileLayer.Bing(bingkey, 
+&quot;AerialWithLabels&quot;, { maxZoom: 21, attribution: BingAttribution });
+</pre> 
+<p></p> 
+<p><b>Fig 3 &ndash; Leaflet Census TIGER WMS with Bing Maps Road style</b></p> 
+<p>TIGER/Line 2010 accuracy has been upgraded substantially, but you can 
+occasionally see some discrepancies against Bing Aerial.</p> 
+<p></p> 
+<p><b>Fig 4 &ndash; Leaflet Census TIGER WMS with Bing Maps Aerial with Labels 
+style</b></p> 
+<p>Once all of the WMS and Bing L.TileLayers are instantiated, a new L.Map 
+with the desired L.TileLayer set is declared this way:</p> 
+<pre> map = new L.Map('mapDiv', { center: new L.LatLng(39.748, -104.981), 
+zoom: 8, layers: [censusStates, censusCounties, censusTracts, censusBlockGrps, 
+censusBlocks] });</pre> 
+<p>Leaflet also provides a simple L.Control.Layers for a user layer control 
+panel:</p> 
+<pre> var baseMaps = { &quot;BingRoads&quot;: BingRoad, 
+&quot;BingAerial&quot;: BingAerial, &quot;BingAerialWithLabels&quot;: 
+BingAerialWithLabels }; var overlayMaps = { &quot;States&quot;: censusStates, 
+&quot;Counties&quot;: censusCounties, &quot;Tracts&quot;: censusTracts, 
+&quot;BlockGroups&quot;: censusBlockGrps, &quot;Blocks&quot;: censusBlocks, 
+&quot;Lakes&quot;: censusArealHydrography, &quot;Rivers Streams&quot;: 
+censusLinearHydrography, &quot;LocalRoads&quot;: censusLocalRoads, 
+&quot;SecondaryRoads&quot;: censusSecondaryRoads, &quot;PrimaryRoads&quot;: 
+censusPrimaryRoads, &quot;Nexrad&quot;: nexrad }; var layersControl = new 
+L.Control.Layers(baseMaps, overlayMaps, { collapsed: !L.Browser.touch }); 
+map.addControl(layersControl);</pre> 
+<p></p> 
+<p><b>Fig 5 &ndash; Leaflet L.Control.Layers</b></p> 
+<p>TIGERweb WMS GetFeatureInfo is available for queries. For example:</p> 
+<pre> 
+http://tigerweb.geo.census.gov/ArcGIS/services/tigerWMS/MapServer/WMSServer?Service=WMS&amp;Version=1.1.1&amp;Request=GetFeatureInfo&amp;Layers=Counties&amp;SRS=EPSG:4326&amp;BBOX=-122.5,37.75,-122.25,38.0&amp;width=1000&amp;height=1000&amp;QUERY_LAYERS=Counties&amp;INFO_FORMAT=text/xml&amp;X=100&amp;Y=100 
+&lt;?xml version=&quot;1.0&quot;?&gt; &lt;FeatureInfoResponse 
+xmlns=&quot;http://www.esri.com/wms&quot; 
+xmlns:esri_wms=&quot;http://www.esri.com/wms&quot;&gt; &lt;FIELDS 
+HU100=&quot;111214&quot; --HousingUnits POP100=&quot;252409&quot; 
+INTPTLON=&quot;-122.7459738&quot; INTPTLAT=&quot;+38.0518169&quot; 
+CENTLON=&quot;-122.7485752&quot; CENTLAT=&quot;+38.0551413&quot; 
+STGEOMETRY=&quot;Polygon&quot; UR=&quot;Null&quot; STATE=&quot;06&quot; 
+OID=&quot;27590357299439&quot; NAME=&quot;Marin County&quot; 
+BASENAME=&quot;Marin&quot; MTFCC=&quot;G4020&quot; METDIV=&quot;41884&quot; 
+LSADC=&quot;06&quot; GEOID=&quot;06041&quot; FUNCSTAT=&quot;A&quot; 
+CSA=&quot;488&quot; COUNTY=&quot;041&quot; COUNTYCC=&quot;H1&quot; 
+CBSA=&quot;41860&quot; AREAWATER=&quot;797420433&quot; 
+AREALAND=&quot;1347585521&quot; COUNTYNS=&quot;00277285&quot;/&gt; 
+&lt;/FeatureInfoResponse&gt;</pre> 
+<p>jQuery makes XMLHttpRequest communication easy, but TIGERweb WMS 
+doesn&rsquo;t expose an open<em>ClientAccessPolicy.xml</em>, so a self hosted 
+proxy is required.</p> 
+<pre> $.ajax({ type: &quot;GET&quot;, url: getInfoURL, dataType: 
+&quot;xml&quot;, success: GetFeatureInfo });</pre> 
+<p></p> 
+<p><b>Fig 6 &ndash; Leaflet Popup panel with the results of TIGERweb WMS 
+GetFeatureInfo request</b></p> 
+<p><strong>Some Caveats</strong></p> 
+<p> <strong>TIGERweb</strong><br>
+ 1) The TIGERweb WMS furnishes images for 
+all the TIGER boundary and line features. However, there doesn&rsquo;t seem to 
+be a WMS layer for labels like those on the TIGERweb Viewer. There is an 
+undocumented label service that might be useful.</p> 
+<p>http://tigerweb.geo.census.gov/ArcGIS/rest/services/Labels/MapServer/export
+</p> 
+<p>2) WMS <em>GetFeatureInfo</em> requests can provide information from the 
+polygon stack, but the lack of a cross-domain policy file on the<em>TIGERweb 
+WMS server</em> means that a pass through proxy service needs to be hosted on 
+the same server as the Leaflet web app. This proxy service simply provides the 
+same<em>GetFeatureInfo</em> result to the client while avoiding cross-domain 
+issues.</p> 
+<p><strong>Leaflet</strong><br>
+ 1) Bing javascript<br>
+ The Bing javascript 
+extension seemed to run into a problem with intersect at this line:<br>
+<em>if 
+(zoom &lt;= coverage.zoomMax &amp;&amp; zoom &gt;= coverage.zoomMin &amp;&amp; 
+coverage.bbox.intersects(bounds))</em></p> 
+<p>Removing the intersect(bounds) clause seemed to get things working without 
+noticeable problems:<br>
+<em>if (zoom &lt;= coverage.zoomMax &amp;&amp; zoom 
+&gt;= coverage.zoomMin )</em></p> 
+<p>2) Leaflet seems to have problems with TileLayer ordering. Bing TileLayers 
+can mask other features if directly added to the map layer set.</p> 
+<p>3) There are some odd behaviors on Amazon Kindle Fire, possibly due to the 
+Silk web browser&rsquo;s EC2 caching.</p> 
+<p>4) Leaflet L.Control.Layers doesn&rsquo;t work consistently in the mobile 
+browsers I tested. The collapsed layer control icon never opened for iPhone or 
+Kindle Fire. Adding the suggested option<em>collapsed: !L.Browser.touch </em>
+keeps the layer control open instead of closing when untouched. This 
+wouldn&rsquo;t be a problem except that mobile devices don&rsquo;t have the 
+screen space for extra panels.</p> 
+<p></p> 
+<p> 5) The default attribution for Bing gets quite lengthy, especially when 
+displaying Aerial vendor meta data. Turning this off and deferring to the Bing 
+Maps Logo frees up more screen space which is at a premium on mobile devices.
+</p> 
+<p><strong>Summary</strong></p> 
+<p>Census Bureau&rsquo;s new TIGERweb is a great step forward for users of 
+TIGER data. Hopefully the momentum will continue forward to include demographic 
+data. SF1 data joined to TIGER polygons would be a more useful service. Adding 
+an OGC WFS service would be the ideal, but WFS always has problems with 
+potentially very large result sets, so I&rsquo;m not sure this is practical on 
+a public OGC service.</p> 
+<p>Since the first time I saw Leaflet I&rsquo;ve been intrigued with its 
+elegance and the potential for abstracting away some of the issues surrounding 
+web apps targeted at mobile and touch clients. In spite of a few minor issues 
+Leaflet is one of the best javascript map apis I&rsquo;ve used. I believe the 
+issues I ran into are on a bug list and could be resolved by next release.</p> 
+<p>This bare bones CensusTest project took only a few hours over the weekend 
+to write using Leaflet.</p> 
+<p><b>Fig 7 &ndash; Lower Manhattan</b></p> 
+<p> Posted in Bing Maps, OWS | Comments Off</p> 
+<h2>Extraterrestrial Map Kinections</h2> December 11th, 2011 
+<p></p> 
+<p><b>Fig 1 &ndash; LRO Color Shaded Relief map of moon &ndash; Silverlight 5 
+XNA with Kinect interface</b></p> 
+<p><strong></strong></p> 
+<p> Silverlight 5 was released after a short delay, at the end of last week. 
+<br>Just prior to exiting stage left, Silverlight, along with all plugins, 
+shares a last aria. The spotlight now shifts abruptly to a new diva, mobile 
+html5. Backstage the enterprise awaits with a bouquet of roses. Their concourse 
+will linger long into the late evening of2021.</p> 
+<p><b>The Last Hurrah?</b></p> 
+<p>Kinect devices continue to generate a lot of hacking interest. With the 
+release of an officialMicrosoft Kinect beta SDK for Windows, things get even 
+more interesting. Unfortunately, Kinect and the web aren&rsquo;t exactly ideal 
+partners. It&rsquo;s not that web browsers wouldn&rsquo;t benefit by moving 
+beyond the venerable mouse/keyboard events. After all, look at the way mobile 
+touch, voice, inertia, gyro, accelerometer, gps . . . have all suddenly become 
+base features in mobile browsing. The reason Kinect isn&rsquo;t part of the 
+sensor event farmyard may be just a lack of portability and an &lsquo;i&rsquo; 
+prefix. Shrinking a Kinect doesn&rsquo;t work too well as stereoscopic imagery 
+needs a degree of separation in a Newtonian world.</p> 
+<p>[The promised advent of NearMode (50cm range) offers some tantalizing 
+visions of 3D voxel UIs. Future mobile devices could potentially take advantage 
+of the human body&rsquo;s bi-lateral symmetry. Simply cut the device in two and 
+mount one half on each shoulder, but that isn&rsquo;t the state of hardware at 
+present. ]</p> 
+<p></p> 
+<p><b>Fig 2 &ndash; a not so subtle fashion statement OmniTouch</b></p> 
+<p>&nbsp;</p> 
+<p>For the present, experimenting with Kinect control of a Silverlight web app 
+requires a relatively static configuration and a three-step process: the Kinect 
+out there, beyond the stage lights, and the web app over here, close at hand, 
+with a software piece in the middle. TheKinect SDK, which roughly corresponds 
+to our visual and auditory cortex, amplifies and simplifies a flood of raw 
+sensory input to extract bits of &ldquo;actionable meaning.&rdquo; The beta 
+Kinect SDK gives us device drivers and APIs in managed code. However, as these 
+APIs have not been compiled for use with Silverlight runtime, a Silverlight 
+client will by necessity be one step further removed.</p> 
+<p>Microsoft includes some rich sample code as part of the Kinect SDK 
+download. In addition there are a couple of very helpful blog posts byDavid 
+Catuhe and a codeplex project, kinect toolbox.</p> 
+<p><b>Step 1:</b></p> 
+<p>The approach for using Kinect for this experimental map interface is to use 
+the GestureViewer code from Kinect Toolbox to capture some primitive commands 
+arising from sensory input. The command repertoire is minimal including four 
+compass direction swipes, and two circular gestures for zooming, circle 
+clockwise zoom in, and circle counter clockwise zoom out. Voice commands are 
+pretty much a freebie, so I&rsquo;ve added a few to the mix. Since 
+GestureViewer toolbox includes a learning template based gesture module, you 
+can capture just about any gesture desired. I&rsquo;m choosing to keep this 
+simple.</p> 
+<p><b>Step 2:</b></p> 
+<p>Once gesture recognition for these 6 commands is available, step 2 is 
+handing commands off to a Silverlight client. In this project I used a socket 
+service running on a separate thread. As gestures are detected they are pushed 
+out to local port 4530 on a tcp socket service. There are other approaches that 
+may be better with final release of Silverlight 5.</p> 
+<p><b>Step 3:</b></p> 
+<p>The Silverlight client listens on port 4530, reading command strings that 
+show up. Once read, the command can then be translated into appropriate actions 
+for our Map Controller.</p> 
+<p></p> 
+<p><b>Fig 3 &ndash; Kinect to Silverlight architecture</b></p> 
+<p><b>Full Moon Rising</b></p> 
+<p><b></b></p> 
+<p>But first, instead of the mundane, let&rsquo;s look at something a bit 
+extraterrestrial, a more fitting client for such &ldquo;extraordinary&rdquo; UI 
+talents. NASA has been very busy collecting large amounts of fascinating data 
+on our nearby planetary neighbors. One data set that was recently released byASU
+, stitches together a comprehensive lunar relief map with beautiful color 
+shading. Wow what if the moon really looked like this!</p> 
+<p></p> 
+<p><b>Fig 4 &ndash; ASU LRO Color Shaded Relief map of moon </b></p> 
+<p>In addition to our ASU moon USGS has published a set of imagery for Mars, 
+Venus, Mercury, as well as some Saturn and Jupiter moons. Finally, JPL 
+thoughtfully shares a couple ofWMS services and some imagery of the other 
+planets: <br>
+
+http://onmars.jpl.nasa.gov/wms.cgi?version=1.1.1&amp;request=GetCapabilities 
+<br>http://onmoon.jpl.nasa.gov/wms.cgi?version=1.1.1&amp;request=GetCapabilities
+</p> 
+<p>This type of data wants to be 3D so I&rsquo;ve brushed off code from a 
+previous post,NASA Neo 3D XNA, and adapted it for planetary data, minus the 
+population bump map. However, bump maps for depicting terrain relief are still 
+a must have. A useful tool for generating bump or normal imagery from color 
+relief isSSBump Generator v5.3 . The result using this tool is an image that 
+encodes relative elevation of the moon&rsquo;s surface. This is added to the 
+XNA rendering pipeline to combine a surface texture with the color relief 
+imagery, where it can then be applied to a simplified spherical model.</p> 
+<p></p> 
+<p><b>Fig 5 &ndash; part of normal map from ASU Moon Color Relief imagery</b>
+</p> 
+<p>The result is seen in the MoonViewer client with the added benefit of 
+immediate mode GPU rendering that allows smooth rotation and zoom.</p> 
+<p>The other planets and moons have somewhat less data available, but still 
+benefit from the XNA treatment. Only Earth, Moon, Mars, Ganymede, and Io have 
+data affording bump map relief.</p> 
+<p>I also added a quick WMS 2D viewer html using OpenLayers against the JPL 
+WMS servers to take a look at lunar landing sites. Default OpenLayers 
+isn&rsquo;t especially pretty, but it takes less than 20 lines of js to get a 
+zoomable viewer with landing locations. I would have preferred the elegance of
+Leaflet.js, but EPSG:4326 isn&rsquo;t supported in L.TileLayer.WMS(). MapProxy 
+promises a way to proxy in the planet data as EPSG:3857 tiles for Leaflet 
+consumption, but OpenLayers offers a simpler path.</p> 
+<p></p> 
+<p><b>Fig 6 &ndash; OpenLayer WMS viewer showing lunar landing sites</b></p> 
+<p>Now that the Viewer is in place it&rsquo;s time to take a test drive. Here 
+is a ClickOnce installer for GestureViewer modified to work with the 
+Silverlight Socket service:http://107.22.247.211/MoonKinect/</p> 
+<p>Recall that this is a Beta SDK, so in addition to a Kinect prerequisite, 
+there are some additional runtime installs required:</p> 
+<p><b>Using the Kinect SDK Beta</b></p> 
+<p>Download Kinect SDK Beta 2:&nbsp; <br>
+
+http://www.kinectforwindows.org/download/<i></i></p> 
+<p><i>Be sure to look at the system requirements and the installation 
+instructions further down the page. This is Beta still, and requires a few 
+pieces. The release SDK is rumored to be available the first part of 2012.</i>
+</p> 
+<p>You may have to download some additional software as well as the Kinect SDK:
+</p> 
+<ul> 
+<li><strong>DirectX latest version:</strong> Runtime for Microsoft 
+DirectX&reg; 9</li> </ul> 
+<ul> 
+<li><strong>For Speech:</strong> <br>
+&bull; Microsoft Speech Platform 
+Runtime, version 10.2 &ndash; select 32-bit if you are running 32-bit Windows. 
+If you have 64-bit Windows, we suggest that you install both the 32-bit and 
+64-bit runtime.<br>
+ &bull; Kinect for Windows Language Pack, version 0.9</li> 
+</ul> 
+<p>Finally, we are making use of port 4530 for the Socket Service. It is 
+likely that you will need to open this port in your local firewall.</p> 
+<p>As you can see this is not exactly user friendly installation, but the 
+reward is seeing Kinect control of a mapping environment. If you are hesitant 
+to go through all of this install trouble, here is a video link that will give 
+you an idea of the results.</p> 
+<p></p> 
+<p><b>YouTube video demonstration of Kinect Gestures</b></p> 
+<p>&nbsp;</p> 
+<p>Voice commands using the Kinect are very simple to add so this version adds 
+a few.</p> 
+<p>Here is the listing of available commands:</p> 
+<pre> public void SocketCommand(string current) { switch (command) { // Kinect 
+voice commands case &quot;mercury-on&quot;: { MercuryRB.IsChecked = true; 
+break; } case &quot;venus-on&quot;: { VenusRB.IsChecked = true; break; } case 
+&quot;earth-on&quot;: { EarthRB.IsChecked = true; break; } case 
+&quot;moon-on&quot;: { MoonRB.IsChecked = true; break;} case 
+&quot;mars-on&quot;: { MarsRB.IsChecked = true; break;} case 
+&quot;marsrelief-on&quot;: { MarsreliefRB.IsChecked = true; break; } case 
+&quot;jupiter-on&quot;: { JupiterRB.IsChecked = true; break; } case 
+&quot;saturn-on&quot;: { SaturnRB.IsChecked = true; break; } case 
+&quot;uranus-on&quot;: { UranusRB.IsChecked = true; break; } case 
+&quot;neptune-on&quot;: { NeptuneRB.IsChecked = true; break; } case 
+&quot;pluto-on&quot;: { PlutoRB.IsChecked = true; break; } case 
+&quot;callisto-on&quot;: { CallistoRB.IsChecked = true; break; } case 
+&quot;io-on&quot;: { IoRB.IsChecked = true;break;} case &quot;europa-on&quot;: 
+{EuropaRB.IsChecked = true; break;} case &quot;ganymede-on&quot;: { 
+GanymedeRB.IsChecked = true; break;} case &quot;cassini-on&quot;: { 
+CassiniRB.IsChecked = true; break; } case &quot;dione-on&quot;: { 
+DioneRB.IsChecked = true; break; } case &quot;enceladus-on&quot;: { 
+EnceladusRB.IsChecked = true; break; } case &quot;iapetus-on&quot;: { 
+IapetusRB.IsChecked = true; break; } case &quot;tethys-on&quot;: { 
+TethysRB.IsChecked = true; break; } case &quot;moon-2d&quot;: { 
+MoonRB.IsChecked = true; Uri uri = Application.Current.Host.Source; 
+System.Windows.Browser.HtmlPage.Window.Navigate(new Uri(uri.Scheme + 
+&quot;://&quot; + uri.DnsSafeHost + &quot;:&quot; + uri.Port + 
+&quot;/MoonViewer/Moon.html&quot;), &quot;_blank&quot;); break; } case 
+&quot;mars-2d&quot;: { MarsRB.IsChecked = true; Uri uri = 
+Application.Current.Host.Source; 
+System.Windows.Browser.HtmlPage.Window.Navigate(new Uri(uri.Scheme + 
+&quot;://&quot; + uri.DnsSafeHost + &quot;:&quot; + uri.Port + 
+&quot;/MoonViewer/Mars.html&quot;), &quot;_blank&quot;); break; } case 
+&quot;nasaneo&quot;: { EarthRB.IsChecked = true; 
+System.Windows.Browser.HtmlPage.Window.Navigate(new 
+Uri(&quot;http://107.22.247.211/NASANeo/&quot;), &quot;_blank&quot;); break; } 
+case &quot;rotate-east&quot;: { RotationSpeedSlider.Value += 1.0; 
+tbMessage.Text = &quot;rotate east&quot;; break; } case 
+&quot;rotate-west&quot;: { RotationSpeedSlider.Value -= 1.0; tbMessage.Text = 
+&quot;rotate west&quot;; break; } case &quot;rotate-off&quot;: { 
+RotationSpeedSlider.Value = 0.0; tbMessage.Text = &quot;rotate off&quot;; 
+break; } case &quot;reset&quot;: { RotationSpeedSlider.Value = 0.0; orbitX = 0; 
+orbitY = 0; tbMessage.Text = &quot;reset view&quot;; break; } //Kinect Swipe 
+algorithmic commands case &quot;swipetoleft&quot;: { orbitY += 
+Microsoft.Xna.Framework.MathHelper.ToRadians(15); tbMessage.Text = &quot;orbit 
+left&quot;; break; } case &quot;swipetoright&quot;: { orbitY -= 
+Microsoft.Xna.Framework.MathHelper.ToRadians(15); tbMessage.Text = &quot;orbit 
+right&quot;; break; } case &quot;swipeup&quot;: { orbitX += 
+Microsoft.Xna.Framework.MathHelper.ToRadians(15); tbMessage.Text = &quot;orbit 
+up&quot;; break; } case &quot;swipedown&quot;: { orbitX -= 
+Microsoft.Xna.Framework.MathHelper.ToRadians(15); tbMessage.Text = &quot;orbit 
+down&quot;; break; } //Kinect gesture template commands case 
+&quot;circle&quot;: { if (scene.Camera.Position.Z &gt; 0.75f) { 
+scene.Camera.Position += zoomInVector * 5; } tbMessage.Text = 
+&quot;zoomin&quot;; break; } case &quot;circle2&quot;: { scene.Camera.Position 
++= zoomOutVector * 5; tbMessage.Text = &quot;zoomout&quot;; break; } } }</pre> 
+<p><b>Possible Extensions</b> </p> 
+<p> After posting this code, I added an experimental stretch vector control 
+for zooming and 2 axis twisting of planets. These are activated by voice: 
+&lsquo;vector twist&rsquo;, &lsquo;vector zoom&rsquo;, and &lsquo;vector 
+off.&rsquo; The Map control side of gesture commands could also benefit from 
+someeasing function animations. Another avenue of investigation would be some 
+type of pointer intersection using a ray to indicate planet surface locations 
+for events.</p> 
+<p> <b>Summary</b> </p> 
+<p>Even though Kinect browser control is not prime time material yet, it is a 
+lot of experimental fun! The MoonViewer control experiment is relatively 
+primitive. Cursor movement and click using posture detection and hand tracking 
+is also feasible, but fine movement is still a challenge. Two hand vector 
+controlling for 3D scenes is also promising and integrates very well with SL5 
+XNA immediate mode graphics.</p> 
+<p>Kinect 2.0 and NearMode will offer additional granularity. Instead of large 
+swipe gestures, finger level manipulation should be possible. Think of 3D voxel 
+space manipulation of subsurface geology, or thumb and forefinger vector3 
+twisting of LiDAR objects, and you get an idea where this could go.</p> 
+<p>The merger of TV and internet holds promise for both whole body and 
+NearMode Kinect interfaces. Researchers are also adapting Kinect technology for 
+mobile as illustrated byOmniTouch.</p> 
+<p>. . . and naturally, lip reading ought to boost the Karaoke crowd (could 
+help lip synching pop singers and politicians as well).</p> 
+<p></p> 
+<p><b>Fig 7 &ndash; Jupiter Moon Io</b></p> 
+<p> Posted in Future, GIS, Kinect, Silverlight, XNA 3D | Comments Off</p> 
+<h2>Paradise Lost</h2> October 26th, 2011 
+<p> </p> 
+<p><strong>Fig 1</strong> &ndash; web mapping utopia, location uncertain</p> 
+<blockquote> 
+<p><em>&ldquo;Not surprisingly, in a culture in which information was becoming 
+standardized and repeatable, mapmakers began to exclude &ldquo;paradise&rdquo; 
+from their charts on the grounds that its location was too uncertain.&rdquo;
+</em></p> 
+<p>&mdash;Neil Postman, Technopoly (1992)</p> </blockquote> 
+<p>I recently spent a few hours re-reading some old books on the shelf. Neil 
+Postman&rsquo;s<em>Technopoly </em>triggered some reflection on the present 
+state of web mapping. As a technophile, I tend to look forward to the next 
+version of whatever with anticipation. Taking the longer view, however, can be 
+a useful exercise.</p> 
+<p><strong>Progress &ndash; yes, no, maybe?</strong></p> 
+<p>Postman&rsquo;s critique asserts that Technology is in the vanguard of 
+illusory &ldquo;progress.&rdquo; That the impact of technology shapes deep 
+things in a culture with unimagined side effects. The core technology of our 
+current cultural turnover is electronics and the key utility is &ldquo;<em>
+Information</em>,&rdquo; its storage and flow. <em>Information</em> volume and 
+velocity apparently grow exponentially over time loosely tracking the famous
+Moore&rsquo;s Law time curve. Our web mapping subset of Technology is embedded 
+in this<em>Information</em> ramp up, and we are still grappling with the 
+confusion of<em>Information</em> and Knowledge, resulting from an accelerating 
+information glut.</p> 
+<p>The principle of<em> Information</em> is popping up all over, from Claude 
+Shannon&rsquo;s<em>Information Theory</em> to Hawking-Berkenstein&rsquo;s Black 
+hole solution which surprisingly showed that the total<em>Information</em> 
+content of a Black hole is proportional to the Planck square surface area of 
+its event horizon (as opposed to a cubic volume relation). Naturally the 
+concept of<em>Information</em> leaks into the soft sciences as well. Bit 
+obsession is now woven into Western economic fabric with the assumption of 
+continuous progress.</p> 
+<p>Sociologically, this all leads to a breakup of previous generations of 
+&ldquo;knowledge monopolies&rdquo; and a hyper-sensitivity to initial 
+conditions, (the old Ray Bradbury crushed butterfly scenario at the root of 
+chaos theory). The upheaval is met with a kind of assumed optimism, an 
+unquestioned utopian view of progress around the benefits of modern technology. 
+Information is good, right? More information faster is even better! Web maps 
+contribute more information faster, so web mapping is on the side of the Good, 
+the True, and the Beautiful. Naturally web maps can be quitebeautiful, whatever 
+that means subjectively.</p> 
+<p>The age of typography, ushered into Western culture by Gutenberg, had 
+profound and enduring effects on history and culture, affecting everything 
+&ndash; from the Reformation and the rise of Democratic Nationalism to our 
+educational bureaucracy and even common definitions of truth and knowledge. But 
+not until Marshall McLuhan were the typographic origins of these effects 
+popularly visible, and only in retrospect. The electronic age, in its current 
+internet iteration, is undoubtedly creating similarly profound dislocations, 
+whose consequences are not at all apparent at present. Unintended side effects 
+are just that, unintended. Consequences are unintended, because they are 
+unknowable.</p> 
+<blockquote> 
+<p><em>&ldquo;Technology solved the problem of information scarcity, the 
+disadvantages of which were obvious. But it gave no warnings about the danger 
+of information glut, the disadvantages of which were not seen so clearly, the 
+long range result &ndash; information chaos.&rdquo;</em></p> 
+<p>&nbsp;</p> 
+<p><em>&ldquo;The world has never before been confronted with information glut 
+and has hardly had time to reflect on its consequences.&rdquo;</em></p> 
+<p>&mdash;Neil Postman, Technopoly (1992)</p> </blockquote> 
+<p><strong>Whither web mapping?</strong></p> 
+<p>So the question at hand revolves around the smaller microcosm of mapping in 
+the internet era. That an ever growing amount of this information flood is 
+geospatial is indisputable. Computing mobility adds terrestrial location to all 
+business and social enterprise &ndash; Tweets to Facebook, Fleet Tracking to 
+Risk Analysis are increasingly tethered to spatial attributes. Maps take all of 
+these streams into a symbolic spatial representation, which filters for 
+location. To a mapmaker everything is a map and<em>terra incognita</em> has 
+long since vanished.</p> 
+<p>Web mapping adds an element of exploration, with zoom and pan flight 
+through these abstract spaces, that mirrors movement in our physical world. Our 
+community is also wont to add controls affording endless tinkering with the 
+form, as if one more contribution to universal&ldquo;Choice fatigue&rdquo; will 
+add value. But Google glommed on to the real deal. In a state of information 
+overload, the key to riches is meaningful information reduction. Simplification 
+is the heart of search. Web mapping is one more filtering approach reducing 
+information along the axis of spatial proximity.</p> 
+<p>Do interactive maps add seriously to comprehension or just to 
+entertainment, as simply a novelty? Cartographers relish pointing out this 
+quandary to web developers and other mere mortals. In the web mapping community 
+proliferating means can easily be confused with progress. Doesn&rsquo;t it seem 
+peculiar, for example, to attach any meaning whatsoever to charts of 
+Kindergartener&rsquo;sDIBELS scores, let alone median DIBELS scores charted on 
+national school district polygons. Does it lead to anything but a bureaucratic 
+illusion of some control over chaos? No child is better off for the graph 
+(unless distant employment potential as an educational bureaucrat is considered 
+relevant), and, &ldquo;no child left behind&rdquo; slogans to the contrary, the
+overthrow of typography based education proceeds apace in a confusing melee of 
+winners and losers. The application of numeracy to every conceivable problem 
+like this elevates modeling to mythic proportions.</p> 
+<blockquote> 
+<p><em>&ldquo;When a technology becomes mythic, it is always dangerous because 
+it is then accepted as it is, and is therefore not easily susceptible to 
+modification or control.&rdquo;</em></p> 
+<p><em></em>&mdash;Neil Postman, Technopoly (1992) </p> </blockquote> 
+<p> </p> 
+<p>What is a map but a modeling technology, a symbolic abstraction of space to 
+visualize a formulaic concept? Maps are all entangled with mathematical models, 
+ellipsoids, surfaces, and transforms, but are we guilty of mythically inflating 
+the power of maps to communicate something of the Good, the True and the 
+Beautiful? Does the proliferation of web maps, for instance, alter the 
+injustice ofAtanas Entchev&rsquo;s incarceration for the so called 
+&ldquo;crime&ldquo;of immigration? Likely not, and in fact, may contribute to 
+the irony of an ICE database assigning the Entchev family a spatial attribute 
+coinciding with some &ldquo;Community Education Center&rdquo; in Newark, NJ.</p>
+<blockquote> 
+<p><em>&ldquo;Our inventions are wont to be pretty toys, which distract our 
+attention from serious things. They are but improved means to an unimproved 
+end, an end which it was already but too easy to arrive at.&rdquo;</em></p> 
+<p>&mdash;Henry David Thoreau, Walden (1854), p. 42</p> </blockquote> 
+<p>Another pillar of cyber utopian thought is the inevitability of improved 
+community with improved connectivity. The meteoric rise of Facebook exemplifies 
+this confusion. For in fact Facebook is faceless, not anonymous, but prone to 
+carefully crafted pseudonymous identities. Unintended messages ripple across 
+unknowable communities, and histories, whether wanted or unwanted, retain 
+regrettably long tails. Twitter, as well, champions brevity while fragmenting 
+communication across a ghostly crowd of undisclosed persons.</p> 
+<blockquote> 
+<p><em>&ldquo;The great communication that we have today can lead to complete 
+depersonalization. Then one is just swimming in a sea of communication and no 
+longer encounters persons at all.&rdquo;</em></p> 
+<p>&mdash;Benedict XVI &ldquo;Light of the World&rdquo; p59 </p> </blockquote> 
+<p>Ray Kurzweil&rsquo;s anticipation of the Coming Singularity includes 
+human/non-human relationships via digital intermediaries, a thought with 
+somewhat disturbing implications. Knowledge of location across an intermediary 
+network matters little to human relationships and adding non-human intelligence 
+to the mix is only disturbing. Real human relationships have deeper currents 
+than high velocity information or spatial attribution. Studies in the 
+educational community have repeatedly shown, for instance, that the presence of 
+a real teacher is overwhelmingly more effective than video or online classes. 
+To state the obvious, face to face renders location aware apps irrelevant and 
+leaves artificial intelligence firmly anchored in the creepy category.</p> 
+<p> </p> 
+<p><strong>Robot Teacher?</strong></p> 
+<p>Assumptions of all goodness by Cyber Utopians are not at all justified as 
+remarked by Evgeny Morozov inThe Internet in Society: Empowering and Censoring 
+Citizen? Enduring histories on Facebook, subject to examination by Iranian 
+intelligence for hardly promising ends, should be unsettling to all but the 
+grimmest of Marxist utopians. Doubtless a few stray Stalinist atDuke and 
+Zuccotti Park are taking notes on new media and the social web. </p> 
+<p></p> 
+<p> Evgeny&rsquo;s passing point about &quot;cyber captivity&quot; underlines 
+a growing problem of lost opportunity. The prescience of Alduous Huxley&rsquo;s 
+Soma comes to mind. Does obsessive gaming, for example, reduce higher value 
+opportunities for learning, productivity, and human relations? Do vast iTune 
+libraries subtract from the net benefit of personal mastery of a musical 
+instrument? These calculations are impossible to quantify and really revolve 
+around deeper questions of spiritual significance,<em>sub specie aeternitatis
+</em>. </p> 
+<p>More information faster is not necessarily a net positive in another sense. 
+Proliferating conspiracy theories only corroborate Neil Postman&rsquo;s 
+shuffled deck analogy, that a disintegrating information context conditions 
+perception to credulity. Anything is believable because the next card is 
+experienced as random. Unwarranted credulity paves the way to tyranny as recent 
+history has shown all too tragically. The Rwandan genocide, less than 10 years 
+ago, was incited by incredulous claims aired to a credulous public in creepy
+Goebbels fashion. The future specter of OsGeo web maps delineating the 
+boundaries of<em>inyenzi</em> (cockroach in Kinyarwandan), does little to 
+encourage optimism.</p> 
+<blockquote> 
+<p><em>&ldquo;The fact is, there are few political, social, and especially 
+personal problems that arise because of insufficient information. Nonetheless, 
+as incomprehensible problems mount, as the concept of progress fades, as 
+meaning itself becomes suspect, the Technopolist stands firm in believing that 
+what the world needs is yet more information.&rdquo;</em></p> 
+<p>&mdash;Neil Postman, Technopoly (1992)</p> </blockquote> 
+<p><strong>Summary</strong></p> 
+<p>These may all be rather marginally Luddite issues. The genuine &ldquo;<em>
+terra incognita&rdquo;</em> of information technology, and consequently web 
+mapping, is the tectonic plate of culture. What kind of global cultural, 
+economic, and political earthquakes have been set in motion? What tidal wave of 
+changing perceptual process is yet to be hailed from the yardarm?</p> 
+<p>Kind of exciting to think about.</p> 
+<p>Paradise Lost? Please report to Lost and Found.</p> 
+<p> Posted in Future | No Comments &raquo;</p> 
+<h2>FOSS4G 2011</h2> September 17th, 2011 <br>
+<br>
+<strong><b>Fig1 &ndash; 
+map of every class C network on the Internet 2005</b></strong><br>
+<br>
+
+<p>I was privileged to spend a few days at FOSS4G in Denver. It&rsquo;s quite 
+the opportunity to have an international convergence of GIS developers handily 
+just a bus ride up the highway. I could walk among the current luminaries of
+OsGeo, Arnulf Christl, Paul Ramsey, Frank Warmerdam, Simone Giannecchini, and 
+so on and on, and trade a handshake with the hard working front range folks, 
+Peter Batty,Brian Timoney (way to go Brian!), and Matt Kruzemark too. The ideas 
+are percolating in every corner, but it strikes me in an odd way that this 
+world has changed irrevocably. The very technology that makes Geo FOSS possible 
+is also making it, of all things, mundane.</p> 
+<p><strong>Open Standards</strong></p> 
+<p>It wasn&rsquo;t that long ago that OGC standards were brand new. Each 
+release anticipated a new implementation for discovery. Now implementations 
+proliferate helter skelter. OGC services? Take your pick. Or, slice, dice, and 
+merge withMapProxy. Map Tiling engines line up like yogurt brands at Whole 
+Foods. GeoFOSS has progressed a long way from naive amazement over OGC WMS 
+connections. WFS and WCS have already passed their respective moments of 
+glorious novelty.</p> 
+<p>This is the year of WPS, Web Processing Service, and the hope of 
+constructing webs of analysis chains from disparate nodes. Each node adds a 
+piece toward a final solution. Anyone with some experience usingFME Transformers
+ has some idea of what this looks like on the desktop. WPS moves analytic 
+workflows into open standards and onto the web. Ref:52north.org and GeoServer 
+Ext </p> <br>
+<strong><b>Fig2 &ndash; example of FME Workbench processing chain
+</b></strong> 
+<p><strong>On the floor at FOSS4G 2011</strong></p> 
+<p>In a different vein, the next release of PostGIS will push raster analysis 
+right into SQL. This is new territory for PostGIS and elevates a<em>raster</em> 
+datatype to the same level as<em>geometry</em>. This PostGIS Raster Functions 
+page gives some flavor for the raster functions soon to be available when 2.0 
+releases. Ever needed a raster reprojection?</p> 
+<p><em>raster</em> <strong>ST_Transform</strong>(raster <em>rast</em>, integer 
+<em>srid</em>, double precision <em>scalex</em>, double precision <em>scaley
+</em>, text algorithm=NearestNeighbor, double precision <em>maxerr</em>=0.125);
+</p> 
+<p>Algorithm options are: &lsquo;NearestNeighbor&rsquo;, 
+&lsquo;Bilinear&rsquo;, &lsquo;Cubic&rsquo;, &lsquo;CubicSpline&rsquo;, and 
+&lsquo;Lanczos.&rsquo;</p> 
+<p>Wow ST_MapAlgebra! And on the roadmap MapAlgebra raster on raster! MySQL 
+and SQL Server have quite the feature curve to follow as PostGIS forges ahead.
+</p> 
+<p>(See even the slightly jaded can catch some excitement at FOSS4G.)</p> 
+<p>Numerous workshops dealt with javascript map frameworks OpenLayers, MapQuery
+,GeoExt, Leaflet. The html5 trend is underlined by news flashes from the 
+concurrentMicrosoft Build Conference.</p> <em>&ldquo;For the web to move 
+forward and for consumers to get the most out of touch-first browsing, the 
+Metro style browser in Windows 8 is as HTML5-only as possible, and plug-in 
+free. The experience that plug-ins provide today is not a good match with Metro 
+style browsing and the modern HTML5 web.&rdquo;</em> &ndash; Steven Sinofsky 
+<br> 
+<p>CouchDB/GeoCouch was present although &ldquo;eventually consistent&rdquo; 
+NoSQL seems less pressing.</p> 
+<p>Although Oracle is trying hard to break Java, it is still a popular 
+platform among FOSS projects. The Javascript platform is a growth industry with 
+the help of backend tools likeNode.js, html5 WebSockets, and Asynchronous 
+WebWorkers. C/C++ takes away wins in the popular performance shootout.</p> 
+<p>3D WebGL made an appearance with WebGLEarth, while Nasa World Wind still 
+has an occasional adherent.</p> 
+<p><strong>Open Software</strong></p> 
+<p>With over 900 attendees, the small world of FOSS seems all of a sudden 
+crowded, jostling through accelerating growth. TheOrdnance Survey was 
+represented at a plenary session, &ldquo;We have to learn to embrace open 
+source. We want to use OS. We want to encourage OS.&rdquo; Who&rsquo;d of ever 
+thought?FCC.gov opens their kimono in a big way with data transparency and OS 
+APIs. Work shop topics include such things as:<em>&ldquo;Open Source Geospatial 
+Software Powering Department of Defense Installation and Environment Business 
+Systems,&rdquo;</em> or catch this, <em>&ldquo;The National 
+Geospatial-Intelligence Agency OSS Challenge.&rdquo;</em>Is this the new Face 
+of FOSS?</p> 
+<p><strong>Open Bureaucracy?</strong></p> 
+<p>Such bureaucracies know little of agile. The memorable phrase 
+&ldquo;embrace, extend, extinguish&rdquo; comes to mind. But who embraces whom? 
+Is the idea of FOSS and its larger www parent, a trend that eventually 
+extinguishes bureaucracy or does the ancient ground of bureaucratic 
+organization trump connection? Byzantine bureaucracy has been around since 
+&hellip; well the Byzantine Empire, and given human nature is likely enduring. 
+But, what does a &ldquo;flat&rdquo; Byzantine Bureaucracy look like? How about 
+crowd sourced Byzantia? Would an aging Modernity mourn the loss of 
+&ldquo;Kafkaesque&rdquo; as an adjective?</p> 
+<p>Assuming growth continues, will success reduce the camaraderie of community 
+as a motivation? Just this year we hear ofOSM&rsquo;s Steve Coast sidling into 
+Microsoft, followed a little later byGDAL&rsquo;s Frank Warmerdam beaming up 
+into the Google mother ship. The corporate penalty, of course, is the loss of 
+personal intellectual property. In other words, will Steve Coast&rsquo;s 
+imaginative ideas now fall under the rubric,<em>&ldquo;all your base are belong 
+to us,&rdquo;</em> and Frank&rsquo;s enduring legacy recede into the patent 
+portfolio of<em>&ldquo;Do no evil?&rdquo;</em> FOSS4G halls are still filled 
+with independent consultants and academics, but a significant corporate 
+representation is evident by this apparent oxymoron, a presentation by ESRI,<em>
+&ldquo;Open Source GIS Solutions.&rdquo;</em></p> 
+<p><strong>Some Perspective:</strong></p> 
+<p>The GIS nervous system grows connections around the world faster than a 
+three year old&rsquo;s brain. OK, maybe I exaggerate, after all,<em>
+&ldquo;During the first three years, your child&rsquo;s brain establishes about 
+1,000 trillion nerve connections!&rdquo;</em> Really, how many connections are 
+there in the World Wide Web. For all its impact on life, our beloved internet 
+encompasses the equivalent of what, a few cubic centimeters of a single 
+infant&rsquo;s anatomy.</p> 
+<p>Open Geospatial and FOSS are just a small part of this minor universe, but 
+it&rsquo;s easy to forget that even ten years ago this all hardly existed.<em>
+&ldquo;The first Interoperability Program testbed (Web Mapping Testbed) 
+appeared in 1999.&rdquo;</em> About the same time Frank Warmerdam started GDAL 
+and the GFOSS engines started.</p> 
+<p>I still recall the wonder of downloading Sol Katz utilities from 
+BLM&rsquo;s ftp. The novelty of all this data free to use from the USGS was 
+still fresh and amazing. Sol sadly died before seeing his legacy, but what a 
+legacy. TheSol Katz award this year went to Java Topology Suite&rsquo;s  well 
+deserving Martin Davis.</p> <br>
+<br>
+<strong><b>Fig3 &ndash; Internet Map by 
+Chris Harrison</b></strong><br>
+<br>
+
+<p> Posted in GIS, PostGIS | No Comments &raquo;</p> 
+<h2>Alice in Mirrorland &ndash; Silverlight 5 Beta and XNA</h2> May 2nd, 2011 
+<p></p> <em>&ldquo;In another moment Alice was through the glass, and had 
+jumped lightly down into the Looking-glass room&rdquo;</em> <br>
+<br>
+<br>
+
+<strong><b>Fig 1 &ndash; NASA Neo Average Land Surface Temperature [Day] (1 
+month) (note: this link requires</b></strong> <strong><b>SL5 RC )</b></strong> 
+<br> 
+<p>Silverlight 5 Beta was released into the wild at MIX 11 a couple of weeks 
+ago. This is a big step for mirror land. Among many new features is the long 
+anticipated 3D capability. Silverlight 5 took the XNA route to 3D instead of 
+the WPF 3D XAML route. XNA is closer to the GPU with the time tested graphics 
+rendering pipeline familiar to Direct3D/OpenGL developers, but not so familiar 
+to XAML developers.</p> 
+<p>The older WPF 3D XAML aligns better with X3D, the ISO sanctioned XML 3D 
+graphics standard, while XNA aligns with the competing WebGL javascript wrapper 
+for OpenGL. Eventually XML 3D representations also boil down to a rendering 
+pipeline, but the core difference is that XNA is immediate mode while XML 3D is 
+kind of stuck with retained mode. Although you pick up recursive control 
+rendering with XML 3D, you lose out when it comes to moving through a scene in 
+the usual avatar game sense.</p> 
+<p>From a Silverlight XAML perspective, mirror land is largely a static 
+machine with infrequent events triggered by users. In between events, the 
+machine is silent. XAML&rsquo;s retained mode graphics lacks a sense of 
+time&rsquo;s flow. In contrast, enter XNA through Alice&rsquo;s DrawingSurface, 
+and the machine whirs on and on. Users occasionally throw events into the 
+machine and off it goes in a new direction, but there is no stopping. Frames 
+are clicking by apace.</p> 
+<p>Thus time enters mirror land in frames per second. Admittedly this is crude 
+relative to our world. Time is measured out in the proximate range of 1/20th to 
+1/60th a second per frame. Nothing like the cusp of the moment here, and 
+certainly no need for the nuance of Dedekind&rsquo;s cut. Time may be chunky in 
+mirror land, but with immediate mode XNA it does move, clicking through the 
+present moment one frame at a time.</p> 
+<p>Once Silverlight 5 is released there will be a continuous XNA API across 
+Microsoft&rsquo;s entire spectrum: Windows 7 desktops, Windows 7 phones, XBox 
+game consoles, and now the browser. Silverlight 5 and WP7 implementations are a 
+subset of the full XNA game framework available to desktop and XBox developers. 
+Both SL5 and WP7 will soon have merged Silverlight XNA capabilities. For 
+symmetry sake XBox should have Silverlight as apparently announcedhere. It 
+would be nice for a web browsing XBox TV console.</p> 
+<p>WP7 developers will need to wait until the future WP7 Mango release before 
+merging XNA and Silverlight into a single app. It&rsquo;s currently an 
+either/or proposition for the mobile branch of XNA/SL.</p> 
+<p>At any rate, with SL5 Beta, Silverlight and 3D XNA now coexist. The border 
+lies at the &lt;DrawingSurface&gt; element:</p> 
+<pre>&lt;DrawingSurface Draw=&quot;OnDraw&quot; 
+SizeChanged=&quot;DrawingSurface_SizeChanged&quot; /&gt;</pre> 
+<p>North of the border lies XML and recursive hierarchies, a largely language 
+world populated with &ldquo;semantics&rdquo; and &ldquo;ontologies.&rdquo; 
+South of the border lies a lush XNA jungle with drums throbbing in the night. 
+Yes, there are tropical white sands by an azure sea, but the heart of darkness 
+presses in on the mind.</p> 
+<p>XAML touches the academic world. XNA intersects Hollywood. It strikes me as 
+one of those outmoded Freudian landscapes so popular in the 50&rsquo;s, the raw 
+power of XNA boiling beneath XAML&rsquo;s super-ego. I might also note there 
+are bugs in paradise, but after all this is beta.</p> 
+<p>Merging these two worlds causes a bit of schizophrenia. Above is 
+Silverlight XAML with the beauty of recursive hierarchies and below is all XNA 
+with its rendering pipeline plumbing. Alice steps into the DrawingSurface 
+confronting a very different world indeed. No more recursive controls beyond 
+this border. Halt! Only immediate mode allowed. The learning curve south of the 
+border is not insignificant, but beauty awaits.</p> 
+<p>XNA involves tessellated models, rendering pipelines, vertex shaders, pixel 
+shaders, and a high level shading language, HLSL, accompanied by the usual 
+linear algebra suspects. Anytime you run across register references you know 
+this is getting closer to hardware.</p> 
+<p><em>&hellip;a cry that was no more than a breath: &ldquo;The horror! The 
+horror!&rdquo;</em></p> 
+<pre> sampler2D CloudSampler : register(s0); static const float3 AmbientColor 
+= float3(0.5f, 0.75f, 1.0f); static const float3 LampColor = float3(1.0f, 1.0f, 
+1.0f); static const float AmbientIntensity = 0.1f; static const float 
+DiffuseIntensity = 1.2f; static const float SpecularIntensity = 0.05f; static 
+const float SpecularPower = 10.0f; . .</pre> 
+<p>Here is an overview of the pipeline from Aaron Oneal&rsquo;s MIX talk:</p> 
+<br> <br>
+<strong><b>Fig 2 &ndash; Rendering Pipline from Aaron Oneal&rsquo;s 
+MIX 11 presentation</b></strong><br>
+<br>
+
+<p>So now that we have XNA it&rsquo;s time to take a spin. The best way to get 
+started is to borrow from the experts. Aaron Oneal has been very kind to post 
+some nicesamples including a game engine called Babylon written by David Catuhe.
+</p> 
+<p>The Silverlight 5 beta version of Babylon uses Silverlight to set some 
+options and SL5 DrawingSurface to host scenes. Using mouse and arrow keys 
+allows the camera/avatar to move through the virtual environment colliding with 
+walls etc. For those wishing to get an idea of what XNA is all about this
+webcafe model in Babylon is a good start. </p> 
+<p>The models are apparently produced in AutoCAD 3DS and are probably 
+difficult to build. Perhaps 3D point clouds will someday help, but you can see 
+the potential for navigable high risk complex facility modeling. This model has 
+over 60,000 faces, but I can still walk through exploring the environment 
+without any difficulty and all I&rsquo;m using is an older NVidia motherboard 
+GPU.</p> <br>
+<br>
+<strong><b>Fig 3 &ndash; Babylon SL5 asynchronous scene 
+loading with navigation by David Catuhe (note: this link requires SL5 beta)</b>
+</strong><br>
+<br>
+
+<p>Apparently, SL5 XNA can make a compelling interactive museum, refinery, 
+nuclear facility, or WalMart browser. This is not a stitched pano or photosynth 
+interior, but a full blown 3D model.</p> 
+<p>You&rsquo;ve gotta love that late afternoon shadow affect. Notice the 
+camera is evidently held by a vampire. I checked carefully and it casts no 
+shadow!</p> 
+<p><b>But what about mapping?</b></p> 
+<p>From a mapping perspective the fun begins with this solar wind sample. It 
+features all the necessary models, and shaders for earth, complete with 
+terrain, multi altitude atmosphere clouds, and lighting. It also has examples 
+of basic mouse and arrow key camera control.</p> <br>
+<strong><b>Fig 4 &ndash; 
+Solar Wind SL5 XNA sample</b></strong> 
+<p>This is my starting point. Solar Wind illustrates generating a tessellated 
+sphere model with applied textures for various layers. It even illustrates the 
+use of a normal (bump) map for 3D effects on the surface without needing a 
+tessellated surface terrain model. Especially interesting is the use of bump 
+maps to show a population density image as 3D.</p> 
+<p>My simple project is to extend this solar wind sample slightly by adding 
+layers fromNASA Neo. NASA Neo conveniently publishes 45 categories and 129 
+layers of a variety of global data collected on a regular basis. The first task 
+is to read the Neo GetCapabilities XML and produce the TreeView control to 
+manage such a wealth of data. The TreeView control comes from the Silverlight 
+Toolkit project. Populating this is a matter of reading through the Layer 
+elements of the returned XML and adding layers to a collection which is then 
+bound to the tree view&rsquo;s ItemsSource property.</p> 
+<pre> private void CreateCapabilities111(XDocument document) { //WMS 1.1.1 
+XElement GetMap = 
+document.Element(&quot;WMT_MS_Capabilities&quot;).Element(&quot;Capability&quot;) 
+.Element(&quot;Request&quot;).Element(&quot;GetMap&quot;).Element(&quot;DCPType&quot;) 
+.Element(&quot;HTTP&quot;).Element(&quot;Get&quot;).Element(&quot;OnlineResource&quot;); 
+XNamespace xlink = &quot;http://www.w3.org/1999/xlink&quot;; getMapUrl = 
+GetMap.Attribute(xlink + &quot;href&quot;).Value; if 
+(getMapUrl.IndexOf(&quot;?&quot;) != -1) getMapUrl = getMapUrl.Substring(0, 
+getMapUrl.IndexOf(&quot;?&quot;)); ObservableCollection layers = new 
+ObservableCollection (); foreach (XElement element in 
+document.Element(&quot;WMT_MS_Capabilities&quot;).Element(&quot;Capability&quot;) 
+.Element(&quot;Layer&quot;).Descendants(&quot;Layer&quot;)) { if 
+(element.Descendants(&quot;Layer&quot;).Count() &gt; 0) { WMSLayer lyr0 = new 
+WMSLayer(); lyr0.Title = (string)element.Element(&quot;Title&quot;); lyr0.Name 
+= &quot;header&quot;; foreach (XElement element1 in 
+element.Descendants(&quot;Layer&quot;)) { WMSLayer lyr1 = new WMSLayer(); 
+lyr1.Title = (string)element1.Element(&quot;Title&quot;); lyr1.Name = 
+(string)element1.Element(&quot;Name&quot;); lyr0.sublayers.Add(lyr1); } 
+layers.Add(lyr0); } } LayerTree.ItemsSource = layers; } </pre> 
+<p>Once the tree is populated, <em>OnSelectedItemChanged</em> events provide 
+the trigger for a GetMap request to NASA Neo returning a new png image. I wrote 
+a proxy WCF service to grab the image and then write it to png even if the 
+source is jpeg. It&rsquo;s nice to have an alpha channel for some types of 
+visualization.</p> 
+<p>The difficulty for an XNA novice like myself is understanding the hlsl 
+files and coming to terms with the rendering pipeline. Changing the source 
+image for a Texture2D shader requires dropping the whole model, changing the 
+image source, and finally reloading the scene model and pipeline once again. It 
+sounds like an expensive operation but surprisingly this re-instantiation seems 
+to take less time than receiving the GetMap request from the WMS service. In 
+WPF it was always interesting to put a Video element over the scene model, but 
+I doubt that will work here in XNA.</p> 
+<p>The result is often a beautiful rendering of the earth displaying real 
+satellite data at a global level.</p> <br>
+<br>
+<strong><b>Fig 5 &ndash; NASA 
+Neo Albedo (1 month) with population density bump map overlay (note: this link 
+requires</b></strong> <strong><b>SL5 RC)</b></strong> <br>
+
+<p><b>Some project extensions:</b></p> 
+<ul> 
+<li>I need to revisit lighting which resides in the cloud shader hlsl. Since 
+the original cloud model is not real cloud coverage, it is usually not an asset 
+to NASA Neo data. I will need to replace the cloud pixel image with something 
+benign to take advantage of the proper lighting setup for daytime.</li> 
+<li>Next on the list is exploring collision. WPF 3D provided a convenient <em>
+RayMeshGeometry3DHitTestResult.</em> In XNA it seems getting a point on the 
+earth to trigger a location event requires some manner of collision or 
+Ray.Intersects(Plane). If that can be worked out the logical next step is 
+grabbing DEM data from USGS for generating ground level terrain models.</li> 
+<li>There is a lot of public LiDAR data out there as well. Thanks to companies 
+likeQCoherent, some of it is available as WMS/WFS. So next on the agenda is 
+moving 3D LiDAR online.</li> 
+<li>The bump map approach to displaying variable geographic density as relief 
+is a useful concept. There ought to be lots of global epidemiology data that 
+can be transformed to a color density map for display as a relief bump map.</li>
+</ul> 
+<p>Lots of ideas, little time or money, but Silverlight 5 will make possible a 
+lot of very interesting web apps.</p> 
+<p><b>Helpful links:</b><br>
+ Silverlight 5 Beta: 
+http://www.silverlight.net/getstarted/silverlight-5-beta/<br>
+ Runtime: 
+http://go.microsoft.com/fwlink/?LinkId=213904</p> 
+<p>Silverlight 5 features:<br>
+
+http://i1.silverlight.net/content/downloads/silverlight_5_beta_features.pdf?cdn_id=1
+<br> &ldquo;Silverlight 5 now has built-in XNA 3D graphics API&rdquo;</p> 
+<p>XNA: http://msdn.microsoft.com/en-us/aa937791.aspx<br>
+Overview</p> 
+<p>NASA Neo: http://localhost/NASA-Neo/publish.htm</p> 
+<p>Babylon Scenes: Michel Rousseau, courtesy of Bewise.fr </p> 
+<p>Babylon Engine: David Catuhe / Microsoft France / DPE </p> 
+<p><b>Summary:</b></p> <em>&ldquo;I am real!&rdquo; said Alice, and began to 
+cry.
+<p></p> 
+<p>&ldquo;You won&rsquo;t make yourself a bit realler by crying,&rdquo; 
+Tweedledee remarked: &ldquo;there&rsquo;s nothing to cry about.&rdquo;</p> </em>
+<p><em>&ldquo;If I wasn&rsquo;t real,&rdquo; Alice said &ndash; half-laughing 
+through her tears, it all seemed so ridiculous &ndash; &ldquo;I shouldn&rsquo;t 
+be able to cry.&rdquo;<br>
+</em> </p> 
+<p>Tags: XNA 3D<br>
+ Posted in GIS, Silverlight, WPF3D, X3D, XML, XNA 3D | No 
+Comments &raquo;</p> 
+<h2>WebBIM? hmmm .. Bing BIM?</h2> February 12th, 2011 <br>
+<br>
+<strong><b>
+Fig 1 &ndash; Silverlight grocery store floor plan and directory</b></strong>
+<br> <br>
+
+<p>BIM or Building Information Modeling isn&rsquo;t exactly news. I guess I 
+tend to think of it as a part of AEC, starting back in the early generations of 
+CAD, as a way to manage a facility in the aftermath of design and construction. 
+BIM is after all about Buildings, and Buildings have been CAD turf all these 
+many years. Since those early days of FM, CAD has expanded into the current BIM 
+trend with building lifecycle management that is swallowing up larger swathes 
+of surrounding environments.</p> 
+<p>BIM models are virtual worlds, &lsquo;mirror lands&rsquo; of a single 
+building or campus. As BIM grows the isolated BIM models start to aggregate and 
+bump up against the floor of web mapping, the big &lsquo;Mirror Land&rsquo;. 
+One perspective is to look at a BIM model as a massively detailed Bill of 
+Material (BIM&lt;=&gt;BOM . .bing) in which every component fitted into the 
+model is linked to additional data for specification, design, material, 
+history, approval chains, warranties, and on and on. BIM potentially becomes 
+one massively connected network of hyperlinks with a top level 3D model that 
+mimics the real world.</p> 
+<p>Sound familiar? &ndash; BIM is a sub-internet on the scale of a single 
+building with an interface that has much in common with web mapping. Could this 
+really be yet another reincarnation of Ted Nelson&rsquo;s epicXanadu Project, 
+the quixotic precursor of today&rsquo;s internet?</p> 
+<p>Although of relatively recent origins, BIM has already spawned its own 
+bureaucratic industry with the likes ofNBIMS replete with committees, charters, 
+and governance capable of seriously publishing paragraphs like this:</p> <em>
+&ldquo;NBIM standards will merge data interoperability standards, content 
+values and taxonomies, and process definitions to create standards which define 
+&ldquo;business views&rdquo; of information needed to accomplish a particular 
+set of functions as well as the information exchange standards between 
+stakeholders.&rdquo;</em> 
+<p>No kidding, <em>&ldquo;taxonomies&rdquo;?</em> I&rsquo;m tempted to believe 
+that &lsquo;Information&rsquo; was cleverly inserted to avoid the embarrassing 
+eventuality of an unadorned &ldquo;<em>Building Model</em>.&rdquo; Interesting 
+howClaude Shannon seems to crop up in a lot of acronyms these days: BIM, GIS, 
+NBIMS, ICT, even IT?</p> 
+<p>BIM has more recently appeared on the GIS radar with a flurry of discussion 
+applying GIS methods to BIM. Here, for example are a couple of posts with 
+interesting discussion:SpatialSustain, GeoExpressions, and Vector One. Perhaps 
+this is just another turf battle arising in the CAD versus GIS wars. I leave 
+that for the GISCIers and NBIMSers to decide.</p> 
+<p>My interest is less in definition and more an observation that buildings 
+too are a part of the rapidly growing &ldquo;Mirror Land&rdquo; we call web 
+maps. Competing web maps have driven resolution down to the region of 
+diminishing returns. After all, with 30cm commonly available, is 15cm that much 
+more compelling? However, until recently, Mirror Land has been all about maps 
+and the wide outside world. Even building models ushered in withSketchUp are 
+all about exteriors.</p> 
+<p>The new frontier of web mapping is interior spaces, &ldquo;WebBIM,&rdquo; 
+&ldquo;Bing BIM&rdquo; ( Sorry, I just couldn&rsquo;t resist the impulse). 
+Before committing to national standards, certifications, and governance 
+taxonomies perhaps we need to just play with this a bit.</p> 
+<p>We have Bing Maps Local introducing restaurant photoscapes. Here&rsquo;s an 
+example of a restaurant in Boston with a series of arrow connected panoramas 
+for virtual exploration of the interior.</p> <br>
+<br>
+<strong><b>Fig 2 &ndash; 
+Step Inside from Bing Maps Local</b></strong><br>
+<br>
+
+<p>And another recent Bing Maps introduction, mall maps. Who wants to be lost 
+in a mall, or are we lost without our malls?</p> <br>
+<br>
+<strong><b>Fig 3 
+&ndash; Roosevelt Field Mall in NY</b></strong><br>
+<br>
+
+<p>And then in the Google World Art Projects explore museums. Cool, Streetside 
+Inside!</p> <br>
+<br>
+<strong><b>Fig 4 &ndash; Google Art Project Freer Gallery 
+of Art Smithsonian</b></strong><br>
+<br>
+
+<p>It&rsquo;s not obvious how far these interior space additions will go in 
+the future, but these seem to be trial balloons floated for generating feedback 
+on interior extensions to the web map mirror world. At least they are not 
+introduced with full fledged coverage.</p> 
+<p>&ldquo;Real&rdquo; BIM moves up the dimension chain from 2D to 3D and on to 
+4 &ndash; 5D, adding time and cost along the way. Mirror Land is still caught 
+in 2-3D. The upcoming Silverlight 5 release will boost things toward the 3-4D. 
+Multi-verse theories aside (now here&rsquo;s a taxonomy to ponder &ndash; the 
+Tegmark cosmological taxonomy of universes), in the 3-4D range full WebBIM can 
+hit the streets. In the meantime the essential element of spatially hyperlinked 
+data is already here for the curious to play with.</p> 
+<p>So what&rsquo;s a newbie Web BIMMER to do? The answer is obvious, get a 
+building plan and start trying a few things. Starting out in 2D, here is an 
+approach: get a building floorplan, add it to a Bing Maps interface, and then 
+do something simple with it.</p> 
+<p><strong>Step 1 &ndash; Model a building</strong></p> 
+<p>CAD is the place to start for buildings. AEC generates floorplans by the 
+boatload and there are even some available on line, but lacking DWG files the 
+next possibility is using CAD as a capture tool. I tried both approaches. My 
+local grocery store has a nice interior directory that is easily captured in 
+AutoCAD by tracing over the image:</p> <br>
+<strong><b>Fig 5 &ndash; King 
+Soopers Store Directory (foldout brochure)</b></strong> 
+<p>As an alternative example of a more typical DWG source, the <br>
+ 
+University of Alaska has kindly published their floor plans on the internet.</p>
+<p>In both scenarios the key is getting the DWG into something that can 
+readily be used in a web map application. Since I&rsquo;m fond ofBing 
+Silverlight Map Control, the goal is DWG to XAML. Similar things can be done 
+with SVG, and will be as HTML5 increases its reach, and probably even in KML 
+for the Googler minded. At first I thought this would be as easy as starting up
+Safe Software&rsquo;s FME, but XAML is not in their writers list, perhaps soon. 
+Next, I fell back to the venerable DXF text export with some C# code to turn it 
+into XAML. This was actually fairly easy with the DXF capture of my local 
+grocery store. I had kept the DWG limited to simple closed polylines and text, 
+separated by layer names.</p> 
+<p>Here is the result:</p> <br>
+<br>
+<strong><b>Fig 6 &ndash; XAML version of 
+King Soopers</b></strong><br>
+<br>
+
+<p>Now on to more typical sources, DWG files which are outside of my control. 
+Dealing with arcs and blocks was more than I wanted, so I took an alternative 
+path. FME does have an SVG writer. SVG is hauntingly similar to XAML 
+(especially haunting to W3C), and writing a simple SVG to XAML translator in C# 
+was easier than any other approach I could think of. There are someXSLT files 
+for SVG to XAML, but instead I took the quick and dirty route of translating 
+SVG text to XAML text in my own translator giving me some more control.</p> 
+<p>Here is the result:</p> <br>
+<br>
+<strong><b>Fig 7 &ndash; UAA Edward and 
+Cathryn Rasmuson Hall</b></strong><br>
+<br>
+
+<p><strong>Step 2 &ndash; Embed XAML into a Bing Map Control interface</strong>
+</p> 
+<p>First I wrote a small webapp that allows me to zoom Bing maps aerial to a 
+desired building and draw a polyline around its footprint. This polyline is 
+turned into a polygon XAML snippet added to a TextBox suitable for cut/paste as 
+a map link in my Web BIM experiment.</p> 
+<pre> &lt;m:MapPolygon Tag=&quot;KingSoopers2&quot; 
+x:Name=&quot;footprint_1&quot; Fill=&quot;#FFfdd173&quot; 
+Stroke=&quot;Black&quot; StrokeThickness=&quot;1&quot; Opacity=&quot;0.5&quot; 
+MouseLeftButtonUp=&quot;MapPolygon_MouseLeftButtonUp&quot;&gt; 
+&lt;m:MapPolygon.Locations&gt; 39.05779345,-104.84322060 
+39.05772368,-104.84321926 39.05770910,-104.84302480 39.05771014,-104.84290947 
+39.05772159,-104.84277536 39.05776116,-104.84277804 39.05776429,-104.84243204 
+39.05833809,-104.84248434 39.05833288,-104.84283303 39.05836204,-104.84284510 
+39.05835996,-104.84313880 39.05832872,-104.84313880 39.05832663,-104.84340836 
+39.05825478,-104.84340568 39.05825374,-104.84354113 39.05821000,-104.84353979 
+39.05820792,-104.84369670 39.05779137,-104.84367792 39.05779345,-104.84322060 
+&lt;/m:MapPolygon.Locations&gt; &lt;/m:MapPolygon&gt;</pre> 
+<p>As a demonstration, it was sufficient to simply add this snippet to a map 
+control. The more general method would be to create a SQL table of buildings 
+that includes a geography column of the footprint suitable for geography<em>
+STIntersects</em> queries. Using a typical <em>MainMap. ViewChangeEnd</em> 
+event would then let the UI send a WCF query to the table, retrieving 
+footprints falling into the current viewport as a user navigates in map space. 
+However, the real goal is playing with interior plans and I left the data 
+connector feature for a future enhancement.</p> <br>
+<br>
+<strong><b>Fig 8 
+&ndash; Bing Map building footprint and address finder</b></strong><br>
+<br>
+
+<p>In order to find buildings easily, I added some Geocode Service calls for 
+an Address finder. The footprint polygon with its<em>MouseLeftButtonUp</em> 
+event leads to a<em>NavigationService</em> that moves to the desired floor plan 
+page. Again generalizing this would involve keeping these XAML floor plans in a 
+SQL Azure Building table for reference as needed. A XAML canvas containing the 
+floor plans would be stored in a BLOB column for easy query and import to the 
+UI. Supporting other export formats such as XAML, SVG, and KML might best be 
+served by using a<em>GeometryCollection</em> in the SQL table with translation 
+on the query response.</p> 
+<p><strong>Step 3 &ndash; Do something simple with the floorplans</strong></p> 
+<p>Some useful utilities included nesting my floorplan XAML inside a <em>
+&lt;local:DragZoomPanel&gt;</em> which is coded to implement some normal pan 
+and zoom functions: pan with left mouse, double click zoom in, and mouse wheel 
+zoom +/-. Mouse over text labeling helps identify features as well. In 
+addition, I was thinking about PlaneProjections for stacking multiple floors so 
+I added some slider binding controls for PlaneProjection attributes, just for 
+experimentation in a debug panel.</p> <br>
+<br>
+<strong><b>Fig 9 &ndash; Store 
+plan in a DragZoomPanel with PlaneProjection sliders</b></strong><br>
+<br>
+
+<p>Since my original King Soopers image is a store directory an obvious 
+addition is making the plan view into a store directory finder.</p> 
+<p>I added the store items along with aisles and shelf polygon id to a table 
+accessed through a WCF query. When the floorplan is initialized a request is 
+made to a SQL Server table with this directory item information used to 
+populate a<em>ListBox</em>. You could use binding, but I needed to add some 
+events so<em>ListBoxItems</em> are added in code behind. </p> 
+<p>Mouse events connect directory entries to position polygons in the store 
+shelves. Finally a<em>MouseLeftButtonUp</em> event illustrates opening a shelf 
+photo view which is overlaid with a sample link geometry to a Crest product 
+website. Clicks are also associated with Camera Icons to connect to some sample
+Photosynthes and Panoramas of store interior. Silverlight 5 due out in 2011 
+promises to have Silverlight integration of Photosynthe controls as well as 3D.
+</p> <br>
+<br>
+<strong><b>Fig 10 &ndash; Photosynthe Panorama of Produce</b>
+</strong><br>
+<br>
+
+<p>Instead of a store directory the UAA example includes a simple room finder 
+which moves to the corresponding floor and zooms to the room selected. My 
+attempts at using PlaneProjection as a multi floor stack were thwarted by lack 
+of control over camera position. I had hoped to show a stack of floor plans at 
+an oblique view with an animation for the selected floor plan sliding it out of 
+the stack and rotating to planar view. Eventually I&rsquo;ll have a chance to 
+revisit this in SL5 with its full 3D scene graph support.</p> 
+<p><strong>Where are we going?</strong></p> 
+<p>You can see where these primitive experiments are going: Move from a Bing 
+Map to a Map of interior spaces and now simple Locators can reach into asset 
+databases where we have information about all our stuff. The stuff in this case 
+is not roads, addresses, and shops, but smaller stuff, human scale stuff that 
+we use in our everyday consumer and corporate lives. Unlike rural cultures, 
+modern western culture is much more about inside than outside. We spend many 
+more hours inside the cube than out, so a Mirror Land where we live is 
+certainly a plausible extension, whether we call it CAD, GIS, BIM, FM, or 
+BINGBIM matters little.</p> 
+<p>It&rsquo;s also noteworthy that this gives vendors a chance to purchase 
+more ad opportunities. After all, our technology is here to serve a consumer 
+driven culture and so is Mirror Land.</p> 
+<p>Interior spaces are a predictable part of Mirror Land and we are already 
+seeing minor extensions. The proprietary and private nature of many interior 
+spaces is likely to leave much out of public mapping. However, retail 
+incentives will be a driving force extending ad opportunities into personal 
+scale mapping. Eventually Mobile will close the loop on interior retail space, 
+providing both consumer location as well as local asset views. Add some mobile 
+camera apps, and augmented reality will combine product databases, 
+individualized coupon links, nutritional content, etc to the shelf in front of 
+you.</p> 
+<p>On the enterprise side, behind locked BIM doors, Silverlight with its rich 
+authentication framework, but more limited mobile reach, will play a part in 
+proprietary asset management which is a big part of FM, BM, BIM &hellip;.. 
+Location of assets is a major part of the drive to efficiency and covers a lot 
+of ground from inventory, to medical equipment, to people.</p> 
+<p><strong>Summary:</strong></p> 
+<p>This small exercise will likely irk true NBIMSers who will not see much 
+&ldquo;real&rdquo; BIM in a few floor plans. So I hasten to add this 
+disclaimer, I&rsquo;m not really a Web BIMer or even a Bing BIMer, but I am 
+looking forward to the extension of Mirror Land to the interior spaces I 
+generally occupy.</p> 
+<p>Whether GIS analysis reaches into web mapped interiors is an open question. 
+I&rsquo;m old enough to remember when there were &ldquo;CAD Maps&rdquo; and 
+&ldquo;Real GIS&rdquo;, and then &ldquo;Web Maps&rdquo; and &ldquo;Real 
+GIS.&rdquo; Although GIS (real, virtual, or otherwise) is slowly reaching 
+deeper into Mirror Land, we are still a long way from NBIMS sanctioned 
+&ldquo;Real&rdquo; WebBIM with GIS analysis. But then that means it&rsquo;s 
+still fun, right?</p> 
+<p> Posted in Bing Maps, CAD, Future, Silverlight | No Comments &raquo;</p> 
+<h2>(Silverlight BusinessApplication , Membership on Azure) =&gt; To Map || 
+Not To Map</h2> December 22nd, 2010 
+<p>We owe Alonzo Church for this one:</p> 
+<pre> WebContext.Current.Authentication.LoggedIn += (se, ev) =&gt; { 
+Link2.Visibility = Visibility.Visible; }; 
+WebContext.Current.Authentication.LoggedOut += (se, ev) =&gt; { 
+Link2.Visibility = Visibility.Collapsed; };</pre> 
+<p>The &lambda; calculus &ldquo;goes to&rdquo; Lambda Expressions now in C#, 
+turning mere programmers into logicians. We share in the bounty of 
+Alonzo&rsquo;s intellect in some remote fashion. Likely others understand this 
+functional proof apparatus, but for me it&rsquo;s a mechanical thing. Put this 
+here and that there, slyly kicking an answer into existence. Is a view link 
+visible or is it not?</p> 
+<p>Here we are not concerned with &ldquo;the what&rdquo; of a map but a small 
+preliminary question, &ldquo;whether to map at all?&rdquo;</p> 
+<p>Azure provides a lot of cloud for the money. Between SQL Azure, blob 
+storage, and hosted services, both web and worker roles, there are a lot of 
+very useful resources. All, except SQL Azure, currently include built in 
+scaling and replication. Azure SQL Server scaling is still awaiting the release 
+offederation at some point in the future. </p> 
+<p>Visual Studio 2010 adds a Cloud toolkit with template ready services (not 
+to be confused with &ldquo;shovel ready&rdquo;). One template that is 
+interesting is the ASP .NET template combined with an Azure hosted Web Role 
+service. The usefulness here is the full ASP .NET authentication and profile 
+capability. If you need simple authentication, profile, and registration built 
+on the ASP .NET model it is all here.</p> 
+<p>The goal then is to leverage the resourceful templates of ASP .NET 
+authentication, modify this to a Silverlight version (which implies a Bing Map 
+Control is in the future, along with some nifty transition graphics), and 
+finally deploy to Azure.</p> 
+<p><strong>And now for the recipe</strong></p> <br>
+<strong><b>Fig1 &ndash; 
+open a new VS2010 project using the Cloud template</b></strong> 
+<p></p> <br>
+<strong><b>Fig2 &ndash; add an ASP .NET Web Role</b></strong> 
+<p></p> <br>
+<strong><b>Fig3 &ndash; click run to open in local development 
+fabric with login and registration</b></strong> 
+<p>This is helpful and works fine in a local dev fabric.</p> 
+<p><strong>Now on to Azure:</strong></p> 
+<p> First create a Storage Account and a Hosted Service.</p> <br>
+<strong><b>
+Fig4 &ndash; Storage Account for use in publishing and diagnostics logs</b>
+</strong> 
+<p></p> <br>
+<strong><b>Fig5 &ndash; Azure control manager</b></strong> 
+<p></p> <br>
+<strong><b>Fig6 &ndash; create a SQL Azure instance to hold the 
+aspnetdb</b></strong> 
+<p> Now using VS2010 publish the brand new ASP .NET web role to the new Azure 
+account.</p> 
+<p><strong>Problem 1</strong><br>
+ However, publish to Azure and you will 
+immediately face a couple of problems. First, the published Azure service is a 
+Web Role not a VM, which means there is no local SQL Server accessible for 
+attaching a default aspnetdb. SQL Azure is in its own separate instance. You 
+will need to manually create the aspnetdb Database on a SQL Azure instance and 
+then provide a connection string to this new SQL Azure in the Web Role.</p> 
+<p>Microsoft provides sql scripts adapted for providing this to SQL Azure:
+http://code.msdn.microsoft.com/KB2006191</p> 
+<p>Running these scripts in your Azure DB will create the following membership 
+database and tables:</p> <br>
+<strong><b>Fig7 &ndash; aspnetdb SQL Azure 
+database</b></strong> 
+<p> Since I like Silverlight better it&rsquo;s probably time to dump the plain 
+Jane ASP .NET in favor of the Silverlight Navigation version. Silverlight 
+provides animated fades and flips to which most of us are already unconsciously 
+accustomed.</p> 
+<p>In Visual Studio add a new project from the Silverlight templates. The 
+Silverlight Business Application is the one with membership.</p> <br>
+<strong>
+<b>Fig8 &ndash; Silverlight Business Application</b></strong> 
+<p> We are now swapping out the old ASP .NET Cloud Web Role with a Silverlight 
+BusinessApplication1.Web</p> 
+<p><strong>Step 1</strong><br>
+ Add reference assemblies WindowsAzure 
+Diagnostic, ServiceRuntime, and StorageClient to BusinessApplication1.Web</p> 
+<p><strong>Step 2</strong><br>
+ Copy WebRole1 WebRole.cs to 
+BusinessApplication1.Web and correct namespace</p> 
+<p><strong>Step 3</strong><br>
+ CloudService1 Roles right click to add Role in 
+solution &ndash; BusinessApplication.Web<br>
+ (Optional remove WebRole1 from 
+Roles and remove WebRole project since it is no longer needed)</p> 
+<p><strong>Step 4</strong><br>
+ Add a DiagnosticsConnectionString property to 
+the Roles/BusinessApplication1.Web role that points to the Azure blob storage. 
+Now we can add a DiagnosticMonitor and trace logging to the WebRole.cs</p> 
+<p><strong>Step 5</strong><br>
+ Open BusinessApplication1.Web web.config, add 
+connection string pointed at SQL Azure aspnetdb and a set of 
+ApplicationServices:</p> 
+<pre> &lt;?xml version=&quot;1.0&quot;?&gt; &lt;configuration&gt; 
+&lt;configSections&gt; &lt;sectionGroup 
+name=&quot;system.serviceModel&quot;&gt; &lt;section 
+name=&quot;domainServices&quot; 
+type=&quot;System.ServiceModel.DomainServices.Hosting.DomainServicesSection, 
+System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, 
+PublicKeyToken=31BF3856AD364E35&quot; 
+allowDefinition=&quot;MachineToApplication&quot; 
+requirePermission=&quot;false&quot; /&gt; &lt;/sectionGroup&gt; 
+&lt;/configSections&gt; &lt;connectionStrings&gt; &lt;remove 
+name=&quot;LocalSqlServer&quot;/&gt; &lt;add 
+name=&quot;ApplicationServices&quot; 
+connectionString=&quot;Server=tcp:&lt;SqlAzure 
+server&gt;.database.windows.net;Database=aspnetdb;User 
+ID=&lt;username&gt;;Password=&lt;password&gt;;Trusted_Connection=False;Encrypt=True;&quot; 
+providerName=&quot;System.Data.SqlClient&quot; /&gt; &lt;/connectionStrings&gt; 
+&lt;system.web&gt; &lt;httpModules&gt; &lt;add 
+name=&quot;DomainServiceModule&quot; 
+type=&quot;System.ServiceModel.DomainServices.Hosting.DomainServiceHttpModule, 
+System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, 
+PublicKeyToken=31BF3856AD364E35&quot; /&gt; &lt;/httpModules&gt; 
+&lt;compilation debug=&quot;true&quot; targetFramework=&quot;4.0&quot; /&gt; 
+&lt;authentication mode=&quot;Forms&quot;&gt; &lt;forms 
+name=&quot;.BusinessApplication1_ASPXAUTH&quot; /&gt; &lt;/authentication&gt; 
+&lt;membership defaultProvider=&quot;AspNetSqlMembershipProvider&quot;&gt; 
+&lt;providers&gt; &lt;clear/&gt; &lt;add 
+name=&quot;AspNetSqlMembershipProvider&quot; 
+type=&quot;System.Web.Security.SqlMembershipProvider&quot; 
+connectionStringName=&quot;ApplicationServices&quot; 
+enablePasswordRetrieval=&quot;false&quot; enablePasswordReset=&quot;true&quot; 
+requiresQuestionAndAnswer=&quot;false&quot; 
+requiresUniqueEmail=&quot;false&quot; maxInvalidPasswordAttempts=&quot;5&quot; 
+minRequiredPasswordLength=&quot;6&quot; 
+minRequiredNonalphanumericCharacters=&quot;0&quot; 
+passwordAttemptWindow=&quot;10&quot; applicationName=&quot;/&quot; /&gt; 
+&lt;/providers&gt; &lt;/membership&gt; &lt;profile 
+defaultProvider=&quot;AspNetSqlProfileProvider&quot;&gt; &lt;providers&gt; 
+&lt;clear/&gt; &lt;add name=&quot;AspNetSqlProfileProvider&quot; 
+type=&quot;System.Web.Profile.SqlProfileProvider&quot; 
+connectionStringName=&quot;ApplicationServices&quot; 
+applicationName=&quot;/&quot;/&gt; &lt;/providers&gt; &lt;properties&gt; 
+&lt;add name=&quot;FriendlyName&quot;/&gt; &lt;/properties&gt; &lt;/profile&gt; 
+&lt;roleManager enabled=&quot;false&quot; 
+defaultProvider=&quot;AspNetSqlRoleProvider&quot;&gt; &lt;providers&gt; 
+&lt;clear/&gt; &lt;add name=&quot;AspNetSqlRoleProvider&quot; 
+type=&quot;System.Web.Security.SqlRoleProvider&quot; 
+connectionStringName=&quot;ApplicationServices&quot; 
+applicationName=&quot;/&quot; /&gt; &lt;add 
+name=&quot;AspNetWindowsTokenRoleProvider&quot; 
+type=&quot;System.Web.Security.WindowsTokenRoleProvider&quot; 
+applicationName=&quot;/&quot; /&gt; &lt;/providers&gt; &lt;/roleManager&gt; 
+&lt;/system.web&gt; &lt;system.webServer&gt; &lt;validation 
+validateIntegratedModeConfiguration=&quot;false&quot;/&gt; &lt;modules 
+runAllManagedModulesForAllRequests=&quot;true&quot;&gt; &lt;add 
+name=&quot;DomainServiceModule&quot; preCondition=&quot;managedHandler&quot; 
+type=&quot;System.ServiceModel.DomainServices.Hosting.DomainServiceHttpModule , 
+System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, 
+PublicKeyToken=31AS3856AD234E35&quot; /&gt; &lt;/modules&gt; 
+&lt;/system.webServer&gt; &lt;system.serviceModel&gt; 
+&lt;serviceHostingEnvironment aspNetCompatibilityEnabled=&quot;true&quot; 
+multipleSiteBindingsEnabled=&quot;true&quot; /&gt; &lt;/system.serviceModel&gt; 
+&lt;/configuration&gt;</pre> 
+<p>Now we can publish our updated Silverlight Web Role to Azure.</p> <br>
+
+<strong><b>Fig9 &ndash; publish to Azure</b></strong> 
+<p> <strong>However, this brings us to problem 2</strong> </p> 
+<p>It turns out that there are a couple of assemblies that are missing from 
+Azure&rsquo;s OS but required for our Silverlight membership 
+BusinessApplication. When an assembly is missing publish will continue cycling 
+between initializing and stop without ever giving a reason for the endless loop.
+</p> 
+<p>When this happens I know to start looking at the assembly dlls. 
+Unfortunately they are numerous. Without a message indicating which is at fault 
+we are reduced to trial and error. Obviously the turnaround on publish to Azure 
+is not incredibly fast. Debug cycles will take five to ten minutes so this 
+elimination process is tedious. However, I spent an afternoon on this and can 
+save you some time. The trick assemblies are:<br>
+<em>
+&nbsp;&nbsp;&nbsp;&nbsp;System.ServiceModel.DomainServices.Hosting<br>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;System.ServiceModel.DomainServices.Server</em></p> 
+<p>To fix this problem: <br>
+Open references under BusinessApplication1.Web 
+and click on the above two assemblies. Then go to properties &ldquo;Copy 
+Local&rdquo; which must be set to True. This means that a publish to Azure will 
+also copy these two missing assemblies from your local VS2010 environment up to 
+Azure and publish will eventually run as expected.</p> 
+<p>The publish process then brings us to this:</p> <br>
+<strong><b>Fig10 
+&ndash; Login</b></strong> 
+<p> And this:</p> <br>
+<strong><b>Fig11 &ndash; Register</b></strong> 
+<p>That in turn allows the Alonzo &lambda; magic:</p> 
+<pre> WebContext.Current.Authentication.LoggedIn += (se, ev) =&gt; { 
+Link2.Visibility = Visibility.Visible; };</pre> 
+<p><strong>Summary:</strong></p> 
+<p>Well it works, maybe not as easily as one would expect for a Cloud template.
+</p> 
+<p> Posted in Uncategorized | No Comments &raquo;</p> 
+<h2>New Stuff</h2> December 14th, 2010 
+<p>Some convergence stuff has been passing by my window recently. Too bad 
+there isn&rsquo;t more time to play, but here are a few items of note to the 
+spatial world.</p> <br>
+<strong><b>Silverlight 5 early early demo from 
+Firestarter webcast</b></strong> <br>
+
+<p>First a look ahead to Silverlight 5 due in 2011:<br>
+<br>
+ Silverlight 
+Firestarter video </p> 
+<p>Some very interesting pre-release demos showcasing mesh graphics running at 
+GPU speeds. WPF has had 3D mesh capability for a few years, but SL5 will add 
+the same camera level control in 3D scene graphs to spice up delivery in the 
+browser. There will be a whole new level of interesting possibilities with 3D 
+in the browser as apparent in the Rosso demos above.<br>
+<br>
+<br>
+<br>
+<strong>
+3D View of what?</strong><br>
+ So then 3D viewing, but how do you get a 3D 
+image into the model in the first place? Well thanks to some links fromGene Roe
+, and interesting open source driver activity around the Kinect, here are some 
+possibilities.</p> 
+<p></p> 
+<p>The obvious direction is a poor man&rsquo;s 3d modeler. It won&rsquo;t be 
+too long until we see these devices in every corner of rooms supplementing the 
+omnipresent security cameras with 3D views. (Nice to know that the security 
+folks can wander around mirror land looking under tables and behind curtains.)
+</p> 
+<p>Well it could be worse, see DIY TSA scanner. But I doubt that Kinect will 
+ever incorporate millimeter or back scatter sensors into the commercial 
+versions.<br>
+<br>
+<br>
+</p> 
+<p><strong>Next</strong><br>
+</p> 
+<p>I know we&rsquo;ve all seen Jack Dangermond&rsquo;s &ldquo;instrumented 
+universe&rdquo; prophecies, but another angle is remote dashboarding. Put the 
+instrument controls right on the floor in front of us and abstract the sensored 
+world one step further into the mirror. That way heavy equipment operators can 
+get nice aerobic workouts too.<br>
+<br>
+<br>
+</p> 
+<p><strong>Next Step</strong><br>
+</p> 
+<p>Can&rsquo;t miss the augmented reality angle. Pico projector in a phone 
+ought to handle this trick in the handheld world.<br>
+<br>
+<br>
+</p> 
+<p><strong>and then UGV</strong><br>
+</p> 
+<p>Why not let that Rumba do some modeling?<br>
+<br>
+<br>
+</p> 
+<p><strong>or UAV</strong></p> 
+<p>Add a bit of UAV and we can move mirror land from the 30cm (1 foot) 
+resolution capture soon to be added to Bing Maps (seeBlaise Aguera y Arcas 
+comments) to hmmm what looks like sub centimeter. Do we doubt that the 
+venerable licensed surveyor will eventually have one of theseGatewingX100 
+thing-a-ma-bobs in his truck.</p> 
+<p></p> 
+<p><strong>Summary</strong></p> 
+<p>So we move along. I am seeing some sanity in the WP7 spanning XNA and 
+Silverlight in the same mobile device. Convergence into the 3D mirror land will 
+be less painful for those of us developing in the Microsoft framework. HTML5 is 
+nice and I&rsquo;m happy to see the rebirth of SVG, but then again, the world 
+moves apace, and I look forward to some genuine 3D adventures in the next 
+generation mirror land.</p> 
+<p> Posted in Uncategorized | No Comments &raquo;</p> 
+<h2>Route Optimization and Death of a Salesman</h2> November 27th, 2010 <br>
+
+<br> <strong><b>Fig 1 &ndash; OnTerra Systems Route Optimization UI &ndash; 
+Before Optimization<br>
+</b></strong><br>
+<br>
+
+<p>Taking an arbitrary list of addresses and finding an optimized route has 
+been a pretty common problem ever since traveling salesmen. It has been the 
+bane of many computer science students leading to more than a few minor 
+tragedies, as well as Arthur Miller&rsquo;s great American tragedy. Technically 
+known as an np-complete problem, computational time escalates quickly and 
+tragically as the number of stops increase.</p> 
+<p>Bing includes some valuable Routing services like routing with waypoints, 
+traffic optimization, optimization of time or distance, or even walking routes 
+versus driving versus major routes. However, there are some limitations to Bing 
+Routing Service , and even Bing could not prevent Willy Loman&rsquo;s tragic 
+demise.</p> 
+<p>One limitation of Bing Routing is that the maximum number of waypoint stops 
+is 25. This is probably not a notable issue for individual users, but it is a 
+problem for enterprise use with large numbers of stops to calculate.</p> 
+<p>Perhaps a broader issue often encountered is waypoint or stop order. Bing 
+Route service does not attempt to reorder waypoints for optimal routing. Route 
+segments between waypoints are optimized, but waypoints themselves are up to 
+the user. Often stop points are coming from a SharePoint list, a contact 
+address book, an Excel spreadsheet, or a database without benefit of sort 
+ordering based on route optimization. This is where route optimization comes in 
+handy.</p> 
+<p>OnTerra Systems has been involved with Fleet management for some time now 
+and recently introduced a RouteOptimization Service.</p> 
+<p>There are of course fairly complex algorithms involved and computational 
+scientists have been at some pains to circumscribe the limits of the problem. 
+One simplification that makes this much easier is to ignore routing momentarily 
+and use a shortest distance algorithm to make a first route optimization pass. 
+One way this can be accomplished is by looking at a set of connected nodes and 
+determining segment intersects. By recursively re&ndash;ordering nodes to 
+eliminate segment intersects, the computer quickly turns the above node set 
+into this:</p> <br>
+<br>
+<strong><b>Fig 2 &ndash; OnTerra Systems Route 
+Optimization UI &ndash; Route after optimization<br>
+</b></strong><br>
+<br>
+
+<p>The nodes are first ordered with the simplified assumption of straight line 
+segment connectors, and only after a re-ordering is the usual Bing Route 
+service triggered to get actual routes between nodes. This is one of those 
+algorithms that take some liberties to find a solution in real time i.e. time 
+we can live with. It doesn&rsquo;t guarantee &ldquo;The Absolute Best&rdquo; 
+route, but a route that is &ldquo;good enough&rdquo; and in the vast majority 
+of cases will in fact be the best, just not guaranteed.</p> 
+<p>Of course mathematicians and purists cringe at the idea, however, that is 
+ordinarily what engineering is all about, getting an approximate solution in 
+less than the time constraint of a useable solution.</p> 
+<p>OnTerra Systems has added some other refinements to the service with the 
+help of Bing Maps Silverlight Control. This UI uses both Bing Geocoding as well 
+as Bing Route services. In addition it makes use of the simplified 
+RouteOptimization service to make the route UI shown above. Users can choose 
+whether to optimize for time or distance. Minor modifications could use traffic 
+optimization, available in Bing, just as well. However, traffic optimization 
+requires a different license and a bit more money.</p> 
+<p>Entering points can be accomplished several ways, with a click approach, 
+from manually entered addresses, or even more easily from an Excel spreadsheet 
+of addresses. Route definition can be set for round trip, one way to a known 
+end destination, or one way to whichever end is the most efficient.</p> 
+<p>This UI is only one of many that could be used. As a WCF Service, 
+RouteOptimization can take latitude, longitude point sets from any source and 
+return the ordered points for display in any web UI.</p> 
+<p>This example Silverlight UI is a three step process of service chaining. 
+First points are collected from the user. If addresses are listed rather than 
+latitude longitude points, then Bing Geocode Service is called to arrive at the 
+necessary list of latitude, longitude points. These in turn are handed to the 
+RouteOptimizer Service. The returned points are now ordered and can be given to 
+the Bing Route Service in the 3rd step of a service chain. Finally the 
+resulting route is plotted in the Silverlight map UI.</p> 
+<p><strong><b>Waypoint limit work around:</b></strong><br>
+ An interesting 
+side note to RouteOptimization Service is the ability to extend the number of 
+waypoints. Microsoft&rsquo;s restriction to 25 waypoints is probably a scaling 
+throttle to prevent service users from sending in hundreds and possibly 
+thousands of waypoints for a single route. The Route Service could be 
+compromised with many large count waypoint requests.</p> 
+<p>However, with the ability to order waypoints with an outside service this 
+limit has a work around. First run an optimization on all of the stops using 
+RouteOptimizer service. Now simply loop through the return set with multiple 
+calls to Bing Route in 25 node chunks. This simple divide and conquer achieves 
+a simple work around to the Waypoint limitation. Note that the public sample 
+here is also limited to 25 stops. To use this work-around, you&rsquo;ll need a 
+licensed version.</p> 
+<p><strong><b>Alternate UIs</b></strong><br>
+ Of course UIs may multiply. 
+Route Savvy is primarily a service to which any number of UIs can connect and 
+Silverlight happens to be a nice way to create useful UIs. Perhaps a more 
+convenient UI is the Bing Map Gallery version found at Bing Maps Explore:<br>
+
+Bing Map Explore Route Savvy.</p> <br>
+<br>
+<strong><b>Fig 3 &ndash; Bing Map 
+Gallery Route Savvy</b></strong><br>
+<br>
+<br>
+<br>
+<strong><b>Fig 4 &ndash; 
+Bing Map Gallery Route Savvy</b></strong><br>
+<br>
+
+<p><strong><b>Linda Loman and the Parent Car Pool:</b></strong><br>
+ Anyone 
+out there with kids in sports has probably run into this traveling salesman 
+problem. (Fast forward to 2010 and Linda Loman jumps in the van with Biff ) 
+There are 6 kids in the car pool. What is the optimal route for picking up all 
+kids and delivering them to the playing field on time? If you want to know, 
+just fire up RouteOptimizer and give it a whirl.</p> 
+<p><strong><b>Summary:</b></strong><br>
+ OnTerra Systems Route Optimization 
+Service supplements the already valuable Bing Services by both optimizing input 
+stop orders and extending the waypoint limitation. This is an illustration of 
+the utility of web service chains. The ability to link many services into a 
+solution chain is one of the dreams come true of web development and one reason 
+why web applications continue to supersede the desktop world.</p> 
+<p>Please note, even though RouteOptimizer will help Linda Loman&rsquo;s car 
+pool run smoothly, it won&rsquo;t prevent the death of a salesman. Sorry, only 
+a higher plane optimization can do that.</p> 
+<p> Posted in Uncategorized | No Comments &raquo;</p> 
+<h2>Connecting the Data Dots &ndash; Hybrid Architecture</h2> July 26th, 2010 
+<br> <br>
+<strong><b>Fig 1 &ndash; DataConnector</b></strong><br>
+<br>
+
+<p>Web mapping has generally been a 3 tier proposition. In a typical small to 
+medium scale scenario there will almost always be a data source residing in a 
+spatial database, with some type of service in the middle relaying queries from 
+a browser client UI to the database and back.</p> 
+<p>I&rsquo;ve worked with all kinds of permutations of 3 tier web mapping, 
+some easier to use than others. However, a few months ago I sat down with all 
+the Microsoft offerings and worked out an example using<strong>SQL Server + WCF 
++Bing Maps Silverlight Control</strong>. Notice tools for all three tiers are 
+available from the same vendor i.e. Microsoft Visual Studio. I have to admit 
+that it is really nice to have integrated tools across the whole span. The 
+Microsoft option has only been possible in the last year or so with the 
+introduction of SQL Server 2008 and Bing Maps Silverlight Map control.</p> 
+<p>The resulting project is available on codeplex: dataconnector<br>
+ and you 
+can play with a version online here:DataConnectorUI</p> 
+<p>When working on the project, I was starting out in WCF with some 
+reservations. SQL Spatial was similar to much of my earlier work with PostGIS. 
+While Bing Maps Silverlight Control and XAML echoed work I&rsquo;d done a 
+decade back with SVG, just more so. However, for the middle tier I had 
+generally used something from the OGC world such as GeoServer. Putting together 
+my own middle tier service using WCF was largely experimental. WCF turned out 
+to be less daunting than I had anticipated. In addition, it also afforded 
+opportunity to try out a few different approaches for transferring spatial 
+query results to the UI client.</p> 
+<p>There is more complete information on the project here:<br>
+
+http://dataconnector.codeplex.com/documentation</p> 
+<p>After all the experimental approaches my conclusion is that even with the 
+powerful CLR performance of Silverlight Bing Maps Control, most scenarios still 
+call for a<strong> hybrid</strong> approach: raster performance tile pyramids 
+for large extent or dense data resources, and vectors for better user 
+interaction at lower levels in the pyramid.</p> 
+<p>Tile Pyramids don&rsquo;t have to be static and DataConnector has examples 
+of both static and dynamic tile sources. The static example is a little 
+different from other approaches I&rsquo;ve used, such as GeoWebCache, since it 
+drops tiles into SQL Server as they are created rather than using a file system 
+pyramid. I imagine that a straight static file system source could be a bit 
+faster, but it is nice to have indexed quadkey access and all data residing in 
+a single repository. This was actually a better choice when deploying to Azure, 
+since I didn&rsquo;t have to work out a blob storage option for the tiles in 
+addition to the already available SQL Azure.</p> 
+<p><strong>Hybrid web mapping:</strong></p> 
+<p>Here are some of the tradeoffs involved between vector and raster tiles. 
+</p> <br>
+<br>
+<strong><b>Fig 2 &ndash; Raster Tiles vs Vector</b></strong><br>
+
+<br> 
+<p>Hybrid architectures switch between the two depending on the client&rsquo;s 
+position in the resource pyramid. Here is my analysis of feature count ranges 
+and optimal architecture:</p> 
+<p><strong>1. Low</strong> &ndash; For vector poly feature counts &lt; 300 
+features per viewport, I&rsquo;d use vector queries from DB. Taking advantage 
+of the SQL Reduce function makes it possible to drop node counts for polygons 
+and polylines for lower zoom levels. Points are more efficient and up to 
+3000-5000 points per viewport are still possible.</p> 
+<p><strong>2. Medium</strong> &ndash; For zoomlevels with counts &gt; 300 per 
+viewport, I&rsquo;d use a dynamic tile builder at the top of the pyramid. 
+I&rsquo;m not sure what the upper limit is on performance here. I&rsquo;ve only 
+run it on fairly small tables 2000 records. Eventually dynamic tile building on 
+the server effects performance (at the server not the client).</p> 
+<p><strong>3. High</strong> &ndash; For zoomlevels with high feature counts 
+and large poly node counts, I&rsquo;d start with pre-seeded static tile at low 
+zoomlevels at the top of the pyramid, perhaps dynamic tiles in the middle 
+pyramid, and vectors at the bottom.</p> 
+<p><strong>4. Very High</strong> &ndash; For very high feature counts at low 
+zoomlevels near the top of the pyramid I&rsquo;d just turn off the layer. There 
+probably isn&rsquo;t much reason to show very dense resources until the user 
+moves in to an area of interest. For dense point sources a heat map raster 
+overview would be best at the top of the pyramid. At middle levels I&rsquo;d 
+use a caching tile builder with vectors again at higher zoom levels at the 
+bottom of the pyramid.</p> 
+<p>Here is a graphic view of some hybrid architectural options:<br>
+</p> 
+<p></p> 
+<p><strong>Data Distribution Geographically:</strong><br>
+ Another 
+consideration is the distribution of data in the resource. Homogenous 
+geographic data density works best with hard zoom level switches. In other 
+words, the switch from vector to raster tile can be coded to zoomlevel 
+regardless of where the client has panned in the extent of the data. This is 
+simple to implement.</p> 
+<p>However where data is relatively heterogeneous geographically it might be 
+nice to arrange switching according to density. An example might be parcel data 
+densities that vary across urban and rural areas. Instead of simple zoom 
+levels, the switch between tile and vector is based on density calculations. 
+Having available a heat map overview, for example, could provide a quick 
+viewport density calculation based on a pixel sum of the heat map intersecting 
+with the user&rsquo;s viewport. This density calculation would be used for the 
+switch rather than a simpler zoom level switch. This way rural area of interest 
+can gain the benefit of vectors higher in the pyramid than would be useful in 
+urban areas.</p> 
+<p></p> 
+<p><strong>Point Layers:</strong><br>
+ Points have a slightly different twist. 
+For one thing too many points clutter a map, while their simplicity means that 
+more point vectors can be rendered before affecting UI performance. Heat Maps 
+are a great way to show density at higher levels in the pyramid. Heat Maps can 
+be dynamic tile source or a more generalized caching tile pyramid. In a point 
+layer scenario at some level there is a switch from Heat Map to Cluster Icons, 
+and then to individual Pushpins. Using power scaling at pushpin levels allows 
+higher density pins to show higher in the pyramid without as much clutter. 
+Power scaling hooks the icon size for the pin to zoomlevel. Experiments showed 
+icon max limit for Bing Silverlight Map Control at 3000-5000 per viewport.</p> 
+<p></p> 
+<p><strong>Some Caveats:</strong><br>
+ Tile pyramids are of course most 
+efficient when the data is relatively static. With highly dynamic data, tiles 
+can be built on the fly but with consequent loss of performance as well as 
+loading on the server that affects scaling. In an intermediate situation with 
+data that changes slowly, static tiles are still an option using a pre-seeding 
+batch process run at some scheduled interval.</p> 
+<p>Batch tile loading also has limitations for very dense resources that 
+require tiling down deep in a pyramid where the number of tiles grows very 
+large. Seeding all levels of a deep pyramid requires some time, perhaps too 
+much time. However, in a hybrid case this should rarely happen since the bottom 
+levels of the pyramid are handled dynamically as vectors.</p> 
+<p>It is also worth noting that with Silverlight the client hardware affects 
+performance. Silverlight has an advantage for web distribution. It distributes 
+the cpu load out to the clients harnessing all their resources. However, an 
+ancient client with old hardware performance will not match performance of 
+newer machines.</p> 
+<p><strong>Conclusion:</strong></p> 
+<p>A Hybrid zoom level based approach is the best general architecture for 
+Silverlight web maps where large data sets are involved. Using your own service 
+provides more options in architecting a web map solution.</p> 
+<p>Microsoft&rsquo;s WCF is a nice framework especially since it leverages the 
+same C# language, IDE, and debugging capabilities across all tiers of a 
+solution. Microsoft is the only vendor out there with the breadth to give 
+developers an integrated solution across the whole spectrum from UI graphics, 
+to customizable services, to SQL spatial tables.</p> 
+<p>Then throw in global map and imagery resources from Bing, with Geocode, 
+Routing, and Search services, along with the Azure cloud platform for 
+scalability and it&rsquo;s no wonder Microsoft is a hit with the enterprise. 
+Microsoft&rsquo;s full range single vendor package is obviously a powerful 
+incentive in the enterprise world. Although relatively new to the game, 
+Microsoft&rsquo;s full court offense puts some pressure on traditional GIS 
+vendors, especially in the web distribution side of the equation.</p> 
+<p> Posted in Uncategorized | No Comments &raquo;</p> &laquo; Older Entries 
+<br> 
+<ul> 
+<li> <br>
+</li> 
+<li>
+<h2>Archives</h2> 
+<ul> </ul> </li> 
+<li>
+<h2>Meta</h2> 
+<ul> 
+<li>Log in</li> 
+<li>Entries RSS</li> 
+<li>Comments RSS</li> 
+<li>WordPress.org</li> </ul> </li> </ul> 
+<p> GIS in XML is proudly powered by WordPress <br>
+Entries (RSS) and Comments 
+(RSS). </p> 
+</body>

@@ -1,0 +1,2163 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>The Linux Gamers' HOWTO</title>
+<body>
+
+<h1>The Linux Gamers' HOWTO</h1> 
+<h3>Peter Jay Salzman</h3> 
+<h3>Fr&eacute;d&eacute;ric Delanoy</h3> 
+<p>Copyright &copy; 2001, 2002 Peter Jay Salzman</p> 
+<p>Copyright &copy; 2003, 2004 Peter Jay Salzman, Fr&eacute;d&eacute;ric 
+Delanoy</p> 
+<p>2004-11-13 v.1.0.6<br>
+</p> 
+<p><b>Abstract</b></p> 
+<p>The same questions get asked repeatedly on Linux related mailing lists and 
+news groups. Many of them arise because people don't know as much as they 
+should about how things &quot;work&quot; on Linux, at least, as far as games 
+go. Gaming can be a tough pursuit; it requires knowledge from an incredibly 
+vast range of topics from compilers to libraries to system administration to 
+networking to XFree86 administration ... you get the picture. Every aspect of 
+your computer plays a role in gaming. It's a demanding topic, but this fact is 
+shadowed by the primary goal of gaming: to have fun and blow off some steam.</p>
+<p>This document is a stepping stone to get the most common problems resolved 
+and to give people the knowledge to begin thinking intelligently about what is 
+going on with their games. Just as with anything else on Linux, you need to 
+know a little more about what's going on behind the scenes with your system to 
+be able to keep your games healthy or to diagnose and fix them when they're not.
+</p> 
+<p></p> 
+<p> &lt;p(at)dirac(dot)org&gt; / http://www.dirac.org/p. </p> 
+<p> Distributed subject to the Open Software License, ver 1.1 </p> 
+<p></p> <br>
+
+<dl> 
+<dt> <b>Table of Contents</b> </dt> 
+<dt> 1. Administra </dt> 
+<dd> 
+<dl> 
+<dt> 1.1. Authorship and Copyright </dt> 
+<dt> 1.2. Acknowledgements </dt> 
+<dt> 1.3. Latest Versions and Translations </dt> </dl> </dd> 
+<dt> 2. Definitions: Types Of Games </dt> 
+<dd> 
+<dl> 
+<dt> 2.1. Arcade style </dt> 
+<dt> 2.2. Card, logic and board games </dt> 
+<dt> 2.3. Text Adventure (aka Interactive Fiction) </dt> 
+<dt> 2.4. Graphical Adventures </dt> 
+<dt> 2.5. Simulation (aka Sims) </dt> 
+<dt> 2.6. Strategy (aka Strats) </dt> 
+<dt> 2.7. First Person Shooter (aka FPS) </dt> 
+<dt> 2.8. Side Scrollers </dt> 
+<dt> 2.9. Third Person Shooters </dt> 
+<dt> 2.10. Role Playing Game (aka RPG) </dt> </dl> </dd> 
+<dt> 3. Libraries </dt> 
+<dd> 
+<dl> 
+<dt> 3.1. What is Glide2? </dt> 
+<dt> 3.2. What is Glide3? </dt> 
+<dt> 3.3. What is OpenGL? </dt> 
+<dt> 3.4. What is Mesa? </dt> 
+<dt> 3.5. What is DRI? </dt> 
+<dt> 3.6. What is GLX? </dt> 
+<dt> 3.7. What is Utah GLX? </dt> 
+<dt> 3.8. What is xlib? </dt> 
+<dt> 3.9. What is a widget set? </dt> 
+<dt> 3.10. What is SDL (Simple DirectMedia Layer)? </dt> 
+<dt> 3.11. What is GGI? </dt> 
+<dt> 3.12. What is SVGAlib? Frame buffer? Console? </dt> 
+<dt> 3.13. What is OpenAL? </dt> 
+<dt> 3.14. What is DirectX? </dt> 
+<dt> 3.15. Clanlib </dt> </dl> </dd> 
+<dt> 4. XFree86 and You </dt> 
+<dd> 
+<dl> 
+<dt> 4.1. Getting information about your X system </dt> 
+<dt> 4.2. Playing Games In X Without a Window Manager </dt> </dl> </dd> 
+<dt> 5. Various Topics </dt> 
+<dd> 
+<dl> 
+<dt> 5.1. Memory Type Range Registers </dt> 
+<dt> 5.2. Milking performance from your system for all it's worth </dt> 
+<dt> 5.3. About libraries on Linux </dt> </dl> </dd> 
+<dt> 6. When Bad Things Happen To Good People </dt> 
+<dd> 
+<dl> 
+<dt> 6.1. RTFM! </dt> 
+<dt> 6.2. Look For Updates and Patches </dt> 
+<dt> 6.3. Newsgroups </dt> 
+<dt> 6.4. Google Group Search </dt> 
+<dt> 6.5. Debugging: call traces and core files </dt> 
+<dt> 6.6. Saved Games </dt> 
+<dt> 6.7. What to do when a file or library isn't being found (better living 
+through strace) </dt> 
+<dt> 6.8. Hosed consoles </dt> 
+<dt> 6.9. Locked System </dt> </dl> </dd> 
+<dt> 7. Video Cards </dt> 
+<dd> 
+<dl> 
+<dt> 7.1. History </dt> 
+<dt> 7.2. Current Status (1 March 2004) </dt> 
+<dt> 7.3. Which Video Card Should I Buy? (1 March 2004) </dt> 
+<dt> 7.4. Definitions: Video Card and 3D Terminology </dt> </dl> </dd> 
+<dt> 8. Sound </dt> 
+<dd> 
+<dl> 
+<dt> 8.1. Which sound card is best? </dt> 
+<dt> 8.2. Why isn't my sound working? </dt> </dl> </dd> 
+<dt> 9. Miscellaneous Problems </dt> 
+<dd> 
+<dl> 
+<dt> 9.1. Hardware Acceleration Problems </dt> 
+<dt> 9.2. Hardware acceleration works only for the root user </dt> </dl> </dd> 
+<dt> 10. Emulation and Virtual Machines </dt> 
+<dd> 
+<dl> 
+<dt> 10.1. What is a virtual machine? </dt> 
+<dt> 10.2. Apple 8-bit </dt> 
+<dt> 10.3. DOS </dt> 
+<dt> 10.4. Win16 </dt> 
+<dt> 10.5. Win32 </dt> </dl> </dd> 
+<dt> 11. Interpreters </dt> 
+<dd> 
+<dl> 
+<dt> 11.1. SCUMM Engine (LucasArts) </dt> 
+<dt> 11.2. AGI: Adventure Gaming Interface (Sierra) </dt> 
+<dt> 11.3. SCI: SCript Interpreter or Sierra Creative Interpreter (Sierra) 
+</dt> 
+<dt> 11.4. Infocom Adventures (Infocom, Activision) </dt> 
+<dt> 11.5. Scott Adams Adventures (Adventure International) </dt> 
+<dt> 11.6. Ultima Underworld: The Stygian Abyss (Origin, Blue Sky Productions) 
+</dt> 
+<dt> 11.7. Ultima 7 (Origin, Electronic Arts) </dt> 
+<dt> 11.8. System Shock (Electronic Arts, Origin) </dt> </dl> </dd> 
+<dt> 12. Websites And Resources </dt> 
+<dd> 
+<dl> 
+<dt> 12.1. Meta gaming websites </dt> 
+<dt> 12.2. Commercial Linux Game Resources </dt> 
+<dt> 12.3. Other Resources </dt> </dl> </dd> </dl> 
+<h1>1. Administra</h1> 
+<p>If you have ideas, corrections or questions relating to this HOWTO, please 
+email me. By receiving feedback on this howto (even if I don't have the time to 
+answer), you make me feel like I'm doing something useful. In turn, it 
+motivates me to write more and add to this document. You can reach me at&lt;
+p(at)dirac(dot)org&gt;. My web page is http://www.dirac.org/p and my Linux 
+pages are athttp://www.dirac.org/linux. Please do send comments and suggestions 
+for this howto. Even if I don't take your suggestions, your input is graciously 
+received.</p> 
+<p>I assume a working knowledge of Linux, so I use some topics like runlevels 
+and modules without defining them. If there are enough questions (or even 
+protests) I'll add more basic information to this document.</p> 
+<h2>1.1. Authorship and Copyright</h2> 
+<p>This document is copyright (c) 2001-2002 Peter Jay Salzman, &lt;
+p(at)dirac(dot)org&gt;; 2003-2004 Peter Jay Salzman and Fr&eacute;d&eacute;ric 
+Delanoy. Permission is granted to copy, distribute and/or modify this document 
+under the terms of the Open Software License, Version 1.1, except for the 
+provisions I list in the next paragraph. I hate HOWTO's that include the 
+license; it's a tree killer. You can read the OSL at
+http://opensource.org/licenses/osl-1.1.txt.</p> 
+<p>If you want to create a derivative work or publish this HOWTO for 
+commercial purposes, I would appreciate it if you contact me first. This will 
+give me a chance to give you the most recent version. I'd also appreciate 
+either a copy of whatever it is you're doing or a spinach, garlic, mushroom, 
+feta cheese and artichoke heart pizza.</p> 
+<h2>1.2. Acknowledgements</h2> 
+<p>Thanks goes out to these people for extensive comments, corrections, and 
+diffs. Their effort is above and beyond the call of duty:</p> 
+<p>Fr&eacute;d&eacute;ric Delanoy, Moritz Muehlenhoff &lt;
+jmm(at)Informatik(dot)uni-bremen(dot)de&gt;, Mike Phillips, Ioan Rogers &lt;
+buck(at)aiur(dot)co(dot)uk&gt;</p> 
+<p>I would also like to thank the following people for sending in comments and 
+corrections. Without their help, there would be more typos and mistakes than 
+you could shake a stick at:</p> 
+<p>Michael McDonnell</p> 
+<h2>1.3. Latest Versions and Translations</h2> 
+<p>The latest version can be found at 
+http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/lgh/LG-HOWTO or 
+http://www.dirac.org/linux/writing, but this is my own personal working copy. 
+The version at my personal web site might be broken if I'm working on the 
+HOWTO. The version at sourceforge is bleeding edge but guaranteed to be not 
+broken, however it may have glitches, like unfinished paragraphs. :)</p> 
+<p>The most recent stable version can be found at http://www.tldp.org.</p> 
+<h3>1.3.1. Russian</h3> 
+<p>Dmitry Samoyloff &lt;dsamoyloff(at)yandex(dot)ru&gt; is the maintainer of 
+the Russian translation. The most recent version can be found at
+http://www.dirac.org/linux/writing.</p> 
+<h3>1.3.2. Hungarian</h3> 
+<p>L&aacute;szl&oacute; Daczi &lt;dacas(at)korhaz(dot)rethy(dot)hu&gt;, the 
+Hungarian LDP coordinator, announced that a Hungarian translation was produced 
+by Szilard Ivan, and is available at
+http://tldp.fsf.hu/HOWTO/Linux-Gamers-HOWTO-hu. </p> 
+<h1>2. Definitions: Types Of Games</h1> 
+<p>Not everyone knows the different types of games that are out there, so in 
+an effort to form a common language that we can all use, I'll run through each 
+game type and provide a very brief history.</p> 
+<h2>2.1. Arcade style</h2> 
+<p>Although arcade games had their heydey in the 80's, they are nonetheless 
+very popular. Nothing will ever replace walking into a dark, crowded and noisy 
+arcade gallery, popping a quarter into your favorite machine and playing an old 
+fashioned game of Space Invaders. Arcade style games attempt to simulate the 
+arcade games themselves. There is such a vast number of these things that it's 
+nearly impossible to enumerate them all, but they include clones of Asteroids, 
+Space Invaders, Pac-Man, Missile Command and Galaxian.</p> 
+<h2>2.2. Card, logic and board games</h2> 
+<p>Computer based card games simulate a card game like poker or solitaire. The 
+program can simulate your opponent(s).</p> 
+<p>Logic games usually simulate some well known logic puzzle like Master Mind 
+or the game where you have put sliding numbered tiles in order inside a box.</p>
+<p>Computer based board games simulate some kind of board game you'd play on a 
+table top with friends, like monopoly, Mille Bourne, chess or checkers. The 
+program can simulate your opponent.</p> 
+<h2>2.3. Text Adventure (aka Interactive Fiction)</h2> 
+<p>Once upon a time, when Apple ][, Commodore, and Atari ruled the world, text 
+adventures were the game of choice of `intelligent folk'. You are given a 
+scenario and can interact with the world you're placed in:</p> 
+<pre> You are in a room. It is pitch dark and you're likely to be eaten by a 
+grue. &gt; Light lantern with match. You light the lantern. This room appears 
+to be a kitchen. There's a table with a book in the center. You also see an 
+oven, refrigerator and a door leading east. &gt; Open the oven. In the oven you 
+see a brown paper bag. &gt; Take the bag. Open the bag. Close the oven. Inside 
+the bag is a some garlic and a cheese sandwich. The oven door is now closed.
+</pre> <br>
+<br>
+
+<p>Back then, text adventures were self contained executables on a disk or 
+casette. These days there's usually a data file and an interpreter. The 
+interpreter reads data files and provides the gaming interface. The data files 
+are the actual game itself, similar to the relationship between first person 
+shooters (Section 2.7) and wad files.</p> 
+<p>The first adventure game was Adventure (actually &ldquo;ADVENT&rdquo;, 
+written on a PDP-1 in 1972). You can play Adventure yourself (actually, a 
+descendent); it comes with &ldquo;bsd games&rdquo; on most Linux distros. Text 
+adventures became popularized by Scott Adams (Section 11.5) and reached their 
+height of popularity in the late 80's with Infocom (Section 11.4) which are 
+also playable under Linux.</p> 
+<p>As computer graphics became easier and more powerful, text adventures gave 
+rise to graphic adventures. The death of commercial interactive fiction more or 
+less coincided with the bankruptcy of Infocom.</p> 
+<h2>2.4. Graphical Adventures</h2> 
+<p>Graphical adventures are, at heart, text adventures on steroids. The degree 
+to which they use graphics varies widely. Back in the 80's, they were little 
+more than text adventures which showed a screen of static graphics. When you 
+picked up an item, the background would be redrawn without the item appearing. 
+The canonical example would be the so-called `Hi-Res Adventures' like The 
+Wizard And The Princess. Later on, the sophisticated graphical adventures had 
+your character roaming around the screen, and you could even use a mouse, but 
+the interface remained purely text.</p> 
+<p>Next there are the `point and click adventures' which basically have no 
+text interface at all, and often have dynamic graphics, like a cat wandering 
+around the room while you're deciding what to do next. In these games, you 
+point at an object (say, a book) and can choose from a pull-down list of 
+functions. Kind of like object oriented adventuring. :) There aren't many 
+graphical adventures written natively for Linux. The only one I can think of is 
+Hopkins FBI (which happens to be my favorite game for Linux).</p> 
+<h2>2.5. Simulation (aka Sims)</h2> 
+<p>Simulations strive to immerse the player behind the controls of something 
+they normally wouldn't have access to. This could be something real like a 
+fighter jet or something imaginary like a mechanized warrior combat unit. In 
+either case, sims strive for realism.</p> 
+<p>Some sims have little or no strategy. They simply put you in a cockpit to 
+give you the thrill of piloting a plane. Some are considerably complex, and 
+there's often a fine line between sims and strats (Section 2.6). A good example 
+would be Heavy Gear III or Flight Gear. These days sims and strats are nearly 
+indistinguishable, but a long time ago, sims were real time while strats were 
+turn based. This is awkward for modern day use, since a game like Warcraft 
+which everyone knows as a strat, would be a sim by definition.</p> 
+<h2>2.6. Strategy (aka Strats)</h2> 
+<p>Strategy games have their roots in old Avalon type board games like Panzer 
+Leader and old war strategy games published by SSI. Generally, they simulate 
+some kind of scenario. The scenario can be peaceful, like running a successful 
+city (SimCity), or not, like illegal drug selling operation (DrugWars) or an 
+all-out war strategy game like Myth II. The types of games usually take a long 
+time to complete and require a lot of brainpower.</p> 
+<p>Strats can be further divided into two classes: real time and turn based. 
+Real time strats are based on the concept of you-snooze-you-lose. For example, 
+you're managing a city and a fire erupts somewhere. The more time it takes for 
+you mobilize the fire fighters, the more damage the fire does. Turn based 
+strats are more like chess---the computer takes a turn and then the player 
+takes a turn.</p> 
+<h2>2.7. First Person Shooter (aka FPS)</h2> 
+<p>What light through yonder window breaks? It must be the flash of the double 
+barreled shotgun! We have a long and twisted history with FPS games which 
+started when id Software open sourced code for Doom. The code base has forked 
+and merged numerous times. Other previously closed engines opened up, many 
+engines are playable via emulators, many commercial FPS games were released for 
+Linux and there are quite a number of FPS engines which started life as open 
+source projects. Although you may not be able to play your<em>favorite</em> FPS 
+under Linux (Half-Life plays great under winex) Linux definitely has no 
+deficiency here!</p> 
+<p>First person shooters are characterized by two things. First, you pretty 
+much blow up everything you see. Second, the action takes place in first 
+person. That is, through the eyes of the character who's doing all the 
+shooting. You may even see your hands or weapon at the bottom of the screen. 
+They can be set in fantasy (Hexen), science fiction (Quake II), present day 
+`real world' (Soldier Of Fortune) and many other settings.</p> 
+<p>Like text adventures, FPS fit the engine/datafile format. The engine refers 
+to the actual game itself (Doom, Quake, Heretic2) and plays out the maps and 
+bad guys outlined by the datafile (doom2.wad, pak0.pak, etc). Many FPS games 
+allow people to write their own non-commercial datafile. There are hundreds, 
+even thousands of non-commercial Doom datafiles that you can download for free 
+off the net. Often, companies release their engines to the open source 
+community so we can hack and improve them. However, the original data files are 
+kept proprietary. To this day, you still have to purchasedoom.wad.</p> 
+<h2>2.8. Side Scrollers</h2> 
+<p>Side scrollers are similar to FPS but you view your character as a 2D 
+figure who runs around various screens shooting at things or performing tasks. 
+Examples would be Abuse for Linux and the original Duke Nukem. They don't 
+necessarily have to be violent, likexscavenger, a clone of the old 8-bit game 
+Lode Runner.</p> 
+<h2>2.9. Third Person Shooters</h2> 
+<p>Similar to FPS, but you view your character in third person and in 3D. On 
+modern third person shooters you can usually do some really kick-butt maneuvers 
+like Jackie Chan style back flips and side rolls. The canonical example would 
+be Tomb Raider. On the Linux platform, we have Heretic 2 and Heavy Metal FAKK2.
+</p> 
+<h2>2.10. Role Playing Game (aka RPG)</h2> 
+<p>Anyone who has played games like Dungeons &amp; Dragons or Call of Cthulhu 
+knows exactly what an RPG is. You play a character, sometimes more than one, 
+characterized by traits (eg strength, dexterity), skills (eg explosives, basket 
+weaving, mechanics) and properties (levels, cash). As you play, the character 
+becomes more powerful and the game adjusts itself accordingly, so instead of 
+fighting orcs, at high levels you start fighting black dragons. The rewards 
+increase correspondingly. At low levels you might get some gold pieces as a 
+reward for winning a battle. At high levels, you might get a magic sword or a 
+kick-butt assault rifle.</p> 
+<p>RPG's generally have a quest with a well defined ending. In nethack you 
+need to retrieve the amulet of Yendor for your god. In Ultima II, you destroy 
+the evil sorceress Minax. At some point, your character becomes powerful enough 
+that you can `go for it' and try to complete the quest.</p> 
+<p>While the insanely popular Ultima series, written by Richard Garriot (aka 
+Lord British) for Origin, was not the first RPG, it popularized and propelled 
+the RPG genre into mainstream. Ultima I was released in 1987 and was the game 
+that launched 9 (depending on how you want to count them) very popular sequels, 
+finishing with Ultima IX: Ascension. You can play Ultima VII under Linux with 
+Exult (Section 11.7).</p> 
+<p>The canonical RPG on Linux is Rogue (the ncurses library started life as a 
+screen handling routine for Rogue!) and it has infinite variants like Zangband 
+and Nethack (which has many variants itself). Some RPG's are quite complicated 
+and great feats of programming. There seems to be a deficiency of commercial 
+RPGs for Linux. Not counting the rogue variants, there's also a deficiency of 
+open source RPGs too.</p> 
+<h1>3. Libraries</h1> 
+<p>We'll run through the different gaming libraries you'll see under Linux.</p>
+<h2>3.1. What is Glide2?</h2> 
+<p>Glide2 is a low level graphics API and driver that accesses 3D hardware 
+accelerated functions on 3dfx's Voodoo I, II and III cards, under XFree86 3.x.
+</p> 
+<p>A program can only use the special hardware accelerated features of these 
+cards by using the Glide2 library in one of two ways:</p> 
+<p></p> 
+<ul> 
+<li>
+<p>directly written using Glide2 (Myth II, Descent III)</p></li> 
+<li>
+<p>indirectly using Mesa built with a Glide2 backend to simulate OpenGL (Rune, 
+Unreal Tournament)</p></li> </ul> 
+<p>3dfx opened up the specifications and source code to the open source 
+community. This allowed Daryll Strauss to port Glide2 to Linux which enabled 
+XFree86 3.x users to use Voodoo I, II and III cards under Linux.</p> 
+<p>Since Glide2 accesses the video card directly, Glide2 applications will 
+either need to be run by root or be setuid root. A way around this was to 
+create the kernel 3dfx module. This module (and its device file/dev/3dfx) 
+allows Glide2 graphical hardware acceleration for non-root users of non-setuid 
+applications.</p> 
+<p>Unfortunately, Glide2 is also a dead issue. It's only used for Voodoo I, 
+II, III boards (which are becoming outdated), under XFree86 3.x (most people 
+use XFree86 4.x). And since 3dfx is now a defunct company, it's a sure bet that 
+no more work will be done on Glide2 and no more games will be written using 
+Glide2.</p> 
+<h2>3.2. What is Glide3?</h2> 
+<p>Unlike Glide2, Glide3 is not an API used for game programming. It exists 
+only to support DRI on Voodoo III, IV and V boards under XFree86 4.x. None of 
+the games which use Glide2 will work with Glide3. This shouldn't be a surprise 
+since Glide2 and Glide3 support different video cards and different versions of 
+XFree86. The only video card that can use both Glide2 (under XFree86 3.x) and 
+Glide3 (under XFree86 4.x) is the Voodoo III. It's reported that a Voodoo III 
+using Glide2 will outperform a Voodoo III using Glide3.</p> 
+<p>When you use a Voodoo III, IV or V under XFree86 4.x, you want to use a 
+version of Mesa (seeSection 3.4) which was compiled to use Glide3 as a backend 
+to ensure hardware accelerated OpenGL on your system.</p> 
+<h2>3.3. What is OpenGL?</h2> 
+<p>OpenGL is a high level graphics programming API originally developed by 
+SGI, and it became an industry standard for 2D and 3D graphics programming. 
+It's defined and maintained by the Architectural Revision Board (ARB), an 
+organization which include representatives from SGI, IBM, DEC, and Microsoft. 
+OpenGL provides a powerful, complete and generic feature set for 2D and 3D 
+graphics operations.</p> 
+<p>There are 3 canonical parts to OpenGL:</p> 
+<p></p> 
+<ul> 
+<li>
+<p>GL: The OpenGL core calls</p></li> 
+<li>
+<p>GLU: The utility calls</p></li> 
+<li>
+<p>GLUT: OS independent window event (mouse, keyboard, etc.) handler.</p></li> 
+</ul> 
+<p>OpenGL is not only an API, it's also an implementation, written by SGI. The 
+implementation tries to use hardware acceleration for various graphics 
+operations whenever available, which depends on what videocard you have in you 
+computer. If hardware acceleration is not possible for a specific task, OpenGL 
+falls back on software rendering. This means that when you get OpenGL from SGI, 
+if you want any kind of hardware acceleration at all, it must be OpenGL written 
+and compiled specifically for some graphics card. Otherwise, all you'll get is 
+software rendering. The same thing is true for OpenGL clones, like Mesa.</p> 
+<p>OpenGL is the open source equivalent to Direct3D, a component of DirectX (
+Section 3.14). The important difference being that since OpenGL is open (and 
+DirectX is closed), games written in OpenGL are much easier to port to and 
+co-develop on Linux than games written using DirectX.</p> 
+<h2>3.4. What is Mesa?</h2> 
+<p>Mesa &lt;http://www.mesa3d.org&gt; is a free implementation of the OpenGL 
+API, designed and written by Brian Paul. While it's not officially certified 
+(that would take more money than an open source project has), it's an almost 
+fully compliant OpenGL implementation conforming to the ARB specifications. 
+It's reported that Mesa is even faster than SGI's own OpenGL implementation.</p>
+<p>Just like OpenGL, Mesa makes use of hardware acceleration whenever 
+possible. When a particular graphics task isn't able to be hardware accelerated 
+by the video card, it's software rendered; the task is done by your computer's 
+CPU instead. This means that there are different builds of Mesa depending on 
+what kind of video card you have. Each build uses a different library as a 
+backend renderer. For example, if you have a Voodoo I, II or III card under 
+XFree86 3.x, you'd use mesa+glide2 (written by David Bucciarelli) which is the 
+Mesa implementation of OpenGL that uses Glide2 as a backend to render for 
+graphical operations.</p> 
+<h2>3.5. What is DRI?</h2> 
+<p>Graphics rendering has 3 players: the client application (like Quake 3), 
+the X server and the hardware (the graphics card). Previously, client 
+applications were prohibited from writing directly to hardware, and there was a 
+good reason for this. A program that is allowed to directly write to hardware 
+can crash the system in any number of ways. Rather than trusting programmers to 
+write totally bug free, cooperative programs that access hardware, Linux simply 
+disallowed it. However, that changed under X 4.x with DRI (Direct Rendering 
+Infrastructure &lt;http://www.dri.sourceforge.net&gt;. DRI allows X clients to 
+write 3D rendering information directly to the video card in a safe and 
+cooperative manner.</p> 
+<p>DRI gets the X server out of the way so the 3D driver (Mesa or OpenGL) can 
+talk directly to the hardware. This speeds things up. The 3D rendering 
+information doesn't even have to be hardware accelerated. On a technical note, 
+this has a number of virtues.</p> 
+<p></p> 
+<ul> 
+<li>
+<p>Vertex data doesn't have to be encoded/decoded via GLX.</p></li> 
+<li>
+<p>Graphics data isn't sent over a socket to the X server.</p></li> 
+<li>
+<p>On uni-processor machines the CPU doesn't have to change context between 
+XFree86 and its client to render the graphics.</p></li> </ul> 
+<h2>3.6. What is GLX?</h2> 
+<p>GLX is the X extension used by OpenGL programs, it is the glue between the 
+platform independent OpenGL and platform dependent X.</p> 
+<h2>3.7. What is Utah GLX?</h2> 
+<p>Utah-GLX is the precursor to DRI. It makes some different design decisions 
+regarding separation of data and methods of accessing the video card like 
+relying on root access rather than creating the kernel infrastructure for 
+secure access. It provides support for a few cards which are not well supported 
+by DRI like the ATI Rage Pro family, S3 Virge (although anyone using this for 
+gaming is, well, nuts), and an open source TNT/TNT2 driver (which is very 
+incomplete). The TNT/TNT2 driver is based on reverse-engineering of the 
+obfuscated source code release of the X 3.3 drivers by nVidia. However, they're 
+really incomplete, and effectively, unusable.</p> 
+<h2>3.8. What is xlib?</h2> 
+<p>Every once in awhile you'll see some sicko (said with respect) write a game 
+in xlib. It is a set of C libraries which comprise the lowest level programming 
+interface for XFree86. Any graphics programming in X ultimately makes use of 
+the xlib library.</p> 
+<p>It's not an understatement to say that xlib is long winded, arcane and 
+complicated. Because of this, there are lots of libraries like SDL (Section 3.10
+) for 2D graphics, OpenGL (Section 3.3) for 3D graphics and widget sets (
+Section 3.9) for widgets within windows which hide the details of different 
+aspects of xlib programming.</p> 
+<p>While some games are written in xlib, like the Doom Editor Yadex, xlib 
+itself is not a serious game writing library. Most games don't need the 
+low-level interface that xlib provides. In addition, by using the higher level 
+libraries, a game writer can develop his game on multiple platforms, even ones 
+that don't use XFree86.</p> 
+<h2>3.9. What is a widget set?</h2> 
+<p>Widgets are objects that make up a GUI application's interface. They 
+include things like text entry boxes, pulldown menus, slider bars, radio 
+buttons and much more. A widget set is a collection of related widgets that are 
+designed to have a common interface and a consistant &quot;feel&quot;. Gtk is 
+the canonical widget set on Linux, but there are many others like fltk (a small 
+C++ widget set), Xaw, Qt (the widget set of KDE), and Motif (the widget set 
+used by Netscape). Motif used to be the king of widget sets in the Unix world, 
+but it was very expensive to license. The Open Group finally opened up Motif's 
+license for open source operating systems, but it was too little too late. 
+There are many completely open source widget sets which are more complete and 
+much nicer looking than Motif, including Lesstif, a totally free Motif clone.
+</p> 
+<h2>3.10. What is SDL (Simple DirectMedia Layer)?</h2> 
+<p>SDL &lt;http://www.libsdl.org&gt; is a library by Sam Lantiga (graduate of 
+UCD, yeah!). It's actually a meta-library, meaning that not only is it a 
+graphics library which hides the details of xlib programming, it provides an 
+easy interface for sound, music and event handling. It's LGPL'd and provides 
+joystick and OpenGL support as well. Unlike xlib (Section 3.8), SDL is very 
+suited for game programming.</p> 
+<p>The most striking part of SDL is that it's a cross platform library. Except 
+for a few details, a program written in SDL will compile under Linux, MS 
+Windows, BeOS, MacOS, MacOS X, Solaris, IRIX, FreeBSD, QNX and OSF. There are 
+SDL extensions written by various people to do things like handle any graphics 
+format you care to mention, play mpegs, display truetype fonts, sprite handling 
+and just about everything under the sun. SDL is an example of what all graphics 
+libraries should strive for.</p> 
+<p>Sam had an ulterior motive for writing such a cool library. He was the lead 
+programmer for Loki Software (he now codes for Blizzard Software), which used 
+SDL in all of its games except for Quake3.</p> 
+<h2>3.11. What is GGI?</h2> 
+<p>GGI &lt;http://www.ggi-project.org&gt; is a project which aims to implement 
+a graphics abstraction layer in lower level code, put graphics hardware support 
+into a common codebase, and bring higher stability and portability to graphics 
+applications. LibGGI applications run on SVGAlib, fb, and X servers among 
+others. Judging from their screenshots, this is quite a powerful library.</p> 
+<p>Applications that use LibGGI directly include Heroes, Ultrapoint, Quake, 
+and Berlin. Most applications that use SVGALib can be run on X or any other 
+LibGGI backend by using a wrapper library which re-implements SVGALib (Section 
+3.12) using LibGGI. SDL (Section 3.10) and clanlib (Section 3.15) applications 
+can display on LibGGI but often the native drivers for these libraries are 
+faster, however it's a good way to get SDL, clanlib, and SVGALib applications 
+to run where they would not before.</p> 
+<p>GGI has a sister project, KGI, which is developing a kernel-level 
+alternative to systems like the linux framebuffer and the DRI. This project is 
+much less far along than LibGGI itself, but promises to combine DRI-level 
+speeds and the stability and security UNIX users expect.</p> 
+<h2>3.12. What is SVGAlib? Frame buffer? Console?</h2> 
+<p>The console is the dark non-graphical screen you look at when your computer 
+first boots up (and you don't havexdm or gdm running). This is opposed to the X 
+environment which has all sorts of GUI things like xterms. It's a common 
+misconception that X means graphics and console means no graphics. There are 
+certainly graphics on the console&mdash;we will discuss the two most common 
+ways to achieve this.</p> 
+<p>SVGAlib is a graphics library that lets you draw graphics on the console. 
+There are many graphical applications and games that use SVGAlib likezgv (a 
+console graphical image viewer),prboom and hhexen. I happen to be a fan of this 
+library and of graphical console games in general; they are extremely fast, 
+fullscreen and compelling. There are three downsides to SVGAlib. First, SVGAlib 
+executables need to be run by root or be setuid root, however, the library 
+releases root status immediately after the executable begins to run. Secondly, 
+SVGAlib is video card dependent&ndash;if your video card isn't supported by 
+SVGAlib, you're out of luck. Third, SVGAlib is Linux only. Games written in 
+SVGAlib will only work on Linux.</p> 
+<p>Frame buffers are consoles implemented by a graphics mode rather than a 
+BIOS text mode. Why simulate text mode in a graphical environment? This allows 
+us to run graphical things in console, like allowing us to choose any font we 
+want the console to display (which is normally set by BIOS). There's a good 
+Framebuffer HOWTO available from LDP. Graphical console games written using the 
+frame buffer suffer from the same deficiencies of the SVGA library: not all 
+hardware is supported and the code will only run on Linux.</p> 
+<h2>3.13. What is OpenAL?</h2> 
+<p>OpenAL &lt;http://www.openal.org&gt; aims to be for sound what OpenGL is 
+for graphics. It started as a joint project between Loki Software and Creative 
+Labs, setting out to be a vendor neutral and cross platform API for audio - the 
+audio equivalent of OpenGL (Section 3.3). Loki is no longer in business, but 
+Creative and the Open Source community have kept the project alive. It is 
+licensed LGPL and the specs can be obtained for free from the OpenAL website. 
+It has support from nVidia (nForce2/3 based motherboards come with OpenAL MS 
+Windows libraries for the on-board audio), Apple has added OpenAL to their 
+audio framework for OSX and it can also be found powering the Epic Games Unreal 
+Engine</p> 
+<p>Currently, it's not all cross-platform goodness. There is almost no support 
+for enhancements like EAX or any hardware acceleration on Linux, though it does 
+it exist in the Windows implementation. However, if you have a Creative 
+SoundBlaster or Audigy sound card (with an emu10x chip), and you use ALSA sound 
+drivers, you can get OpenAL libraries fromhttp://www.lost.org.uk that provide 
+hardware acceleration and decent surround support.</p> 
+<h2>3.14. What is DirectX?</h2> 
+<p>DirectX is a collection of proprietary multimedia API's, first developed by 
+Microsoft in 1995, for its various Windows OS's. It's a mistake to say 
+something like &quot;DirectX is like OpenGL&quot; or &quot;DirectX is like 
+SDL&quot;, as is commonly said in DirectX tutorials. Multimedia API's are more 
+centralized on Windows than they are on Linux. A more accurate statement would 
+be something like &quot;DirectX is like DRI, OpenGL and SDL combined&quot;. As 
+of October 2004, the most recent version of DirectX is 9c. The components of 
+DirectX are:</p> 
+<p></p> 
+<dl> 
+<dt> DirectDraw </dt> 
+<dd> 
+<p>DirectDraw gives direct access to video memory, like DRI, so 2D graphics 
+can be blitted directly to the video card. DirectDraw is like the graphical 
+component of SDL, but the direct video card access is done by DRI rather than 
+SDL. This is why a game can easily take out a Windows system but should not 
+take down a Linux system.</p> </dd> 
+<dt> Direct3D (D3D) </dt> 
+<dd> 
+<p>Direct3D, like OpenGL, provides a 3D graphics API. Whereas OpenGL is open 
+source, lower level and compiles under a multitude of operating systems, D3D is 
+proprietary, higher level and only compiles on Windows. D3D first appeared in 
+DirectX 2, released in 1996.</p> </dd> 
+<dt> DirectAudio </dt> 
+<dd> 
+<p>DirectAudio is a combination of 2 audio API's, DirectSound and DirectMusic, 
+which allows direct access to the sound card for sound and music playback.</p> 
+</dd> 
+<dt> DirectInput </dt> 
+<dd> 
+<p>DirectInput gives support for gaming input devices such as joysticks.</p> 
+</dd> 
+<dt> DirectPlay </dt> 
+<dd> 
+<p>DirectPlay gives support for simplified networking for multiplayer gaming.
+</p> </dd> 
+<dt> DirectShow </dt> 
+<dd> 
+<p>DirectShow provides support for movie files like AVI and MPG. It was a 
+separate API from DirectX, but was integrated with DirectX 8.</p> </dd> 
+<dt> DirectSetup </dt> 
+<dd> 
+<p>This API provides a way to install DirectX from within an application to 
+simplify game installation.</p> </dd> </dl> 
+<p>Depending on the version of DirectX you're talking about, DirectX support 
+in winex (Section 10.5.3) ranges from well supported to &quot;kind of&quot; 
+supported. It's poorly supported by wine (Section 10.5.1), barely supported by 
+vmware (Section 10.5.5) and unsupported by Win4Lin (Section 10.5.4).</p> 
+<p>One comment about portability: Each component of DirectX has multiple 
+corresponding library on Linux. Moreover, a game writer who uses libraries like 
+OpenGL, GGI or SDL will write a game which will trivially compile on Windows, 
+Linux and a multitude of other OS's. Yet game companies persist using DirectX 
+and therefore limit their audience to Windows users only. If you're a game 
+writer, please consider using cross platform libraries and stay away from 
+DirectX.</p> 
+<p>A company named realtechVR started an open source project, DirectX Port, 
+&lt;http://www.v3x.net/directx&gt; which, like wine, provides a Direct3D 
+emulation layer that implements Direct3D calls. The project was focused on the 
+BeOS platform, but is now focused on MacOS and Linux. You can get the latest 
+cvs from their sourceforge page at &lt;http://sourceforge.net/projects/dxglwrap
+&gt;.</p> 
+<h2>3.15. Clanlib</h2> 
+<p>ClanLib is a medium level development kit. At its lowest level, it provides 
+a platform independent (as much as that is possible in C++) way of dealing with 
+display, sound, input, networking, files, threading and such. ClanLib builds a 
+generic game development framework, giving you easy handling of resources, 
+network object replication, graphical user interfaces (GUI) with theme support, 
+game scripting and more.</p> 
+<h1>4. XFree86 and You</h1> 
+<p>If you're going to game under X, it's crucial that you know a bit about X. 
+The &quot;X Window User HOWTO&quot;, and especially &quot;man XF86Config&quot; 
+are<em>required</em> reading. Don't short change yourself; read them. They have 
+an extremely high &quot;information to space&quot; ratio. Many problems can be 
+fixed easily if you know your way aroundXF86Config (or XF86Config-4).</p> 
+<h2>4.1. Getting information about your X system</h2> 
+<p>Whether you're trying to diagnose an X problem or requesting help from a 
+mailing list or Usenet newsgroup, you'll want to have as much information 
+available as possible. These are a set of tools you can use to obtain that 
+information.</p> 
+<h3>4.1.1. Probeonly</h3> 
+<p>One of the best diagnostic tools and sources of information about your X 
+system is<b>probeonly</b> output. To use it, kill X if it's already running and 
+from a console, type:</p> 
+<pre> X -probeonly 2&gt; X.out </pre> <br>
+<br>
+
+<p>Yes, that's a single dash; so much for standards. The output of X goes to 
+stderr, so we have to redirect stderr with &quot;2&gt;&quot; to a file named
+X.out. This file will have almost everything there is to know about your X 
+system. It's crucial that you know the difference between the various markers 
+you'll see in probeonly output:</p> 
+<pre> (--) probed (**) from config file (==) default setting (++) from command 
+line (!!) notice (II) informational (WW) warning (EE) error (??) unknown.</pre> 
+<br> <br>
+
+<p>Here's an example of some information I gleaned from my output:</p> 
+<p>I'm running at 16 bpp color:</p> 
+<pre> (**) TDFX(0): Depth 16, (--) framebuffer bpp 16 </pre> <br>
+<br>
+
+<p>X has detected what my videocard chipset and videoram are:</p> 
+<pre> (--) Chipset 3dfx Voodoo5 found (--) TDFX(0): VideoRAM: 32768 kByte 
+Mapping 65536 kByte</pre> <br>
+<br>
+
+<h3>4.1.2. Getting info about your setup: xvidtune</h3> 
+<p>xvidtune is your friend when your X screen is shifted a little bit too far 
+to the right, or if the vertical length is too small to fit on your monitor. 
+However, it's a great diagnostic tool also. It'll give you:</p> 
+<p></p> 
+<ul> 
+<li>
+<p>the hsync/vsync range specified in your XF86Config file</p></li> 
+<li>
+<p>the 4 horizontal and 4 vertical numbers which defines your videomode (the 
+1st horizontal/vertical numbers gives the screen resolution). These 8 numbers 
+will tell you which modeline your X uses. See the XFree86 Video Timings Howto 
+for more information. Note that explicit modelines are no longer necessary, 
+since XFree 4.0.1 and up computes modetimings automatically based on your 
+monitor's and video card's capabilities. However, there may be times when 
+you'll want to play around with mode timings, like for weird hardware or if 
+want to tweak your display.</p></li> 
+<li>
+<p>the &quot;dot clock&quot; your videocard is running at.</p></li> </ul> 
+<h3>4.1.3. Getting info about your setup: xwininfo</h3> 
+<p><b>xwininfo</b> tells you all sorts of information about X windows. And 
+actually, your &quot;background&quot; or &quot;root&quot; window is considered 
+a window too. So when xwininfo asks you to click on the window you want the 
+information on, click on your background. It'll tell you things like screen and 
+window resolution, color depth, window gravity state (which gives a hint to the 
+window manager about where to place new windows), backing store usage and more.
+</p> 
+<h3>4.1.4. Other sources of information</h3> 
+<p><b>xdpyinfo</b> gives cool stuff, like X version and loaded extensions 
+(invaluable when trying to see what's missing, like GLX, DRI, XFree86-VidMode, 
+etc.).</p> 
+<h3>4.1.5. Getting information about your 3D system</h3> 
+<p><b>glxinfo</b> gives lots of useful information about OpenGL like whether 
+direct rendering enabled, the currently installed versions of glx and mesa, 
+vendor/renderer strings, the GL library files being used and more.</p> 
+<h2>4.2. Playing Games In X Without a Window Manager</h2> 
+<p>When playing a game under X, you should consider starting X without a 
+window manager (WM). Heavyweight WMs, like Enlightenment, or full-blown desktop 
+environments like GNOME or KDE, may produce a noticeable slow down. Even 
+lightweight WMs, like twm, rob your CPU of clock cycles (and in twm's case, 
+even full screen games will have a frame around the window). Running a game 
+without a WM or DE depends on how you access X. If you usually log in to a 
+Virtual Console and start X with &quot;startx&quot; try the following:</p> 
+<p>Modify ~/.xinitrc, which tells X what to run upon starting. Here is what my 
+.xinitrc looks like:</p> 
+<pre> #quake3 +set r_gldriver libGR.so.1 #exec ut #lsdldoom -server 2 #exec 
+tribes2 exec /usr/bin/enlightenment</pre> <br>
+<br>
+
+<p>You'll usually see a window or desktop manager being executed from this 
+file (GNOME or KDE). Comment out the lines containing the WM or desktop manager 
+with a pound sign (#) and place your game on a new line with any command line 
+arguments you want to pass. If the game is not located in your $PATH, give its 
+full path name.</p> 
+<p>If you log directly into X using gdm, then things are a little different. 
+These instructions are for gdm 2.4 or greater. They *may* work with kde, but I 
+cannot say for certain.</p> 
+<p>First, check your gdm.conf (usually in /etc/X11/gdm or /etc/gdm) file for a 
+line that says begins &quot;SessionDesktopDir=blah&quot;. One of the 
+directories listed as options should be &quot;/usr/share/xsessions&quot;, and 
+is the directory which will be used in this example. As root, change to the 
+&quot;/usr/share/xsessions&quot; directory and take a look at its contents. It 
+should contain some.desktop files, each corresponding to an entry you'll see in 
+gdm's Session menu, e.ggnome.desktop, enlightenment.destop. This example will 
+show you how to log in to Doom3. Copy any of the desktop files to &quot;
+doom3.desktop&quot; and open the new file in your favourite text editor. The 
+file will be full of alternative languages, so cut out everything you don't 
+want and make the file look like this:</p> 
+<pre> [Desktop Entry] Encoding=UTF-8 Name=DOOM III Comment=iD's Doom III #if 
+game is not in path, remember to put the full path here 
+Exec=/usr/games/doom3/doom3 # no icon yet, only the top three are currently 
+used Icon= Type=Application</pre> <br>
+<br>
+
+<p>Save the file and log out of your window manager. At the gdm login screen, 
+you should now see &quot;DOOM III&quot; as an option in &quot;Sessions&quot;. 
+Naturally you can add a .desktop file for each game you have installed</p> 
+<h1>5. Various Topics</h1> 
+<h2>5.1. Memory Type Range Registers</h2> 
+<p>Starting with Pentium class processors and including Athlon, K6-2 and other 
+CPUs, there are Memory Type Range Registers (MTRR) which control how the 
+processor accesses ranges of memory locations. Basically, it turns many smaller 
+separate writes to the video card into a single write (a burst). This increases 
+efficiency in writing to the video card and can speed up your graphics by 250% 
+or more.</p> 
+<p>See /usr/src/linux/Documentation/mtrr.txt for details. Note that since this 
+file was written, XFree86 has been patched to automatically detect your video 
+RAM base address and size and set up the MTRRs.</p> 
+<h2>5.2. Milking performance from your system for all it's worth</h2> 
+<p></p> 
+<ul> 
+<li>
+<p>If for some reason you're using X 3.3, follow the instructions given by 
+mtrr.txt (see Section 5.1) to set up your MTRRs. X 4.0 does this automatically 
+for you.</p></li> 
+<li>
+<p>If you're playing a game under X, don't run a window manager, and <em>
+certainly</em> don't run a desktop manager like GNOME or KDE. See Section 4.2 
+for details.</p>
+<p>Kill all non-essential processes (you'll have to do this as root) by using 
+the startup scripts on your system. On Debian, the startup scripts for 
+run-level 2 are located in /etc/rc2.d/. You can kill a service in an orderly 
+manner by sending its startup script the `stop' command:</p> 
+<pre> # cd /etc/rc2.d # ./ntpd stop </pre> <br>
+<br>
+
+<p>Another (radical) option is to simply put yourself in single-user mode with
+</p> 
+<pre> # telinit 1 </pre> <br>
+<br>
+
+<p>This will even get rid of getty; your system will only be running whatever 
+is absolutely crucial to its operation. You'll have something like 10 processes 
+running. The downside is that you'll have to play the game as root. But your 
+process table will be a ghost town, and all that extra CPU will go straight to 
+your game.</p></li> </ul> 
+<h2>5.3. About libraries on Linux</h2> 
+<p>A common problem you'll see in gaming is a library file not being found. 
+They're kind of mysterious and have funny names, so we'll go over libraries on 
+Linux for a bit. There are two types of libraries, static and dynamic. When you 
+compile a program, by default,<b>gcc</b> uses dynamic libraries, but you can 
+make<b>gcc</b> use static libraries instead by using the -static switch. Unless 
+you plan on compiling your games from source code, you'll mainly be interested 
+in dynamic libraries.</p> 
+<h3>5.3.1. Dynamic libraries</h3> 
+<p>Dynamic libraries, also called a &ldquo;shared library&rdquo;, provide 
+object code for an application while it's running. That is, code gets linked 
+into the executable at run time, as opposed to compile time. They're analagous 
+to the.dll's used by Windows. The program responsible for linking code 
+&ldquo;on the fly&rdquo; is called<b>/etc/ld.so</b>, and the dynamic libraries 
+themselves usually end with.so with a version number, like:</p> 
+<pre> /usr/lib/libSDL.so /lib/libm.so.3 </pre> <br>
+<br>
+
+<p>When using <b>gcc</b>, you refer to these libraries by shaving off the 
+stringslib, .so and all version numbers. So to use these two libraries, you 
+would pass<b>gcc</b> the -lSDL -lm options. <b>gcc</b> will then `place a memo 
+inside the executable' that says to look at the files /usr/lib/libSDL.so and 
+/lib/libm.so.3 whenever an SDL or math function is used.</p> 
+<h3>5.3.2. Static libraries</h3> 
+<p>In contrast to dynamic libraries which provide code while the application 
+runs, static libraries contain code which gets linked (inserted) into the 
+program while it's being compiled. No code gets inserted at run time; the code 
+is completely self-contained. Static libraries usually end with.a followed by a 
+version number, like:</p> 
+<pre> /usr/lib/libSDL.a /usr/lib/libm.a </pre> <br>
+<br>
+
+<p>The .a files are really an archive of a bunch of .o (object) files archived 
+together, similar to a tar file. You can use the<b>nm</b> to see what functions 
+a static library contains:</p> 
+<pre> % nm /usr/lib/libm.a ... e_atan2.o: 00000000 T __ieee754_atan2 
+e_atanh.o: 00000000 T __ieee754_atanh 00000000 r half 00000010 r limit 00000018 
+r ln2_2 ...</pre> <br>
+<br>
+
+<p>When using <b>gcc</b>, you refer to these libraries by shaving off the 
+strings &ldquo;lib&rdquo;, &ldquo;.a&rdquo; and all version numbers. So to use 
+these two libraries, you would pass<b>gcc</b> the -lSDL -lm options. <b>gcc</b> 
+will then `bolt on' code from/usr/lib/SDL.a and /usr/lib/libm.a whenever it 
+sees a math function during the compilation process.</p> 
+<h3>5.3.3. How are library files found</h3> 
+<p>If you compile your own games, your biggest problem with libraries will 
+either be that<b>gcc</b> can't find a static library or perhaps the library 
+doesn't exist on your system. When playing games from binary, your library woes 
+will be either be that<b>ld.so</b> can't find the library or the library 
+doesn't exist on your system. So it makes some sense to talk about how<b>gcc</b>
+ and<b>ld.so</b> go about finding libraries in the first place.</p> 
+<p><b>gcc</b> looks for libraries in the ``standard system directories'' plus 
+any directories you specify with the-L option. You can find what these standard 
+system directories are with<b>gcc -print-search-dirs</b></p> 
+<p><b>ld.so</b> looks to a binary hash contained in a file named 
+/etc/ld.so.cache for a list of directories that contain available dynamic 
+libraries. Since it contains binary data, you cannot modify this file directly. 
+However, the file is generated from a text file/etc/ld.so.conf which you can 
+edit. This file contains a list of directories that you want<b>ld.so</b> to 
+search for dynamic libraries. If you want to start putting dynamic libraries in
+/home/joecool/privatelibs, you'd add this directory to /etc/ld.so.conf. Your 
+change doesn't actually make it into/etc/ld.so.cache until you run <b>ldconfig
+</b>; once it's run, <b>ld.so</b> will begin to look for libraries in your 
+private directory.</p> 
+<p>Also, even if you just add extra libraries to your system, you must update 
+ld.so.cache to reflect the presence of the new libraries.</p> 
+<h3>5.3.4. Finding Out What Libraries a Game Depends On</h3> 
+<p>Most commercial Linux games will be dynamically linked against various LGPL 
+libraries, such as OpenAL or SDL. For these examples, Bioware's NeverWinter 
+Nights &lt;http://nwn.bioware.com&gt; will be used.</p> 
+<p>To find out what libraries a game uses, we can use the &quot;ldd&quot; 
+command. Cd to/usr/games/nwn, or wherever you installed it and take a look at 
+the files. You should see a file callednwmain; this is the actual game binary. 
+Type &quot;ldd nwmain&quot; and you'll see:</p> 
+<pre> $ ldd nwmain linux-gate.so.1 =&gt; (0xffffe000) libm.so.6 =&gt; 
+/lib/libm.so.6 (0x40027000) libpthread.so.0 =&gt; /lib/libpthread.so.0 
+(0x40049000) libGL.so.1 =&gt; /usr/lib/libGL.so.1 (0x4009b000) libGLU.so.1 
+=&gt; /usr/X11R6/lib/libGLU.so.1 (0x40103000) libmss.so.6 =&gt; not found 
+libSDL-1.2.so.0 =&gt; /usr/lib/libSDL-1.2.so.0 (0x40178000) libc.so.6 =&gt; 
+/lib/libc.so.6 (0x401ff000) /lib/ld-linux.so.2 (0x40000000) libGLcore.so.1 
+=&gt; /usr/lib/libGLcore.so.1 (0x40319000) libnvidia-tls.so.1 =&gt; 
+/usr/lib/libnvidia-tls.so.1 (0x409f1000) libXext.so.6 =&gt; 
+/usr/X11R6/lib/libXext.so.6 (0x409f3000) libX11.so.6 =&gt; 
+/usr/X11R6/lib/libX11.so.6 (0x40a01000) libdl.so.2 =&gt; /lib/libdl.so.2 
+(0x40acd000) libstdc++.so.5 =&gt; /usr/lib/libstdc++.so.5 (0x40ad1000) 
+libgcc_s.so.1 =&gt; /usr/lib/libgcc_s.so.1 (0x40b88000) libasound.so.2 =&gt; 
+/usr/lib/./libasound.so.2 (0x40b90000)</pre> <br>
+<br>
+
+<p>ldd shows all the libraries a dynamic executable relies on, and shows you 
+where they are. It also &quot;pulls in&quot; the dependencies of the 
+dependencies. For instance, while NWN does not itself depend onlibnvidia-tls.so
+, the Nvidia supplied libGL on my system does.</p> 
+<p>Missing libraries?</p> 
+<p>In the example above, we can see that nwmain wants libmss.so.6, and the 
+linker cannot find it. Usually, a missing library is a crash waiting to happen. 
+There is one other thing to consider though: The majority of games are actually 
+launched by a &quot;wrapper&quot;, a shell script that performs some magic 
+prior to launching the game. In the case of NWN, the wrapper is callednwn. 
+Let's take a look at that now:</p> 
+<pre> $ less nwn #!/bin/sh # This script runs Neverwinter Nights from the 
+current directory export SDL_MOUSE_RELATIVE=0 export SDL_VIDEO_X11_DGAMOUSE=0 # 
+If you do not wish to use the SDL library included in the package, remove # 
+./lib from LD_LIBRARY_PATH export 
+LD_LIBRARY_PATH=./lib:./miles:$LD_LIBRARY_PATH ./nwmain $@</pre> <br>
+<br>
+
+<p>This script sets up some environment variables, then launches the game 
+binary with whatever command line options we added. The relevant part here is 
+the environment variable called &quot;LD_LIBRARY_PATH&quot;. This is a way of 
+adding to the linkers search path. Try copying the line to your shell and 
+seeing what happens when you re-run ldd.</p> 
+<pre> $ export LD_LIBRARY_PATH=./lib:./miles:$LD_LIBRARY_PATH $ ldd nwmain 
+linux-gate.so.1 =&gt; (0xffffe000) libm.so.6 =&gt; /lib/libm.so.6 (0x40027000) 
+libpthread.so.0 =&gt; /lib/libpthread.so.0 (0x40049000) libGL.so.1 =&gt; 
+/usr/lib/libGL.so.1 (0x4009b000) libGLU.so.1 =&gt; /usr/X11R6/lib/libGLU.so.1 
+(0x40103000) libmss.so.6 =&gt; ./miles/libmss.so.6 (0x40178000) libSDL-1.2.so.0 
+=&gt; ./lib/libSDL-1.2.so.0 (0x401ec000) libc.so.6 =&gt; /lib/libc.so.6 
+(0x4025e000) /lib/ld-linux.so.2 (0x40000000) libGLcore.so.1 =&gt; 
+/usr/lib/libGLcore.so.1 (0x40378000) libnvidia-tls.so.1 =&gt; 
+/usr/lib/libnvidia-tls.so.1 (0x40a50000) libXext.so.6 =&gt; 
+/usr/X11R6/lib/libXext.so.6 (0x40a52000) libX11.so.6 =&gt; 
+/usr/X11R6/lib/libX11.so.6 (0x40a60000) libdl.so.2 =&gt; /lib/libdl.so.2 
+(0x40b2c000) libstdc++.so.5 =&gt; /usr/lib/libstdc++.so.5 (0x40b30000) 
+libgcc_s.so.1 =&gt; /usr/lib/libgcc_s.so.1 (0x40be7000)</pre> <br>
+<br>
+
+<p>As you can see, this gives us slighly different results. The NWN library 
+directories have been prepended to the search path, so now the linker can find
+libmss.so.6 in the &quot;./miles&quot; directory, and also finds the local copy 
+of libSDL first, no longer using the system copy.</p> 
+<p>There's another benefit of these scripts: they are easily edited to allow 
+you to provide your own copy of a library. Any game-supplied copy of a library 
+such as OpenAL or SDL is likely to be compiled for the lowest common 
+denominator, probably i486 or i686. If you have a Pentium4 or an AthlonXP, you 
+could compile you own version specifically for your processor. The compiler 
+will try to optimise the resulting binary, giving some increase in performance. 
+See the homepage for GCC for more information this at the GCC site.</p> 
+<p>Making NWN use your system copy is easy. It says so in the wrapper script! 
+Remove &quot;./lib:&quot; from theLD_LIBRARY_PATH line, and you're good to go.
+</p> 
+<p>Another nice little trick is for games that use OpenAL for their sound 
+output (e.g. Unreal based games: UT, Postal, Rune, etc.). Since the Open Sound 
+System's (OSS) deprecation in favour of ALSA, all Linux distributions I've seen 
+now ship with ALSA support as default, with OSS support actually being supplied 
+via ALSA's compatability modules. The copies ofopenal.so distributed with games 
+often do NOT support ALSA, so making the game use a copy compiled yourself will 
+allow you to use ALSA natively.</p> 
+<h1>6. When Bad Things Happen To Good People</h1> 
+<p>Of course we can't cover every Bad Thing that happens, but I'll outline 
+some items of common sense.</p> 
+<p>There are two types of bad things: random and repeatable. It's very 
+difficult to diagnose or fix random problems that you don't have any control 
+over when they happen or not. However, if the problem is repeatable &quot;it 
+happens when I press the left arrow key twice&quot;, then you're in business.
+</p> 
+<h2>6.1. RTFM!</h2> 
+<p>Read the friendly manual. The `manual' can take on a few forms. For open 
+source games there's the readme files that come with the game. Commercial games 
+will have a printed manual and maybe some readme files on the CD the game came 
+on. Don't forget to browse the CD your game came on for helpful tips and advice.
+</p> 
+<p>Don't forget the game's website. The game's author has probably seen people 
+with your exact same problem many times over and might put information specific 
+to that game on the website. A prime example of this is Loki Software's online 
+FAQs located athttp://faqs.lokigames.com.</p> 
+<h2>6.2. Look For Updates and Patches</h2> 
+<p>If you're playing an open source game that you compiled, make sure you have 
+the newest version by checking the game's website. If your game came from a 
+distro make sure there's not an update rpm/deb for the game.</p> 
+<p>Commercial game companies like Loki release patches for their games. Often 
+a game will have MANY patches (Myth2) and some games are unplayable without 
+them (Heretic2). Check the game's website for patches whether you have a 
+problem running the game or not; there may be an update for a security problem 
+that you may not even be aware of.</p> 
+<p>By the way, Loki now has a utility that searches for Loki Software on your 
+hard drive and automatically updates them. Check outhttp://updates.lokigames.com
+.</p> 
+<h2>6.3. Newsgroups</h2> 
+<p>If you don't know what netnews (Usenet) is, then this is definitely worth 
+30 minutes of your time to learn about. Install a newsreader. I prefer console 
+tools more, so I use tin, but slrn is also popular. Netscape has a nice 
+graphical &quot;point and click&quot; newsreader too.</p> 
+<p>For instance, I can browse Loki Software's news server with <b>tin -g 
+news.lokigames.com</b>. You can also specify which news server to use using the 
+$NNTP environment variable or with the file /etc/nntpserver.</p> 
+<h2>6.4. Google Group Search</h2> 
+<p>Every post made to Usenet gets archived at Google's database at 
+http://groups.google.com. This archive used to be at http://www.deja.com, but 
+was bought by Google. Many people still know the archive as &quot;deja&quot;.
+</p> 
+<p>It's almost certain that whatever problem you have with Linux, gaming 
+related or not, has already been asked about and answered on Usenet. Not once, 
+not twice, but many times over. If you don't understand the first response you 
+see (or if it doesn't work), then try one of the other many replies. If the 
+page is not in a language you can understand, there are many translation sites 
+which will convert the text into whatever language you like, including
+http://www.freetranslation.com and http://translation.lycos.com. My web browser 
+of choice, Opera (available athttp://www.opera.com) allows you to use the right 
+mouse button to select a portion of text and left click the selection to 
+translate it into another language. Very useful when a Google group search 
+yields a page in German which looks useful and my wife (who reads German well) 
+isn't around.</p> 
+<p>The Google group search has a basic and advanced search page. Don't bother 
+with the simple search. The advanced search is at
+http://groups.google.com/advanced_group_search.</p> 
+<p>It's easy to use. For example, if my problem was that Quake III crashed 
+everytime Lucy jumps, I would enter &quot;linux quake3 crash lucy jumps&quot; 
+in the &quot;Find messages with all of the words&quot; textbox.</p> 
+<p>There are fields for which newsgroup you want to narrow your search to. 
+Take the time to read and understand what each field means. I promise you. You 
+won't be disappointed with this service. Use it, and you'll be a much happier 
+person. Do note that they don't archive private newsgroups, like Loki 
+Software's news server. However, so many people use Usenet, it almost doesn't 
+matter.</p> 
+<h2>6.5. Debugging: call traces and core files</h2> 
+<p>This is generally not something you'll do for commercial games. For open 
+source games, you can help the author by giving a corefile or stack trace. Very 
+quickly, a core file (aka core dump) is a file that holds the &quot;state&quot; 
+of the program at the moment it crashes. It holds valuable clues for the 
+programmer to the nature of the crash -- what caused it and what the program 
+was doing when it happened. If you want to learn more about core files, I have 
+a great gdb tutorial athttp://www.dirac.org/linux.</p> 
+<p>At the *very* least, the author will be interested in the call stack when 
+the game crashed. Here is how you can get the call stack at barf-time:</p> 
+<p>Sometimes distros set up their OS so that core files (which are mainly 
+useful to programmers) aren't generated. The first step is to make your system 
+allow unlimited coresizes:</p> 
+<pre> ulimit -c unlimited </pre> <br>
+<br>
+
+<p>You will now have to recompile the program and pass the -g option to gcc 
+(explaining this is beyond the scope of this document). Now, run the game and 
+do whatever you did to crash the program and dump a core again. Run the 
+debugger with the core file as the 2nd argument:</p> 
+<pre> $ gdb CoolGameExecutable core </pre> <br>
+<br>
+
+<p>And at the (gdb) prompt, type &quot;backtrace&quot;. You'll see something 
+like:</p> 
+<pre> #0 printf (format=0x80484a4 &quot;z is %d.\n&quot;) at printf.c:30 #1 
+0x8048431 in display (z=5) at try1.c:11 #2 0x8048406 in main () at try1.c:6
+</pre> <br>
+<br>
+
+<p>It may be quite long, but use your mouse to cut and paste this information 
+into a file. Email the author and tell him:</p> 
+<p></p> 
+<ol> 
+<li>
+<p>The game's name</p></li> 
+<li>
+<p>Any error message that appears on the screen when the game crashes.</p></li>
+<li>
+<p>What causes the crash and whether it's a repeatable crash or not.</p></li> 
+<li>
+<p>The call stack</p></li> </ol> 
+<p>If you have good bandwidth, ask the author if he would like the core file 
+that his program dumped. If he says yes, then send it. Remember to ask first, 
+because core files can get very, very big.</p> 
+<h2>6.6. Saved Games</h2> 
+<p>If your game allows for saved games, then sending the author a copy of the 
+saved game is useful because it helps the tech reproduce whatever is going 
+wrong. For commercial games, this option is more fruitful than sending a core 
+file or call stack since commercial games can't be recompiled to include 
+debugging information. You should definitely ask before sending a save game 
+file because they tend to be long, but gaming companies usually have lots of 
+bandwidth. Mike Phillips (formerly of Loki Software) mentioned that sending in 
+saved games to Loki is definitely a good thing.</p> 
+<p>Needless to say, this only applies if your game crashes reproducably at a 
+certain point. If the game segfaults every time you run it, or is incredibly 
+slow, a saved game file won't be of much help.</p> 
+<h2>6.7. What to do when a file or library isn't being found (better living 
+through strace)</h2> 
+<p>Sometimes you'll see error messages that indicate a file wasn't found. The 
+file could be a library:</p> 
+<pre> % ./exult ./exult: error while loading shared library: libSDL-1.2.so.0: 
+cannot load shared object file: No such file or directory</pre> <br>
+<br>
+
+<p>or it could be some kind of data file, like a wad or map file:</p> 
+<pre> % qf-client-sdl IP address 192.168.0.2:27001 UDP Initialize Error: 
+W_LoadWadFile: couldn't load gfx.wad</pre> <br>
+<br>
+
+<p>Suppose gfx.wad is already on my system, but couldn't be found because it 
+isn't in the right directory. Then where IS the right directory? Wouldn't it be 
+helpful to know where these programs looked for the missing files?</p> 
+<p>This is where strace shines. strace tells you what system calls are being 
+made, with what arguments, and what their return values are. In my `Kernel 
+Module Programming Guide' (due to be released to LDP soon), I outline 
+everything you may want to know about strace. But here's a brief outline using 
+the canonical example of what strace looks like. Give the command:</p> 
+<pre> strace -o ./LS_LOG /bin/ls </pre> <br>
+<br>
+
+<p>The -o option sends strace's output to a file; here, LS_LOG. The last 
+argument to strace is the program we're inspecting, here, &quot;ls&quot;. Look 
+at the contents of LS_LOG. Pretty impressive, eh? Here is a typical line:</p> 
+<pre> open(&quot;.&quot;, O_RDONLY|O_NONBLOCK|0x18000) = 4 </pre> <br>
+<br>
+
+<p>We used the open() system call to open &quot;.&quot; with various 
+arguments, and the return value of the call is4. What does this have to do with 
+files not being found?</p> 
+<p>Suppose I want to watch the StateOfMind demo because I can't ever seem to 
+get enough of it. One day I try to run it and something bad happens:</p> 
+<pre> % ./mind.i86_linux.glibc2.1 Loading &amp; massaging... Error:Can't open 
+data file 'mind.dat'.</pre> <br>
+<br>
+
+<p>Let's use strace to find out where the program was looking for the data 
+file.</p> 
+<pre> strace ./mind.i86_linux.glibc2.1 2&gt; ./StateOfMind_LOG </pre> <br>
+<br>
+<p>Pulling out vim and searching for all occurrences of mind.dat, I find the 
+following lines:</p> 
+<pre> open(&quot;/usr/share/mind.dat&quot;,O_RDONLY) = -1 ENOENT (No such 
+file) write(2, &quot;Error:&quot;, 6Error:) = 6 write(2, &quot;Can\'t open data 
+file \'mind.dat\'.&quot;..., ) = 33</pre> <br>
+<br>
+
+<p>It was looking for mind.dat in only one directory. Clearly, mind.dat isn't 
+in/usr/share. Now we can try to locate mind.dat and move it into /usr/share, or 
+better, create a symbolic link.</p> 
+<p>This method works for libraries too. Suppose the library libmp3.so.2 is in 
+/usr/local/include but your new game &quot;Kill-Metallica&quot; can't find it. 
+You can use strace to determine where Kill-Metallica was looking for the 
+library and make a symlink from/usr/local/include/libmp3.so.2 to wherever 
+Kill-Metallica was looking for the library file.</p> 
+<p>strace is a very powerful utility. When diagnosing why things aren't being 
+found, it's your best ally, and is even faster than looking at source code. As 
+a last note, you can't look up information in source code of commercial games 
+from Lokisoft or Tribsoft. But you can still use strace with them!</p> 
+<h2>6.8. Hosed consoles</h2> 
+<p>Sometimes a game will exit abnormally and your console will get `hosed'. 
+There are a few definitions of a hosed console. The text characters could look 
+like gibberish. Your normally nice black screen could look like a 
+quasi-graphics screen. When you press<b>ENTER</b>, a newline doesn't get 
+echo'ed to the screen. Sometimes, certain keys of the keyboard won't respond. 
+Logging out and back in don't always work, but there are a few things that 
+might:</p> 
+<p></p> 
+<ul> 
+<li>
+<p>If you don't see any character on the screen as you type in, your terminal 
+settings may be wrong. Try &quot;stty echo&quot;. This should let input 
+characters echo again.</p></li> 
+<li>
+<p>At the prompt, type &quot;reset&quot;. This should clear up many problems, 
+including consoles hosed by an SVGAlib or ncurses based game.</p></li> 
+<li>
+<p>Try running the game again and normally. Once I had to kill Quake III in a 
+hurry, so I performed aCtl-Alt-Backspace. The console was hosed with a 
+quasi-graphics screen. Running Quake III and quitting normally fixed the 
+problem.</p></li> 
+<li>
+<p>The commands deallocvt and openvt will work for most of the other problems 
+you'll have.<b>deallocvt N</b> kills terminal N entirely, so that Alt-FN 
+doesn't even work anymore.<b>openvt -c N</b> starts it back up.</p></li> 
+<li>
+<p>If certain keys on your keyboard don't work, be creative. If you want to 
+reboot but the `o' key doesn't work, try using halt. One method I've come up 
+with is typing a command at the prompt and using characters on the screen with 
+mouse cut/paste. For example, you can type &quot;ps ax&quot;, and you're sure 
+to have an `h', `a', `l' and a `t' somewhere on the screen. You can use the 
+mouse to cut and paste the word &quot;halt&quot;.</p></li> 
+<li>
+<p>The most regrettable option is a reboot. If you can, an orderly shutdown is 
+preferable; use &quot;halt&quot; or &quot;shutdown&quot;. If you can't, ssh in 
+from a another machine. That sometimes works when your console is very badly 
+hosed. In the worst case scenario, hit the reset or power switch.</p></li> </ul>
+<p>Note that if you use a journalling filesystem like ext3, reiserfs or xfs, 
+hitting the power switch isn't all that bad. You're still supposed to shutdown 
+in an orderly manner, but the filesystem integrity will be maintained. You 
+won't normally see an fsck for the partitions that use the journalling 
+filesystem.</p> 
+<h2>6.9. Locked System</h2> 
+<p>When a computer &quot;locks&quot;, also called &quot;hung&quot;, the 
+keyboard and mouse become completely unresponsive. This is a direct consequence 
+of a bug in the Linux kernel. While Linux is known for stability, these things 
+do happen, especiallly for gaming which entails highly synchronized hardware 
+events which occur very fast, even to a computer. When a computer locks, it can 
+be a &quot;hard lock&quot;, meaning the kernel has completely stopped 
+functioning. This often indicates misbehaving or faulty hardware. There's no 
+recovery from this kind of lock other than pressing the reset or power button. 
+The lock can also be a &quot;soft lock&quot;, meaning that the kernel is still 
+functioning in some capacity. It's possible to recover from this gracefully.</p>
+<p></p> 
+<ul> 
+<li>
+<p>The first thing you should try is to hit control-alt-backspace which kills 
+X. If you gain control of your system, the kernel wasn't really locked in the 
+first place. If this didn't work after a few seconds, you'll definitely want to 
+reboot the system using the following instructions.</p></li> 
+<li>
+<p>Use control-alt-delete to reboot the system. You'll know this worked if you 
+hear the computer beep after a few seconds (this is BIOS saying &quot;I'm 
+OK&quot; during a power on cycle).</p></li> 
+<li>
+<p>Log into another system and ssh into the hung system. If you can ssh in, 
+reboot or halt the system.</p></li> 
+<li>
+<p>If you can't ssh into the system, you'll need to use the &quot;magic SysRq 
+key&quot; which is documented in/usr/src/linux/Documentation/sysrq.txt. Here's 
+a summary for the x86 architecture (see the documentation for other 
+architectures). Note if your keyboard doesn't have a<b>SysRq</b> key, use the 
+<b>PrintScreen</b> key: </p>
+<p></p> 
+<ol> 
+<li>
+<p>Hit alt-SysRq-s. This will attempt to sync your mounted filesystems so that 
+changes to files get flushed to disk. You may hear disk activity. If you're 
+looking at a console, the system should print the devices which were flushed.
+</p></li> 
+<li>
+<p>A few seconds later, hit alt-SysRq-u. This will attempt to remount all your 
+mounted filesystems as read-only). You should hear disk activity. If you're 
+looking at a console, the system will print the devices which were remounted.
+</p></li> 
+<li>
+<p>A few seconds later, use alt-SysRq-b to reboot the system.</p></li> 
+<li>
+<p>You can hit alt-SysRq-h for a very terse help screen.</p></li> </ol>
+<p></p></li> </ul> 
+<p>To use the magic SysRq key, your kernel needs to have been compiled with 
+magic SysRq support. You'll find this option under &quot;Kernel Hacking | 
+Kernel Debugging | Magic SysRq key&quot; in whatever kernel config menu you 
+like to use. If the magic SysRq key sequence doesn't shut your system down 
+gracefully, your kernel has crashed hard and you'll need to use the reset or 
+power button to recover.</p> 
+<h1>7. Video Cards</h1> 
+<h2>7.1. History</h2> 
+<p>Once upon a time, a company in San Jose, California named 3dfx Interactive 
+was king of the gaming video card market. In October 1996 they released the 
+Voodoo I, which was a phenomenal success. It was the first hardware accelerated 
+card, but only rendered 3D; it had to be piggybacked with a 2D video card. The 
+idea was that 2D rendering was handled by a high quality 2D video card (Matrox 
+was immensely popular at the time) but 3D information (see Glide2,Section 3.1) 
+would be passed to the Voodoo I and rendered, using the Voodoo's fast hardware 
+to perform the necessary graphics calculations. They released the Voodoo Rush 
+in April 1996. It should've been a more powerful card, with a 50MHz GPU and 8MB 
+of RAM. Even better, it was their first combined 2D/3D card, meaning that it 
+freed up a valuable PCI slot (most PC's only had a couple of PCI slots back 
+then) but the Rush wasn't as popular. 3dfx removed the multi-texturing unit 
+from the Rush, and it was outperformed by the Voodoo I. At the time, ATI had 
+their Rage series and nVidia had their Riva 128, but the Voodoo I blew them all 
+away.</p> 
+<p>This was a good time for Linux. id Software's open sourced the Doom 
+codebase and ported Quake I to Linux (December 1996). We were getting our first 
+tastes of real commercial gaming. Life was simple: you purchased a Voodoo. And 
+it felt good, because 3dfx open sourced their drivers. The king of video cards 
+worked with Linux developers. Not only did we have the best video cards, but 
+the drivers were all open source.</p> 
+<p>In March 1998, 3dfx released their Voodoo II, with its 3.6GB/sec memory 
+bandwith, 12MB of video memory and 90MHz core. It supported resolutions up to 
+1024x768. This was 3dfx in its heyday. Like the Voodoo I, the Voodoo II was a 
+3D only card, and piggy backed with a 2D video card. The Voodoo Banshee was 
+released in September 1998 as a combined 2D/3D card, like the Rush. Despite the 
+faster 100MHz core, the Banshee was outperformed by the Voodoo II because its 
+multi-texturing unit was removed, like with the Rush. And again like the Rush, 
+it wasn't popular. But 3dfx reigned supreme, and nobody could touch them.</p> 
+<p>In April 1999, the Voodoo III was released. There were a number of Voodoo 
+III's, ranging from a 143MHz core speed to 183MHz. There were TV-out versions. 
+There were PCI and AGP versions (it was the first AGP video card). It was 
+another success, but 3dfx began to lose ground to nVidia, which released their 
+TNT 2. The TNT 2 outperformed the Voodoo II, and accelerated 3D graphics at 
+full 32 bit color, while the Voodoo's were stuck at 16 bit color. But life was 
+still good for Linux. We had a card that was almost neck-to-neck with nVidia, 
+our drivers were open source, and in December 1999, id Software gave us a huge 
+gift: they open sourced the Quake I codebase.</p> 
+<p>Then nVidia released the GeForce 256 in October 1999. 3dfx's Voodoo IV, its 
+direct competitor, was about a year late which is very bad when you're 
+competing for a bleeding edge market. While nVidia was putting real R&amp;D 
+into their cards, 3dfx was simply adding more and faster RAM. The Voodoo IV and 
+V rendered in full 32bpp color, had great AA support (Section 7.4.3), featured 
+a 2nd GPU, more memory, and was arguably the king of of video cards. However, 
+3dfx's late release of the Voodoo IV and V coupled with the fact that the 
+GeForce could be had for half the price meant that 3dfx was sinking fast. For 
+Linux, the newest Voodoo's could only accelerate at 16 and 24 bit color. Worse 
+still, the Voodoo V's 2nd GPU was unused by the Linux driver (and to this day, 
+the Voodoo V is functionally equivalent to the single GPU Voodoo IV on Linux). 
+Most Windows users were switching to nVidia, and despite the fact that the 
+nVidia drivers were proprietary, even Linux users began to jump onto the nVidia 
+bandwagon. VA Linux, the largest Linux server vendor, put nVidia into their 
+machines.</p> 
+<p>Then in April 2000, 3dfx was attacked on a different front: ATI started 
+releasing their first generation Radeons. Until this point, ATI had always been 
+an innovative (they developed their own 3D acceleration chips in 1996, about 
+the same time as 3dfx), but sleepy graphics chipset manufacturer. The Radeons 
+were their first 3D accelerated card that gamers took any real serious interest 
+in. Their Radeons trounced both nVidia and 3dfx. They worked with Linux 
+developers, open sourced all their drivers and were hailed as the great hope 
+for Linux gaming. nVidia came back with fists swinging, and this was all too 
+much for 3dfx. Between losing the benchmark wars to the GeForce and Radeon, 
+their lateness with new cards and high prices, 3dfx lost its market share and 
+didn't have the funds to stay into business. On April 18 2001, they sold most 
+of their assets and technology to nVidia, and in October 2002, they finally 
+declared bankruptcy.</p> 
+<p>The demise of 3dfx was quite sudden and a slap in the face to the open 
+source community. I still remember my friend Gabe Rosa emailing me with just 
+&quot;Look at /.&quot; and seeing the news. It was the 2nd worst day for Linux 
+gaming (the 1st being the demise of Loki). And it was also a shame. 3dfx was 
+getting ready to release a new Voodoo V featuring 4 GPU's which would've 
+trounced the ATI and nVidia offerings, as well as a new card code named 
+&quot;Rampage&quot; which reportedly would've put them firmly back as the king 
+of the hill. There are reports that the Rampage's technology (which was sold to 
+nVidia) went into the GeForce 5900. Not too shabby for 3 year old technology!
+</p> 
+<p>At first, things were still simple. Linux gamers would either keep their 
+open source Voodoos, get an open source Radeon or a closed source GeForce. 
+However, with bigger and better games on the horizon, it was only a matter of 
+time before the Voodoos would no longer be a viable graphics card for modern 
+gaming. People were still using Voodoo's, but they were essentially out of the 
+game at this point.</p> 
+<p>ATI started to release a tremendous number of versions of each video card, 
+and keeping up with them and their terminology started to become very 
+difficult. ATI, together with nVidia, played king of hill. Their products have 
+been neck to neck ever since, with GeForce taking the lead a bit more times 
+than the Radeon. But the Radeon's drivers were open source, so many Linux users 
+stuck by them. Then things got even more complicated.</p> 
+<p>ATI started becoming more and more reluctant to open source drivers for 
+their new releases, and suddenly, it wasn't clear who the &quot;good guy&quot; 
+was anymore. nVidia's party line was they license some of their GL code from 
+another company, and is thus non-releasable. Presumably, ATI doesn't want to 
+release drivers to keep their trade secrets, well, a secret. And it gets worse. 
+The ATI Linux drivers have been plagued by extremely poor performance. Even 
+when an ATI offering is better than the current GeForce offering for Windows, 
+the card is always trounced by GeForce on Linux. Because of the ATI Linux 
+driver woes, Linux users cannot use MS Windows based benchmarks or card stats. 
+They simply don't apply to us. And that's pretty much where we are right now.
+</p> 
+<p>As a last note, the only systematic Linux video card benchmarking effort 
+I'm aware of was done, unfortunately, in March 2001, between a Radeon 32 DDR 
+and a GeForce 2. You can read it for yourself at
+http://www.linuxhardware.org/features/01/03/19/0357219.shtml, but conclusion is 
+that the GeForce 2 firmly and soundly trounced the Radeon 32 DDR.</p> 
+<h2>7.2. Current Status (1 March 2004)</h2> 
+<p>nVidia's latest offering is the GeForce 5900, based on the NV35 chipset. 
+It's well supported by Linux with high quality but proprietary drivers. nVidia 
+uses a convenient combined driver architecture; their driver will support the 
+TNT 2 all the way up to the GeForce 5900. Although their drivers are closed 
+source, as a company, nVidia has been supportive and good to Linux users.</p> 
+<p>ATI's has worked with Linux developers for their Radeons up to and 
+including the Radeon 9200, which have 2D and 3D support in XFree86. I'm not 
+entirely sure of the quality of these open source drivers, however, Soldier of 
+Fortune I and Heavy Metal still have opaque texture problems under first 
+generation Radeons. Beyond the 9200, you need to use ATI's binary only 
+proprietary drivers, available in rpm format from ATI's website. It's claimed 
+that these drivers are piss poor; a friend of mine claims his GeForce 4400 
+outperforms his Radeon 9700 pro. That's shameful.</p> 
+<p>On paper, and in the Windows benchmarks, the Radeon 9800 trounces the 
+ill-conceived GeForce 5800 and slightly edges out the GeForce 5900. On paper, 
+it's simply the more impressive card. But again, the driver issue makes this 
+information unusable for us. If you have your heart set to buy the best card 
+for Linux, you'll want to go with the GeForce 5900.</p> 
+<h3>7.2.1. SVGAlib Support</h3> 
+<p>As of June 2002, SVGAlib support Radeon cards is shaky. Developers have 
+reported that SVGAlib works on the Radeon 7500, Radeon QD (64MB DDR model) but 
+has problems on the Radeon VE.</p> 
+<p>I have no information about SVGAlib and the GeForce cards.</p> 
+<h2>7.3. Which Video Card Should I Buy? (1 March 2004)</h2> 
+<p>The answer was very difficult last year, but here's my take on it these 
+days:</p> 
+<p></p> 
+<ol> 
+<li>
+<p>All GeForce cards require a proprietary driver which will &quot;taint&quot; 
+your kernel. However, all ATI cards beyond the Radeon 9200 also require a 
+proprietary driver that will &quot;taint&quot; your kernel as well.</p></li> 
+<li>
+<p>nVidia has proven that they care enough about Linux to write and maintain 
+current and very high quality drivers for Linux. Even when ATI open sourced its 
+video card driver, they played the &quot;we'll make Linux developers write our 
+drivers for us&quot; game. Their current proprietary drivers are below par.</p>
+</li> 
+<li>
+<p>The current Radeon 9800 barely beats out the GeForce 5900 in benchmarks and 
+card specs, but Linux users won't benefit from this because of driver issues..
+</p></li> 
+<li>
+<p>ATI has a very long history of dropping support for hardware as fast as 
+they can get away with it.</p></li> 
+<li>
+<p>On MS Windows, when the GeForce beat out its main competing Radeon, the 
+review claimed that the Radeon generally had better visuals. I have no idea how 
+this translates to Linux.</p></li> </ol> 
+<p>Don't get the GeForce 5800. Card reviews claim that it has some serious 
+heat, noise, and dust issues. It's informally called the &quot;dust 
+buster&quot; because of noise its fan makes.</p> 
+<p>If you absolutely only want open source drivers on your system, the Radeon 
+9200 is the best card you can buy.</p> 
+<p>If you have a Linux/Windows dual boot, consider either the Radeon 9800 or 
+the GeForce 5900. The Radeon will be slightly stronger on Windows. The GeForce 
+will be stronger on Linux.</p> 
+<p>If you have a Linux only system, the GeForce 5900 is your best bet. As of 
+today, the 256MB version comes in at a whopping $350, however, the 128MB 
+version is more reasonable.</p> 
+<h2>7.4. Definitions: Video Card and 3D Terminology</h2> 
+<p>We'll cover video card and 3D graphics terminology. This material isn't 
+crucial to actually getting a game working, but may help in deciding what 
+hardware and software options are best for you.</p> 
+<h3>7.4.1. Textures</h3> 
+<p>A rendered scene is basically made up of polygons and lines. A texture is a 
+2D image (usually a bitmap) covering the polygons of a 3D world. Think of it as 
+a coat of paint for the polygons.</p> 
+<h3>7.4.2. T&amp;L: Transform and Lighting</h3> 
+<p>The T&amp;L is the process of translating all the 3D world information 
+(position, distance, and light sources) into the 2D image that is actually 
+displayed on screen.</p> 
+<h3>7.4.3. AA: Anti Aliasing</h3> 
+<p>Anti aliasing is the smoothing of jagged edges along a rendered curve or 
+polygon. Pixels are rectangular objects, so drawing an angled line or curve 
+with them results in a 'stair step' effect, also called the 'jaggies'. This is 
+when pixels make, what should be a smooth curve or line, jagged. AA uses CPU 
+intensive filtering to smooth out these jagged edges. This improves a game's 
+visuals, but can also dramatically degrade performance.</p> 
+<p>AA is used in a number of situations. For instance, when you magnify a 
+picture, you'll notice lines that were once smooth become jagged (try it with 
+The Gimp). Font rendering is another big application for AA.</p> 
+<p>AA can be done either by the application itself (as with The Gimp or the 
+XFree86 font system) or by hardware, if your video card supports it. Since AA 
+is CPU intensive, it's more desirable to perform it in hardware, but if we're 
+talking about semi-static applications, like The Gimp, this really isn't an 
+issue. For dynamic situations, like games, doing AA in hardware can be crucial.
+</p> 
+<h3>7.4.4. FSAA: Full Screen Anti-Aliasing</h3> 
+<p>FSAA usually involves drawing a magnified version of the entire screen in a 
+separate framebuffer, performing AA on the entire image and rescaling it back 
+to the normal resolution. As you can imagine, this is extremely CPU intensive. 
+You will never see non hardware accelerated FSAA.</p> 
+<h3>7.4.5. Mip Mapping</h3> 
+<p>Mip mapping is a technique where several scaled copies of the same texture 
+are stored in the video card memory to represent the texture at different 
+distances. When the texture is far away a smaller version of the texture (mip 
+map) is used. When the texture is near, a bigger one is used. Mip mapping can 
+be used regardless of filtering method (Section 7.4.6). Mip mapping reduces 
+memory bandwidth requirements since the images are in hardware, but it also 
+offers better quality in the rendered image.</p> 
+<h3>7.4.6. Texture Filtering</h3> 
+<p>Texture filtering is the fundamental feature required to present sweet 3D 
+graphics. It's used for a number of purposes, like making adjacent textures 
+blend smoothly and making textures viewed from an angle (think of looking at a 
+billboard from an extreme angle) look realistic. There are several common 
+texture filtering techniques including point-sampling, bilinear, trilinear and 
+anisotropic filtering.</p> 
+<p>When I talk about 'performance hits', keep in mind that the performance hit 
+depends on what resolution you're running at. For instance, at a low resolution 
+you may get only a very slight hit by using trilinear filtering instead of 
+bilinear filtering. But at high resolutions, the performance hit may be 
+enormous. Also, I'm not aware of any card that uses anisotropic texture 
+filtering. TNT drivers claim they do, but I've read that these drivers still 
+use trilinear filtering when actually rendering an image to the screen.</p> 
+<h4>7.4.6.1. Point Sampling Texture Filtering</h4> 
+<p>Point sampling is rare these days, but if you run a game with 'software 
+rendering' (which you'd need to do if you run a 3D accelerated game without a 
+3D accelerated board) you're likely to see it used.</p> 
+<h4>7.4.6.2. Bilinear Texture Filtering</h4> 
+<p>Bilinear filtering is a computationally cheap but low quality texture 
+filtering. It approximates the gaps between textures by sampling the color of 
+the four closest (above, below, left and right) texels. All modern 3D 
+accelerated video cards can do bilinear filtering in hardware with no 
+performance hit.</p> 
+<h4>7.4.6.3. Trilinear Texture Filtering</h4> 
+<p>Trilinear filtering is a high quality bilinear filter which uses the four 
+closest pixels in the second most suitable mip map to produce smoother 
+transitions between mip map levels. Trilinear filtering samples eight pixels 
+and interpolates them before rendering. Trilinear filtering always uses mip 
+mapping. Trilinear filtering eliminates the banding effect that appears between 
+adjacent mip map levels. Most modern 3D accelerated video cards can do 
+trilinear filtering in hardware with no performance hit.</p> 
+<h4>7.4.6.4. Anisotropic Texture Filtering</h4> 
+<p>Anisotropic filtering is the best but most CPU intensive of the three 
+common texture filtering methods. Trilinear filtering is capable of producing 
+fine visuals, but it only samples from a square area which in some cases is not 
+the ideal method. Anisotropic (meaning 'from any direction') samples from more 
+than 8 pixels. The number of sampled pixels and which sampled pixels it uses 
+depends on the viewing angle of the surface relative to your screen. It shines 
+when viewing alphanumeric characters at an angle.</p> 
+<h3>7.4.7. Z Buffering</h3> 
+<p>A Z buffer is a portion of RAM which represents the distance between the 
+viewer (you) and each pixel of an object. Many modern 3D accelerated cards have 
+a Z buffer in their video RAM, which speeds things up considerably, but Z 
+buffering can also be done by the application's rendering engine. However, this 
+sort of thing clearly should be done in hardware wherever possible.</p> 
+<p>Every object has a stacking order, like a deck of cards. When objects are 
+rendered into a 2D frame buffer, the rendering engine removes hidden surfaces 
+by using the Z buffer. There are two approaches to this. Dumb engines draw far 
+objects first and close objects last, obscuring objects below them in the Z 
+buffer. Smart engines calculate what portions of objects will be obscured by 
+objects above them and simply not render the portions that you won't see 
+anyhow. For complicated textures this is a huge savings in processor work.</p> 
+<h1>8. Sound</h1> 
+<h2>8.1. Which sound card is best?</h2> 
+<p>By the word &quot;best&quot; I mean best for gaming. Gamers want high 
+quality sound for our games with the least amount of tinkering. On the other 
+hand, a musician would have a very different concept of what &quot;best sound 
+card&quot; would mean. If you're a musician, you might want to check out the
+Linux Audio Quality HOWTO.</p> 
+<p>Now that Linux is beginning to mature, this question isn't as important as 
+it used to be. Once upon a time, soundcards without onboard MIDI chips (most 
+PCI sound cards) didn't do MIDI. This was mostly a problem for things like 
+xdoom or lxdoom using musserv. These days we have MIDI emulators like Timidity 
+and libraries like SDL which don't require hardware MIDI support. Frankly, I've 
+had many cards and I can't tell the difference between any of them for gaming. 
+If you want to do things like convert a record LP to digital format, then your 
+choice of a soundcard with a professional grade A/D converter is absolutely 
+crucial. For this HOWTO, we'll assume that you're more of a gamer than a studio 
+recording engineer.</p> 
+<p>Your decision should be based on what will be the easiest to configure. If 
+you already have a card and it works well, that's good enough. If you're in the 
+market to buy a sound card, get something that will take you a second to 
+configure. PCI cards are much easier to deal with than ISA since you don't need 
+to tell their drivers about which system resources (IRQ, DMA, I/O addresses) to 
+use. Some ISA cards ARE plug-n-play, like the Creative AWE-64, and the Linux 
+kernel has come a long way in auto configuring them.</p> 
+<p>My personal recommendation is any card which has the es1370 or es1371 chip, 
+which uses the es1370 and es1371 sound drivers on Linux. These cards include 
+the older Ensoniq es1370 and newer Creative PCI-128. These cards are extremely 
+cheap and trivial to get working under Linux.</p> 
+<p>I used to be a fan of the Creative Soundblaster AWE 32, AWE 64 and AWE 64 
+gold soundcards. These ISA PnP cards are well supported by both OSS and Alsa. 
+They all use the same E-mu 8000 synthesis chip which enables them to play 32 
+voices simultaneously (they have 32 &quot;channels&quot;). A few notes: First, 
+the Soundblaster AWE HOWTO is very out of date. Second, the AWE 64 and AWE 64 
+gold can play 64 voices simultaneously, but this is done in software. Creative 
+never released a Linux driver for these cards (and they never released 
+programming information to Linux developers), so Linux users cannot use the 
+extra 32 channels on the AWE 64 and AWE 64 gold. As far Linux users are 
+concerned, all three cards are completely identical (although the AWE 64 gold 
+has gold plated connectors, which are better for sound quality than the more 
+common steel connectors).</p> 
+<p>The Creative Soundblaster Live! is an extremely popular PCI sound card 
+these days. I've never owned one, so I cannot comment here. However, there have 
+been numerous reports about serious problems with the Live! and AMD 
+motherboards that use the 686b southbridge. A google search should turn up alot 
+of information on this problem.</p> 
+<p>A more relevent issue is speakers, but even here the difference isn't huge. 
+I've had expensive Altec Lansing speakers perform only slightly better than 
+el-cheapo speakers. You get what you pay for with speakers, but don't expect a 
+huge difference. You'll want to get something with a separate sub-woofer; this 
+does make a difference at a cost of extra power and connector wires.</p> 
+<h2>8.2. Why isn't my sound working?</h2> 
+<p>First of all, it's probably not the game, it's probably your setup. AFAIK, 
+there are 3 options to getting a sound card configured under Linux: the free 
+OSS sound drivers that come with the Linux kernel, the Alsa drivers and the 
+commercial OSS sound drivers. Personally, I prefer the free OSS drivers, but 
+many people swear by Alsa. The commercial OSS drivers are good when you're 
+having trouble getting your sound card to work by free methods. Don't discount 
+them; they're very cheap (like 10 or 20 bucks), support bleeding edge sound 
+cards and take a lot of guesswork out of the configuring process.</p> 
+<p>There are 5 things that can go wrong with your sound system:</p> 
+<p></p> 
+<ol> 
+<li>
+<p>Shared interrupt</p></li> 
+<li>
+<p>Misconfigured driver</p></li> 
+<li>
+<p>Something's already accessing the sound card</p></li> 
+<li>
+<p>You're using the wrong driver</p></li> 
+<li>
+<p>A permissions problem</p></li> </ol> 
+<h3>8.2.1. Shared interrupt</h3> 
+<p>The first thing to do is to figure out if you have an IRQ conflict. ISA 
+cards can't share interrupts. PCI cards can share interrupts, but certain types 
+of high bandwidth cards simply don't like to share, including network and sound 
+cards. To find out whether you have a conflict, do a<b>cat /proc/interrupts</b>
+. Output on my system is:</p> 
+<pre> $ cat /proc/interrupts CPU0 CPU1 0: 24185341 0 XT-PIC timer 1: 224714 0 
+XT-PIC keyboard 2: 0 0 XT-PIC cascade 5: 2478476 0 XT-PIC soundblaster 5: 
+325924 0 XT-PIC eth0 11: 131326 0 XT-PIC aic7xxx 12: 2457456 0 XT-PIC PS/2 
+Mouse 14: 556955 0 XT-PIC ide0 NMI: 0 0 LOC: 24186046 24186026 ERR: 1353</pre> 
+<br> <br>
+
+<p>The second column is there because I have 2 CPU's in this machine; if you 
+have one CPU (called UP, or uniprocessor), you'll have only 1 CPU column. The 
+numbers on the left are the assigned IRQ's and the strings to the right 
+indicate what device was assigned that IRQ. You can see I have an IRQ conflict 
+between the soundcard (soundblaster) and the network card (eth0). They both 
+share IRQ 5. Actually, I cooked this example up because I wanted to show you 
+what an IRQ conflict looks like. But if I did have this conflict, neither my 
+network nor my sound would work well (or at all!).</p> 
+<p>If my sound card is PCI, the preferred way of fixing this would be to 
+simply move one of the cards to a different slot and hope the BIOS sorts things 
+out. A more advanced way of fixing this would be to go into BIOS and assign 
+IRQ's to specific slots. Modern BIOS'es can do this.</p> 
+<h3>8.2.2. Misconfigured driver</h3> 
+<p>Sometimes, a card is hardwired to use a certain IRQ. You'll see this on ISA 
+cards only. Alternatively, some ISA cards can be set to use a specific IRQ 
+using jumpers on the card itself. With these types of cards, you need to pass 
+the correct IRQ and memory access, &quot;I/O port&quot;, to the driver.</p> 
+<p>This is a sound card specific issue, and beyond the scope of this HOWTO.</p>
+<h3>8.2.3. Something is already accessing your sound card</h3> 
+<p>Perhaps an application is already accessing your soundcard. For example, 
+maybe you have an MP3 player that's paused? If something is already accessing 
+your card, other applications won't be able to. Even though it was written to 
+share the card between applications, I've found that esd (the enlightenment 
+sound daemon) sometimes doesn't work correctly. The best tool to use here is 
+lsof, which shows which processes are accessing a file. Your sound card is 
+represented by/dev/dsp. Right now, I'm listening to an MP3 (not a Metallica 
+MP3, of course...) with mp3blaster.</p> 
+<pre> # lsof /dev/dsp COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME mp3blaste 
+1108 p 6w CHR 14,3 662302 /dev/dsp</pre> <br>
+<br>
+
+<p><b>fuser</b> is similar; but it lets you send a signal to any process 
+accessing the device file.</p> 
+<pre> # fuser -vk /dev/dsp USER PID ACCESS COMMAND /dev/dsp root 1225 f.... 
+mp3blaster root 1282 f.... mp3blaster</pre> <br>
+<br>
+
+<p>After issuing this command, mp3blaster was killed with SIGKILL. See the man 
+pages for lsof and fuser; they're very useful. Oh, you'll want to run them as 
+root since you'll be asking for information from processes that may be owned by 
+root.</p> 
+<h3>8.2.4. You're using the wrong driver (or no driver)</h3> 
+<p>There are only two ways to configure your card:</p> 
+<p></p> 
+<ol> 
+<li>
+<p>Support must be compiled directly into the kernel</p></li> 
+<li>
+<p>You must have the correct driver loaded into memory</p></li> </ol> 
+<p>You can find out which driver your sound card is using by doing 
+&quot;lsmod&quot; or looking at the output of &quot;dmesg&quot;. Since sound is 
+crucial for me, I always compile sound into my kernels. If you don't have a 
+driver loaded, you need to figure out what's been compiled into your kernel. 
+That's not so straight forward. Your best bet is to compile your kernel. BTW, 
+let me say that compiling your own kernel is the first step towards proficiency 
+with Linux. It's painful the first time you do it, but once you do it 
+correctly, it becomes very easy down the right, especially if you keep all your 
+old .config files and make use of things like &quot;make oldconfig&quot;. See 
+the Kernel HOWTO for details.</p> 
+<p>If you haven't compiled the kernel yourself, there is an overwhelmingly 
+good chance that your system is set up to load sound drivers as modules. That's 
+the way distros do things. Have everything under the sun compiled as a module 
+and try to load them all. So if you don't see your sound card's driver with 
+lsmod, your card probably isn't configured yet.</p> 
+<h3>8.2.5. Permissions Problem</h3> 
+<p>If the sound card works when you're root but not any other user, you 
+probably have a permissions problem. If this is the case, as root, look at the 
+group owner of the sound card using<b>ls -l /dev/dsp</b>; it'll probably be 
+audio. Then, as root, add your non-root user to the audio group in /etc/group. 
+For example, I added the users p and wellspring to group audio on my system:</p>
+<pre> audio:x:29:p,wellspring </pre> <br>
+<br>
+
+<p>Don't forget to use <b>grpconv</b> if you use shadow passwords (which 
+should be the case on most recent distributions) in order to maintain a 
+consistent group configuration. Then log out and log back in as the non-root 
+user. Your sound card should work. Thanks to James Barton for reminding me to 
+add this to the howto.</p> 
+<h1>9. Miscellaneous Problems</h1> 
+<h2>9.1. Hardware Acceleration Problems</h2> 
+<p>XFree86 4.x provides a more centralized and self-contained approach to 
+video. Much of the funkyness like kernel modules for non-root access of video 
+boards is, thankfully, gone.</p> 
+<h3>9.1.1. Hardware acceleration isn't working at all</h3> 
+<p>If you're getting like 1 fps, then your system isn't using hardware 3D 
+acceleration. There's one of two things that can be going on.</p> 
+<p></p> 
+<ol> 
+<li>
+<p>Your 3D system is misconfigured (more likely)</p></li> 
+<li>
+<p>Game X is misconfigured (less likely)</p></li> </ol> 
+<p>The first step is to figure out which one is happening.</p> 
+<p></p> 
+<ol> 
+<li>
+<p>If you have X 4.0 (X 3.* users procede to step 2), look at the output of <b>
+X -probeonly</b>. You'll see:</p> 
+<pre>(II) XXXXXX: direct rendering enabled</pre> <br>
+<br>
+
+<p>or</p> 
+<pre>(II) XXXXXX: direct rendering disabled</pre> <br>
+<br>
+
+<p>where XXXXXXX depends on which video card you have. If direct rendering is 
+disabled, then your X configuration is definitely faulty. Your game is not at 
+fault. You need to figure out why DRI is disabled. The most important tool for 
+you to use at this point is the `DRI Users Guide'. It is an excellently written 
+document that gives you step by step information on how to get DRI set up 
+correctly on your machine. A copy is kept athttp://www.xfree86.org/4.0/DRI.html.
+</p>
+<p>Note that if you pass this test, your system is CAPABLE of direct 
+rendering. Your libraries can still be wrong. So procede to step 2.</p></li> 
+<li>
+<p>There is a program called glxgears which comes with the 
+&quot;mesademos&quot; package. You can get mesademos with Debian (<b> apt-get 
+install mesademos</b>) or you can hunt for the rpm on http://www.rpmfind.net. 
+You can also download and compile the source yourself from the mesa homepage.
+</p>
+<p>Running glxgears will show some gears turning. The xterm from which you run 
+glxgears will display &quot;X frames in Y seconds = X/Y FPS&quot;. You can 
+compare your system to the list of benchmarks below.</p> 
+<pre> CPU TYPE VIDEO CARD X VERSION AVERAGE FPS </pre> <br>
+<br>
+
+<p>Compiling Mesa and DRI modules yourself can increase your FPS by 15 FPS; 
+quite a performance boost! So if your number is, say, about 20 FPS slower than 
+a comparable machine, chances are that glxgears is falling back on software 
+rendering. In other words, your graphics card isn't 3D accelerating graphics.
+</p>
+<p>More important than FPS is having a constant FPS for small and large 
+windows. If hardware acceleration is working, the FPS for glxgears should be 
+nearly independent of window size. If it's not, then you're not getting 
+hardware acceleration.</p></li> </ol> 
+<h2>9.2. Hardware acceleration works only for the root user</h2> 
+<h3>9.2.1. XFree86 4.x</h3> 
+<p>If the following lines aren't present in your XF86Config-4 file, put them 
+in:</p> 
+<pre> Section &quot;DRI&quot; Mode 0666 EndSection </pre> <br>
+<br>
+
+<p>This allows all non-root users to use DRI. For the paranoid, it's possible 
+to restrict DRI to only a few non-root users. See the DRI User Guide.</p> 
+<h3>9.2.2. XFree86 3.x</h3> 
+<h4>9.2.2.1. Voodoo cards</h4> 
+<p>Voodoo card hardware acceleration only takes place ONLY at 16bpp color and 
+fails silently when starting X in another color depth.</p> 
+<p>Also, Voodoo cards need the 3dfx.o kernel module and a /dev/3dfx device 
+file (major 107, minor 0) for non-root hardware acceleration. Neither the 
+module nor the device file are used under XFree86 4.x.</p> 
+<h1>10. Emulation and Virtual Machines</h1> 
+<p>Linux gets ragged on a lot because we don't have the wealth of games that 
+other platforms have. Frankly, there's enough games for me, although it would 
+be really nice to have some of the bleeding edge games and classics like 
+Half-life and Carmageddon. Fortunately, we have more emulators than you can 
+shake a stick at. Although playing an emulated game is sometimes not quite as 
+fun as playing it on the native machine, and getting some of the emulators to 
+work well can be a difficult task, they're here, and there's alot of them!</p> 
+<h2>10.1. What is a virtual machine?</h2> 
+<p>A &quot;real computer&quot; provides an operating system many things, 
+including a CPU, I/O channels, memory, a BIOS to provide low level access to 
+motherboard and I/O resources, etc. When an operating system wants to write to 
+a hard drive, it communicates through a device driver that interfaces directly 
+with the hardware device memory.</p> 
+<p>However, it's possible to give a program all the hardware resources it 
+needs. When it wants to access a hard drive, give it some memory to write to. 
+When it wants to set an IRQ, give it some bogus instructions that lets it think 
+it set an IRQ. If you do this correctly, then in principle, there's no way for 
+the poor application to know whether it's really accessing hardware or tricked 
+by being given resources which simulate hardware. A virtual machine is the 
+environment which tricks applications into believing they're running on a real 
+computer. It provides all the services that a real computer would provide.</p> 
+<p>VM's were used initially in the 1960's to emulate time shared operating 
+systems, but these days we use them to run software which was written for 
+foreign operating systems, or more commonly, an entire operating system. 
+Because of the nature of the VM, the foreign OS can't tell the difference 
+between operating in a VM or in a &quot;real&quot; machine.</p> 
+<h2>10.2. Apple 8-bit</h2> 
+<p>All the 8-bit Apple ][ emulators require a copy of the original ROM, for 
+whichever system you want to emulate, in a file. If you search hard enough, you 
+can find file copies of the ROMs for the Apple ][, ][+, ][e, ][c and //gs. They 
+are still copyrighted by Apple, and you can only use them legally if you 
+actually own one of these computers.</p> 
+<h3>10.2.1. KEGS</h3> 
+<p>KEGS is an Apple II emulator written by Kent Dickey &lt;
+kentd(at)cup(dot)hp(dot)com&gt; which was originally written for HP-UX, but 
+improved and customized for Linux. It runs under X at any color depth, and 
+supports changeable memory sizes, joysticks, and sound. KEGS boots all Apple II 
+variants, and supports all of the Apple ]['s graphics modes. I can't find a 
+working homepage for this application.</p> 
+<h3>10.2.2. apple2 and xapple2</h3> 
+<p>The SVGAlib based apple2 and X based xapple2 can emulate any Apple ][ 
+variant except for the //gs. The interface is a bit funky, but usable. 
+Configuration is also a bit funky; this emulator would benefit from an SVGA or 
+X based configuration tool. It supports the undocumented portion of the 6502 
+instruction set which some games rely on.apple2 is currently being maintained 
+by Michael Deutschmann&lt;michael(at)talamasca(dot)ocis(dot)net&gt; and seems 
+to be developed at a slow but constant pace. I don't think this application has 
+a homepage.</p> 
+<h2>10.3. DOS</h2> 
+<h3>10.3.1. dosemu</h3> 
+<p>dosemu &lt;http://www.dosemu.org&gt; is the canonical DOS emulator on 
+Linux. When you think of DOS, don't think of things like PROCOM PLUS OR OTHER 
+PROGRA~1 WHICH HAVE SHORT NAMES AND ARE IN ALL CAPS. There are some real 
+classics that were written for DOS like Carmageddon, Redneck Rampage and Tomb 
+Raider. dosemu can run these. Unfortunately, it can take alot of effort to get 
+dosemu to work, and of Jan 2002, the sound code is somewhat broken. Not a big 
+deal when you're trying to run Wordperfect or an old database application. It's 
+an absolute show stopper for gaming. Getting dosemu to work well is not easy, 
+but unfortunately, for DOS games it's the best avenue. Good luck. If you have 
+success using dosemu, I would like to hear from you.</p> 
+<h2>10.4. Win16</h2> 
+<h3>10.4.1. Wabi</h3> 
+<p>Wabi is a commercial Win16 emulator. That is, it'll run Windows 16-bit 
+applications from a Windows 3.1, Windows 3.11 or Windows for Workgroups 3.11 
+environment.Wabi was originally created by SCO Unix a long time ago and then 
+was purchased by Caldera sometime in mid year 2001.</p> 
+<p>Wabi is fast and does a good job for what it does, although I've heard it 
+said that wabi for Solaris is more stable than Linux. It might be useful for 
+playing older Win16 games, but there are three problems:</p> 
+<p></p> 
+<ul> 
+<li>
+<p>You must have a licensed copy of Windows 3.1/3.11 or WfW 3.11.</p></li> 
+<li>
+<p>Wabi is awfully expensive for what it does.</p></li> 
+<li>
+<p>Wabi doesn't work under 32bpp or 24bpp color.</p></li> </ul> 
+<p>Wabi does NOT do DOS itself, but it looks like it can use a DOS emulator as 
+a backend for running DOS programs. There was talk about Wabi 3.0 which 
+would've done Win32 emulation, but AFAIK, this project was shelved 
+indefinitely. I think Wabi will run under Linux on all architectures (can 
+someone verify this?)</p> 
+<h2>10.5. Win32</h2> 
+<h3>10.5.1. wine</h3> 
+<p>Wine &lt;http://www.winehq.com&gt;, which bears the GNUish acronym 
+&quot;Wine Is Not An Emulator&quot; is a non-commercial implementation of the 
+Win32 API. The reason why it's not an emulator is subtle and not of much 
+interest to most non computer scientists, so we'll call it an emulator here (it 
+really does run-time translation of calls to the Win32 API to POSIX/X11 calls). 
+Wine has come a long way, and is capable of emulating many important programs, 
+which is great news for Linux users who want this sort of stuff.</p> 
+<p>Wine does not provide the DOS API, so you can't use it to run DOS 
+applications. For that, you should look at dosemu (Section 10.3.1). Wine has 
+never been too good at implementing DirectX, although a number of games are 
+known to work under wine. For gaming you might want to look at winex (Section 
+10.5.3).</p> 
+<p>In addition to run-time translation of the Win32 API to POSIX/X11 (it runs 
+Windows applications on Linux), wine also does compile-time tranlation of the 
+Win32 API to POSIX/X11 (it compiles Windows application source code on Linux). 
+In this sense, wine is a Windows-to-Linux porting utility. The x86 architecture 
+isn't required, but is recommended since it allows actual x86 binary execution 
+as well as direct DLL usage).</p> 
+<p>You can use wine `with Windows', which means that wine uses libraries that 
+actually come with Microsoft Windows itself. This is legal only if you own a 
+copy of Windows which isn't currently being used on a computer. It's said that 
+wine has the best success when run with Windows. You can also run wine without 
+Windows. The people atwinehq are writing their own set of libraries called 
+libwine which implements the Win32 API with no Microsoft code at all.</p> 
+<p>Wine was originally licenced under the MIT/X11 license, so it could be used 
+for both commercial and non-commercial purposes. In mid 2002, parts of wine 
+were re-licensed under the LGPL so that it could only be used for 
+non-commercial puposes. This presents a problem for companies like Transgaming (
+Section 10.5.3) and prompted a fork of wine called ReWind (Section 10.5.2).</p> 
+<h3>10.5.2. rewind</h3> 
+<p>Rewind &lt;http://rewind.sourceforge.net/&gt; was started by Eric Pouech (a 
+wine developer) and Ove K&aring;ven (a winex developer) in response towine's 
+license change). It started out life as a snapshot of the last version of wine 
+which was completely licensed under the MIT/X11 license. The aim is to keep 
+rewind MIT/X11 based so that companies like Transgaming can offer wine based 
+products.</p> 
+<h3>10.5.3. winex</h3> 
+<p>Winex is released by a company called Transgaming &lt;
+http://www.transgaming.com&gt;. The developers take wine (see Section 10.5.1) 
+and add DirectX / DirectDraw support. Although winex is commercial, they have 
+an interesting business model.</p> 
+<p>The end user (you) can download the source code for free. However, for 5 US 
+dollars per month, you can become a subscriber of Transgaming. Being a 
+subscriber of Transgaming gives three major benefits:</p> 
+<p></p> 
+<ul> 
+<li>
+<p>Subscribers can download convenient packaged versions of winex in deb, rpm 
+or tar.gz format whenever they want, including updates. They have also more 
+functionality than the publicly available tarball: the latter is an older 
+version which lacks some of the newest features, like support for copy 
+protected programs.</p></li> 
+<li>
+<p>There are monthly polls where subscribed users can take votes on what they 
+want winex developers to work on. For instance, they can vote for things like 
+&quot;Improve support for copy protected programs&quot;, &quot;Better 
+Installshield support&quot; or &quot;Improve DirectX 8.0 support&quot;. As far 
+as I can see, the developers really do listen to the subscriber polls.</p></li> 
+<li>
+<p>The Transgaming website has a few user support forums. On one hand, they 
+use the most godawful, horrible, confusing, wasteful, moronic format I've ever 
+seen and I hope to god I never see a forum with a format as bad as 
+Transgaming's. On the other hand, you can ask for help and the developers are 
+VERY good about getting around to your answer; their vigilance is quite 
+impressive. Non-subscribers can browse the forums, but only subscribers can 
+post (and therefore, ask for support).</p></li> </ul> 
+<p>The developers of winex were going to release their Installshield, DirectX 
+and DirectDraw enhancements to wine &quot;every so often&quot;. In return, as 
+wine maturation improved, the winex developers were going to take the new 
+versions of wine and use them for winex. However, since the birth of 
+Transgaming, parts of wine have been re-licensed under the more restrictive GNU 
+LGPL license (Section 10.5.1). This basically means that versions of wine that 
+are released past the date of the re-licensing can no longer be used by winex. 
+Therefore, winex will now be based on rewind (Section 10.5.2).</p> 
+<h3>10.5.4. Win4Lin</h3> 
+<p>Win4Lin &lt;http://www.netraverse.com&gt; is a commercial product by 
+Netraverse. Like vmware (Section 10.5.5) it uses the virtual machine approach 
+to running Windows applications, so you'll get a big window from which you can 
+boot Windows and run all kinds of Windows applications. Unlike vmware, Win4Lin 
+only does Windows 95/98/ME, but this turns out to be better for gamers. Because 
+Win4Lin concentrates on these operating systems, reports say that it's faster 
+and does a better job at running games under these operating system than 
+vmware. It's also much cheaper than vmware. The most recent version of Win4Lin 
+as of June 2003 is 5.0. It suffers nevertheless from some limitations:</p> 
+<p></p> 
+<ul> 
+<li>
+<p>It does not support DirectX or DirectDraw, while vmware has 
+&quot;limited&quot; support for DirectX.</p></li> 
+<li>
+<p>It only supports serial and parallel devices. This is important for people 
+who use USB joysticks. Note that vmware supports up to 2 USB devices.</p></li> 
+<li>
+<p>As of June 2003, expect to pay $89.99 without printed docs and $99.99 with 
+printed docs. In addition, there isn't an evaluation copy available, although 
+you get a 30 day money back guarantee. However, since it's commercial you do 
+get tech support. vmware is considerably more expensive.</p></li> 
+<li>
+<p>Like vmware, you're required to have a licensed copy of Win95 or Win98. 
+Win4Lin cannot use an existing Windows installation the way wine can.</p></li> 
+<li>
+<p>It only runs on x86 architectures.</p></li> </ul> 
+<h3>10.5.5. VMWare</h3> 
+<p>VMWare is a virtual machine that runs multiple operating systems 
+simultaneously on a standard PC: supported OSes include Microsoft ones, Linux, 
+Novell Netware and FreeBSD. You can among others use it to run a MS Windows OS 
+and launch your favourite game there. You can even run another Linux under 
+Linux; useful is you want to test another distro for instance. Amazing! Now for 
+the bad sides. You should definitely have a good configuration in order to run 
+it; they claim the minimum is a 500MHz x86 CPU with 128MB RAM, but a faster 
+processor and at least 256MB RAM seem to be the bare minimum if you want 
+reasonable performance. Not all Linux distributions are supported: newest 
+RedHat's, Mandrake's and Suse's are, but you're out of luck if you have an 
+other version and/or distribution (like Debian). Moreover,vmware has only 
+limited support for DirectX, and you might not be able to play recent games.</p>
+<p>See http://www.vmware.com for more information. It's not very cheap (about 
+300$ for the Workstation version), but you can get a 30 day evaluation copy.</p>
+<h3>10.5.6. What should I choose?</h3> 
+<p>First of all, you should try an emulator. Although some games may work with 
+wine, you'll probably get the most success with winex: its DirectX support is 
+constantly improving. As of version 3.1, the DirectX 8 support is nearly 
+complete, but this may not be the case with older DirectX versions (are 
+consequently older games).</p> 
+<p>You might also try a virtual machine like Win4Lin or VMWare instead of an 
+emulator. If your goal is to run Win95/98/ME applications on Linux, without USB 
+and on the x86 architecture, Win4Lin's cost and focus on Win95 type OS's make 
+it a better choice than vmware. However, if you must have USB support or run 
+Linux on a platform other than x86, vmware is your only option.</p> 
+<p>Now if your goal is to run Win95 type OS games under Linux, Win4Lin almost 
+seems better than vmware. The show-stopper is the fact that vmware has limited 
+DirectX support while Win4Lin has none. This fact alone makes both Win4Lin and 
+vmware unsuitable for most hardcore gaming purposes. But if you're going to 
+give it a try, you're more likely to have success with vmware.</p> 
+<h1>11. Interpreters</h1> 
+<h2>11.1. SCUMM Engine (LucasArts)</h2> 
+<p>Lucasarts wrote an engine for point and click adventures named SCUMM 
+(Script Creation Utility for Maniac Mansion). They wrote many graphical 
+adventures using SCUMM, like their famous Monkey Island series (all three). 
+Ludvig Strigeus&lt;strigeus(at)users(dot)sourceforge(dot)net&gt; was able to 
+reverse engineer the SCUMM format and write an interpreter for SCUMM based 
+games that compiles under Linux and Win32 named scummvm &lt;
+http://scummvm.sourceforge.net/&gt;. Their website is very good, and chock full 
+of any kind of information about SCUMM and playing these games under scummvm.
+</p> 
+<p>A compatibility page is maintained at the scummvm website. FWIW, I've been 
+able to finish many of the games that are listed as 90% done with no problems. 
+scummvm is rock solid, and allows you to purchase SCUMM based Lucas Arts games, 
+copy the data files to your hard drive and play them under Linux. As of 
+February 2002, I've been following their cvs, and this project is undergoing 
+constant development. Kudos to the scummvm team.</p> 
+<h2>11.2. AGI: Adventure Gaming Interface (Sierra)</h2> 
+<p>The older Sierra DOS graphical adventure games used a scripting language 
+named AGI (Adventure Gaming Interface). Some examples of games written in AGI 
+would be Leisure Suit Larry I (EGA), Space Quest I and II, King's Quest II, 
+Mixed-Up Mother Goose and others. These games can be played usingsarienon&gt; 
+&lt;http://sarien.sourceforge.net&gt;, an open source interpreter for AGI games.
+</p> 
+<p>Sarien was written in SDL, so it should run on any platform that can 
+compile SDL programs. In addition, there are versions for DOS, Strong-Arm based 
+pda's, QNS (holy cow! embedded gaming!), MIPS based systems and SH3/4 based 
+Pocket PC's. The developers are clearly out of their minds (in a good way!). 
+Sarien also has numerous enhancements not found in the original games, like a 
+Quake style pull-down console, picture and dictionary viewer, enhanced sound 
+and support for AGDS, a Russian AGI clone. Sarien is under development and the 
+developers have been very good about documenting the Sarien internals if anyone 
+wants to get involved in hacking it.</p> 
+<h2>11.3. SCI: SCript Interpreter or Sierra Creative Interpreter (Sierra)</h2> 
+<p>The newer Sierra graphical adventure games (we're talking about the late 
+80's here) used an interpreter named SCI. There were many versions of SCI since 
+Sierra was constantly improving its engine. The original SCI games were DOS 
+based, but Sierra eventually started releasing Win32 SCI based games. Some 
+examples of games written with SCI are Leisure Suit Larry 1 (VGA), Leisure Suit 
+Larry 2-7, Space Quest 3-6, King's Quest 4-6, Quest For Glory 1-4 and many 
+others. Compared with AGI games, SCI adventures have better music support, a 
+more complex engine and loads of bells and whistles.</p> 
+<p>Many SCI based games (games written in SCI0) can be played using freesci, 
+available athttp://freesci.linuxgames.com. Like Sarien, FreeSCI has many 
+graphics targets including SDL, xlib and GGI, so this program can compile and 
+run under an incredible number of platforms. The developers have done a 
+fantastic job of documenting and FAQing their application.</p> 
+<h2>11.4. Infocom Adventures (Infocom, Activision)</h2> 
+<p>The Z-machine is a well documented &lt;
+http://www.gnelson.demon.co.uk/zspec/index.html&gt; virtual machine designed by 
+Infocom to run their interactive fiction games. This allowed them to write game 
+data files in a cross platform manner, since only the engine itself, the 
+Z-machine, would be platform dependent. Z-machine went through a number of 
+revisions during the lifetime of Infocom, and two further revisions (V7 and V8 
+created by Graham Nelson) after the Infocom's demise. The later versions even 
+supported limited sound and graphics!</p> 
+<p>One of the most popular Z-machine interpreters is Frotz &lt;
+http://www.cs.csubak.edu/~dgriffi/proj/frotz/&gt;. This excellently done page 
+has many nice links for interactive fiction fans. Frotz is GPL, runs all 
+versions of Z-machine and will compile on most versions of Unix. Frotz has 
+spawned many forks, like a version for PalmOS and Linux based PDA's.</p> 
+<p>jzip &lt;http://jzip.sourceforge.net/&gt; is another very popular Z-machine 
+interpreter that will run V1-V5 and V8 Z-machine data files. jzip is very 
+portable; it compiles on all Unices, OS/2, Atari ST and DOS.</p> 
+<p>There are actually many other Z-machine interpreters like nitfol and rezrov 
+(written in Perl!). Each interpreter has its own set of strengths, and you can 
+find links to them on the home pages for Frotz and jzip.</p> 
+<h2>11.5. Scott Adams Adventures (Adventure International)</h2> 
+<p>Scott Adams is, arguably, the father of interactive fiction. Although he 
+himself was inspired by the first piece of interactive fiction, Adventure, 
+Scott brought adventuring to the masses. His games were available for Atari, 
+Apple 2, Commodore, Sorcerer, TI, and CPM. His company, Adventure 
+International, released a number of much loved games between 1978 and 1984 
+before folding. He recently released a new game (a Linux version is not 
+available) but since the decline of adventuring, he has pretty much kept out of 
+the gaming industry.</p> 
+<p>Alan Cox wrote scottfree, a Scott Adams adventure game file interpreter for 
+Unix. Using scottfree and any of the Scott Adams data files which can be 
+downloaded from Scott's website &lt;http://www.msadams.com/&gt; you can enjoy 
+these classics.</p> 
+<h2>11.6. Ultima Underworld: The Stygian Abyss (Origin, Blue Sky Productions)
+</h2> 
+<p>The Underworld Adventures project &lt;http://uwadv.sourceforge.net/&gt; is 
+an effort to port the 1992 classic, Ultima Underworld: The Stygian Abyss, to 
+modern operating systems like Linux, MacOS X, and Windows. It uses OpenGL for 
+3D graphics, SDL for platform specific tasks and is released under the GNU GPL. 
+Underworld Adventures provides an impressive graphics system which uses the 
+original game files, so you'll need the original game disk to play.</p> 
+<p>Underworld Adventures also provides a bunch of tools for you to display the 
+level maps, tools for examining uw1 conversation scripts and more.</p> 
+<h2>11.7. Ultima 7 (Origin, Electronic Arts)</h2> 
+<p>Ultima 7 is actually 2 games: part I (The Black Gate) and part II (Serpent 
+Island) which uses a slightly enhanced version of The Black Gate's engine. In 
+addition, an addon disk was released to both part I (The Forge Of Virtue) and 
+part II (The Silver Seed).</p> 
+<p>A team of people developed Exult &lt;http://exult.sourceforge.net/&gt; 
+which is an open source interpreter that will run both parts of Ultima 7 and 
+their addon disks. Exult is written in C++ using SDL, so it will compile on any 
+platform that can compile SDL programs. It also features some enhancements over 
+the original versions of the Ultima VII engine. You'll need to purchase a copy 
+of Ultima 7 to play. The developers have no plans on extending Exult to 
+interpret the other Ultimas since the engines changed so radically between 
+releases.</p> 
+<p>The Exult team has also been hard at work creating a map editor, Exult 
+Studio, and a script compiler that will let users create their own RPG in the 
+Ultima style.</p> 
+<h2>11.8. System Shock (Electronic Arts, Origin)</h2> 
+<p>System Shock is a classic first person shooter/adventure from 1994, which 
+puts it as a contemporary of Doom. However, its engine is much more feature 
+rich than the original Doom: for example, System Shock had 3D sprites, free 
+look and a facility to have objects on top of each other, giving the illusion 
+of a full 3D map, like Quake. Game reviewers agree that this game has the 
+features of Quake with a story-line more compelling than Half-life. The System 
+Shock engine was optimized for sophistication, while Doom's engine was 
+optimized for throwing lots of monsters at you; a completely different appoach. 
+Quite impressive for such an old game!</p> 
+<p>The System Shock Hack Project &lt;
+http://madeira.physiol.ucl.ac.uk/tsshp/sshock.html&gt; is an attempt to update 
+the game for modern operating systems. The project uses SDL and is released 
+under the modified BSD license. While you need the original game files to play 
+SSHP, it should work with the System Shock demo, which is freely available.</p> 
+<h1>12. Websites And Resources</h1> 
+<h2>12.1. Meta gaming websites</h2> 
+<p>These are some resources for Linux gamers no matter what kind of game you 
+enjoy to play.</p> 
+<p></p> 
+<dl> 
+<dt> The Linux Game Tome: http://www.happypenguin.org </dt> 
+<dd> 
+<p> About the games themselves.</p> </dd> 
+<dt> Linuxgames </dt> 
+<dd> 
+<p> Linux gaming news</p> </dd> 
+<dt> http://www.holarse.net </dt> 
+<dd> 
+<p>Linux meta gaming site for German speaking folk.</p> </dd> 
+<dt> Mobygames </dt> 
+<dd> 
+<p>A database of all known computer games. It's very complete and is one of my 
+favorite sites.</p> </dd> </dl> 
+<h2>12.2. Commercial Linux Game Resources</h2> 
+<h3>12.2.1. Where to buy commercial games</h3> 
+<p>ebgames &lt;http://www.ebgames.com&gt; no longer officially sells Linux 
+software. They stopped selling Linux games and distributions at around the same 
+time Loki Software declared bankruptcy, which is a shame because they had the 
+lowest prices on Linux games I've ever seen. However, occasionally, they'll 
+have things like Code Warrior or Redhat Linux on sale.</p> 
+<p></p> 
+<dl> 
+<dt> Tux Games: http://www.tuxgames.com </dt> 
+<dd> 
+<p> Your one stop shop for buying any commercial Linux game (software vendors 
+like Tribsoft and Loki have online shops at their websites too).</p> </dd> </dl>
+<h3>12.2.2. Who Used To Release Games For Linux</h3> 
+<p>These are companies that used to release games for Linux but for whatever 
+reasons aren't actively involved in Linux games anymore.</p> 
+<p></p> 
+<dl> 
+<dt> Loki Software: http://www.lokigames.com </dt> 
+<dd> 
+<p>As the company that brought CTP and Quake3 to Linux, Loki was the father of 
+Linux gaming. They were one of the first and had, by far, the most titles (I 
+own ALL of them). Loki ported games to Linux, mostly using the SDL library. 
+Loki's death in January 2002 was the biggest setback Linux has ever had in its 
+attempt to capture the general desktop market. Linuxgames.com has a nice Loki 
+timeline athttp://www.linuxgames.com/articles/lokitimeline</p> </dd> 
+<dt> Tribsoft: http://www.tribsoft.com </dt> 
+<dd> 
+<p>Tribsoft released Jagged Alliance 2, an excellent rpg/strat which claimed 
+2+ weeks of my life. There were slated to release Europai Universalis, Majesty 
+and Unfinished Business. However, as of 3Jan01, Mathieu Pinard of Tribsoft said 
+that he was taking a break and Tribsoft would no longer release games for 
+awhile. He'll still support JA2 but don't expect patches or updates.</p> </dd> 
+<dt> MP Entertainment: http://www.hopkinsfbi.com </dt> 
+<dd> 
+<p>MP Entertainment released Hopkins FBI, my favorite game ever released for 
+Linux. More violent than Quake. More nudity than Hustler. More camp thanLiberace
+. It's a comic book on your monitor. They were slated to release Hopkins FBI II 
+and a few other titles, but it's been a few years since the announcements with 
+no sign that the games are coming. They've ignored all my attempts at finding 
+out more information, so I have to conclude that MP Entertainment is in the 
+same status as Tribsoft. You can still purchase or download a demo of Hopkins 
+FBI from their website. If anyone has more information on this company or the 
+author of Hopkins FBI, please contact me.</p> </dd> 
+<dt> Phantom EFX: http://www.phantomefx.com </dt> 
+<dd> 
+<p>They offer Reel Deal Slots, which is very nicely done! I'm not much for 
+card/gambling games, but this game is impressive! Because their Linux guy quit 
+the company, Reel Deal Slots is their first, and so far, last release for Linux.
+</p> </dd> </dl> 
+<h2>12.3. Other Resources</h2> 
+<p>This section has URL's that should be mentioned but didn't have a separate 
+section within the howto, so I list them here as a kind of appendix.</p> 
+<p></p> 
+<dl> 
+<dt> Linux Game Publishing: http://www.linuxgamepublishing.com </dt> 
+<dd> 
+<p>Linux Publishing doesn't sell directly to the public, but provides 
+professional game publishing to authors of publishing. I think this means disk 
+copying, packaging and selling to retailers.</p> </dd> 
+<dt> XFree86 Homesite: http://www.xfree86.org </dt> 
+<dd> 
+<p>XFree86 home page</p> </dd> 
+<dt> Linux Game Development Center: http://lgdc.sunsite.dk/index.html </dt> 
+<dd> 
+<p>This is the canonical website for people who want to program games under 
+Linux. It's a clearing house of information that contains well written articles 
+on all aspects of game programming (not necessarily Linux specific), links to 
+important game programming resources, interviews, reviews, polls and lots of 
+other stuff. It's hard to imagine a better website on the subject.</p> </dd> 
+<dt> Linux Gamers' FAQ: http://www.icculus.org/lgfaq/ </dt> 
+<dd> 
+<p>Despite the astounding fact that the Linux Gamers' FAQ doesn't mention the 
+Linux Gamers' HOWTO as a resource anywhere in their text, I regard the FAQ as a 
+good companion to this HOWTO. I've tried to keep game specific information in 
+this HOWTO at a minimum. The FAQ takes the opposite approach; they mainly focus 
+on the games themselves, including game specific problems and where to get 
+Linux games in the first place. The FAQ and HOWTO are complementary in this 
+regard, and I've tried to not reproduce their content. Despite the authors 
+being a bit surly, their effort with the FAQ is very good. If you want a 
+general source of information on game specific questions, the FAQ is a 
+fantastic place to start with. In addition, the FAQ keeps a fairly large 
+database of Linux Games.</p> </dd> 
+<dt> Linux Audio Quality HOWTO: http://www.linuxdj.com/audio/quality/ </dt> 
+<dd> 
+<p>This HOWTO is mainly of interest to musicians who want professional or semi 
+professional sound cards for the recording and making of music on a computer. 
+The information is very detailed, and perhaps overkill for gamers.</p> </dd> 
+</dl> 
+</body>

@@ -1,0 +1,152 @@
+retaining graphics functionality requires being able to render the graphics stream from the task and being able to handle iraf cl gcur mode for interactive graphics.
+next: a python-based iraf task parameter editor up: use of scripting language previous: scientific computing with python table of contents - subject index  -author index - ps reprint - greenfield, p. & white, r. l.  2000, in asp conf.
+while tcl is generally more readable than perl, its support for numeric types is weak.
+the new cl must coexist with the existing system and cl.
+this capability was  provided by wrapping the noao client display library (fitzpatrick 1997) with  swig (simplified wrapper interface generator, beazley 2000).
+we can run virtually all existing  iraf tasks with full functionality including interactive graphics and image  display.
+since we  expect that the new cl will be used more by astronomers than by professional  software developers, we need a language that is both quick to learn and  comparatively easy to read and understand for those who cannot devote large  amounts of time to becoming an expert with it.
+the existing iraf cl manages the  graphics of iraf tasks.
+an orphaned language  presents the problem of providing support for the language and its libraries  with limited resources and expertise.
+first, we felt that readability was an essential requirement.
+to make tasks easy to use requires being able to interpret the iraf package structure from package cl scripts (and thus being able to determine what packages are available, what tasks are contained within, and where the executables are located).
+furthermore, the cl should be useful not only as a tool for astronomical data reduction, but also for many other tasks including accessing databases, the web, and text processing.
+one reason we chose python as the basis for our new cl is because it satisfied these requirements.
+python is also better for writing object-oriented programs since it was designed to be an object-oriented language from the start--though one can write procedural programs just as easily.
+the  new cl must coexist with the existing system and cl.
+it also is not as well suited as python for object-oriented programming.
+one reason we chose python as the basis for our new cl is because it  satisfied these requirements.
+with the adoption of python, the primary technical challenge was reduced to being able to run iraf tasks with full functionality.
+it also is not as well suited as python for  object-oriented programming.
+i/o between python and the  iraf task.
+we have provided a front end to the python interpreter that allows the use of iraf command mode syntax as well as standard mode syntax for interactive use.
+there is also work proceeding on enhancing the fits i/o module (barrett & bridgman 2000).
+it has been adopted by  major organizations including hewlett packard, red hat, industrial light and  magic, and many others.
+without cl emulation, a number of iraf tasks that  exist as cl scripts will not be accessible in the new cl.
+nevertheless, we believe that the following characteristics dictated that python be chosen over tcl and perl for our purposes.
+task control and execution.
+abstract: we have developed a new cl for iraf to allow us to develop  scripts with capabilities not easily obtained in the current iraf cl.
+ser., vol. 216, astronomical data analysis software and  systems ix, eds.
+this phase will form the basis of our beta release (expected in  december 1999).
+a full-featured, easy-to-use plotting package is needed (there is good progress in the python community on that front).
+we have implemented all of the  above capabilities in python itself.
+iraf tasks run as connected subprocesses and multiplex several i/o channels onto the executable's stdin and stdout channels.
+one condition that we set was that we should not require any changes in the iraf system proper.
+the new  cl is based on python, a powerful, freely available object-oriented scripting  language with an large and growing user base.
+speed has been an issue only during initialization on slow workstations.
+we wished not to maintain any parallel configuration information but,  rather, to use the information contained within iraf itself.
+we have long felt there was an important role for a more powerful command  language (cl) for iraf.
+we have provided a front end to the python  interpreter that allows the use of iraf command mode syntax as well as standard  mode syntax for interactive use.
+we implemented a python/iraf graphics kernel using tkinter and opengl libraries.
+while no language's future is guaranteed, we expect that python will be well supported for many years to come.
+some improvements are needed to the numerics module to fill holes in functionality and to make it more memory efficient.
+the popularity of idl in the astronomical community (shaw et al. 1999) has demonstrated that it is possible to write significant astronomical data analysis applications using an array-based interactive language.
+while python is a  reasonably well known scripting language, its user base is smaller than that of  two better known scripting languages, namely tcl and perl.
+phase 3 makes pyraf usable as  an interactive environment for the typical astronomer.
+proceeding on enhancing the fits i/o module (barrett & bridgman 2000).
+the only occasions we have had to resort to using c have been for xlib manipulations not available in tk (such as focus or cursor manipulations) and to wrap the client display library.
+ser., vol. 145, astronomical data analysis software and systems vii, ed.
+this capability was provided by wrapping the noao client display library (fitzpatrick 1997) with swig (simplified wrapper interface generator, beazley 2000).
+while python syntax is one that most programmers will find very straightforward, it is not one that all existing cl users will find convenient.
+while tcl is generally more readable than perl, its support for numeric  types is weak.
+traversing iraf packages and interpreting parameter files.
+our requirement for object-oriented features was born out of conviction that such a capability would make a new cl environment significantly more flexible and extendible.
+speed has been  an issue only during initialization on slow workstations.
+we were able to adapt an existing module written in python to  start and communicate with an iraf connected process, and we wrote python code  to handle the multiplexing/demultiplexing of iraf
+one condition that we  set was that we should not require any changes in the iraf system proper.
+future plans we see the development of a new cl--which we've  dubbed ``pyraf''--as having four phases.
+it is not a language we considered a natural choice for developing numerical algorithms.
+it has been  one of those rare instances where we have accomplished more than we set out to  do with significantly less effort than expected.
+while image display does not go through the cl, imcur interactions do, so it is necessary for a cl to be able to interact with the image display server (e.g., ximtool or saoimage).
+we are already beginning to use python for new stsci tools.
+since we have a large investment in existing iraf tasks it is essential that a new cl provide full access to existing iraf task functionality in a style that current iraf users will find comfortable.
+we have implemented all of the above capabilities in python itself.
+but  there is an extension module (numeric) which does implement an efficient  array-based functionality that can provide many of the features found in idl  and matlab.
+iraf parameter  files are an integral part of the iraf system; any cl that wishes to use iraf  tasks must be able to interpret iraf parameters in the same way the iraf cl  does.
+nevertheless, we have written a cl compiler that converts cl procedures to  python using one of the python parsing modules (spark, aycock 1998).
+although python's user community is smaller than that of perl or tcl, it is substantial and it is continuing to grow rapidly.
+we have long felt there was an important role for a more powerful command language (cl) for iraf.
+nevertheless, when necessary, it should be easy to incorporate compiled code into the cl either as a task, or by calling newly added functions within a cl program.
+to run iraf tasks, we must emulate iraf task control and communications faithfully enough that tasks ``believe'' they are communicating with the old iraf cl.
+we have nearly completed this phase.
+7th international python conference, 100 barrett, p. & bridgman, t. 2000, this volume, 67 beazley, d. 2000, this volume, 49 de la pena, m. 2000, this volume, 63 fitzpatrick, m. 1997, in asp conf.
+without cl emulation, a number of iraf tasks that exist as cl scripts will not be accessible in the new cl.
+the requirement for a large user base stems from a natural desire to  develop using software that has a large community of people supporting it.
+a full-featured, easy-to-use plotting package is needed (there is  good progress in the python community on that front).
+while there is existing functionality that allows much of this, we feel it is  not quite mature enough to meet the expectations of most astronomers,  particularly those who currently use idl.
+i/o between python and the iraf task.
+the popularity of idl in the astronomical community (shaw et al. 1999) has  demonstrated that it is possible to write significant astronomical data  analysis applications using an array-based interactive language.
+in that regard we judged python  to be far superior to perl.
+r. albrecht, r. n. hook,  & h. a. bushouse (san francisco: asp), 200 shaw, r. a. white, r. l. & greenfield, p. 1999, this volume, 24 © copyright 2000 astronomical society of the pacific, 390 ashton  avenue, san francisco, california 94112, usa next: a  python-based iraf task parameter editor up: use of  scripting language previous: scientific computing with  python table of contents - subject index - author index - ps  reprint - adass@cfht.hawaii.edu
+a suitably powerful cl could become the data analysis software language of first resort, one that both astronomers and programmers would consider using first and where writing applications in a traditional compiled language such as c, fortran or spp would be infrequently required.
+iraf tasks run as connected  subprocesses and multiplex several i/o channels onto the executable's stdin and  stdout channels.
+having such a capability in a scripting language would enable it to serve for more than just scripting iraf tasks; it would also be a language in which actual data analysis algorithms could be implemented directly.
+while no language's future is guaranteed, we expect  that python will be well supported for many years to come.
+python is also better for writing object-oriented  programs since it was designed to be an object-oriented language from the  start--though one can write procedural programs just as easily.
+a powerful but clear programming language, support for object-oriented programming, access to a wide base of libraries (built-in and external), easy access to code written in standard languages such as fortran, c, c++,  and java, idl-like data access and image manipulation capabilities, easy access to gui facilities, open source and freely distributable, portable, large user base and good prospects for long term support.
+since we have a large investment in  existing iraf tasks it is essential that a new cl provide full access to  existing iraf task functionality in a style that current iraf users will find  comfortable.
+but what about its competitors?
+the  larger the community involved, the more talent and resources are available to  support the language itself as well as libraries it uses.
+we decided at the outset that the only practical way  of developing a new iraf cl was to adapt an existing scripting language to the  task.
+some improvements are needed to the  numerics module to fill holes in functionality and to make it more memory  efficient.
+the existing iraf cl manages the graphics of iraf tasks.
+we wished not to maintain any parallel configuration information but, rather, to use the information contained within iraf itself.
+an orphaned language presents the problem of providing support for the language and its libraries with limited resources and expertise.
+an additional year will be needed to bring pyraf to the point of being a practical alternative to idl as a data analysis language.
+graphics and image display.
+aycock, j. 1998, proc.
+since we expect that the new cl will be used more by astronomers than by professional software developers, we need a language that is both quick to learn and comparatively easy to read and understand for those who cannot devote large amounts of time to becoming an expert with it.
+but there is an extension module (numeric) which does implement an efficient array-based functionality that can provide many of the features found in idl and matlab.
+we implemented a python/iraf graphics kernel  using tkinter and opengl libraries.
+initial projects include a gui front end for synphot, a revised dither package, and an acs display tool.
+while python is a reasonably well known scripting language, its user base is smaller than that of two better known scripting languages, namely tcl and perl.
+the iraf cl has a  complicated syntax and semantics, and emulating it is not trivial.
+in that regard we judged python to be far superior to perl.
+since there is a module for python that provides idl-like array  manipulation, we expect to eventually combine the strengths of the iraf and idl  environments into one system.
+it has been one of those rare instances where we have accomplished more than we set out to do with significantly less effort than expected.
+developing a new scripting language that satisfies these general  requirements is not easy.
+we have found python to be both very powerful and productive.
+retaining graphics functionality requires being able to  render the graphics stream from the task and being able to handle iraf cl gcur  mode for interactive graphics.
+while python syntax is one that most  programmers will find very straightforward, it is not one that all existing cl  users will find convenient.
+this involves supplying some  utility functions and settling on public interfaces to iraf tasks and  environment.
+a suitably powerful cl could become the data analysis  software language of first resort, one that both astronomers and programmers  would consider using first and where writing applications in a traditional  compiled language such as c, fortran or spp would be infrequently required.
+initial  projects include a gui front end for synphot, a revised dither package, and an  acs display tool.
+the above requirements and the attributes of the existing cl that we  wished to preserve resulted in a more specific list of requirements for an  acceptable scripting language.
+the iraf cl has a complicated syntax and semantics, and emulating it is not trivial.
+the first (completed) demonstrates  that it is possible to run iraf tasks with full functionality.
+the larger the community involved, the more talent and resources are available to support the language itself as well as libraries it uses.
+nevertheless, we have written a cl compiler that converts cl procedures to python using one of the python parsing modules (spark, aycock 1998).
+the first release is expected in the summer of 2000.
+by choosing suitably we would automatically get the wished-for attributes  for free (except for the ability to run iraf tasks).
+n. manset, c. veillet, d. crabtree (san francisco: asp), 59 a new cl for iraf based on python p. greenfield, r. l. white space telescope science institute, 3700 san martin dr.,  baltimore, md 21218
+to make  tasks easy to use requires being able to interpret the iraf package structure  from package cl scripts (and thus being able to determine what packages are  available, what tasks are contained within, and where the executables are  located).
+it is not a language we considered a natural choice for  developing numerical algorithms.
+array-based numeric operations are not part of the base python system.
+an  additional year will be needed to bring pyraf to the point of being a practical  alternative to idl as a data analysis language.
+furthermore, the cl should be useful not only as a tool for  astronomical data reduction, but also for many other tasks including accessing  databases, the web, and text processing.
+our requirement for object-oriented features was born out of conviction  that such a capability would make a new cl environment significantly more  flexible and extendible.
+while there is existing functionality that allows much of this, we feel it is not quite mature enough to meet the expectations of most astronomers, particularly those who currently use idl.
+the final phase makes pyraf usable for idl-style analysis and programming.
+ser., vol. 145, astronomical data  analysis software and systems vii, ed.
+we decided at the outset that the only practical way of developing a new iraf cl was to adapt an existing scripting language to the task.
+nevertheless, when necessary, it should be easy to incorporate compiled code  into the cl either as a task, or by calling newly added functions within a cl  program.
+the second makes  pyraf usable as a scripting language for iraf.
+r. albrecht, r. n. hook, & h. a. bushouse (san francisco: asp), 200 shaw, r. a. white, r. l. & greenfield, p. 1999, this volume, 24 © copyright 2000 astronomical society of the pacific, 390 ashton avenue, san francisco, california 94112, usa next: a python-based iraf task parameter editor© copyright 2000 astronomical society of the pacific, 390 ashton avenue, san francisco, california 94112, usa next: a python-based iraf task parameter editor
+the above requirements and the attributes of the existing cl that we wished to preserve resulted in a more specific list of requirements for an acceptable scripting language.
+to run iraf tasks, we must emulate  iraf task control and communications faithfully enough that tasks ``believe''  they are communicating with the old iraf cl.
+having such a  capability in a scripting language would enable it to serve for more than just  scripting iraf tasks; it would also be a language in which actual data analysis  algorithms could be implemented directly.
+by choosing suitably we would automatically get the wished-for attributes for free (except for the ability to run iraf tasks).
+the only occasions we have had to resort  to using c have been for xlib manipulations not available in tk (such as focus  or cursor manipulations) and to wrap the client display library.
+familiar user interface.
+this includes handling typing issues, range or value checking and various other parameter attributes.
+references aycock, j. 1998, proc.
+we were able to adapt an existing module written in python to start and communicate with an iraf connected process, and we wrote python code to handle the multiplexing/demultiplexing of iraf
+this includes supporting  iraf cl command mode syntax, providing a parameter editor (a prototype exists,  see de la pena 2000) and os type utilities (e.g., dir, chdir, page, etc.), and  logging.
+nevertheless, we  believe that the following characteristics dictated that python be chosen over  tcl and perl for our purposes.
+iraf parameter files are an integral part of the iraf system; any cl that wishes to use iraf tasks must be able to interpret iraf parameters in the same way the iraf cl does.
+developing a new scripting language that satisfies these general requirements is not easy.
+it has been adopted by major organizations including hewlett packard, red hat, industrial light and magic, and many others.
+although python's user community is smaller than that of perl or tcl, it  is substantial and it is continuing to grow rapidly.
+technical challenges with the adoption of python, the primary technical challenge was reduced  to being able to run iraf tasks with full functionality.
+this includes handling typing issues, range or value checking and various  other parameter attributes.
+while image display does not go through the  cl, imcur interactions do, so it is necessary for a cl to be able to interact  with the image display server (e.g., ximtool or saoimage).
+the requirement for a large user base stems from a natural desire to develop using software that has a large community of people supporting it.

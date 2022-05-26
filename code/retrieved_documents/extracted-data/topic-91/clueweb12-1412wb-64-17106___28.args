@@ -1,0 +1,314 @@
+both input and output vectors/values are passed as matrices.
+this is default and the only option for logitboost and gentle adaboost.
+the cvdtreetraindata structure will be constructed and used internally.
+term_crit.max_iteris the maximum number of trees in the forest (see also max_tree_countparameter of the constructor, by default it is set to 50) term_crit.epsilonis the sufficient accuracy ( oob error).
+at the first step (expectation-step, or e-step), we find a probability pi,k(denoted αi,kin the formula below) of sample #ito belong to mixture #kusing the currently available mixture parameter estimates: at the second step (maximization-step, or m-step) the mixture parameter estimates are refined using the computed probabilities: alternatively, the algorithm may start with m-step when initial values for pi,kcan be provided.
+note that the method is virtual, therefore any model can be loaded using this virtual method.
+for tree ensembles this preprocessed data is reused by all the trees.
+for example, in a spam filter that uses a set of words occurred in the message as a feature vector, the variable importance rating can be used to determine the most "spam-indicating" words and thus help to keep the dictionary size reasonable.
+the model trained is similar to thenormal bayes classifier.
+then, if necessary, the surrogate splits are found that resemble at the most the results of the primary split on the training data; all data are divided using the primary and the surrogate splits (just like it is done in the prediction procedure) between the left and the right child node.
+a note about memory management: the field priors is a pointer to the array of floats.
+true, the cut off nodes (with tn≤ cvdtree::pruned_tree_idx) are physically removed from the tree.
+a weak classifier is only required to be better than chance, and thus can be very simple and computationally inexpensive.
+default constructor cvstatmodel::cvstatmodel(); each statistical model class in ml has default constructor without parameters.
+as the algorithms have different set of features (like ability to handle missing measurements, or categorical input variables etc.), there is a little common ground between the classes.
+in case of regression, the predicted result will be a mean value of the particular vector's neighbor responses.
+any of the parameters can be overridden then, or the structure may be fully initialized using the advanced variant of the constructor.
+nuis used instead of p. cand thus affect the misclassification penalty for different classes.
+to make it easier for user, the method train usually includes var_idx and sample_idx parameters.
+[const cvmat* var_type,] ..., [const cvmat* missing_mask,] ... ); the method trains the statistical model using a set of input feature vectors and the corresponding output values (responses).
+in case of regression and 2-class classification the optimal split can be found efficiently without employing clustering, thus the parameter is not used in these cases.
+in the first case, the variable value is compared with the certain threshold (which is also stored in the node); if the value is less than the threshold, the procedure goes to the left, otherwise, to the right (for example, if the weight is less than 1 kilo, the procedure goes to the left, else to the right).
+cvstatmodel::read reads the model from file storage void cvstatmode::read( cvfilestorage* storage, cvfilenode* node ); the method read restores the complete model state from the specified node of the file storage.
+examples deleted at a particular iteration may be used again for learning some of the weak classifiers further [fht98].
+this is unlike decision trees, where variable importance can be computed anytime after the training.
+cvstatmodel::save saves the model to file void cvstatmodel::save( const char* filename, const char* name=0 ); the method save stores the complete model state to the specified xml or yaml file with the specified name or default name (that depends on the particular class).data persistence functionality from cxcore is used.
+mh algorithm, described in [fht98], that reduces the problem to the 2-class problem, yet with much larger training set.
+sometimes, certain features of the input vector are missed (for example, in the darkness it is difficult to determine the object color), and the prediction procedure may get stuck in the certain node (in the mentioned example if the node is split by color).
+if a certain feature in the input or output (i.e. in case of n-class classifier for n>2) layer is categorical and can take m (>2) different values, it makes sense to represent it as binary tuple of m elements, where i-th element is 1 if and only if the feature is equal to the i-th value out of m possible.
+in case of multiple input vectors, there should be output vectorresults.
+the node must be located by user, for example, using the functioncvgetfilenodebyname().
+no values are required from the user, k-means algorithm is used to estimate initial mixtures parameters.
+1- algorithm updates the network weights, rather than computes them from scratch (in the latter case the weights are initialized usingnguyen-widrow algorithm).
+the array should be allocated by user, and released just after thecvdtreeparams structure is passed to cvdtreetraindata orcvdtree constructors/methods (as the methods make a copy of the array).
+if this parameter is >1, the tree is pruned using cv_folds -fold cross validation.
+however, some algorithms can handle the transposed representation, when all values of each particular feature (component/input variable) over the whole input set are stored continuously.
+none of the tree built is pruned.
+when the tree is built, it may be pruned using cross-validation procedure, if need.
+learning of boosted model is based on n training examples {(xi,yi)}1n with xi ∈ rk and yi ∈ {−1, +1}.
+so a robust computation scheme could be to start with the harder constraints on the covariation matrices and then use the estimated parameters as an input for a less constrained optimization problem (often a diagonal covariation matrix is already a good enough approximation).
+there is also more advanced constructor to customize the parameters and/or choose backpropagation algorithm.
+if the var_idx parameter is passed totrain, it is remembered and then is used to extract only the necessary components from the input sample in the methodpredict .
+for example, if _sample_idx=[1, 5, 7, 100], then _subsample_idx=[0,3] means that the samples [1, 100] of the original training set are used.
+user may pass null pointers instead of either of the argument, meaning that all the variables/samples are used for training.
+in addition, there is update flag that identifies, whether the model should be trained from scratch (update=false) or should be updated using new training data (update=true).
+0(the feature is disabled) to 1and beyond.
+new cvsvm(... /* svm params */); else model = new cvdtree(... /* decision tree params */); ... delete model;normally, the destructor of each derived class does nothing, but calls the overridden methodclear() that deallocates all the memory.
+the previous model state is cleared by clear().
+however, for custom tree algorithms, or another sophisticated cases, the structure may be constructed and used explicitly.
+thus such examples may be excluded during the weak classifier training without having much effect on the induced classifier.
+basically, it contains 3 types of information: the training parameters, cvdtreeparams instance.
+that is, some branches of the tree that may lead to the model overfitting are cut off.
+to reach a leaf node, and thus to obtain a response for the input feature vector, the prediction procedure starts with the root node.
+regression_accuracy another stop criteria - only for regression trees.
+one of the key properties of the constructed decision tree algorithms is that it is possible to compute importance (relative decisive power) of each variable.
+all weights are then normalized, and the process of finding the next week classifier continues for anotherm-1 times.
+the training data, preprocessed in order to find the best splits more efficiently.
+if the training flag is not set, then the null pointer is returned.
+deallocates memory and resets the model state void cvstatmodel::clear(); the method clear does the same job as the destructor, i.e. it deallocates all the memory occupied by the class members.
+but at the same time the learned network will also "learn" the noise present in the training set, so the error on the test set usually starts increasing after the network size reaches some limit.
+note, that in case of logitboost and gentle adaboost each weak predictor is a regression tree, rather than a classification tree.
+it follows the conventions of generictrain "method" with the following limitations: only cv_row_sample data layout is supported, the input variables are all ordered, the output variables can be either categorical (is_regression=false ) or ordered (is_regression=true), variable subsets (var_idx ) and missing measurements are not supported.
+update_base=false ); the method trains the k-nearest model.
+all the training data are from the same class, svm builds a boundary that separates the class from the rest of the feature space.
+examples deleted at a particular iteration may be used again for learning some of the weak classifiers further [fht98].
+all the trees are trained with the same parameters, but on the different training sets, which are generated from the original training set using bootstrap procedure: for each training set we randomly select the same number of vectors as in the original set ( =n).
+the parameter _update_base specifies, whether the model is trained from scratch (_update_base=false), or it is updated using the new training data (_update_base=true).
+surrogate splits are needed to handle missing measurements and for variable importance estimation.
+this constructor is equivalent to the default constructor, followed by thetrain() method with the parameters that passed to the constructor.
+the algorithm caches all the training samples, and it predicts the response for a new sample by analyzing a certain number (k) of the nearest neighbors of the sample (using voting, calculating weighted sum etc.)
+each layer of mlp includes one or more neurons that are directionally linked with the neurons from the previous and the next layer.
+all weights are then normalized, and the process of finding the next week classifier continues for anotherm-1 times.
+min_sample_count a node is not split if the number of samples directed to the node is less than the parameter value.
+it will increase the size of the input/output layer, but will speedup the training algorithm convergence and at the same time enable "fuzzy" values of such variables, i.e. a tuple of probabilities instead of a fixed value.
+using the training data the algorithm estimates mean vectors and covariation matrices for every class, and then it uses them for prediction.
+in simple cases (e.g. standalone tree, or ready-to-use "black box" tree ensemble from ml, likerandom trees or boosting) there is no need to care or even to know about the structure - just construct the needed statistical model, train it and use it.
+the indices in _subsample_idx are counted relatively to the _sample_idx, passed to cvdtreetraindata constructor.
+the algorithm can deal with both classification and regression problems.
+they are multiplied by c and thus affect the misclassification penalty for different classes.
+cvdtreesplit decision tree node split struct cvdtreesplit { int var_idx; int inversed; float quality; cvdtreesplit* next; union { int subset[2]; struct { float c; int split_point; } ord; }; }; var_idx index of the variable used in the split inversed when it equals to 1, the inverse split rule is used (i.e. left and right branches are exchanged in the expressions below) quality the split quality, a positive number.
+if both layouts are supported, the method includestflag parameter that specifies the orientation: tflag=cv_row_sample means that the feature vectors are stored as rows, tflag=cv_col_sample means that the feature vectors are stored as columns.
+sometimes, certain features of the input vector are missed (for example, in the darkness it is difficult to determine the object color), and the prediction procedure may get stuck in the certain node (in the mentioned example if the node is split by color).
+here is an example of 3-layer perceptron with 3 inputs, 2 outputs and the hidden layer including 5 neurons: all the neurons in mlp are similar.
+the input vectors (one or more) are stored as rows of the matrix samples.
+at each node the recursive procedure may stop (i.e. stop splitting the node further) in one of the following cases: depth of the tree branch being constructed has reached the specified maximum value.
+many models in the ml may be trained on a selected feature subset, and/or on a selected sample subset of the training set.
+at each node the recursive procedure may stop (i.e. stop splitting the node further) in one of the following cases: when the tree is built, it may be pruned using cross-validation procedure, if need.
+if the var_idx parameter is passed totrain, it is remembered and then is used to extract only the necessary components from the input sample in the method predict .
+this constructor is equivalent to the default constructor, followed by thetrain() method with the parameters that passed to the constructor.
+all the specific to the algorithm training parameters are passed ascvrtparams instance.
+if the network is assumed to be updated frequently, the new training data could be much different from original one.
+class_weights optional weights, assigned to particular classes.
+building tree for classifying mushrooms see mushroom.cpp sample that demonstrates how to build and use the decision tree.
+the training procedure can be repeated more than once, i.e. the weights can be adjusted based on the new training data.
+in case of classification the method returns the class label, in case of regression - the output function value.
+for custom classification/regression prediction, the method can optionally return pointers to the neighbor vectors themselves (neighbors, array ofk*_samples->rows pointers), their corresponding output values (neighbor_responses, a vector of k*_samples->rows elements) and the distances from the input vectors to the neighbors ( dist, also a vector of k*_samples->rows elements).
+each of them has several input links (i.e. it takes the output values from several neurons in the previous layer on input) and several output links (i.e. it passes the response to several neurons in the next layer).
+the larger weight, the larger penalty on misclassification of data from the corresponding class.
+if this flag is not set, the training algorithm normalizes each input feature independently, shifting its mean value to 0 and making the standard deviation =1.
+instead, it computesmle of gaussian mixture parameters from the input sample set, stores all the parameters inside the stucture: pi,k in probs, ak in means sk in covs[k], πk in weights and optionally computes the output "class label" for each sample: labelsi=arg maxk(pi,k), i=1..n (i.e. indices of the most-probable mixture for each sample).
+the set of training parameters for the forest is the superset of the training parameters for a single tree.
+loads the model from file void cvstatmodel::load( const char* filename, const char* name=0 ); the method load loads the complete model state with the specified name (or default model-dependent name) from the specified xml or yaml file.
+the each node a new subset is generated, however its size is fixed for all the nodes and all the trees.
+the node must be located by user, for example, using the functioncvgetfilenodebyname().
+and in the second case the discrete variable value is tested, whether it belongs to a certain subset of values (also stored in the node) from a limited set of values the variable could take; if yes, the procedure goes to the left, else - to the right (for example, if the color is green or red, go to the left, else to the right).
+in order to reduce computation time for boosted models without substantial loosing of the accuracy, the influence trimming technique may be employed.
+optionally, the user may also provide initial values for weights ( cvemparams::weights) and/or covariation matrices ( cvemparams::covs).
+cvsvm::c_svcor _params.svm_type=cvsvm::nu_svc), or ordered ( _params.svm_type=cvsvm::eps_svror _params.svm_type=cvsvm::nu_svr), or not required at all ( _params.svm_type=cvsvm::one_class), missing measurements are not supported.
+however, for custom tree algorithms, or another sophisticated cases, the structure may be constructed and used explicitly.
+once a leaf node is reached, the value assigned to this node is used as the output of prediction procedure.
+the trained model can be used further for prediction, just like any other classifier.
+if true, the cut off nodes (with tn≤ cvdtree::pruned_tree_idx) are physically removed from the tree.
+mh algorithm, described in [fht98], that reduces the problem to the 2-class problem, yet with much larger training set.
+as the training algorithm proceeds and the number of trees in the ensemble is increased, a larger number of the training samples are classified correctly and with increasing confidence, thereby those samples receive smaller weights on the subsequent iterations.
+as the algorithms have different set of features (like ability to handle missing measurements, or categorical input variables etc.), there is a little common ground between the classes.
+subset bit array indicating the value subset in case of split on a categorical variable.
+this method returns the cummulative result from all the trees in the forest (the class that receives the majority of voices, or the mean of the regression function estimates).
+the indices in_subsample_idx are counted relatively to the_sample_idx, passed to cvdtreetraindata constructor.
+the parameter missing_mask, 8-bit matrix of the same size as train_data , is used to mark the missed values (non-zero elements of the mask).
+as the training algorithm proceeds and the number of trees in the ensemble is increased, a larger number of the training samples are classified correctly and with increasing confidence, thereby those samples receive smaller weights on the subsequent iterations.
+the method is sometimes referred to as "learning by example", i.e. for prediction it looks for the feature vector with a known response that is closest to the given vector.
+normally, there is no need to use the weak classifiers directly, however they can be accessed as elements of sequence cvboost::weak, retrieved by cvboost::get_weak_predictors.
+update_base=false), or it is updated using the new training data ( _update_base=true).
+as soon as the estimated node value differs from the node training samples responses by less than the parameter value, the node is not split further.
+it follows the conventions of generictrain "method" with the following limitations: only cv_row_sample data layout is supported, the input variables are all ordered, the output variables can be either categorical ( _params.svm_type=cvsvm::c_svc or _params.svm_type=cvsvm::nu_svc ), or ordered ( _params.svm_type=cvsvm::eps_svr or _params.svm_type=cvsvm::nu_svr), or not required at all ( _params.svm_type=cvsvm::one_class), missing measurements are not supported.
+however, unlike the c types of opencv that can be loaded using genericcvload(), in this case the model type must be known anyway, because an empty model, an instance of the appropriate class, must be constructed beforehand.
+predicts the output for the input sample double cvrtrees::predict( const cvmat* sample, const cvmat* missing=0 ) const; the input parameters of the prediction method are the same as in cvdtree::predict, but the return value type is different.
+the size of oob data is about n/3.
+the weights are computed by the training algorithm.
+in case of classification the method returns the class label, in case of regression - the output function value.
+the whole training data (feature vectors and the responses) are used to split the root node.
+that is, in addition to the best "primary" split, every tree node may also be split on one or more other variables with nearly the same results.
+cvstatmodel::cvstatmodel default constructor cvstatmodel::cvstatmodel(); each statistical model class in ml has default constructor without parameters.
+the larger weight, the larger penalty on misclassification of data from the corresponding class.
+but the object itself is not destructed, and it can be reused further.
+in case of regression and 2-class classification the optimal split can be found efficiently without employing clustering, thus the parameter is not used in these cases.
+thus, to compute variable importance correctly, the surrogate splits must be enabled in the training parameters, even if there is no missing data.
+this method is called from the destructor, from the train methods of the derived classes, from the methodsload(), read() etc., or even explicitly by user.
+the structure must be initialized and passed to the training method of cvsvm trains svm bool cvsvm::train( const cvmat* _train_data, const cvmat* _responses, const cvmat* _var_idx=0, const cvmat* _sample_idx=0, cvsvmparams _params=cvsvmparams() );the method trains the svm model.
+all the other parameters are gathered in cvsvmparams structure.
+in case of classification the class is determined by voting.
+but the object itself is not destructed, and it can be reused further.
+both data layouts ( _tflag=cv_row_sample and _tflag=cv_col_sample) are supported, as well as sample and variable subsets, missing measurements, arbitrary combinations of input and output variable types etc.
+most algorithms can handle only ordered input variables.
+the structure contains all the decision tree training parameters.
+to make it easier for user, the methodtrain usually includes var_idx and sample_idx parameters.
+and in the second case the discrete variable value is tested, whether it belongs to a certain subset of values (also stored in the node) from a limited set of values the variable could take; if yes, the procedure goes to the left, else - to the right (for example, if the color is green or red, go to the left, else to the right).
+the actual depth may be smaller if the other termination criteria are met (see the outline of the training procedure in the beginning of the section), and/or if the tree is pruned.
+it follows the conventions of generictrain "method" with the following limitations: only cv_row_sample data layout is supported; the input variables are all ordered; the output variable is categorical (i.e. elements of _responses must be integer numbers, though the vector may have 32fc1 type), missing measurements are not supported.
+normally, this procedure is only applied to standalone decision trees, while tree ensembles usually build small enough trees and use their own protection schemes against overfitting.
+the train_data must have 32fc1 (32-bit floating-point, single-channel) format.
+however, some algorithms can handle the transposed representation, when all values of each particular feature (component/input variable) over the whole input set are stored continuously.
+the train_data must have 32fc1 (32-bit floating-point, single-channel) format.
+the method is sometimes referred to as "learning by example", i.e. for prediction it looks for the feature vector with a known response that is closest to the given vector.
+if only a single input vector is passed, all output matrices are optional and the predicted value is returned by the method.
+in case of classification the class is determined by voting.
+finally, the structure can be released only after all the trees using it are released.
+this is default option for real adaboost; may be also used for discrete adaboost.
+cvstatmodel::predict predicts the response for sample float cvstatmode::predict( const cvmat* sample[, ] ) const; the method is used to predict the response for a new sample.
+any of the parameters can be overridden then, or the structure may be fully initialized using the advanced variant of the constructor.
+in the latter case the type of output variable is either passed as separate parameter, or as a last element of var_type vector: cv_var_categorical means that the output values are discrete class labels, cv_var_ordered(=cv_var_numerical) means that the output values are ordered, i.e. 2 different values can be compared as numbers, and this is a regression problem the types of input variables can be also specified using var_type.
+instead, many decision trees engines (including ml) try to find sub-optimal split in this case by clustering all the samples intomax_categories clusters (i.e. some categories are merged together).
+most of the classification and regression algorithms are implemented as c++ classes.
+[const cvmat* var_type,] ..., [const cvmat* missing_mask,]  ... ); the method trains the statistical model using a set of input feature vectors and the corresponding output values (responses).
+in ml all the neurons have the same activation functions, with the same free parameters (α, β) that are specified by user and are not altered by the training algorithms.
+it follows the conventions of generictrain "method" with the following limitations: only cv_row_sample data layout is supported, the input variables are all ordered, the output variables can be either categorical ( is_regression=false ) or ordered ( is_regression=true), variable subsets ( var_idx ) and missing measurements are not supported.
+surrogate splits are needed to handle missing measurements and for variable importance estimation.
+no_input_scale- algorithm does not normalize the input vectors.
+at each node of each tree trained not all the variables are used to find the best split, rather than a random subset of them.
+that is, in addition to the best "primary" split, every tree node may also be split on one or more other variables with nearly the same results.
+the second method train is mostly used for building tree ensembles.
+the classification works as following: the random trees classifier takes the input feature vector, classifies it with every tree in the forest, and outputs the class label that has got the majority of "votes".
+for each input vector the neighbors are sorted by their distances to the vector.
+boosting is a powerful learning concept, which provide a solution to supervised classification learning task.
+given the number of mixtures mand the samples {xi, i=1..n}the algorithm finds themaximum-likelihood estimates (mle) of the all the mixture parameters, i.e. ak, skand πk: em algorithm is an iterative procedure.
+in case of regression, the predicted result will be a mean value of the particular vector's neighbor responses.
+a note about memory management: the field priors is a pointer to the array of floats.
+examples with very low relative weight have small impact on training of the weak classifier.
+cvsvm::get_support_vector* retrieves the number of support vectors and the particular vector int cvsvm::get_support_vector_count() const; const float* cvsvm::get_support_vector(int i) const; the methods can be used to retrieve the set of support vectors.
+if only a single input vector is passed, all output matrices are optional and the predicted value is returned by the method.
+to avoid this, the priors can be specified, where the anomaly probability is artificially increased (up to 0.5 or even greater), so the weight of the misclassified anomalies becomes much bigger, and the tree is adjusted properly.
+the value 0.1or so is good enough.
+the weights are increased for training samples, which have been misclassified (step 3c).
+thus, to compute variable importance correctly, the surrogate splits must be enabled in the training parameters, even if there is no missing data.
+cvstatmodel::cvstatmodel(...) training constructor cvstatmodel::cvstatmodel( const cvmat* train_data ... ); */ most ml classes provide single-step construct+train constructor.
+the estimate of the training error (oob-error) is stored in the protected class member oob_error.
+from each non-leaf node the procedure goes to the left (i.e. selects the left child node as the next observed node), or to the right based on the value of a certain variable, which index is stored in the observed node.
+returns the leaf node of decision tree corresponding to the input vector cvdtreenode* cvdtree::predict( const cvmat* _sample, const cvmat* _missing_data_mask=0, bool raw_mode=false ) const; the method takes the feature vector and the optional missing measurement mask on input, traverses the decision tree and returns the reached leaf node on output.
+in other words, the goal is to learn the functional relationshipf: y = f(x) between input x and output y. predicting qualitative output is called classification, while predicting quantitative output is called regression.
+usually, the previous model state is cleared by clear() before running the training procedure.
+note that this technique is used only inn(>2)-class classification problems.
+max_categories if a discrete variable, on which the training procedure tries to make a split, takes more thanmax_categories values, the precise best subset estimation may take a very long time (as the algorithm is exponential).
+in this case user should take care of proper normalization.
+k nearest neighbors the algorithm caches all the training samples, and it predicts the response for a new sample by analyzing a certain number (k) of the nearest neighbors of the sample (using voting, calculating weighted sum etc.)
+the actual depth may be smaller if the other termination criteria are met (see the outline of the training procedure in the beginning of the section), and/or if the tree is pruned.
+in addition, there is update flag that identifies, whether the model should be trained from scratch ( update=false) or should be updated using new training data ( update=true).
+most of the classification and regression algorithms are implemented as c++ classes.
+in the latter case the type of output variable is either passed as separate parameter, or as a last element ofvar_type vector: cv_var_categorical means that the output values are discrete class labels, cv_var_ordered(=cv_var_numerical) means that the output values are ordered, i.e. 2 different values can be compared as numbers, and this is a regression problem the types of input variables can be also specified usingvar_type.
+boosting is a powerful learning concept, which provide a solution to supervised classification learning task.
+only examples with the summary fractionweight_trim_rate of the total weight mass are used in the weak classifier training.
+for custom classification/regression prediction, the method can optionally return pointers to the neighbor vectors themselves ( neighbors, array of k*_samples->rows pointers), their corresponding output values ( neighbor_responses, a vector of k*_samples->rows elements) and the distances from the input vectors to the neighbors ( dist, also a vector of k*_samples->rows elements).
+cvnormalbayesclassifier::predict predicts the response for sample(s) float cvnormalbayesclassifier::predict( const cvmat* samples, cvmat* results=0 ) const; the method predict estimates the most probable classes for the input vectors.
+the method cvboost::predict runs the sample through the trees in the ensemble and returns the output class label based on the weighted voting.
+one of the key properties of the constructed decision tree algorithms is that it is possible to compute importance (relative decisive power) of each variable.
+the second method train is mostly used for building tree ensembles.
+thus such examples may be excluded during the weak classifier training without having much effect on the induced classifier.
+that leads to compact, and more resistant to the training data noise, but a bit less accurate decision tree.
+this is default option for discrete adaboost; may be also used for real adaboost.
+the method creates mlp network with the specified topology and assigns the same activation function to all the neurons.
+most algorithms can handle only ordered input variables.
+by default the input feature vectors are stored astrain_data rows, i.e. all the components (features) of a training vector are stored continuously.
+the larger the network size (the number of hidden layers and their sizes), the more is the potential network flexibility, and the error on the training set could be made arbitrarily small.
+finally, the individual parameters can be adjusted after the structure is created.
+additionally some algorithms can handle missing measurements, that is when certain features of certain training samples have unknown values (for example, they forgot to measure a temperature of patient a on monday).
+new cvsvm(... /* svm params */); else model = new cvdtree(... /* decision tree params */); ... delete model; normally, the destructor of each derived class does nothing, but calls the overridden methodclear() that deallocates all the memory.
+however, unlike the c types of opencv that can be loaded using genericcvload(), in this case the model type must be known anyway, because an empty model, an instance of the appropriate class, must be constructed beforehand.
+see mushroom.cpp sample that demonstrates how to build and use the decision tree.
+variable importance besides the obvious use of decision trees - prediction, the tree can be also used for various data analysis.
+in simple cases (e.g. standalone tree, or ready-to-use "black box" tree ensemble from ml, likerandom trees or boosting) there is no need to care or even to know about the structure - just construct the needed statistical model, train it and use it.
+next a weak classifierfm(x) is trained on the weighted training data (step 3a).
+in case of multiple input vectors, there should be output vector results.
+both data layouts ( _tflag=cv_row_sample and _tflag=cv_col_sample) are supported, as well as sample and variable subsets, missing measurements, arbitrary combinations of input and output variable types etc.
+however, some algorithms may optionally update the model state with the new training data, instead of resetting it.
+a weak classifier is only required to be better than chance, and thus can be very simple and computationally inexpensive.
+for example, if _sample_idx=[1, 5, 7, 100], then _subsample_idx=[0,3] means that the samples [1, 100] of the original training set are used.
+for example, if users want to detect some rare anomaly occurrence, the training base will likely contain much more normal cases than anomalies, so a very good classification performance will be achieved just by considering every case as normal.
+in particular, cross-validation is not supported.
+max_categoriesvalues, the precise best subset estimation may take a very long time (as the algorithm is exponential).
+this method applies the specified training algorithm to compute/adjust the network weights.
+training constructor cvstatmodel::cvstatmodel( const cvmat* train_data ... ); */ most ml classes provide single-step construct+train constructor.
+the whole training data (feature vectors and the responses) are used to split the root node.
+then, if necessary, the surrogate splits are found that resemble at the most the results of the primary split on the training data; all data are divided using the primary and the surrogate splits (just like it is done in the prediction procedure) between the left and the right child node.
+usually, the previous model state is cleared by clear() before running the training procedure.
+cvem::cov_mat_diagonal- a covariation matrix of each mixture may be arbitrary diagonal matrix with positive diagonal elements, that is, non-diagonal elements are forced to be 0's, so the number of free parameters is dfor each matrix.
+learning of boosted model is based on n training examples {(xi,yi)}1n with xi ∈ rk and yi ∈ {−1, +1}.
+the parameter can only be changed explicitly by modifying the structure member.
+this constructor is useful for 2-stage model construction, when the default constructor is followed bytrain() or load().
+the suffix "const" means that prediction does not affect the internal model state, so the method can be safely called from within different threads.
+in order to reduce computation time for boosted models without substantial loosing of the accuracy, the influence trimming technique may be employed.
+predicting with decision trees to reach a leaf node, and thus to obtain a response for the input feature vector, the prediction procedure starts with the root node.
+the structure must be initialized and passed to the training method of cvsvm cvsvm::train trains svm bool cvsvm::train( const cvmat* _train_data, const cvmat* _responses, const cvmat* _var_idx=0, const cvmat* _sample_idx=0, cvsvmparams _params=cvsvmparams() ); the method trains the svm model.
+normally, this procedure is only applied to standalone decision trees, while tree ensembles usually build small enough trees and use their own protection schemes against overfitting.
+additionally some algorithms can handle missing measurements, that is when certain features of certain training samples have unknown values (for example, they forgot to measure a temperature of patient a on monday).
+use_1se_rule if true, the tree is truncated a bit more by the pruning procedure.
+besides the obvious use of decision trees - prediction, the tree can be also used for various data analysis.
+the best split found does not give any noticeable improvement comparing to just a random choice.
+there is a default constructor that initializes all the parameters with the default values tuned for standalone classification tree.
+besides, the larger networks are train much longer than the smaller ones, so it is reasonable to preprocess the data (usingpca or similar technique) and train a smaller network on only the essential features.
+for each input vector the neighbors are sorted by their distances to the vector.
+the weight of each individual tree may be increased or decreased using method cvboosttree::scale.
+note that the method is virtual, therefore any model can be loaded using this virtual method.
+the input vectors (one or more) are stored as rows of the matrixsamples.
+instead, many decision trees engines (including ml) try to find sub-optimal split in this case by clustering all the samples into max_categoriesclusters (i.e. some categories are merged together).
+retrieves the number of support vectors and the particular vector int cvsvm::get_support_vector_count() const; const float* cvsvm::get_support_vector(int i) const; the methods can be used to retrieve the set of support vectors.
+when the training set for the current tree is drawn by sampling with replacement, some vectors are left out (so-calledoob (out-of-bag) data ).
+by default the input feature vectors are stored as train_data rows, i.e. all the components (features) of a training vector are stored continuously.
+saves the model to file void cvstatmodel::save( const char* filename, const char* name=0 ); the method save stores the complete model state to the specified xml or yaml file with the specified name or default name (that depends on the particular class).data persistence functionality from cxcore is used.
+reads the model from file storage void cvstatmode::read( cvfilestorage* storage, cvfilenode* node ); the method read restores the complete model state from the specified node of the file storage.
+both input and output vectors/values are passed as matrices.
+the prediction result, either the class label or the estimated function value, may be retrieved as value field of the cvdtreenode structure, for example: dtree->predict(sample,mask)->value the last parameter is normally set to false that implies a regular input.
+however, random trees do not need all the functionality/features of decision trees, most noticeably, the trees are not pruned, so the cross-validation parameters are not used.
+many of them smartly combined, however, result in a strong classifier, which often outperforms most 'monolithic' strong classifiers such as svms and neural networks.
+that is, some branches of the tree that may lead to the model overfitting are cut off.
+the weights are increased for training samples, which have been misclassified (step 3c).
+many of them smartly combined, however, result in a strong classifier, which often outperforms most 'monolithic' strong classifiers such as svms and neural networks.
+all the samples in the node belong to the same class (or, in case of regression, the variation is too small).
+from each non-leaf node the procedure goes to the left (i.e. selects the left child node as the next observed node), or to the right based on the value of a certain variable, which index is stored in the observed node.
+the suffix "const" means that prediction does not affect the internal model state, so the method can be safely called from within different threads.
+once a leaf node is reached, the value assigned to this node is used as the output of prediction procedure.
+0.5that should work well in most cases, according to the algorithm's author.
+const; the method predict estimates the most probable classes for the input vectors.
+1.2that should work well in most cases, according to the algorithm's author.
+start with weights wi = 1/n, i = 1,…,n. repeat for m = 1,2,…,m: fit the classifier fm(x) ∈ {−1,1}, using weights wi on the training data.
+retrieves the variable importance array const cvmat* cvrtrees::get_var_importance() const; the method returns the variable importance vector, computed at the training stage when cvrtparams::calc_var_importance is set.
+cvdtree::predict returns the leaf node of decision tree corresponding to the input vector cvdtreenode* cvdtree::predict( const cvmat* _sample, const cvmat* _missing_data_mask=0, bool raw_mode=false ) const; the method takes the feature vector and the optional missing measurement mask on input, traverses the decision tree and returns the reached leaf node on output.
+user may pass null pointers instead of either of the argument, meaning that all the variables/samples are used for training.
+first, a network with the specified topology is created using the non-default constructor or the methodcreate.
+the results of such preliminary estimation may be passed again to the optimization procedure, this time with cov_mat_type=cvem::cov_mat_diagonal.
+this method is called from the destructor, from thetrain methods of the derived classes, from the methodsload(), read() etc., or even explicitly by user.
+that is the training algorithms attempts to split a node while its depth is less than max_depth.
+only examples with the summary fractionweight_trim_rate of the total weight mass are used in the weak classifier training.
+if the flag is not set, the training algorithm normalizes each output features independently, by transforming it to the certain range depending on the activation function used.
+the error is estimated internally during the training.
+the prediction result, either the class label or the estimated function value, may be retrieved asvalue field of the cvdtreenode structure, for example: dtree->predict(sample,mask)->value the last parameter is normally set to false that implies a regular input.
+the structure has default constructor that initializes parameters for rprop algorithm.
+retrieves proximitity measure between two training samples float cvrtrees::get_proximity( const cvmat* sample_1, const cvmat* sample_2 ) const; the method returns proximity measure between any two samples (the ratio of the those trees in the ensemble, in which the samples fall into the same leaf node, to the total number of the trees).
+predicts the response for sample float cvstatmode::predict( const cvmat* sample[, ] ) const; the method is used to predict the response for a new sample.
+so the whole trained network works as following.
+there is a default constructor that initializes all the parameters with the default values tuned for standalone classification tree.
+cvstatmodel::load loads the model from file void cvstatmodel::load( const char* filename, const char* name=0 ); the method load loads the complete model state with the specified name (or default model-dependent name) from the specified xml or yaml file.
+if both layouts are supported, the method includes tflag parameter that specifies the orientation: tflag=cv_row_sample means that the feature vectors are stored as rows, tflag=cv_col_sample means that the feature vectors are stored as columns.
+the array should be allocated by user, and released just after the cvdtreeparams structure is passed to cvdtreetraindata orcvdtree constructors/methods (as the methods make a copy of the array).
+the values retrieved from the previous layer are summed with certain weights, individual for each neuron, plus the bias term, and the sum is transformed using the activation function f that may be also different for different neurons.
+examples with very low relative weight have small impact on training of the weak classifier.
+next a weak classifierfm(x) is trained on the weighted training data (step 3a).
+additionally, the training data characteristics that are shared by all trees in the ensemble are stored here: variable types, the number of classes, class label compression map etc. buffers, memory storages for tree nodes, splits and other elements of the trees constructed.
+one of the main that em algorithm should deal with is the large number of parameters to estimate.
+it follows the conventions of generictrain "method" with the following limitations: only cv_row_sample data layout is supported; the input variables are all ordered; the output variable is categorical (i.e. elements of_responses must be integer numbers, though the vector may have32fc1 type), missing measurements are not supported.
+in case of regression the classifier response is the average of responses over all the trees in the forest.
+however, some algorithms may optionally update the model state with the new training data, instead of resetting it.
+the input sample must have as many components as the train_data passed to train contains.
+that leads to compact, and more resistant to the training data noise, but a bit less accurate decision tree.
+even in case of discrete adaboost and real adaboost the cvboosttree::predict return value ( cvdtreenode::value) is not the output class label; a negative value "votes" for class #0, a positive - for class #1.
+after the tree is constructed, it is also used to compute variable importance.
+in each node the optimum decision rule (i.e. the best "primary" split) is found based on some criteria (in mlgini "purity" criteria is used for classification, and sum of squared errors is used for regression).
+this constructor is useful for 2-stage model construction, when the default constructor is followed bytrain() or load().
+number of training samples in the node is less than the specified threshold, i.e. it is not statistically representative set to split the node further.
+many models in the ml may be trained on a selected feature subset, and/or on a selected sample subset of the training set.
+in the first case, the variable value is compared with the certain threshold (which is also stored in the node); if the value is less than the threshold, the procedure goes to the left, otherwise, to the right (for example, if the weight is less than 1 kilo, the procedure goes to the left, else to the right).
+for example, in a spam filter that uses a set of words occurred in the message as a feature vector, the variable importance rating can be used to determine the most "spam-indicating" words and thus help to keep the dictionary size reasonable.
+the structure is derived from cvdtreeparams, but not all of the decision tree parameters are supported.
+no_output_scale- algorithm does not normalize the output vectors.
+cvstatmodel::clear deallocates memory and resets the model state void cvstatmodel::clear(); the method clear does the same job as the destructor, i.e. it deallocates all the memory occupied by the class members.
+it takes the feature vector on input, the vector size is equal to the size of the input layer, when the values are passed as input to the first hidden layer, the outputs of the hidden layer are computed using the weights and the activation functions and passed further downstream, until we compute the output layer.

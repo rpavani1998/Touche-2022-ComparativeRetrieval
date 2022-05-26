@@ -1,0 +1,1746 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Microsoft Announces ReFS, a New Filesystem For Windows 8 - Slashdot</title>
+<body>
+<br>
+<br>
+<br>
+Slashdot Stories <br>
+Slash Boxes <br>
+Comments <br>
+<br>
+Join 
+Log In Submit Story Jobs Newsletter Library <br>
+ &nbsp; 
+<p> Nickname: </p> 
+<p> Password: </p>  Public Terminal <br>
+Forgot your password? <br>
+<br>
+<br>
+
+Close <br>
+binspam dupe notthebest offtopic slownewsday stale stupid fresh funny
+insightful interesting maybe offtopic flamebait troll redundant overrated 
+insightful interesting informative funny underrated descriptive typo dupe error 
+<ul> 
+<li> Stories </li> 
+<li> Recent </li> 
+<li> Popular </li> </ul> 
+<h4> Slashdot </h4> 
+<ul> 
+<li></li> 
+<li> Ask Slashdot </li> 
+<li> Book Reviews </li> 
+<li> Games </li> 
+<li> Idle </li> 
+<li> YRO </li> 
+<li> Technology </li> 
+<li></li> 
+<li> Cloud </li> 
+<li> Hardware </li> 
+<li> Linux </li> 
+<li> Management </li> 
+<li> Mobile </li> 
+<li> Science </li> 
+<li> Security </li> 
+<li> Storage </li> </ul> <br>
+28273134 story 
+<h2> Microsoft Announces ReFS, a New Filesystem For Windows 8 459 </h2>  
+Posted bytimothy on Tuesday January 17, @10:23AM <br>
+from the 
+comes-with-striped-shirt dept.  bonch writes <i>&quot;Microsoft has shared 
+details about itsnew filesystem called ReFS, which stands for Resilient File 
+System. Codenamed 'Protogon,' ReFS will first appear as the storage system for 
+Windows Server and later be offered to Windows clients. Microsoft plans to 
+deprecate lesser-used NTFS features while maintaining 'a high degree of 
+compatibility' for most uses. NTFS has beencriticized in the past for its 
+inelegant architecture.&quot;</i> 
+<p> <strong>100</strong> of <strong>459</strong> comments loaded twitter 
+facebook </p> software technology windows <br>
+
+<h3>&larr;</h3> 
+<h3>Related Links</h3> 
+<h3>&rarr;</h3> Package Signing Comes To Pacman and Arch Linux <br>
+
+<h3>Submission: Microsoft Announces New Filesystem For Windows 8</h3> <br>
+
+iTunes Match Expands To Latin America, Netherlands, Baltics <br>
+<br>
+<br>
+ 
+This discussion has been archived. No new comments can be posted.<br>
+
+<h4> Microsoft Announces ReFS, a New Filesystem For Windows 8  More Login </h4>
+<h2>Microsoft Announces ReFS, a New Filesystem For Windows 8</h2> Archived 
+Discussion Load All Comments <br>
+&nbsp;Full &nbsp;Abbreviated &nbsp;Hidden <br>
+ /Sea Score: <br>
+ 5 <br>
+ 4 <br>
+ 3 <br>
+ 2 <br>
+ 1 <br>
+ 0 <br>
+ -1 <br>
+ More
+Login <br>
+ &nbsp; 
+<p> Nickname: </p> 
+<p> Password: </p>  Public Terminal <br>
+Forgot your password? <br>
+<br>
+<br>
+
+Close <br>
+Close <br>
+<br>
+Search 459 Comments Log In/Create an Account <br>
+
+Comments Filter: 
+<ul> 
+<li>All</li> 
+<li>Insightful</li> 
+<li>Informative</li> 
+<li>Interesting</li> 
+<li>Funny</li> </ul> 
+<p> <strong>The Fine Print:</strong> The following comments are owned by 
+whoever posted them. We are not responsible for them in any way. </p> <br>
+
+<ul> 
+<li> <br>
+
+<h4>My preview of ReFS  (Score:5, Funny)</h4> by TechGuys (2554082)  writes:  
+on Tuesday January 17, @10:23AM (#38724884) <br>
+ After my initial tests, I 
+must say that ReFS is incredible advangement. ReFS supports named streams, 
+object IDs, short names, compression, file level encryption (EFS), user data 
+transactions, sparse, hard-links, extended attributes and quotas. It is 
+basically all the best filesystems compiled into one.<br>
+<br>
+ Not only is 
+this good for Windows system, but overall network architecture. Share twitter 
+facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3, Interesting)</h4> by Anonymous Coward  writes: <br>
+
+<p>How does it compare to ZFS in terms of resilience? After all, it's in the 
+damn name.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Informative)</h4> by Creepy (93888)  
+writes:  on Tuesday January 17, @02:07PM (#38727974) Journal <br>
+
+<p>The &quot;resilience&quot; is from copy on write (CoW), which is used in 
+Volume Shadow Copy and Microsoft SQL server. It is also able to cloud data 
+across multiple volumes on different machines from what I read. Since both CoW 
+and ZFS's copy work a lot like RAID0 (as far as I can tell), I'd expect them to 
+be similar in this respect, however ZFS also does checksum tests and NTFS 
+doesn't BUT I don't know if ReFS will or not.</p> 
+<p>That said, ZFS is a WAY better file system, and I'll give you a few reasons 
+why:<br>
+No max path length restriction (TFA says there still be one for ReFS)
+<br>Variable Block sizes and Sparse Files<br>
+Allocate on Flush [wikipedia.org]
+<br>Block Journaling (aka Journaling File System) as opposed to Metadata only 
+Journaling (NTFS and probably ReFS) which is less reliable<br>
+Logical Volume 
+Management [wikipedia.org]<br>
+and that is just naming a few off the top of my 
+head with some links to what they mean if it seemed like it may not be obvious 
+(the others are fairly commonly talked about IMO - if you don't know them, they 
+should be easy to search for)</p> 
+<p> &nbsp; I'm fairly certain NTFS still doesn't support user metadata, 
+either, and I believe zfs does (most modern FS's do), so I doubt ReFS will 
+(what I mean by this is I can tag a piece of data as, say &quot;photos&quot; 
+and then when I search for photos, those are found first - this is a feature 
+like what was planned for WinFS's and what Apple's Spotlight does).</p> Parent 
+Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:4, Insightful)</h4> by Anon-Admin (443764)  
+writes:  on Tuesday January 17, @10:26AM (#38724946) Journal <br>
+
+<p>So they are starting to catch up with the ext3 filesystem.</p> Parent Share 
+twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3, Informative)</h4> by vlm (69642)  writes: <br>
+
+<p></p> 
+<p>So they are starting to catch up with the ext3 filesystem.</p> 
+<p>I thought it sounded pretty much like a dumbed down version of AFS... from 
+the early 90s. The problem is I never use any of that extra stuff because I 
+have no use for it. I don't remember if I can do sparse with AFS because I 
+don't care about sparse. At home I do the openafs thing for linux, mac, and 
+windoze and everything is in AFS, so I don't really care what windows uses 
+natively, its just kind of a bootloader to get to my real files over afs.</p> 
+<p>I hope there is a way to disable file level compression, be </p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Informative)</h4> by SpryGuy (206254)  
+writes:  on Tuesday January 17, @10:44AM (#38725220) <br>
+
+<p>You need to RTFA. The grandparent was a spoof. ReFS doesn't support 
+compression. Or short-names. etc.</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by Enderandrew (866215)  writes: <br>
+
+<p>Supposedly they also support pools across multiple devices of different 
+sizes that can be reallocated dynamically.</p> 
+<p>In that regard, it is more like zfs and btrfs, and on par with the best 
+filesystems out there.</p> 
+<p>I'm curious what performance is like.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Funny)</h4> by gnalre (323830)  writes:  
+on Tuesday January 17, @10:27AM (#38724948) <br>
+
+<p></p> 
+<p>After my initial tests, I must say that ReFS is incredible advangement. 
+ReFS supports named streams, object IDs, short names, compression, file level 
+encryption (EFS), user data transactions, sparse, hard-links, extended 
+attributes and quotas. It is basically all the best filesystems compiled into 
+one.</p> 
+<p>Not only is this good for Windows system, but overall network architecture.
+</p> 
+<p>and of course will be an open standard(Sarcasm Alert)</p> Parent Share 
+twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by hedwards (940851)  writes: <br>
+
+<p>That thought crossed my mind, there are legitimate reasons for ditching 
+NTFS, but I can't help but wonder if this has anything to do with Win 8 being 
+the first release in a long time where they weren't under DoJ supervision. 
+Also, at this point, NTFS support on other OSes is pretty good. Seems like a 
+really convenient way of making it inconvenient to interoperate or multiboot.
+</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by ByOhTek (1181381)  writes: <br>
+
+<p>Nothing about leaving anyone in the dust.</p> 
+<p>Consider:<br>
+1) In the past, when has MS <b>EVER</b> dropped an existing 
+technology and rewritten it for a new version of something, rather than 
+adapted/shoehorned it into the desired role?<br>
+- NT? Nope - that was a 
+ground-up write, but for a new project that didn't really align with existing 
+software. It did end up replacing DOS for the basis of Windows, but that was 
+just shoehorning one underlayer in place of another that itself was shoehorned 
+into running things.<br>
+-NTFS? Nope, ju </p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Informative)</h4> by DarkOx (621550)  
+writes:  on Tuesday January 17, @10:28AM (#38724958) Journal <br>
+
+<p>That's very interesting given the article says</p> 
+<p></p> 
+<p>There are some NTFS features for which Microsoft plans to drop support with 
+ReFS, specifically named streams, object IDs, short names, compression, file 
+level encryption (EFS), user data transactions, sparse, hard-links, extended 
+attributes, and quotas, Verma blogged. That said, one of Microsoft&acirc;(TM)s 
+goals with ReFS is to &acirc;oemaintain a high degree of compatibility with a 
+subset of NTFS features that are widely adopted while deprecating others that 
+provide limited value at the cost of system complexity and footprint,&acirc; 
+Verma said.</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by mlts (1038732) *  writes: <br>
+
+<p>Some of those features are actually useful:</p> 
+<p>Compression comes into handy for dealing with directories full of log files.
+</p> 
+<p>File level encryption is useful for volumes where BitLocker can't be used.
+</p> 
+<p>Sparse files are extremely useful.</p> 
+<p>As for quotas, unless they have another layer for warning/enforcement, how 
+will places keep users from filling up their home directories?</p> 
+<p>I'm hoping ReFS is up to ZFS with needed features, such as deduplication, 
+encryption, an analog of RAID-Z, the filesystem working with the LVM layer </p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:4, Informative)</h4> by compro01 (777531)  
+writes:  on Tuesday January 17, @10:55AM (#38725398) <br>
+
+<p></p> 
+<p>Some of those features are actually useful</p> 
+<p>Yes, and they're DROPPING those features.</p> Parent Share twitter facebook 
+<br> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:4, Interesting)</h4> by ledow (319597)  
+writes:  on Tuesday January 17, @10:28AM (#38724960) Homepage <br>
+
+<p>Great. What does that mean for users?</p> 
+<p>Amateurs: Nothing at all.<br>
+&quot;Know-a-bit's&quot;: Almost nothing.<br>
+
+Professional users: Nothing we couldn't do before.<br>
+State-of-the-art, 
+top-dog, storage-gods: Nothing very special or new at all.</p> 
+<p>Now, if you'd said that it finally supported WinFS-style file tagging and 
+searching, then you'd have ticked lots of boxes for all manner of users. As it 
+is, it's a &quot;slightly better filesystem than before&quot; and hardly 
+newsworthy (out of all your &quot;features&quot;, I only spot one that you 
+can't already do with Windows alone and that would ever be exposed to someone 
+NOT using bit-level access to the drive - file level encryption).</p> Parent 
+Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Funny)</h4> by vlm (69642)  writes:  on 
+Tuesday January 17, @10:32AM (#38725036) <br>
+
+<p>End users: We still live in a world of 8.3 filenames. Sorry. Till the last 
+PC is burned in a bonfire...</p> 
+<p>You know what would be a funny graph of google data? How many are still 
+serving up .htm files instead of .html files vs year.</p> 
+<p>20 years from now my grandkids are going to have to answer on Jeopardy why 
+computer filenames are still in a 8.3 filename format.</p> Parent Share twitter 
+facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by peragrin (659227)  writes: <br>
+
+<p>No we will live in 8.3 file names as long as FAT is the defacto standard 
+for all portable drives.</p> 
+<p>My only wish is for MSFT to support a filesystem they didnt create. That 
+way a third paty FS can get used for portable media</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by exomondo (1725132)  writes: <br>
+
+<p></p> 
+<p>No we will live in 8.3 file names as long as FAT is the defacto standard 
+for all portable drives.</p> 
+<p>Why? FAT LFN support has been commonplace for <i>well</i> over a decade. 
+Where have you recently been restricted to 8.3 filenames?</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by ckaminski (82854)  writes: <br>
+ There's an answer 
+to that - switch to QuickBooks. My dad held on to Peach Tree Classic until he 
+ran out of quarters and PCA started rolling over and obliterating his old data.
+<br> <br>
+He wishes he switched to QuickBooks years ago. Make sure you get the 
+Accountants version if you need Fixed Asset management. :-) <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Informative)</h4> by willy_me (212994)  
+writes:  on Tuesday January 17, @03:57PM (#38729456) <br>
+
+<p></p> 
+<p>Apple's OSX uses file extension exclusively to determine what sort of file 
+it is. They used to use creator codes, but those have been removed and now it 
+relies entirely on file extension.</p> 
+<p> No, creator and type metadata take precedent over file extension. The big 
+change in OSX is that the API and developer tools promote file extensions over 
+metadata. There was a big push to ensure that OSX would work correctly even if 
+it was using a file system that didn't support metadata.</p> 
+<p> Try this, go to the Finder and select &quot;Get Info&quot; on a data file. 
+Now go to where it says &quot;Open With&quot; and select a different 
+application. Unlike Windows where this selection is forgotten after it opens, 
+on OSX the choice is remembered. The Finder sets the creator metadata of the 
+data file to ensure that it is always opened with the selected application.</p> 
+<p> So metadata is still used in OSX, but extensions now also play a prominent 
+role.</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Informative)</h4> by cbhacking (979169)  
+writes:  &lt;been_out_cruising-slashdot.yahoo@com&gt; on Tuesday January 17, 
+@09:40PM (#38733794) Homepage Journal <br>
+
+<p>Windows also allows you to change the Open With association (and has for 
+many years) but it's stored in the registry as a global configuration for the 
+file type. It's not specific to any given file.</p> 
+<p>Just thought I'd clear that up.</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by Vegemeister (1259976)  writes: <br>
+ Better than 
+<br> <br>
+ [D0NK3Y T1T5]!!! - Avatar.the.Last.Airbender.XviD.avi 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by NJRoadfan (1254248)  writes: <br>
+ Umm, aren't 
+those the features being dropped? 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>My Preview of Cold Fusion Reactors  (Score:4, Funny)</h4> by eldavojohn 
+(898314) *  writes:  &lt;my/.username@@@gmail.com&gt; on Tuesday January 17, 
+@10:32AM (#38725032) Journal <br>
+
+<p></p> 
+<p>After my initial tests</p> 
+<p>Wait, what? From the article:</p> 
+<p></p> 
+<p>Officially named ReFS &mdash; for Resilient File System &mdash; the new 
+file system will be made available via a staged &ldquo;evolution,&rdquo; 
+according to a January 16 post on the &ldquo;Building Windows 8 blog.</p> 
+<p>So you're saying something that was just announced and will be made 
+available via a staged evolution has already been tested by you? Impressive!</p>
+<p></p> 
+<p>It is basically all the best filesystems compiled into one.</p> 
+<p>Thanks for summing it up for me there, bud. I didn't realize it was the 
+greatest goddamn filesystem I could imagine, why didn't you just say 
+&quot;Imagine what your dream filesystem will be able to do, this is it.&quot; 
+I wonder though, will it have the homicide capacity of ReiserFS?<br>
+<br>
+ This 
+reminds me of my initial tests of cold fusion. I must say that cold fusion is 
+incredible dvangement. Cold fusion supports providing us with unlimited power 
+from a glass of water, it prints money, it gives the user eternal life, it 
+allows the user to travel faster than the speed of life and -- when activated 
+-- attractive women jump out of the core reactor demanding money shot after 
+money shot.</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by anonymov (1768712)  writes: <br>
+
+<p>It gets better:</p> 
+<p>TFA:</p> 
+<p></p> 
+<p>some NTFS features for which Microsoft plans <b>to drop support</b> with 
+ReFS, specifically<b>named streams, object IDs, short names, compression, file 
+level encryption (EFS), user data transactions, sparse, hard-links, extended 
+attributes, and quotas</b>, Verma blogged.</p> 
+<p>His post:</p> 
+<p></p> 
+<p>I must say that ReFS is incredible advangement. ReFS <b>supports named 
+streams, object IDs, short names, compression, file level encryption (EFS), 
+user data transactions, sparse, hard-links, extended attributes and quotas</b> 
+</p> 
+<p>He's either overpaid as MS shill, or underpaid as dark PR style 
+&quot;obviously dumb MS shill&quot; troll.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by cbhacking (979169)  writes: <br>
+
+<p>Or... he's being sarcastic, and you are a fool. That list was basically a 
+complete rundown of NTFS's newest or least-known features (some, like 
+compression and EFS, have existed for over a decade). It was quite obvious, 
+even without reading TFA, that some if not all of them were going to be cut 
+from the new version.</p> 
+<p>Mind you, if you want me to use a filesystem that doesn't support 
+transactions, it better have some other damn good perk. Compare what happens if 
+a big file operation (say, copying a large direct </p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by andydread (758754)  writes: <br>
+ Yes troll but it 
+features POOR interoperability. No thanks. 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by K. S. Kyosuke (729550)  writes: <br>
+
+<p></p> 
+<p>After my initial tests, I must say that ReFS is incredible advangement. 
+ReFS supports named streams, object IDs, short names, compression, file level 
+encryption (EFS), user data transactions, sparse, hard-links, extended 
+attributes and quotas. It is basically all the best filesystems compiled into 
+one.</p> 
+<p>We have a cautionary fairy tale here about the cat and the dog baking a 
+cake. Since they don't know how to bake a tasty cake, they decide to put every 
+tasty ingredient they know into the mix. So then naturally include flour, milk, 
+butter, eggs, whipped cream, bones, mice, sausages, candies, chocolate, pork 
+cracklings, sauce...and so on, except for bread, which neither cats nor dogs 
+seem to like. Well, I guess you can guess what they got in the end.</p> 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Insightful)</h4> by Enderandrew (866215)  
+writes:  &lt;[enderandrew] [at] [gmail.com]&gt; on Tuesday January 17, @10:45AM 
+(#38725234) Homepage Journal <br>
+
+<p>Not everything that Microsoft makes is bad. Just because someone says a 
+particular product or technology is good doesn't make them a troll. In fact, as 
+much as Windows drives me up a wall, I am a really big fan of Microsoft 
+Security Essentials.</p> 
+<p>Assuming that everything Microsoft is terrible conversely is trolling.</p> 
+Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Insightful)</h4> by andydread (758754)  
+writes:  on Tuesday January 17, @10:59AM (#38725464) <br>
+ Actually for Windows 
+MSE works pretty decent compared to the others with seeming less resource 
+usage. Didn't they purchase that technology from someone else? I can't 
+remember. However TechGuys is a known paid shill. At this point I don't even 
+know why he bothers. The problem with this new filesystem is that it features 
+very poor interoperability with non Microsoft products leaving your data at the 
+mercy of Microsoft even worse than before. Now-a-days you can boot up Windows 
+computer with a Linux live CD and rescue your files when windows is borked. 
+That won't happen now. Microsort is doing everything in their power to break 
+interoperability with open source and competing operating systems. Parent Share 
+twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3, Interesting)</h4> by ByOhTek (1181381)  writes: <br>
+
+<p>I disagree on the 'paid' part. The posts are too incompetent. It seems more 
+like a &quot;I'll make MS look bad by posting this crap&quot; type thing.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by Bill, Shooter of Bul (629286)  writes: <br>
+
+<p>While those you listed do a lot of pro Microsoft posts, I have to wonder 
+about this one. He listed all of the features that they actually removed from 
+NTFS and said that they still support them, either he screwed up or he's not a 
+Microsoft shill.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by anonymov (1768712)  writes: <br>
+
+<p>He was in too much hurry to get that first post and hadn't much chance to 
+get pro-MS today.</p> 
+<p>His three other 
+first-post-same-timestamp-as-article-but-no-subscription-account today succeed 
+in looking down on Google, but don't have much to say about MS, except for 
+&quot;IE9 is now fully standards compliant and Google breaks the web 
+[slashdot.org]&quot;.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by ByOhTek (1181381)  writes: <br>
+
+<p>I work for a Wniversity, and they pay my salary. If I were paid by MS, I 
+probably wouldn't have moved a bunch of Windows servers over to Linux (network 
+filesystems + Windows = PAIN IN THE ASS).</p> 
+<p>As for them, how the hell do I know where their salary comes from? It seems 
+to me you are trying to say everyone who disagrees with your dogma is one 
+person, in an attempt to discredit them, without any evidence.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:4, Informative)</h4> by SteveFoerster 
+(136027)  writes:  &lt;steve@@@hiresteve...com&gt; on Tuesday January 17, 
+@01:26PM (#38727424) Homepage <br>
+
+<p></p> 
+<p>I work for a Wniversity</p> 
+<p>Ha, dude, you're busted! You were trying to say &quot;university&quot; and 
+it came out &quot;Windows&quot;! ;-)</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by afabbro (33948)  writes: <br>
+
+<p></p> 
+<p>Here is a list of known MS shill accounts on slashdot:</p> 
+<p>Give me a break...I doubt MS even knows Slashdot exists.</p> 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:Hi, GreatBunzinni--a message from the accused  (Score:4, Interesting)
+</h4> by GreatBunzinni (642500)  writes:  on Wednesday January 18, @06:53AM (
+#38736456) <br>
+
+<p>You are confused. The only time I've bothered pointing out that the bonch 
+[slashdot.org] account andOverly Critical Guy [slashdot.org] accounts are 
+sockpuppet accounts wasin this comment [slashdot.org], after I read this comment
+ [slashdot.org] blowing your cover. And since then I've also stumbled onthis 
+comment [slashdot.org], which provides further evidence. Are you also going to 
+claim that I am chrb?</p> 
+<p>And rest assure. I have some time to spare about now which I will waste 
+replying to bonch/overly critical guy posts with messages pointing out that 
+they are sockpuppet accounts. You can thank your personal attacks for this one.
+</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by GreatBunzinni (642500)  writes: <br>
+
+<p>Meanwhile I've also stumbled on this post  [slashdot.org], which raises the 
+suspicion that thebonch [slashdot.org] and SharkLazer [slashdot.org] accounts 
+are also controlled by the same people.This post [slashdot.org] also points out 
+that suspicion. Could it be that you also made the same mistake with messages 
+posted from the SharkLazer account as the ones made from the Overly Critical 
+Guy one?</p> 
+<p>These sockpuppet accounts follow the same posting pattern: one account 
+starts a discussion, either karma-whoring or astroturfing, and the other 
+accounts then quickly interv</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Insightful)</h4> by reasterling (1942300) 
+ writes:  on Tuesday January 17, @12:26PM (#38726662) Homepage <br>
+ I use 
+linux (arch linux) on all my machines. I agree with you that this will break 
+interoperability, but even I (a die hard linux user) recognize that Microsoft 
+has a right to try to improve their file system. NTFS has been around a long 
+time (version 1.0 released in 1993). Sometimes laying an old project to rest 
+and starting new is the right choice. This does not mean that they are doing 
+this to break &quot;system rescue cd&quot; or some other live linux environment.
+Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by TheRealGrogan (1660825)  writes: <br>
+
+<p>Yeah, well, when I go to work on trashy Windows 8 computers and I can't 
+read the filesystem with my tools, people are simply going to lose their data. 
+I don't care. I'm sick of working on Microsoft crap anyway. (Time for a change 
+of life)</p> 
+<p>I have specialized boot disks that don't exactly use a Windows 8 kernel. 
+Every goddamned version of Windows is getting worse for recovery and repair 
+options. I am almost embarrassed to say how many times I have had to 
+&quot;clean install&quot; Vista and Windows 7 because I couldn't f </p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Informative)</h4> by Canazza (1428553)  
+writes:  on Tuesday January 17, @11:04AM (#38725532) <br>
+
+<p>TechGuy's a troll who's gotten the most first-posts in the last week AND 
+every one has either promoted an MS product or bashed a Google one. One even 
+said &quot;Use Silverlight instead of Dreamweaver for making a website&quot;.
+</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by MrHanky (141717)  writes: <br>
+
+<p>Then again, no one does that, bonch.</p> 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by GreatBunzinni (642500)  writes: <br>
+
+<p>For a headsup, the bonch [slashdot.org] account and Overly Critical Guy 
+[slashdot.org] accounts are sockpuppets operated by the same organization. See
+this post [slashdot.org] and a previous post I've made here [slashdot.org] for 
+evidence that these user accounts are used to push the same script, sometimes 
+even copy/paste versions of it.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:4, Informative)</h4> by Missing.Matter 
+(1845576)  writes:  on Tuesday January 17, @01:16PM (#38727312) <br>
+
+<p></p> 
+<p>Does anyone knows what happens between research and productivization at MS?
+</p> 
+<p>Management.</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by phrostie (121428)  writes: <br>
+
+<p>I think you got it right.</p> 
+<p>look at the time stamps:<br>
+@10:23AM<br>
+@10:23AM</p> 
+<p>on the other hand, how do you know when projects like Wine or ReactOS are 
+getting good?</p> 
+<p>when MS starts introducing incompatibilities.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by drsmithy (35869)  writes: <br>
+
+<blockquote> 
+<p>on the other hand, how do you know when projects like Wine or ReactOS are 
+getting good?</p> 
+<p>when MS starts introducing incompatibilities.</p> </blockquote> 
+<p>Is this the contemporary manifestation of that old &quot;DOS ain't done 
+'til Lotus won't run&quot; canard ?</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by Dishevel (1105119)  writes: <br>
+
+<p>Apple with Steve was a monster.<br>
+Apple booted Steve Apple played dead.
+<br>Apple brought Steve back for the win.<br>
+Steve died, Apple will soon.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by JasterBobaMereel (1102861)  writes: <br>
+
+<p>iPhone - All the parts were available, they had all been integrated into 
+devices before, Apple gets the credit because it was the first one that a) 
+worked b) was easy to use c) had an app store with useful apps in it on the day 
+of launch ...</p> 
+<p>This is the same reason the iPod worked - the device itself was nothing 
+special, not even the interface - but iTunes meant you had an easy way of 
+getting stuff on it ...</p> 
+<p>Apple are good at complete systems, they are not as good at components that 
+work nicely with others  .</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by dmbasso (1052166)  writes: <br>
+
+<p>You remember myself some 6 or 7 years ago. Back then I coded mostly in C++ 
+and Lua, and I wholeheartedly hated Python. I have a friend (way more 
+intelligent than I am) that told me something like &quot;Python is the best 
+language ever&quot;, but I couldn't understand how he liked it.</p> 
+<p>Then I was forced to make some extensions to Blender in Python. What 
+started as a frustrating (because of my prejudice) experience quickly (+- one 
+week) turned to amazement about how easy it was to code the things I wanted to 
+do. And afte </p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:5, Insightful)</h4> by Anonymous Coward  
+writes:  on Tuesday January 17, @10:55AM (#38725384) <br>
+
+<p>Or maybe, just maybe, his post is actually a joke, wherein he copy/pasted 
+the list of features being<i>dropped</i> (see paragraph 5 in TFA), claiming 
+they were the advancements.</p> 
+<p>But no, conspiracy theories are much more fun.</p> Parent Share twitter 
+facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:My preview of ReFS  (Score:4, Informative)</h4> by anonymov (1768712)  
+writes:  on Tuesday January 17, @11:21AM (#38725762) <br>
+
+<p>Yeah, he's also very, very fast to be able a) read the article, b) concoct a
+<i>funny</i> answer, c) post it the same minute the article was published.</p> 
+<p>All that without subscriber account, note.</p> 
+<p>He's really agile with the keyboard, this guy, he does it fourth time 
+already today.</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<h4>Full of sound and fury, signifying an idiot  (Score:2, Informative)</h4> by
+SuperKendall(25149)  writes: <br>
+
+<p> <em>Note the collaboration between this, and numerous other 
+&quot;contributors&quot; between extremely verbose first posts submitted within 
+the same minute</em> </p> 
+<p>It's called &quot;being a subscriber&quot;. Since you don't even know that 
+we can all just assume you've not ever been one and are just a leech.</p> 
+<p>As for &quot;being paid&quot;, I don't know that many people are paying to 
+have humorous articles posted to Slashdot.</p> 
+<p>You did realize his post was humor, right? It was not to subtle for you to 
+comprehend, right?</p> 
+<p>Oh.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:Full of sound and fury, signifying an idiot  (Score:4, Informative)</h4>
+byanonymov (1768712)  writes:  on Tuesday January 17, @11:28AM (#38725852) <br>
+
+<p>Yes, you see that asterisk [slashdot.org] right next to his nickname that 
+means &quot;a subscriber account&quot;... Oh, wait, there's none.</p> Parent 
+Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Starts with 'R'  (Score:5, Funny)</h4> by uigrad_2000 (398500)  writes:  
+on Tuesday January 17, @10:27AM (#38724954) Homepage Journal <br>
+
+<p>This is a bad idea.</p> 
+<p>Now we can count on some guy named 'Hans Resilient&quot; to be tried and 
+found guilty of murder.</p> Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>Interesting  (Score:5, Interesting)</h4> by msobkow (48369)  writes:  on 
+Tuesday January 17, @10:29AM (#38724998) Homepage Journal <br>
+
+<p> I can't say that I've ever used any of the NTFS features they're planning 
+to drop.</p> 
+<p> I do wish Windows had a sane soft-link system like *nix does; I've yet to 
+run into an application that automatically dereferences a .lnk when opening it. 
+You have to futz around with opening the link manually, reading it's redirect, 
+and then opening THAT instead. Very crude and ugly.</p> 
+<p> But more to the point, I didn't see much about what might be NEW with this 
+file system, only what's OLD and being discarded.</p> 
+<p> Mind you, some basic feature cleanup never hurt anyone. But if that's the 
+case, why not NTFS2 instead of a marketing buzzword?</p> Share twitter facebook 
+<br> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by msobkow (48369)  writes: <br>
+
+<p> Typo: I meant &quot;API&quot;, not &quot;application&quot;.</p> 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>Re:Interesting  (Score:5, Informative)</h4> by EvanED (569694)  writes:  
+&lt;evanedNO@SPAMgmail.com&gt; on Tuesday January 17, @10:35AM (#38725086) <br>
+
+<p><i>I do wish Windows had a sane soft-link system like *nix does; I've yet 
+to run into an application that automatically dereferences a .lnk when opening 
+it. You have to futz around with opening the link manually, reading it's 
+redirect, and then opening THAT instead. Very crude and ugly.</i></p> 
+<p>Man, if only [microsoft.com].</p> 
+<p>(OK, it's not <i>quite</i> sane considering you have to distinguish between 
+links to files and links to directories at creation time. I'm not sure what 
+happens if you flip it behind its back.)</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by dkf (304284)  writes: <br>
+
+<p></p> 
+<p>Also, I think that under the default setup you have to be admin to create 
+links.</p> 
+<p>That'll be to create hard links to directories, which is a Bad Idea 
+everywhere. Symbolic links to directories are fine though, and can be created 
+by ordinary users (with the right tool; Windows doesn't come with anything like 
+'ln' by default).</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by anonymov (1768712)  writes: <br>
+
+<p>mklink can create symlinks (which were introduced with NT6.0's update to 
+NTFS)/hardlink/dir junctions and is available out of the box since Vista/Server 
+2008. There's &quot;fsutil hardlink&quot; command on earlier systems, but to 
+create directory junctions you had to install Resource Kit's linkd or 
+Russinovich's Junction.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by Malc (1751)  writes: <br>
+
+<p>Why are you referring to shortcut files? That's something entirely 
+different.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by Miamicanes (730264)  writes: <br>
+
+<p>It usually does. The bug only surfaces when you're part of an enterprise 
+active directory network that has group policies &amp; domain admins, and it 
+only crops up with specific combinations of group policy settings that look 
+innocent in and of themselves, but have disabling the creation of symlinks by 
+local admin members (but nobody else) as an unintended side effect. To make 
+them work, you have to set some other policy that looks like it's imposing a 
+restriction upon local admins, but actually has the opp </p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:Interesting  (Score:5, Informative)</h4> by anonymov (1768712)  writes: 
+ on Tuesday January 17, @10:48AM (#38725280) <br>
+
+<p>There's a blog post [msdn.com] linked from the article.</p> 
+<p>There's all kinds of promising stuff, like data corruption resilience and 
+dropped/extended limits.</p> 
+<p>Much more interesting read than the linked ZDNet article.</p> Parent Share 
+twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by UnknownSoldier (67820)  writes: <br>
+
+<p>I built 3 windows 7 computers over the winter break.</p> 
+<p>A fresh install of Win 7 x64 takes<br>
+- 12 GB Windows<br>
+- 8 GB pagefile 
+(deleted &amp; turned off)<br>
+- 8 GB hibernate (deleted &amp; turned off)</p> 
+<p>Not sure where you are pulling 40 GB out of your ass from ? =)</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:Interesting  (Score:5, Informative)</h4> by SpryGuy (206254)  writes:  
+on Tuesday January 17, @10:51AM (#38725332) <br>
+
+<p><i>But more to the point, I didn't see much about what might be NEW with 
+this file system, only what's OLD and being discarded.</i></p> 
+<p>Let's see: 32K file name and path limits (instad of 255), on-line recovery 
+from corruption (no more &quot;Check Disk&quot; or offline recovery-rebuild), 
+faster performance, built in recovery of data on failed disks (via Storage 
+Spaces), hot-adding-more-storage to volumes, better control of allocation and 
+localization on the drive, attribute checksums (and auto detection and recovery 
+from &quot;bitrot&quot;)....</p> 
+<p>Did you RTFA at all?</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>32K long file names? That'll be useful...  (Score:3)</h4> by Viol8 (599362)
+ writes: <br>
+
+<p>... to no one. Apart from maybe malware writers who'll be able to put an 
+entire virus in the filename. Whether they'll be able to hide it or even use it 
+is another matter but I wouldn't put it past Windows to have a nice exploit 
+available.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:32K long file names? That'll be useful...  (Score:5, Informative)</h4> 
+byThing 1 (178996)  writes:  on Tuesday January 17, @12:25PM (#38726650) Journal
+<br> 
+<p> </p> 
+<p>... to not one.</p> 
+<p>The real world disagrees with your statement: we have TFS projects with 
+long directory and file names, such that we cannot map the entire TFS source in 
+a single folder. Even naming it e.g. &quot;c:\x&quot; (or &quot;d:\&quot;, 
+putting it on a separate drive), the paths and files<i>still</i> exceed 
+MAX_PATH (which is260, [microsoft.com] not 255).</p> 
+<p>So, this feature will be useful to our shop.</p> 
+<p>It's also useful for &quot;rolling backups&quot;; I administer family 
+machines, and one has been upgraded from a desktop, to a laptop, to another 
+laptop. The first upgrade, I copied all the files to &quot;c:\e&quot; (old 
+machine was an eMachine). That laptop died, we used a restoration company that 
+started with a &quot;G&quot; to get the data back (now we backup via WHS), and 
+I saved that in &quot;c:\g&quot; (so there's a &quot;c:\g\e&quot; with the 
+desktop's files). The third machine (second laptop) has &quot;c:\h&quot; (which 
+also contains &quot;c:\h\g\e&quot;). Other times I've saved backups with more 
+descriptive names, like &quot;Backup of the Dell Inspiron 5150, 
+2011-11-11&quot;, and sometimes those backups fit inside each other like 
+expressed above.</p> 
+<p>So, I have examples from both home and work where having 
+longer-than-MAX_PATH file/path names would be useful.</p> Parent Share twitter 
+facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by DarkOx (621550)  writes: <br>
+
+<p>NTFS supports softlinks, (junction points) its just none of the user land 
+stuff that ships on the Windows platform knows how to deal with it.</p> 
+<p>Explorer for instance can't create them, and indicate that something is a 
+link, and can't correctly total up disk usage for a tree if you have used them 
+in that tree.</p> 
+<p> &nbsp;</p> 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by Rakishi (759894)  writes: <br>
+
+<p>I buy an 128gb SSD to speed things up, I have 200gb worth of Steam games.
+</p> 
+<p>Without symlinks: I am sad.</p> 
+<p>With symlinks: I copy rarely played games to my regular hard drive, symlink 
+to them from the steam directory (on the ssd). Everything works transparently.
+</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Great!  (Score:3, Insightful)</h4> by Sez Zero (586611)  writes:  on 
+Tuesday January 17, @10:29AM (#38725000) Journal <br>
+ All we need is another 
+MS-specific filesystem to cause compatibility headaches. Share twitter facebook 
+<br> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:Great!  (Score:4, Insightful)</h4> by uigrad_2000 (398500)  writes:  on 
+Tuesday January 17, @10:51AM (#38725340) Homepage Journal <br>
+
+<p>I'll agree.</p> 
+<p>As ugly as NTFS is, the one thing I've liked about it is that it's the only 
+FS used by Windows and Windows Servers for a dozen years.</p> 
+<p>With Linux, on the other hand, I've had to deal with ext2, ResierFS, ext3, 
+ext4, and those are only the popular ones! There are a ton of other specialized 
+filesystems for other features, such as encryption or use on flash memory!</p> 
+Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:Then what file system should we all use?  (Score:4, Informative)</h4> by
+bearfx(697655)  writes:  on Tuesday January 17, @01:34PM (#38727548) <br>
+ I 
+use zfs quite a bit. Huge zfs fan.
+<p> How much data did you have on a single large zdev that it required that 
+amount of time? I tend to group mine into groups of 8 disks with raidz2. When I 
+have to rebuild, it does so at the write speed of the new disk (100+MB/sec). If 
+you have a relatively small array and it still takes 45 days to rebuild then 
+you have a hardware issue, or you are using an siig card, which has horrible 
+performance under all the unix/linux variants I have used.</p> 
+<p> I use zfs on linux at home with an 8 disk raidz2 array for network 
+storage. On a core 2 duo / 2.5ghz using an lsi 1068 based card, I achieve a 
+rebuild speed of 80+MB per second, a scrub speed of 150+MB/sec. At work, I use 
+it to store spatial data / 3d video using zfs on linux. Multiple 8 disk raidz2 
+devices connected via lsi 9200 card. I achieve a rebuild speed of 80+MB per 
+second, a scrub speed of 250+MB/sec.</p> 
+<p> If you use junk cards, you get junk performance.</p> Parent Share twitter 
+facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Dropped features  (Score:3)</h4> by snsh (968808)  writes:  &lt;{slashdot} 
+{at} {satyen.com}&gt; on Tuesday January 17, @10:34AM (#38725064) <br>
+
+<p>Dropping support for compressed folders and hard links? I use those 
+features all the time. Especially when you troubleshoot a server with a 
+subfolder containing 12GB of log files, and have no direction or policy about 
+what to do with those old log files, you could safely enable compression on the 
+folder and they magically take up less space.</p> Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by MagicM (85041)  writes: <br>
+
+<p>compressed folders + truecrypt + robocopy also makes a wonderful 
+hassle-free backup system.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<h4>You gotta be kidding me?!  (Score:5, Funny)</h4> by Robert Zenz (1680268)  
+writes:  on Tuesday January 17, @10:34AM (#38725066) Homepage <br>
+From the 
+blog post: [msdn.com] 
+<p></p> 
+<p>Today, NTFS is the most widely used, advanced, and feature rich file system 
+in broad use.</p> 
+<p>If this is true...it's a very sad world we live in...</p> Share twitter 
+facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Then I guess we live in a sad world  (Score:4, Insightful)</h4> by 
+Sycraft-fu(314770)  writes:  on Tuesday January 17, @11:33AM (#38725900) <br>
+
+<p>When it comes down to it, NTFS is a pretty good file system. If you look in 
+to things you find that the feature list for BTRFS reads an awful like a 
+feature set of current NTFS.</p> 
+<p>None of that is to say that NTFS couldn't stand improvement, and indeed it 
+is being improved, but I've yet to see the amazing widely used file system that 
+is so much better than it. Ext3 is functional, but leaves much to be desired.
+</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by spauldo (118058)  writes: <br>
+
+<p>We can come up with tons of bad things to say about NTFS. It basically 
+boils down to three things in the end, though:</p> 
+<p>1) Windows doesn't support NTFS features very well<br>
+2) NTFS is overly 
+complex and unpredictable as a disk format<br>
+3) NTFS is outdated and doesn't 
+support modern features</p> 
+<p>Point 1 is evidenced by how basic tools (explorer, file dialogs, etc.) 
+don't support many of the features. You have to use command line tools for 
+things like links. That's not a big deal on UNIX systems, but Windows isn't ho 
+</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>As the best boss I ever had used to ask:  (Score:3)</h4> by vikingpower 
+(768921)  writes:  &lt;magnaliberatio AT gmail DOT com&gt; on Tuesday January 
+17, @10:36AM (#38725090) Homepage Journal <br>
+
+<p>1) which problem does this solve ?</p> 
+<p>2) if the answer at #1) is not &quot;null&quot;, then how monkeyproof is it 
+?</p> Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>Warning  (Score:5, Funny)</h4> by TBedsaul (95979)  writes:  on Tuesday 
+January 17, @10:38AM (#38725138) <br>
+
+<p>If you're married to &quot;Hans Resilient&quot;, you'll want to start 
+running now.</p> Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>More things to patent....  (Score:5, Funny)</h4> by Sir_Sri (199544)  
+writes:  on Tuesday January 17, @10:40AM (#38725162) <br>
+
+<p>Sounds like they're due for a refresh so they can get some new patents on 
+their filesystem to make sure all the device makers need to continue to pay 
+them money.</p> Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by TemporalBeing (803363)  writes: <br>
+
+<p></p> 
+<p>Sounds like they're due for a refresh so they can get some new patents on 
+their filesystem to make sure all the device makers need to continue to pay 
+them money.</p> 
+<p>That's what exFAT was for. This is probably to make it harder for 
+non-Windows folks again since they can finally read/write to NTFS (stable since 
+late 2.6.2x series for Linux; don't know about the others).</p> 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by Sir_Sri (199544)  writes: <br>
+
+<p>No, but if you want to use long filenames on say, your android phone, and 
+being able to connect that to a windows machine MS gets a licence fee. That 
+applies to pretty much all devices. That's a FAT32 patent though, and I'm 
+wondering (somewhat seriously) if they don't have anything worthwhile for 
+enforcing on NTFS so that's part of why they're looking for something new.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>NTFS up to EXT4 speeds?  (Score:4, Interesting)</h4> by Moses48 (1849872)  
+writes:  on Tuesday January 17, @10:50AM (#38725326) <br>
+
+<p>I'm not a filesystem guru. I stick to programming in the application space 
+mostly. But I have noticed a large time discrepency compiling a large project 
+using EXT4 vs NTFS. EXT4 being multiple times faster then doing the same 
+compile on an NTFS. My question now is, will ReFS bring those times up to 
+similar values?</p> 
+<p>PS. Also looking at the dropped support for short names, i think quite a 
+few server batch files will be broken.</p> Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by SpryGuy (206254)  writes: <br>
+
+<p>I've heard anecdotal evidence (so take with a grain of salt) that doing 
+stuff on ReFS is much faster.</p> 
+<p>Keep in mind this initial release is for servers only, and NOT for boot 
+volumes, so it'll be a while (half a decade or more) before it trickles down 
+into most desktops/laptops.</p> 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by JasterBobaMereel (1102861)  writes: <br>
+
+<p>So this is for servers, not for boot devices</p> 
+<p>So what is it for, for storage most people are using network storage, where 
+the filesystem is very often not Windows Native?</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Microsoft plans to deprecate lesser-used features  (Score:5, Insightful)
+</h4> by IGnatius T Foobar (4328)  writes:  on Tuesday January 17, @10:57AM (
+#38725436) Homepage Journal <br>
+ &quot;Microsoft plans to deprecate 
+lesser-used features&quot; --- such as the reasonable level of compatibility 
+that has started to show up in non-Microsoft implementations of NTFS over the 
+last couple of years. We may be assured that ReFS is a patent minefield. Share 
+twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>When NTFS was introduced...  (Score:5, Interesting)</h4> by QuietLagoon 
+(813062)  writes:  on Tuesday January 17, @11:06AM (#38725552) <br>
+ ... it was 
+hyped, among other things, as a file system that would never need to be 
+defragmented.
+<p>.<br>
+ I have to wonder how much of the pre-release ReFS hype will prove to 
+be true in the coming years.</p> Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by TemporalBeing (803363)  writes: <br>
+ And they 
+specifically used the same FS number as HPFS which Microsoft and IBM jointly 
+developed for OS/2, and was also used by Apple for MacOS specifically to keep 
+systems from being compatible.<br>
+<br>
+ So, watch them use partition table FS 
+identifier 82 (Linux FS - Ext2/3/4) instead...for the same reason. However, 
+that has typically only hurt Microsoft as everyone else figures out how to be 
+detect the differents FS's on the actual partition, especially the Linux folks. 
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by drsmithy (35869)  writes: <br>
+
+<blockquote> 
+<p>And they specifically used the same FS number as HPFS which Microsoft and 
+IBM jointly developed for OS/2 [...]</p> </blockquote> 
+<p>The reason for that should be pretty obvious - NTFS was supposed to replace 
+HPFS in what was then still called OS/2 NT.</p> 
+<p>NTFS development started along with NT development in the late '80s. Back 
+when IBM and Microsoft were still BFFs and *years* before they would have any 
+thoughts about &quot;compatibility&quot;.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>Compatibility Grief is What I See Coming  (Score:4, Insightful)</h4> by 
+BoRegardless(721219)  writes:  on Tuesday January 17, @11:09AM (#38725592) <br>
+
+<p>All the file utilities for both Mac and PC and how you handle these 
+different systems including forward/backward compatibility, Parallels, VMWare, 
+Backup software, hard drives and tape devices will all go through teeth nashing 
+debugs as we try to get everything to work with a new file system.</p> 
+<p>That may be OK when you are an IT professional.</p> 
+<p>For someone who &quot;just wants it to work&quot; there is likely to be 
+lots of surprises ahead.</p> Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>NTFS is resilient!  (Score:5, Interesting)</h4> by DigiShaman (671371)  
+writes:  on Tuesday January 17, @11:16AM (#38725690) Homepage <br>
+
+<p>A few weeks ago, I pulled &quot;Hail Mary&quot; with regards to saving an 
+SBS 2003 server. For whatever reason, the server would not boot after a power 
+failure. The RAID cache was not dirty on the card, and the RAID volume passed a 
+manual parity consistency check. Unfortunately, the server would still not boot 
+into the OS. It kept throwing a BSOD or hung at finding the hal.dll file. 
+Attempting to access the recovery console or other F8 invoked options failed. 
+Any Server 2003 disk would throw a BSOD the moment it attempted to mount the 
+boot &quot;C&quot; volume. It wasn't the RAID drivers, but actual NTFS 
+corruption causing the kernel panic. Serious shit. However, a Server 2008 R2 
+disk<i>did</i> save my ass. I was able to mount the volume through a command 
+recovery console. A chkdsk revealed massive amounts of corruption. Server is 
+fucked right? NO! A &quot;chkdsk /R&quot; command was able to find and repair 
+all errors. No data loss what-so-ever.</p> 
+<p>Basically, the server must have been busy with installing updates or 
+something when the power died. An old UPS battery will do that. But this goes 
+to show how remarkably resilient the NTFS system is. Absolute respect!</p> Share
+twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:NTFS is resilient!  (Score:5, Insightful)</h4> by Anonymous Coward  
+writes:  on Tuesday January 17, @12:05PM (#38726362) <br>
+
+<p>Respect?? That's absolutely terrible.</p> 
+<p>A modern journalling filesystem should not experience any corruption after 
+a crash, because journal recovery is supposed to keep data structures 
+consistent.</p> 
+<p>Not only that, but NO filesystem, journalling or not, should cause a kernel 
+crash if it is corrupted.</p> 
+<p>Microsoft has done one thing well, and that is to lower the expectations of 
+their users so far, that what should have been a few second journal recovery 
+turned into a big outage and manual recovery of a massively corrupted 
+filesystem, and that gains them &quot;Absolute respect&quot;.</p> Parent Share 
+twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:NTFS is resilient!  (Score:4, Interesting)</h4> by 0123456 (636235)  
+writes:  on Tuesday January 17, @01:33PM (#38727538) <br>
+
+<p></p> 
+<p>Journalling most certainly does not rely on luck and timing! Under heavy 
+I/O, journalling can guarantee filesystem data integrity (modulo coding bugs).
+</p> 
+<p>Back in the real world, journalling is generally only used for metadata, 
+and many hard drives lie when you ask them to flush their cache to disk. So 
+even if the drive doesn't lie and your journal works, the actual file data -- 
+you know, the stuff you actually care about -- may well be trashed.</p> Parent 
+Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> </ul></li> </ul></li> 
+<li> <br>
+
+<h4>with patented algorithms nodoubt  (Score:3)</h4> by Fujisawa Sensei 
+(207127)  writes:  on Tuesday January 17, @11:35AM (#38725940) Journal <br>
+ 
+With patented algorithms to ensure that other OSes won't inter-operate without 
+paying the Microsoft Patent Trolls a fee high enough to buy a Windows license 
+for each machine in question. Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>Windows doesn't need a new disk based filesystem.  (Score:3, Interesting)
+</h4> by Anonymous Coward  writes:  on Tuesday January 17, @12:18PM (#38726540) 
+<br> 
+<p>It needs some way to securely mount a remote filesystem. SMB and 
+non-anonymous FTP shouldn't be used over the internet ever. It wouldn't be too 
+bad except that FTP is incredibly difficult to reliably tunnel due to it 
+opening connections in both directions on random ports. I would be a happy 
+person if Windows added native support for sftp.</p> Share twitter facebook <br>
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:linux driver  (Score:5, Funny)</h4> by SJHillman (1966756)  writes:  on 
+Tuesday January 17, @10:37AM (#38725122) Homepage <br>
+
+<p>There's already no Linux driver for it... so does that mean you're going to 
+switch? And if someone makes a Linux driver will you switch back to not using 
+it?</p> Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by vlm (69642)  writes: <br>
+
+<p>Maybe he means something like with SecureBoot, he will never be able to run 
+linux again, so not having a filesystem driver won't matter, or something like 
+that, so he's not switching?</p> 
+<ul> 
+<li></li> </ul> </li> 
+<li> <br>
+
+<h4>Re:  (Score:2)</h4> by stanlyb (1839382)  writes: <br>
+ I mean i am not 
+going to use this new FS. NTFS is mature enough for me, for Win7 and linux. 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<h4>Re:linux driver  (Score:5, Insightful)</h4> by NJRoadfan (1254248)  writes:
+ on Tuesday January 17, @10:40AM (#38725168) <br>
+ That might be motivation for 
+creating ReFS. Third party NTFS drivers finally became mature enough to safely 
+read/write the file system... so lets create a new undocumented filesystem and 
+make data exchange between other OSes a PITA again. It also means WinFS is 
+completely dead and never coming back. Parent Share twitter facebook <br>
+
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by MachineShedFred (621896)  writes: <br>
+
+<p>Got it in one. MacOSForge had a working driver and filesystem version for 
+ZFS on Snow Leopard. However, on the day before Snow Leopard shipped, it was 
+yanked off the download repository, because Apple couldn't come to licensing 
+terms with (then) Sun.</p> 
+<p>They had ZFS completely implemented on Mac OS X 10.6, and had to abort due 
+to licensing. The package is still kicking around out there if you go looking, 
+but I doubt anyone is maintaining it anymore. Too bad, too.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3)</h4> by rubycodez (864176)  writes: <br>
+ the fsck that 
+comes with Mac OS can't even repair certain cases of the &quot;Invalid Node 
+Structure&quot; errors (some third party products averaging about $100 each 
+claim to handle those cases). Really Apple should either make their shit 
+fixable or get a more modern file system 
+<ul> 
+<li></li> </ul> </li> </ul></li> </ul></li> 
+<li> <br>
+
+<ul> 
+<li></li> </ul> 
+<ul> 
+<li> <br>
+
+<h4>Re:  (Score:3, Informative)</h4> by amliebsch (724858)  writes: <br>
+
+<p>You're reversing cause and effect. A volume isn't boot because it's C:\, 
+it's assigned C:\ because it's boot. Behind the scenes the drive letters don't 
+exist. It's an abstraction, in a similar way that sda, sdb, sdc are.</p> 
+<ul> 
+<li></li> </ul> </li> </ul></li> 
+<li></li> </ul> 
+<p><b>There may be more comments in this discussion. Without JavaScript 
+enabled, you might want toturn on Classic Discussion System in your preferences 
+instead.</b></p> <br>
+<br>
+<br>
+Slashdot <br>
+Archived Discussion Moderate 
+Moderator Help Delete 
+<ul> 
+<li> Get more comments </li> 
+<li>100 of 459 loaded</li> </ul> 
+<ul> 
+<li>Submit Story</li> </ul> <br>
+
+<blockquote> 
+<p>&quot;The lesser of two evils -- is evil.&quot; -- Seymour (Sy) Leon</p> 
+</blockquote> 
+<ul> 
+<li>FAQ</li> 
+<li>Story Archive</li> 
+<li>Hall of Fame</li> 
+<li>Advertising</li> 
+<li>Terms</li> 
+<li>Privacy</li> 
+<li>About</li> 
+<li> Feedback  If you have problems or questions with Slashdot, email us at 
+<em>feedback</em> at <em>this domain</em>. </li> 
+<li>Slashdot Japan</li> </ul>  Trademarks property of their respective owners. 
+Comments owned by the poster.&copy; 2012 All Rights Reserved. Geeknet, Inc. <br>
+Close 
+<h3> Slashdot <br>
+</h3> Working... <br>
+
+</body>

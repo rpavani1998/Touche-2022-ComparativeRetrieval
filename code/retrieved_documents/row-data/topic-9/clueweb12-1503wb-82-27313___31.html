@@ -1,0 +1,667 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>partition | Linux Help</title>
+<body>
+
+<ul> 
+<li>Home</li> 
+<li>About Us</li> 
+<li>Blogroll</li> 
+<li>Contact</li> 
+<li>Ubuntu Help</li> 
+<li>Web Hosting Coupon Codes</li> </ul> 
+<h2>Linux Help</h2> 
+<h3>Free Linux help, tips &amp; tricks!</h3> 
+<h2>Tag: partition</h2> 
+<h2>Tutorial: Install Linux Mint 12 KDE Using BTRFS File System</h2>  Tuesday, 
+April 10th, 2012 |Learn Linux - Linux help | 1 Comment <br>
+<br>
+
+<p>By Emma Rosenberg</p> 
+<p></p> 
+<p>In this tutorial, the reader will learn how to install the Linux Mint 12 
+KDE on a btrfs filesystem. The B-tree File system (abbreviated to acronym 
+Btrfs) has not matured far enough to be used as a default file system on Linux 
+machines. Fortunately, those who choose to run Linux with btrfs do have options 
+on installing useful components such as the highly coveted Linux Mint 12 KDE. 
+For those who are not familiar, Linux Mint 12 KDE is a linux distribution based 
+on the Ubuntu desktop operating system, and is gaining massive popularity in 
+the past couple of months in the world of the low cost dedicated server running 
+Linux. Due to popular demand, this tutorial will teach how to precisely install 
+Linux Mint KDE on a btrfs file system.</p> 
+<p>Before we proceed, do keep in mind that this tutorial is optimized for the 
+current version of Linux Mint made available on their main website on January 
+11,2012, which is still a release candidate. Regardless, the stable version 
+will likely have an identical installation process as the current release 
+candidate, so it should not affect the validity of this article.</p> 
+<p>Installing a Linux distribution on a btrfs file system will require three 
+partitions. The first partition is a boot partition, which is mounted at the 
+/boot. The second partition is the root partition, which is mounted at /. The 
+last partition is for the Swap partition, which provides disk space that the 
+system will use as virtual memory.</p> 
+<p>In order to setup these partitions, download the installation file for the 
+distribution from the Linux Mint download page. Stick the downloaded package 
+onto either a DVD or a USB stick, and boot the computer accordingly.</p> 
+<p>After the computer has booted, the Linux Mint 12 KDE installation should be 
+on your desktop. Click on the &ldquo;Install Linux Mint&rdquo; icon on the 
+desktop. Click the Continue button to proceed onto the next step. Two disk 
+partitioning options are available, default and manual. Make sure you use 
+Manual, so that we can install it on a Btrfs file system.</p> 
+<p>Selecting Manual will pull up the advanced disk partitioning tool. Make 
+sure the target disk has been initialized before you create the partitions. 
+Select the appropriate disk and click on the New Partition Table button. There 
+will now be a free space option on your menu. Select the free space, and then 
+click on the Add button so that the first partition can be created.</p> 
+<p>The first partition will be mounted at /boot. Make sure it is a Primary 
+partition out of the two options. A disk space of 500 MB should be plenty for 
+this partition, so go ahead and put 500 MB. Even though we are installing on a 
+Btrfs file system, make the boot partition as a Ext4 file system. It will still 
+work properly.</p> 
+<p>Now that the boot partition has been created, select the remaining free 
+space and once again, press the Add button to create the next partition. This 
+time this partition is for /, which is the main file system. Instead of 
+choosing Primary, choose Logical. The majority of the remaining disk space can 
+be put on this file system, leaving only 4 GB for the last partition. Then, 
+make sure the btrfs journaling file system option is chosen for this partition. 
+Mount point will be set as /. Press ok, and the second partition is finished.
+</p> 
+<p>Lastly, choose the remaining free space and press Add button. Depending on 
+the disk space, allocate 2 to 4 GB for the Swap partition. Make the partition 
+type Logical. Finally, use the partition as swap area under the Use as drop 
+down menu. Press ok, and the third and last partition is created.</p> 
+<p>Double check that all three of these partitions were created properly. If 
+the list checks out, click on Install Now. Congratulations, you have now 
+installed Linux Mint 12 KDE using the Btrfs file system!</p> 
+<p>Learn more about free and popular Linux distributions to use on your low 
+cost dedicated server.</p>  Tags: 12, btrfs, install, kde, Mint, partition <br>
+
+<h2>How to Migrate From Windows to Linux</h2>  Saturday, December 10th, 2011 | 
+Learn Linux - Linux help | No Comments <br>
+<br>
+
+<p>By Mario Pesce</p> 
+<p><strong>Introduction</strong></p> 
+<p>When a few years ago I decided to move from Windows to Linux (I created on 
+my machine separate partitions for Linux and booted from Lilo or Grub either 
+into Windows or into Linux, according to job requirements.</p> 
+<p>I normally used my laptop PC during the day in a company that had a Windows 
+based LAN and therefore I normally had to boot in Windows during the day 
+whereas I would boot into either Windows or Linux at home. This approach has a 
+few disadvantages as follows:</p> 
+<ul> 
+<li>My work e-mails were in Microsoft Outlook and I had to boot under Windows 
+to access them.<br>
+ I used KMail (and later Mozilla Thundirbird) for my 
+personal e-mails and I had to boot under Linux to access them.</li> 
+<li>I could access Window folders from Linux and copy data, but I could not 
+access any of the Linux folders from Windows.</li> </ul> 
+<p>I concluded that there should have been a better way to use my PC and I 
+looked for a solution to access both Linux and Windows applications without 
+rebooting.</p> 
+<p>I investigated some of the available products. I found that the wine or 
+CodeWeavers Crossover supported most common Microsoft Windows applications, but 
+some other ones would not work. VMWare looked interesting, but finally I 
+decided to buy<strong>Win4Lin</strong> (originally developed by Netraverse to 
+support only Windows 95, 98 or ME, even if it allowed to install and use many 
+more recent applications such as Office 2000 or other ones developed for XP 
+without a glitch.</p> 
+<p>Some good advantages that I found in Win4Lin are the following:</p> 
+<ul> 
+<li>Win4Lin has a very small overhead and pretty good performance. I 
+discovered, after the installation, that sometimes applications run faster 
+under Win4Lin than in the original Windows environment. The performance is due 
+to the fact that Win4Lin is not really an emulator; it creates an environment 
+where Windows applications run in native mode. This is done by providing 
+modules that allow Windows to run as a Linux process.</li> 
+<li>The installation of Win4Lin is pretty straightforward.</li> </ul> 
+<p>Recently I had to install Linux on a new machine and I decided to install 
+both a new OpenSUSE 11.0 distribution and the new version of<strong>Win4LinPro
+</strong> that now supports Windows 2000 and XP (according to the company Vista 
+should also be supported in future).</p> 
+<p>The objective of this report is to give you an overview of the new 
+Win4LinPro application and of the approach that I followed to migrate my dual 
+boot machine to a single boot system.</p> 
+<p><strong>Installing Win4LinPro</strong></p> 
+<p>Win4LinPro is now distributed and supported by Virtual Bridges. You can 
+easily order it online at the Win4Lin.com site and download either an ISO 
+version or one of the Debian or RPM packages. Virtual Bridges confirms the 
+order with an e-mail which includes also the licence code that must be entered 
+during the installation.</p> 
+<p>Since I had an RPM based Linux distribution (OpenSuSE 11.0), I downloaded 
+the RPM package. I checked the instructions of the UserManual which require to 
+pre-install also the gcc and the kernel-source packages and then I could 
+install the RPM without any problems.</p> 
+<p>The installation procedure of the original Win4Lin was more complex because 
+it required to download a special Netraverse-enabled kernel according to each 
+distribution. The new installer does not require this step because it 
+automatically compiles and installs the kernel modules needed to support 
+Win4LinPro.</p> 
+<p>The Windows installation has also become simpler. The original product 
+required to copy files from your Windows 95, 98 or ME CD to disk and eventually 
+install Windows. In the new version you can use the win4console command to 
+request a Windows session installation and to define how it should be performed 
+(installation directory, installation media etc.) You can specify that you want 
+to install from the XP CD and the installation is performed as if it were a 
+normal XP installation. The win4console allows also to install multiple copies 
+of Windows and the system allows to run two of them concurrently (this could be 
+useful if you want to have a Windows XP and a Windows 2000 session).</p> 
+<p>After the installation is complete, if you have used the defaults, you will 
+find a Windows icon on your desktop and you can use it to start or shut-down 
+your Windows session terminal. Alternatively you can use the win4 shell command.
+</p> 
+<p>You can install new applications in Windows in the same way as you would do 
+with a normal Windows system. I installed various applications such as 
+Microsoft Office, Acrobat Reader, Eudora, HotMetal PRO and a new version of 
+Internet Explorer without any problem.</p> 
+<p>I had some problems with the original installation to use a COM device for 
+a dial up connection. The new version allows Windows to connect to almost any 
+type of Ethernet network from regular Internet access to Active Directory 
+authentication, and anything in between.</p> 
+<p><strong>Using Win4LinPro</strong></p> 
+<p>Win4LinPro creates an interesting Windows environment which is pretty well 
+integrated with Linux.</p> 
+<p>The personal Windows environment is normally created by win4LinPro in the 
+home directory of the user who performs the installation. When the installation 
+is complete, you will find two image files with the .IMG suffix which are used 
+by Windows as the C: drive (used to store Windows programs and data) and the D: 
+drive (used to store user settings).</p> 
+<p>By default Win4LinPro automatically configures shared folders so that 
+Windows can access Linux files and Linux can access Windows files. Your Linux 
+home directory is accessible from the Windows HOSTHOME path. You can also use 
+the shared documents directory from Windows by double clicking on the Windows 
+My Documents icon and accessing the path HOSTDocuments.</p> 
+<p>The Win4LinPro environment is surely much better integrated with Linux than 
+a native Windows installation and you will have at your disposal the power of 
+Linux and Windows applications without any need to reboot.</p> 
+<p>Moreover Win4LinPro offers greater virus protection than a stand-alone 
+Windows installation. You can easily save your Windows directory as a tar 
+archive and many viruses will not have any effect as explained below:</p> 
+<ul> 
+<li>Boot sector or other boot time viruses. There is no Windows boot sector 
+and therefore they are ineffective.</li> 
+<li>FAT32, VFAT or NTFS related viruses. Win4Lin installs Windows files in 
+subdirectories of the Linux filesystem and therefore these viruses are 
+ineffective.</li> 
+<li>Executable files viruses. These can still attack, but will not affect the 
+Linux system.</li> 
+<li>Macro viruses. These can still attack Windows macros, but you can use 
+Linux permissions to make them write protected.</li> </ul> 
+<p>Another protection is given by the snapshot running mode which insures that 
+data in the C: virtual drive cannot be changed</p> 
+<p>Win4Lin Limitations and Peculiarities. Following main points should be 
+considered:</p> 
+<ul> 
+<ul> 
+<li>Win4Lin offers different networking options that you can choose during 
+installation and modify later (if needed). The basic TCP/IP and UDP/IP 
+networking is the most secure and provides the best use of resources. If you 
+need more advanced networking options you can use the NAT neworking or the 
+Bridged networking options well explained in the UserManual.</li> 
+<li>Win4LIN does not support direct Windows access to USB devices. However, if 
+they are configured in Linux, they can be accessed indirectly (You can use the 
+My Host Computer function from the start menu to access devices mounted 
+automatically by Linux)</li> </ul> </ul> 
+<p>.</p> 
+<p><strong>Removing the original Window partition</strong></p> 
+<p>One negative point of having both an original Windows partition and the 
+Win4Lin installation is the waste of space (for instance I had MS Office 
+applications installed on both partitions). This setup could offer better 
+security, in case of problems to either the Windows or Linux installation, but, 
+at some point, I decided that I could use better the disk space and work 
+without double booting with Linux and Windows under Win4LinPro.</p> 
+<p>To avoid loosing useful data, I performed following activities:</p> 
+<ul> 
+<li>I identified the Outlook mail boxes by using the Windows Find option with 
+&ldquo;*.pst&rdquo; and copied them to the Win4LinPro environment.</li> 
+<li>I identified the Outlook Express maild boxes by using the Windows Find 
+option with &ldquo;*.dbx&rdquo; and copied them to the Win4LinPro environment.
+</li> 
+<li>I identified my Eudora mail boxes (used for my personal mail) by using the 
+Windows Find option with &ldquo;*.mbx&rdquo; and copied them to the Win4LinPro 
+environment.</li> 
+<li>I found the &lsquo;Favorites&rsquo; folders used by Internet Explorer and 
+I copied it and its sub-folders to the Win4LinPro environment.</li> 
+<li>I copied the &lsquo;My Documents&rsquo; folder and all other folders that 
+I used in my Windows environment</li> </ul> 
+<p>Making the above copies in the Win4LinPro environment is relatively easy, 
+because Win4LinPro can access mnt directly. You can mount the original Windows 
+partition in the Linux /mnt directory by using a command such as:</p> 
+<p>$sudo mount /dev/sdb3 /media/windows -t vfat -o umask=000</p> 
+<p>Once the partition is mounted, you can access it in the Win4LinPro Windows 
+session in the mnt Windows folder.</p> 
+<p>Once I was satisfied that all important data existed in the Win4LinPro 
+environment, I decided to reformat the Windows partition and copy my Linux 
+/home directory, that was included in the main root hierarchy, to a separate 
+partition. This activity is described in detail below.</p> 
+<p><strong>Using the freed partition for Linux</strong></p> 
+<p>A good description of how to move /home to a different partition can be 
+found in a good tutorial by Daniel Robbins at IBM DeveloperWorks. The main 
+steps are as following:</p> 
+<ul> 
+<li>Create a filesystem in the new partition by using a command such as mkfs 
+/dev/???</li> 
+<li>Mount the new filesystem in /mnt with a command such as mount /dev/??? 
+/mnt/newhome</li> 
+<li>Drop to single user mode (init 1)</li> 
+<li>Change to the current home directory and enter a copy command such as cp 
+-ax * /mnt/newhome. The ax option causes cp to copy in recursive mode by 
+preserving all file attributes.</li> 
+<li>Rename the old /home to /home.old by using the command mv /home /home.old 
+and mount the new one with mount /dev/??? /home.</li> </ul> 
+<p>When you are sure that everything works correctly, you can remove the 
+/home.old directory.</p> 
+<p><strong>Conclusions</strong></p> 
+<p>I believe that the approach described above allows an optimal use of both 
+Linux and Windows resources.</p> 
+<p>It is often difficult to use only Linux, because one normally has to work 
+in Windows based LANs, interact with other Windows or Linux users or just 
+because one is too lazy to learn new applications instead of those normally 
+used in a Windows environment.</p> 
+<p>A double boot system is a inconvenient to use. The solution proposed above 
+allows a much better usage of the computer resources and time.</p> 
+<p>Mario Pesce &ndash; Computer consultant</p> 
+<p>email: mario@datamission.co.uk</p> 
+<p>blog: http://mariopesceuk.blogspot.com/</p>  Tags: boot, dual, Linux Hosting
+,partition, security <br>
+
+<h2>Understanding Linux Partition Types &amp; Linux Hard Disk Partitioning 
+&ndash; System Admin Training</h2>  Monday, May 23rd, 2011 | Learn Linux - 
+Linux help | No Comments <br>
+<br>
+
+<p>Understanding Linux Partition Types &amp; Linux Hard Disk Partitioning 
+&ndash; System Admin Training</p> 
+<p>By Clyde E. Boom</p> 
+<p>When you&rsquo;re doing Linux disk partitioning (during or after installing 
+Linux) you will likely run into situations where you can&rsquo;t create 
+partitions &ndash; and can&rsquo;t do other tasks that you&rsquo;d like to do 
+with partitions!</p> 
+<p>This is when you need to understand the Linux hard disk partitioning 
+&ldquo;rules&rdquo; described below.</p> 
+<p><strong>Linux System Admin Training Tips: </strong> Keep in mind that the 
+&ldquo;rules&rdquo; below apply to using the Linux fdisk command, which is the 
+most commonly used disk partitioning utility. You may be able to 
+&ldquo;break&rdquo; these rules with other hard disk partitioning utilities.</p>
+<p><strong>&ldquo;Setting Up&rdquo; Linux Hard Disk Partitions</strong></p> 
+<p>You can &ldquo;set up&rdquo; and configure your Linux partitions while 
+using the installation routine of most Linux distributions &ndash; and also by 
+using the Linux fdisk and parted commands &ndash; and some other partitioning 
+commands.</p> 
+<p>Also, as a Linux System Administrator, you will also need to manage 
+(create, delete, and modify) partitions on existing Linux systems (after the OS 
+has been installed). To do this, you use the fdisk command / utility or the 
+parted command / utility &ndash; and there are also other disk partitioning 
+commands and utilities.</p> 
+<p>There are several Linux hard disk partition &ldquo;types&rdquo;, such as 
+primary, extended and logical &ndash; and there are also strict 
+&ldquo;rules&rdquo; about using these Linux partition types.</p> 
+<p><strong> Linux Primary Partitions</strong></p> 
+<p>The disk partitioning utility in a Linux installation routine and the fdisk 
+command (and other disk partitioning commands) can create a maximum of four 
+Primary partitions per hard disk drive.</p> 
+<p>If you need more than four hard disk partitions, you need to create at 
+least one Extended partition and then create one or more Logical partitions in 
+the Extended partition.</p> 
+<p>To be able to create an Extended partition on a hard disk that already has 
+four Primary partitions, you need to delete one of the primary Partitions and 
+then create the Extended partition. So, you can have a maximum of three Primary 
+partitions if you are creating an Extended partition on a Linux hard disk.</p> 
+<p><strong> Linux Extended Partitions</strong></p> 
+<p>A Linux hard disk must have at least one Primary partition before it can 
+have an Exteneded partition.</p> 
+<p>fdisk cannot create more than one Extended partition per drive. To be able 
+to use the disk space in an Extended partition, it must have at least one 
+Logical partition (within the Extended partition).</p> 
+<p><strong> Linux Logical Partitions</strong></p> 
+<p>Extended partitions contain one or more Logical partitions. An Extended 
+partition is not accessed directly. It is accessed via one or more Logical 
+partitions within the Extended partition. If a hard disk has an Extended 
+partition, then it has at least one Logical partition in that partition.</p> 
+<p><strong>Partition Numbering</strong></p> 
+<p>The maximum number of Primary partitions that fdisk can create is four and 
+the maximum number of Extended partitions that it can create is one.</p> 
+<p><strong>Remember, </strong>you must have at least one Primary partition 
+before you can have an Extended partition. You can only have one Extended 
+partition and the maximum number of the<strong><em>combination</em></strong> of 
+Primary and Extended partitions is four.</p> 
+<p>The Linux disk partitioning concepts covered here apply to: Debian, Red 
+Hat, Fedora, Ubuntu, Slackware, SUSE, openSUSE &ndash; and ALL other Linux 
+distributions.</p> 
+<p>By the way&hellip;do you want to learn exactly how to use Linux and run 
+Linux commands for Linux System Administration and get real, practical Linux 
+training experience by running hundreds of examples of Linux commands?</p> 
+<p>Just click to download my free new Linux commands training course book and 
+Linux audio podcast (.mp3) files here:Linux Commands Training Mini-Course</p> 
+<p>Clyde Boom says &ldquo;Learn how to use Linux commands with easy, 
+self-paced Linux training materials that show you how to run hundreds of 
+examples of the essential Linux System Administration commands &ndash; and get 
+that new and better job, promotion, raise &ndash; or keep your current 
+job!&rdquo;</p> 
+<p>You can get your instant access to my free Linux commands training course 
+at:http://www.LinuxCommandsTrainingCourse.com</p>  Tags: fdisk, partition <br>
+
+<h2>Linux Training &ndash; Installing Linux on a Windows System</h2>  Tuesday, 
+November 24th, 2009 |Learn Linux - Linux help | No Comments <br>
+<br>
+
+<p>Linux Training &ndash; Installing Linux on a Windows System<br>
+ By Clyde 
+E. Boom</p> 
+<p>The best way to get Linux training and Linux administration experience is 
+to start by getting, installing and running Linux on a system. This allows you 
+to actually work with Linux to run programs and learn Linux commands.</p> 
+<p>If you don&rsquo;t want to buy a computer just for the purpose of running 
+Linux, you can install Linux on your Windows system. You do this to create what 
+is called a &ldquo;dual boot&rdquo; (Linux and Windows) system.</p> 
+<p>After you install Linux and boot your system, a menu appears allowing you 
+to boot into Windows or boot into Linux!</p> 
+<p>7 Steps to Install Linux on Windows and Create a Dual Boot System</p> 
+<p>1. Back up your Windows programs and data</p> 
+<p>If you make a mistake when you install Linux on Windows you can loose all 
+your Windows programs and data! Also, if you install Linux and then remove it 
+later, you may not be able to boot into Windows.</p> 
+<p>Some people have run dual boot Linux systems without losing programs and 
+data, but it&rsquo;s good to know this downside. It&rsquo;s extra incentive to 
+do a backup.</p> 
+<p>Doing a backup is like buying insurance. If you don&rsquo;t need it, fine. 
+But if you do, you&rsquo;ll be very glad you took this extra step.</p> 
+<p>2. Get Linux on CD or DVD</p> 
+<p>Select a Linux distribution (a.k.a. distro) and either download it and burn 
+it to disk or buy it and have it delivered.</p> 
+<p>Linux Tip: To get Linux delivered, just do an Internet search for 
+&ldquo;linux cd&rdquo; and you can have it mailed to you anywhere in the world 
+for a very small fee.</p> 
+<p>3. Create empty unpartitioned disk space for Linux</p> 
+<p>Make sure your system has enough empty unpartitioned disk space for Linux. 
+This isn&rsquo;t just free disk space, as seen from within Windows. This is 
+empty disk space that isn&rsquo;t seen from within Windows.</p> 
+<p>4. Document your Linux installation settings</p> 
+<p>During the Linux installation, you need to specify some system settings. 
+These include the Linux software programs and desktop(s) you want installed, 
+networking settings, and disk partition sizes.</p> 
+<p>5. Start the Linux installation routine</p> 
+<p>To start installing Linux, you need to shut down your system and boot it 
+with Linux CD / DVD number 1.</p> 
+<p>Some systems are set up to automatically boot from a CD / DVD if 
+there&rsquo;s one in the drive, and some need to have a system setting made. On 
+other systems, you may simply need to hold down a key, like the letter 
+&ldquo;c&rdquo; to boot Linux from CD / DVD.</p> 
+<p>6. Follow the prompts to specify settings and create a user</p> 
+<p>Linux systems have users and these users have names. You log in with a user 
+name and password to work on a Linux system.</p> 
+<p>You work as the user named &ldquo;root&rdquo; to do Linux system 
+administration. The root user is always created automatically during the 
+installation. However, for security reasons, you should never log in to a Linux 
+desktop as the root user.</p> 
+<p>As the installation routine runs, you will be asked if you want to create 
+users. Always create at least one &ldquo;regular&rdquo; (non- root) user and 
+give this user a password.</p> 
+<p>7. Have fun!</p> 
+<p>The Linux operating system is an incredible phenomenon. By getting it, 
+installing it, and running it, you can get tons of experience working with it. 
+Get a mitt and get in the game!</p> 
+<p>And now I would like to offer you free access to my Linux Commands Training 
+Mini-Course, a 7 Lesson, Daily Mini-Course, including the free Linux Commands 
+ebook and Linux audio podcasts &ndash; showing you how to get started learning 
+how to use Linux commands.</p> 
+<p>You can get your instant access at: 
+http://www.LinuxCommandsTrainingCourse.com</p> 
+<p>From Clyde Boom &ndash; The Easy Linux Training Guy &ndash; Easy, 
+self-paced Linux training &ndash; In Plain English!</p>  Tags: boot, dual, 
+partition, Windows <br>
+
+<h2>Beginners Under Gnu &ndash; Linux? There Are Five Errors to Be Avoided</h2>
+ Saturday, October 3rd, 2009 |Learn Linux - Linux help | No Comments <br>
+<br>
+
+<p>Beginners Under Gnu &ndash; Linux? There Are Five Errors to Be Avoided<br>
+ 
+ByDidier Pradel</p> 
+<p>To give the desire for testing linux so that it is one day your operating 
+system, is one of the objectives of this site. The new users of GNU/Linux often 
+make the same errors when they test GNU/Linux for the first time. The reasons 
+of these errors are numerous: because GNU/Linux is a different OS; because 
+Windows gives bad habits; because the user chooses the bad distribution and 
+much of other possibilities. Here some solutions with five current problems 
+under GNU/Linux.</p> 
+<h2>1- To choose its distribution:</h2> 
+<p>There is much opinion on the GNU/Linux distribution with which you will 
+have to start, and the majority are not relevant.</p> 
+<p>After having to seek, to study, read the opinions of users, with the wire 
+of time, on many distributions, two points arise:</p> 
+<p>the first: GNU/Linux Bureau is a question of taste,</p> 
+<p>the second: not a distribution does not join together the whole of the best 
+options.</p> 
+<p>For start with GNU/Linux, it is to advise to choose among the following 
+distributions, withoutorder:</p> 
+<p>Professional SUSE and, in the future, openSUSE</p> 
+<p>Linspire Xandros</p> 
+<p>Fedora Core</p> 
+<p>Mandriva (in the past Mandrake)</p> 
+<p>Ubuntu</p> 
+<h2>2- Is Linux free?</h2> 
+<p>Some claim that all that is related to Linux is free. A good software 
+deserves that one pays for him it is obvious, but the price must be reasonable 
+the majority of the commercial distributions GNU/Linux for the office costs 
+less than $100 and is really very rich. The term distribution meaning that a 
+great number of software are gathered they also contain thousands of 
+applications for the office. The commercial distributions GNU/Linux include 
+word processing softwares, P2P, spreadsheet, presentation on transparency, 
+edition file sharing of video, binary compatibility with Windows, virtual 
+machine, reading of DVD, Web server, Web navigator, and much of others.</p> 
+<h2>3- The partitions:</h2> 
+<p>With Windows, you are accustomed to only one partition on your hard disk. 
+It contains the operating system, the applications, the data, and a great space 
+for your file of Windows exchange (the software uses space on the hard disk 
+when the read-write memory is not enough any more). GNU/Linux functions 
+differently. In order to obtain the best performances of the system, the file 
+of exchange is on a separate partition. If you have 512 MB or 1GB of read-write 
+memory the size the partition of exchange (swap) should not be lower than 512 
+MB, and not lower than 1GB if you have less than 512 MB of read-write memory.
+</p> 
+<p>It is useless to make a larger partition if you use your machine only for 
+office automation applications. With this solution you can safeguard the 
+remainder of your personal and software data on a second partition. It is a 
+good solution if you never change hard disk or operating system. But if you 
+wish to preserve your data and the preferences of the applications which you 
+use, it is to better do two other partitions for the operating system, the 
+other for your data and your adjustments. that thus gives 1 partition root 
+&ldquo;/&rdquo;, 2 partition &ldquo;/home&rdquo;. 3 swap the size depends on 
+the number of software which you install, but 20 GB are more than sufficient 
+for the partition root &ldquo;/&rdquo;root, the largest part of your disc must 
+be to hold has&rdquo; /home &ldquo;, because it is there that you will store 
+images, films, and other large files. It is wise to give 75% of the total disk 
+space to the repertory /home, the majority of the GNU/Linux distributions can 
+make the partitions for you, but they have all various ideas on the number of 
+partitions to create and their size. you must decide if you want to change the 
+default values. You can preserve your Windows partition and thanks to the 
+dual-boot to choose to start your computer either under Windows or under 
+GNU/Linux. You must install Windows in first to make only one partition but not 
+too large not to obstruct the installation of GNU/Linux after. And if you want 
+to exchange files between the Windows partition and the GNU/Linux partition, 
+use the filing system FAT32 to format your Windows partition (Window does not 
+read the partition linux and linux does not read partitions NTFS whereas it can 
+read and write easily on a system FAT32).</p> 
+<h2>4- The Permissions:</h2> 
+<p>With Windows, you are in general either an administrator, or a user with 
+the rights of administrator. With GNU/Linux, you are in general connect as a 
+user to restricted access, and you pass as a root (i.e. administrator under 
+Windows) when you must change important parameters of the system or regulate 
+the hardware configuration or add or remove a program. This organization based 
+on the permissions makes your system protected and one is accustomed quickly, 
+although that is strange at the beginning.</p> 
+<h2>5- To give up with the first problems:</h2> 
+<p>GNU/linux is not Windows thus you enter a new world with new rules. To 
+learn has to evolve/move in this new world will take time, it is normal. It 
+will be necessary to learn from new software, a new interface, with a new 
+manner of making. but once passed this stage hardest is made. The community the 
+forums are sources of support as well as the site of your distribution if you 
+chose a distribution commercial. To learn an operating system is a challenge. 
+Essayer Linux is not in fact so hard and a thing is sure in any case: more you 
+are frustrated with Windows and its problems, more the transition to GNU/Linux 
+will be easy. Good luck! Those which want to install linux on a laptop will 
+find hereThe linux laptop support a list of the laptop on which that was 
+already done.</p> 
+<p>Didier Pradel is the webmaster of laptop support and The linux laptop 
+support where you can find many useful informations, and help for your lovely 
+laptop.</p>  Tags: Fedora, GNU, Linspire, partition, permissions, SUSE, ubuntu, 
+Xandros <br>
+
+<h2>Dual booting Linux and Windows</h2>  Monday, May 11th, 2009 | Arizona Linux
+ |No Comments <br>
+<br>
+
+<p><strong>Multi boot</strong> or <strong>Multi booting</strong> (usually 
+<strong>dual booting</strong>, but many OSes can be booted from the same 
+computer) is the act of installing multiple operating systems on a computer, 
+and being able to choose which one to boot when switching on the computer 
+power. The program which makes multi booting possible is called a boot loader.
+</p> 
+<p>Multi booting is useful in many situations, such as those where several 
+pieces of software require different operating systems and cannot be run on a 
+single system. A multi boot configuration will allow a user to use all of this 
+software on one computer. Another reason for setting up a multi boot system can 
+be that one wants to investigate or test a new operating system without 
+switching completely. Multi booting allows one to get to know the new system, 
+configure all applications needed and migrate data before making the final step 
+and removing the old operating system. This is often accomplished by using a 
+boot loader that can boot more than one operating system, such as NTLDR, LILO, 
+or GRUB.</p> 
+<p>Multi booting can also aid software developers where multiple operating 
+systems are required for development or testing purposes. Having these systems 
+on one machine can greatly reduce hardware costs. (However hardware costs are 
+counterbalanced by system management costs, and the costs of the unavailability 
+of the software that cannot be run at any given moment. Another solution to 
+these problems is to use virtual machine software to emulate another computer 
+from within the operating system of choice.)</p> 
+<p>A popular multi-boot configuration is a mixed-OS system in which Linux is 
+one of the secondary (or primary) installations. In terms of business strategy, 
+Windows does not facilitate or support multi-boot systems, other than allowing 
+for partition-specific installations, and no choice ofboot loader is offered. 
+To deal with such installs requires consultation with Linux afficionados and 
+techs, who are typically well-versed in the concept.</p> 
+<p>The basic concept involves partitioning a disk, to accommodate each planned 
+installation, including separate partitions for data storage or backups. The 
+partitions should be done with a Windows partitioning tool (diskpart,Disk 
+Management), rather than a Linux tool (parted, QTparted), for the simple reason 
+that Windows is more particular (cf. &ldquo;picky&rdquo;) about how the 
+partition table is written and will occasionally complain or even show errors 
+if its installed to a Linux-created (or sometimes modified) partition table. 
+Linux tools are powerful, (ie. shrinking an NTFS drive) but Windows has 
+particularities which must be considered. (See master boot record and extended 
+boot record).</p> 
+<p>Windows should be installed to the first primary drive. Though Windows can 
+be installed to another drive, certain particularities (drive letter 
+assignments, expected system partition number) can make such installations 
+problematic, while Linux installations on primary or logical drives have no 
+such problems whatsoever.</p> 
+<p>The boot manager/loader should be installed by the Linux distribution. All 
+Windows installations will be easily found by Linux, but Windows boot managers 
+do not find Linux installations (nor does Windows deal natively with Linuxfile 
+systems).</p> 
+<h3>Get Linux Today!</h3> 
+<p>Excellent resources below:</p> 
+<p>How to dual boot Windows XP and Linux (XP installed first) &mdash; the 
+step-by-step guide with screenshots</p> 
+<p>Illustrated Dual Boot Site &ndash; Awesome site with all things Linux!</p>  
+Tags:boot, dual, grub, LILO, linux, multi, NTFS, NTLDR, partition, partitioning,
+Windows <br>
+Back to top <br>
+ &nbsp;&nbsp;&nbsp; <br>
+&nbsp;Please enjoy my 
+blog!<br>
+ Get Linux now! <br>
+<br>
+<br>
+ Click Here for my Hostgator <br>
+
+1&cent; PROMO CODE! <br>
+<br>
+
+<h3>Search</h3> <br>
+
+<h3>Tags</h3> apache bash beginner boot BSD cli command console damn debian DSL
+espa&ntilde;ol filesystems Fluxbox FOSS games gnome GNU host hosting how-to kde 
+linux Linux Hosting live cd ls man Mint mysql partition php ps3 recovery script 
+security server shell small terminal ubuntu UNIX vs Windows wireless xfce <br>
+
+<h3>Meta</h3> 
+<ul> 
+<li>Log in</li> 
+<li>Entries RSS</li> 
+<li>Comments RSS</li> 
+<li>WordPress.org</li> </ul> 
+<h3>&nbsp;</h3>  April 2012 M T W T F S S <br>
+&laquo; Feb &nbsp; &nbsp; <br>
+
+&nbsp; 1 <br>
+2 3 4 5 6 7 8 <br>
+9 10 11 12 13 14 15 <br>
+16 17 18 19 20 21 22 
+<br> 23 24 25 26 27 28 29 <br>
+30 &nbsp; <br>
+<br>
+
+<h3>Recent Posts</h3> 
+<ul> 
+<li>How to Set Up a Dhcp Server on Linux Mint 12</li> 
+<li>Tutorial: Install Linux Mint 12 KDE Using BTRFS File System</li> 
+<li>System Resource Comparison of several distros running lightweight Linux 
+Window Managers</li> 
+<li>Dual Boot Windows 7 and Ubuntu on Two Hard Drives</li> 
+<li>Add Flash player to Linux Mint 12 Live CD in 3 steps</li> </ul> 
+<h3>Recent Comments</h3> 
+<ul> 
+<li>Thai (1 comments) on Tutorial: Install Linux Mint 12 KDE Using BTRFS File 
+System</li> 
+<li>Matias (1 comments) on El Mejor Sistema Operativo Linux &ndash; Algunas 
+cosas importantes a tener en cuenta</li> 
+<li>ps3 (2 comments) on System Resource Comparison of several distros running 
+lightweight Linux Window Managers</li> 
+<li>Arnold (1 comments) on Daemons in Linux</li> 
+<li>red5 server (1 comments) on What Is The Difference Between Windows And 
+Unix Web Hosting?</li> </ul> 
+<h3>Categories</h3> 
+<ul> 
+<li>Arizona Linux </li> 
+<li>buy linux books </li> 
+<li>international Linux </li> 
+<li>Learn Linux &ndash; Linux help </li> 
+<li>Linux Hosting </li> 
+<li>random </li> </ul> 
+<h3>Blogroll</h3> 
+<ul> 
+<li>Bihlman Computer Services</li> 
+<li>Prescott Linux</li> </ul> 
+<h3> Yahoo! Linux news</h3> 
+<ul> 
+<li>20-million new Ubuntu Linux PCs in 2012? April 14, 2012</li> 
+<li>Proprietary Software for Linux: A Good Idea? April 14, 2012</li> 
+<li>Linux Tycoon and Italian Rocket Riders lead the Best of Indie Games this 
+week April 13, 2012</li> 
+<li>The expanding need to protect innovation in Linux April 12, 2012</li> 
+<li>Demand for Linux Skills Sets a New Record This Month April 12, 2012</li> 
+<li>Installing Windows and Linux On the Same Computer April 12, 2012</li> 
+<li>Linux Top 3: Who Writes Linux in 2012? April 11, 2012</li> 
+<li>The Linux Foundation Releases Annual Linux Development Report April 3, 2012
+</li> 
+<li>Microsoft Cracks List of Top Linux Contributors April 3, 2012</li> 
+<li>Who helps make Linux? Microsoft. April 3, 2012</li> </ul> 
+<h3> PCWorld Linux Line</h3> 
+<ul> 
+<li>Try Calligra 2.4 for a New Microsoft Office Alternative</li> 
+<li>Demand for Linux Skills Sets a New Record This Month</li> 
+<li>'Flashback' Mac Malware: One More Reason to Switch to Linux</li> 
+<li>Say Goodbye to Ubuntu Linux 10.10 'Maverick Meerkat'</li> 
+<li>Ubuntu Linux Comes Preloaded on Two New Laptops</li> 
+<li>Presented By:</li> 
+<li>SUSE Linux: 20 Years and Going Strong</li> 
+<li>For a Truly Private Social Network, Try RetroShare</li> 
+<li>Look Who's Working on Linux Now: Microsoft</li> 
+<li>Who Uses Ubuntu Linux, and Why? Survey Offers New Insight.</li> </ul>  
+&copy;2012. All Rights Reserved.Linux Help linix 
+<h1>how to</h1> <br>
+ Powered by WordPress | Theme design by WP Themes <br>
+
+<br> 
+</body>

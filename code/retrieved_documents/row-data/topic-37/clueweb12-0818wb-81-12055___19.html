@@ -1,0 +1,335 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Vladimir Vuki&#263;evi&#263;</title>
+<body>
+ &nbsp;  Vladimir Vuki&#263;evi&#263; &mdash; Words <br>
+&nbsp; 
+<ul> 
+<li>Blog</li> </ul> 
+<h2> Archive Page 6 </h2> &laquo; Previous Entries <br>
+Next Entries &raquo; 
+<br> 
+<h3>Android Hacking (Part 1 of probably many)</h3> 4&nbsp;Comments Published by
+vladimir November 19th, 2009 in Firefox, Mozilla <br>
+
+<p>I&rsquo;ve been looking to understand the Android OS better, so that I can 
+answer some questions and create plans for getting Gecko/Firefox running on 
+Android-based devices.&nbsp; One of the first questions I asked was, &ldquo;How 
+do Android apps start?&rdquo;&nbsp; They&rsquo;re clearly separate processes 
+while they&rsquo;re running, but it wasn&rsquo;t clear how they were 
+launched.&nbsp; It turns out, there are a couple of pieces here.&nbsp; 
+I&rsquo;m going to describe what I&rsquo;ve discovered here, in case it&rsquo;s 
+useful for someone else; I haven&rsquo;t been able to find much of this 
+information, largely because I don&rsquo;t think many people need to know any 
+of this.</p> 
+<p>At boot time, a special instance of the Java VM is launched, called the 
+Zygote.&nbsp; This process loads a bunch of the core Java classes and performs 
+initial processing of them, making it possible to avoid this step for each app 
+launch.&nbsp; Once the initial work is done, the process listens to a socket 
+and waits for requests.</p> 
+<p>To launch an app using the Zygote process, a command-line tool called 
+&ldquo;dvz&rdquo; can be used.&nbsp; It sends its arguments to the Zygote, 
+which will fork and then start executing the main method in a given class.</p> 
+<p>So, we have these steps, dealing with the Zygote process:</p> 
+<ul> 
+<li>the zygote process is executed at system boot; it does initialization, and 
+then runs a select() loop listening to requests</li> 
+<li>the zygote process is sent a message, which includes the start args, which 
+will include the class name for main launch</li> 
+<li>the zygote process reads connection args in ZygoteConnection.runOnce</li> 
+<li>the zygote process forks in ZygoteConnection.runOnce (
+Zygote.forkAndSpecialize, native)</li> 
+<li>ZygoteConnection.handleChildProc is called, which does some cleanup and 
+eventually throws a MethodAndArgsCaller (viaZygoteInit.invokeStaticMain)</li> 
+<li>&hellip; which takes us all the way back to ZygoteInit.main, which catches 
+that trampoline exception, and calls run()</li> </ul> 
+<p>But, that&rsquo;s not fully how a new Android Activity is started.&nbsp; 
+It&rsquo;s a bit of a roundabout process.&nbsp; To launch a new Activity, the 
+ActivityManagerService is notified with an activity start request, including 
+things like the name/class/etc. of the activity.&nbsp; It puts that information 
+in a list of activities to run.&nbsp; Then, a new process is started with the 
+main from ActivityThread.&nbsp; This new process then contacts the 
+ActivityManagerService and asks, essentially, &ldquo;what app am 
+I?&rdquo;.&nbsp; The service then gives it the name of its activity class and 
+other info, which is then loaded, and a message is enqeued on the main thread 
+to instantiate the new activity and send it an onCreate() message.</p> 
+<p>This is interesting because it means that apps are not launched directly, 
+but instead somewhat indirectly through specializing a generic 
+&ldquo;Activity&rdquo; process for a specific activity.&nbsp; A side effect of 
+this is that I couldn&rsquo;t find a way to actually register an app with the 
+ActivityManagerService if it wasn&rsquo;t launched by it.&nbsp; So, to be a 
+full Android app, you have to go through this normal startup process.</p> 
+<h2>JNI Bridging</h2> 
+<p>One of the difficulties in porting Gecko to Android is that the Android 
+platform is built around Java, whereas Gecko is very much all native 
+C/C++.&nbsp; However, there is a fairly good native bridge layer, JNI, which is 
+fairly heavily optimized by Dalvik.&nbsp; So, the simplest way to connect these 
+two is to write a shell app in Java, which bridges events, messages, paint 
+requests, etc. to the native code for handling.</p> 
+<p>As a proof of concept of this, I wrote a simple test app.&nbsp; It&rsquo;s 
+fairly straightforward, with a few wrinkles.&nbsp; Most of this stuff can be 
+done with the stock Android SDK and NDK &mdash; except painting.&nbsp; The only 
+API that the NDK exposes for graphics is OpenGL ES.&nbsp; This is fine, but in 
+some cases you may want to access Skia directly from native code.&nbsp; This is 
+possible, but requires version-specific code to accomplish.&nbsp; You can ship 
+multiple versions of your JNI glue layer, optimized for each Android version 
+(or even platform), and load the right one during your app startup on the Java 
+side.</p> 
+<p>This is, of course, not very portable, robust, or guaranteed to continue to 
+work by Google, but it&rsquo;s possible.&nbsp; There are some very rough hacks 
+in the test app, but for the most part it demonstrates that this approach can 
+work fine.</p> 
+<p>Next up, I&rsquo;ll probably blog about porting issues for large native 
+apps, including library compatibility, Bionic, and integrating into a 
+non-ant-based build system.</p> <br>
+
+<h3>CanvasArrayBuffer and Canvas*Array</h3> 6&nbsp;Comments Published by 
+vladimir November 6th, 2009 in Canvas 3D, Firefox, Mozilla <br>
+
+<p>WebGL introduces two interesting concepts that I think have application 
+outside of WebGL, theCanvasArrayBuffer and CanvasArray WebGLArrayBuffer and 
+WebGLArray. This is all subject to change, of course, though this is what the 
+current Gecko (and others&rsquo;) implementation looks like. In particular, the 
+Canvas prefix in the names might change soon.</p> 
+<p><strong>Edit 12/2: these types have changed names; they now have a WebGL 
+prefix instead of a Canvas prefix.</strong></p> 
+<p>It became clear that pure JS arrays are not a useful way of shoveling 
+around lots of 3D data; their very flexibility makes them impractical for 
+performance-critical uses. In particular, WebGL often wants to deal with arrays 
+of a specific type &mdash; an array of integers, an array of floats, etc. Even 
+more complicated is the need to manage multiple types within a single memory 
+region; for performance, it&rsquo;s often preferable to allocate one chunk of 
+video memory, and place coordinates, colors, and other types in there, 
+replacing them as necessary.</p> 
+<p>There are two portions to the solution: the WebGLArrayBuffer and a set of 
+typed WebGLArray views. A WebGLArrayBuffer represents chunk of data. It can be 
+allocated with a size in bytes, but it can&rsquo;t be accessed in any way. To 
+actually manipulate the data inside a WebGLArrayBuffer, a WebGLArray has to be 
+created that references it. An example:</p> 
+<pre>var buf = new WebGLArrayBuffer(3*4); var floats = new 
+WebGLFloatArray(buf); floats[0] = 12.3; floats[1] = 23.4; floats[2] = 34.5;
+</pre> 
+<p>The above chunk of code allocates a 12-byte WebGLArrayBuffer, and then 
+creates a float-typed view onto the buffer which can then be manipulated 
+(almost) like a normal array. Of course, the above is cumbersome to write, so 
+there are shorthands that will allocate a WebGLArrayBuffer, and optionally fill 
+it with data from a JS array:</p> 
+<pre>var f1 = new WebGLFloatArray(3); var f2 = new WebGLFloatArray([12.3, 
+23.4, 34.5]);</pre> 
+<p>The size of each WebGLArrayBuffer is fixed; there is currently no way to 
+change its size once allocated.</p> 
+<p>Multiple WebGLArrays can reference the same WebGLArrayBuffer. For example:
+</p> 
+<pre>var buf = new WebGLArrayBuffer(12*3*4+12*4); var points = new 
+WebGLFloatArray(buf, 0, 12*3); var colors = new WebGLUnsignedByteArray(buf, 
+12*3*4, 12*4);</pre> 
+<p>This creates a buffer of 192 bytes, which is enough room for 12 
+3-coordinate float points followed by 12 RGBA colors, with each component 
+represented as an unsigned byte. The arguments to the WebGLArray constructors 
+are the offset from the start of the buffer (in bytes), and the length (in 
+elements). The offset must always be a multiple of the element size (to 
+preserve alignment), and the buffer must obviously be large enough for the 
+given offset and length. If length is not given, the length is assumed to be 
+&ldquo;from offset until the end of the array buffer&rdquo;; that value must be 
+a multiple of the element size. If offset is not given, it&rsquo;s assumed to 
+be zero.</p> 
+<p>For extra complex use cases, WebGLArrays can reference overlapping regions 
+of a WebGLArrayBuffer:</p> 
+<pre>var buf = new WebGLArrayBuffer(192); // same value from above var points 
+= new WebGLFloatArray(buf); var colors = new WebGLUnsignedByteArray(buf); 
+points[0] = 12.3; points[1] = 23.4; points[2] = 34.5; colors[12] = 0xff; 
+colors[13] = 0xaa; colors[14] = 0x00; colors[15] = 0x00;</pre> 
+<p>In the buffer, this writes 3 float values followed by 4 byte values. 
+You&rsquo;ll note that this use is significantly more complex, and requires the 
+user to keep track of the current position in terms of whatever element 
+they&rsquo;re modifying (thus setting array elements 12, 13, 14, and 15 for the 
+color).</p> 
+<p>If an attempt is made to store data in a WebGLArray that doesn&rsquo;t fit 
+within the right type, a C-style cast is performed. If the data is an entirely 
+wrong type (e.g. trying to store a string or an object), Gecko currently throws 
+an exception, but this might become a silent 0 or similar in the future.</p> 
+<p>Where does this fit in WebGL? Any API function that needs an array of data 
+takes a WebGLArrayBuffer. This avoids placing costly JS array type conversion 
+in a potential critical performance path, and simplifies a number of aspects of 
+the API. So, VBOs, texture data (if not loaded from a DOM image element or from 
+a CanvasImageData object), index array, etc. all use 
+WebGLArrayBuffers/WebGLArrays for pulling data in and out. WebGLArrays also 
+help manage memory usage &mdash; an array of byte color data now takes up 
+exactly as much memory as needed, instead of getting expanded out to 4 bytes. 
+Also, critically, floating point data can be stored as 32-bit single-precision 
+floats instead of 64-bit doubles, taking up half as much space when the 
+underlying graphics system can&rsquo;t support 64-bit values.</p> 
+<p>This API is overall lacking in developer niceties, since the focus was on 
+providing the necessary functionality. Higher level wrappers can be written in 
+JS to simplify usage. In addition, by keeping it as bare-bones as it is, it 
+allows for fast implementation on native hardware via the JITs in all the 
+current-generation JS engines. The web currently fudges around the problem of 
+binary data by passing it around either in strings (because JS strings are 
+UCS2, therefore all 8-bit elements are valid, but with a performance and 
+memeory cost), or often encoding as base64 (again going back to strings). I can 
+see this type of dense/native type access being useful for both the File and 
+WebSockets APIs as a way to exchange and deal with binary data.</p> <br>
+
+<h3>Firefox Application Directory Lockdown</h3> 2&nbsp;Comments Published by 
+vladimir October 23rd, 2009 in Firefox, Mozilla <br>
+
+<p>Starting with Firefox 3.6, only well-known components shipped with Firefox 
+will be loaded from the application components directory.&nbsp; Any other 
+components (both binary and script) will be ignored.&nbsp; This work might also 
+be backported to the 3.5 branch, but that decision has not been made yet.&nbsp; 
+There are a number of reasons why this decision was made.</p> 
+<p>Firefox, through Gecko, has always had a flexible component-based 
+architecture.&nbsp; In particular, creating binary components to interface with 
+the OS or with other applications is fairly straightforward, though ultimately 
+dangerous.&nbsp; Binary components have full access to the application and OS, 
+and so can impact stability, security, and performance.&nbsp; What&rsquo;s 
+worse, in a binary component, the line between supported/frozen and completely 
+unfrozen internal Gecko interfaces is blurred, making it easy to create a 
+binary component that works well against one very specific version of Firefox 
+(potentially as specific as a minor security release), but causes serious 
+problems with any other version.</p> 
+<p>As we&rsquo;ve seen the popularity of Firefox increase, more and more 
+binary components have been written to interface between Firefox and other 
+applications.&nbsp; However, we haven&rsquo;t provided great guidance about the 
+appropriate way to do so.</p> 
+<p><em>The only supported way of adding functionality to Firefox (whether a 
+binary component is required or not) isthrough an add-on. </em>This has many 
+advantages for users: they can see that additional functionality is installed 
+in the Add-ons Manager, and from there they can easily enable or disable it, as 
+well as check for and receive updates.&nbsp; We&rsquo;re working on improving 
+theuser experience when third-party addons are installed in system-wide 
+locations.&nbsp; Also, critically, add-ons include information indicating their 
+compatibility with specific versions of Firefox.&nbsp; Having this version 
+information allows for safe upgrades, especially when binary components are 
+present.</p> 
+<p>Currently, third-party applications can drop binary components into the 
+Firefox application&rsquo;s components directory and expect them to be loaded 
+as part of our normal startup.&nbsp; This causes a number of problems, not the 
+least of which is the removal of the user control that add-ons provide.&nbsp; 
+Unfortunately, a number of third-party applications are using this approach to 
+integration, and are currently causing Firefox 3.5 users stability 
+problems.&nbsp; Many of these components were written for Firefox 3.0, and have 
+not been updated for Firefox 3.5; a situation that we have no way of detecting 
+because of the lack of versioning information on these &ldquo;bare&rdquo; 
+components.&nbsp; Because a number of internal interfaces changed between the 
+two versions, this leads to crashes or other problems when these components are 
+used.</p> 
+<p>In order to simplify future integration with native code, Firefox 3.6 will 
+include support forJSCtypes for add-on developers.&nbsp; This approach is 
+greatly preferred over writing binary components.&nbsp; For example, a 
+third-party component that would like to perform some action implemented in 
+native code when an event is received can write the integration pieces in 
+Javascript (capturing the event and so on), and use JSCtypes to make function 
+calls to regular non-XPCOM component native code.&nbsp; Keeping as much of 
+add-on code in Javascript reduces the impact of internal changes to Firefox, 
+and allows for much easier maintainability.</p> 
+<p>(If you are a third-party application developer and have questions about 
+integration in Firefox, please contact me &mdash; I&rsquo;d be happy to put you 
+in touch with the right people who can answer questions and provide guidance.)
+</p> <br>
+
+<h3>WebGL Samples/Demos and other bits</h3> 5&nbsp;Comments Published by 
+vladimir September 21st, 2009 in Canvas 3D, Firefox, Mozilla <br>
+
+<p>Since my post on Friday, we landed a few fixes to improve our WebGL 
+implementation and to fix a couple of bugs we discovered on Friday.&nbsp; 
+I&rsquo;m looking forward to seeing what people do with WebGL, and how it can 
+be useful on the web right now.&nbsp; For example, EA/Maxis recently added 
+COLLADA export of Creature designs to their popular gameSpore, and they have a 
+Sporepedia where players can see others&rsquo; creations.&nbsp; Right now, 
+those previews are just as images.&nbsp; With WebGL, they could be fully 3D, 
+even animated.</p> 
+<p>Over the weekend I&rsquo;ve put together this example, which uses WebGL to 
+render an exported Spore creature, and let the user rotate the 3D model to view 
+it from different angles.&nbsp; For those who want to try it out, you&rsquo;ll 
+need a recent Firefox nightly (one from today, September 21, or newer), and 
+with one preference flipped as described inthis post.</p> 
+<p>I&rsquo;ll be working to update the very basic &ldquo;getting started
+&rdquo; demos from the GL ES 2 book that I ported to Canvas 3D as well, so that 
+those who are interested in experimenting can have some good basic code to look 
+at.&nbsp; They&rsquo;re not updated yet, but they should be in the next day or 
+two.</p> 
+<p>For those of you on Windows who don&rsquo;t have an up to date OpenGL 
+driver, or don&rsquo;t have the possibility of getting one (e.g. many common 
+Intel graphics cards doesn&rsquo;t have OpenGL drivers), you can enable 
+software rendering by downloading a Windows build of the Mesa software OpenGL 
+implementation.&nbsp; It won&rsquo;t be fast, but it should be enough for you 
+to get an idea of what&rsquo;s going on, and to play with some of the 
+demos.&nbsp; To use it, downloadwebgl-mesa-751.zip and extract it somewhere on 
+your computer.&nbsp; It has a single file, OSMESA32.DLL, that you need to tell 
+Firefox where to find:&nbsp; open up about:config, and set the preference<em>
+webgl.osmesalib</em> to the path of OSMESA32.DLL.&nbsp; If you extracted it to 
+&ldquo;C:\temp&rdquo;, you would put in &ldquo;C:\temp\osmesa32.dll&rdquo; in 
+the pref.&nbsp; Then, flip<em>webgl.software_rendering</em> to true, and you 
+should be good to go.</p> 
+<p>(Mac OS X users shouldn&rsquo;t need to bother with software rendering, 
+since Apple already provides a high quality OpenGL implementation, and Linux 
+users should be ok as long as they have recent OpenGL drivers installed.)</p> 
+<br> 
+<h3>WebGL in Firefox Nightly Builds</h3> 23&nbsp;Comments Published by vladimir
+ September 18th, 2009 inCanvas 3D, Firefox, Mozilla <br>
+
+<p>Last night, I checked in some more work from Mark Steele (who&rsquo;s 
+focusing on the Firefox WebGL implementation), and along with that, enabled 
+WebGL in trunk nightlies.&nbsp; (<em>Finally!</em>)</p> 
+<p>If you&rsquo;re not familiar with WebGL, it&rsquo;s the evolution of work 
+that Mozilla starteda few years ago with experiments called Canvas 3D &mdash; 
+essentially a way of accessing OpenGL from within the browser, through the 
+HTML5 canvas tag.&nbsp; Earlier this year, westarted a standardization effort 
+within theKhronos Group which oversees OpenGL, and have made very rapid 
+progress.</p> 
+<p>Along with the Firefox implementation, a WebGL implementation landed in 
+WebKit fairly recently.&nbsp; All of these implementations are going to have 
+some interoperability issues for the next little while, as the spec is still in 
+flux and we&rsquo;re tracking it at different rates, but will hopefully start 
+to stabilize over the next few months.</p> 
+<p>If you&rsquo;d like to experiment with WebGL with a trunk nightly build 
+(starting from Friday, September 18th), all you have to do is flip a pref: load 
+about:config, search for &ldquo;<strong>webgl</strong>&ldquo;, and double-click 
+&ldquo;<strong>webgl.enabled_for_all_sites</strong>&rdquo; to change the value 
+from<strong><em>false </em></strong>to <strong><em>true</em></strong>.&nbsp; 
+You&rsquo;ll currently have the most luck on MacOS X machines or Windows 
+machines with up-to-date OpenGL drivers.</p> 
+<p>We still have some ways to go, as there are issues in shader security and 
+portability, not to mention figuring out what to do on platforms where OpenGL 
+is not available.&nbsp; (The latter is an interesting problem; we&rsquo;re 
+trying to ensure that the API can be implementable on top of a non-GL native 3D 
+API, such as Direct3D, so that might be one option.)&nbsp; But progress is 
+being quickly made.</p> 
+<p>When paired with high-performance JavaScript, such as what we&rsquo;ve seen 
+come from both Firefox and other browsers, should allow for some exciting fully 
+3D-enabled web applications.&nbsp; We&rsquo;ll have some simple demos linked 
+for you soon, both here and on Mark&rsquo;s blog.</p> 
+<p>Edit: new post up, with some samples!</p> <br>
+&laquo; Previous Entries <br>
+Next Entries&raquo; <br>
+<br>
+
+<h2> Search Blog </h2> <br>
+<br>
+
+<h2> About </h2> 
+<p></p> <br>
+
+<h2> Latest Posts </h2> 
+<ul> 
+<li>Looking at Java NIO Buffer performance</li> 
+<li>What I&rsquo;ve Been Up To</li> 
+<li>Moving On</li> 
+<li>WebGL in Firefox 4 Beta 8</li> 
+<li>Using Adobe Lightroom with Dropbox</li> 
+<li>Building Fennec for Android under Win32</li> 
+<li>Getting Information from Windows Vista/7 Display Driver Resets</li> 
+<li>Fun With Fast JavaScript</li> 
+<li>EGL &amp; OpenGL ES Come to Windows</li> 
+<li>WinDbg Image Viewer Extension</li> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+Powered 
+byWordPress 3.1.3, K2 Beta Two r167 and Black Minimalism 2.0 theme <br>
+RSS 
+Entries and RSS Comments <br>
+
+</body>

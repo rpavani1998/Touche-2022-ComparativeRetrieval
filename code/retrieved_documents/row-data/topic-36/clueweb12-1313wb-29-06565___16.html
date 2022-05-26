@@ -1,0 +1,351 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>NetBeans was the early bird but has Eclipse caught the worm?</title>
+<body>
+<br>
+<br>
+ Software Developer Station <br>
+
+<ul> 
+<li></li> 
+<li>Home</li> 
+<li>Articles </li> 
+<li>Interviews </li> 
+<li>News </li> </ul> <br>
+<br>
+Oct  14 <br>
+
+<h2> NetBeans was the early bird but has Eclipse caught the worm? </h2> <br>
+
+<br> 
+<p>Rich Unger is currently on the NetBeans Governance Board and has been a 
+contributor to NetBeans for several years. He was honored at this year&rsquo;s 
+NetBeans Software Day for his valuable contribution to the NetBeans platform.
+</p> 
+<p>In this interview Rich talks about NetBeans 5.0, NetBeans Profiler and the 
+changing Java IDE market. He shares his views on plugin development for the 
+NetBeans platform and on Eclipse. He also elaborates on why he thinks the field 
+is wide open for client frameworks for desktop java apps and how it could come 
+down to Swing vs SWT.</p> 
+<p></p> 
+<p><strong>IndicThreads &gt;&gt; Hi Rich. Could you please introduce yourself?
+</strong></p> 
+<p><strong>Rich Unger &gt;&gt; </strong>Hi there! I&rsquo;m a developer on the 
+V-Builder team at Nuance Communications. Nuance is in the business of 
+network-based speech recognition. For example, when you call American Airlines, 
+and the machine on the other end says What is your destination city? and you 
+can speak the name of any city they fly to, you&rsquo;re talking to our 
+technology.</p> 
+<p>V-Builder is our development tool for creating these types of speech 
+applications. It allows you to model graphically conversations between humans 
+and computers, and generate VoiceXML to implement the call flow. It is 
+implemented on top of the NetBeans platform, and you can see a screenshot at
+http://platform.netbeans.org</p> 
+<p><strong>IndicThreads &gt;&gt; NetBeans IDE recently jumped from version 4.1 
+to 5.0. So what&rsquo;s special about 5.0 that warranted the jump?</strong></p> 
+<p><strong>Rich Unger &gt;&gt; </strong>Well, from my perspective, the 
+completely revamped support for module development alone is worthy of a major 
+version number increment. I&rsquo;ve been writing modules on top of the 
+platform since NetBeans 3.3, and it&rsquo;s never been particularly easy until 
+now. It was always a lot of hacked up build scripts, difficult to test, 
+difficult to debug, and difficult to deploy.</p> 
+<p>&ldquo;The completely revamped support for NetBeans module development, 
+alone is worthy of a major version number increment&hellip;&rdquo;</p> <strong>
+</strong> <br>
+<strong>Rich Unger accepting his award from James Gosling
+</strong> <br>
+<br>
+
+<p>Up until 4.0, I actually preferred Eclipse for developing NetBeans modules. 
+In 4.0, the NetBeans IDE finally became better for developing NetBeans platform 
+modules. But, even then, it was not nearly as easy as it should have been. I 
+packaged up a modified version of the netbeans.org build files (which are quite 
+complex), and called it the &lsquo;cluster build harness&rsquo;. This allowed 
+folks to build applications on the platform (like V-Builder), but it was not 
+officially supported.</p> 
+<p>In 5.0, Jesse Glick et. al. took the idea of the cluster build harness, and 
+reworked it so it could have first-class support in the IDE. Then they just 
+kept adding features and wizards until creating, debugging, testing, branding, 
+and shipping modules could all be done in a ridiculously simple fashion.</p> 
+<p>&ldquo;Matisse GUI builder works the way you always thought GUI builders 
+should&hellip;&rdquo;</p> 
+<p>Other than the module development support, major new features in 5.0 
+include:</p> 
+<ul> 
+<li><strong>Matisse</strong>: The dead-simple GUI builder that really works 
+the way you always thought GUI builders should.</li> 
+<li> <strong>New CVS Support</strong>: A completely revamped approach to the 
+source control UI. I&rsquo;m told that a subversion version of this will be 
+alpha or beta when 5.0 is released. I&rsquo;m hoping for ClearCase, myself, 
+though no word on that yet. For now, I&rsquo;m stuck with the old source 
+control module.</li> 
+<li> <strong>JSF and Struts Support</strong></li> 
+<li><strong> Developer collaboration modules</strong>: I haven&rsquo;t tried 
+these out yet, but the demos I&rsquo;ve seen are very encouraging. 
+There&rsquo;s a guy on my team who lives in Hawaii, and this ought to make 
+codewalks much easier.</li> 
+<li><strong> JFluid Profiler</strong>: I&rsquo;d have to put this as a close 
+second to module development support in my personal list. A long time ago, 
+debuggers were things that were hard to configure, and so there was this hurdle 
+you had to overcome in the severity of a bug before you went through the effort 
+of using a debugger. I think that&rsquo;s where profiling is now, and I think 
+the JFluid profiler will knock down such barriers. We won&rsquo;t think twice 
+about profiling our applications. It will be as natural as debugging, and a 
+whole new class of software errors will become a whole lot easier to address.
+</li> </ul> 
+<p><strong>IndicThreads &gt;&gt; Do you think that NetBeans&rsquo; J2EE 
+development capabilities can today match the features of any other IDE in the 
+market?</strong></p> 
+<p><strong>Rich Unger &gt;&gt; </strong>There&rsquo;s really two camps in the 
+J2EE world these days. If you&rsquo;re the type of developer who uses 
+EJB&rsquo;s, and must use JSR-blessed libraries (JSF over Tapestry, for 
+example), then you&rsquo;ll be a lot happier with NetBeans. Also, their web 
+services support is second to none. They&rsquo;ve got a built-in Tomcat and 
+Derby DB that let you get up and running extremely quickly. The HTTP Monitor 
+window helps you figure out exactly what&rsquo;s going on in your app.</p> 
+<p>&ldquo;If you must use JSR blessed libraries, you&rsquo;ll be a lot happier 
+with NetBeans&hellip;&rdquo;</p> 
+<p>NetBeans is less strong when it comes to supporting some of the more 
+popular OSS libraries out there. It&rsquo;s got nothing like Spindle (an 
+Eclipse plugin) for Tapestry. I think the Hibernate support is currently a bit 
+better with the appropriate Eclipse plugins. Spring is so simple that I think 
+it doesn&rsquo;t matter which IDE you use. Just having decent XML syntax 
+completion should be adequate.</p> 
+<p>&ldquo;NetBeans is less strong when it comes to supporting some of the more 
+popular OSS libraries&hellip;&rdquo;</p> <strong></strong> <br>
+<strong>Rich 
+moonlights as a dancer in a swing dance performance troupe</strong> <br>
+<br>
+
+<p>This is certainly something they&rsquo;re addressing in NetBeans, though. 
+They&rsquo;ve finally added nice Struts support. Also, the module-writing 
+support includes some fantastic wizards that make writing something like a 
+Hibernate plugin pretty simple, so I think we&rsquo;ll be seeing those kinds of 
+modules in the near future.</p> 
+<p><strong>IndicThreads &gt;&gt; </strong>NetBeans Profiler is a recent 
+development that NetBeans seems to be pushing in a big way. In what state is 
+the Profiler today and will the Profiler stay an independent product or will it 
+become a part of NetBeans at a later state?</p> 
+<p><strong>Rich Unger &gt;&gt; </strong>I think the main reason it&rsquo;s a 
+separate product right now is that it requires JDK 5.0, and the core NetBeans 
+project must remain 1.4-compliant. I&rsquo;ve asked on the mailing list why the 
+profiler isn&rsquo;t just a module on the Update Center, and the answer was 
+something like, I don&rsquo;t know. Probably it will be soon.</p> 
+<p>&ldquo;NetBeans Profiler is fantastic technology&hellip;&rdquo;</p> 
+<p><strong> </strong>The profiler is fantastic technology. You can profile 
+pieces of your application, thereby reducing the performance impact. For 
+example, if you&rsquo;re working on a J2EE app, you don&rsquo;t have to profile 
+the whole app server, just your own code. They&rsquo;re finally hitting the 
+point where it&rsquo;s no longer a question of should I profile my app? 
+It&rsquo;s just too easy not to.</p> 
+<p>&ldquo;It&rsquo;s no longer a question of should I profile my app? 
+It&rsquo;s just too easy not to&hellip;&rdquo;</p> 
+<p>The one downside is that it required changes to the JRE. Most of those 
+changes made it into JDK 5.0 update 4. However, we have to wait for Mustang 
+before we can attach to a running application (the way we already can with the 
+debugger).</p> 
+<p><strong>IndicThreads &gt;&gt; BEA, Borland, Nokia and to some extend Oracle 
+have all got involved in Eclipse. However Sun Java Studio Creator is perhaps 
+the only major product built over NetBeans. Why isn&rsquo;t the NetBeans 
+platform more popular?</strong></p> 
+<p><strong>Rich Unger &gt;&gt; </strong>I guess it depends on your 
+perspective, but I&rsquo;d consider V-Builder a major product </p> 
+<p><strong></strong>It&rsquo;s important to notice that BEA, Borland, and 
+Nokia are all working on features to help IDE catch up to NetBeans in the web 
+and mobile space. Now, I&rsquo;m not knocking Eclipse. NetBeans certainly has 
+been playing their own share of catch-up. They just tend to do it themselves, 
+rather than enlisting partners to work with them.</p> 
+<p>&ldquo;Most desktop java apps are still built without using a client-side 
+framework at all. The field is still wide open&hellip;&rdquo;</p> 
+<p>I don&rsquo;t think this has much to do with the platform, however. To me, 
+the success of the Eclipse RCP and the NetBeans Platform can be measured by how 
+many apps are written on top of them that are not IDEs. It looks to me like 
+most desktop java apps are still built without using a client-side framework at 
+all. The field is still wide open.</p> 
+<p>&ldquo;I think it will come down to Swing vs. SWT&hellip;&rdquo;</p> 
+<p>In the end, assuming people buy into the argument that such a platform is 
+indeed helpful, then I think it will come down to Swing vs. SWT, and the 
+libraries that are available for doing things like data binding, graphing, 
+visualization, charting, etc.</p> 
+<p><strong>IndicThreads &gt;&gt; Despite NetBeans being the early bird, 
+Eclipse today seems to have got the worm. Do you see things changing in the 
+near future?</strong></p> 
+<p><strong>Rich Unger &gt;&gt; </strong>The worm that I think Eclipse does 
+have is the community of IDE plugin developers, which, as I said, is distinct 
+from the platform market. Eclipse has a wide lead in IDE plugins because their 
+IDE was better (let&rsquo;s face it, it was), and because their tools for 
+writing plugins were better. I think NetBeans has caught up on both counts. 
+More and more I hear people interested in writing IDE plugins that will work on 
+both Eclipse and NetBeans. That&rsquo;s a good indication that NetBeans has 
+finally found a broader audience. IDE market share will drive the plugin 
+community, not the other way around.</p> 
+<p>&ldquo;Eclipse has a wide lead in IDE plugins because their IDE and their 
+tools for writing plugins were better&hellip;&rdquo;</p> <strong></strong> <br>
+
+<strong>Rich at Oracle OpenWorld 05 </strong> <br>
+<br>
+
+<p>As an aside, I think the goal of writing a plugin once for both platforms 
+is a laudable goal, but for all kinds of technical and architectural reasons, 
+won&rsquo;t be fully realized.</p> 
+<p>&ldquo;Writing a plugin once for both platforms (NetBeans and Eclipse) is a 
+laudable goal that won&rsquo;t be fully realized&hellip;&rdquo;</p> 
+<p><strong>IndicThreads &gt;&gt; You perhaps would be pretty fed up of 
+providing aNetBeans vs Eclipse comparison. So instead of giving a comparison 
+could you tell us when one should go with NetBeans and when Eclipse might be a 
+better choice?</strong></p> 
+<p><strong>Rich Unger &gt;&gt; </strong>That sounds an awful lot like asking 
+me to provide a comparison<br>
+ The great thing about both is that 
+they&rsquo;re free! And, they&rsquo;re both pretty easy to get up and running 
+with your current codebase. So, try them both out. Maybe you&rsquo;ll end up 
+keeping them both and using them for different tasks. I did that for a while. 
+These days, I&rsquo;m totally on NetBeans (and gvim), but that&rsquo;s not true 
+of everyone on my team. The Hawaiian guy is an Eclipse aficionado, and he 
+continues developing NetBeans modules with it. Personally, I think when he 
+tries out the new collaboration modules, he&rsquo;ll use NetBeans more.</p> 
+<p>&ldquo;People will always be asking for Eclipse vs NetBeans comparisons 
+because both keep leapfrogging each other&hellip;&rdquo;</p> 
+<p>People will always be asking for such comparisons, because Eclipse and 
+NetBeans keep leapfrogging each other. Eclipse is working on a Visual Editor to 
+compete with Matisse, and the Nokia guys are working on matching the feature 
+set of the Mobility Pack. The NetBeans guys are continually adding new 
+refactorings and tweaking the usability of the editor, both areas where Eclipse 
+has historically had higher marks.</p> 
+<p><strong>IndicThreads &gt;&gt; Considering the wide range of features of 
+NetBeans and Eclipse and also that JDeveloper recently became free, do you 
+think the days of the commercial Java IDE are over / numbered?</strong></p> 
+<p><strong>Rich Unger &gt;&gt; </strong>I think Borland&rsquo;s days in the 
+IDE space are numbered. I don&rsquo;t think enough people are going to see the 
+value in their Eclipse plugins. I feel the same way about Sun&rsquo;s Enterpise 
+Java Studio. It&rsquo;s basically NetBeans with a UML modeler. Ho hum.</p> 
+<p>&ldquo;Borland&rsquo;s days in the IDE space are numbered&hellip;&rdquo;</p>
+<p>&ldquo;Sun&rsquo;s Enterpise Java Studio is basically NetBeans with a UML 
+modeler&hellip;&rdquo;</p> <strong></strong> <br>
+<strong>On stage in front of 
+thousands of DBAs</strong> <br>
+<br>
+
+<p>The IDEA folks, though, have got it together. They&rsquo;re not targeting 
+the whole Java developer community. They&rsquo;re creating a product 
+that&rsquo;s extremely compelling to a much smaller slice of the market, and 
+creating a lot of loyalty around that. That&rsquo;s something you can charge 
+for. So long as they can stay ahead of Eclipse and NetBeans in the few areas 
+where they really shine, and thereby capture a consistent (if small) market 
+share, I think they can still have a profitable concern.</p> 
+<p><strong>IndicThreads &gt;&gt; NetBeans is integrated with Sun&rsquo;s 
+Application Server however which other servers can one easily work with through 
+NetBeans?</strong></p> 
+<p><strong>Rich Unger &gt;&gt; </strong>Well, Tomcat is built in. JBoss and 
+WebLogic integrations are finished now, and supposedly Websphere is on the way.
+</p> 
+<p>&ldquo;NetBeans is integrated with Tomcat, JBoss, WebLogic and Sun&rsquo;s 
+Application Server. WebSphere is on the way&hellip; &ldquo;</p> 
+<p><strong>IndicThreads &gt;&gt; Thanks Rich for your time and all the info 
+about NetBeans and the Java IDE market.</strong></p> 
+<p>My pleasure. Good luck with IndicThreads.</p> 
+<p><strong>IndicThreads &gt;&gt; Readers can keep up with Rich through his 
+blog athttp://weblogs.java.net/blog/richunger/</strong></p> 
+<p><strong>Related:<br>
+</strong><strong>&gt;&gt; NetBeans moving fast, could 
+soon threaten Eclipse&rsquo;s leader position<br>
+</strong><strong>&gt;&gt; 
+Eclipse vs<strong>NetBeans</strong><br>
+ &gt;&gt; <strong>NetBeans</strong> is 
+a long way from dead!<br>
+</strong><strong>&gt;&gt; When to buy an IDE? When to 
+stick with Eclipse /<strong>NetBeans</strong>?<br>
+</strong><strong>&gt;&gt; Is 
+Sun taking the Microsoft way to capturing the Java IDE market?</strong></p> 
+<p><strong></strong></p> 
+<ul> 
+<li>Share</li> 
+<li></li> </ul> 
+<ul> 
+<li>Email</li> 
+<li>Print</li> 
+<li></li> 
+<li>Facebook</li> 
+<li> <br>
+</li> 
+<li></li> 
+<li> <br>
+</li> 
+<li> <br>
+</li> 
+<li></li> 
+<li>StumbleUpon</li> 
+<li>Reddit</li> 
+<li></li> 
+<li>Digg</li> 
+<li></li> </ul> 
+<h6> Written by Content Team on October 14, 2005 &nbsp;&nbsp;&nbsp; </h6> 
+<p></p>  Tagged with: desktop java &bull; eclipse &bull; ejb &bull; Interviews 
+&bull;Java &bull; java ide &bull; java ide comparison &bull; Java Interviews 
+&bull;jsf &bull; netbeans &bull; rich unger &bull; spring<br>
+
+<p> </p> 
+<ul> 
+<li>  http://www.security-wire.com/ Remove Spyware <br>
+
+<p>Thanks for your information:)</p> </li> 
+<li> admin <br>
+
+<p>Had a really bas experience when we were outsourcing. I don\&rsquo;t 
+recommend it. And as for cheaper? I don\&rsquo;t think so, on the impression it 
+might seem cheaper. But it essence it cost the company more. They are quick, 
+but the communication is poor which caused delays. They never really understood 
+requirements. Plus they struggled with cultural barrier when developing a site. 
+All the back and forth made outsourcing unreliable. Nice guys, just 
+couldn\&rsquo;t get the job done.</p> </li> 
+<li> Noname <br>
+
+<p>I feel the reason why Netbeans is not as popular as Eclipse is that Sun has 
+tried to do everything on it&rsquo;s own. No doubt it has done a very good job 
+but this approach means that NetBeans doesn&rsquo;t get get free publicity like 
+Eclipse does.</p> 
+<p>IBM does not have to market Eclipse because Nokia, BEA, etc are doing the 
+marketing on IBM&rsquo;s behalf. With NetBeans, nobody is helping Sun.</p> 
+<p>NetBeans is obviously easier to use and has more features out of the box. 
+</p> 
+<p>Just the Eclipse website is so confusing that you are never sure if you 
+have downloaded what you were really looking for.</p> </li> </ul> 
+<p></p> <br>
+
+<h3>Updates</h3> <br>
+<br>
+
+<h3>Write</h3> <br>
+
+<h3>Ads</h3> <br>
+
+<h3>On Facebook</h3> <br>
+<br>
+
+<h3>Up Next</h3> Tell a Friend about Delhi.IndicThreads.com and win a copy of 
+Beginning Java 7! <br>
+
+<h3>Recent Posts</h3> 
+<ul> 
+<li>Simplifying Build Scripts with Gradle</li> 
+<li>Scalable Applications with Akka</li> 
+<li>Win a Copy Of Beginning Java 7</li> </ul> 
+<h3>Related</h3> <br>
+
+<h3>Related</h3> 
+<ol> 
+<li>Java IDEs &ndash; NetBeans vs Eclipse vs JDeveloper</li> 
+<li>NetBeans wants Eclipse developers to switch</li> 
+<li>When to buy an IDE? When to stick with Eclipse / NetBeans?</li> </ol> 
+<h3>Contact</h3> Editor: Harshad Oak <br>
+<br>
+Contact IndicThreads <br>
+<br>
+
+<br> &copy; 2004-2009 Rightrix Solutions <br>
+<br>
+Send to Email Address Your 
+Name Your Email Address Cancel  Post was not sent - check your email addresses! 
+<br>  Email check failed, please try again  Sorry, your blog cannot share posts 
+by email. 
+</body>

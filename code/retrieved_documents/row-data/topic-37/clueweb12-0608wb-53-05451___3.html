@@ -1,0 +1,312 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Egoboo: The Cute Way to Dungeon Role Play - O'Reilly Media</title>
+<body>
+
+<h1></h1> <br>
+<br>
+<br>
+<b> We've expanded our Linux news coverage and 
+improved our search!</b> Search for all things Linux across O'Reilly! <br>
+<br>
+
+Search <br>
+Search Tips <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<p> </p> Print Subscribe to Linux Subscribe to Newsletters <br>
+Linux &amp; 
+Unix &gt; Excerpts &gt; <br>
+
+<h2> Egoboo: The Cute Way to Dungeon Role Play</h2> by Howard Wen <br>
+ 
+03/13/2003
+<p>In the land of Bishopia, King Bishop has been kidnapped by evil forces. To 
+rescue him, you must traverse dungeons in search of the &quot;Sporks of 
+Power&quot;. (Yes, these objects do look like the spoon/fork hybrid utensil.) 
+This game premise might sound, well, silly, but it's silly by design. The 
+creators ofEgoboo--brothers Aaron and Ben Bishop--have aimed to make their game 
+the most accessible and cutest open source dungeon RPG.</p> <br>
+
+<p>Egoboo features real-time action and 3D graphics. As is standard in dungeon 
+adventures, game play consists of combat against monsters, spell-casting, and 
+exploring a variety of map levels. The world of Bishopia consists of seven 
+environments. You choose to play as one of eight hero characters, including an 
+elf, rogue, soldier, or wizard. While the game is nowhere near complete, 
+Egoboo's current form still has plenty of dungeon romping and monster-bashing. 
+The game runs under Linux, Windows, and Mac OS X.</p> 
+<p>Egoboo was originally developed by Aaron Bishop. Ben Bishop, his brother, a 
+former computer science professor at the University of Georgia, currently 
+maintains the game. Both brothers currently reside in Danville, Pennsylvania.
+</p> 
+<p>The motivation for the ongoing work of Egoboo has been the brothers' desire 
+to make a modernRoguelike game. In terms of its design, the inspiration for its 
+game play draws uponNetHack. The graphics exhibit a Japanime style; 
+specifically, the artistic look of Nintendo's<em>Legend of Zelda</em> series is 
+obvious.</p> 
+<p><em>Figure 1 -- a hero in distress</em><br>
+</p> 
+<h3>From the Classroom to Open Source</h3> 
+<p>Egoboo development began in 1999. In its simpler form, it started as a 
+Direct3D Windows game Aaron did as an assignment for one of his college 
+classes. Ben eventually convinced his brother to release it as open source. 
+They then rewrote Egoboo for cross-platform portability by usingSDL and OpenGL. 
+They also credit other open source programmers specializing in graphics for 
+contributing the help they needed to accomplish this specific task. (When Aaron 
+started Egoboo, his graphics card only supported Direct3D.)</p> 
+<p>Related Reading</p> 
+<p>Linux Server Hacks<strong><br>
+ 100 Industrial-Strength Tips and Tools<br>
+ 
+ByRob Flickenger</strong> </p> <br>
+<br>
+<br>
+
+<p>&quot;Converting Direct3D to OpenGL was like getting teeth pulled,&quot; 
+describes Ben. He recalls this as the biggest challenge in Egoboo's 
+development. &quot;If anyone reading this ever writes a graphic program, wrap 
+the graphics API calls in macros!&quot;</p> 
+<p>Ben points out that OpenGL itself was not the problem in this process: 
+&quot;OpenGL has been a pleasure to work with. The original code from Direct3D 
+was a complete mess. There are still some lingering problems from the 
+conversion, though, such as our flaky support for particles. They don't rotate 
+properly.&quot;</p> 
+<p>Aside from the OpenGL and SDL APIs, the rest of the codebase is original 
+and was written in C by the Bishop brothers. They did borrow the Quake II model 
+format for game characters, however, to avoid the work of writing their own 
+modeling program from scratch. An extra, obvious benefit is that this decision 
+makes customizing Egoboo much easier: the mod community is full of people who 
+are familiar with creating Quake II models.</p> 
+<p>&quot;We are working with the Quake II model format to simplify the lives 
+of character developers,&quot; says Ben. &quot;Users have been able to 
+contribute new models, and I hope some of these start making it into the game 
+soon.&quot;</p> 
+<p>While the character models are done in Quake II format, Egoboo uses a 
+separate tool, developed for Egoboo, calledCartman, for map generation. Other 
+map-making tools for Egoboo are also available and in development, including
+EgoMap, which adds random level generation to the game.</p> 
+<p>As far as the game's AI, its scripting is specific to Egoboo. Ben, who 
+wrote some of the AI, feels this is unfortunate because it has probably 
+hindered further development by others who might want to help to improve it. It 
+is possible for others to study the existing AI scripts and documentation, but 
+he admits it is not easy to figure out. Some have suggested to the Egoboo 
+developers that they useLua for scripting the AI functions, but there has been 
+no significant progress on this idea. Ben says this may partly be because 
+support for the Lua language in egoboo &quot;is not 'fully baked' as of now, 
+from what I know.&quot;</p> 
+<p>The Egoboo graphics engine itself is not limited to dungeon crawlers. Other 
+kinds of games can be built upon it. In fact, Ben says his brother has already 
+developed some of his own: &quot;Aaron always seemed to get distracted and 
+[would] code up new games using the Egoboo engine. He had a simple real-time 
+strategy test, as well as a bumper car game.&quot;</p> 
+<p> <em>Figure 2 -- a peaceful outdoor scene, unless you're a sheep</em><br>
+
+</p> 
+<p>To those interested in modifying the Egoboo code to create an entirely 
+different type of game, Bishop warns that the learning curve for the engine is 
+pretty steep. He suggests that it might be best to start by contributing to the 
+development of the original dungeon crawl, a more likely way to gain better 
+technical insight into the engine's code.</p> 
+<p> <em>Figure 3 -- a little lightning</em><br>
+</p> 
+<h3>A Much-Needed Fixing and Polishing</h3> 
+<p>Before any new features can be added to Egoboo's game play, Ben says a 
+couple of existing technical issues need to be addressed, particularly with its 
+graphics. As mentioned above, particle graphics do not rotate in the OpenGL 
+version of the game like they do in the Direct3D original. Another partial 
+feature is transparency. Egoboo is also supposed to have a network play 
+feature, but it's broken in its present state. Fixing the particle graphics is 
+easy, says Ben, but the network issue will be tougher to resolve.</p> 
+<p>The networking challenge is typical for this type of game. &quot;Being an 
+action game, network code timing is a big concern. In something like a 
+real-time strategy, you might not notice if your units take a half-second to 
+start moving. On Egoboo, this is not the case,&quot; says Ben. &quot;Our main 
+problem is that we haven't gotten around to porting the network code from the 
+original DirectX. I think it would be a pretty straightforward job for a 
+competent programmer with some spare time.&quot;</p> 
+<p>The Egoboo project could also use contributions of character and object 
+models for the game and definitely needs more level maps. While the game looks 
+very good in its current form, it does not have a polished feel of a commercial 
+game, which Ben admits and wants to see improved. He invites others to 
+contribute to Egoboo's development; outside submissions of any sort will 
+encourage the release of more official updates to the game:</p> 
+<p>&quot;It takes some effort to put a new release out. So I'd like say what 
+would get me to do a new release: A new level, significant bug fixes 
+(networking, particles, etc.), and a good new [development] tool. If you want 
+to get to work on the code, consider setting up your own CVS. The code in 
+Version 2.22 is current.&quot;</p> 
+<p>In the end, Ben is proudest not of the technical achievements that he, his 
+brother, and various volunteers have made to Egoboo, but, rather, the game's 
+very place within the overall open source gaming scene. &quot;Good open source 
+games are few and far between,&quot; he says. &quot;So I think Egoboo is 
+contributing by enlarging the pool of games.&quot;</p> 
+<p><i> Howard Wen is a freelance writer who has contributed frequently to 
+O'Reilly Network and written forSalon.com, Playboy.com, and Wired, among others.
+</i></p> 
+<p>Return to the Linux DevCenter.</p> <br>
+<br>
+<b> Comments on this article
+</b> <br>
+<br>
+<br>
+<br>
+<br>
+
+<p>Showing messages 1 through 8 of 8. </p> 
+<ul> 
+<li> wonderful<br>
+ 2004-01-20 02:02:32&nbsp;  anonymous2  [ View]<br>
+<br>
+ 
+This is a goog article where we can learn a lot about the matter. </li> 
+<ul> 
+<li> wonderful<br>
+ 2004-01-20 02:08:30&nbsp;  anonymous2  [ View]<br>
+<br>
+ 
+Thats&acute;s all?? </li> </ul> </ul> 
+<ul> 
+<li> Cool game!<br>
+ 2003-11-07 13:00:43&nbsp;  anonymous2  [ View]<br>
+<br>
+ 
+Play this game! Download this game! It abseloutley one of the best rpg games i 
+have played! Recommended..<br>
+<br>
+ The Leader Of: Zefz Softwares </li> </ul> 
+<ul> 
+<li> surprised at low publicity<br>
+ 2003-04-04 22:08:28&nbsp;  anonymous2  [ 
+View]<br>
+<br>
+ I found out about egoboo the other day and dld it to try it 
+out, it's awesome! Obviously it's still being developed(as a good opensource 
+projects always should be!) I can't wait to see network gameplay! the website 
+is lacking though, imho.<br>
+ it needs a better forum, but it will get one once 
+it develops a larger community </li> </ul> 
+<ul> 
+<li> Where is the OS X version? *NM*<br>
+ 2003-03-30 07:09:45&nbsp;  anonymous2
+ [View]<br>
+<br>
+</li> 
+<ul> 
+<li> Where is the OS X version? *NM*<br>
+ 2004-01-20 02:17:53&nbsp;  anonymous2
+ [View]<br>
+<br>
+<br>
+</li> </ul> </ul> 
+<ul> 
+<li> Egoboo<br>
+ 2003-03-24 01:09:19&nbsp;  anonymous2  [ View]<br>
+<br>
+ I 
+haven't played it, as to be honest I never heard of it, but looking at the 
+graphics, it looks pretty cool, think the first thing I'll do tonight is 
+download it and give it a whirl...<br>
+ There are a lot of opensource rpg out 
+there, no matter how good them seem, they all generally feel clumky in terms of 
+graphics quality, but this look pretty nice..<br>
+<br>
+ btw the images on the 
+main page fails to display and yo get a forbidden when viewing them (Or it 
+could be me!) </li> 
+<ul> 
+<li> Egoboo<br>
+ 2003-03-29 17:42:34&nbsp;  anonymous2  [ View]<br>
+<br>
+ I've 
+had it for a while, there's a Debian package for it, so it's easy to install. I 
+had to play it for an hour or two before I finally got a hang of the controls. 
+On my machine, the controls are a little jerky, though.<br>
+<br>
+ Egoboo is a 
+really fun game and the graphics are awesome. I'm not a very good gamer, so for 
+me, the game is REALLY HARD. It seems like I am seriously outnumbered. It would 
+probably be easier if we could have a network game and make teams to fight 
+against the bad guys.<br>
+<br>
+ Good work, Egoboo crew! Thanks for the awesome 
+game. </li> </ul> </ul> <br>
+<br>
+<br>
+<br>
+<br>
+
+<h3>Tagged Articles</h3> 
+<p>Be the first to post this article to del.icio.us</p> 
+<h3>Recommended for You</h3> <br>
+<br>
+
+<h3>Sponsored Resources</h3> 
+<ul> 
+<li>Inside Lightroom</li> </ul> <br>
+
+<p>Sponsored by:</p> <br>
+<br>
+<br>
+ Sign up today to receive special 
+discounts,<br>
+ product alerts, and news from O'Reilly. 
+<ul> 
+<li> </li> 
+<li> </li> </ul> <br>
+<br>
+Privacy Policy &gt;<br>
+View Sample Newsletter &gt; 
+<ul> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li></li> 
+<li>View All RSS Feeds &gt;</li> </ul> <br>
+<br>
+<br>
+<br>
+ 800-889-8969 or 
+707-827-7019<br>
+ Monday-Friday 7:30am-5pm PT<br>
+ &copy;2011, O'Reilly Media, 
+Inc.<br>
+ All trademarks and registered trademarks appearing on oreilly.com are 
+the property of their respective owners. 
+<ul> 
+<li><strong>About O'Reilly</strong></li> 
+<li>Academic Solutions</li> 
+<li>Contacts</li> 
+<li>Customer Service</li> 
+<li>Careers</li> 
+<li>Press Room</li> 
+<li>Privacy Policy</li> 
+<li>Terms of Service</li> 
+<li>Writing for O'Reilly</li> </ul> 
+<ul> 
+<li><strong>Community</strong></li> 
+<li>Authors</li> 
+<li>Forums</li> 
+<li>Membership</li> 
+<li>Newsletters</li> 
+<li>RSS Feeds</li> 
+<li>User Groups</li> </ul> 
+<ul> 
+<li><strong>More O'Reilly Sites</strong></li> 
+<li>igniteshow.com</li> 
+<li>makerfaire.com</li> 
+<li>makezine.com</li> 
+<li>craftzine.com</li> 
+<li>labs.oreilly.com</li> </ul> 
+<ul> 
+<li><strong>Partner Sites</strong></li> 
+<li>PayPal Developer Zone</li> 
+<li>O'Reilly Insights on Forbes.com</li> </ul> <br>
+<br>
+<br>
+<br>
+
+</body>

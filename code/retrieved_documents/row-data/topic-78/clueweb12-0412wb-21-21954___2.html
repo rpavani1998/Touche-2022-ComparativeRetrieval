@@ -1,0 +1,241 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Optimizing Sort Algorithms For The PS3 Part 6 (Final Optimizations) by Pierre-Andre Saulais - Codeplay.com</title>
+<body>
+Login or Register <br>
+
+<ul> 
+<li>Home</li> 
+<li>Games</li> 
+<li>Compilers</li> 
+<li>Company</li> 
+<li>Support</li> </ul> 
+<ul> 
+<li>Codeplay</li> 
+<li>Academia</li> 
+<li>Blogs</li> 
+<li>Team</li> 
+<li>Documents</li> 
+<li>Publications</li> 
+<li>Partners</li> 
+<li>Jobs</li> 
+<li>Media</li> 
+<li>Contact Us</li> </ul> 
+<ul> 
+<li>  Pierre-Andre Saulais <br>
+ Research Student </li> 
+<li>Codeplay Bloggers</li> 
+<li> </li> 
+<li>Similar Blogs</li> 
+<li>Offload&trade; Feedback</li> 
+<li>Codeplay sets out to wre..</li> 
+<li>Codeplay Launches Offloa..</li> 
+<li>The New Website</li> 
+<li>Offload&trade; compiler ..</li> </ul> 
+<ul> 
+<li>Pierre-Andre Saulais's Blogs</li> </ul>  &raquo;  Optimizing Sort 
+Algorithms for the PS.. Tweet <br>
+
+<h1>Optimizing Sort Algorithms For The PS3 Part 6 (Final Optimizations)</h1> 
+<h4>Posted on Monday 11th of July 2011 10:38:21 AM.</h4> <br>
+
+<p>Sorting is a simple but important concept for implementing games. For 
+example, sorting transparent objects before rendering or sorting objects by 
+state attribute (e.g. texture) to improve batching. Because of the way most 
+algorithms work (comparing and swapping pairs of items) sorting often takes 
+precious time. With multi-core architectures like the PS3 it makes sense to 
+parallelize this operation to maximize the use of these cores.</p> 
+<p>In the previous part we have created a parallel sort implementation that 
+runs on 2 SPUs. In this part we willimprove it so that it can run on 4 SPUs 
+instead of 2. In addition, we will show how to parallelize merge to run on any 
+number of SPUs which will improve performance even further.</p> 
+<h2>Quick Links</h2> 
+<p>Part 1 (Quicksort)</p> 
+<p>Part 2 (Merge)</p> 
+<p>Part 3 (Merge Sort)</p> 
+<p>Part 4 (Offloading on 1 SPU)</p> 
+<p>Part 5 (Parallel Sort on 2 SPUs)</p> 
+<p>Part 6 (Final Optimizations)</p> 
+<p>The entire series is also available as a single PDF document.</p> 
+<h2>Parallel Sort on 4 SPUs</h2> 
+<p>As we have seen, the recursive structure of our parallel sort 
+implementation limits the number of SPUs we can use. With one level of 
+recursion and dividing the array in half each time we are limited to using 2 
+SPUs in parallel. If we divided the array in four parts we could use 4 SPUs.</p>
+<p>The algorithm would be the same, only with &ldquo;unrolling&rdquo; one 
+level of recursion. At each recursion level we are left with 4 sorted array 
+parts. We then need to merge these 4 parts into 2, then into one. Note that now 
+we don't need to copy back temp into data:</p> 
+<pre>template&lt;typename T&gt; void parallelSort(T *data, size_t count, 
+AlignedT *temp, ThreadQueue *queue) { // divide the data array into (nearly) 
+equal parts const size_t PARTS = 4; size_t partSize[PARTS], partStart[PARTS], 
+partEnd[PARTS]; size_t current = 0, left = count; for(int i = 0; i &lt; PARTS; 
+i++) { partStart[i] = current; partSize[i] = min(count / PARTS, left); current 
++= partSize[i]; left -= partSize[i]; if(i == (PARTS - 1)) partSize[i] += left; 
+partEnd[i] = partStart[i] + partSize[i] - 1; } // sort the parts 
+if(partSize[PARTS - 1] &gt; MAX_SPU_ARRAY_COUNT) { parallelSort(data + 
+partStart[0], partSize[0], temp, queue); parallelSort(data + partStart[1], 
+partSize[1], temp, queue); parallelSort(data + partStart[2], partSize[2], temp, 
+queue); parallelSort(data + partStart[3], partSize[3], temp, queue); } else { 
+sortChunkQueued(data, partStart[0], partEnd[0], queue); sortChunkQueued(data, 
+partStart[1], partEnd[1], queue); sortChunkQueued(data, partStart[2], 
+partEnd[2], queue); sortChunkQueued(data, partStart[3], partEnd[3], queue); } 
+// parts must have been sorted before merging queue-&gt;joinAllThreads(); // 
+merge four parts (data) into two (temp) merge(temp + partStart[0], data, 
+partStart[0], partEnd[0], data, partStart[1], partEnd[1]); merge(temp + 
+partStart[2], data, partStart[2], partEnd[2], data, partStart[3], partEnd[3]); 
+// merge two parts (temp) into one (data) merge(data, temp, partStart[0], 
+partEnd[1], temp, partStart[2], partEnd[3]); }</pre> 
+<p>&nbsp;</p> 
+<p>Without going into details, when sorting &gt;20K arrays with merge sort we 
+see 3.4-4.8x speed-ups. These speed-ups come from &ldquo;unrolling&rdquo; one 
+recursion level. Doing this again (i.e. dividing the array into 8 parts) would 
+be possible, unfortunately only 6 out of the PS3's 8 SPUs can be used. With 
+Offload&trade; we can enqueue more blocks than there are SPUs but some SPUs 
+will be idle at the end: if we enqueue 8 blocks, 6 will be processed in 
+parallel at the same time and when they have been sorted the last 2 blocks will 
+be processed. Thus it is not any faster than sorting 4 blocks on 4 SPUs.</p> 
+<h2>Parallel Merge</h2> 
+<p>One major part of our sort implementation remains sequential: merging. It 
+turns out that merge can also be parallelized[1]. The idea is to take the 
+median of the left array (the middle element since the array is sorted) and 
+look in the right array for an item that is smaller than the median (this is 
+fast since the array is sorted). Then these two items divide each array into 
+two parts that can be merged independently. And independently means we can 
+easily parallelize it:</p> 
+<pre>template&lt;typename T&gt; void parallelMerge(T *to, const T *fromX, 
+size_t lowX, size_t highX, const T *fromY, size_t lowY, size_t highY, size_t 
+lowTo, ThreadQueue *q) { size_t lengthX = highX - lowX + 1; size_t lengthY = 
+highY - lowY + 1; if((lengthX + lengthY) &lt;= MAX_SPU_ARRAY_COUNT) { 
+mergeQueued(to, fromX, lowX, highX, fromY, lowY, highY, lowTo, q); return; } 
+if(lengthX &lt; lengthY) { parallelMerge(to, fromY, lowY, highY, fromX, lowX, 
+highX, lowTo, q); return; } // get median of the X sub-array size_t midX = 
+(lowX + highX) / 2; // find index mixY such that temp[midY] &gt; temp[midX] 
+size_t midY = binarySearch(fromY, lowY, highY, fromX[midX]); // copy the median 
+size_t midTo = lowTo + midX - lowX + midY - lowY; to[midTo] = fromX[midX]; // 
+merge X[lowX .. midX - 1] with Y[lowY .. midY - 1] parallelMerge(to, fromX, 
+lowX, midX - 1, fromY, lowY, midY - 1, lowTo, q); // and X[midx + 1 .. highX] 
+with Y[midY .. highY] parallelMerge(to, fromX, midX + 1, highX, fromY, midY, 
+highY, midTo + 1,q); }</pre> 
+<p>In this code, the mergeQueued function is similar to the sortChunkQueued 
+function we have seen earlier. It allocates SPU memory for all arrays, copy the 
+data from PPU to SPU, merge both arrays and copies the result back to the PPU 
+once finished.</p> 
+<h2>Results</h2> 
+<p>&nbsp;</p> 
+<p>16K faces</p> 
+<p>64K floats </p> 
+<p>64K ints</p> <br>
+
+<p>std::sort</p> 
+<p>8.4 ms</p> 
+<p>12.0 ms</p> 
+<p>7.0 ms</p> <br>
+
+<p>Quicksort (PPU)</p> 
+<p>9.4 ms</p> 
+<p>17.7 ms</p> 
+<p>7.2 ms</p> <br>
+
+<p>Parallel quicksort (2 SPU) with sequential merge</p> 
+<p>6.5 ms</p> 
+<p>6.1 ms</p> 
+<p>6.1 ms</p> <br>
+
+<p>Parallel quicksort (4 SPU) with sequential merge</p> 
+<p>5.4 ms</p> 
+<p>4.1 ms</p> 
+<p>4.0 ms</p> <br>
+
+<p>Parallel quicksort (2 SPU) with parallel merge (6 SPU)</p> 
+<p>5.5 ms</p> 
+<p>5.4 ms</p> 
+<p>5.4 ms</p> <br>
+
+<p>Parallel quicksort (4 SPU) with parallel merge (6 SPU)</p> 
+<p>3.6 ms</p> 
+<p>2.8 ms</p> 
+<p>2.8 ms</p> <br>
+
+<p>std::stable_sort</p> 
+<p>23.3 ms</p> 
+<p>31.6 ms</p> 
+<p>19.9 ms</p> <br>
+
+<p>Merge sort (PPU)</p> 
+<p>18.3 ms</p> 
+<p>10.1 ms</p> 
+<p>9.6 ms</p> <br>
+
+<p>Parallel merge sort (2 SPU) with sequential merge</p> 
+<p>10.1 ms</p> 
+<p>3.6 ms</p> 
+<p>3.3 ms</p> <br>
+
+<p>Parallel merge sort (4 SPU) with sequential merge</p> 
+<p>6.3 ms</p> 
+<p>2.5 ms</p> 
+<p>2.4 ms</p> <br>
+
+<p>Parallel merge sort (2 SPU) with parallel merge (6 SPU)</p> 
+<p>8.7 ms</p> 
+<p>2.5 ms</p> 
+<p>2.4 ms</p> <br>
+
+<p>Parallel merge sort (4 SPU) with parallel merge (6 SPU)</p> 
+<p>4.5 ms</p> 
+<p>1.2 ms</p> 
+<p>1.2 m</p> <br>
+<br>
+
+<p>Using parallelMerge instead of merge in our parallelSort function gives 
+even greater speedups (using all 6 SPUs for merging). When sorting &gt;20K 
+arrays with merge sort on 4 SPUs we see 6-11x speed-ups for float arrays and 
+5-10x speed-ups for int arrays over the PPU implementation. When it comes to 
+face arrays &gt;16K we see 2-2.3x speed-ups with 2 SPUs and 3.6-4.5x speed-ups 
+with 4 SPUs (see below for tables and plots of the results).</p> 
+<p>Interestingly, different sort algorithms perform differently with different 
+data types. For example, our parallel merge sort (with parallel merge) 
+implementation sees 7-11x speed-ups for float and int arrays &gt;40K on 4 SPUs. 
+When sorting faces the speed-ups are lower (~4x). On the other hand, the 
+parallel quicksort (with parallel merge) sees 5-6x speed-ups (<em>over merge 
+sort</em>) on the same face arrays. With float and integer arrays the speed-ups 
+are lower (~4x over merge sort).</p> 
+<h2>Speed-up plots</h2> 
+<p>These plots compare the performance of the different sort implementations 
+we have presented in the series as well as STL's. All speed-ups are over our 
+optimized merge sort running on the PPU. All vectorized functions we have 
+described are used whenever possible.</p> 
+<h3>Sorting Arrays of Floats</h3> 
+<p>&nbsp;</p> 
+<h3>Sorting Arrays of Integers</h3> 
+<p>&nbsp;</p> 
+<h3>Sorting Arrays of Faces (1 float, 3 integers)</h3> 
+<p>&nbsp;</p> 
+<h3>Comparison with offloaded std::sort (Face arrays)</h3> 
+<p>&nbsp;</p> 
+<h2>Conclusion</h2> 
+<p>In this blog post series we have explained the process of creating a 
+parallel sort implementation on the PS3's SPUs. Our implementation can use any 
+sort function (that can run inside an Offload&trade; block) to sort array 
+chunks small enough to fit in a SPU's local memory. These chunks are then 
+merged in parallel, also on SPUs. Up to 4 SPUs are used for sorting and up to 6 
+SPUs for merging. This results in 6-11x speed-ups for sorting float and 
+integers arrays of over 20K elements and 2.5-3x speed-ups for sorting 
+similarly-sized arrays of our user-definedFace struct. </p> 
+<h2>References</h2> 
+<p>[1] http://dzmitryhuba.blogspot.com/2010/10/parallel-merge-sort.html</p> 
+<p>&nbsp;</p> 
+<p>&nbsp;</p> 
+<p>&nbsp;</p> 
+<p>&nbsp;</p> 
+<h1>Comments</h1> <b>Copyright 2002 - 2012 Codeplay Software Ltd.</b> <br>
+<b>
+All Rights Reserved.</b> <br>
+<i>&quot;PlayStation&reg;&quot; is a registered 
+trademark, and &quot;Cell Broadband Engine&quot; is a trademark of Sony 
+Computer Entertainment Inc.</i> <b>Tel:</b> +44 131 466 0503 <br>
+<b>Email:</b> 
+info@codeplay.com <br>
+<b>VAT:</b> GB 802 8335 47 
+</body>

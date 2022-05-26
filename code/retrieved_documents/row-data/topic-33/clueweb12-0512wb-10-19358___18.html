@@ -1,0 +1,1439 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>PHP versus ASP.NET &ndash; Windows versus Linux &ndash; Who&rsquo;s the fastest ? :MisfitGeek  (Joe Stagner)</title>
+<body>
+
+<h1> &nbsp;  MisfitGeek (Joe Stagner) </h1> 
+<p> The Original Opinionated Misfit Geek ! - A2 </p> Subscribe RSS | Podcast 
+RSS <br>
+<br>
+
+<ul> 
+<li>Home</li> 
+<li></li> 
+<li>Code</li> 
+<li>Links</li> 
+<li>Videos</li> 
+<li>Podcast</li> 
+<li>Books</li> 
+<li>About</li> 
+<li>Contact</li> </ul> 
+<h1> PHP versus ASP.NET &ndash; Windows versus Linux &ndash; Who&rsquo;s the 
+fastest ?</h1> 
+<ul> 
+<li>Written by JoeStagner </li> 
+<li>Posted August 5, 2009 at 3:11 pm</li> </ul> 
+<blockquote> 
+<p>NOTE: This is &ldquo;Misfit Data&rdquo; &ndash; While I do work for 
+Microsoft, this data is NOT &ldquo;official Microsoft&rdquo; data and is not 
+endorsed or ratified by Microsoft in any way. I built and ran these tests 
+because I was personally curious about comparative performance.</p> 
+<p>If these test results cause you dizziness, vomiting, or other undesired 
+side effects, please discontinue use immediately and consult your physician.</p>
+</blockquote> 
+<h1>How does IMPLEMENTATION Performance Compare ?</h1> 
+<p>Usually, when someone creates benchmarks, they are trying to prove that 
+their thing is faster than someone else&rsquo;s thing.</p> 
+<p>I&rsquo;m PAID by Microsoft to write BOTH PHP and ASP.NET Code. I was doing 
+PHP before .NET shipped. I love them both.</p> 
+<p>This makes it hard for me to say anything good about either one. When I 
+confer a preference for something in PHP, my Microsoft peers send me flame mail 
+and when I confer a preference for something in ASP.NET, my PHP friends come 
+out of the woodwork to call me a Microsoft shill.</p> 
+<p>I started building and running these tests because everyone had opinions 
+about comparative PHP performance (Windows versus Linux &amp; 5.2 versus 5.3), 
+but no one had any solid data.</p> 
+<p>So, I decided to collect some empirical evidence of my own.</p> 
+<p>[ You can CLICK HERE to see the result spreadsheet. ]</p> 
+<p>Before you look at them, let m e provide some method details and context.
+</p> 
+<p>All tests were run on the SAME Machine.</p> 
+<p>A Toshiba Tecra M5 with 4 Gig of ram and a 60 Gig 7200 RPM Hard Drive.</p> 
+<p>Ubuntu 9 and Windows Server 2008 Standard were natively installed on 2 
+separate (but identical) hard drives.</p> 
+<p>The web servers were Apache2 on Linux and IIS 7 on Windows.</p> 
+<p>Both operating systems were fully patched / updated.</p> 
+<p>No Operating System or Development Runtime performance enhancements were 
+added.</p> 
+<p>I wasn&rsquo;t investigating how much speed an expert could custom tailor 
+the tests to on a specific platform.</p> 
+<p>Yes, I could implement PHP Byte Caching, or for ASP.NET I could use Page 
+Caching, Partial Page Caching, SQL Cache Dependency, Multi Threading, etc.</p> 
+<p>Both Windows and Linux Implementations of PHP will benefit from PHP Byte 
+Code caching.</p> 
+<p>My goal was to determine the relative speed of THE IMPLEMENTATION.</p> 
+<p>I found the results both interesting and unexpected.</p> 
+<h1>PHP on Linux Versus PHP on Windows&hellip;..</h1> 
+<p>I really though one would just be faster than the other, but I was wrong. 
+Some things are faster on Windows, other are faster on Linux.</p> 
+<ul> 
+<li>RAW statement execution seems faster on Windows.</li> 
+<li>Function Calls were faster on Windows</li> 
+<li>Object Creation / Access was faster on Linux with PHP 5.2 but faster on 
+Windows with 5.3</li> 
+<li>Library calls were faster on Linux. (Example: Encryption 3-5 times faster 
+on Ubuntu.)</li> 
+<li>File Access is faster on Linux by a small percentage, except for file copy 
+operations which was as much as 60% slower on Windows probably due to the ACL 
+advanced security.</li> 
+<li>MySQL access with Linux is faster by more than a little and on Windows, 
+MySQL access deteriorates in version 5.3 (This seems to be poor implementation, 
+see PostgreSQL below.)</li> 
+<li>PostgreSQL performance is very close on both platforms (within 6/100 of a 
+second for 1000 Operations) &ndash; It&rsquo;s faster on Windows and faster 
+still on Windows with PHP 5.3</li> 
+<li>MS SQL Server access from PHP 5.2 on Windows is marginally slower than 
+MySQL access on Linux. (PHP 5.3 not yet supported at the time of this writing.)
+</li> </ul> 
+<p>So what does all that mean ?</p> 
+<ul> 
+<li>We can probably say that in terms of raw execution &ndash; performance on 
+Linux versus Windows is probably a wash (more or less equivalent) so that the 
+performance of PHP itself becomes a moot factor in choosing Linux or Windows 
+for PHP application deployment.</li> 
+<li>If you are building an application, or running an application that 
+supports it, PostgreSQL might be a better database choice since it performs 
+pretty much the same on Windows and Linux.</li> 
+<li>If you are running an application that locks you in to Sun 
+Microsystems&rsquo; MySQL and you want to run it on Windows, your should do 
+scale planning. (My personal guess is that it&rsquo;s unlikely that Sun will 
+markedly improve MySQL performance on Windows. )</li> 
+<li>Version 1 of the PHP Driver for SQL Server (V2 is in the works) is 
+somewhat slower than MySQL or PostpreSQL but probably not enough to discourage 
+use where diverse developer access is desired. (v2 ot the driver will improve 
+performance. )</li> </ul> 
+<p>By and large I think the PHP team and the Microsoft IIS team have 
+accomplished good raw performance equivalence across platforms. (Now we just 
+need to get the Open Source Application teams (Drupal, WordPress, Joomle, etc.) 
+to do performance optimization on both !)</p> 
+<h1>PHP versus ASP.NET Raw Performance &hellip;..</h1> 
+<p>By now you have cheated and looked at the spread sheet.</p> 
+<p>Yes, ASP.NET is universally faster than PHP (on Windows and on Linux) with 
+the exceptions of File Copy and Attribute operations.</p> 
+<p>MySQL Access from PHP on Linux is a TINY bit faster than SQL Server access 
+on Windows (assuming common data types and SELECT statements) but probably not 
+enough to matter.</p> 
+<p>ASP.NET (C#) operations, object use, library calls, etc. are SIGNIFICANTLY 
+faster that the PHP equivalents.&nbsp;</p> 
+<p>I know my PHP friends and the Linux dudes (and dude-etts) will probably 
+come out of the wood work to refute my tests and results &nbsp;</p> 
+<p>I&rsquo;ve always thought that if high end performance options were part of 
+your needs requirements,&nbsp; then .NET programming has some advanced options 
+&ldquo;out of the box&rdquo; like multi-threading, asynchronous requests, and a 
+number of caching options.</p> 
+<p>NOTE &ndash; I&rsquo;m not saying &ldquo;ASP.NET is Faster so you 
+shouldn&rsquo;t choose PHP !!!!&nbsp; I&rsquo;ve always contended that the 
+affable simplicity of PHP had some drawbacks for certain advanced applications. 
+(Just as the early learning complexity of ASP.NET can have it&rsquo;s 
+drawbacks. )</p> 
+<p>To me (your mileage may vary) the exciting thing about PHP is not the 
+language / platform so much as it is what thousands of clever PHP Developers 
+have done with it (Drupal, Joomla, WordPress, PHPBB, Nuke, etc.)</p> 
+<p>In any event, it&rsquo;s nice to now have some data that PHP performance on 
+Windows and Linux are &ldquo;in the same ballpark&rdquo;.</p> 
+<p>Now I can start writing those Windows specific PHP&nbsp; libraries 
+I&rsquo;ve been dreaming about for years !!</p> 
+<blockquote> 
+<p>COMMENT WARNING</p> 
+<ul> 
+<li>I know some will be incensed by these tests. You are welcome to comment 
+and disagree, but if you can&rsquo;t be polite I&rsquo;ll simply delete your 
+comments and block your IP address.</li> 
+<li>If you dislike the results and want to refute them &ndash; DO THE WORK. 
+Accompany your dissent with DATA. Take my code or write your own and argue with 
+FACTS.</li> </ul> </blockquote> 
+<p>You can look at the code here.</p> 
+<ul> 
+<li>PHP Perf Test &ndash; MySQL</li> 
+<li>PHP Perf Test &ndash; PostgreSQL</li> 
+<li>PHP Perf Test &ndash; SQL Server</li> 
+<li>ASP.NET Perf Test</li> 
+<li>&nbsp;SQL Database Setup</li> </ul> 
+<p>Anyway &ndash; hope some of you find this interesting.</p> 
+<p>Now let the frenzy begin !!</p> 
+<p>&nbsp;</p>  Technorati Tags: Microsoft,ASP.NETOOP, PHP, Linux, MySQL
+,Postgress,SQL Server, Performance <br>
+<br>
+<br>
+<br>
+ Filed under: ASP.NET 
+<br> <br>
+
+<ul> 
+<li> RSS feed for comments on this post </li> 
+<p><b>155 Responses to this post</b></p> 
+<ol> 
+<li> PHP versus ASP.NET &ndash; Windows versus Linux &ndash; Who&rsquo;s the 
+fastest ? : Misfit Geek on August 5th, 2009 3:35 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ? : Misfit Geek</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who???s the fastest ? | 
+ASP Scribe on August 5th, 2009 3:48 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who???s the 
+fastest ? | ASP Scribe</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who's the fastest 
+&hellip; | Webmaster Tools on August 5th, 2009 3:54 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who&rsquo;s 
+the fastest &hellip; | Webmaster Tools</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who's the fastest &hellip;
+ on August 5th, 2009 4:08 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who&rsquo;s 
+the fastest &hellip;</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who's the fastest &hellip;
+ on August 5th, 2009 4:08 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who&rsquo;s 
+the fastest &hellip;</p> </li> 
+<li> Oran on August 5th, 2009 4:41 pm 
+<p>&quot;I know some will be incensed by these tests. You are welcome to 
+comment and disagree, but if you can be polite I&rsquo;ll simply delete your 
+comments and block your IP address.&quot;</p> 
+<p>I guess I will have to be impolite to comment here  .</p> 
+<p>I assume you the versions of Ubuntu &amp; Windows that were used were 32bit.
+</p> 
+<p>Is that correct? </p> </li> 
+<li> Sid on August 5th, 2009 4:42 pm 
+<p>Joe,</p> 
+<p>Thanks for this article. I found it most helpful, as I too am a 
+&quot;switch hitter&quot; in that I develop projects in both ASP.net and 
+PHP/MySQL. I agree that the folks who developed Drupal, Joomla and WordPress 
+have done a great job using PHP to accomplish this.</p> 
+<p>If I had to choose, I would utilize ASP.net simply because I like the 
+Visual Studio IDE experience. I&rsquo;ve used Zend Studio and Eclipse and 
+haven&rsquo;t quite had the same success. My clients ultimately dictate what 
+programming language to use based on their server environment. I&rsquo;ve seen 
+a lot of articles about how it&rsquo;s better to focus on .Net or PHP but not 
+both. However, I disagree because ultimately I need to meet client&rsquo;s 
+needs which might require the use of ASP.net for one project, and PHP for a 
+different one.</p> 
+<p>Thanks Again!</p> </li> 
+<li> Scriptstar on August 5th, 2009 4:42 pm 
+<p>&quot;ASP.NET is universally faster than PHP (on Windows and on Linux)&quot;
+</p> 
+<p>This is music to my ears. All these days, I was a bit guilty of not honing 
+my PHP skills and bowed to .NET. Tonight it&rsquo;s a good night sleep.</p> 
+<p>Great Joe.</p> </li> 
+<li> hajan on August 5th, 2009 5:07 pm 
+<p>Joe, thanks for the article and for sharing the tests you&rsquo;ve made.</p>
+<p>I have quite similar experience&hellip; </p> 
+<p>I have started working on PHP but ended up with ASP.NET because simply I 
+feel the power which is above PHP.</p> 
+<p>I have personally made only few of the tests for which you already provided 
+more detailed explanation and tests on your results spreadsheet and I 
+don&rsquo;t have anything to say except to strongly agree with the results you 
+have achieved.</p> 
+<p>Anyway, I still love both ASP.NET &amp; PHP because both these give me 
+opportunity to work and accomplish great things, even though, I have always 
+preferred ASP.NET before PHP.</p> 
+<p>Cheers</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who's the fastest &hellip;
+ on August 5th, 2009 5:21 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who&rsquo;s 
+the fastest &hellip;</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who's the fastest 
+&hellip; | MySQL Security on August 5th, 2009 5:58 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who&rsquo;s 
+the fastest &hellip; | MySQL Security</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who???s the fastest ? | I 
+love .NET! on August 5th, 2009 6:04 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who???s the 
+fastest ? | I love .NET!</p> </li> 
+<li> Seo Swap | | PHP versus ASP.NET ??? Windows versus Linux ??? Who&rsquo;s 
+the fastest ??? &raquo; Seo Swap | on August 5th, 2009 6:31 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Seo Swap | | PHP versus ASP.NET ??? Windows versus Linux ??? 
+Who&rsquo;s the fastest ??? &raquo; Seo Swap |</p> </li> 
+<li> Windows | All Days Long on August 5th, 2009 8:21 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Windows | All Days Long</p> </li> 
+<li> Kevin Isom on August 5th, 2009 9:00 pm 
+<p>Joe, </p> 
+<p>Thanks for the effort. Any chance you could compare mono against php as 
+well?</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who's the fastest &hellip;
+ on August 5th, 2009 9:00 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who&rsquo;s 
+the fastest &hellip;</p> </li> 
+<li> rui on August 5th, 2009 9:13 pm 
+<p>Beforehand i&rsquo;d like to say that i&rsquo;m not a fanatic, and, 
+i&rsquo;ve also tested alot of thing you already did, in different version 
+along the last years.</p> 
+<p>I often find this comparisons to be a bit biased towards the expertise of 
+the person testing it, if one is more proeficient with windows then the tests 
+tend to favour windows, if the tester is more proeficient with linux it favours 
+linux etc.</p> 
+<p>Thing is most of the time, people disregard several importan aspects while 
+testing, making a test in a standard out of the box install of 
+linux/apache/php/mysql/postgresql vs windows/iis/mysql/postgresql is not quite 
+accurate, the hardware for starters should be the same, then, both operating 
+systems / software should be configured for maximum performance (since 
+that&rsquo;s what a sane person would do in a production environment) and only 
+then compare results. For instance, have you installed a PHP accelerator like 
+APC ? or have you optimized Apache ? the same applied to windows obviously.</p> 
+<p>Out of the box benchmarks worth just that&hellip;</p> 
+<p>Good effort though.</p> 
+<p>Best regards</p> </li> 
+<li> Shannon Deminick on August 5th, 2009 9:44 pm 
+<p>Just wanted to know what implementation of PHP you are using on windows: 
+FastCGI or ISAPI?</p> </li> 
+<li> Avinash on August 5th, 2009 10:49 pm 
+<p>Nice one. Is there a way where you can compare ASP with ASP.NET because 
+many people like me have the doubt that Microsoft is killing ASP in the 
+upcoming servers.</p> </li> 
+<li> PHP vs ASP.NET, Linux vs Windows on August 5th, 2009 11:24 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>PHP vs ASP.NET, Linux vs Windows</p> </li> 
+<li> PHP Vs. ASP.net on Linux and Windows on August 6th, 2009 1:55 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>PHP Vs. ASP.net on Linux and Windows</p> </li> 
+<li> Sharique on August 6th, 2009 2:06 am 
+<p>Thanks for performing tests. These are quite useful.</p> 
+<p>There are few things I would like to know like how PHP in IIS configured, 
+if FastCGi than version of FastCGI. Are OSes 32-bit or 64bit?</p> 
+<p>It would be better if Ubuntu with PHP 5.3 is also tested.</p> 
+<p>Have you ever tested asp.net on windows and linux?</p> 
+<p>&ndash;</p> 
+<p>Thank you</p> 
+<p>Sharique</p> </li> 
+<li> Geof on August 6th, 2009 3:45 am 
+<p>PHP is ugly like hell. ASP.NET RULZ!!! Long live .NET. Long live C#</p> 
+</li> 
+<li> Andrew on August 6th, 2009 5:29 am 
+<p>Hi Joe,</p> 
+<p>I would have loved to seen how classic ASP performed against it&rsquo;s big 
+brother ASP.Net on Windows Server 2008.</p> 
+<p>Andrew</p> </li> 
+<li> zhangzhao on August 6th, 2009 5:40 am 
+<p>interesting! </p> </li> 
+<li> Jay Khatri on August 6th, 2009 7:02 am 
+<p>Hi friends,</p> 
+<p>I am using ASP.Net and never known to php and dont even like to be switched 
+as I am quite comfort on windows platform. But as a freelancer when I see 
+online projects, I always found php products are many more than ASP.Net. So I 
+think as I freelancer I have less opportunity.</p> 
+<p>This is very painful. As ultimate object of learning ASP.Net for me is to 
+earn money.</p> 
+<p>What you think.</p> 
+<p>Thanks &amp; Best Regards</p> 
+<p>Jay Khatri</p> </li> 
+<li> Brian Dines on August 6th, 2009 7:29 am 
+<p>I have in the past worked with ASP with MSAccess/SQL Server, PHP with MYSql 
+and ASP.NET with SQL Server.</p> 
+<p>I also did some simple tests back when ASP.NET was v1.1. I noted that with 
+ASP and PHP, PHP was generally faster. With ASP.NET and PHP, .NET was faster 
+but not greatly. This was before I really knew what I was doing too.</p> 
+<p>I like all 3, although if given a choice I would always go the .NET route. 
+I never used visual studio &ndash; I was using Macromedia/Adobe Homesite for 
+coding. I now use Studio 2008 exclusively for coding although Homesite had some 
+nice touches I still consider superior to any other editor, particularly its 
+extensibility via JScript and user-defined forms.</p> 
+<p>I probably would use PHP over ASP, but ASP.NET over PHP. I really dislike 
+MySQL as it does weird things sometimes with queries and prefer stored 
+procedures on SQL Server.</p> </li> 
+<li> Chris Love on August 6th, 2009 7:42 am 
+<p>Thanks for doing this Joe. I rememeber attending a Mix &rsquo;08 IIS 
+session where they were showing PHP test on IIS 7 showed signigicant perf 
+increases over Apache. They said it was because IIS 7 provides a true 
+multithreaded web server for PHP. I am not a LAMP person by any means, but that 
+made sense because my LAMP friends always talk about scaling as adding more 
+servers, ie more hardware. Can you speak to this sometime?</p> </li> 
+<li> Bruno on August 6th, 2009 8:09 am 
+<p>I always knew that&hellip; asp.net rox!</p> </li> 
+<li> Dew Drop &ndash; August 6, 2009 | Alvin Ashcraft's Morning Dew on August 
+6th, 2009 8:34 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Dew Drop &ndash; August 6, 2009 | Alvin Ashcraft&rsquo;s 
+Morning Dew</p> </li> 
+<li> Joe Stagner on August 6th, 2009 8:38 am 
+<p>Sharique, </p> 
+<p>Good questions. First, I didn&rsquo;t test 5.3 becuase the Ubuntu package 
+manager doesn&rsquo;t include 5.3. I tried building 5.3 from source but it kept 
+failing and the only pre built binaries I could find for 5.3 were Beta.</p> 
+<p>The OS versions were both 32 bit. Given that the test were single user and 
+the macine wasn&rsquo;t running anything else, I suspect tests would not be 
+effected by 64bit.</p> 
+<p>The Windows 08, IIS 7, FastCGI was fully updated. </p> 
+<p>Joe </p> </li> 
+<li> Dan on August 6th, 2009 8:59 am 
+<p>thank goodness .. backs up the assertion that one should chose the right 
+tool for the right job. end of argument.</p> </li> 
+<li> Lloyd on August 6th, 2009 9:03 am 
+<p>Adding a XAML/SilverLight comparison would be a good idea.</p> 
+<p>Good Article</p> 
+<p>Lloyd </p> </li> 
+<li> Vinod Unny on August 6th, 2009 9:47 am 
+<p>A magazine to which I contribute articles recently did a PHP on win vs. Lin 
+article and found that PH ran better on Linux than Windows. I was quite 
+surprised by that knowing that PHP with FastCGI does have a number of 
+optimizations on IIS7. Can you please take a look at let us know your thoughts 
+on these results? The article is available at:
+pcquest.ciol.com/&hellip;/109070402.asp </p> </li> 
+<li> Fl&aacute;vio Stakoviak on August 6th, 2009 9:50 am 
+<p>Nice, I always thought asp.net was slower than php.</p> 
+<p>Now, I see, with good development practices, you can have a great 
+performance at asp.net too.</p> 
+<p>Congratulation, excelent article</p> </li> 
+<li> Joe Stagner on August 6th, 2009 9:50 am 
+<p>Vinod &ndash; this is typical of the stuff I found when I did my initial 
+search. It&rsquo;s simply a declaration that one is faster than the other. No 
+share code or methodology. In my opinion that makes the article meaningless.</p>
+</li> 
+<li> Rick on August 6th, 2009 10:10 am 
+<p>Is there a way to improve the performance of the file copy test on Win2k8 
+ASP.Net 2 without compromising security?</p> </li> 
+<li> PHP versus ASP.NET ??? Windows versus Linux ??? Who???s the fastest ? | 
+rapid-DEV.net on August 6th, 2009 10:24 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP versus ASP.NET ??? Windows versus Linux ??? Who???s the 
+fastest ? | rapid-DEV.net</p> </li> 
+<li> Craig on August 6th, 2009 10:37 am 
+<p>Let&rsquo;s suppose for the moment that your numbers are in the general 
+ballpark. (I think they probably are.) In an economically-challenged country 
+like the USA, is this the question that really matters? To really make the two 
+stand apart, isn&rsquo;t it TCO that counts? Isn&rsquo;t this the answer that 
+CIOs are looking for?</p> 
+<p>To factor that all in, you&rsquo;ve got to consider a gazillion things, 
+like the development environment, RAD vs. RUP, startup hardware costs (must 
+consider #users served over x amount of time, not just #users served at a 
+snapshot in time), startup software costs, ongoing licensing costs, ongoing 
+maintenance costs, developer availability, code comprehensibility, security 
+costs, and on and on. This means that for different environments, the choice 
+may vary. For the freelancer, it may be one choice, while the 10,000 employee 
+enterprise IT staff may need a completely different choice (or choices.)</p> 
+<p>So, who&rsquo;s going to step up and pull those numbers out of their hat? 
+PHP vs .NET? Not my question, I can learn to code in anything, frankly. To have 
+money or not to have money, that is the question. &lsquo;Cuz that&rsquo;s where 
+the business is ultimately going to go, and that&rsquo;s what I want to learn. 
+Personally, I&rsquo;ve seen firsthand the hidden costs of both Java and .NET in 
+an Fortune 500 environment, and .NET still has my focus. Haven&rsquo;t messed 
+with PHP much yet; no incentive to do so. Make me see the value in the 
+switch&hellip;</p> </li> 
+<li> PHP versus ASP.NET &ndash; Windows versus Linux &ndash; Who&rsquo;s the 
+fastest ? - Joe Stagner on August 6th, 2009 10:43 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Thank you for submitting this cool story &ndash; Trackback from 
+DotNetShoutout</p> </li> 
+<li> PHP versus ASP.NET &ndash; Windows versus Linux &ndash; Who&rsquo;s the 
+fastest ? : Misfit Geek on August 6th, 2009 11:01 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Thank you for submitting this cool story &ndash; Trackback from progg.ru</p>
+</li> 
+<li> Craig on August 6th, 2009 11:27 am 
+<p>Just to provide some numbers from my experience: I saw a team of 20 
+experienced developers from India (no 1st-timers) rewrite 50% of an existing 
+application in 1 year for a cost of about $1M. Single request times were 2-3 
+seconds per page, when the existing system was under .5 seconds per page. It 
+choked badly when they cranked up the user load in testing.</p> 
+<p>I could have easily redone the entire application by myself in .NET in the 
+same amount of time, and guaranteed better response times. Assuming they 
+finished the app in another year (I left the company disgusted with their 
+choice, which I advised against), the total cost would be approaching $2M, for 
+something I could have done for about 1/20th the cost with faster performance 
+in .NET. Now you know why I prefer it. I have no reason to believe that PHP 
+will be any better, especially given Joe&rsquo;s numbers.</p> 
+<p>Granted, you could argue that the India team had a vested interest in 
+running up the cost, but isn&rsquo;t that what we are talking about here? TCO? 
+They also had a vested interest in getting good response times to prove 
+themselves valuable. I talked with them, they were smart guys. But the 
+technology they used was very inadequate for the task, and the TCO was poorly 
+calculated up front. And 40,000 end users paid a price as well. PHP may not 
+suffer from the performance problem, but what about the TCO? That&rsquo;s 
+crucial.</p> </li> 
+<li> Dubs on August 6th, 2009 12:27 pm 
+<p>ASP.NET: &quot;Whose your daddy?!&quot;</p> 
+<p>LAMP: &quot;I&rsquo;ll never join you!&quot;</p> 
+<p>ASP.NET: &quot;If you only knew the power of the .NET side.&quot;</p> 
+<p>LAMP: &quot;My professor told me enough. He told me PHP was faster!&quot;
+</p> 
+<p>ASP.NET: &quot;No, I am your father.&quot;</p> 
+<p>LAMP: &quot;No&hellip; No&hellip; That&rsquo;s not true&hellip; 
+That&rsquo;s impossible!&quot;</p> 
+<p>ASP.NET: &quot;Search your feelings, you know it to be true&quot;</p> 
+<p>LAMP: &quot;NOOOOOOOOOOO!&quot;</p> </li> 
+<li> rick on August 6th, 2009 12:53 pm 
+<p>Hey Joe great article I was going to send you an email asking you about 
+this om the same lines I,m a novice self taught novice</p> 
+<p>wannabe the gov. here in Canada has released a pile of training money for 
+anyone affected by the recession I qualify for training money the only 
+accredited courses I can find in B.C. Canada are open source drupal PHP and so 
+on I wold like to learn ASP.NET with some credits since I have a passion for 
+and have invested so much time I on ASP.NET Microsoft rules you guys are a 
+great team so I have a two part question</p> 
+<p>1, if I do the PHP thing will it help me be better ASP.NET developer in the 
+long run basically how much is related</p> 
+<p>2, Where could I get the equivalent training in ASP.NET in this part of the 
+world</p> </li> 
+<li> nollkoll on August 6th, 2009 1:00 pm 
+<p>mildly interesting comparison. like always developers will find ways to 
+make any platform shine or slow down using any random anti-pattern. what i 
+would like to see is a good comparison on architecture in terms of how 
+productive can i get. short term and long term. i have just started to play a 
+bit with php to get a feel for what it can do since i dont have asp.net on my 
+mac except virtually. i miss so many nice features from .net that i feel one 
+quickly has gotten used to having. like linq and where are my telerik 
+components ?? you mean i have to code all ajax code myself in php??  what is 
+the key advantage of using php (technically not on price- price is irrelevant 
+in this discussion) the whole infrastructure seem so bare. and what about mvc 
+or some scaffolding structure like rail? seems it does not exist for php or 
+only in tiny corner or php universe. would help to make an informed decision on 
+using php for anything&hellip; my initial php trials tell me im better off 
+learning objective-c on mac than web development, if im going to do any mac dev 
+at all, since there is nothing that let me be as productive as i am in .net.</p>
+</li> 
+<li> Windows Hosting or Linux Hosting? Which runs PHP Faster? on August 6th, 
+2009 2:45 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Windows Hosting or Linux Hosting? Which runs PHP Faster?</p> 
+</li> 
+<li> codegeeks &raquo; PHP versus ASP.NET ??? Windows versus Linux ??? Who???s 
+the fastest ? on August 6th, 2009 3:06 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from codegeeks &raquo; PHP versus ASP.NET ??? Windows versus Linux 
+??? Who???s the fastest ?</p> </li> 
+<li> Geof on August 6th, 2009 4:12 pm 
+<p>@Jay Khatri, Its true that PHP has more freelance projects. And I am glad 
+that .NET doesn&rsquo;t have them. You know why? Because those projects are 
+piece of shi*t. I can tell 90% of them will never go live..they are cheap 
+projects for some cheap people a way of making quick money. But .NET have big 
+projects..that PHP devs can only dream of..In our country; an avarage .NET 
+developer earns two to three times salary than an avarage PHP developer of same 
+experience. So its easy to see the difference on basis of financial benefits.
+</p> 
+<p>I wont go comparing between these two. Because comparing .NET platform with 
+PHP would be like comparing an ocean with my reservoir.</p> </li> 
+<li> opus131 on August 6th, 2009 4:22 pm 
+<p>PHP has always been, and will always be, tailored to semi-professional 
+environments. Anyone who does not get that&hellip; well does not get that.</p> 
+</li> 
+<li> Savage on August 6th, 2009 6:10 pm 
+<p>Great tests Joe we appreciate your efforts. My though is that sometime you 
+can afford a few milliseconds of performance loss to save you wallet. At the 
+bottom of the chart i would add.</p> 
+<p>Ubuntu 9 (PHP 5.2)+ MySQL Win Server 08 ASP.NET 2 + MSSQL</p> 
+<p>FREE &ndash; (color green) $$$$ &ndash; Thousands &ndash; (color pink)</p> 
+</li> 
+<li> Dave on August 6th, 2009 6:45 pm 
+<p>PHP is dead. Long live PHP!!!</p> </li> 
+<li> K on August 6th, 2009 7:06 pm 
+<p>I don&rsquo;t think it&rsquo;s fair to compare PHP without an opcode cache 
+(like APC). It is included as part of the PECL, so it is a part of the PHP 
+environment.</p> 
+<p>You can&rsquo;t compare an opcode cache to page caching. .Net has the 
+benefit of using bytecode, while PHP has to parse the file and 
+&quot;compile&quot; for each page request. So you deny PHP the advantage that 
+.Net has.</p> 
+<p>I know you can&rsquo;t setup every type of caching solution. But adding APC 
+would only put PHP on equal ground, since .Net already has something similar in 
+the form of compiled byte code.</p> </li> 
+<li> frank on August 6th, 2009 7:20 pm 
+<p>I make things in asp.net while I dabble in php. I use php projects (drupal, 
+etc&hellip;) because they are free, numerous and quite often, though not 
+always, of high quality. I know php enough to get around and to hijack the good 
+ideas and put them in asp.net.</p> 
+<p>Hands down the reason I use asp.net is because of the IDE. PHP&rsquo;s IDEs 
+are jokes with no punchlines; they really, really suck. The second reason I 
+asp.net is that the Windows technology stack is cohesive and well documented 
+(Ubuntu is a great tack for the Linux community). On the other hand the Free 
+stack seems to remain perpetually unfinished, unpolished and all the pieces to 
+the puzzle are laying all over the place and documented in gibberish. It gives 
+me motion sickness to think of starting from scratch on a Free stack.</p> </li> 
+<li> samir on August 6th, 2009 7:22 pm 
+<p>Just one doubt, you said ubuntu 9 vs Window$ 2008 SERVER, wich flavour 
+exactly of ubuntu 9.04? Desktop? or Server?</p> 
+<p>Please tell us!</p> </li> 
+<li> shane on August 6th, 2009 7:44 pm 
+<p>Good tests Joe. Why no Perl comparison too? </p> 
+<p>@opus131. I call BS. &quot;semi-professional&quot;, such a condescending 
+attitude. If you don&rsquo;t care to write code in PHP, say it. But don&rsquo;t 
+be a jerk about it.</p> 
+<p>I believe with the speed of hardware, and it&rsquo;s relatively cheap cost, 
+the difference in speeds with most things (.Net, PHP, Perl) are negligible. I 
+think @nollkoll eluded to this, but the real question is your IT&rsquo;s 
+productivity. Given a given RFP spec for a project, can an experienced PHP, 
+Perl, Ruby/Rails, Objective-C/{J} or .Net developer finish the project in the 
+same time and have it operate in relatively the same speed?</p> 
+<p>I&rsquo;m not sure if that question&rsquo;s even answerable without a flame 
+war. It&rsquo;d be expensive to put on and I think it&rsquo;d take some work to 
+do fairly. But for me, that is the ultimate question.</p> 
+<p>For the record, I&rsquo;ve written Objective-C, PHP, Perl and 
+asp/vb/c#/.Net. Different tools for different jobs (employers, too). Each has 
+it&rsquo;s own rewards and each has it&rsquo;s own irks. As long as 
+someone&rsquo;s willing to pay me a good buck I&rsquo;ll write in, or learn, 
+whatever language and/or framework they need me to write in for them.</p> </li> 
+<li> Diego Toala on August 6th, 2009 7:55 pm 
+<p>&quot;PostgreSQL performance is very close on both platforms (within 6/100 
+of a second for 1000 Operations) &ndash; It&rsquo;s faster on Windows and 
+faster still on Windows with PHP 5.3&quot;</p> 
+<p>For Sure, PostgreSQL is better with PHP.</p> 
+<p>MySql backup and restore features are very bad.</p> 
+<p>It&rsquo;s all about business, if you keep your mind as a developer go 
+ahead and cry like a baby &quot;Mommy I want ASP.net&quot; or &quot;Mommy I 
+want PHP&quot;, but if you are a professional software engineer you have to be 
+technical in your choice, and manage the variables of your project, this is not 
+a soccer game.</p> 
+<p>Custom Applications # ASP.NET</p> 
+<p>$CMS -&gt; PHP</p> 
+<p>Regards.</p> 
+<p>Good Post!</p> </li> 
+<li> Jeffrey McManus on August 6th, 2009 7:58 pm 
+<p>Speed of execution of a web scripting language is so rarely a performance 
+bottleneck that this discussion isn&rsquo;t even worth having. For nearly every 
+non-trivial web site, the bottleneck is at the network and database level, not 
+in the speed of execution of the business logic and presentation script.</p> 
+<p>Cost/performance is a much more meaningful metric for all but the most 
+trivial applications. And if you get around to doing that kind of test, you 
+should probably account for the fact that it typically takes hours to set up 
+and configure a Windows server (while most Linux sysadmins can do it in under 
+10 minutes).</p> 
+<p>Saying that PHP isn&rsquo;t a &quot;professional&quot; language is just 
+dippy, since nearly all of the largest web sites in the world today were built 
+with PHP.</p> </li> 
+<li> Rush Frisby on August 6th, 2009 9:48 pm 
+<p>Not tweaking performance on both systems was a good choice for this test. 
+Not everyone knows how to get the best performance out of their systems/code. 
+Most developers I have come across don&rsquo;t even care about performance. 
+It&rsquo;s really sad.</p> </li> 
+<li> Will on August 6th, 2009 10:38 pm 
+<p>Why didn&rsquo;t you use Zend Page Cache to negate that effect to bring it 
+to an equal footing with ASP.NET?</p> </li> 
+<li> Kevin on August 6th, 2009 11:39 pm 
+<p>Joe,</p> 
+<p>can you share which tools you used to do the benchmarks?</p> </li> 
+<li> Faheem on August 6th, 2009 11:55 pm 
+<p>Thanks you solved my problem, becaz currently i am working in both PHP and 
+ASP.NET and even in JSP. but personally i enjoy programming in ASP.NET and in 
+JSP becaz becaz i love JAVA and C#.</p> </li> 
+<li> Andy Edinborough on August 7th, 2009 12:28 am 
+<p>People seriously want a comparison of ASP.NET to Classic ASP?! Compiled vs 
+Interpreted! That&rsquo;s why ASP.NET spanks PHP. You&rsquo;ll never get me to 
+go back to old school ASP&hellip; I&rsquo;LL DIE FIRST!</p> </li> 
+<li> Sergey on August 7th, 2009 12:36 am 
+<p>Great tests! Long live .NET, long live C#!!!</p> 
+<p>Thanks Joe!</p> </li> 
+<li> Sanju Nannuri on August 7th, 2009 1:34 am 
+<p>Scriptstar You are right.. Now I dont feel guilty when I see any PHP open 
+source tools or web sites. .NET is the best.-:)</p> </li> 
+<li> Edgar S&aacute;nchez on August 7th, 2009 1:46 am 
+<p>Nice work! It would be nice if you could add Mono 2.4 performance numbers.
+</p> </li> 
+<li> C.T. on August 7th, 2009 2:10 am 
+<p>I like asp.net/mvc, c#, visual studio, iis, sql server and windows server, 
+and i have followed ms over 10 years, but when i plan to start a small 
+business, i find i have not enougth $ to buy the ENVIRONMENTs, although maybe i 
+can use the illegal soft of visual studio, sql server and windows server, but 
+if i do so in my OWN business, i feel very sorry and uncomfortable, if i use 
+the illegal soft, maybe some day, before i have made some money, i have lost my 
+future.</p> 
+<p>as a c# developer, i really dislike the ugly php, but maybe i have to make 
+a decision to use LAMP.</p> 
+<p>sigh&hellip;</p> 
+<p>if some day during my life, i luckly see the asp.net/mvc can fully run on 
+linux/unix, or the ENVIRONMENTS are cheap enough for beginning companies, i 
+will be happy.</p> </li> 
+<li> to C.T on August 7th, 2009 2:44 am 
+<p>&lt;comment&gt;if some day during my life, i luckly see the asp.net/mvc can 
+fully run on linux/unix, or the ENVIRONMENTS are cheap enough for beginning 
+companies, i will be happy&lt;comment&gt;</p> 
+<p>Mono now supports asp.net/mvc. Use mono and you will be.</p> </li> 
+<li> Ozzy on August 7th, 2009 4:28 am 
+<p>I&rsquo;m working with PHP at work exclusively (my boss is obsessed with 
+the whole LAMP thingie). What can I say&hellip; this is the most annoying, 
+weird, ugly, bugged bunch of crap. And some of the &quot;great&quot; open 
+source projects? God! Typo3, osCommerce, blah blah&hellip; most of these 
+projects are perfect examples of heavy spaghetti, anti-pattern software.</p> 
+<p>For my side projects, i&rsquo;m not touching this so called 
+&quot;programming language&quot;.</p> 
+<p>(Who the hell will name a function mysql_real_escape_string? woot!)</p> 
+</li> 
+<li> @chrisco on August 7th, 2009 4:56 am 
+<p>Interesting, thanks. I would like to see a similar comparison for ASP.NET 
+MVC vs. Ruby on Rails vs. Python/Django. -Chris</p> 
+<p>PS: Regarding your side-effects warning: What should one do if his erection 
+lasts more than four hours?</p> </li> 
+<li> Exo on August 7th, 2009 7:15 am 
+<p>@Will </p> 
+<p>Cause they don&rsquo;t know how to use it properly mate. Guy even had 
+problem with proper installation of PHP 5.3 on &lsquo;Ubuntu&rsquo;.</p> 
+<p>Well if you&rsquo;d spent some time on the real, debian based linux server 
+(-&gt; yes I know, there&rsquo;s no point and click :D:D )and apply proper 
+framework like CodeIgniter or ZF + mod_deflate you would notice difference in 
+speed/development.</p> 
+<p>Shame all .NET developers are negative to language which makes websites 
+more maintainable (yeah, even designer can do change &amp; develop his skills 
+without paying $$$ to anyone).</p> 
+<p>@Ozzy -&gt; for last 4 years I&rsquo;ve seen worst so called &lsquo;custom 
+tags&rsquo; from ASP.NET Developers, like &lt;BETTER_NAVIGATION_GOES_HERE&gt; 
+or &lt;CONTENT_BOT_L&gt;. Right &hellip;.&rsquo;encryption&rsquo; &amp; 
+&lsquo;securing the code&rsquo; &hellip;but why is in the way that html will 
+output it and be invalid.</p> 
+<p>Same stuff goes to VIEW_STATE -&gt; what a piece of shit (sometimes so 
+massive string, that&rsquo;s ridiculous), like the session couldn&rsquo;t be 
+stored anywhere else but on website itself, right?</p> 
+<p>Costs: well no discussion here. Linux done well once will server years. 
+Hosting is cheaper. Basically you&rsquo;re paying for electricity &amp; no 
+licensing fees. RAD stands in LAMP for what it should be. RAD in .NET makes 
+things not maintainable really.</p> </li> 
+<li> Ozzy on August 7th, 2009 7:38 am 
+<p>@Exo</p> 
+<p>ViewState can be turned off on per control, per page, etc. basis. Not a big 
+deal here. If you&rsquo;re the dev, it is up to you to decide what storage 
+you&rsquo;ll use &ndash; viewstate, session, etc. And the html output&hellip; I 
+can provide you with 100s php sites which do not validate at all too.</p> 
+<p>&quot;Shame all .NET developers are negative to language which makes 
+websites more maintainable&quot;.</p> 
+<p>I&rsquo;m not exactly .NET dev. As I said, i&rsquo;m working with both PHP 
+and C#. Was working on C++ and Delphi projects. And recently started some 
+Python. Among these, PHP is the worst thing i&rsquo;ve touched ever. And ppl 
+were laughing on VB6?</p> 
+<p>Oh, PHP sites are more maintainable? Out designers still have hard time to 
+understand why the hell we&rsquo;re using a weird templating language (Smarty) 
+over another templating language (PHP).</p> 
+<p>To all: sorry for this offtopic reply.</p> </li> 
+<li> Exo on August 7th, 2009 7:56 am 
+<p>@Ozzy</p> 
+<p>True, not every page, regardless to the language validates. But not every 
+language works against you in this matter.</p> 
+<p>AFAIK quite experienced developers had a problem to agree sessions between 
+ASP &amp; .NET after turning ViewState.</p> 
+<p>I think PHP is more maintainable. Syntax isn&rsquo;t weird as long as you 
+have no programming preferences/fixations (it seems to me you have some strong 
+ones).</p> 
+<p>Designer we&rsquo;re able to pick our code after ~month and changing it as 
+they want it.</p> 
+<p>Smarty can be weird if you don&rsquo;t understand template engine 
+principles. Template engine syntax is then really useful &amp; powerful at same 
+time. But when you understand the principles, know what you exactly want, have 
+plenty of time &amp; money there&rsquo;s nothing against writing your own one.
+</p> 
+<p>And please do not even compare Masterpage to Smarty or ZendView -&gt; KO 
+would be instant.</p> 
+<p>I&rsquo;ve seen many voices about controls. Well Zend, Code Igniter &amp; 
+symphone are offering same amount of reusable libraries.</p> 
+<p>After all I think we both have some strong preferences Ozzy :&gt;</p> </li> 
+<li> kathirvel on August 7th, 2009 8:42 am 
+<p>ASP.net rules</p> </li> 
+<li> Ozzy on August 7th, 2009 8:58 am 
+<p>@Exo</p> 
+<p>I think you&rsquo;re missing a point here: &quot;But not every language 
+works against you in this matter.&quot; ASP.NET is not a programming language 
+at all. C# is Pick up ASP.NET MVC and voila, you have the full control over 
+your HTML output </p> 
+<p>&quot;AFAIK quite experienced developers had a problem to agree sessions 
+between ASP &amp; .NET after turning ViewState&quot;</p> 
+<p>Ermmm, this is a bit lame. You can&rsquo;t share sessions easily between 
+two PHP apps running on the same machine too. Have you tried to share session 
+between WordPress and osCommerce for example?</p> 
+<p>&quot;And please do not even compare Masterpage to Smarty or ZendView -&gt; 
+KO would be instant.&quot;</p> 
+<p>Eh? Mate, what are you talking about? What have these 3 in common? A 
+mistery&hellip;</p> 
+<p>As you&rsquo;re mentioning Symphony, I think it is the best thing in the 
+PHP world.</p> </li> 
+<li> namespace on August 7th, 2009 9:09 am 
+<p>&quot;Smarty can be weird if you don&rsquo;t understand template engine 
+principles.&quot;</p> 
+<p>IMO, the point was: why someone would use a templating engine over another 
+templating engine </p> </li> 
+<li> Exo on August 7th, 2009 9:35 am 
+<p>@Ozzy</p> 
+<p>You&rsquo;re right &ndash; it is messy. Especially when all PHP frameworks 
+are extending language, while ASP is something completely different to C#. 
+Comparison then is bit out of &lsquo;range&rsquo;, don&rsquo;t you think ?</p> 
+<p>&quot;You can&rsquo;t share sessions easily between two PHP apps running on 
+the same machine too. Have you tried to share session between WordPress and 
+osCommerce for example?&quot;</p> 
+<p>Yeah, damn easy via memcache, using 
+&lsquo;session_set_save_handler()&rsquo;. Hard isn&rsquo;t it ?</p> 
+<p>Btw. ever hear about Masterpage &lsquo;semi-template engine&rsquo; ? If you 
+were, you&rsquo;d know what I&rsquo;m speaking about.</p> 
+<p>Symphony, ZF &amp; CI are three best for RAD in PHP.</p> </li> 
+<li> Ozzy on August 7th, 2009 9:57 am 
+<p>Oh the mighty memcached! Yes, it is very simple: run a memcached server, 
+modify the code to use it properly, pray so that it will not loose your session 
+data. Yes, very simple. </p> 
+<p>&quot;&hellip;while ASP is something completely different to 
+C#&hellip;&quot;</p> 
+<p>Mate, stop it. It seems you&rsquo;re completely clueless here.</p> </li> 
+<li> lol on August 7th, 2009 10:04 am 
+<p>Memcache&hellip; No check for validity. No referential integrity. Memcache 
+doesn&rsquo;t have locks. Memcache is not atomic. There is no authentication. 
+In shared hosting, everyone on that host can read/write to your memcache 
+instance.</p> 
+<p>What a joke!</p> </li> 
+<li> &lt;? &gt; on August 7th, 2009 11:13 am 
+<p>PHP is the ugliest ans slowest thing in the recent world history. The logic 
+behind its existence is still escaping me </p> 
+<p>Btw, are there any similar tests comparing Ruby vs Python or Java vs C#? (i 
+mean, real programming languages) </p> </li> 
+<li> Kashif Imran on August 7th, 2009 11:45 am 
+<p>I think ASP.NET is far better platform than PHP and an asp.net developer is 
+a lot more productive than a PHP developer. What makes PHP important is all 
+these existing open source applications. And if you end up using one of these 
+existing apps, asp.net looses all the productivity advantage.</p> </li> 
+<li> .... on August 7th, 2009 11:52 am 
+<p>If you want a real programming language you do it in assembly, not on those 
+ruby/python/java/c# thingies there&hellip; (see where am going?)</p> </li> 
+<li> Richter on August 7th, 2009 12:12 pm 
+<p>I think it&rsquo;s all bollocks and it&rsquo;s bad for you.</p> </li> 
+<li> Konstantin on August 7th, 2009 12:27 pm 
+<p>Joe,</p> 
+<p>Now when you got testing PC, tests, all the infrastructure in place, would 
+you please walk an extra step and test</p> 
+<p>Win + ASP.NET + MySQL</p> 
+<p>Win + ASP.NET + PostgreSQL</p> 
+<p>It would be also nice to test Mono ASP.NET on Ubuntu and Win</p> 
+<p>Can you do it for the community please?</p> </li> 
+<li> Lee on August 7th, 2009 1:26 pm 
+<p>Why didn&rsquo;t you include the postgres on windows perf? Would be 
+interesting to say the least.</p> </li> 
+<li> Aaron on August 7th, 2009 3:04 pm 
+<p>Joe,</p> 
+<p>Where&rsquo;s the code you used to test database connections from ASP.NET 
+to SQL,MySQL, and PostgreSQL ? I&rsquo;d like to run some of these tests. Did 
+you use the MySQLConnector?</p> 
+<p>Also, you&rsquo;ve got the class code you used to call framework functions 
+for PHP, but can you provide the page you made to call those? Thanks! Very 
+interesting.</p> </li> 
+<li> Aaron on August 7th, 2009 3:06 pm 
+<p>oops, I meant you&rsquo;ve got the class for ASP.NET but not the page like 
+you have in PHP.. thanks if you can provide that.</p> </li> 
+<li> Vipin Vij on August 8th, 2009 7:55 am 
+<p>Hi, This sounds interesting. Though I have never been onto PHP but as 
+still. Can you also put some more effort in comparing Java and ASP.NET. I have 
+recently tried Java but still I feel that micorsoft technologies are simpler 
+and easy to implement. Long Live Microsoft</p> </li> 
+<li> Boris Barroso on August 8th, 2009 4:43 pm 
+<p>Kashif Imran. I would like to be sure if you are more productive in asp.net 
+than PHP (Have you ever tried a PHP MVC framework &quot;CaePHP, CodeIgniter, 
+Symfony, Zend&quot;) I can certanly say that for really simple application 
+ASP.NET is way faster to develop than PHP or Rails but when the things start to 
+get more complicated I would not choose ASP.NET I would go for Rails (Ruby) or 
+Django (Python). Iam not sure if this comparisons PHP vs ASP.NET help. I know 
+JAVA is faster than Ruby but I have seen JAVA applications converted to Rails, 
+and Rails was faster, the way you code determines the speed of your application 
+a lot and I can tell you that Ruby can give you a lot of happiness, (Happy 
+programmer is more productive).</p> </li> 
+<li> Kelvin Li on August 8th, 2009 11:13 pm 
+<p>Rails is good for complicated applications? I would say the exact opposite. 
+</p> </li> 
+<li> gargamel on August 9th, 2009 7:01 pm 
+<p>&ndash;&gt; My comment was deleated becuase I can neither read or be polite 
+and I&rsquo;m only here to whine becuase I&rsquo;m too lazy to add value.</p> 
+<p>. and becuase it contained technically innacurate presumtions/</p> 
+<p>- I&rsquo;m just mad that ASP.NET is so much faster than PHP</p> </li> 
+<li> gargamel on August 9th, 2009 7:29 pm 
+<p>&ndash;&gt; My comment was deleated becuase I can neither read or be polite 
+and I&rsquo;m only here to whine becuase I&rsquo;m too lazy to add value.</p> 
+</li> 
+<li> gargamel on August 9th, 2009 7:50 pm 
+<p>&ndash;&gt; My comment was deleated becuase I can neither read or be polite 
+and I&rsquo;m only here to whine becuase I&rsquo;m too lazy to add value.</p> 
+</li> 
+<li> me on August 9th, 2009 8:17 pm 
+<p>@gargamel </p> 
+<p>Honestly, get the sources, optimize PHP as you like, call Zend for help, 
+run the tests and come report the results. OK?</p> </li> 
+<li> Interesting Finds: 2009 08.04 ~ 08.10 on August 9th, 2009 8:37 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>.NET Fun With the ?? Operator in C#: if { } or ?? &ndash; Which is Faster? 
+Documenting source code Dictionary&amp;lt;T&amp;gt;</p> </li> 
+<li> gargamel on August 9th, 2009 9:07 pm 
+<p>&ndash;&gt; My comment was deleated becuase I can neither read or be polite 
+and I&rsquo;m only here to whine becuase I&rsquo;m too lazy to add value.</p> 
+</li> 
+<li> marulak on August 10th, 2009 12:35 am 
+<p>This benchmark is nonsense! </p> </li> 
+<li> janis on August 10th, 2009 3:57 am 
+<p>i think this isn&rsquo;t a good test..</p> 
+<p>php vs asp.net on mono&hellip; linux ..</p> 
+<p>then see what is faster..</p> </li> 
+<li> Tatworth on August 10th, 2009 4:19 am 
+<p>Thank you for running the comparison and having the boldness to publish 
+your results.</p> </li> 
+<li> Sadid on August 10th, 2009 4:25 am 
+<p>Hello!</p> 
+<p>I&rsquo;m not a developer I&rsquo;m a user. to me PHP sites universally 
+have better performance than ASP.NET Powered ones. maybe bcz of FF </p> </li> 
+<li> vdd on August 10th, 2009 4:41 am 
+<p>Thanks a lot!</p> 
+<p>We had a lot of discussions about which technology should be used in a new 
+project. Since you made you sources public even my boss accept it!</p> </li> 
+<li> me on August 10th, 2009 6:09 am 
+<p>@gargamel</p> 
+<p>You can run all the tests on your machine (both php and .net)? Then we can 
+compare percentages&hellip;</p> </li> 
+<li> gargamel on August 10th, 2009 6:45 am 
+<p>&ndash;&gt; My comment was deleated becuase I can neither read or be polite 
+and I&rsquo;m only here to whine becuase I&rsquo;m too lazy to add value.</p> 
+</li> 
+<li> Shail on August 10th, 2009 8:14 am 
+<p>Both are good and both let you earn money, which is most important.</p> 
+</li> 
+<li> PHP and Community | Postcards From My Life on August 10th, 2009 9:01 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP and Community | Postcards From My Life</p> </li> 
+<li> dave on August 10th, 2009 10:20 am 
+<p>This cannot be accepted as a fair, non-partisan measure. For one thing, you 
+may have selected tests that, at some level of implementation, favor asp.net. 
+I&rsquo;m sure the same thing could be done with PHP.</p> 
+<p>Not meaning to be too skeptical here, but one wonders if MS really is 
+serious about its overtures to the open-source community given these types of 
+contrived comparisons touted by an MS employee who purports to be 
+&quot;neutral&quot; (i.e., &quot;I love them both&quot;). Smile. Nod. Wink.</p> 
+<p>@vdd said, &quot;We had a lot of discussions about which technology should 
+be used in a new project. Since you made your sources public even my boss 
+accepted it!&quot;</p> 
+<p>Hey, VDD &ndash; if your company uses comparisons like these to make 
+decisions about real-world web solutions, you might want to keep your resume 
+updated.</p> 
+<p>Just sayin&rsquo;</p> </li> 
+<li> Joe Stagner on August 10th, 2009 10:25 am 
+<p>Way to go &quot;dave&quot; or should I say anonymous coward  (My term for 
+posters who lack the courage to provide a real name and contact information.</p>
+<p>YOu managed to call me dishonest and incompetant in the same commnet 
+&ndash; which also proves you didn&rsquo;t READ teh orriginal post.</p> 
+<p>You are typical of the internet warrior who whines becuase they don&rsquo;t 
+like the RESULTS. Since you can&rsquo;t provide opposing data you make stuff up.
+</p> 
+<p>Cheat, Bias, hand taylored. </p> 
+<p>Thankfully &ndash; you are not representative of the PHP community. 
+I&rsquo;ve been emailing with Andi Gutmans (ZEND and co-Inventor of PHP) who 
+has had some interesting suggestions for a next set of benchmarks.</p> 
+<p>Keep watching for those !!!</p> </li> 
+<li> PHP vs ASP.NET &laquo; Blog, what blog? on August 10th, 2009 11:07 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP vs ASP.NET &laquo; Blog, what blog?</p> </li> 
+<li> rickj on August 10th, 2009 1:48 pm 
+<p>Hey Joe I read your stuff and do your videos and try to fallow your 
+suggestions all the time everything I&rsquo;ve done of or should I say copied 
+your lead has worked exactly like you said it would great work you&rsquo;ve 
+brought me and I assume allot of other people a long way in this game we call 
+development and I&rsquo;m sure if PHP was faster you folks at Microsoft would 
+start working on making ASP.NET faster so I don&rsquo;t know why Dave would 
+think you would jimmy the test KEEP UP THE GOOD WORK JOE!!!!!!</p> </li> 
+<li> Apfel on August 10th, 2009 1:52 pm 
+<p>ASP: DateTime NextWeek = new System.DateTime().AddDays(7);</p> 
+<p>PHP: $secNextWeek = time() + (7 * 24 * 60 * 60);</p> 
+<p>Just because PHP doesn&rsquo;t seem to have a similar AddDays() function 
+you don&rsquo;t need to calculate (7 * 24 * 60 * 60) in every loop iteration.
+</p> </li> 
+<li> Comments on my recent benchmarks. on August 10th, 2009 7:34 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Overall I&rsquo;ve been pretty impressed with the reactions to my first 
+round of PHP/Linux/Windows/ASP.NET performance tests. I&rsquo;d like to comment 
+of the comments&amp;#160;&amp;#160; First, while I appreciate the enthusiasm of 
+my .NET friends, the point of my exercise</p> </li> 
+<li> Sheo Narayan on August 10th, 2009 10:06 pm 
+<p>Thanks Joe, This is really interesting stuff and may help someone to show 
+to their client to go for .NET </p> </li> 
+<li> php mysql training hyderabad on August 11th, 2009 3:33 am 
+<p>Good post Thanks for sharing it </p> 
+<p>Puru</p> </li> 
+<li> php mysql training hyderabad on August 11th, 2009 3:33 am 
+<p>Good post Thanks for sharing it </p> 
+<p>Puru</p> </li> 
+<li> php mysql training hyderabad on August 11th, 2009 3:34 am 
+<p>good post </p> 
+<p>Puru</p> </li> 
+<li> Open Source on August 11th, 2009 4:18 am 
+<p>Do Windows servers stay up for a couple of years without a reboot like 
+Linux &amp; FreeBSD?</p> 
+<p>Last time I tried a Windows server, it encountered a &quot;STOP ERROR&quot; 
+after just a week! </p> </li> 
+<li> Andrey on August 11th, 2009 7:39 am 
+<p>&quot;# If you are running an application that locks you in to Sun 
+Microsystems&rsquo; MySQL and you want to run it on Windows, your should do 
+scale planning. (My personal guess is that it&rsquo;s unlikely that Sun will 
+markedly improve MySQL performance on Windows. )&quot;</p> 
+<p>That is FUD, you are spreading. 5.3&prime;s mysql driver has better 
+performance, measured on Linux. We got comments from user that they like the 
+speed of the new driver (compared to libmysql, which is used with 5.2). We did 
+not have any Windows users complaining, so far. You are the first and your 
+results will be taken into consideration, so we will set a Windows system for 
+testing trying to check the results.</p> 
+<p>Andrey</p> </li> 
+<li> Joe Stagner on August 11th, 2009 8:03 am 
+<p>Andrey, </p> 
+<p>It&rsquo;s not FUD &ndash; the times speak for themselves &ndash; the 
+performance of MySQL access on Windows SUCKS !</p> 
+<p>.. and logic suggests that Sun is less than compleatly interested in 
+it&rsquo;s performance on Windows.</p> </li> 
+<li> Programming news: ASP.NET beats LAMP and WIMP in performance test | 
+Programming and Development | TechRepublic.com on August 11th, 2009 10:07 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Programming news: ASP.NET beats LAMP and WIMP in performance 
+test | Programming and Development | TechRepublic.com</p> </li> 
+<li> A Programmer on August 11th, 2009 10:18 am 
+<p>Thanks for sticking your head out. I&rsquo;m happy to see someone 
+&lsquo;promoting&rsquo; the thought that maybe personal skills DOES matter 
+after all &ndash; the dev env/language wont do it for you </p> 
+<p>I think that too many decisions are taken in our industry on personal 
+belief and rumours, which many of these comments and on similar tests show.</p> 
+</li> 
+<li> PHP and Community &ndash; techPortal on August 11th, 2009 10:41 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP and Community &ndash; techPortal</p> </li> 
+<li> Sam Shull on August 11th, 2009 10:43 am 
+<p>First, a scripted language against a compiled one, the fact that you are 
+even trying to compare the two makes me think you shouldn&rsquo;t be in the 
+benchmarking business at all.</p> 
+<p>Second, making wild statements like &lsquo;ASP.NET is universally faster 
+than PHP&rsquo; without providing explicit details on how to duplicate the 
+results that you posted, shows you are not a very trust worthy source.</p> 
+<p>Third, I challenge someone to use your own code examples with any server 
+configurations they desire to contradict your findings, and I challenge you to 
+post those results.</p> </li> 
+<li> Joe Stagner on August 11th, 2009 10:56 am 
+<p>Hi Sam, I see that you can&rsquo;t read since your comments don&rsquo;t 
+comply with my requsts.</p> 
+<p>I also see from your web site that you are a PHP developer so I understand 
+your rant.</p> 
+<p>I posted all the details and the code to duplicate my tests (I guess you 
+were so upset at PHP perfarmance that you missed that.)</p> 
+<p>How about &ndash; instead of whining &quot;I don&rsquo;t believe thye thing 
+I know is slower than the thing I don&rsquo;t know&quot; you actually download 
+the code and run some tests yourself.</p> </li> 
+<li> Wim Godden on August 11th, 2009 11:00 am 
+<p>2 remarks :</p> 
+<p>- To the author : running PHP without an opcode cache is like running 
+ASP.Net in debug mode&hellip; it&rsquo;s just &quot;not-done&quot;. Use an 
+opcode cache and then compare performance of real applications, not a bunch of 
+loops. You&rsquo;ll notice PHP beats ASP.Net on most levels.</p> 
+<p>I would still prefer PHP over ASP.Net if it were slower&hellip; speed is 
+just a small factor.</p> 
+<p>- To Apfel : from PHP 5.3.0 onwards :</p> 
+<p>ASP: DateTime NextWeek = new System.DateTime().AddDays(7);</p> 
+<p>PHP: $secNextWeek = new DateTime()-&gt;add(new 
+DateInterval(&quot;P7D&quot;));</p> </li> 
+<li> Joe Stagner on August 11th, 2009 11:19 am 
+<p>Wim, </p> 
+<p>In fact, my LAMP host does not include op-code caching.</p> 
+<p>Also, I often find ASP.NET applications in production that are running in 
+debug mode.</p> 
+<p>However THIS staement by you &quot;I would still prefer PHP over ASP.Net if 
+it were slower&hellip; speed is just a small factor.&quot;</p> 
+<p>Is the important one &ndash; for you, a performance difference of this 
+amount doesn&rsquo;t matter.</p> 
+<p>And &ndash; I agree !</p> </li> 
+<li> SergeyS on August 11th, 2009 11:55 am 
+<p>&gt; I&rsquo;ve been emailing with Andi Gutmans </p> 
+<p>&gt;(ZEND and co-Inventor of PHP) who has </p> 
+<p>&gt; had some interesting suggestions for </p> 
+<p>&gt; a next set of benchmarks. </p> 
+<p>That would be cool. And, could you please, email ScottGu too. </p> 
+<p>I love ASP.NET/MS SQL Server and I&rsquo;ll keep on using it in any case. 
+What I need is to be honest with my customers.</p> 
+<p>Thank you.</p> 
+<p>SergeyS</p> </li> 
+<li> Joe Stagner on August 11th, 2009 12:13 pm 
+<p>Email Scott for what ?</p> </li> 
+<li> Cal Evans&rsquo; Blog: PHP and Community | Webs Developer on August 11th, 
+2009 1:02 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Cal Evans&rsquo; Blog: PHP and Community | Webs Developer</p> 
+</li> 
+<li> SergeyS on August 11th, 2009 3:25 pm 
+<p>&gt; Email Scott for what?</p> 
+<p>To suggest testing scenario to reveal all the ASP.NET/MS SQL power. What 
+you tested was almost not related to real life more or less complex projects 
+(in my opinion, &ndash; I may be wrong). And for simple projects the 
+performance does not matter.</p> 
+<p>For example</p> 
+<p>- Does PHP/MySQL really scale in both dimensions as they love to say 
+(specifically for AJAX-rich mass web projects)</p> 
+<p>etc etc</p> 
+<p>Thanks.</p> </li> 
+<li> Cal Evans&rsquo; Blog: PHP and Community | PHP on August 11th, 2009 9:05 
+pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Cal Evans&rsquo; Blog: PHP and Community | PHP</p> </li> 
+<li> Sam Shull on August 11th, 2009 11:27 pm 
+<p>Joe, I must apologize for my rant, I did go off the deep end a little, but 
+in my own defense the file &lsquo;
+http://www.msjoe.com/pages/aspnet_perf_test_source.htm&lsquo; does not display 
+correctly in Firefox 3.5 on my laptop, which led me to believe that there was 
+missing information. However, upon further investigation, I realized that it 
+does display in IE. And I will be happy to put it to the test myself.</p> </li> 
+<li> ASP.Net Vs PHP performance.... - The Prophecy Forums on August 12th, 2009 
+2:47 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from ASP.Net Vs PHP performance&hellip;. &ndash; The Prophecy 
+Forums</p> </li> 
+<li> Of Lies, Damned Lies, and Benchmarks &ndash; Brandon Savage | 
+rapid-DEV.net on August 12th, 2009 6:01 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Of Lies, Damned Lies, and Benchmarks &ndash; Brandon Savage | 
+rapid-DEV.net</p> </li> 
+<li> Joe Stagner on August 12th, 2009 6:55 am 
+<p>Thanks Sam &ndash; I do appreciate it. Feel free ot email me directly if 
+you like and if you create a scenario that renders different results, 
+I&rsquo;ll be happy to post the results here as well.</p> 
+<p>Also, I plan to progress to more snecario based tests (full page 
+renderings, etc.) &ndash; suggestions are welcome.</p> 
+<p>-Joe</p> </li> 
+<li> Matt on August 12th, 2009 7:13 am 
+<p>Database is the main scalability and performance issue, Page UI content is 
+the second biggest performance factor in my experience &ndash; assuming no 
+serious coding errors. I have been able to shave seconds off first loads with 
+CSS spriting techniques, javascript packaging, and CDN.</p> 
+<p>Obviously other performance gains can only be a good thing, I don&rsquo;t 
+see why a newcomer would choose PHP over .NET, simply due to the depth of 
+support you guys (MS) give, the size of the community and the nature of C# and 
+asp syntax. It&rsquo;s one big beautiful combo.</p> </li> 
+<li> Jonathon Hibbard on August 12th, 2009 9:57 am 
+<p>At the end of the day, it&rsquo;s all about the developer. It&rsquo;s also 
+about knowing your server, optimizing it properly, and knowing how to exploit 
+the resources you have.</p> 
+<p>If you can code .NET to be faster, go for it. If you can code PHP to be 
+faster, again, go for it. Either way, PHP has it&rsquo;s pro&rsquo;s and 
+con&rsquo;s, as does .NET.</p> 
+<p>This &quot;age old question&quot; about which is better has long been too 
+focused on the languages and platforms. You should be looking at yourself, the 
+developer, to know which one you are stronger in.</p> 
+<p>That alone dictates which will perform better.</p> </li> 
+<li> Gerardo Tasistro on August 12th, 2009 10:49 am 
+<p>How come your tests show it takes less to do more with ASP .NET?</p> 
+<p>If I normalize your empty loops to your string assignment loops I discover 
+that the first two cause a 20% increase in time consumed. But the third takes 
+16% less time. Doing a simple extrapolation from 7 million to 20 million we can 
+see that a do while loop doing a text assignment takes 16% less time to 
+complete than when it has nothing to do. How is that?</p> 
+<p>Time Loops Extrapolated %increase</p> 
+<p>(test) time (-decrease)</p> 
+<p>0.0940 20000000 0.09400 (empty for loop)</p> 
+<p>0.0400 7000000 0.11429 21.58% (empty for loop with string)</p> 
+<p>0.0950 20000000 0.09500 (empty while loop) </p> 
+<p>0.0400 7000000 0.11429 20.30% (empty while loop with string)</p> 
+<p>0.1090 20000000 0.10900 (empty do loop)</p> 
+<p>0.0320 7000000 0.09143 -16.12% (empty do loop with string)</p> </li> 
+<li> John on August 12th, 2009 2:06 pm 
+<p>I have used both PHP and ASP.NET and really hooked up to ASP.NET now 
+because of the Visual Studio IDE it beats any PHP IDE out there hands down (my 
+opinion ).</p> 
+<p>Thanks for the hard work Joe. </p> </li> 
+<li> beberlei on August 12th, 2009 2:28 pm 
+<p>Have you used Ubuntu&rsquo;s PHP 5.2, Zend Server CE or built it from 
+source (vanilla-php)? Ubuntu by default also installs the Suoshin Security 
+Extension, which adds a performance penalty.</p> </li> 
+<li> Brandon Savage&rsquo;s Blog: Of Lies, Damned Lies, and Benchmarks | Webs 
+Developer on August 12th, 2009 3:01 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Brandon Savage&rsquo;s Blog: Of Lies, Damned Lies, and 
+Benchmarks | Webs Developer</p> </li> 
+<li> Brandon Savage&rsquo;s Blog: Of Lies, Damned Lies, and Benchmarks | PHP 
+on August 12th, 2009 9:07 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Brandon Savage&rsquo;s Blog: Of Lies, Damned Lies, and 
+Benchmarks | PHP</p> </li> 
+<li> Brandon Savage&rsquo;s Blog: Of Lies, Damned Lies, and Benchmarks | PHP 
+on August 12th, 2009 9:07 pm 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Brandon Savage&rsquo;s Blog: Of Lies, Damned Lies, and 
+Benchmarks | PHP</p> </li> 
+<li> Looks at details on August 12th, 2009 9:23 pm 
+<p>I hope people actually looked at your spreadsheet, because your article is 
+misleading.</p> 
+<p>&quot;MySQL Access from PHP on Linux is a TINY bit faster than SQL Server 
+access on Windows&quot; &ndash; I think you meant to say, &quot;is twice as 
+fast&quot; as SQL Server, according to your data.</p> 
+<p>&quot;MySQL access with Linux is faster by more than a little and on 
+Windows&quot; &ndash; Again, you meant to say &quot;is about five times 
+faster&quot;, again according to your data.</p> </li> 
+<li> Bipin Gaur on August 13th, 2009 2:43 am 
+<p>Well the tone of article was set by the first few lines &quot;I&rsquo;m 
+PAID by Microsoft to write BOTH PHP and ASP.NET Code. I was doing PHP before 
+.NET shipped. I love them both.&quot;</p> 
+<p>Does anyone seriously believe, a guy who is in Microsoft employment will be 
+unbiased??? I have done a few REAL LIFE tests, file access is WAY TOO SLOW in 
+Windows and mysql is generally way faster than SQL.</p> </li> 
+<li> guest on August 13th, 2009 9:48 am 
+<p>&quot;No Operating System or Development Runtime performance enhancements 
+were added.&quot; &ndash; yes none were added but .NET has its Global Assembly 
+Cache by default.</p> 
+<p>This is wrong from the start as somebody already pointed out(K I think was 
+the name). For a real comparison you should have used a bytecode cache system 
+for php, because the asp.net code is compiled and cached by default after the 
+first request.</p> </li> 
+<li> Joe Stagner on August 13th, 2009 10:30 am 
+<p>Ok &ndash; please see the results of add op-code caching here 
+msjoe.com/&hellip;/php-linux-windo </p> </li> 
+<li> Jesse Bever on August 13th, 2009 3:26 pm 
+<p>&lt;rant&gt;</p> 
+<p>I don&rsquo;t know why anyone is surprised by these results. Microsoft has 
+done a great job tuning their web stack/ide in recent years.</p> 
+<p>I program primarily in php because my customers request it not because its 
+the best thing ever. I think all technologies have their faults. The biggest 
+selling point of php/mysql is the price. FREE.</p> 
+<p>The other thing thats nice is unlike windows server which I have to worry 
+about getting hacked/viruses all the time linux servers are extremely easy to 
+secure.</p> 
+<p>For Microsoft to rule the programming scene I would like to see them secure 
+their operating system.. don&rsquo;t allow processes rights to files they 
+don&rsquo;t need. Take security seriously be like apple and (borrow) an already 
+great filesystem and make it your own.. its bsd licensing after all.</p> 
+<p>&lt;/rant&gt;</p> </li> 
+<li> Bobby Pejman on August 13th, 2009 10:04 pm 
+<p>This article is not a true comparison of apples to apples simply because 
+.NET has caching built in, PHP doesn&rsquo;t, by default. Also, according to 
+the author, if PHP runs faster on a Windows 2008 machine than on Ubuntu 9.04, 
+then this isn&rsquo;t really a battle between ASP.NET and PHP but rather 
+Windows 2008 and Ubuntu 9.04 ehh??</p> 
+<p>Anyone in the right mind will tell you that Ubuntu 9.04 is a much beefier 
+operating system than Windows 2008. I&rsquo;ve worked with both, yes, even the 
+stripped down version of Ubuntu, and it just wan&rsquo;t quite the same. How 
+about you try running this on a stripped down version of *BSD system?</p> 
+<p>Plus, how does anyone know what background services Ubuntu 9.04 was running 
+versus MS 2008 when this benchmark was performed?</p> 
+<p>Next, only true developers who understand the importance of performance, 
+security and optimization will understand my point here. That is, in PHP, you 
+design your own controls, your own Javascript and your own CSS to fit your 
+needs for what your website&rsquo;s intended use. You also have access to this 
+code to further enhance your controls and optimize it to your needs.</p> 
+<p>In .NET, as we all know, everything is compiled so how would you know that 
+a control you&rsquo;re throwing on your page that has JS and CSS embedded, code 
+that you have no access to, is 1. Secure, 2. Optimized code for your intended 
+use and 3. Performs?</p> 
+<p>I&rsquo;ll be fair here. VS2008 has done a great job creating user controls 
+by wrapping JS and CSS into their IDE. And that&rsquo;s totally great and works 
+best for MS developers. I&rsquo;m not a MS developer because I just don&rsquo;t 
+believe in closed code.</p> 
+<p>I have a saying: &quot;Open Mind, Open Heart, Open Source&quot; &ndash; 
+Bobby Pejman.</p> </li> 
+<li> Dennes on August 14th, 2009 1:46 am 
+<p>Hi, Joe,</p> 
+<p>Great tests !</p> 
+<p>One question : The data access tests used transactions (and locks) in all 
+databases ?</p> 
+<p>SQL Server always uses transactions (few exceptions here), but mysql not 
+always and I don&rsquo;t know about postgree in this case.</p> 
+<p>Thanks,</p> 
+<p>Dennes</p> </li> 
+<li> PHP Linux Windows ASP.NET Performance ??? Redux ! : Misfit Geek on August 
+14th, 2009 8:12 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from PHP Linux Windows ASP.NET Performance ??? Redux ! : Misfit 
+Geek</p> </li> 
+<li> Web Pro ASP - Active Server Page Development News on August 14th, 2009 
+11:03 am 
+<p><strong>RE: PHP versus ASP.NET &ndash; Windows versus Linux &ndash; 
+Who&rsquo;s the fastest ?</strong></p> 
+<p>Pingback from Web Pro ASP &ndash; Active Server Page Development News</p> 
+</li> 
+<li> Joey on August 16th, 2009 8:34 pm 
+<p>Of course C# + asp.net is faster than PHP. IT&rsquo;S COMPILED CODE! But 
+that&rsquo;s not what I&rsquo;m talking about when I say I prefer building web 
+apps in PHP compared to asp.net. I think a better comparison is to create a web 
+app in both php and asp.net. Track the time it takes to build it, the 
+environment cost and the amount of traffic each one can handle. That&rsquo;s 
+the TRUE test.</p> </li> 
+<li> lalpri on August 17th, 2009 8:03 am 
+<p>This is a wonderful opinion. The things mentioned are unanimous and needs 
+to be appreciated by everyone&hellip;&hellip;&hellip;&hellip;</p> 
+<p>&lt;a href=&quot;http://www.ibowtech.com/algeria&quot;&gt;IT 
+Solution&lt;/a&gt;</p> </li> 
+<li> software development company on August 17th, 2009 11:47 am 
+<p>Nice post,</p> 
+<p>Thanks for writing about it</p> </li> 
+<li> Matthew on August 17th, 2009 4:10 pm 
+<p>It would be great to apply the same test to JSP and add the result to your 
+spreadsheet.</p> </li> 
+<li> Breakthrough on August 19th, 2009 12:42 pm 
+<p>Would it be possible for you to repeat the benchmarks with some kind of PHP 
+optimizer?</p> 
+<p>This type of test would only be fair if you tested classic ASP, which 
+isn&rsquo;t compiled. Some PHP optimizers compile the actual script, which is 
+exactly what happens with ASP.NET.</p> </li> </ol> </ul> 
+<h2>Powered by:</h2> <br>
+
+<h2>Your Host.</h2> <br>
+<br>
+
+<h2>Recent Posts</h2> 
+<ul> 
+<li>Where are you Joe ?</li> 
+<li>Building Apps and deploying them from GitHub</li> 
+<li>I Moved ! &ndash; Selecting a New Hosting Provider</li> 
+<li>Choosing a CSS Framework</li> 
+<li>Building Apps with HTML5 &ndash; Desktop, Tablet, Phone !</li> </ul> 
+<h2>Posts</h2> <br>
+
+<ul> 
+<h2>Catagories</h2> 
+<ul> 
+<li>.NET </li> 
+<li>Adobe </li> 
+<li>AJAX </li> 
+<li>Apple </li> 
+<li>Apps </li> 
+<li>ASP.NET </li> 
+<li>Books </li> 
+<li>Cloud </li> 
+<li>CMS </li> 
+<li>Community </li> 
+<li>CSS </li> 
+<li>Data Access </li> 
+<li>Events </li> 
+<li>Free </li> 
+<li>Hardware </li> 
+<li>HTML </li> 
+<li>IIS </li> 
+<li>Java </li> 
+<li>JavaScript </li> 
+<li>Jobs </li> 
+<li>jQuery </li> 
+<li>Linux </li> 
+<li>Microsoft </li> 
+<li>Mobile </li> 
+<li>Mozilla </li> 
+<li>MVC </li> 
+<li>News </li> 
+<li>Non-Tech Non-Fiction </li> 
+<li>Off-Topic </li> 
+<li>Office </li> 
+<li>Op-Ed </li> 
+<li>Open Source </li> 
+<li>Patterns &amp; Practices </li> 
+<li>Performance </li> 
+<li>PHP </li> 
+<li>Podcast </li> 
+<li>REST </li> 
+<li>Samples </li> 
+<li>SEO </li> 
+<li>Silverlight </li> 
+<li>SOA </li> 
+<li>Software Security </li> 
+<li>SQL </li> 
+<li>Tips &amp; Tricks </li> 
+<li>Tools </li> 
+<li>Visual Studio </li> 
+<li>WebForms </li> 
+<li>WebMatrix </li> 
+<li>WF </li> 
+<li>Windows </li> 
+<li>WPF </li> 
+<li>XML </li> </ul> 
+<h2>Admin</h2> 
+<ul> 
+<li>Log in</li> 
+<li>Entries RSS</li> 
+<li>Comments RSS</li> 
+<li>WordPress.org</li> </ul> </ul> 
+<ul> 
+<h2>Older Posts</h2> 
+<ul> 
+<li>January 2012</li> 
+<li>December 2011</li> 
+<li>November 2011</li> 
+<li>October 2011</li> 
+<li>September 2011</li> 
+<li>August 2011</li> 
+<li>July 2011</li> 
+<li>June 2011</li> 
+<li>May 2011</li> 
+<li>April 2011</li> 
+<li>March 2011</li> 
+<li>February 2011</li> 
+<li>January 2011</li> 
+<li>December 2010</li> 
+<li>November 2010</li> 
+<li>October 2010</li> 
+<li>September 2010</li> 
+<li>August 2010</li> 
+<li>July 2010</li> 
+<li>June 2010</li> 
+<li>May 2010</li> 
+<li>April 2010</li> 
+<li>March 2010</li> 
+<li>February 2010</li> 
+<li>January 2010</li> 
+<li>November 2009</li> 
+<li>October 2009</li> 
+<li>September 2009</li> 
+<li>August 2009</li> 
+<li>July 2009</li> 
+<li>June 2009</li> 
+<li>May 2009</li> 
+<li>April 2009</li> 
+<li>March 2009</li> 
+<li>February 2009</li> 
+<li>January 2009</li> 
+<li>December 2008</li> 
+<li>November 2008</li> 
+<li>October 2008</li> 
+<li>September 2008</li> 
+<li>August 2008</li> 
+<li>July 2008</li> 
+<li>June 2008</li> 
+<li>May 2008</li> 
+<li>April 2008</li> 
+<li>March 2008</li> 
+<li>February 2008</li> 
+<li>January 2008</li> 
+<li>December 2007</li> 
+<li>November 2007</li> 
+<li>October 2007</li> 
+<li>September 2007</li> 
+<li>August 2007</li> 
+<li>July 2007</li> 
+<li>June 2007</li> 
+<li>May 2007</li> 
+<li>April 2007</li> 
+<li>March 2007</li> 
+<li>February 2007</li> 
+<li>January 2007</li> 
+<li>December 2006</li> 
+<li>November 2006</li> 
+<li>October 2006</li> 
+<li>September 2006</li> </ul> </ul> 
+<h2>Tags</h2> ACT ARR Azure Drupal HTML5 iPhone Joomla Links LINQ Lists MEF 
+NuGet Orchard Python RIA RIA Services WCF WebForms WinForms Wordpress WP7 WPF 
+<br> 
+<h2>My Tweets</h2> 
+<h2>Blogroll</h2> 
+<ul> 
+<li>JoeStagner.com</li> 
+<li>Soft Strategy</li> </ul>  &copy; 2011  MisfitGeek.com. <br>
+<br>
+
+</body>

@@ -1,0 +1,136 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>RSS Reader in Python - Building an RSS Reader With Python - Holding User Data for the Python-Powered RSS Reader in CGI</title>
+<body>
+
+<ol> 
+<li>About.com</li> 
+<li>Computing &amp; Technology</li> 
+<li>Python</li> </ol> <br>
+<br>
+Python <br>
+Search<br>
+
+<ul> 
+<li>Python</li> 
+<li>Basic Python</li> 
+<li>Intermediate Python</li> 
+<li>Pro Python</li> 
+<li></li> </ul> 
+<ul> 
+<li>Share</li> 
+<li></li> </ul> 
+<p><b>Discuss</b> in our forum</p> 
+<h1>Part 2: Getting Feed Information From the Data File With&nbsp;Python</h1> 
+<p>From&nbsp;Al Lukaszewski,&nbsp;former&nbsp;About.com Guide</p>  See More 
+About: 
+<ul> 
+<li>python tutorials</li> 
+<li>web programming</li> 
+<li>rss reader</li> 
+<li>advanced projects</li> 
+<li>cgi</li> </ul> 
+<h4><b>4</b> of <b>9</b></h4> Previous Next <br>
+ Holding the User Data in 
+Python With&nbsp;CGI 
+<p> In addition to receiving the user data, we need to define a variable to 
+hold the data. Let's call it something obscure like 'feedname'. The way we 
+assign data to feedname depends on whether we are using PHP or CGI as the 
+intermediary.</p> 
+<p> If we use CGI, we will need to import the <b>cgi</b> and <b>cgitb</b> 
+libraries, enable<b>cgitb</b>, and then assign the data from <b>cgi.FieldStorage
+</b> to a dictionary from which we will cull the feedname by its HTML name 
+value, 'selection'. The code looks like this:</p> 
+<pre><code> ## CGI Version import cgi import cgitb; cgitb.enable() form = 
+cgi.FieldStorage() feedname = form[&quot;selection&quot;].value</code></pre> 
+<p></p> 
+<p> If you are at all uncomfortable with the <b>cgi</b> library, I encourage 
+you to read [link url=/od/cgiformswithpython/ss/pycgitut1.htm] my tutorial on 
+programming CGI with Python. If CGI is used for this program, the application 
+should have a 'cgi' suffix instead of the usual 'py'. On the next page, we will 
+look atthe PHP version of this setup and see how we can code the program to 
+allow command-line execution and debugging.</p> <br>
+Previous 
+<ul> 
+<li>This is NOT the&nbsp;Beginning</li> 
+<li>The Python Bang&nbsp;Line</li> 
+<li>The Tasks This Python Program Must&nbsp;Do</li> 
+<li>Holding the User Data in Python With&nbsp;CGI</li> 
+<li>Holding the User Data in Python With&nbsp;PHP</li> 
+<li>Defining the First Python&nbsp;Function</li> 
+<li>Reading the RSS Feed as a Python File&nbsp;Object</li> 
+<li>Using a Python&nbsp;Iterator</li> 
+<li>Calling Python's Function, Retrieving the Feed&nbsp;Address</li> </ul> Next
+<br>  Related Articles <br>
+
+<ul> 
+<li>Part 2: Getting Feed Information From the Data File With Python</li> 
+<li>RSSReader.cgi - Python CGI for an RSS Reader</li> 
+<li>Python CGI - Programming CGI With Python - How to Program CGI in Python
+</li> 
+<li>Installing a Guestbook - Build Your Own</li> 
+<li>Using Forms and CGI</li> </ul> <br>
+<br>
+ Explore Python  Must Reads 
+<ul> 
+<li>What is Python?</li> 
+<li>Learn Python</li> 
+<li>Hello, World!</li> 
+<li>Python 3.0 </li> 
+<li>Regular Expressions</li> </ul>  Most Popular 
+<ul> 
+<li>&quot;Hello, World!&quot;</li> 
+<li>Line-By-Line File Analysis</li> 
+<li>What is Python?</li> 
+<li>Python Text Editors</li> 
+<li>String Methods - 1 of 2</li> </ul>  See More About: 
+<ul> 
+<li>python tutorials</li> 
+<li>web programming</li> 
+<li>rss reader</li> 
+<li>advanced projects</li> 
+<li>cgi</li> </ul>  By Category <br>
+
+<ul> 
+<li>Beginning Python</li> 
+<li>Python 3.0</li> 
+<li>Python Library</li> 
+<li>Regular Expressions</li> 
+<li>Web Development</li> 
+<li>Advanced Python</li> 
+<li>Database Programming</li> 
+<li>Networking</li> 
+<li>ScripTips</li> 
+<li>Python Jobs</li> 
+<li>Programming Glossary</li> 
+<li>Suggested Resources</li> </ul> <br>
+Python <br>
+
+<ol> 
+<li>About.com</li> 
+<li>Computing &amp; Technology</li> 
+<li>Python</li> </ol> 
+<ul> 
+<li>Most Popular</li> 
+<li>Latest Articles</li> 
+<li>RSS</li> </ul> 
+<ul> 
+<li>Advertise on About.com</li> 
+<li>Our Story</li> 
+<li>News &amp; Events</li> 
+<li>Work at About</li> 
+<li>SiteMap</li> 
+<li>All Topics</li> 
+<li>Reprints</li> 
+<li>Help</li> </ul> 
+<ul> 
+<li>Write for About</li> 
+<li>User Agreement</li> 
+<li>Ethics Policy</li> 
+<li>Patent Info.</li> 
+<li>Privacy Policy</li> 
+<li>Your Ad Choices</li> </ul> 
+<p>&copy;2012 About.com. All rights reserved.&nbsp;</p> 
+<p>A part of&nbsp;The New York Times Company.</p> <br>
+
+</body>

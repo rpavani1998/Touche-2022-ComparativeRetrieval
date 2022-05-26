@@ -1,0 +1,342 @@
+in addition to source files, an ide project contains metadata about what belongs on the classpath, how to build and run the project, and so on.
+assuming that your project's compilation classpath is set correctly, you need only select the project, package, or file that you want to compile and choose the appropriate build or compile command from the run menu.
+if you use the browse button to choose the project main class, the file chooser only shows classes in your project source directory.
+you can view your ide's jdk version by choosinghelp > about.
+contents setting up a java project based on existing sources setting up a web project based on existing sources free-form projects configuring the classpath and other project settings setting the main project setting the target jdk in a project managing a project's classpath making the jdk's javadoc available in the ide enabling java web start building projects, packages, and files compile on save setting the main class and runtime arguments setting jvm arguments editing and running ant scripts writing custom ant tasks to complete this tutorial, you need the following software and resources.
+this multi-tabbed window is displayed automatically whenever you generate compilation errors, debug your program, generate javadoc documentation, and so on.
+in free-form projects, the ide uses targets in an existing ant script to build, run, clean, test, and debug your application.
+to solve these problems, you can specify a dedicated folder for project libraries.
+in standard java projects, the ide maintains separate classpaths for compiling and running your project, as well as compiling and running junit tests (for java se applications).
+when you want to add a required project, select the project folder whose jar files you want to add to the classpath (the file chooser displays the icon for ide project folders ( ).
+you can set a dedicated libraries folder for standard java se, web, and enterprise projects.
+see importing eclipse projects into netbeans ide for information on how the wizard works and how you can work simultaneously in eclipse and netbeans projects.
+note that to access settings for the main class, program arguments, the working directory for program execution and vm options, you have to select the run node.
+you can right-click any project node to access a popup menu of commands for building, running, and debugging the project, as well as opening the project properties dialog box.
+by default, the ide uses the version of the java se platform (jdk) on which the ide runs as the default java platform for ide projects.
+the template contains sample code for many of the common operations performed by ant tasks.
+the ide's project system is based directly on ant.
+in the wizard, you identify the location of the sources and specify a location for the netbeans project metadata.
+in the project properties dialog box, select the application > web start node.
+the import eclipse project wizard enables you to import multiple projects simultaneously, including their configurations.
+when the compile on save feature is enabled for a project, files are compiled when you save them.
+override the jartarget to have no contents and no dependencies.
+to make an existing project's libraries sharable: the following actions are available: note: you can also use the libraries node of the project properties dialog box to change the location of the libraries folder.
+whenever you invoke compile commands, the ide displays the output including any compilation errors encountered in the output window, as described infixing compilation errors below.
+in general, it is better to use standard "with existing sources" project templates for importing projects.
+typically, one of these projects serves as the entry point for your application.
+only one project can be the main project at a time.
+in the libraries panel, click browse to open the new libraries folder wizard.
+if your project uses special libraries dynamically at runtime through an indirect interface or reflection (like jdbc drivers or jaxp implementations), you have to add these libraries to the runtime classpath.
+note: if the project was originally developed in eclipse, you might be able to save time by using the import eclipse project wizard instead of the new project wizard.
+if your application consists of multiple projects, you have to set up the classpath dependencies between the projects.
+if you need to save the messages displayed in the output window, you can copy and paste it to a separate file.
+in the name and location page of the wizard, follow these steps: type a project name.
+you can right-click ant scripts in the projects window, files window, or favorites window to access a pop-up menu of commands.
+if you want to specify a class in one the libraries on the classpath, you have to type the fully-qualified name of the class in the main class field.
+note that if you are using the java application template, the ide creates a manifest file for you.
+switching the target jdk for a standard project does the following: javacand java) to compile and execute your application.
+for eclipse projects, you can use the import eclipse project wizard to help you create netbeans projects from projects in an eclipse workspace and import the project classpaths and other settings.
+this enables you to test and debug your application without having to wait for the application to be built first.
+to configure java web start for the application: this section explains how to build standard projects in the ide, how to do basic customizations to the build process, and how to handle compilation errors.
+another potential inconvenience is that libraries are stored in a variety of locations, based on where they originate.
+in addition, the ide also contains templates for ejb modules, enterprise applications, java me applications, and more.
+to tell the ide which of your projects is the main entry point for your application, you set one project to be the main project.
+=value in standard projects the ide generates the build script based on the options you enter in the new project wizard and the project's project properties dialog box.
+any previously compiled files and distributable outputs such as jar files are deleted.
+the build command is disabled.
+for example, imagine that project a compiles against project b, and project b compiles against project c, but project a does not compile against project c. this means that project a only has project b on its runtime classpath.
+if the ant script does not contain targets for some of these functions, the functions are unavailable for the project.
+the ide's compile on save feature enables you to save time when you are running and debugging projects in the ide.
+for web projects developed outside of netbeans, you use an "existing sources" template in the new project wizard to make a netbeans project.
+this section shows you how to handle the initial importing of projects into the ide.
+if available, displays the target jdk's source code and javadoc documentation.
+this flexibility makes it easier for you to handle the following situations: you can set a dedicated libraries folder for standard java se, web, and enterprise projects.
+use this option if the library is not in the folder that you have selected and you want to have the library jar files placed there.
+do not edit nbproject/build-impl.xml directly, because that file is regenerated based on changes that you make in the project properties dialog box.
+in addition, it provides information on how to do custom configuration of ide-generated build scripts.
+when the deploy on save feature is enabled for a project and a project has been deployed to a server through the ide, changed files are redeployed to the server immediately.
+use this option if there is already a copy of the library in the libraries folder and you want to use that copy of the library.
+you can also open this window manually by choosing window > output (ctrl-4 on windows/cmd-4 on mac os x).
+for example, if you are importing a project with multiple source roots, each of which has a different classpath, and you can not split the source roots into different projects, it might be necessary to use a free-form project template.
+web application with existing sources.
+if project a requires both project b and project c during execution, you have to add project c to project a's runtime classpath.
+if the server that you want does not appear, click add to register the server in the ide.
+the output window also provides links to errors found when running ant build scripts.
+in free-form projects, the ide uses targets in an existing ant script to build, run, clean, test, and debug your application.
+click next to advance to the server and settings page of the wizard.
+if you have already specified a libraries folder, clicking browse opens a file chooser instead of the new libraries folder wizard.
+the font style of a subnode's label in the projects, files, and favorites windows indicates the following: targets that are imported from another script but are overridden in the importing script are not listed.
+by default, the ide uses the version of the java se platform (jdk) on which the ide runs as the default java platform for ide projects.
+in addition, compilation errors are shown in the tasks window and marked in the source editor.
+uses the target jdk's executables (javac and java ) to compile and execute your application.
+compiles your source code against the target jdk's libraries.
+you can step into classes and look up javadoc pages for the classes without configuring anything else.
+when you add a folder containing source code, you must add the folder that contains the highest folder in your package tree.
+but if the project depends on a custom library that you have specified in the libraries manager dialog box, others might initially have problems building the project because of unresolved references to the custom library.
+from the files window, you can open and edit your project configuration files, such as the project's build script and properties file.
+you can run targets in an ant script from the ant script's node in the projects window, files window, or favorites window.
+a dist is generated to contain distributable outputs such as jar files and javadoc documentation.
+in the web category of the wizard, select one of the standard templates.
+a build folder is created to hold the compiled classes.
+to enable or disable deploy on save for a java web or enterprise project: right-click the project's node and choose properties.
+projects in the ide, you always work inside of a project.
+you can edit the classpath declarations for an existing project in the project properties dialog box.
+setting up a java project based on existing sources for other java projects developed outside of netbeans, you use an "existing sources" template in the new project wizard to make a netbeans project.
+in the test package folders pane, click add folder to select the folder containing the junit package folders.
+for example, running the clean and build main project command builds both the main project and all of its required projects.
+to set up a netbeans project for an existing java application: build.xmlthat is used to build the sources.
+by default, compile on save is enabled for new projects that you create.
+when you finish creating a project, it opens in the ide with its logical structure displayed in the projects window and its file structure displayed in the files window: note: if you need to access files and directories that are outside of your project directories, you can use the favorites window.
+if you want to add a free-form project to the classpath of a standard project, you have to add the free-form project's jar file to the standard project's classpath.
+you can step into classes and look up javadoc pages for the classes without configuring anything else.
+when adding projects in the project properties dialog box, make sure that the build projects on classpath checkbox is selected.
+the default filter does this for you by excluding all .java, .nbattrs , and .form files from your output file.
+if the ant script does not contain targets for some of these functions, the functions are unavailable for the project.
+for this, use the java web start category in the project properties window.
+to make a general java project's libraries sharable upon project creation: choose file > new project.
+in the ide, you can register multiple java platforms and attach javadoc and source code to each platform.
+to make a web or java ee project's libraries sharable upon project creation: if the libraries are already included in the ide, those libraries will be copied to the folder that you have designated.
+in the projects, files, and favorites windows, an ant script's subnodes are flagged in the following ways:
+it shows a logical view of important project contents such as java packages and web pages.
+to solve these problems, you can specify a dedicated folder for project libraries.
+the ide also uses classpath settings to enable code completion, automatic highlighting of compilation errors, and refactoring.
+the project template icon can be displayed in gray, which means that this project type has not been activated.
+the java and web project categories also have free-form project templates.
+you can add any required projects to your project by right-clicking the libraries node in the projects window, or you can add them by specifying them in the libraries tab in the project properties dialog box.
+the required project's javadoc and sources are also made available to the receiving project.
+in addition, it provides information on how to do custom configuration of ide-generated build scripts.
+this section shows you how to run projects in the ide and how to configure the project's main class, runtime arguments, vm arguments, and the working directory.
+building projects, packages, and files compilation in the ide is simple.
+in the wizard, you identify the location of the sources and specify a location for the netbeans project metadata.
+select the enable web start checkbox and configure java web start settings as explained inenabling java web start in the netbeans ide.
+typically, one of these projects serves as the entry point for your application.
+you can also add the new target to the dependencies of any of the ide's existing targets.
+to make an existing project's libraries sharable: right-click the project's node and choose properties.
+for deploy on save to work on glassfish v2, the glassfish instance must have the directory deployment enabled option selected.
+the jar file that is built from the project is not kept up to date when you save changes to your files.
+right-click the libraries node in the projects window and choose add project, add library, or add jar/folder.
+you then use the project properties dialog box to configure the project.
+the ide automatically adds everything on your project's compilation classpath to the project's runtime classpath.
+to register a new java platform: to switch the target jdk of a standard project: adding a group of class files to a project's classpath tells the ide which classes the project should have access to during compilation and execution.
+you also have to adjust your runtime classpath if the runtime dependencies between your projects do not match the compilation dependencies between the projects.
+instead of running a target by using the ant script node's popup menu, you can simply right-click the target's node and choose run target.
+as the netbeans ide project system is ant-based, netbeans projects are already generally portable between different users, whether or not they use the ide.
+it is not necessary to know ant to work with the ide.
+you can view the project's compilation classpath by opening the project properties dialog box and selecting the libraries node in the categories pane and then clicking the compile tab in the right pane.
+double-click any of the ant script's subnodes to jump to that target's location in the source editor.
+then they should be able build the application without extra configuration.
+when enabled, the compile on save feature has the following effects: the ide compiles your files as you save them so that your project is always ready to run or debug in the ide.
+set the source level to the java version on which you want the application to run.
+in addition, the build script uses the nbproject/project.properties which you can edit manually.
+with this command, ant lists only those targets that have a description attribute, together with their descriptions.
+you can create additional filters using regular expressions to control the output files.
+to do so, right-click the ant script node and choose a target from the run target submenu.
+use this option if the library is not in the libraries folder and you need to access the library in its existing location using an absolute path.
+for example, for the com.mycompany.myapp.ui package, you add the folder that contains the com folder.
+you can use custom ant tasks to expand on the functionality provided by ant's built-in tasks.
+the ide contains the following standard project templates for java and java web applications: in addition, the ide also contains templates for ejb modules, enterprise applications, java me applications, and more.
+you can modify your project's classpath in either of the following ways: right-click the project's node, choose properties, select the libraries category, and modify the listed classpath entries.
+in the name and location page of the wizard, follow these steps: in the location field, enter the folder that contains the web application's source root folders and web page folders.
+when you use the import eclipse project wizard, you do not need to use create and configure the netbeans project manually.
+when adding projects in the project properties dialog box, make sure that the build projects on classpath checkbox is selected.
+to set the project's main class, select the run node in the categories pane of the project properties dialog box and type the fully-qualified name in the main class field (for example, org.mycompany.mylib.
+nbproject/build-impl.xmlalso has a -preand -posttarget that you can override in build.xml.
+when the compile on save feature is enabled for a project, files are compiled when you save them.
+if you are familiar with ant, you can customize a standard project's ant script or write your own ant script for a project.
+you can set all the basic compilation and runtime options in the project's project properties dialog box and the ide automatically updates your project's ant script.
+after each section of code, the template also shows you how to use the task in an ant script.
+a dist is generated to contain distributable outputs such as jar files and javadoc documentation.
+the ide automatically adds everything on your project's compilation classpath to the project's runtime classpath.
+this flexibility makes it easier for you to handle the following situations: you create a project and need to make it available and buildable to other users, whether they use the ide or not.
+when you create a jar file or a war file, you usually want to include just the compiled .class files and any other resource files located in your source directory, such as resource bundles or xml documents.
+if the compile on save feature is enabled for a java project (or the deploy on save feature is enabled for a java web or enterprise project), the ide compiles your files automatically when you save them.
+the free-form templates enable you to use an existing ant script for a project but require manual configuration.
+this enables you to test and debug your application without having to wait for the application to be built first.
+in the ide, you always work inside of a project.
+every action that is run by an ant script, such as compiling, running, and debugging files, sends its output to the same output window tab.
+you can therefore build and run your project outside the ide exactly as it is built and run inside the ide.
+libraries that come with the ide are stored in various different folders within the ide's installation.
+to build your application for deployment: any previously compiled files and distributable outputs such as jar files are deleted.
+use this option if the library is not in the libraries folder and you need to access the library in its existing location using a relative path.
+creates a skeleton web application, including options to add various web frameworks.
+click ok to exit the project properties dialog box.
+each of these subnodes also has a popup menu of commands.
+project.properties, type the name of the manifest file in the manifest.fileproperty.
+use existing library in libraries folder.
+the compiled files are stored in a cache that the ide uses when you run, test, debug, and profile the project in the ide.
+you can see the build outputs by opening the files window.
+an entry with a relative reference is added for the library in the libraries folder'snblibraries.properties file.
+importing an eclipse workspace for eclipse projects, you can use the import eclipse project wizard to help you create netbeans projects from projects in an eclipse workspace and import the project classpaths and other settings.
+for other java projects developed outside of netbeans, you use an "existing sources" template in the new project wizard to make a netbeans project.
+the ant build script is not used.
+to register a new java platform: choose tools > java platforms from the main menu.
+the ide calls targets in build.xml whenever you run ide commands.
+this file contains an import statement that imports nbproject/build-impl.xml , which contains build targets that are generated by the ide.
+then, if you forget the names of the targets or what they do, you can run the ant -projecthelp command from the command line.
+you open the favorites window by choosingwindow > favorites (ctrl-3 on windows/cmd-3 on mac os x).
+adding a group of class files to a project's classpath tells the ide which classes the project should have access to during compilation and execution.
+you can add any required projects to your project by right-clicking the libraries node in the projects window, or you can add them by specifying them in the libraries tab in the project properties dialog box.
+the project template icon can be displayed in gray, which means that this project type has not been activated.
+however, by default, the project build script's way of referring to libraries is dependent on factors specific to each user, particularly in the case of libraries defined in the library manager dialog box.
+in the actions panel of the wizard, verify the selected action for each listed library.
+--jdkhome jdk-home-dir alternatively, set the jdk in the /etc/netbeans.conf file that is located in the ide's installation folder.
+to make the javadoc api documentation available for the show javadoc command: you can configure your application to run through java web start in the ide.
+the main class must exist in the project or in one of the jar files or libraries in the project's runtime classpath.
+with standard projects, you can customize the build process by doing any of the following: nbproject/project.properties.
+you can also view build output like compiled classes, jar files, war files, and generated javadoc documentation.
+in these cases, the javadoc resources must be manually associated with the ide.
+to switch the target jdk of a standard project: right-click the project's node and choose properties.
+free-form projects there are also project templates available for free-form projects.
+in most cases, the ide detects the most appropriate action for that library.
+if you want to add a free-form project to the classpath of a standard project, you have to add the free-form project's jar file to the standard project's classpath.
+the ide stores project information in a project folder which includes an ant build script and properties file that control the build and run settings, and a project.xml file that maps ant targets to ide commands.
+for this, use the java web start category in the project properties window.
+to specify which files to exclude, right-click your project in the projects window and choose properties to open the project properties dialog box.
+however, the free-form project templates can be useful if you have an existing ant-based project with a complex or idiosyncratic configuration that can not be replicated within a standard project.
+this file stores ant properties with important information about your project, such as the location of your source and output folders.
+when the new project wizard appears, select the right template for your project and complete the remaining wizard steps.
+setting up a web project based on existing sources for web projects developed outside of netbeans, you use an "existing sources" template in the new project wizard to make a netbeans project.
+especially when there are many targets in your ant build script, emphasizing some and de-emphasizing others can be a useful way to distinguish between those that you use a lot and those that you use less often.
+in the library folder page of the wizard, enter a location for the libraries and click next.
+to do this, you must first declare all of the free-form project's output files in the output panel of the free-form project's project properties dialog box.
+whenever you invoke compile commands, the ide displays the output including any compilation errors encountered in the output window, as described infixing compilation errors below.
+to enable or disable compile on save for a java project: similarly, the ide has a deploy on save feature for java web and enterprise applications.
+you can also install the ant manual into the ide help system by using the plugins manager.
+if the compile on save feature is enabled for a java project (or the deploy on save feature is enabled for a java web or enterprise project), the ide compiles your files automatically when you save them.
+managing dependencies between projects if your application consists of multiple projects, you have to set up the classpath dependencies between the projects.
+in the name and location page of the wizard, select the use dedicated folder for sharing libraries checkbox.
+you can view your ide's jdk version by choosinghelp > about.
+you can edit the classpath declarations for an existing project in the project properties dialog box.
+for eclipse projects, it is best to use the import project feature, which creates and configures a standard project for you.
+the required project's javadoc and sources are also made available to the receiving project.
+all of the project commands, like clean and build project and debug, call targets in the project's ant script.
+you then use the project properties dialog box toconfigure the project.
+for eclipse projects, it is best to use the import project feature, which creates and configures a standard project for you.
+the files window can be opened by choosing window > files (ctrl-2 on windows/cmd-2 on mac os x).
+you can specify jvm arguments for the project in the project properties dialog box.
+but if the project depends on a custom library that you have specified in the libraries manager dialog box, others might initially have problems building the project because of unresolved references to the custom library.
+the projects window can be opened by choosing window > projects (ctrl-1 on windows/cmd-1 on mac os x).
+building applications this section explains how to build standard projects in the ide, how to do basic customizations to the build process, and how to handle compilation errors.
+note: if you need to access files and directories that are outside of your project directories, you can use the favorites window.
+the ide provides commands that act on the main project.
+to add projects, libraries, jar files, and folders to the project's runtime classpath, use the buttons on the right side of the run-time libraries list in the project properties dialog box.
+the ide stores project information in a project folder which includes an ant build script and properties file that control the build and run settings, and aproject.xml file that maps ant targets to ide commands.
+you can therefore build and run your project outside the ide exactly as it is built and run inside the ide.
+you open the favorites window by choosingwindow > favorites (ctrl-3 on windows/cmd-3 on mac os x).
+in the libraries folder field, select the location for the libraries to be stored.
+to enable or disable compile on save for a java project: right-click the project's node and choose properties.
+to do this, you must first declare all of the free-form project's output files in the output panel of the free-form project's project properties dialog box.
+for example, to get rmi working with regular projects, type the following in build.xml:  nbproject/build-impl.xmlto build.xmland make any changes to the target.
+whenever you click an error link in the output window, the source editor jumps to the line containing the error automatically.
+you can also expand the ant script node to see an alphabetical list of subnodes representing the ant script's targets.
+in the right pane, enter regular expressions in the text box to specify the files to exclude when packaging the jar or war files.
+in general, it is better to use standard "with existing sources" project templates for importing projects.
+when you create a target that you want to run from the command line, give the target a description attribute.
+by default, all files in your source roots are included.
+note: you can also use the libraries node of the project properties dialog box to change the location of the libraries folder.
+these targets include a description attribute, which is displayed as a tooltip.
+internal targets are excluded from these lists because they cannot be run independently.
+by default, the ide does not specify a main class, runtime arguments, or jvm arguments.
+next, select the libraries node in the categories pane and click the run tab in the right pane of the dialog box.
+enabling java web start for the application you can configure your application to run through java web start in the ide.
+the ide's project system is based directly on ant.
+if the libraries are already included in the ide, those libraries will be copied to the folder that you have designated.
+in the java category of the wizard, select one of the standard templates.
+verify all of the fields on the page, such as the values for the web pages folder and source package folders.
+override the existing target in build.xmland then add the new target to the existing target's dependsproperty.
+you can enter the location as a relative reference or an absolute reference.
+in the left pane, click on packaging.
+in the ide, you can register multiple java platforms and attach javadoc and source code to each platform.
+if you have attached javadoc and source files to a jar file in the library manager, the ide automatically adds the javadoc and source files to the project when you register the jar file on a project's classpath.
+the error message is displayed in blue underlined text and is linked to the line in the source code that caused the error, as illustrated in the image below.
+when you clean and build a project, the ide also cleans and builds its required projects.
+click next to advance to the existing sources and libraries page of the wizard.
+the project's ant script is not used when you use run, debug, profile, or test commands.
+click the add zip/folder button and navigate to the zip file or the folder that contains the javadoc api documentation on your system.
+open the project properties dialog box and click run in the categories pane and then type a space-separated list of jvm arguments in the vm options field.
+the ide provides commands that act on the main project.
+to enable or disable deploy on save for a java web or enterprise project: to enable directory deployment glassfish v2: the ide displays output messages and any compilation errors in the output window.
+to set up a netbeans project for an existing web application: there are also project templates available for free-form projects.
+another potential inconvenience is that libraries are stored in a variety of locations, based on where they originate.
+to create a custom ant task in the ide: when you create the custom ant task file, the template opens in the source editor.
+see importing eclipse projects into netbeans ide for information on how the wizard works and how you can work simultaneously in eclipse and netbeans projects.
+the import eclipse project wizard enables you to import multiple projects simultaneously, including their configurations.
+in the source packages folder pane, click add folder.
+similarly, the ide has a deploy on save feature for java web and enterprise applications.
+in the project properties dialog box, select the libraries node.
+when the deploy on save feature is enabled for a project and a project has been deployed to a server through the ide, changed files are redeployed to the server immediately.
+proceed with creating the project and this functionality will be activated in the ide.
+in build.xml, you can override any of the targets from nbproject/build-impl.xml or write new targets.
+for example, normally you can put a project in a zip file and give it to another user to unpack and run.
+you should therefore never set the output folder to the same location as your source folder without first configuring the clean target to not delete the output folder.
+in standard java projects, the ide maintains separate classpaths for compiling and running your project, as well as compiling and running junit tests (for java se applications).
+this section shows you how to handle the initial importing of projects into the ide.
+this might be desirable if there is already a build script calledbuild.xml that is used to build the sources.
+one important function of the output window is to notify you of errors found while compiling your program.
+when you use the import eclipse project wizard, you do not need to use create and configure the netbeans project manually.
+for example, the following adds the new-targettarget to the run target's dependencies:   you do not need to copy the body of the run target into build.xml .
+the runtime classpath of each standard project contains the project's compiled classes and everything in the project's compilation classpath.
+when you add a folder containing source code, you must add the folder that contains the highest folder in your package tree.
+the ide then compiles the files.
+click finish to exit the make project sharable wizard.
+to change project runtime options, open the project properties dialog box by right-clicking the project node in the projects window and choosing properties.
+to create a new project: when the new project wizard appears, select the right template for your project and complete the remaining wizard steps.
+for example, if you are importing a project with multiple source roots, each of which has a different classpath, and you can not split the source roots into different projects, it might be necessary to use a free-form project template.
+when you finish creating a project, it opens in the ide with its logical structure displayed in the projects window and its file structure displayed in the files window: the projects window is the main entry point to your project sources.
+all of the normal xml search tools, selection tools, and keyboard shortcuts are available for editing ant scripts, and the ide provides code completion for all standard ant tasks.
+the following actions are available: copy library jar files to new libraries folder.
+the ide automatically recognizes ant scripts and displays them as ant script nodes ( ) rather than as normal xml files.
+the free-form templates enable you to use an existing ant script for a project but require manual configuration.
+libraries that come with the ide are stored in various different folders within the ide's installation.
+all of the project commands, like clean and build project and debug, call targets in the project's ant script.
+for web projects, the main project is the project that is first deployed.
+to view the javase api documentation in the netbeans ide, use the source >show documentation command or choose window > other > javadoc from the main menu to view api documentation in a separate window.
+the files window shows a directory-based view of your projects, including files and folders that are not displayed in the projects window.
+for existing projects, compile on save is turned off.
+sharing project libraries as the netbeans ide project system is ant-based, netbeans projects are already generally portable between different users, whether or not they use the ide.
+if you have already specified a libraries folder, clicking browse opens a file chooser instead of the new libraries folder wizard.
+in the wizard, you identify the location of the sources and specify a location for the netbeans project metadata.
+if you have additional requirements for the build process that can not be handled in the project properties dialog box, you can modify the build script directly.
+you can set the libraries folder when you create the project (in the new project wizard) or afterwards in the libraries tab of the project properties dialog box.
+the compiled files are stored in a cache that the ide uses when you run, test, debug, and profile the project in the ide.
+note: if compile on save is enabled for a project, the run project command operates on class files that have been created when you have saved those files.
+in the next section we'll take a closer look at how to configure the runtime classpath.
+if you are familiar with ant, you can customize a standard project's ant script or write your own ant script for a project.
+in addition to source files, an ide project contains metadata about what belongs on the classpath, how to build and run the project, and so on.
+java project with existing sources.
+you can also set ant to print the command output for each new target to a new output window tab by choosing tools > options, selecting the miscellaneous category, clicking the ant tab, and deselecting the checkbox for the reuse output tabs from finished processes property.
+note: if the project was originally developed in eclipse, you might be able to save time by using the import eclipse project wizard instead of the new project wizard.
+assuming that your project's compilation classpath is set correctly, you need only select the project, package, or file that you want to compile and choose the appropriate build or compile command from the run menu.
+the clean and build command always uses your project's ant script, whether or not compile on save is enabled.
+you can set all the basic compilation and runtime options in the project's project properties dialog box and the ide automatically updates your project's ant script.
+to set a project as the main project: only one project can be the main project at a time.
+to make the javadoc api documentation available for the show javadoc command: download the javadoc api documentation source.
+however, by default, the project build script's way of referring to libraries is dependent on factors specific to each user, particularly in the case of libraries defined in the library manager dialog box.
+to make a general java project's libraries sharable upon project creation: if the libraries are already included in the ide, those libraries will be copied to the folder that you have designated.
+you can set the libraries folder when you create the project (in the new project wizard) or afterwards in the libraries tab of the project properties dialog box.
+to tell the ide which of your projects is the main entry point for your application, you set one project to be the main project.
+if you have attached javadoc and source files to a jar file in the library manager, the ide automatically adds the javadoc and source files to the project when you register the jar file on a project's classpath.
+in these cases, the javadoc resources must be manually associated with the ide.
+an entry with an absolute reference is added for the library in the libraries folder's nblibraries.properties file.
+to run the ide with a different jdk version: --jdkhome jdk-home-dir alternatively, set the jdk in the /etc/netbeans.conf file that is located in the ide's installation folder.
+proceed with creating the project and this functionality will be activated in the ide.
+to set a project as the main project: right-click the project node in the projects window, and choose set as main project.
+however, the free-form project templates can be useful if you have an existing ant-based project with a complex or idiosyncratic configuration that can not be replicated within a standard project.
+by default, the context path is based on the project name.
+compile on save the ide's compile on save feature enables you to save time when you are running and debugging projects in the ide.
+the main ant script for a standard project is build.xml.
+to configure java web start for the application: right-click the project's node and choose properties.
+if you would like the full build process to occur when you use run project, debug project, and profile project, disablecompile on save.
+switching the target jdk for a standard project does the following: offers the new target jdk's classes for code completion.
+you then use the project properties dialog box toconfigure the project.
+for example, normally you can put a project in a zip file and give it to another user to unpack and run.
+note: though the ide puts source directories within the project folder by default, your source directories do not necessarily need to be located in the project folder.
+for example, running the clean and build main project command builds both the main project and all of its required projects.
+when you clean and build a project, the ide also cleans and builds its required projects.
+when you want to add a required project, select the project folder whose jar files you want to add to the classpath (the file chooser displays the icon for ide project folders ( ).
+if you want to rebuild the jar file without having to use the clean and build command, you need to disable the save on compile feature.
+for deploy on save to work on glassfish v2, the glassfish instance must have the directory deployment enabled option selected.
+if you have customized your build script for any of these commands, those customizations will be disregarded.
+note: though the ide puts source directories within the project folder by default, your source directories do not necessarily need to be located in the project folder.
+the ide also uses classpath settings to enable code completion, automatic highlighting of compilation errors, and refactoring.
+for example, the output folder is deleted every time you clean your project.

@@ -1,0 +1,698 @@
+<!doctype html>
+<meta charset="utf-8">
+<title></title>
+<body>
+ OpenGL Game Development Mailing List: Frequently Asked Questions Maintainer: 
+Tom Hubina (tomh@3dgamedev.com - ICQ# 1708822) 
+---------------------------------------------------------------------- Version: 
+.94.1 Last Updated: 7-28-99 This is a sneaky update. I messed some things up 
+with version .94 (section 9.13 was missing, and a few items I was supposed to 
+add got droped). 
+---------------------------------------------------------------------- Changed 
+items this posting (|): 1.02 Added archive info 1.05 Added algorithm mailing 
+list info 3.05 Added link to the OpenGL-Java FAQ 5.02 Changed wording slightly 
+to be more accurate 5.03 Added info 6.01 Added info 7.01 Added info 7.02 Added 
+info 8.01 Changed code for getting info about screen width / height 9.07 Added 
+more info about multi-texture techniques. Added link. A.01 Added links to 
+OpenGL books online. A.03 Updated link to Dave Eberly's site A.04 Updated 
+ISBN/Edition info for Procedural Elements book New items this posting (+): 1.06 
+Where can I get examples for OpenGL? 5.05 Why doesn't rendering to multiple 
+windows under Win32 (or MFC) work. 9.13 How do I use Extensions? 9.14: How do I 
+draw a mouse cursor on a 3dfx Voodoo1/Voodoo2 card? How do I draw a custom 
+mouse pointer using OpenGL? 9.15: How did those guys at ID software make it so 
+you could pick your OpenGL driver? 
+---------------------------------------------------------------------- This 
+document can be freely distributed, but links back to the main page (as 
+referenced in Subject 1.04) are preferred. All source code examples contained 
+herein are to be considered in the Public Domain. 
+---------------------------------------------------------------------- Table of 
+Contents ---------------------------------------------------------------------- 
+1. General Information 1.01: The OpenGL Game Development Mailing List | 1.02: 
+Are the postings to the mailing list archived? 1.03: The purpose of this FAQ? 
+1.04: How can I get this FAQ? | 1.05: Where can I find useful info on graphics 
+algorithms? + 1.06: Where can I get examples for OpenGL? 2. OpenGL 
+Implementations 2.01: Microsoft OpenGL 2.02: SGI OpenGL 2.03: Vendor Specific 
+OpenGL Ports and Miniports 2.04: 3DFXGL 2.05: What is MESA? 2.06: What is GLUT? 
+2.07: What is GameGLUT? 2.08: What is Fahrenheit? 3. Programming Environments 
+and OpenGL 3.01: Visual C++ 3.02: Borland C++ 3.03: Delphi 3.04: Visual Basic | 
+3.05: Java 4. OpenGL as a rasterization only API 4.01: Why use OpenGL as a 
+rasterization-only API? 4.02: Is there a performance hit for doing this? 4.03: 
+How do I set up OpenGL matrix stack for rastrization-only? 4.04: What about 
+clipping? 4.05: What about the perspective divide? 4.06: Fog 4.07: Is there 
+some sample code to do this? 5. Rendering Problems 5.01: Why is my 
+fog/lighting/textures not working correctly? | 5.02: My objects appear to be 
+&quot;fighting&quot; in the z-buffer. | 5.03: Why doesn't my texture appear? 
+5.04: After calling glRotate() a few times I end up rotating around the wrong 
+axis. Why? + 5.05: Rendering to multiple windows under Win32 (or MFC) doesn't 
+work. 6. Hardware Acceleration | 6.01: How do I determine if I'm getting 
+hardware acceleration under Windows NT/95/98? 6.02: Why am I not getting 
+hardware acceleration? 7. Picking/Selection | 7.01: How do I use OpenGL's 
+Selection Buffer? | 7.02: What are some other methods for picking/selection? 8. 
+Full Screen Rendering | 8.01: How do I open a full screen window? 8.02: How do 
+I change resolution under Windows NT/95/98? 9. Miscellaneous 9.01: What is the 
+best way to draw text? 9.02: What is the best way to draw 2D overlays? 9.03: 
+Should I use OpenGL's matrix routines for all my matrix math? 9.04: How do 
+matrixes work? 9.05: What are Quaternions? 9.06: What are BSP Trees? | 9.07: 
+What are light maps and how do I use them in OpenGL? 9.08: How do I load a .BMP 
+file into a texture map? 9.09: Can I mix OpenGL and DirectX? 9.10: How do I 
+access the frame/depth/texture memory directly? 9.11: How do I use OpenGL for 
+Collision Detection? 9.12: What is the best card for running OpenGL under 
+Windows NT/95/98? 9.13: How do I use extensions? + 9.14: How do I draw a mouse 
+cursor on a 3dfx Voodoo1/Voodoo2 card? How do I draw a custom mouse pointer 
+using OpenGL? + 9.15: How did those guys at ID software make it so you could 
+pick your OpenGL driver? Appendices A. General References | A.01: OpenGL Online 
+Links A.02: OpenGL Specific Books | A.03: General Computer Graphics Online 
+Links | A.04: General Computer Graphics Books A.05: Game Development Online 
+Links A.06: Game Development Books B. Contributors B.01: How can you contribute 
+to this FAQ? B.02: Contributors. Who made this all possible. Search e.g. for 
+&quot;Section 2&quot; to find that section. Search e.g. for &quot;Subject 
+2.04&quot; to find that item. 
+---------------------------------------------------------------------- Section 
+1. General Information 
+---------------------------------------------------------------------- Subject 
+1.01: The OpenGL Game Development Mailing List &quot;This list is being 
+provided as a service to the 3D game development community to help promote 
+OpenGL as a viable and exciting way to program 3D entertainment titles. 
+Discussion of game programming techniques and issues using OpenGL is the 
+primary goal of this list! Since so much of the installed base consists of 
+Intel PCs running Win32 platforms, the emphasis will probably be on that 
+environment and C/C++. However, there are many other interesting platforms out 
+there, and any discussion relating to OpenGL programming on those platforms is 
+welcome! For instance, OpenGL programming in Java may well become a hot topic 
+soon. Another thing to keep an eye on is OpenGL support in Apple's forthcoming 
+Rhapsody OS. While the emphasis of this list is on game programming, general 
+OpenGL programming information and examples are welcome as well. This is 
+intended as a resource for all levels of OpenGL programmers, from beginner to 
+expert. Other topics that are appropriate to the list include OpenGL device and 
+driver quality, OpenGL benchmarking, and other real-world issues involved in 
+doing OpenGL development. General topics relating to programming 3D games are 
+also welcome. There are a few things that aren't desired on the list. The 
+ongoing religious war between OpenGL and Direct3D is best left somewhere else 
+(rec.games.programmer is a likely candidate ;-). Actively promoting other APIs 
+besides OpenGL on this list is discouraged. General programming questions (i.e. 
+&quot;which is better a pointer or an array?&quot;) are also best taken 
+elsewhere. Some of these topics will inevitably creep onto the list, but let's 
+try to keep the discussion civil and technical.&quot; - OpenGL Game Development 
+List Charter To subscribe, enter: sub OPENGL-GAMEDEV-L Where  is your real 
+name, not your E-mail address. In the MESSAGE BODY (NOT Subject), mail the 
+message to: listserv@fatcity.com &lt;-- Note EXACT spelling of 'listserv' To 
+unsubscribe, use the same address above, but use the command: unsub 
+OPENGL-GAMEDEV-L If you need further assistance, send a message to: 
+OPENGL-GAMEDEV-REQUEST@fatcity.com 
+---------------------------------------------------------------------- Subject 
+1.02: Are the postings to the mailing list archived? An archive of this mailing 
+list can be found at: http://www.findmail.com/listsaver/opengl-gamedev-l/ But 
+it appears to have gone out of date. There are also archives available through 
+the mail server itself (check the help for the mail server for details). 
+---------------------------------------------------------------------- Subject 
+1.03: The purpose of this FAQ? The main purpose of this FAQ is to either answer 
+the most common questions posted to the mailing list or to point readers in the 
+right direction. Questions on topics such as collision detection are too large 
+to answer here. 
+---------------------------------------------------------------------- Subject 
+1.04: How can I get this FAQ? The home for this FAQ is located at: 
+http://www.3dgamedev.com/resources/openglfaq.txt 
+---------------------------------------------------------------------- Subject 
+1.05: Where can I find useful info on graphics algorithms? The best source for 
+general graphics algorithm information is the comp.graphics.algorithms FAQ, 
+posted bimonthly on the newsgroup of that name. This FAQ introduces many useful 
+techniques as well as listing the most important books and links that no one 
+should be without. This FAQ is also available from: 
+http://www.exaflop.org/docs/cgafaq 
+ftp://rtfm.mit.edu/pub/faqs/graphics/algorithms-faq There is also a mailing 
+list for algorithms. Info can be found at: 
+http://www.3dgamedev.com/lists/algo_list.htm 
+---------------------------------------------------------------------- Subject 
+1.06: Where can I get examples for OpenGL? The vast majority of example code 
+for OpenGL on the net can be found through the Developers and Coding Examples 
+sections on: http://www.opengl.org 
+---------------------------------------------------------------------- Section 
+2. OpenGL Implementations 
+---------------------------------------------------------------------- Subject 
+2.01: Microsoft OpenGL Microsoft provide OpenGL drivers as standard with 
+Windows NT4.0 and Windows 95 Release 2, and will continue to do so with Windows 
+98 and future Windows releases. An upgrade can be found on the Microsoft 
+website for owners of Windows 95 Release 1. I am not aware of the distribution 
+rules for their OpenGL libraries. Unlike the SGI libraries, the Microsoft ones 
+will directly make use of any available hardware. Software rendering with the 
+MS libraries is very slow compared to custom software rendering engines. 
+---------------------------------------------------------------------- Subject 
+2.02: SGI OpenGL for Windows Quoting from the SGI OpenGL for Windows SDK: 
+&quot;Silicon Graphics' OpenGL library for Windows is a high-performance, fully 
+compliant implementation that runs on Intel PCs. It allows a PC with no 
+dedicated 3D graphics hardware to execute OpenGL applications at exceptional 
+levels of performance and complements accelerated OpenGL products available 
+from numerous 3D graphics hardware vendors. This version of Silicon Graphics' 
+OpenGL library for Windows relies on Microsoft's OpenGL library for hardware 
+acceleration. If an OpenGL driver is available on the system then the library 
+will automatically call Microsoft's library so that the driver will be invoked 
+during rendering. The next version of Silicon Graphics' library will be able to 
+load OpenGL drivers directly.&quot; SGI libraries are called opengl.dll and 
+glu.dll while the Microsoft libraries are called opengl32.dll and glu32.dll. 
+Due to the agreement made between Microsoft and Silicon Graphics in Early 1998, 
+this product is no longer being developed as such and is no longer officially 
+available. However, the software rendering is far in advance of the Microsoft 
+implementation (for political reasons) and some IHVs are basing their OpenGL 
+libraries around this version, 3dfx for example. There are a few unsupported 
+functions, but overall this is the choice for OpenGL development on 
+unaccelerated machines. In the future, a joint venture between Microsoft and 
+SGI will probably provide a successor to both Direct3D and OpenGL, called 
+Fahrenheit. For further information please see the SDK. You can find a copy at: 
+http://www.berkelium.com/OpenGL/ IMPORTANT NOTE ~~~~~~~~~~~~~~ First time users 
+often have the same problem with the SGI implementation, please read the 
+following if you cannot get your version to link correctly: Quoting from the 
+SGI OpenGL for Windows SDK FAQ Section 4: &quot;To use SGI's OpenGL for Windows 
+you must link with OPENGL.LIB and GLU.LIB instead of OPENGL32.LIB and GLU32.LIB 
+respectively. Also make sure that OPENGL.LIB and GLU.LIB precede GDI32.lib in 
+the library list. Since SGI's OpenGL for Windows library overloads the 
+ChoosePixelFormat() function in GDI you need to make sure that you link the 
+libraries in the right order so you don't pick up the wrong version of 
+ChoosePixelFormat(). You should also set your include path so that SGI's header 
+files have precedence over Microsoft's. This is required if you wish to use any 
+of the extensions provided in SGI's OpenGL library for Windows.&quot; 
+---------------------------------------------------------------------- Subject 
+2.03: Vendor Specific OpenGL Ports and Miniports As well as the main Microsoft 
+and SGI implementations hardware vendors may ship their own OpenGL ports based 
+on either of the aforementioned drivers. Whilst a full port is meant to 
+strictly adhere to the standards laid down by the OpenGL 1.1 specification it 
+is often the case that bugs and minor incompatibilities remain. Vendors also 
+often provide their own extensions; check their documentation for more 
+information, use glGetString to verify their existence, and use the appropriate 
+function to call the extension (via wglGetProcAddress under Windows). NB: You 
+must have an existing GL context or your call to glGetString will not be valid, 
+though your target window may to some extent be defined by the hardware 
+available to the user. One way around this is to temporarily open a dummy 
+window when your application starts up, then open a further window set up 
+according to the hardware available. OpenGL Miniports are there to support 
+games such as Quake, and they will usually only support a small subset of 
+OpenGL commands. There are some notes on miniports made available by 
+independent users on the internet, but generally hardware manufacturers seem to 
+be reluctant to release many details. Since most IHVs expect to provide full 
+OpenGL 1.1 compliance miniports are not expected to be so useful in the future. 
+---------------------------------------------------------------------- Subject 
+2.04: 3DFXGL Like most vendors, 3DFX is working on a full implementation of 
+OpenGL 1.1. For more information see http://www.3dfx.com For release notes see 
+the 3dfx website and newsgroups, the beta version still has a few features 
+missing. 2nd Monitor Debugging ~~~~~~~~~~~~~~~~~~~~~ One nice thing about 3dfx 
+cards is that you can plug a 2nd VGA monitor into the output of the 3dfx card 
+while keeping your main monitor attached to your primary video card. This 
+allows you near full use of Windows functions for debugging, though there can 
+be problems with the 3dfx not knowing it's screen/window is visible (another 
+dreaded black screen problem). Usually bringing your 3dfx window into the 
+foreground will solve the problem, but if anyone has good solutions for many of 
+SGI's example programs perhaps they could send them in. Rendering into a window 
+~~~~~~~~~~~~~~~~~~~~~~~ The Voodoo series from 3Dfx cannot render into a GDI 
+window by itself, however you can use WinGlide 
+(http://www.nullsoft.com/winglide.html) to automatically copy the 3Dfx 
+framebuffer to your 2D framebuffer so it will render to a window. This is 
+slower than full-screen rendering, but essential when trying to debug on a 
+single monitor setup. Removing the 3DFX Logo ~~~~~~~~~~~~~~~~~~~~~~ If you 
+don't wish the 3dfx logo to be shown on user's machines, then according to Sam 
+McGrath the following method is best: In runapp.bat: set T = 
+%FX_GLIDE_NO_SPLASH% set FX_GLIDE_NO_SPLASH=1 runapp.exe set FX_GLIDE_NO_SPLASH 
+= %T% The user's previous settings are therefore kept in place. 
+---------------------------------------------------------------------- Subject 
+2.05: What is MESA? Quoting the Author of Mesa (Brian Paul) from his Mesa 
+homepage (http://www.mesa3d.org): &quot;Mesa is a 3-D graphics library which 
+uses the OpenGL API (Application Programming Interface). Mesa cannot be called 
+an implementation of OpenGL since I did not obtain an OpenGL license from SGI. 
+Furthermore, Mesa cannot claim OpenGL conformance since the conformance tests 
+are only available to OpenGL licensees. Despite these technical/legal terms, 
+you may find Mesa to be a valid alternative to OpenGL.&quot; &quot;Most 
+applications written for OpenGL can be recompiled for Mesa without making any 
+source code changes.&quot; Mesa is issued with full source code under GPL and 
+runs on a huge range of operating systems: UNIX/X11, Linux, Amiga, Apple 
+Macintosh, BeOS, NeXT, OS/2, MS-DOS, VMS, and Windows 95/NT Mesa is also 
+hardware accelerated on 3Dfx Voodoo and Voodoo RUSH (at time of writing) - 
+further hardware support is expected. Other Mesa questions are answered in the 
+Mesa FAQ at: http://www.mesa3d.org/Mesa/MesaFAQ.html Mesa can be obtained from: 
+http://www.mesa3d.org There is a Mesa Mailing List, to subscribe, send email to 
+majordomo@iqm.unicamp.br with this as the body of the message: subscribe mesa 
+your-email-address 
+---------------------------------------------------------------------- Subject 
+2.06: What is GLUT? Quoting the Author of GLUT (Mark Kilgard) from his GLUT 
+homepage (http://reality.sgi.com/mjk_asd/spec3/spec3.html): &quot;The OpenGL 
+Utility Toolkit (GLUT) is a programming interface with ANSI C and FORTRAN 
+bindings for writing window system independent OpenGL programs. The toolkit 
+supports the following functionality: Multiple windows for OpenGL rendering. 
+Callback driven event processing. Sophisticated input devices. An 'idle' 
+routine and timers. A simple, cascading pop-up menu facility. Utility routines 
+to generate various solid and wire frame objects. Support for bitmap and stroke 
+fonts. Miscellaneous window management functions, including managing 
+overlays.&quot; GLUT is Copyright material and not in the public domain, but it 
+is freely distributable without licensing fees and comes with complete source 
+code. It is available for Windows 95, Windows NT, UNIX/X, Linux, OS/2 and 
+Macintosh. Other GLUT questions are answered in the GLUT FAQ which is 
+distributed with the GLUT library. GLUT can be obtained from: 
+http://reality.sgi.com/mjk_asd/glut3/glut3.html There is a GLUT Mailing List, 
+to subscribe, send email to Majordomo@perp.com with a body saying 
+&quot;subscribe glut&quot;. 
+---------------------------------------------------------------------- Subject 
+2.07: What is GameGLUT? GameGLUT is a utility toolkit being written with games 
+in mind. Mark Kilgard introduced the possibility in late 1997/early 1998. 
+GameGLUT is considered part of GLUT 3.7 and GLUT 3.7 is still in Beta. Since 
+Mark started working at NVIDIA development of GLUT has been greatly reduced. 
+Hopefully it will be finished soon. 
+---------------------------------------------------------------------- Subject 
+2.08: What is Fahrenheit? Fahrenheit is being designed by Microsoft and SGI to 
+replace OpenGL and Direct3D on the Windows platform. It has not been released 
+yet, and no technical information is available at this time. Ron Fosner seems 
+to know quite a bit about it and might be able to answer any specific questions 
+you may have. His web page is www.directx.com. 
+---------------------------------------------------------------------- Section 
+3. Programming Environments and OpenGL 
+---------------------------------------------------------------------- Subject 
+3.01: Visual C++ Linking any of the libraries with Microsoft Visual C++ is as 
+easy as changing the linked libraries. Before linking with the SGI OpenGL for 
+Windows libraries please see the IMPORTANT NOTE in the SGI OpenGL for Windows 
+section. ---------------------------------------------------------------------- 
+Subject 3.02: Borland C++ A comp.graphics.api.opengl posting by John 
+Biddiscombe, j.biddiscombe@rl.ac.uk, includes the following tips: TIP : 
+C++Builder uses a whole load of lib's in the CBuilder/lib directory, these 
+libs, in particular import32.lib already contain the opengl32.lib and glu32.lib 
+inside them. This means that you don't actually need to link to the libs using 
+C++ Builder. If you want to (say) switch from Microsoft OpenGL to SGI OpenGL, 
+then you need to use TLIB.exe to remove the DLL's from import32.lib, some notes 
+are included in the files in the above directory. TIP2 : Use implib.exe to 
+generate a lib from a DLL, frequently people distribute code with lib's in MSVC 
+format so Borland users get stuck. Borland C++ links ok to OpenGL, but there 
+are a couple of problems users should be aware of. * The Microsoft 
+implementation can cause undefined exceptions when run under the BCB Pro 
+debugger. * You need to mask floating point exceptions by including the 
+following line in your initialization routines: _control87(MCW_EM, MCW_EM); 
+MCD_EM should be defined in float.h Failing to do this results in spurious 
+floating point exceptions, when using lighting or normalization in particular. 
+A couple of examples are on: http://rcru1.te.rl.ac.uk/~jab/opengl/ Before 
+linking with the SGI OpenGL for Windows libraries please see the IMPORTANT NOTE 
+in the SGI OpenGL for Windows section. Alan Garny has some BCB OpenGL 
+components available: http://pc-heartbreak.physiol.ox.ac.uk/ 
+---------------------------------------------------------------------- Subject 
+3.03: Delphi TBD 
+---------------------------------------------------------------------- Subject 
+3.04: Visual Basic Patrice Scribes DirectX/OpenGL for VB site should be able to 
+answer most questions: http://www.chez.com/scribe/ 
+---------------------------------------------------------------------- Subject 
+3.05: Java Quoting from the press release from Arcane Technologies Ltd: 
+&quot;Magician allows developers to write portable, high-performance OpenGL 
+applications using the Java programming language. To effect the 
+high-performance rendering, Magician interfaces directly with existing OpenGL 
+installations in the form of native code. In-core support for thread-safeness 
+has also been implemented enabling developers to take full advantage of Java's 
+powerful multi-threading. Additional developer features include in-built 
+interactive tracing and profiling of OpenGL calls. Magician is currently 
+shipping for Windows 95/NT, Linux and Irix operating systems with ports to 
+Solaris, MacOS and OS/2 in the pipeline. Netscape Communicator, Internet 
+Explorer, Symantec Cafe and the Sun JRE/JDK are currently supported for both 
+application and applet usage on suitable platforms.&quot; See 
+http://www.arcana.co.uk/products/magician There is also an OpenGL-Java FAQ at: 
+http://www.arcana.co.uk/products/magician/docs/java-opengl-faq.html 
+---------------------------------------------------------------------- Section 
+4. OpenGL as a rasterization only API 
+---------------------------------------------------------------------- Subject 
+4.01: Why use OpenGL as a rasterization-only API? Because your app does its own 
+transform, and supplies screen-space coordinates to the OpenGL. There are lots 
+of reasons why an app might do this. 
+---------------------------------------------------------------------- Subject 
+4.02: Is there a performance hit for doing this? It depends on where the best 
+place for doing the transform is. If (for example) there is fast transform 
+hardware, then it would probably be a good idea to use it. If the OpenGL 
+transform code is more efficient than the code in your app, then a similar 
+argument applies. 
+---------------------------------------------------------------------- Subject 
+4.03: How do I set up OpenGL matrix stack for rasterization-only? Something 
+like: glMatrixMode(GL_PROJECTION); glLoadIdentity(); 
+glMatrixMode(GL_MODELVIEW); glLoadIdentity(); glViewport(0, 0, width, height); 
+/* viewport size in pixels */ will mean that the 3D point (0,0,0) is in the 
+center of the viewport, and that (1,1,0) is the top-right corner of the 
+viewport. To get a 1:1 pixel mapping, with (0,0,0) in the top-left of the 
+viewport and (width,height,0) in the bottom-right, do this: 
+glMatrixMode(GL_PROJECTION); glLoadIdentity(); glMatrixMode(GL_MODELVIEW); 
+glLoadIdentity(); glScalef(2.0f / (float)width, -2.0f / (float)height, 1.0f); 
+glTranslatef(-((float)width / 2.0f), -((float)height / 2.0f), 0.0f); 
+glViewport(0, 0, width, height); /* viewport size in pixels */ 
+---------------------------------------------------------------------- Subject 
+4.04: What about clipping? Most OpenGL implementations, including SGI's for 
+Windows, have extremely efficient clip-check code. The cost varies between 
+negligible and zero. Some hardware can rasterize primitives that go outside the 
+viewport for free, so it's not worthwhile to do clipping on the host. For this 
+reason, you might as well leave clipping to OpenGL. In pseudocode, you change 
+this: if (primitive isn't rejected) if (primitive is trivially accepted) draw 
+it else clip it to this: if (primitive isn't rejected) draw it. OpenGL will 
+clip it, or not, as the hardware requires. 
+---------------------------------------------------------------------- Subject 
+4.05: What about the perspective divide? You _can_ supply coordinates with (w 
+== 1.0f), if you're prepared to do the perspective divide yourself. However, 
+you might miss out on acceleration (for a similar reason to part 4 above), plus 
+this approach makes supplying perspective-correct texture coordinates a 
+headache. For these reasons it's probably best to use glVertex4f() and supply 
+the transformed (i.e. non unity) w. If you do this, you can supply texture 
+coordinates with glTexCoord2fv(). 
+---------------------------------------------------------------------- Subject 
+4.06: Fog The degree of fogging is calculated according to the eye-coordinate's 
+z component. With a modelview matrix that passes Z straight through (such as 
+the two above), you can set the near and far fog values according to the range 
+of Z values that come out of your transform. You must use GL_LINEAR for this to 
+work. For example, to make the &quot;rasonly&quot; example fogged, do the 
+following: { GLfloat fog_color[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; /* white */ 
+glEnable(GL_FOG); glHint(GL_FOG_HINT, GL_FASTEST); glFogi(GL_FOG_MODE, 
+GL_LINEAR); glFogf(GL_FOG_START, 1.0f); glFogf(GL_FOG_END, 4.0f); 
+glFogfv(GL_FOG_COLOR, fog_color); } 
+---------------------------------------------------------------------- Subject 
+4.07: Is there some sample code to do this? The best sample is Michael Gold's 
+&quot;rasonly.c&quot; - available at: 
+http://www.berkelium.com/OpenGL/examples/index.html 
+---------------------------------------------------------------------- Section 
+5. Rendering Problems 
+---------------------------------------------------------------------- Subject 
+5.01: Why is my fog/lighting/texture not drawing correctly? This is most 
+commonly caused by trying to place the camera position and orientation into the 
+Projection Matrix. While at first glance this may seem like the right way to do 
+things, it is not. The camera transformation should be combined with the model 
+transformation in the ModelView matrix (hence the name ModelView). Lighting and 
+fog (and to some extent textures and z-buffer information) are based on 
+calculations that require information about the camera and the model rotations, 
+but need to ignore any projection information (typically perspective). As such, 
+these calculations are based solely on the ModelView matrix and ignore the 
+Projection matrix. 
+---------------------------------------------------------------------- Subject 
+5.02: My objects appear to be &quot;fighting&quot; in the z-buffer. Most 
+consumer cards have a relatively low precision z-buffer (16 bit) so you need to 
+be careful when setting up your projection so you don't make the Z range too 
+large. In general it is best to push the near Z as far out as possible, and 
+bring in the far Z as close as possible. Changes in the near Z will have much 
+larger effects than changes in the far Z. This will fix most problems. If you 
+have a large Z range to deal with you may be able to use a trick to get around 
+the fighting. If you can break up the scene into at least two different groups 
+of objects where one group is &quot;close&quot; and the other group is 
+&quot;distant&quot; and if those two groups do not intersect each other, you 
+can do the following: 1. Clear the frame/depth buffers. 2. Render the distant 
+objects. 3. Clear the depth buffer. 4. Render the close objects. 
+---------------------------------------------------------------------- Subject 
+5.03: Why doesn't my texture appear? Provided you can see the geometry with 
+textures disabled: 1) GL_TEXTURE_2D isn't enabled 2) Texture Coordinates are 
+incorrect 3) glBindTexture is failing 4) Alpha is incorrect 5) You are using an 
+unsupported blend mode. For #5, there are a few cards out there with limited 
+blending capability. The two most noteworthy are the Permedia2 and the Riva128. 
+---------------------------------------------------------------------- Subject 
+5.04: After calling glRotate() a few times I end up rotating around the wrong 
+axis. Why? This problem is commonly referred to as Gimble Lock. It is a problem 
+inherent in using 3 angles to describe an orientation and is mentioned in just 
+about every 3D graphics book in existence. Typical solutions are to use a 
+different representation for orientation. The common ones are; Matrix, 
+Axis/Angle, and Quaternions. 
+http://www.3dgamedev.com/articles/eulers_are_evil.htm 
+ftp://ftp.netcom.com/pub/he/hexapod/matrixfaq.html 
+---------------------------------------------------------------------- Subject 
+5.05: Why doesn't rendering to multiple windows under Win32 (or MFC) work. You 
+need to make sure CS_OWNDC is part of the window class. For MFC it is often 
+temping to add CS_OWNDC to the cs.style parameter, but that is _not_ the 
+correct way to do it. The following link shows an example of doing it 
+correctly: http://www.codeguru.com/doc_view/custom_window_class.shtml 
+---------------------------------------------------------------------- 
+---------------------------------------------------------------------- Section 
+6. Hardware Acceleration 
+---------------------------------------------------------------------- Subject 
+6.01: How do I determine if I'm getting hardware acceleration under Windows 
+NT/95/98? After you fill out the PIXELFORMATDESCRIPTOR, do the following: int 
+pixelFormat = ChoosePixelFormat (hDC, &amp;pfd); PIXELFORMATDESCRIPTOR pfd_new; 
+DescribePixelFormat (hDC, pixelFormat, sizeof(PIXELFORMATDESCRIPTOR), 
+&amp;pfd_new); int generic_format = pfd_new.dwFlags &amp; PFD_GENERIC_FORMAT; 
+int generic_accelerated = pfd_new.dwFlags &amp; PFD_GENERIC_ACCELERATED; if 
+(generic_format &amp;&amp; ! generic_accelerated) { // software } else if 
+(generic_format &amp;&amp; generic_accelerated) { // hardware - MCD } else if 
+(! generic_format &amp;&amp; ! generic_accelerated) { // hardware - ICD } 
+---------------------------------------------------------------------- Subject 
+6.02: Why am I not getting hardware acceleration? Most likely you have 
+requested a pixel format that is unsupported by your current driver or the 
+requested format cannot fit in the video memory of your card. For instance, 
+requesting a 1024x768 16 bit double-buffered rendering context with a 16 bit 
+z-buffer will put you into software emulation mode on a 4 Meg Riva 128 (it 
+would require about 4.7 Megs of video memory). You would also be put into 
+software, or the creation of the context may fail if you request a 24 bit frame 
+buffer on the same card. 
+---------------------------------------------------------------------- 
+---------------------------------------------------------------------- Section 
+7. Picking/Selection 
+---------------------------------------------------------------------- Subject 
+7.01: How do I use OpenGL's Selection Buffer? The Red Book (see Section A.02) 
+has good example of this. The source code to everything in the Red Book is 
+available at: http://trant.sgi.com/opengl/examples/redbook/redbook.html 
+Specifically the pickdepth.c example. This is the prefered method of picking, 
+but may not be practical for all applications. 
+---------------------------------------------------------------------- Subject 
+7.02: What are some other methods for picking/selection? Other methods include: 
+1. Casting a ray for the mouse point into the scene and checking colisions 
+between the ray and the geometry in the scene. 2. Reading back the z-buffer 
+under the cursor. 
+---------------------------------------------------------------------- 
+---------------------------------------------------------------------- 8. Full 
+Screen Rendering 
+---------------------------------------------------------------------- Subject 
+8.01: How do I open a full screen window? In a Windows application where you 
+already know the screen resolution you can simply use the following code 
+snippet: hWnd = CreateWindow(szAppName, &quot;Some Name&quot;, WS_POPUP | 
+WS_CLIPSIBLINGS, 0, 0, WIDTH, HEIGHT, NULL, NULL, hInstance, NULL); If you 
+don't know the screen resolution you can use the following code to get it from 
+the OS and then call the above code to create a full screen window: HEIGHT = 
+GetSystemMetrics(SM_CYSCREEN); WIDTH = GetSystemMetrics(SM_CXSCREEN); 
+---------------------------------------------------------------------- Subject 
+8.02: How do I change resolution under Windows NT/95/98? Many people are 
+tempted to use DirectDraw to switch resolutions under Windows, but this can 
+cause problems with a few of the OpenGL drivers. The best way to change 
+resolution under Windows is to use ChangeDisplaySettings(). Old drivers under 
+95 may require a restart if you try to change the bit depth so it is best to 
+have the bit depth set to the desired level before running the application. 
+Sample Code: http://www.3dgamedev.com/code/change.c 
+---------------------------------------------------------------------- 
+---------------------------------------------------------------------- 9. 
+Miscellaneous 
+---------------------------------------------------------------------- Subject 
+9.01: What is the best way to draw text? There are many different ways to draw 
+text under OpenGL but to get the best results you should place the font in a 
+256x256 texture and use texture mapped quads with an orthographic projection to 
+render the text. Sample Code: 
+http://home.bc.rogers.wave.ca/borealis/opengl.html 
+http://reality.sgi.com/opengl/tips/TexFont/TexFont.html 
+http://home.worldnet.fr/~rehel/gltt/gltt.html 
+---------------------------------------------------------------------- Subject 
+9.02: What is the best way to draw 2D overlays? The best way is to use an 
+orthographic projection and render the overlays as texture mapped quads. If you 
+want areas of the quads to be transparent the textures should be RGBA with the 
+alpha used to create areas of transparency. This is very similar to the methods 
+used in Subject 9.01. 
+---------------------------------------------------------------------- Subject 
+9.03: Should I use OpenGL's matrix routines for all my matrix math? In general 
+the answer is &quot;no&quot;. If you use OpenGL to do the transforms for your 
+collision detection or other things you will need to use the Feedback mechanism 
+to get the transformed values back into your code. If you don't have hardware 
+accelerated geometry then all you are doing is adding a layer of overhead to 
+get the computed values. If you do have hardware accelerated transforms then 
+your data needs to be sent over the bus to the card, transformed, then sent 
+back. Reading data back from the card is typically very slow. As a result, even 
+with hardware geometry it will probably be faster to do the transforms 
+yourself. 
+---------------------------------------------------------------------- Subject 
+9.04: How do matrices work? This is a long and detailed question, check the 
+links below for more info: ftp://ftp.netcom.com/pub/he/hexapod/matrixfaq.html 
+http://web2.airmail.net/sjbaker1/matrices_can_be_your_friends.html 
+---------------------------------------------------------------------- Subject 
+9.05: What are Quaternions? This is a long and detailed question, check the 
+links below for more info: http://HTTP.CS.Berkeley.EDU/~laura/cs184/quat/ 
+ftp://ftp.netcom.com/pub/he/hexapod/matrixfaq.html 
+---------------------------------------------------------------------- Subject 
+9.06: What are BSP Trees? Check out the BSP FAQ at: 
+http://reality.sgi.com/bspfaq/ 
+---------------------------------------------------------------------- Subject 
+9.07: What are light maps and how do I use them in OpenGL? Light maps are a set 
+of textures that are blended with the normal textures in the scene to produce 
+lighting effects. This technique is more generally known as multi-pass 
+rendering, or multi-texture rendering. Multi-pass effects take two or more 
+passes over pixels in the frame buffer. This typically means the geometry needs 
+to be transformed multiple times and sent to the hardware card for each pass. 
+Multi-pass can be done with standard blending and rendering techniques. 
+Multi-texture produces the same or similar effects as multi-pass, but in a 
+single pass. Usually this means that two textures are combined with some form 
+of blending to produce a single output pixel. With multi-texturing the geometry 
+only needs to be sent to the hardware once. Multi-texturing requires an 
+extension to OpenGL. At one point two extensions were available and different 
+drivers used different extensions (SGIS_multitexture and EXT_multitexture). Now 
+all drivers either support, or will soon support the standardized extension 
+(ARB_multitexture). An example using ARB_multitexture can be found at: 
+http://www.berkelium.com/OpenGL/examples/index.html 
+---------------------------------------------------------------------- Subject 
+9.08: How do I load a .BMP file into a texture map? Microsoft has some pretty 
+detailed instructions on how to load a DIB (a BMP file in memory) into an 
+OpenGL texture in their MSDN distribution. Do a search for &quot;OpenGL 
+BMP&quot; and you'll turn up some good info. You can also get some example 
+source here: http://home.bc.rogers.wave.ca/borealis/opengl.html 
+---------------------------------------------------------------------- Subject 
+9.09: Can I mix OpenGL and DirectX? DirectX describes a suite of API's by 
+Microsoft that includes DirectDraw, Direct3D, DirectInput, DirectPlay, 
+DirectSound, etc. You cannot mix DirectDraw or Direct3D with OpenGL, but all of 
+the others can be used without a problem. 
+---------------------------------------------------------------------- Subject 
+9.10: How do I access the frame/depth/texture memory directly? You don't. 
+OpenGL does not provide any interface for accessing this memory directly. You 
+can get access to the contents of those buffers by using glReadPixels() but it 
+is slow. There has been much debate over whether this is a good thing or a bad 
+thing, but the reasons are basically irrelevant. You can't get direct access 
+through OpenGL. Access to these buffers belongs in the windowing system 
+(through DirectDraw or something similar) and not in OpenGL. Currently Windows 
+does not provide any means to access this information. 
+---------------------------------------------------------------------- Subject 
+9.11: How do I use OpenGL for Collision Detection? You don't. OpenGL is a used 
+to draw images on the screen, not to do general geometry manipulation. For 
+information on collision detection see Section A.03. 
+---------------------------------------------------------------------- Subject 
+9.12: What is the best card for running OpenGL under Windows NT/95/98? This 
+question comes up fairly often and the only answer is, &quot;It depends on what 
+you're doing&quot;. Every few months a new card comes along that looks real 
+cool. Every few months new drivers are released that could potentially turn a 
+performance pig into a greyhound. This question is best answered by a little 
+research on the your part and a few trips around the web to some sites that 
+specialize in benchmarking cards. 
+---------------------------------------------------------------------- Subject 
+9.13: How do you use extensions? Extensions can take the form of new API 
+functions, or as enumerants to existing functions. The following URL has a 
+header file with many common function prototypes and enumerants. Be sure to 
+check the glGetString(GL_EXTENSIONS) for the extension before using it. See the 
+other examples at this URL for more details. 
+http://www.berkelium.com/OpenGL/examples/index.html Extensions not found in 
+this header file are detailed on: http://www.opengl.org 
+---------------------------------------------------------------------- Subject 
+9.14: How do I draw a mouse cursor on a 3dfx Voodoo1/Voodoo2 card? How do I 
+draw a custom mouse pointer using OpenGL? Since the Voodoo1/Voodoo2 is 3D only, 
+you do not have access to the 2D GDI functions to allow Windows to draw your 
+pointer. Or, you may want to use OpenGL for portability to other platforms. A 
+mouse pointer is simply a 2D overlay, and can be drawn with a texture mapped 
+quad (see Subject 9.01 and 9.02), or as flat shaded triangles as in the sample 
+below. Sample code: 
+http://www.geocities.com/SiliconValley/Lakes/7220/pointer.html 
+---------------------------------------------------------------------- Subject 
+9.15: How did those guys at ID software make it so you could pick your OpenGL 
+driver? They do not dynamically link to the opengl32.dll, they use the Windows 
+functions LoadLibrary and GetProcAddress to manually load the appropriate DLL 
+and get the address of each function. Sample Code: 
+http://home.bc.rogers.wave.ca/borealis/opengl.html 
+---------------------------------------------------------------------- 
+-------------------------- Appendices ---------------------------- 
+---------------------------------------------------------------------- 
+---------------------------------------------------------------------- Section 
+A. General References 
+---------------------------------------------------------------------- Subject 
+A.01: OpenGL Online Links Rather than listing endless OpenGL links here, the 
+reader is refered to Mark Kilgard's superb collection of appropriate links at: 
+http://reality.sgi.com/mjk/ Mark has links to anything and everything related 
+to OpenGL. The Advanced Rendering course notes hosted at the SGI website offer 
+good tutorials into OpenGL programming: 
+http://www.sgi.com/Technology/OpenGL/advanced97/notes/notes.html 
+http://www.opengl.org: In the Developers section you will find links to many 
+useful places There are several useful USENET groups, including: 
+comp.graphics.api.opengl comp.graphics.algorithms rec.games.programmer The red 
+and blue books (see below for description) can be found online at: Frames-based 
+redbook: 
+http://ofs.msi.umn.edu:88/ebt-bin/nph-dweb/dynaweb/SGI_Developer/OpenGL_PG/@Generic__BookView 
+Frames-based bluebook: 
+http://ofs.msi.umn.edu:88/ebt-bin/nph-dweb/dynaweb/SGI_Developer/OpenGL_RM/@Generic__BookView 
+No-frames redbook: 
+http://ofs.msi.umn.edu:88/ebt-bin/nph-dweb/dynaweb/SGI_Developer/OpenGL_PG/@Generic__BookTocView;hf=0 
+No-frames bluebook: 
+http://ofs.msi.umn.edu:88/ebt-bin/nph-dweb/dynaweb/SGI_Developer/OpenGL_RM/@Generic__BookTocView;hf=0 
+---------------------------------------------------------------------- Subject 
+A.02: OpenGL Specific Books The &quot;Red Book&quot; is a must have for all 
+OpenGL programmers. The &quot;Blue Book is available online as web pages or 
+help files so is only really required for people who prefer &quot;Dead Tree 
+Format&quot;. The &quot;Green Book&quot; uses GLUT and as such is useful for 
+more platforms than X-Windows. The &quot;White/Alpha Book&quot; uses MFC. The 
+OpenGL SuperBible contains some of the same information from the &quot;Red 
+Book&quot;, some information from the &quot;Blue Book&quot; and sets up OpenGL 
+rendering under many different environments under Windows (Win32, MFC, OWL, 
+etc). The SuperBible is based on OpenGL 1.0, but is still quite useful. OpenGL 
+Reference Manual (2nd Ed.), AKA &quot;Blue Book&quot; Editors: R. Kempf, C. 
+Frazier Addison-Wesley 1996, ISBN 0-201-46140-4 OpenGL Programming Guide (2nd 
+Ed.), AKA &quot;Red Book&quot; M. Woo, J. Neider, T. Davis Addison-Wesley 1997, 
+ISBN 0-201-46138-2 OpenGL Programming with X-Windows, AKA &quot;Green 
+Book&quot; OpenGL Programming in MS-Windows, AKA &quot;White/Alpha Book&quot; 
+OpenGL SuperBible 
+---------------------------------------------------------------------- Subject 
+A.03: General Computer Graphics Online Links Some of these links have been 
+taken from the comp.graphics.algorithms faq. [Animation] Modelling physically 
+based systems for animation: 
+http://www.cc.gatech.edu/gvu/animation/Animation.html Motion Capture Examples 
+http://www.darwin3d.com/gamedev.htm Character Animation FAQ 
+ftp://ftp.netcom.com/pub/he/hexapod/charanimfaq.html [Collisions] A variety of 
+interesting algorithms are being researched, including: 
+http://www.cs.berkeley.edu/~mirtich/impulse.html 
+http://www.cs.unc.edu/~geom/I_COLLIDE.html http://www.cs.wustl.edu/~pmh/ 
+http://www.win.tue.nl/cs/tt/gino/solid/ Source code for smallest bounding 
+sphere around points: http://vision.ucsd.edu/~dwhite/ball.html [Level of Detail 
+Algorithms] http://www.research.microsoft.com/research/graphics/hoppe/ 
+http://www.cc.gatech.edu/gvu/people/peter.lindstrom 
+http://research.microsoft.com/MSRSIGGRAPH/ 
+http://www.undergrad.math.uwaterloo.ca/~s3graham/ 
+http://w3imagis.imag.fr/Membres/Fredo.Durand/Book/sig97 
+http://www.cs.utah.edu/~ppsloan/siggraph96.html [Miscellaneous] 
+comp.graphics.algorithms FAQ: comp.graphics.algorithms newsgroup (posted 
+bi-monhtly) http://www.exaflop.org/docs/cgafaq 
+ftp://rtfm.mit.edu/pub/faqs/graphics/algorithms-faq David Eberly has lots of 
+useful math notes and code: http://www.magic-software.com/ Leath Muller is 
+putting together several FAQs, including ones on character animation, matrices, 
+and vectors: http://www.geocities.com/SiliconValley/Horizon/2097 The University 
+of Manchester NURBS Library: ftp://unix.hensa.ac.uk/pub/misc/unix/nurbs/ For an 
+implementation of Seidel's algorithm for fast trapezoidation and triangulation 
+of polygons. You can get the code from: 
+ftp://ftp.cs.unc.edu/pub/users/narkhede/triangulation.tar.gz A compact 
+reference for real-time 3d computer graphics programming: 
+http://www.cs.mcgill.ca/~zed BSP Tree FAQ by Bretton Wade: 
+http://reality.sgi.com/bspfaq/ Gamma and Color FAQs by Charles A. Poynton: 
+ftp://ftp.inforamp.net/pub/users/poynton/doc/colour/ 
+http://www.inforamp.net/~poynton/ Quaternion introductions: 
+http://www.glue.umd.edu/~rsrodger/gd/matrixfaq.htm 
+http://http.cs.berkeley.EDU/~laura/cs184/quat 
+ftp://ftp.netcom.com/pub/hb/hbaker/quaternion/ [Volume Lighting Examples] 
+http://www.softplusplus.com/ 
+---------------------------------------------------------------------- Subject 
+A.04: General Computer Graphics Books These are a small section of those 
+mentioned in the comp.graphics.algorithms faq. [Foley] Computer Graphics: 
+Principles and Practice (2nd Ed.), J.D. Foley, A. van Dam, S.K. Feiner, J.F. 
+Hughes, Addison-Wesley 1990, ISBN 0-201-12110-7; Computer Graphics: Principles 
+and Practice, C version J.D. Foley, A. van Dam, S.K. Feiner, J.F. Hughes, 
+Addison-Wesley ISBN: 0-201-84840-6, 1996, 1147 pp. [Rogers:Procedural] 
+Procedural Elements for Computer Graphics 2nd Ed, David F. Rogers, McGraw Hill 
+1998, ISBN 0-07-053548-5 [Rogers:Mathematical] Mathematical Elements for 
+Computer Graphics 2nd Ed., David F. Rogers and J. Alan Adams, McGraw Hill 1990, 
+ISBN 0-07-053530-2 [Watt:3D] 3D Computer Graphics, 2nd Edition, Alan Watt, 
+Addison-Wesley 1993, ISBN 0-201-63186-5 [Glassner:RayTracing] An Introduction 
+to Ray Tracing, Andrew Glassner (ed.), Academic Press 1989, ISBN 0-12-286160-4 
+[Gems I] Graphics Gems, Andrew Glassner (ed.), Academic Press 1990, ISBN 
+0-12-286165-5 [Gems II] Graphics Gems II, James Arvo (ed.), Academic Press 
+1991, ISBN 0-12-64480-0 [Gems III] Graphics Gems III, David Kirk (ed.), 
+Academic Press 1992, ISBN 0-12-409670-0 (with IBM disk) or 0-12-409671-9 (with 
+Mac disk) See also &quot;AP Professional Graphics CD-ROM Library,&quot; 
+Academic Press, ISBN 0-12-059756-X, which contains Gems I-III. [Gems IV] 
+Graphics Gems IV, Paul S. Heckbert (ed.), Academic Press 1994, ISBN 
+0-12-336155-9 (with IBM disk) or 0-12-336156-7 (with Mac disk) [Gems V] Graphic 
+Gems V, Alan W. Paeth (ed.), Academic Press 1995, ISBN 0-12-543455-3 (with IBM 
+disk) [Watt:Animation] Advanced Animation and Rendering Techniques, Alan Watt, 
+Mark Watt, Addison-Wesley 1992, ISBN 0-201-54412-1 
+---------------------------------------------------------------------- Subject 
+A.05: Game Development Online Links World Wide Web: http://www.3dgamedev.com 
+USENET: rec.games.programmer 
+---------------------------------------------------------------------- Subject 
+A.06: Game Development Books If you find any good ones, let me know. So far I 
+haven't been incredibly impressed with any Game Development books I've read or 
+seen. ---------------------------------------------------------------------- 
+Section B. Contributors 
+---------------------------------------------------------------------- Subject 
+B.01: How can you contribute to this FAQ? Send email to tomh@biomorphic.com 
+with your suggestions, possible topics, corrections, or pointers to 
+information. 
+---------------------------------------------------------------------- Subject 
+B.02: Contributors. Who made this all possible. * Only YOU make this possible * 
+These are people who have contributed in some way, including the names of those 
+whose postings that have been used to construct this FAQ: Alex Amsel Joseph 
+O'Rourke James Bowman Tom Hubina Michael Dale Long Peder Blekken Steve Baker 
+John Biddiscombe Richard Wright Sam McGrath Bernd Kreimeier Michael Brooks 
+Leath Muller Ryan Haksi Brian Whitman Kowsik Guruswamy Phil J. Mayers L.J. 
+Wischik 
+</body>

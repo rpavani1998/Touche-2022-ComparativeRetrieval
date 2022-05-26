@@ -1,0 +1,310 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>How to Start Using (pgf)Sweave in LyX in One Minute | (R news &amp; tutorials)</title>
+<body>
+
+<h2>R-bloggers </h2>  R news and tutorials contributed by (320) R bloggers 
+<ul> 
+<li>Home</li> 
+<li>About</li> 
+<li>add your blog!</li> 
+<li>Contact us</li> 
+<li>RSS</li> </ul> 
+<h2>Welcome!</h2>  Here you will find daily <strong>news and tutorials about R
+</strong>, contributed by over 300 bloggers. You can subscribe for e-mail 
+updates: <br>
+ And get updates to your Facebook: <strong>If you are an R 
+blogger yourself</strong> you are invited to add your own R content feed to 
+this site ( <strong>Non-English</strong> R bloggers should add themselves- here)
+<br> 
+<h2>TOPICS OF INTEREST</h2> ggplot2 r-project graphics programming rstats R 
+Language Books visualization Data events R-english tutorial LaTex finance sweave
+stocks Software packages Bioinformatics Simulation BMS Extensions Big Data 
+applications computing random English plot R Programming ggplot Python cran 
+Rmedia Climate Trends Quant finance lattice linux stats Announcements MCMC Rcpp 
+SAS blog twitter Tutorials ABC Global Warming Probability rblogs user groups 
+predictive analytics <br>
+<br>
+
+<h2>Sponsors</h2> 
+<ul> 
+<li> Personalcashadvance.com </li> </ul> 
+<h2>Recent Posts</h2> 
+<ul> 
+<li>Transaction Cost and Execution Price functionality in the Backtesting 
+library in the Systematic Investor Toolbox</li> 
+<li>how to access different records within a data frame by using logical tests 
+in r</li> 
+<li>An unabashedly narcissistic data analysis of my own tweets. The&hellip;
+</li> 
+<li>Working with Globcolour data</li> 
+<li>Add a frame to a map</li> 
+<li>3-D graphing with Google</li> 
+<li>Playing with fire (or water)</li> 
+<li>Example 9.25: It&rsquo;s been a mighty warm winter? (Plot on a circular 
+axis)</li> 
+<li>Linking apples liking to analytical data</li> 
+<li>Replacing market indices</li> 
+<li>Sunday evening, stupid games&hellip;</li> 
+<li>Quantitative finance and computational systems</li> 
+<li>A better way of saving and loading objects in R</li> 
+<li>Julia, I Love You</li> 
+<li>Back to Blogging</li> </ul> 
+<h2>Other sites</h2> 
+<ul> 
+<li>Forex blogs</li> 
+<li>SAS blogs</li> </ul> 
+<h2>Popular Searches</h2> 
+<ul> 
+<li>ggplot</li> 
+<li>ggplot2</li> 
+<li>RStudio</li> 
+<li>heatmap</li> 
+<li>quantmod</li> 
+<li>PCA</li> 
+<li>maps</li> 
+<li>googleVis</li> 
+<li>hadoop</li> 
+<li>finance</li> 
+<li>tutorial</li> 
+<li>time series</li> 
+<li>boxplot</li> 
+<li>excel</li> 
+<li>trading</li> 
+<li>LaTeX</li> 
+<li>GIS</li> 
+<li>twitter</li> 
+<li>plyr</li> 
+<li>map</li> 
+<li>animation</li> 
+<li>Web Scraping</li> 
+<li>SQL</li> 
+<li>sweave</li> 
+<li>Rcmdr</li> 
+<li>regression</li> 
+<li>ecdf</li> 
+<li>coplot</li> 
+<li>time%20series</li> 
+<li>ANOVA</li> </ul> 
+<h1>How to Start Using (pgf)Sweave in LyX in One Minute</h1>  October 30, 2010 
+ByYihui Xie <br>
+
+<p></p>  (This article was first published on <strong> Statistics, R, Graphics 
+and Fun &raquo; R Language</strong>, and kindly contributed to R-bloggers) <br>
+
+<p></p> Take a look at the video in this entry if you don&rsquo;t understand 
+the title. To put it short,
+<p></p> 
+<ol> 
+<li>install LyX and R as well as a working LaTeX toolkit such as MikTeX or 
+TeXLive or MacTeX;</li> 
+<li>run <code>
+source('http://yihui.name/en/wp-content/uploads/2010/10/lyx-pgfsweave-config.R')
+</code> in R under Windows or Ubuntu or Mac; I tried my best to automatically 
+configure LaTeX, R and LyX;</li> 
+<li>restart LyX as instructed, and you can enjoy <code>pgfSweave</code> in LyX 
+now &mdash; either play withmy demo (click to download), or DIY: create a new 
+document, change the document class to article (Sweave noweb) from Document 
+&ndash;&gt; Settings, switch the environment to Scrap from the top-left drop 
+list, start your Sweave code chunks like<br>
+<code>&lt;&lt;test&gt;&gt;=<br>
+ 
+rnorm(10)<br>
+ @</code><br>
+ and click the PDF button to compile this document. 
+Done.Take a look at this video if you feel confused.</li> </ol> 
+<p>This works for MikTeX under Windows (Server 2003 / Win7), and TeXLive 2009 
+under Ubuntu 10.10, MacTeX 2010 under Mac OS; R 2.12.0 or 2.11.1; LyX 1.6.x.G
+regor Gorjanc published an interesting article &ldquo;Using Sweave with 
+LyX&rdquo; inR News in 2008, which (I believe) makes it much easier to use 
+Sweave. I use command-line tools a lot every day, but I am still 
+&ldquo;GUI-addicted&rdquo;. (I don&rsquo;t want to comment more about Microsoft 
+Word here.)LyX is a somewhat WYSIWYG tool based on LaTeX, and on the first time 
+I saw it I decided that Word was completely useless to me from then on. In the 
+past, I did not like writing LaTeX documents just because I hate wasting my 
+time on typing the raw commands. For example, I hate typing<code>\item</code> 
+in an<code>itemize</code> environment each time I need a new item. There might 
+be some text editors which can automatically do this tedious task, but the more 
+serious problem is I cannot see the whole picture &mdash; in my eyes there are 
+only commands; my imagination is limited &mdash; it is difficult for me to 
+imagine<code>\section{}</code> to be a section title. However, LyX has provided 
+a perfect solution to lazy people like me. We don&rsquo;t have to write LaTeX 
+documents from scratch, and everything is intuitive in LyX. You can clearly<em>
+<strong>see</strong></em> the structure of your document, as well as figures 
+(instead of<code>\includegraphics{}</code>), tables (instead of the gory <code>
+\begin{table} numbers 1.4 &amp; 2.2 &amp; 3.8</code>), headings (instead of 
+<code>\title{} \section{}</code>) and math formulae (instead of <code>
+$\frac{\gamma}{\alpha_{ij}}$</code>)&hellip; In all, it is a whole lot easier 
+and faster to write LaTeX documents in LyX. This is the main reason for an 
+easier life of Sweave, because a Sweave document is nothing but a mixture of 
+LaTeX and R code.</p> 
+<h1>1. Introduction</h1> 
+<p>Although Sweave in LyX is convenient to use, it is not a trivial task for 
+beginners to configure and understand how it works. The video below can give 
+you an idea on what it looks like in LyX (Chinese visitors please go to
+Photobucket or 56.com to watch the video):</p> 
+<p></p> 
+<p>As we can see, R code can be easily embedded into LyX. If you are familiar 
+with Sweave, you don&rsquo;t even need time to learn anything. For those who do 
+not know Sweave well, a good place to look at is the help page<code>?Sweave
+</code>. A Sweave document is dynamic in the sense that everything in the 
+document can be changed by the R code (nothing is hard-coded), so we 
+don&rsquo;t need to worry too much about the specific numbers and plots in the 
+output. Instead, we focus on the code which produces these output. In the above 
+video, I used a LaTeX macro<code>\Sexpr{}</code> to output the value of <code>pi
+</code> and I don&rsquo;t need to write the specific number 3.1415926 there.</p>
+<h1>2. <code>pgfSweave</code></h1> 
+<p>While Sweave is a great invention for reproducible research, there are 
+other packages which can improve R&rsquo;s default Sweave functionality. A 
+brilliant one is the<code>pgfSweave</code> package. It was built upon the 
+cacheSweave package to support caching R objects (to avoid unnecessary repeated 
+computations and save time), and it also provided a mechanism to cache 
+graphics! Beside the speed issues, a remarkable feature is the quality of 
+graphics &mdash; it is unbeatable. I&rsquo;m not exaggerating. This packages 
+uses the<code>tikzDevice</code> package to produce pgf/tikz graphics which are 
+essentially LaTeX code, in other words, the R graphics are represented in the 
+LaTeX language so that they are treated (compiled) in the same way as the body 
+of a LaTeX document. This will make the style of graphics completely consistent 
+with the body of a document, e.g. the fonts.</p> 
+<p>By the way, I also like the <code>nogin</code> option for Sweave.sty to be 
+the default in pgfSweave, because I really don&rsquo;t like the idea of setting 
+the size of graphics by a LaTeX macro<code>\setkeys{Gin}{width=0.8\textwidth}
+</code>. In pgfSweave, we just set the width and height naturally in the code 
+chunk options like<code>&lt;&lt;width = 5, height =4&gt;&gt;=</code>.</p> 
+<p>pgfSweave comes with a command line usage like Sweave: <code>R CMD 
+pgfSweave your-file.Rnw</code>. I&rsquo;m not using this approach in LyX, 
+because this requires system admin privilege to install pgfSweave. Instead, I 
+use this way:</p> 
+<pre>R -q -e &quot;library(pgfSweave);pgfSweave('yourfile.Rnw')&quot;</pre> 
+<p>R can accept a string in its <code>-e</code> argument, e.g.</p> 
+<pre>yihui@xie:~$ R -q -e &quot;rnorm(5)&quot; &gt; rnorm(5) [1] -0.2970093 
+-0.2171444 1.5645127 0.5422097 0.7359204</pre> 
+<p>Later I&rsquo;ll explain how to connect LyX and R/pgfSweave in this way.</p>
+<h1>3. Configuration</h1> 
+<p>To make LyX work with Sweave, we need to take these steps:</p> 
+<ol> 
+<li>put the LaTeX style files such as Sweave.sty under the texmf tree</li> 
+<li>define the literate programming environment in LyX (literate-scrap.inc) 
+and corresponding layouts</li> 
+<li>(the critical step) create converters to convert Sweave documents to LaTeX 
+(this is done in the preferences file) and the converter is like<br>
+<code>R -e 
+&quot;library(pgfSweave);pgfSweave($$i,compile.tex=FALSE)&quot;</code><br>
+ 
+where<code>$$i</code> is a variable in LyX denoting the input file</li> </ol> 
+<p>Each step involves with several novel concepts for beginners. For example, 
+you may ask &ldquo;what&rsquo;s a texmf tree?&rdquo; &ldquo;What&rsquo;s a 
+layout file? Where is it?&rdquo; &ldquo;Where is the preference file?&rdquo; 
+&ldquo;What&rsquo;s a converter?&rdquo;&hellip;</p> 
+<p>I spent several hours on writing an R script trying to cover all these gory 
+details automatically, so the configuration becomes as easy as</p> 
+<pre>
+source('http://yihui.name/en/wp-content/uploads/2010/10/lyx-pgfsweave-config.R')
+</pre> 
+<p>This is convenient, which is good. But I have to confess it is a really 
+nasty script &mdash; (for Windows) it calls several system commands to help the 
+configuration, such as<code>initexmf</code> or <code>mpm</code>, or <code>setx
+</code> to set the system PATH variable; this is a dangerous practice and some 
+users may feel extremely uncomfortable with it. Under Mac and Linux, it tries 
+to download and copy files to your home directory so that LaTeX and LyX will 
+work properly. It will do no harm to your system, but I need to warn you first 
+in the spirit of &ldquo;open source&rdquo;.</p> 
+<h1>4. Gory Details</h1> 
+<p>You are still reading&hellip; So first you have to read Gregor 
+Gorjanc&rsquo;s paper in R News and that make most things clear in this blog 
+entry. A few more things I need to add are:</p> 
+<ol> 
+<li>I modified the file literate-scrap.inc so that we can hit the <code>Enter
+</code> key to start a new line in R code, which is more natural for the users, 
+I think. Gregor&rsquo;s original definition for breaking a line was<code>
+Ctrl+Enter</code>.</li> 
+<li>I added another environment in LyX named <code>ScrapCenter</code>, which 
+is for the code chunks that produce plots, because plots are usually centered 
+in the page.</li> 
+<li>I also modified <code>Sweave.sty</code> to add line numbers to the code 
+chunks in LaTeX, and the real Sweave style file I&rsquo;m using is<code>
+SweaveX.sty</code>.</li> 
+<li>I did not add R&rsquo;s texmf directory to the root directory of MikTeX; 
+instead I copied all the files to the user directory of MikTeX (this can be a 
+bad practice too) and I did the same thing to Mac and Ubuntu. This will make 
+LaTeX know the style definitions for Sweave.</li> 
+<li>I copied LyX configurations to the user directory of LyX as well. I need 
+to mention here that all the old configurations will be overwritten except the
+<code>preferences</code> file, with which I handled in a special way: if I 
+could detect the Sweave configurations in the old<code>preferences</code>, I 
+will not do anything, otherwise I will<em>append</em> the Sweave configurations 
+(converters) to the old preferences file. This makes sense, I believe. Users do 
+not want their<code>preferences</code> to be overwritten.</li> 
+<li>Under Mac and Windows, the path for LyX was hard-coded as <code>LyX16
+</code>, which is surely subject to changes in future when new versions of LyX 
+come out. Linux usually stores configurations in the home directory as folders 
+with a dot, e.g.<code>~/.lyx</code>. This is good because we don&rsquo;t need 
+to worry about the version numbers.</li> 
+<li><code>pgfSweave</code> will try to format your R code by default, e.g. add 
+spaces and indent where appropriate when your source code is not 
+well-formatted. This is my suggestion (and contribution), and I think this 
+makes sense because many users just do not care about formatting R code (hence 
+torture other people&rsquo;s eyes), so let&rsquo;s do it automatically with
+<code>pgfSweave</code>. Unfortunately <code>pgfSweave</code> has not been 
+adapted to R 2.12.0 in this aspect &mdash; there is a tiny bug for the time 
+being: a comment line indicating the line number will be added to the beginning 
+of the code chunk. This is a new feature of R 2.12.0 (reporting line numbers in 
+case of errors), and I&rsquo;m still trying to figure out how to get around it.
+</li> </ol> 
+<h1>5. Demo</h1> 
+<p>After you have got everything ready, here are two demos that you can play 
+with:</p> 
+<p>LyX and pgfSweave demo (7.6K) </p>
+<p>I hope this is useful to the community. Please feel free to report problems 
+during your installation and configuration.</p> 
+<h2>Related Posts</h2> 
+<ul> 
+<li>Press Enter in LyX Sweave as You Wish</li> 
+<li>Font Families for the R PDF Device</li> 
+<li>On the Gory Loops in R</li> 
+<li>SyntaxHighlighter Brush for the R Language</li> 
+<li>Auto-completion in Notepad++ for R Script</li> </ul> 
+<p></p>  To <strong>leave a comment</strong> for the author, please follow the 
+link and comment on his blog:<strong> Statistics, R, Graphics and Fun &raquo; R 
+Language</strong>. R-bloggers.com offers <strong>daily e-mail updates</strong> 
+aboutR news and tutorials on topics such as: visualization ( ggplot2, Boxplots, 
+maps, animation), programming ( RStudio, Sweave, LaTeX, SQL, Eclipse, git, 
+hadoop, Web Scraping) statistics ( regression, PCA, time series, ecdf, trading) 
+and more...<br>
+
+<p></p> <br>
+<br>
+<br>
+ If you got this far, why not <strong>subscribe for 
+updates </strong>from the site? Choose your flavor: e-mail, twitter, RSS, or 
+facebook... <br>
+
+<p><strong>Tags:</strong> Featured, Literate programming, Lyx, pgfSweave, R 
+Language, R Programming, reproducible research, sweave</p> <br>
+
+<p>Comments are closed.</p> <br>
+<br>
+
+<h2>Top 7 articles of the week</h2> 
+<ol> 
+<li>Julia, I Love You</li> 
+<li>R 2.15.0 is released</li> 
+<li>Google summer of code 2012 - and R - a call for students</li> 
+<li>Solving easy problems the hard way</li> 
+<li>Social Network Analysis with R</li> 
+<li>A better way of saving and loading objects in R</li> 
+<li>Select operations on R data frames</li> </ol> <br>
+
+<h2>Sponsors</h2> <br>
+mango-solutions.com <br>
+ Zero Inflated Models and 
+Generalized Linear Mixed Models with R. Zuur, Saveliev, Ieno (2012). <br>
+<br>
+
+<strong>R-bloggers</strong> was founded by Tal Galili, with gratitude to the R 
+community.<br>
+ Is powered by WordPress using a bavotasan.com design. <br>
+ 
+Copyright &copy; 2012<strong>R-bloggers</strong>. All Rights Reserved. <br>
+
+</body>

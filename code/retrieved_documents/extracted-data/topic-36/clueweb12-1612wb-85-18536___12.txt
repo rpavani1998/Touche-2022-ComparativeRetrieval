@@ -1,0 +1,101 @@
+$var = $db->get_var("select count(*) from users"); echo $var; although the methods documented above are quite useful, most of the time you’ll need to get various rows of data from your database.
+while it’s functional, i do not recommend to use all those mysql_xxx  functions: most websites are using mysql, that’s right, but if one day  you have to deal with another db like postgres or oracle… your code will  not work at all, and you’ll have to rewrite it.
+ezsql has a few methods to make sql queries extremely simple.
+let’s take a look at a very useful tool to handle sql queries easily and efficiently on small to medium projects.
+using it is extremely simple as shown below.
+we’ll use it run any types of  queries to our database.
+in order to insert, delete or most generally, run any kind of query to the  database, we have to use the query method.
+but on smaller projects, many developers are still using php functions such as mysql_query() to do sql queries to the database.
+why anyone would use a library without placeholder or bound parameter support is beyond me.
+this dzone refcard provides an in depth introduction to the cloud computing technology, google app engine.
+$db->debug(); i hope you enjoyed this article and that you’ll use ezsql in your  future projects.
+as wpdb is based on ezsql, and you’re already familiar with the wordpress class, you won’t have any trouble to learn using ezsql.
+i was born and raised in paris, france and i now live in belgium with my wife and our adorable cat.
+let’s see what you can do with it: in order to insert, delete or most generally, run any kind of query to the database, we have to use the query method.
+when  called, the method will display the last query performed and its associated  results.
+it’s a great tool which was very helpful for me many  times!
+this is why is it recommended to use adatabase abstraction layer, an api which unifies the communication between your application/website and databases such as mysql, oracle or postgresql.
+let’s  see what you can do with it: execute any query
+to output the  data, a simple foreach() loop is all you need.
+ezsql is extremely easy to learn  and to use.
+it follows the very dated manual escaping methodology.
+if you are looking for more information on cloud computing then this dzone refcard is for you.
+and don’t worry if you never heard of wordpress or the wpdb class.
+in 2010, i left my job and created my own web development studio.
+but on smaller projects,  many developers are still using php functions such as mysql_query() to do sql  queries to the database.
+let start by  grabbing your copy of ezsql.
+the example below executes a simple select query and displays the results.
+the following example demonstrates the inclusion of the required files and the creation of a ezsql object: include_once "../shared/ez_sql_core.php"; include_once "ez_sql_mysql.php"; $db = new ezsql_mysql('db_user','db_password','db_name','db_host'); now, you have an object called $db.
+in order to use ezsql with a  mysql database, you have to include ez_sql_mysql.php.
+ezsql does not offer any way to parameterize your queries – or indeed to protect your queries from sql injection at all — least of all in a system-portable fashion.
+as most of you are familiar with wordpress, you probably know the wpdb class, which allows you to send queries to the database.
+using it  is extremely simple as shown below.
+everyone wants sql to be easy, and indeed this script does seem like an easy way to avoid having to change your sql function calls if you change databases.
+in order to be able to use ezsql in your projects, you have to include two files: the first is ez_sql_core.php, which is ezsql core file.
+source:  http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql
+values (null,'the cat','cat@google.com')"); example of an update query: $db->query("update users set name = 'patrick' where id = 4"); the get_row method is great if you just need to select a row from your database.
+once you have it, unzip on your server (or hard  drive).
+in order to use ezsql with a mysql database, you have to include ez_sql_mysql.php.
+$user = $db->get_row("select name, email from users where id = 4"); echo $user->name; echo $user->email; if you only need a variable, the get_var method is here to help.
+also, ezsql provide a few methods which simplify queries to the database, and help producing a cleaner code.
+the second parameter is the column offset.
+though, please note that it does not support differences in sql syntax  implementations among different databases.
+you can read more from them attheir website.
+$results = $db->get_results("select name, email from users"); foreach ( $results as $user ) { echo $user->name; echo $user->email; } if you need to get a column, you can use the get_col method.
+in case of a data insertion, the  method will return the insert id. $db->query("insert into users (id, name, email)
+right, i have talked too much.
+retarded is more like it.
+downloading and installing ezsql
+as most of you are familiar with wordpress, you probably know the wpdb  class, which allows you to send queries to the database.
+values (null,'the  cat','cat@google.com')"); example of an update query: $db->query("update users set name = 'patrick' where id = 4"); select a row the get_row method is great if you just need to select a row from your  database.
+$results = $db->get_results("select name, email from  users"); foreach ( $results as $user ) { echo $user->name; echo  $user->email; } select a column if you need to get a column, you can use the get_col method.
+the example below executes a simple select query and displays the  results.
+my name is jean-baptiste jung and i’m a 29 years old web developer and professional blogger.
+in order to be able to use ezsql in your projects, you have to include two  files: the first is ez_sql_core.php, which is ezsql core file.
+$var = $db->get_var("select count(*) from users"); echo $var; select multiple results
+to output the data, a simple foreach() loop is all you need.
+not surprising, the method is called debug.
+while it’s functional, i do not recommend to use all those mysql_xxx functions: most websites are using mysql, that’s right, but if one day you have to deal with another db like postgres or oracle… your code will not work at all, and you’ll have to rewrite it.
+that's not exactly easier to use.
+$db->debug(); i hope you enjoyed this article and that you’ll use ezsql in your future projects.
+it’s a great tool which was very helpful for me many times!
+the second  depends on the database you’re going to use.
+get an in depth comparison on three different cloud...
+the following example  demonstrates the inclusion of the required files and the creation of a ezsql  object: include_once "../shared/ez_sql_core.php"; include_once  "ez_sql_mysql.php"; $db = new  ezsql_mysql('db_user','db_password','db_name','db_host'); now, you have an object called $db.
+on big projects, the usual good practice is to use a cms or a framework such as symfony or codeigniter to build your site on.
+jb is a dzone mvb and is not an employee of dzone and has posted 20 posts at dzone.
+this is done easily using  your database username, password, name and host.
+this class is the reason wp had so many sql exploits over the years.
+covering everything from the basics...
+once done, you have to create a ezsql object.
+if you only need a variable, the get_var method is here to help.
+the second depends on the database you’re going to use.
+this is done easily using your database username, password, name and host.
+in case of a data insertion, the method will return the insert id. $db->query("insert into users (id, name, email)
+source: http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql (note: opinions expressed in this article and its replies are the opinions of their respective authors and not those of dzone, inc.) fast and easy?
+and don’t worry if you  never heard of wordpress or the wpdb class.
+as you can guess, ezsql allows you to work with various databases very  easily.
+we’ll use it run any types of queries to our database.
+this is why is it recommended to use adatabase abstraction layer, an  api which unifies the communication between your application/website and  databases such as mysql, oracle or postgresql.
+foreach ( $db->get_col("select name,email from users",0) as  $name ) { echo $name; } debug when something doesn’t work as expected, ezsql has a great method to  perform some debugging.
+foreach ( $db->get_col("select name,email from users",0) as $name ) { echo $name; } when something doesn’t work as expected, ezsql has a great method to perform some debugging.
+let’s take a look at a very useful tool to handle sql  queries easily and efficiently on small to medium projects.
+the java evolution mismatch: why you need a better jvm innovate faster in the cloud with a platform as a service five levels of embedded bi developing .net/c# applications with voltdb nowadays, most websites and web applications are database driven, which  means that you, the developer, have to query the database to get the requested  information.
+as you can guess, ezsql allows you to work with various databases very easily.
+although the methods documented above are quite useful, most of the time  you’ll need to get various rows of data from your database.
+also, ezsql provide a few methods which simplify queries to the database,  and help producing a cleaner code.
+though, please note that it does not support differences in sql syntax implementations among different databases.
+how about some coding now?
+the method  called get_results will get various data from your database.
+once you have it, unzip on your server (or hard drive).
+let start by grabbing your copy of ezsql.
+ezsql is extremely easy to learn and to use.
+what’s ezsql, and why it is useful on big projects, the usual good practice is to use a cms or a framework  such as symfony or codeigniter to build your site on.
+view full user profile nowadays, most websites and web applications are database driven, which means that you, the developer, have to query the database to get the requested information.
+$user = $db->get_row("select name, email from users where id =  4"); echo $user->name; echo $user->email; select a single variable
+when called, the method will display the last query performed and its associated results.
+as wpdb is based  on ezsql, and you’re already familiar with the wordpress class, you  won’t have any trouble to learn using ezsql.
+i first used the internet in 1998, built my first website in 2001 and finally started to work as a professional web developer in 2005.
+the second  parameter is the column offset.
+queries examples ezsql has a few methods to make sql queries extremely simple.
+the method called get_results will get various data from your database.

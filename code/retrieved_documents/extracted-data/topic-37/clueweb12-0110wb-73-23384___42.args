@@ -1,0 +1,155 @@
+some simple demos and simple tests are running.
+michael: it will always be interesting, but if we can move quickly, we can have a single solution that everyone supports.
+i also think it's critical to allow applications to"reach around" and access opengl.
+another is how sgi would provide a sample implementation or other assistance to other vendors.
+in comparing java3d vs ogl++, the following distinctions are noteworthy: ogl++ layered on top of opengl; java3d is not tied to a single api (support for opengl and direct3d are planned) more of abstraction — no way to jump in the middle ogl++ has direct support for fields and routes ogl++ allows methods to extend traversal mark went over goals.
+don't mistake that for lack of interest though, if the arb moves forward, we'll participate.
+but from a practical standpoint, we'll leverage the code as much as we can.
+* the arb has made several attempts to get agreement on high-level apis, and has overall failed, sometimes in a frustrating manner.
+need support for notification (not in spec yet) and set/get.
+extensions probably have the value, not the api itself.
+this can be a way to provide more and more capabilities to applications without requiring them to access extensions directly.
+renderer specific approach either disallows extensibility or throws its difficulties at the application developer mark: a variant approach is to specify tightly -- but there will be performance costs in converting to the format of the underlying library.
+i had a look > and it looks really like one of the best apis around for 3d : full opengl > support, portability and it's free !
+check the quarterly arb minutes published on the web to track opengl++'s development.
+real3d (richard): we think it's a good idea to support a low-level scene graph api as long as it isn't too thick.
+john: let mark know if you can give a  presentation of your scene graph efforts and your evaluation of its effectiveness.
+jon: there is rich set of things that can be addressed by a scene graph api.
+performer, on the other hand, was very conscious of how to package state together.
+david b.: fundamental solution space involves: lowest common denominator specification (aka "neutral") renderer specific "spec" specification vagueness can raise performance costs for converting to renderer format.
+sgi is saying that cosmo 3d is a java 3d implementation.
+kurt: it may not be like opengl because it doesn't require hardware acceleration...companies may be able to ship it more quickly.
+it will probably be sent to the entire arb.
+licensees shouldn't expect to have to pay anything more for this stuff.
+extension mechanism depends on two big things: dinner discussions: ibm rep (suzy?) proposed and met little opposition with coyote cafe as place for the night's meal.
+for instance, the arb needs to know whether the technology must be taken as is or if it can be used as the starting point to develop whatever the arb thinks is the right solution.
+we're for it, just need to figure out how to merge it into our business plans.
+still, building good 3d games involves building good 3d tools, and opengl optimzier can help in this area.
+tim: unlike opengl, areas of competition/differentiation aren't as clear for a given implementation.
+we're not intending to push our technology for anything more than solving our problems.
+intel (igor): we're very much committed to having a standard scene graph api.
+i'd be suprised is an interactive kind of game would be a candidate for optimizer.
+answered by jon k., john s.) problems related to the "wrong" attendees being here (some companies have scene graph experts quite distinct from hardware/rendering crowd at the opengl arb).
+opengl++ is intended to be the underlying infrastructure on top of which the other three are built.
+general feeling around to see how to proceed.
+kurt: we're in the (unfortunate) position of being able to provide an implementation sooner than a spec.
+all access is through documented entry points in opengl or extensions.
+more time would help in order to work things out internally.
+considering i want to program a 3d game under windows i think optimizer is > the simplest/cheapest api available ...
+kurt: as the level of the functionality provided by a vendor increases, it becomes possible for that vendor to "hide" access to extensions.
+it's not the next inventor, it's the thing that will be used to build the next inventor, and that's nice because it leaves us something to do.
+optimiser is for cad (efficient - but not 'realtime' display of very large data sets) inventor is for rapid prototyping, presentation graphics, etc.
+to promote high-end graphics intensive cad and 3d modeling applications.
+john: sgi has been working on merging inventor and performer.
+it's so interesting that in a year, people will have their own ways to solve this problem and the market will be faced with a bunch of incompatible solutions to the same problem.
+we're willing to change what we have in order to make it acceptable to other companies, but we're moving ahead regardless because we believe that this is the right way to go.
+i think this is the right body to work on it.
+i havn't checked their latest meeting notes - but i don't think they say very much.
+game developers may find opengl optimizer interesting for quickly building game 3d modeling and layout tools, but opengl optimizer is probably not something anyone is going to use as the basis for a game engine.
+also, extensibility allows us to give customer's the go-ahead to use mechanisms that "good taste" prevents us from allowing into the library.
+it reads and writes vrml 2.0 files and renders using opengl.
+we need to develop a good migration story for the customers of these existing products.
+david: perfomer had limited support for indexing.
+david: inventor went overboard in the object area.
+openinventor costs over a $1000 but > then comes optimizer "totally" free ...
+mark: i hope that we can distill the requirements without the need to look at every application or market-specific toolkit that could be built on top.
+the sgi view (and i think i agree with it) is that performer, inventor and optimiser are each intended for a different market.
+much the same way that opengl developed from sgi's experience implementing its predecssor iris gl in conjunction with other opengl arb partners, opengl++ is about designing a standard high-level 3d framework based on sgi's 3d toolkit design experience and working with other interested industry leaders.
+digital: likely to contribute intel: can contribute.
+it will be difficult to go deep into a discussion of the requirements because each vendor will have customer requirements that might only be discussed under non-disclosure.
+also, extensibility allows us to give customer's the go-ahead to use mechanisms that "good taste" prevents us from allowing into the library.
+(scene graph doesn't have to be implemented or shipping.)
+kurt: sgi is prepared to offer up technology unconditionally.
+feng: no notification mechanism in specification.
+we'd like to make sure the various goals are met, e.g., working out the issues with activeanimation.
+the scene graph capabilities are only part of what integrator does.
+we're also ready to turn over the manpower to implement whatever spec the arb came up with.
+no.  open inventor and iris performer are mature, stable toolkits that serve particular market needs.
+david responded that they are trying hard to avoid doing things behind the back of the application.
+we like the direction of the opengl++ layer heading towards something lower level than we first envisioned.
+openinventor costs over a $1000 but > then comes optimizer "totally" free ...
+they sorted on graphics state to effectively utilize the pipeline.
+sgi's experience (particularly based on sgi's experience with the visual simulation market and iris performer) shows that customers and software developers greatly benefit from higher-level apis to that make optimal use of hardware features.
+dick: i really think that this group only has a part of the membership needed to be successful at the scene graph level.
+we would not support systems in which one of our dlls has been overwritten.
+also definitely plan on creating c++ bindings.
+david: one of the highest values of extensibility is for folks to use the latest extensions without a new release of the library.
+jon: hp can check into what's possible to offer.
+kurt: sgi's goal is to create an environment in which applications could use a variety of libraries (where opengl provides the common foundation) to accomplish their tasks.
+sgi's experience (particularly based on sgi's experience with the visual simulation market and iris performer) shows that customers and software developers greatly benefit from higher-level apis to that make optimal use of hardware features.
+jim c: doc feedback: couldn't make heads or tails out of spline engine.
+there's a lot of opportunity for adding value in this middleware area.
+you say you want to support audio rendering, but audio rendering can have very different requirements than visual rendering.
+no. direct3d is completely useless for quality cad and 3d modeling.
+mark: it's aggressive but doable if we manage what we consider for the first version.
+a low-level standard would benefit new application development.
+file loading for vrml and optimizer, and a generic object framework for loading images, geometry, audio, and video.
+i've also seen people wanting to do haptic rendering.
+no. open inventor and iris performer are mature, stable toolkits that serve particular market needs.
+mark: this does make the specification process more difficult.
+this doesn't say that we shouldn't go ahead, but it could be a significant barrier.
+a test suite co-developed with the source code, and documentation auto-generated from the source.
+sgi's motivation with fahrenheit was primarily to get agreement on a good scene graph.
+otto: replacing microsoft opengl is essentially replacing a system component of our os which is not a good thing.
+i would prefer not to go through the licensing effort again, since it was really, really difficult to get legal agreements in place between a number of companies.
+direct3d offers neither the performance or quality to do cad or 3d modeling well.
+kurt: we've heard vendors say, "we have this scene graph stuff and we'd really like not to.
+performer is for visual simulation (realtime performance - guaranteed update rates, etc).
+i had a look > and it looks really like one of the best apis around for 3d : full opengl > support, portability and it's free !
+right now, sgi customers have to make a choice about which library to use, and the libraries don't interact with each other.
+micheal: the reason to embark on a standards effort is that everyone who participates thinks they will benefit in some material way by the results of standardization.
+need support for notification (not in spec yet) and set/get.
+bill: this seems ambitious, it doesn't seem like a group as large as this can make timely progress.
+sgi also has a 3d browser plug-in called cosmo player.
+much the same way that opengl developed from sgi's experience implementing its predecssor iris gl in conjunction with other opengl arb partners, opengl++ is about designing a standard high-level 3d framework based on sgi's 3d toolkit design experience and working with other interested industry leaders.
+we still have the concern about the workload for the arb.
+mark promised to send out the minutes from monday's meeting.
+igor: it's not that clear that we could do a good job at the scene graph level since most people here are hardware/system vendors.
+we think we need to get some of the vrml stuff out and add some other stuff, since we want to do a lot more than vrml in opengl++.
+after david presented the "shape" approach, jim c. chimed in that the one appearance for multiple geometry approach "works for prodesigner" david: want to allow multi-pass geometry -- or specific ordering or rendering.
+dinner discussions: ibm rep (suzy?) proposed and met little opposition with coyote cafe as place for the night's meal.
+extension mechanism depends on two big things: new node types new traversals also want to preserver binary compatibility.
+david: traversal model comes from inventor.
+we could come to meetings more prepared, have subcommittees, delegate, etc.
+a fair amount of time was spent on multithreading issus.
+we understand that we lose control when it is given to the arb.
+sgi's experience is that apps need to write to a scene graph to get good performance without micro-optimization.
+visual simulation for iris performer; rapid 3d prototyping and effective user interation for open inventor.
+performer, on the other hand, was very conscious of how to package state together.
+extensions probably have the value, not the api itself.
+with performer, lots of effort in making it work well for a given platform.
+this kind of effort will help promote/enable applications.
+but it's also important to be able to "reach around" the scene graph to the low level.
+it can be quite frustrating for an application to be locked into access through a higher-level api with no way to do things that the underlying layer could accomplish.
+in the cad market, this means a higher-level api that handles multiprocessing, view frustum culling, occlusion culling, fast picking, excellent surface trimming, use of opengl evalauators, etc. >
+e&s (bill): we have some technology in integrator, but do not view this as a competitor.
+a new version of the spec was distributed last week, with big changes including consistent syntax, naming conventions, and terminology for the object concepts.
+igor: intel has a library (intel scene manager) that addresses similar concepts.
+openinventor programs ended up with lots of separators to wall off state -- which is difficult to optimize around.
+if the arb is going to take this on, it will have to organize itself so that the current work and this new work can be supported.
+steve: the difference between this and the original opengl effort is that no isv's were doing rasterization on their own when opengl came along, but there are a lot of isv's who have been doing their own scene graph code.
+there are lots of opportunities to provide optimization value with a scene graph api that aren't available in opengl.
+ptc: interested, but no resources.
+e&s has a product in this area (integrator), so we'd be very interested in seeing this evolve in a way that is consistent with what we already support.
+after david presented the "shape" approach, jim c. chimed in that the one appearance for multiple geometry approach "works for prodesigner" david: want to allow multi-pass geometry -- or specific ordering or rendering.
+no.  direct3d is completely useless for quality cad and 3d modeling.
+we need a lot more input and representation from the user community.
+openinventor programs ended up with lots of separators to wall off state -- which is difficult to optimize around.
+we need to get the cart back before the horse and make sure we do a spec that contains what we want.
+mark: clearly interested in supporting multiple apis.
+[silence followed] straw pool was taken with the results (pls check w/ paula): tim: unlike opengl, areas of competition/differentiation aren't as clear for a given implementation.
+on the other hand, since we have an implementation in progress, this stuff isn't just a bunch of hot air.
+there's been lots of work, but relatively little communication.
+support for intersection testing and picking.
+valuable to force all geometry and appearance into leaves.
+kevin r.: since last time, java3d spec now available to java licensees.
+the group met monday and spent the day talking about procedural and technical issues.
+system design center will by dynamic data over static data.
+a scene graph api requires a lot more isv input than the opengl api level.
+with performer, lots of effort in making it work well for a given platform.
+therefore there is a rich solution space, and vendors are poised to deliver a variety of solutions.
+we're not neccessarily interested in pursuing an opengl++ effort right now, since it will be a distraction to our java3d effort.
+the plan is to use pthreads, which should provide a good implementation across unix systems.
+they sorted on graphics state to effectively utilize the pipeline.
+we believe in making this library opengl-specific.
+david: one of the highest values of extensibility is for folks to use the latest extensions without a new release of the library.

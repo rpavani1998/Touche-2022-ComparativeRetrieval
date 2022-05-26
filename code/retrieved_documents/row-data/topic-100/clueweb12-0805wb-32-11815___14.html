@@ -1,0 +1,712 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>R &laquo; Code and Culture</title>
+<body>
+
+<h1>Code and Culture</h1> <br>
+
+<ul> 
+<li>Home</li> 
+<li>Hello&nbsp;World</li> </ul> 
+<h2>Posts tagged &lsquo;R&rsquo;</h2> 
+<h3>importspss.ado (requires&nbsp;R)</h3> 
+<p>| Gabriel |</p> 
+<p>Mike Gruszczynski has a post up pointing out that you can use R to 
+translate files, for instance from SPSS to Stata. I like this a lot because it 
+let&rsquo;s you avoid using SPSS but I&rsquo;d like it even better if it let 
+you avoid using R as well.</p> 
+<p>As such I rewrote the script to work entirely from Stata. Mike wanted to do 
+this in Bash but couldn&rsquo;t figure out how to pass arguments from the shell 
+to R. Frankly, I don&rsquo;t know how to do this either which is why my 
+solution is to have Stata write and execute an R source file so all the 
+argument passing occurs within Stata. This follows my general philosophy of 
+doing a lot of code mise en place in a user-friendly language so I can spend as 
+little time as necessary in R. (Note that you could just as easily write this 
+in Bash, but I figured this way you can a) make it cross-platform and b) attach 
+it to &ldquo;use&rdquo; for a one-stop shop &ldquo;import&rdquo; command).<br>
+
+</p> 
+<pre>*importspss.ado *by GHR 6/29/2010 *this script uses R to translate SPSS 
+to Stata *it takes as arguments the SPSS file and Stata file *adapted from 
+http://mikegruz.tumblr.com/post/704966440/convert-spss-to-stata-without-stat-transfer 
+*DEPENDENCY: R and library(foreign) *if R exists but is not in PATH, change the 
+reference to &quot;R&quot; in line 27 to be the specific location capture 
+program drop importspss program define importspss set more off local spssfile 
+`1' if &quot;`2'&quot;==&quot;&quot; { local statafile 
+&quot;`spssfile'.dta&quot; } else { local statafile `2' } local 
+sourcefile=round(runiform()*1000) capture file close rsource file open rsource 
+using `sourcefile'.R, write text replace file write rsource 
+&quot;library(foreign)&quot; _n file write rsource `&quot;data &lt;- 
+read.spss(&quot;`spssfile'&quot;, to.data.frame=TRUE)&quot;' _n file write 
+rsource `&quot;write.dta(data, file=&quot;`statafile'&quot;)&quot;' _n file 
+close rsource shell R --vanilla &lt;`sourcefile'.R erase `sourcefile'.R use 
+`statafile', clear end</pre> 
+<p></p> 
+<p> <em>June 29, 2010 at 3:01 pm</em> <em>gabrielrossman</em> <em> 6 comments 
+</em> </p> 
+<h3>Thanks for the Aspirin&nbsp;Guys</h3> 
+<p>| Gabriel |</p> 
+<p>In a recent post, I lamented that I couldn&rsquo;t figure out how to do 
+loops and a few other things in R. The script at issue was intended to create a 
+slideshow of network graphs which I&rsquo;d then use Image Magick to convert to 
+an animated gif. With some help from Brian and Kieran, I ultimately got it to 
+work and the results are inthis post (as well as a presentation at a 
+mini-conference I made a few days later).</p> 
+<p>Kieran very generously further improved on the code at his own blog using 
+simulated data. Kieran&rsquo;s code has a certain elegance to it, but 
+it&rsquo;s an R style of elegance based on objects and lists and the like so 
+it&rsquo;s not completely intuitive to me, despite his thorough commenting. 
+Anyway, I worked his suggestions into my code (see below) and it works great.
+</p> 
+<p>Since Kieran was &ldquo;interested to see whether this approach was at all 
+faster,&rdquo; I ran the old version and the new version with timestamps. (To 
+make it fair, I commented out the &ldquo;pdf&rdquo; version of the flipbook, 
+which only appears in the &ldquo;old&rdquo; code &mdash; this saves about one 
+second). Turns out they&rsquo;re almost exactly the same speed &mdash; about 26 
+or 27 seconds (it varies about a second or two every time I do it, sometimes 
+new is faster, sometimes old). The vast majority of that half a minute is taken 
+up by Image Magick. The actual R code only takes about 7 seconds to execute in 
+either version. I think that&rsquo;s amazingly fast to import 60 or so datasets 
+(albeit small datasets), generate two different FR layouts, apply the layouts 
+to 60 or so graphs (albeit graphs that are written directly to disk rather than 
+to screen), and do miscellaneous housekeeping. I haven&rsquo;t run a 
+timestamped comparison, but my impression is that this is much faster than 
+comparable operations in Pajek or NWB and appreciably faster than doing 
+scatterplots in Stata.</p> 
+<p></p> 
+<pre> # File-Name: chrnetwork.R # Date: 2010-03-11 # Created Date: 2009-11-24 
+# Author: Gabriel Rossman (w a fair amount of help from BR and KJH) # Purpose: 
+graph CHR station network # Data Used: ties_bounded.net # Packages Used: igraph 
+plyr timestamp() library(igraph) library(plyr) 
+setwd(&quot;~/Documents/Sjt/radio/survey&quot;) #ties -- including ties to 
+non-top40 (who can't reciprocate) chrnet &lt;- read.graph(&quot;ties.net&quot;, 
+c(&quot;pajek&quot;)) pdf(&quot;~/Documents/book/images/chrnetwork.pdf&quot;) 
+plot.igraph(chrnet, layout=layout.fruchterman.reingold, vertex.size=4, 
+vertex.label=NA, vertex.color=&quot;red&quot;, edge.color=&quot;gray20&quot;, 
+edge.arrow.size=0.3, margin=0) dev.off() #ties bounded to only top 40, includes 
+adoption time color-codes, but use is optional chrnetbounded &lt;- 
+read.graph(&quot;ties_bounded_humpcolor.net&quot;, c(&quot;pajek&quot;)) la = 
+layout.fruchterman.reingold(chrnetbounded) #create layout for use on several 
+related graphs #graph structure only 
+pdf(&quot;~/Documents/book/images/chrnetworkbounded.pdf&quot;) 
+plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=NA, 
+vertex.color=&quot;red&quot;, edge.color=&quot;gray20&quot;, 
+edge.arrow.size=0.3, margin=0) dev.off() #graph color coded diffusion 
+pdf(&quot;~/Documents/book/images/chrnetworkboundedcolor.pdf&quot;) 
+plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=NA, 
+edge.color=&quot;gray80&quot;, edge.arrow.size=0.3, margin=0) dev.off() 
+#flipbook timestamp() setwd(&quot;~/Documents/Sjt/radio/survey/flipbook&quot;) 
+filenames &lt;- list.files(getwd(), pattern=&quot;\\.net$&quot;) ind &lt;- 
+order(as.numeric(gsub(&quot;[^[:digit:]]&quot;, &quot;&quot;, filenames))) 
+filenames &lt;- filenames[ind] g.list &lt;- llply(filenames, read.graph, 
+format=&quot;pajek&quot;) 
+png(file=&quot;~/Documents/book/images/flipbook/chrnet_hc%d.png&quot;, 
+width=600, height=600, units=&quot;px&quot;) l_ply(g.list, plot, layout=la, 
+vertex.size=4, vertex.label=NA, edge.color=&quot;gray60&quot;, 
+edge.arrow.size=0.3, margin=0) dev.off() timestamp() ### Finally, generate the 
+gif without having to renumber the files ### individually. png.filenames &lt;- 
+list.files(&quot;~/Documents/book/images/flipbook/&quot;, 
+pattern=&quot;\\.png$&quot;) timestamp() ## Resort properly again ind &lt;- 
+order(as.numeric(gsub(&quot;[^[:digit:]]&quot;, &quot;&quot;, png.filenames))) 
+png.filenames &lt;- png.filenames[ind] png.filenames &lt;- 
+paste(&quot;~/Documents/book/images/flipbook/&quot;, png.filenames, 
+sep=&quot;&quot;) # add the path back png.string &lt;- 
+capture.output(cat(png.filenames)) ## Open a pipe to the shell to execute the 
+convert command ## directly. timestamp() gifpipe &lt;- 
+pipe(paste(&quot;convert&quot;, png.string, 
+&quot;~/Documents/book/images/flipbook/chrnet_humps.gif&quot;, sep=&quot; 
+&quot;), &quot;w&quot;) close(gifpipe) timestamp()</pre> 
+<p></p> 
+<p> <em>March 16, 2010 at 4:31 am</em> <em>gabrielrossman</em> <em> 2 comments 
+</em> </p> 
+<h3>Network&nbsp;slideshow</h3> 
+<p>| Gabriel |</p> 
+<p>Now that I&rsquo;ve gotten R and <code>igraph</code> to make a set of 53 
+png files (seeyesterday&rsquo;s post), the next step is animating them. I did 
+this using the command line toolImageMagick, which I installed using Fink, the 
+(buggy) Mac version of the Debian package manager. Once ImageMagick is 
+installed, I can do everything from directly within R using<code>system()</code>
+. To accomplish this, I just added these lines of code to the end of 
+yesterday&rsquo;s script. The &ldquo;mv&rdquo; commands are necessary because 
+ImageMagick has a naive view of alphabetical order.<br>
+</p> 
+<pre>#create animated gif in image magick 
+setwd(&quot;~/Documents/book/images/&quot;) system(&quot;mv chrnet_hc0.png 
+chrnet_hc00.png&quot;) system(&quot;mv chrnet_hc1.png chrnet_hc01.png&quot;) 
+system(&quot;mv chrnet_hc2.png chrnet_hc02.png&quot;) system(&quot;mv 
+chrnet_hc3.png chrnet_hc03.png&quot;) system(&quot;mv chrnet_hc4.png 
+chrnet_hc04.png&quot;) system(&quot;mv chrnet_hc5.png chrnet_hc05.png&quot;) 
+system(&quot;mv chrnet_hc6.png chrnet_hc06.png&quot;) system(&quot;mv 
+chrnet_hc7.png chrnet_hc07.png&quot;) system(&quot;mv chrnet_hc8.png 
+chrnet_hc08.png&quot;) system(&quot;mv chrnet_hc9.png chrnet_hc09.png&quot;) 
+system(&quot;convert *.png chrnet_humps.gif&quot;)</pre> 
+<p></p> 
+<p>Here are the results. Vertices are stations, which turn black when the 
+station has begun playing &ldquo;My Humps&rdquo; by Black Eyed Peas. Yellow 
+vertices have missing data on airplay (true missing data, not just 
+right-censored). The graph layout is based on directed nominations from a 
+survey so vertices near each other have low path length, but I hid the actual 
+edges to preserve some privacy about the stations social network ties. My 
+substantive interpretation of this animation (and a comparable event history) 
+is that the network doesn&rsquo;t really matter and the endogenous cascade is 
+based on attention to aggregate peer behavior rather than that of specific 
+alters.<br>
+<br>
+ Note that you may have to click on the image to see the 
+animation.</p> 
+<p> <em>March 1, 2010 at 1:35 pm</em> <em>gabrielrossman</em> <em> 1 comment 
+</em> </p> 
+<h3>More R&nbsp;headaches</h3> 
+<p>| Gabriel |</p> 
+<p>I&rsquo;ve continued to play with the R package <code>igraph</code> and I 
+think I&rsquo;ve gotten the hang of<code>igraph</code> itself but R itself is 
+still pretty opaque to me and that limits my ability to use<code>igraph</code>. 
+Specifically, I&rsquo;m trying to merge diffusion data onto a network graph and 
+plot it as kind of a slideshow, where each successive image is a new period. I 
+can actually do this, but I&rsquo;m having trouble looping it and so my code is
+<em>very</em> repetitive. [Update, thanks to Brian Rubineau I've gotten it to 
+work]</p> 
+<p>First the two tricks that I have solved.</p> 
+<p>1. Merging the diffusion data (a vertice-level trait) onto the network.</p> 
+<p>The preferred way to do this is to read in the network file to R then merge 
+in the vertice-level trait (or more technically, read the vertice data and 
+associate it with the network data). This has proven really difficult to me so 
+instead I wrote analternate version of <code>stata2pajek</code> that 
+let&rsquo;s me do this within Stata. The upside is that I spend more time in 
+Stata and less time in R, the downside to this is that I need a separate 
+&ldquo;.net&rdquo; file for every version of the graph.</p> 
+<p>2. Getting the different versions of the graph to appear comparable.</p> 
+<p>It does no good to have multiple versions of a graph if they don&rsquo;t 
+look at all similar, which is what you get if you generate the layout on the 
+fly as part of each plot. The solution to this is to first generate a layout 
+(the object &ldquo;la&rdquo;) then apply it to each graph by defining the 
+&ldquo;layout&rdquo; parameter to &ldquo;=la&rdquo; within the 
+&ldquo;plot.igraph()&rdquo; function.</p> 
+<p>So instead of this:</p> 
+<p></p> 
+<pre>plot.igraph(chrnetbounded, layout=layout.fruchterman.reingold, 
+vertex.size=4, vertex.label=NA, vertex.color=&quot;red&quot;, 
+edge.color=&quot;gray20&quot;, edge.arrow.size=0.3, margin=0)</pre> 
+<p></p> 
+<p>Do this:</p> 
+<p></p> 
+<pre>la = layout.fruchterman.reingold(chrnetbounded) 
+plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=NA, 
+vertex.color=&quot;red&quot;, edge.color=&quot;gray20&quot;, 
+edge.arrow.size=0.3, margin=0)</pre> 
+<p></p> 
+<p>Now the problem I can&rsquo;t solve, at least with anything approaching 
+elegance.</p> 
+<p>3. Looping it.</p> 
+<p>Currently my code is really long and repetitive. I want one graph per week 
+for a whole year. To make 52 versions of the graph, I need about two hundred 
+lines of code, whereas I should be able to just loop my core four lines of code 
+52 times &mdash; pdf(); read.graph();plot.igraph();dev.off(). This works, but 
+is ridiculous.</p> 
+<p>The thing is that I can&rsquo;t figure out how to make a loop in R where 
+the looping local feeds to be part of a filename. This kind of thing is 
+trivially easy in Stata since Stata expands locals and then interprets them. 
+For example, here&rsquo;s how I would do this in Stata. (I&rsquo;m using 
+&ldquo;twoway scatter&rdquo; as a placeholder for &ldquo;plot.igraph()&rdquo;, 
+which of course doesn&rsquo;t exist in Stata).</p> 
+<p></p> 
+<pre> forvalues i=0/52 { use ties_bounded`i', clear twoway scatter x y graph 
+export chrnet_hc`i'.png, replace }</pre> 
+<p></p> 
+<p>R not only doesn&rsquo;t let you do this directly, but I can&rsquo;t even 
+figure out how to do it by adding an extra step where the looped local feeds 
+into a new object to write the filename. (The problem is that the 
+&ldquo;paste()&rdquo; function adds whitespace). So basically I&rsquo;m at an 
+impasse and I see three ways to do it:</p> 
+<ul> 
+<li>Wait for somebody to tell me in the comments how to do this kind of loop 
+in R. (hint, hint).</li> 
+<li>Give up on writing this kind of loop and just resign myself to writing 
+really repetitive R code.</li> 
+<li>Give up on using <code>igraph</code> from within R and learn to use it 
+from within Python. I have basically zero experience using Python but it has a 
+good reputation for usability. In fact, it only took me, a complete 
+Python-noob, about ten minutes to figure out what&rsquo;s been a real stumper 
+in R. I haven&rsquo;t yet worked<code>igraph</code> into this loop but 
+I&rsquo;m thinking it can&rsquo;t be that hard.</li> </ul> 
+<p></p> 
+<pre>for i in range(0,52): datafile='ties_bounded%d' % i # igraph code here 
+that treats the python object &quot;datafile&quot; as a filename</pre> 
+<p></p> 
+<p><b>Update</b><br>
+ So thanks to Brian Rubineau&rsquo;s suggestion on how to 
+better use the &ldquo;paste()&rdquo; function, which is functionally equivalent 
+to the second line of the Python code above. The catch is that you have to add 
+a &ldquo;, sep=&rdquo;&quot; &rdquo; parameter to suppress the whitespace that 
+had been annoying me. I thought I tried this already, but apparently not. 
+Anyway, the Python / R method of first defining a new object then calling it is 
+an extra step compared to Stata loops (where the looping local can expand 
+directly) but it&rsquo;s still reasonably easy. Here&rsquo;s my complete R 
+code, which I&rsquo;m now very happy with.<br>
+</p> 
+<pre># File-Name: chrnetwork.R # Date: 2010-02-26 # Created Date: 2009-11-24 # 
+Author: Gabriel Rossman # Purpose: graph CHR station network # Data Used: 
+ties_bounded.net # Packages Used: igraph library(igraph) 
+setwd(&quot;~/Documents/Sjt/radio/survey&quot;) #ties bounded to only top 40, 
+includes adoption time color-codes, but use is optional chrnetbounded &lt;- 
+read.graph(&quot;ties_bounded_humpcolor.net&quot;, c(&quot;pajek&quot;)) la = 
+layout.fruchterman.reingold(chrnetbounded) #create layout for use on several 
+related graphs #graph structure only 
+pdf(&quot;~/Documents/book/images/chrnetworkbounded.pdf&quot;) 
+plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=NA, 
+vertex.color=&quot;red&quot;, edge.color=&quot;gray20&quot;, 
+edge.arrow.size=0.3, margin=0) dev.off() #graph color coded diffusion 
+pdf(&quot;~/Documents/book/images/chrnetworkboundedcolor.pdf&quot;) 
+plot.igraph(chrnetbounded, layout=la, vertex.size=4, vertex.label=NA, 
+edge.color=&quot;gray60&quot;, edge.arrow.size=0.3, margin=0) dev.off() #do as 
+flipbook setwd(&quot;~/Documents/Sjt/radio/survey/flipbook&quot;) for(i in 
+0:52) { datafile&lt;-paste('ties_bounded_hc',i,'.net', sep=&quot;&quot;) 
+pngfile&lt;-paste('~/Documents/book/images/chrnet_hc',i,'.png', 
+sep=&quot;&quot;) chrnetbounded &lt;- read.graph(datafile, 
+c(&quot;pajek&quot;)) png(pngfile) plot.igraph(chrnetbounded, layout=la, 
+vertex.size=4, vertex.label=NA, edge.color=&quot;gray60&quot;, 
+edge.arrow.size=0.3, margin=0) dev.off() }</pre> 
+<p></p> 
+<p> <em>February 28, 2010 at 1:23 pm</em> <em>gabrielrossman</em> <em> 9 
+comments </em> </p> 
+<h3>R and&nbsp;TextMate</h3> 
+<p>| Gabriel |</p> 
+<p>Now that I&rsquo;ve started dabbling in R, I figured I needed to get my 
+text editor to highlight the Klingon-esque syntax. TextWrangler and Smultron 
+already support R, but getting it for TextMate requires the Terminal:</p> 
+<p><code>cd &quot;~/Library/Application Support/TextMate/Bundles&quot;<br>
+ 
+svn co http://svn.textmate.org/trunk/Bundles/R.tmbundle/</code></p> 
+<p>Note that 64-bit R is buggy so if you have trouble piping scripts from 
+TextMate to Rdaemon (i.e., the command line R running in the background), you 
+can use the bundle editor to redirect it to &ldquo;R32&Prime; instead of just 
+&ldquo;R&rdquo; which will force it to use the slightly slower but more 
+reliable 32-bit R. Or if that&rsquo;s too hard, just stick to piping to R.app 
+instead of Rdaemon.</p> 
+<p>Also, as long as you&rsquo;re playing with the TextMate library, you might 
+as well install &ldquo;GetBundles,&rdquo; a GUI frontend for browsing the 
+TextMate bundle server.<br>
+<code>svn co 
+http://svn.textmate.org/trunk/Review/Bundles/GetBundles.tmbundle/</code></p> 
+<p>Note that GetBundles (with &ldquo;s&rdquo;) supersedes the now defunct 
+GetBundle (without &ldquo;s&rdquo;) that you might see mentioned if you google 
+things like &ldquo;TextMate Bundle&rdquo; or &ldquo;TextMate R syntax&rdquo;.
+</p> 
+<p> <em>December 1, 2009 at 4:54 am</em> <em>gabrielrossman</em> <em> 6 
+comments </em> </p> 
+<h3>some R baby&nbsp;steps</h3> 
+<p>| Gabriel |</p> 
+<p>I&rsquo;ve tried to learn R a few times but the syntax has always been 
+opaque to my Stata-centric mind. I think the trick is to realize that two of 
+the key differences are that:</p> 
+<ul> 
+<li>whereas handles only come up in a few Stata commands (e.g., file, 
+postfile, log), they are very important in R, what with all the 
+&ldquo;&lt;-&rdquo; statements</li> 
+<li>in R there&rsquo;s a much fuzzier line between commands and functions than 
+in Stata. What I mean by this is both the superficial thing of all the 
+parentheses and also the more substantive issue that often you don&rsquo;t put 
+them one to a line and they just do something (like Stata commands) but you 
+usually put them many to a line and feed them into something else (like Stata 
+functions). Related to this is that the typical Stata line has the syntax 
+&ldquo;verb object, adverb&rdquo; whereas the typical R line has the syntax 
+&ldquo;object &lt;- verb(object2, adverb)&rdquo;</li> </ul> 
+<p>The two combine in an obvious way with something as simple as opening a 
+dataset, which is just<em>use file</em> in Stata but is <em>filehandle &lt;- 
+read.table(&ldquo;file&rdquo;)</em> in R, that is, there&rsquo;s not a 
+read.table() command but a read.table() function and you feed this function to 
+a handle. (And people say R isn&rsquo;t intuitive!)</p> 
+<p>At least I <strong>think</strong> that&rsquo;s a good way to think about 
+the basic syntax &mdash; I suck at R and I really could be totally wrong about 
+this. (Pierre or Kieran please correct me).</p> 
+<p>Anyway, I wrote my first useful R file the other day. It reads my Pajek 
+formatted network data on top 40 radio stations and does a graph.</p> 
+<p><code># File-Name: testgraph.R<br>
+ # Date: 2009-11-20<br>
+ # Author: 
+Gabriel Rossman<br>
+ # Purpose: graph CHR station network<br>
+ # Data Used: 
+ties_bounded.net<br>
+ # Packages Used: igraph<br>
+ library(igraph)<br>
+ 
+setwd(&quot;~/Documents/Sjt/radio/survey&quot;)<br>
+ chrnet &lt;- 
+read.graph(&quot;ties.net&quot;, c(&quot;pajek&quot;))<br>
+ 
+pdf(&quot;~/Documents/book/images/chrnetworkbounded.pdf&quot;)<br>
+ 
+plot.igraph(chrnet, layout=layout.fruchterman.reingold, vertex.size=2, 
+vertex.label=NA, vertex.color=&quot;red&quot;, edge.color=&quot;gray20&quot;, 
+edge.arrow.size=0.3, margin=0)<br>
+ dev.off()<br>
+</code><br>
+ The weird thing 
+is that it works fine in R.app but breaks when I try to R run from the 
+Terminal, regardless of whether I try to do it all in one line or first invoke 
+R and then feed it the script. [Update: the issue is a 32 bit library and 64 
+bit R, the simple solution is to invoke &quot;R32&quot; rather than just plain 
+&quot;R&quot;. see the comments for details]. Here&rsquo;s a session with both 
+problems:</p> 
+<p><code>gabriel-rossmans-macbook-2:~ rossman$ Rscript 
+~/Documents/book/stata/testgraph.R<br>
+ Error in dyn.load(file, DLLpath = 
+DLLpath, ...) :<br>
+ unable to load shared library 
+'/Library/Frameworks/R.framework/Resources/library/igraph/libs/x86_64/igraph.so':
+<br> 
+dlopen(/Library/Frameworks/R.framework/Resources/library/igraph/libs/x86_64/igraph.so, 
+10): Symbol not found: ___gmpz_clear<br>
+ Referenced from: 
+/Library/Frameworks/R.framework/Resources/library/igraph/libs/x86_64/igraph.so
+<br> Expected in: dynamic lookup</code></p> 
+<p><code>Error : .onLoad failed in 'loadNamespace' for 'igraph'<br>
+ Error: 
+package/namespace load failed for 'igraph'<br>
+ Execution halted<br>
+ 
+gabriel-rossmans-macbook-2:~ rossman$ R 
+'source(&quot;~/Documents/book/stata/testgraph.R&quot;)'<br>
+ ARGUMENT 
+'source(&quot;~/Documents/book/stata/testgraph.R&quot;)' __ignored__</code></p> 
+<p><code>R version 2.10.0 (2009-10-26)<br>
+ Copyright (C) 2009 The R 
+Foundation for Statistical Computing<br>
+ ISBN 3-900051-07-0</code></p> 
+<p><code>R is free software and comes with ABSOLUTELY NO WARRANTY.<br>
+ You 
+are welcome to redistribute it under certain conditions.<br>
+ Type 'license()' 
+or 'licence()' for distribution details.</code></p> 
+<p><code> </code></p> 
+<p><code>Natural language support but running in an English locale</code></p> 
+<p><code>R is a collaborative project with many contributors.<br>
+ Type 
+'contributors()' for more information and<br>
+ 'citation()' on how to cite R or 
+R packages in publications.</code></p> 
+<p><code>Type 'demo()' for some demos, 'help()' for on-line help, or<br>
+ 
+'help.start()' for an HTML browser interface to help.<br>
+ Type 'q()' to quit R.
+</code></p> 
+<p><code>&gt; source(&quot;~/Documents/book/stata/testgraph.R&quot;)<br>
+ 
+Error in dyn.load(file, DLLpath = DLLpath, ...) :<br>
+ unable to load shared 
+library 
+'/Library/Frameworks/R.framework/Resources/library/igraph/libs/x86_64/igraph.so':
+<br> 
+dlopen(/Library/Frameworks/R.framework/Resources/library/igraph/libs/x86_64/igraph.so, 
+10): Symbol not found: ___gmpz_clear<br>
+ Referenced from: 
+/Library/Frameworks/R.framework/Resources/library/igraph/libs/x86_64/igraph.so
+<br> Expected in: dynamic lookup</code></p> <code> </code> 
+<p><code></code></p> 
+<p>&nbsp;</p> 
+<p><code>Error : .onLoad failed in 'loadNamespace' for 'igraph'<br>
+ Error: 
+package/namespace load failed for 'igraph'<br>
+ &gt;<br>
+</code><br>
+ The 
+problem seems to be that R (terminal) can&rsquo;t find the igraph library. This 
+is weird because R.app has no trouble finding it. Furthermore, I get the same 
+error even if I make sure igraph is installed directly from R (Terminal) in the 
+same R session:</p> 
+<p><code>chooseCRANmirror(graphics = FALSE)<br>
+ 
+install.packages(&quot;igraph&quot;)<br>
+ 
+source(&quot;/Users/rossman/Documents/book/stata/testgraph.R&quot;)</code></p> 
+<p>I guess that&rsquo;s another difference with Stata, StataConsole knows 
+where the ado library is. I&rsquo;d like to be able to use the Terminal mode 
+for R as this would let me to reach my Nirvana-like goal of having a single 
+script that does everything without any proximate human intervention. So 
+I&rsquo;ll just ask? How do I get R (Terminal) to run as reliably as R.app? Is 
+this a naive question?</p> 
+<p>Or would it be better to try to feed R.app a &ldquo;source&rdquo; script 
+from the command line? Much how like I can do this for Stata to launch a 
+do-file into the Stata GUI<br>
+<code>exec 
+/Applications/Stata/StataMP.app/Contents/MacOS/stataMP 
+~/Documents/book/stata/import.do</code></p> 
+<p> <em>November 24, 2009 at 4:42 am</em> <em>gabrielrossman</em> <em> 11 
+comments </em> </p> 
+<h3>R, Stata and descriptive&nbsp;stats</h3> 
+<p>| Pierre |</p> 
+<p>It&rsquo;s amazing how R can make complicated things look simple and simple 
+things look complicated.</p> 
+<p>I tried to explain in my previous post that R could have important 
+advantages over Stata when it came to managing weird, 
+&ldquo;non-rectangular&rdquo; datasets that need to be 
+transformed/combined/reshaped in non-trivial ways: R makes it much easier to 
+work on several datasets at the same time, and different types of objects can 
+be used in consistent ways.</p> 
+<p>Still, I haven&rsquo;t completely stopped using Stata: one of the things 
+that bother me when I use R is the lack of nice and quick descriptive 
+statistics functions like &ldquo;tabulate&rdquo; or &ldquo;tabstat&rdquo;. Of 
+course, it is possible to use standard R functions to get about the same 
+desired output, but they tend to be quite a bit more cumbersome. Here&rsquo;s 
+an example:</p> 
+<p><code>tabstat y, by(group) stats(N mean p10 median p90)</code></p> 
+<p>could be translated into R as:</p> 
+<p><code>tapply(levels(group), levels(group), function(i)<br>
+cbind(N=length(y[
+group== i],<br>
+mean(y[group == i]),<br>
+quantile(y[group == i], c(.1,.5,.9)))
+</code></p> 
+<p>or, for a more concise version:</p> 
+<p><code>by(y, group, function(x)<br>
+c(N=length(x),mean=mean(x),quantile(x,c(
+.1,.5,.9)))</code></p> 
+<p>That&rsquo;s quite ugly compared to the simple tabstat command, but I could 
+deal with it&hellip; Now suppose I am working on survey data and observations 
+have sampling weights, and the syntax will have to get even more complicated 
+&mdash; I&rsquo;d have to think about something for a few minutes, when all 
+Stata would need is a quick [fw=weight] statement added before the comma.</p> 
+<p>True, R can deal with survey weights, but it almost never matches the 
+simplicity of Stata when all I am trying to do is get a few simple descriptive 
+statistics on survey data:</p> 
+<p>One of my latest problems with R involved trying to make a two-way table of 
+relative frequencies by column with weighted data&hellip; yes, a simple 
+contingency table! The table() function cannot even compare with Stata&rsquo;s 
+tabulate twoway command, since:</p> 
+<ol> 
+<li> it does not handle weights;</li> 
+<li> it does not report marginal distributions in the last row and column of 
+the table (which I always find helpful);</li> 
+<li> it calculates cell frequencies but not relative frequencies by row or 
+column.</li> </ol> 
+<p>Luckily, writing an R function that can achieve this is not too hard:</p> 
+<p><code>col.table &lt;- function(var1, var2, weights=rep(1,length(var1)), 
+margins=TRUE){<br>
+# Creating table of (weighted) relative frequencies by 
+column, and adding row variable margins as the last column<br>
+ crosstab &lt;- 
+prop.table(xtabs(weights ~ var1 + var2), margin=2)<br>
+t &lt;- cbind(crosstab, 
+Total=prop.table(xtabs(weights ~ var1)))<br>
+# Adding column sums in the last 
+row<br>
+t &lt;- rbind(t,Total = colSums(t))<br>
+# Naming rows and columns of 
+the table after var1 and var2 used, and returning result<br>
+names(dimnames(t)) 
+&lt;- c(deparse(substitute(var1)), deparse(substitute(var2)))<br>
+return(round(
+100*t,2))<br>
+}</code></p> 
+<p>col.table(x,y,w) gives the same output as Stata&rsquo;s &ldquo;tabulate x y 
+[fw=w], col nofreq&rdquo;. Note that the weight argument is optional so that: 
+col.table(x,y) is equivalent to tabulate x y, col nofreq.</p> 
+<p>Here&rsquo;s the same function, but for relative distributions by row:</p> 
+<p><code>row.table &lt;- function(var1, var2, weights=rep(1,length(var1)), 
+margins=TRUE){<br>
+ t &lt;- rbind(prop.table(xtabs(weights ~ var1 + var2), 
+margin=1),<br>
+ Total=prop.table(xtabs(weights ~ var2)))<br>
+t &lt;- cbind(t,
+Total= rowSums(t))<br>
+names(dimnames(t)) &lt;- c(deparse(substitute(var1)), 
+deparse(substitute(var2)))<br>
+return(round(100*t,2))<br>
+}</code></p> 
+<p> <em>May 6, 2009 at 7:41 pm</em> <em>pkremp</em> <em> 8 comments </em> </p> 
+<h3>R, Stata and &ldquo;non-rectangular&rdquo;&nbsp;data</h3> 
+<p>| Pierre |</p> 
+<p>Thanks Gabriel for letting me join you on this blog. For those who 
+don&rsquo;t know me, my name is Pierre, I am a graduate student in sociology at 
+Princeton and I&rsquo;ve been doing work on organizations, culture and economic 
+sociology (guess who&rsquo;son my committee). Recently, I&rsquo;ve become 
+interested in diffusion processes &mdash; in quite unrelated domains: the
+emergence of new composers and their adoption in orchestra repertoires, the 
+evolution of attitudes towards financial risk, the diffusion of stock-ownership 
+and the recent stock-market booms and busts.</p> 
+<p>When Gabriel asked me if I wanted to post on this 
+Stata/soc-of-culture-oriented blog, I first told him I was actually slowly 
+moving away from Stata and using R more and more frequently&hellip; which is 
+going to be the topic of my first post. I am not trying to start the first 
+flamewar of &ldquo;Code and culture&rdquo; &mdash; rather I&rsquo;d like to 
+argue that both languages have their own strengths and weaknesses; the 
+important thing for me is not to come to a definitive conclusion (&ldquo;Stata 
+is better than R&rdquo; or vice versa) and only use one package while 
+discarding the other, but to identify conditions under which R or Stata are 
+more or less painful to use for the type of data analysis I am working on.</p> 
+<p>People usually emphasize graphics functions and the number of high-quality 
+user-contributed packages for cutting-edge models as being R&rsquo;s greatest 
+strengths over other statistical packages. I have to say I don&rsquo;t run very 
+often into R estimation functions for which I can&rsquo;t find an equivalent 
+Stata command. And while I agree that R-generated graphs can be amazingly cool, 
+Stata has become much better in recent years. For me, R is particularly useful 
+when I need to manipulate certain kinds of data and turn them into a 
+&ldquo;rectangular&rdquo; dataset:</p> 
+<p>Stata is perfect for &ldquo;rectangular&rdquo; data, when the dataset fits 
+nicely inside a rectangle of observations (rows) and variables (colums) and 
+when the conceptual difference between rows and columns is clear &mdash; this 
+is what a dataset will have to look like just before running a regression. But 
+things can get complicated when the raw dataset I need to manipulate is not 
+already &ldquo;rectangular&rdquo;: this may include network data and multilevel 
+data &mdash; even when the ultimate goal is to turn these messy-looking data, 
+sometimes originating from multiple sources, into a nice rectangular dataset 
+that can be analyzed with a simple linear model&hellip; Sure, Stata has a few 
+powerful built-in commands (although I&rsquo;d be embarrassed to say how many 
+times I had to recheck the proper syntax for &ldquo;reshape&rdquo; in the Stata 
+help). But sometimes egen, merge, expand, collapse and reshape won&rsquo;t do 
+the trick&hellip; and I find myself sorting, looping, using, saving and merging 
+until I realize (too late of course!) that Stata can be a horrible, horrible 
+tool when it comes to manipulating datasets that are not already rectangular. R 
+on the other hand has two features that make it a great tool for data 
+management:</p> 
+<ol> 
+<li>R can have multiple objects loaded in memory at the same time. Stata on 
+the other hand can only work on one dataset at a time &mdash; which is not just 
+inefficient (you always need to write the data into temporary files and read a 
+new file to switch from one dataset to another), it can also&nbsp; 
+unnecessarily add lines to the code and create confusion.</li> 
+<li>R can easily handle multiple types of objects: vectors, matrices, arrays, 
+data frames (i.e. datasets), lists, functions&hellip; Stata on the other hand 
+is mostly designed to work on datasets: most commands take variables or 
+variable lists as input; and when Stata tries to handle other types of objects 
+(matrices, scalars, macros, ado files&hellip;), Stata uses distinct commands 
+each with a different syntax (e.g. &ldquo;matrix define&rdquo;, 
+&ldquo;scalar&rdquo;, &ldquo;local&rdquo;, &ldquo;global&rdquo;, &ldquo;program 
+define&rdquo; instead of &ldquo;generate&rdquo;&hellip;) and sometimes a 
+completely different language (Mata for matrix operations &mdash; which I have 
+never had the patience to learn). R on the other hand handles these objects in 
+a simple and consistent manner (for example it uses the same assignment 
+operator &ldquo;&lt;-&rdquo; for a matrix, a vector, an array, a list or a 
+function&hellip;) and can extract elements which are seamlessly 
+&ldquo;converted&rdquo; into other object types (e.g. a column of a matrix, or 
+coefficients/standard errors from a model are by definition vectors, which can 
+be treated as such and added as variables in a data frame, without even using 
+any special command &agrave; la &ldquo;svmat&rdquo;).</li> </ol> 
+<p>In my next post, I&rsquo;ll try to explain why I keep using Stata despite 
+all this&hellip;</p> 
+<p> <em>April 28, 2009 at 12:57 pm</em> <em>pkremp</em> <em> 9 comments </em> 
+</p> 
+<p> Newer Posts </p> 
+<ul> 
+<li>RSS - Posts</li> 
+<li>RSS - Comments</li> </ul> 
+<h2><em>The Culture Geeks</em></h2> 
+<ul> 
+<li> <strong>gabrielrossman</strong> </li> 
+<li> <strong>pkremp</strong> </li> </ul> Search for: <br>
+
+<h2><em>Tags</em></h2> ASA bayesian categorization causality cleaning culture 
+diffusion economics economic sociology ethnomethodology financial crisis 
+genetics graphs history IMDB loops lyx macros netlogo networks perl 
+phenomenology philosophy of science R random variables regular expressions 
+resampling satire scraping shell simulation sociology of organizations 
+sociology of science socm176 st Stata superstar text editor typesetting <br>
+
+<h2><em>Archives</em></h2> 
+<ul> 
+<li>March 2012</li> 
+<li>February 2012</li> 
+<li>January 2012</li> 
+<li>December 2011</li> 
+<li>November 2011</li> 
+<li>October 2011</li> 
+<li>September 2011</li> 
+<li>August 2011</li> 
+<li>July 2011</li> 
+<li>June 2011</li> 
+<li>May 2011</li> 
+<li>April 2011</li> 
+<li>March 2011</li> 
+<li>February 2011</li> 
+<li>January 2011</li> 
+<li>December 2010</li> 
+<li>November 2010</li> 
+<li>October 2010</li> 
+<li>September 2010</li> 
+<li>August 2010</li> 
+<li>July 2010</li> 
+<li>June 2010</li> 
+<li>May 2010</li> 
+<li>April 2010</li> 
+<li>March 2010</li> 
+<li>February 2010</li> 
+<li>January 2010</li> 
+<li>December 2009</li> 
+<li>November 2009</li> 
+<li>October 2009</li> 
+<li>September 2009</li> 
+<li>August 2009</li> 
+<li>July 2009</li> 
+<li>June 2009</li> 
+<li>May 2009</li> 
+<li>April 2009</li> 
+<li>March 2009</li> </ul> 
+<h2><em>Recent Posts</em></h2> 
+<ul> 
+<li>Recursively building graph commands</li> 
+<li>Bleg on Failure</li> 
+<li>Do declining Hollywood revenues mean fewer movies or smaller mansions?</li>
+<li>Sympathy for the IP Industry</li> 
+<li>That depends on the meaning of &quot;all&quot;</li> 
+<li>How is a Textbook Like an MRI? [updated]</li> 
+<li>How the poor debtors still sell their daughters, How in the drought men 
+still grow fat</li> 
+<li>Is Facebook &quot;Naturally Occurring&quot;?</li> 
+<li>Scraping Using twitteR (updated)</li> 
+<li>Scraping Using twitteR</li> </ul> 
+<h2><em>Recent Comments</em></h2> 
+<ul> 
+<li>gabrielrossman on Recursively building graph&nbsp;commands</li> 
+<li>Eric on Recursively building graph&nbsp;commands</li> 
+<li>gabrielrossman on fsx.ado, fork of fs.ado (capture ls as&nbsp;macro)</li> 
+<li>Ben on fsx.ado, fork of fs.ado (capture ls as&nbsp;macro)</li> 
+<li>Zoltan on R, Stata and descriptive&nbsp;stats</li> 
+<li>edward walker on Bleg on&nbsp;Failure</li> 
+<li>Bill on Bleg on&nbsp;Failure</li> 
+<li>Dan Hirschman on Bleg on&nbsp;Failure</li> 
+<li>LS on How the poor debtors still sell their daughters, How in the drought 
+men still grow&nbsp;fat</li> 
+<li>Quora on Network Graphs in Native Stata&nbsp;Code</li> </ul> 
+<h2><em>Blogroll</em></h2> 
+<ul> 
+<li>Data Drip (SSRC)</li> 
+<li>Disgruntled Sociologist</li> 
+<li>Eric Booth's Research Notes</li> 
+<li>Mac Research</li> 
+<li>Org Theory</li> 
+<li>Org Theory (My Posts)</li> 
+<li>Permutations</li> 
+<li>Religion and Other Curiosities</li> 
+<li>Rense Corten</li> 
+<li>Soc2Econ</li> 
+<li>Social Science Statistics Blog (Harvard)</li> 
+<li>Sociological Imagination</li> 
+<li>Stata Daily</li> 
+<li>Stata on a Mac</li> 
+<li>Stata Tidbit of the Week (Michael Mitchell)</li> 
+<li>The Stata Blog</li> 
+<li>The Stata Things (Gabi Huiber)</li> 
+<li>What is the What (Jenn Lena)</li> </ul> 
+<h2><em>References/Resources</em></h2> 
+<ul> 
+<li>California Center for Population Research</li> 
+<li>CPANDA</li> 
+<li>Data Ninja</li> 
+<li>Internet Movie Database (raw text)</li> 
+<li>Safari Books (gated)</li> 
+<li>UCLA Academic Technology Services</li> 
+<li>Unix and Perl Tutorial (UC Davis)</li> </ul> 
+<p>Theme: Blix by Sebastian Schmieg . Blog at WordPress.com.</p> <br>
+<br>
+<br>
+Follow 
+<h3>Follow &ldquo;Code and Culture&rdquo;</h3> 
+<p>Get every new post delivered to your Inbox.</p> 
+<p></p> 
+<p></p> 
+<p></p> Powered by WordPress.com <br>
+<br>
+
+<p></p> 
+</body>

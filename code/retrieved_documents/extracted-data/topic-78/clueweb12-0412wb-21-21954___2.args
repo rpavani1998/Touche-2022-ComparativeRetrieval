@@ -1,0 +1,28 @@
+for example, sorting transparent objects before rendering or sorting objects by state attribute (e.g. texture) to improve batching.
+for example, our parallel merge sort (with parallel merge) implementation sees 7-11x speed-ups for float and int arrays >40k on 4 spus.
+in this part we willimprove it so that it can run on 4 spus instead of 2.
+all speed-ups are over our optimized merge sort running on the ppu.
+in the previous part we have created a parallel sort implementation that runs on 2 spus.
+with offload™ we can enqueue more blocks than there are spus but some spus will be idle at the end: if we enqueue 8 blocks, 6 will be processed in parallel at the same time and when they have been sorted the last 2 blocks will be processed.
+with multi-core architectures like the ps3 it makes sense to parallelize this operation to maximize the use of these cores.
+parallel sort on 4 spus as we have seen, the recursive structure of our parallel sort implementation limits the number of spus we can use.
+with offload™ we can enqueue more blocks than there are spus but some spus will be idle at the end: if we enqueue 8 blocks, 6 will be processed in parallel at the same time and when they have been sorted the last 2 blocks will be processed.
+if we divided the array in four parts we could use 4 spus.
+on the other hand, the parallel quicksort (with parallel merge) sees 5-6x speed-ups (over merge sort) on the same face arrays.
+when sorting >20k arrays with merge sort on 4 spus we see 6-11x speed-ups for float arrays and 5-10x speed-ups for int arrays over the ppu implementation.
+when sorting faces the speed-ups are lower (~4x).
+doing this again (i.e. dividing the array into 8 parts) would be possible, unfortunately only 6 out of the ps3's 8 spus can be used.
+as we have seen, the recursive structure of our parallel sort implementation limits the number of spus we can use.
+in this blog post series we have explained the process of creating a parallel sort implementation on the ps3's spus.
+it allocates spu memory for all arrays, copy the data from ppu to spu, merge both arrays and copies the result back to the ppu once finished.
+with float and integer arrays the speed-ups are lower (~4x over merge sort).
+interestingly, different sort algorithms perform differently with different data types.
+thus it is not any faster than sorting 4 blocks on 4 spus.
+doing this again (i.e. dividing the array into 8 parts) would be possible, unfortunately only 6 out of the ps3's 8 spus can be used.
+these chunks are then merged in parallel, also on spus.
+up to 4 spus are used for sorting and up to 6 spus for merging.
+this results in 6-11x speed-ups for sorting float and integers arrays of over 20k elements and 2.5-3x speed-ups for sorting similarly-sized arrays of our user-definedface struct.
+in addition, we will show how to parallelize merge to run on any number of spus which will improve performance even further.
+our implementation can use any sort function (that can run inside an offload™ block) to sort array chunks small enough to fit in a spu's local memory.
+because of the way most algorithms work (comparing and swapping pairs of items) sorting often takes precious time.
+it allocates spu memory for all arrays, copy the data from ppu to spu, merge both arrays and copies the result back to the ppu once finished.

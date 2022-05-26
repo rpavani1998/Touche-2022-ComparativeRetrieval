@@ -1,0 +1,553 @@
+having tests depend on each other will cause chains of failing tests, making it difficult to track the problem down to the source.
+two tips that helped us apply tdd to high-level code: tests as a measure of progress software developers have been struggling for a long time to find a good measure of progress or work done.
+it is common sense and a good software engineering practice to keep all the graphics-related code in one library or module, and make the rest of the game independent of the platform graphics api and hardware.
+one thing that should be clear and is important to stress is that tdd is not just writing unit tests.
+the input system deals with getting input values from gamepads and other controllers.
+for example, a mock object could record what functions were called and what values were passed, or could be set up to return a set of fixed values when one of its functions is called.
+maybe if we were working on a commercial graphics rendering middleware it would be worth the effort.
+code can get too complex for its own good.
+see how doing something so apparently backwards as writing unit tests before any code can help with all those problems.
+we have found that in codebases that are developed with tdd, comments have almost disappeared, being used only to explain why something was done in a particular way, or to document what paper an algorithm we implemented came from.
+i return false from the above function as true is the signal to try and hook into the debugger, which i don’t want when running automated tests.
+having an agile mindset fits very well with the idea of finding the design through tests.
+its only job is to check the non-test code, so it’s keeping an eye out for us, helping us, and letting us know when something breaks.
+that’s actually even more complicated than what we want for our small testing steps, so let’s start with an even simpler test that requires the least amount of effort: if we have a player and a powerup, and the player isn’t anywhere near the powerup, his amount of health doesn’t change.
+the most important thing is to make sure your tests run automatically (remember the postbuild trick).
+any decent unit test framework should support fixtures, so use them whenever they’re needed.
+because of that, our unit tests on platforms other than windows are only executed manually, and by the build server.
+that way we could make any graphics api calls that we needed without having to worry about the underlying hardware.
+one thing that should be clear and is important to stress is that tdd is not just writing unit tests.
+mockpp, at least in my opinion, is a too straitforward port from java and c#, and is not suitable for c/c++ (similar to what happend with cppunit).
+keeping that in mind helps to write true unit tests and not functional tests for the api.
+in addition to running tests locally, the build server also runs all the unit tests at the same time it does code builds.
+in your game binary you can link a library containing your (perhaps platform specific) assert handler, for a dialog box, or whatever your preference is in that case.
+when doing this, it can be extremely useful to have somebody on board with previous tdd experience who can help guide the process, set up the environment, and avoid common early mistakes.
+on the positive side, because the tests are exercising the graphics api and hardware directly, we catch things that the first approach wouldn’t have caught (for example, sending incorrect parameters to a function).
+backwards is forward: making better games with test-driven development one thing that should be clear and is important to stress is that tdd is not just writing unit tests.
+it was also discouraging us from using new api functions just because they hadn’t been wrapped before.
+so if this is made clear, people will be much more likely to be strict about applying tdd and not falling back on writing code without tests.
+keep the engine architecture as flat as possible.
+we pass the mocked rendering canvas to the hud renderer and make the render call.
+in our particular case, not only were we doing tdd, but we were doing all the extreme programming practices (pair programming, continuous integration, collective code ownership, etc).
+as you can see, it can’t get much easier than that.
+however, it’s the same facility to weave code out of thin air that can become our greatest danger.
+let’s assume we already have a game up and running, and our task is to implement health powerups.
+we can easily set up a world with a couple of enemies, call that function, and verify that it returns the enemy entity we expected.
+not everybody has that luxury, so it is important to learn how to apply tdd even with an existing legacy codebase.
+the most important reason to minimize the amount of code involved in a test is to keep things simple.
+in our case, since the tests are a postbuild step, there was nothing special we had to do in the build server, and a failed test would be reported just as code that didn’t compile correctly.
+the minimum support that we needed was the ability to run an executable through the command line and capture the output and, ideally, the return code.
+the testing layer could be removed in the final build and the functions would call directly into the graphics api so there would be no performance penalties.
+functional tests are a great complement to unit tests, so it’s important not to forget about them.
+additionally, since the test executable returns a value with the number of failed tests, a failing test will return a non-zero value, which is interpreted by the build chain as a failed build.
+here we make a function call, and we want to test that the object under test did a sequence of actions with other objects.
+you have to format your message like so: std::cout 0 check somewhere).
+the test program should know whether any tests failed or not without any ambiguity, that way it can be easily integrated into the build process.
+code can get too complex for its own good.
+we are hoping that as tdd becomes more common in the games industry, middleware providers will make their apis more tdd friendly and even ship with their unit tests.
+no problem seems too large as long as you’re taking small steps in its direction and getting feedback that you’re in the correct track.
+there is no doubt that the best situation to roll out tdd is with a fresh new codebase.
+notice the trade-off between slightly slower short-term speed vs. massive gains later on.
+if some tests involve a large amount of the codebase, they will constantly break for unrelated reasons.
+unit tests are supposed to be simple and fast, so any loops in a test are usually very suspect.
+that means you can be merciless about refactoring your code, and you can still be confident that it will work if all the tests continue to run.
+graphics, middleware, and other apis probably the biggest barrier that people see to doing unit testing and tdd with games is how to deal with graphics.
+we don’t really care about state, just that a certain number of function calls happened.
+in our groups, we have a test chart, which is updated every day and shows the total count of tests.
+even though at high moon we develop console games, we use windows as our primary development environment because of the good development tools and the fast iteration time.
+working with a full game engine, you might end up writing a small module that is fully surrounded by the engine code.
+the check_equal macro is the part that performs the actual check, and it takes as parameters the expected value and the actual value.
+we also found that limiting each unit test to a single check statement or two resulted in tests that were the easiest to understand.
+that means that making any changes to the library or tests and triggering a compile will also run all the tests.
+gethealth()); and that’s exactly what the test will look like, only we’ll have to surround it with a macro to take care of all the bookkeeping and to give it a descriptive name.
+not that i was present to see it further proof agile is turning the corner i love to find information that backs up my belief that agile development practices are gaining wider acceptance, such as this article describing how to do tdd game programming in c++.
+as a general rule, whenever a set of unit tests goes over two seconds, it means something is wrong and we try to fix it (even if a unit test takes a full ms, which is a huge amount for a unit test, you can still run 1000 of them in a single second).
+he builds his castles in the air, from air, creating by exertion of the imagination.
+randomness and games most games involve a fair amount of randomness: the next footstep sound you play can be any one of a set of sounds, the next particle emitted has a random speed between a minimum and a maximum, etc.
+here we make a function call, and we want to test that the object under test did a sequence of actions with other objects.
+what was a pleasant surprise is that broken builds are much easier to fix.
+sometimes that means you’ll have to write some duplicate setup code between two tests, but it’s a small price to pay to keep the tests as simple as possible.
+i’ve been lazy and haven’t updated the cpptestharness homepage yet, but unittest++ has many notable improvements already.
+it will probably come as no surprise to anybody that writing code with tdd results in more code being written.
+you can browse through them to see what kind of use a class is intended to have, you can look up a particular test to see what kind of assumptions a function makes about its parameters, or you can even comment out some code that makes no sense and see what tests break to give an idea of what it does.
+however, it was quite labor-intensive, especially for the direct3d api because it uses classes and not just plain functions like opengl.
+one of the drawbacks of this approach is that we’re working directly with the hardware, so tests actually do initialize and shutdown the graphics system every time (except for those platforms out there that can only initialize the graphics system once), so they can be more time consuming.
+write the simplest amount of code that will make the test compile and pass.
+because a lot of the high-level game engine is written in unrealscript, we had little choice but to use it to write most of the game code.
+this approach made for extremely thorough tests.
+in “object interactions” you wrote: “using mocks frequently could be an indication that the code relies too much on heavy objects with complex interactions …” i do not think it’s true.
+i think part of the reason is that mocks are much easier to create in unrealscript than in c++.
+for this to happen, it’s important to let the tests guide the code and not the other way around.
+the test code has been written so it’s extremely simple, so its complexity is minimal.
+the key to working with tdd is to realize that refactoring is an integral part of the development process and should happen regularly every few tests.
+its only job is to check the non-test code, so it’s keeping an eye out for us, helping us, and letting us know when something breaks.
+for the guy asking about visual studio return codes: yes, visual studio ignores error codes.
+build stability as we expected, having almost full code coverage with unit tests greatly improves the code stability.
+however, that severely limits the amount of large-scale refactorings we can do to keep things as testable as possible, so it’s a tough trade-off.. one unique aspect of the unreal engine is that it makes heavy use of its scripting language, unrealscript.
+the most important thing to do in this situation is to separate the code we write as much as possible from the engine code.
+then we can examine that the list in our mocked canvas matches our expectations.
+theworld object can be a very lightweight container for game entities without any other dependencies.
+creating an object in a test and reusing it in a different test is asking for trouble for the same reasons as we discussed earlier: when a test fails, you want to be able to zero in on the failing test and the problem that is causing it to fail.
+the larger the team and the more complex the problem, the more tdd saves time in the long run.
+even though we find refactoring to be an extremely important part of the development process, the safety net goes way beyond refactoring.
+not only does visual studio indicate this in the output log, but it will also fail any automated builds in your build server without having to do any extra checks.
+applying it on a small scale initially was very useful in many different ways.
+not only does this allow us to unit-test our code in isolation, but we also keep future merges with epic’s codebase as simple as possible.
+the test program should know whether any tests failed or not without any ambiguity, that way it can be easily integrated into the build process.
+we’re not doing tdd because it’s a “good” thing to do, but because we want to ship a better-quality product faster and cheaper than we did before.
+– ash paulius: unittest++ actually started as a copy of cpptestharness.
+in our system, we have an interface named gamecontroller with a sample() function.
+for example, instead of just having a playfootstep() function that takes care of computing a random footstep and then playing it, we can break it into int computenextfootstep() which is just a random function call, and a playfootstep(int index), which we can now test very easily.
+you may use fakes as michael feathers suggests, but manual creation of fakes could very soon turn to be too burdensome.
+also, since opengl is so state-based, it was important for most functions to clean up after themselves, so it was often very hard to check for any state.
+see how doing something so apparently backwards as writing unit tests before any code can help with all those problems.
+even though we find refactoring to be an extremely important part of the development process, the safety net goes way beyond refactoring.
+it is possible to simply write code faster than it is to write the tests first, but as soon as that code needs to be refactored, debugged, used by somebody else, or simply gets more complex, any time savings quickly disappear.
+you also need something to deal with system api as you described in “graphics, middleware, and other aips”.
+let’s assume we already have a game up and running, and our task is to implement health powerups.
+not everybody has that luxury, so it is important to learn how to apply tdd even with an existing legacy codebase.
+we have hooked up running the executable itself as the post-build step in visual studio (or as the last command in a make file).
+that’s actually really important, because it allows us to run $(targetpath) in the postbuild step and have the executable return the number of failed tests.
+maybe you run through a level, checking that feature and making sure nothing else looks obviously broken, or maybe you even step in the debugger to make sure your code is getting called and doing what it’s supposed do.
+but even more importantly, tests should run very frequently, and a failed test should be treated the same way as a failed build.
+after we wrote those small utility programs, we were able to run unit tests on the consoles just like we did under windows.
+at high moon, every library has a separate test project that creates an executable that links with the library and runs all the tests.
+even though the engine is not tdd-friendly at all, we still find more benefit from doing tdd with it.
+build stability as we expected, having almost full code coverage with unit tests greatly improves the code stability.
+the unit tests created through tdd serve as a very effective form of documentation.
+it is common sense and a good software engineering practice to keep all the graphics-related code in one library or module, and make the rest of the game independent of the platform graphics api and hardware.
+applying it on a small scale initially was very useful in many different ways.
+we pass the mocked rendering canvas to the hud renderer and make the render call.
+milestone pressures, a fluctuating game industry, growing teams and budgets, and the breakneck pace of hardware change don’t help an already difficult situation.
+the unit tests provide you with instant feedback up to several times per minute.
+- assertions: we provide a hooking mechanism, so every assertion that gets fired inside a test result in failing the test.
+the assert system works identically to cpptestharness.
+especially when tests are developed through tdd, they deal less with corner cases and more with program features.
+for us, after doing that for a few weeks, we realized that the benefits we were deriving from it weren’t worth the time we were spending.
+also, code at that level is often writ ten by designers in a game-specific scripting language, so tdd might not be a viable option.
+once we had that organization, we were able to test any part of the game or engine without having to worry about graphics.
+our castles in the air can quickly become snowballs that are too large to be moved and shaped to fit our needs.
+it also makes any bad practices apparent early on and they can be dealt with before rolling it out (making overly complex tests or functional, rather than unit tests).
+the reason we have macros like check_equal is that unit tests need to be fully automated.
+great article, especially like the air-castle reference one little tip for people who dedice to hook things up in visual studio, it took us a little headscratching to realize that visual studio doesn’t do result !
+we have hooked up running the executable itself as the post-build step in visual studio (or as the last command in a make file).
+for example, we could send an event of nearby noise to an ai in “idle” state and check that its state changes to “alert” in response.
+even though at first glance it might seem like the whole system is about making system calls to poll the data, there is a lot of common code that is totally platform independent: button mappings, edge detection, filtering, plugging/unplugging controllers, etc.
+by the way, just a quick announcement to say that the first release of unittest++ is out.
+we had seen in practice from previous projects that we can certainly do tdd to create low-level and intermediate-level libraries (math, collision, messaging, etc).
+an example of some code that we would not use tdd for is trigger code: when the player goes around the corner, wake up two ais and trigger a different background music.
+test diagnostics (could be easily integrated with any other unit testing framework – i did it for cunit!).
+we have found that in codebases that are developed with tdd, comments have almost disappeared, being used only to explain why something was done in a particular way, or to document what paper an algorithm we implemented came from.
+another approach is to actually work on the graphics hardware and check that things are working correctly by querying the graphics ap i state.
+because a lot of the high-level game engine is written in unrealscript, we had little choice but to use it to write most of the game code.
+using mock objects frequently could be an indication that the code relies too much on heavy objects with complex interactions instead of many, loosely-coupled, simpler objects.
+this is quite subjective, but the constant feedback has a surprising morale-boosting effect.
+by default, all functions are virtual, so overriding behaviors and creating mocks is simpler than c++.
+for example, a function called getnearestenemy() would be a perfect candidate to be tested this way.
+sometimes that means you’ll have to write some duplicate setup code between two tests, but it’s a small price to pay to keep the tests as simple as possible.
+we had seen in practice from previous projects that we can certainly do tdd to create low-level and intermediate-level libraries (math, collision, messaging, etc).
+it also had the effect of creating new evangelists for the new technique.
+keeping each unit test to just a handful of lines makes it much easier to understand at a glance.
+the rest of the input system works through the gamecontroller interface, but for all the tests we provide a mockgamecontroller() which allows us to control what input values we feed to the tests.
+in fact it was initially developed for internal use only, but then i realised it might be useful for a wider audience.
+however, it’s the same facility to weave code out of thin air that can become our greatest danger.
+that means we always have a version of our engine and tools that runs under windows, which makes running unit tests very easy and convenient.
+in test projects) you get failed tests, in the case of assertion errors, or you can use check_assert to verify a particular expression does assert.
+btw, the full subversion checkout command is this: svn co https://svn.sourceforge.net/svnroot/unittest-cpp/unittest++ if anyone’s interested in an unpackaged sneak preview.
+right now, the idea of writing code without writing tests first feels quite alien to most of us, and we treat tdd like the scaffolding in building construction: a necessary tool that will not be shipped to the customer but that helps tremendously during development.
+run tests frequently being able to write tests easily is a requirement for successfully rolling out tdd.
+it’s a matter of just a few seconds, but it was too long to run the unit tests automatically as a postbuild step after every compilation.
+even though this can initially sound like a scary proposition, it really isn’t a problem.
+ideally, when something breaks, you want only a small number of tests failing so you can quickly pinpoint the problem.
+gdc2006 presentations links game developers conference 2006 closed its doors last week.
+nobody wants to spend extra time writing unit tests when they can be implementing the features that are due for this milestone.
+continuing with the health powerup example, notice that the test involved a world object, a player object, and a healthpowerup object.
+in oo we indeed have a best practices recommendation to avoid deep inheritance hierarchy since it typically leads to a very fragile and overcomplicated structure.
+i’ll have a more detailed announcement up tomorrow explaining the rational for the new unit testing framework and what i think its unique selling points are.
+members of that team were then moved on to other teams, where they became the resident tdd expert.
+the minimum support that we needed was the ability to run an executable through the command line and capture the output and, ideally, the return code.
+if a library has 500 tests associated with it, we can say that it’s roughly half as complex as a library with 1000 tests.
+when doing this, it can be extremely useful to have somebody on board with previous tdd experience who can help guide the process, set up the environment, and avoid common early mistakes.
+a few people can have a hard time switching over to the tdd mentality, but to take full advantage of tdd, it is best to let the design emerge from the tests and the refactoring rather than trying to plan everything up front.
+for example, a mock object could record what functions were called and what values were passed, or could be set up to return a set of fixed values when one of its functions is called.
+in our case, it is unusual to have unit tests that are more than 15 lines long.
+as a bonus, that layer could report which functions were called and with what parameters.
+graphics, middleware, and other apis probably the biggest barrier that people see to doing unit testing and tdd with games is how to deal with graphics.
+not only does visual studio indicate this in the output log, but it will also fail any automated builds in your build server without having to do any extra checks.
+automated functional tests can be extremely useful catching high-level problems, gathering performance and memory utilization data, and removing some of the mechanical testing from qa and letting them concentrate on issues such as gameplay balance and flow.
+he builds his castles in the air, from air, creating by exertion of the imagination.
+maybe you run through a level, checking that feature and making sure nothing else looks obviously broken, or maybe you even step in the debugger to make sure your code is getting called and doing what it’s supposed do.
+this is the trickiest aspect to test.
+as a general rule, we find that if any other part of the game is going to depend on the code we are writing, then it’s probably worth doing it with tdd and having a full set of unit tests for it.
+additionally, the tdd approach results in much simpler, decoupled code.
+also, because the code was first created by testing it in isolation from the rest of the code, you will end up with a much more modular, simpler design.
+especially when tests are developed through tdd, they deal less with corner cases and more with program features.
+object state make a function call, then check that the state of the object or some part of the system has changed correctly.
+frederick p. brooks, jr. part of the appeal of programming is that, as brooks describes, it allows us to build ornate castles in the air, where our imagination is the only limit.
+because of that, our unit tests on platforms other than windows are only executed manually, and by the build server.
+even though the engine is not tdd-friendly at all, we still find more benefit from doing tdd with it.
+you can browse through them to see what kind of use a class is intended to have, you can look up a particular test to see what kind of assumptions a function makes about its parameters, or you can even comment out some code that makes no sense and see what tests break to give an idea of what it does.
+needing to write overly long unit tests is usually a sign that the test is involving too much code and could probably be re-written in a better way.
+after we wrote those small utility programs, we were able to run unit tests on the consoles just like we did under windows.
+functional tests are extremely useful, especially if they are fully automated, but they fill a very different role than unit tests.
+cppunit comparison of c++ unit-test frameworks this entry was posted in test-driven development by noel.
+as an added benefit, people tend to behave based on how they think they are being measured.
+for example, it can test that a health pack doesn’t add more health past the player’s maximum, or it can test that a particular effect disables depth writes.
+you are forced to use that code in a test.
+this is the most direct way of testing, and it works great for functions that do computations and return the computed value.
+beware of testing functions that return boolean results indicating if the function failed or succeeded.
+in your game binary you can link a library containing your (perhaps platform specific) assert handler, for a dialog box, or whatever your preference is in that case.
+test-driven development can be a very effective development technique.
+this tests that state changes directly, so it’s also a very straightforward form of testing.
+for example, a test named playerhealth is not very helpful.
+notice the trade-off between slightly slower short-term speed vs. massive gains later on.
+maybe if we were working on a commercial graphics rendering middleware it would be worth the effort.
+ideally, tdd and refactoring can flatten out the classical cost-of-change over time curve into something like this.
+i’m not sure it’s the same with regrad to an object composition structue, which could be quite deep.
+we are hoping that as tdd becomes more common in the games industry, middleware providers will make their apis more tdd friendly and even ship with their unit tests.
+sometimes it just takes a little bit of refactoring of the existing code and it becomes a lot easier to add new tests.
+i’ve been looking at various software development methodologies lately and i’ve found some pretty interesting blogs on one type that is very exciting.
+conclusion test-driven development can be a very effective development technique.
+as a general rule, whenever a set of unit tests goes over two seconds, it means something is wrong and we try to fix it (even if a unit test takes a full ms, which is a huge amount for a unit test, you can still run 1000 of them in a single second).
+so inter-object communication and thus a need for mocks is supposed to be a norm rather than an exception.
+it might lead to larger interfaces than absolutely necessary, but it also sometimes shows that a class really should be split into two, and one of the classes should contain the other one.
+by following our best practices for unit tests, it becomes really obvious when something breaks, and we can usually check in a fix right away.
+we’re not doing tdd because it’s a “good” thing to do, but because we want to ship a better-quality product faster and cheaper than we did before.
+all of that makes tdd with unrealscript not just possible, but very effective.
+not only does this allow us to unit-test our code in isolation, but we also keep future merges with epic’s codebase as simple as possible.
+similarly, changing functionality or adding new feature towards the end of the development cycle suddenly becomes a lot less risky and scary.
+nobody wants to spend extra time writing unit tests when they can be implementing the features that are due for this milestone.
+then we can examine that the list in our mocked canvas matches our expectations.
+on platforms in which the internals of the graphics api are more open, you might be able to examine more states by looking at the graphics command buffer.
+otherwise, if it’s a one-shot deal with the highest-level code, then it’s probably fine without tdd.
+for example, we could render a mesh, but we wouldn’t be able to find out how many triangles were sent to the hardware.
+that simple fact makes it so all code is created with the user of the code in mind, not the implementation details.
+specifically, in this context, each unit test deals with something almost trivially small, which can probably be done in less than a minute.
+you are forced to use that code in a test.
+finally, another very good reason to avoid involving extra code is that tests that only work on a small set of code are typically much faster than tests that involve large systems and complex initialization/shutdown sequences.
+it also makes any bad practices apparent early on and they can be dealt with before rolling it out (making overly complex tests or functional, rather than unit tests).
+michael feathers’ book working effectively with legacy code, explains exactly that situation and gives some very good guidelines on how to go about unit testing with a codebase without existing unit tests.
+finally, another very good reason to avoid involving extra code is that tests that only work on a small set of code are typically much faster than tests that involve large systems and complex initialization/shutdown sequences.
+the first thing to realize is that graphics are just part of a game.
+it’s not something you’re going to deliver to your customer, but it’s an absolute necessity, it needs some time commitment to set it up, and you wouldn’t dream of doing any complex building without it.
+we can easily set up a world with a couple of enemies, call that function, and verify that it returns the enemy entity we expected.
+there is no doubt that the best situation to roll out tdd is with a fresh new codebase.
+few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures.
+maciej very nice article.
+so if this is made clear, people will be much more likely to be strict about applying tdd and not falling back on writing code without tests.
+we have hundreds or thousands of tests per library, so that means they have to run blazingly fast or they’ll get in the way.
+http://citym.org/blog/archives/2006/03/backwards_is_fo.html citym.org “backwards is forward: making better games with test-driven development” one of my coworkers alerted me to the presence of a fantastic article by noel llopis on the games from within site entitled backwards is forward: making better games with test-driven development.
+the programmer, like the poet, works only slightly removed from pure thought-stuff.
+the main difference was that running any program on the consoles had a noticeable startup time delay.
+ideally, when something breaks, you want only a small number of tests failing so you can quickly pinpoint the problem.
+we have developed a full codebase doing tdd from the start, and we had no difficulty writing high-level code with tdd.
+as a bonus, unittest++ formats the failed test message so it can be parsed by visual studio and it is easy to navigate to the location of the test.
+having tests depend on each other will cause chains of failing tests, making it difficult to track the problem down to the source.
+this tests that state changes directly, so it’s also a very straightforward form of testing.
+not that i was present to see it… http://jroller.com/page/obie?entry=further_proof_agile_is_turning obie fernandez further proof agile is turning the corner i love to find information that backs up my belief that agile development practices are gaining wider acceptance, such as this article describing how to do tdd game programming in c++.
+also, compilation is very fast, which keeps iteration times low (large, badly organized c++ codebases can take a long time to link).
+in general, the less known or more likely to change something is, the less design we do.
+also, compilation is very fast, which keeps iteration times low (large, badly organized c++ codebases can take a long time to link).
+then tests can count on a specific sequence of numbers being generated and check the results accordingly.
+by following our best practices for unit tests, it becomes really obvious when something breaks, and we can usually check in a fix right away.
+our castles in the air can quickly become snowballs that are too large to be moved and shaped to fit our needs.
+test diagnostics (could be easily integrated with any other unit testing framework – i did it for cunit!).
+when working on high-level code, it can be tempting to let tests degenerate into functional tests that involve the whole game engine.
+this is the most direct way of testing, and it works great for functions that do computations and return the computed value.
+things like character state machines, game flow, or specific game entities were done through tdd without any problems, and greatly benefited from the tdd approach.
+not useing mocks would lead to more complex tests and fixtures.
+also, as noel mentions, if you design your code to be horizontal you need them less.
+the reason we have macros like check_equal is that unit tests need to be fully automated.
+this makes it so everybody is running unit tests for all code all the time, which greatly improves the build stability.
+still, some initial studies have some interesting initial findings (http://collaboration.csc.ncsu.edu/laurie/papers/tddpaperv8.pdf), even if the study was not very rigorous and had a very small sample.
+one of the drawbacks of this approach is that we’re working directly with the hardware, so tests actually do initialize and shutdown the graphics system every time (except for those platforms out there that can only initialize the graphics system once), so they can be more time consuming.
+a few people can have a hard time switching over to the tdd mentality, but to take full advantage of tdd, it is best to let the design emerge from the tests and the refactoring rather than trying to plan everything up front.
+you really want to test that the function does things correctly, not just that it reports it did them.
+needing to write overly long unit tests is usually a sign that the test is involving too much code and could probably be re-written in a better way.
+another interesting read, i’m sure it will go down well at gdc.
+a good situation for using a mock object could be testing hud rendering.
+in fact it was initially developed for internal use only, but then i realised it might be useful for a wider audience.
+it is very interesting to note though, that most programmers at high moon quickly accepted tdd, and soon became very enthusiastic about it and started using it in all their code, including their home projects.
+if you’re interested in applying tdd but you don’t have a commitment from your manager or lead, it is possible to start doing it on the side on your assigned tasks.
+so inter-object communication and thus a need for mocks is supposed to be a norm rather than an exception.
+still, some initial studies have some interesting initial findings (http://collaboration.csc.ncsu.edu/laurie/papers/tddpaperv8.pdf), even if the study was not very rigorous and had a very small sample.
+another approach is to take control over the random number generator at the beginning of the test and rig the output so we know what sequence of numbers is going to come up.
+- assertions: we provide a hooking mechanism, so every assertion that gets fired inside a test result in failing the test.
+broken builds happen much less frequently, and they’re usually caused by a missing file or a different platform not compiling correctly.
+as our target platforms increase in power and memory, our castles become larger and more intricate.
+safety net with tdd, just about every bit of code has some associated tests with it.
+once we had that organization, we were able to test any part of the game or engine without having to worry about graphics.
+few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures.
+you can confidently apply obscure performance optimizations to squeeze that last bit of performance out of the hardware and know that nothing is broken.
+“backwards is forward: making better games with test-driven development” one of my coworkers alerted me to the presence of a fantastic article by noel llopis on the games from within site entitled backwards is forward: making better games with test-driven development.
+at high moon, every library has a separate test project that creates an executable that links with the library and runs all the tests.
+we prefer to let the tests guide us, and if at some point we’re going away from what we had in mind at the beginning, we can stop to reconsider if we’re heading in the right direction.
+the best thing about unit tests as documentation: they can never get out of date.
+i’m not sure it’s the same with regrad to an object composition structue, which could be quite deep.
+surprisingly, none of the game console environments we develop for supports that simple operation, so we were forced to write a small set of programs using the system api to do exactly that.
+if unit tests are only dealing with the minimum amount of code, they should be able to run really fast.
+that’s why tdd’s benefits deal with better code design and structure, ease of refactoring, etc, and not with correctness.
+this is required reading before you start doing any tdd: these other books will also come in handy: very useful mailinglists and web sites: resources dealing with tdd and agile game development: c++ unit-testing frameworks: hello.
+an example of some code that we would not use tdd for is trigger code: when the player goes around the corner, wake up two ais and trigger a different background music.
+if unit tests are only dealing with the minimum amount of code, they should be able to run really fast.
+test-driven development (tdd) turns the programming process around: as before, you break down a problem mentally into smaller problems (or at least a single smaller problem), but now you write a unit test for that small feature, see it fail (since you still haven’t implemented anything), and then write the code to make that test pass.
+it can be disconcerting to always be looking only a few minutes into the future and implementing the “simplest thing that could possibly work,” but it really works.
+as a bonus, unittest++ formats the failed test message so it can be parsed by visual studio and it is easy to navigate to the location of the test.
+but even more importantly, tests should run very frequently, and a failed test should be treated the same way as a failed build.
+we have sat in frustration, unable to do any work for several hours while the game build is broken.
+i think part of the reason is that mocks are much easier to create in unrealscript than in c++.
+by default, all functions are virtual, so overriding behaviors and creating mocks is simpler than c++.
+then tests can count on a specific sequence of numbers being generated and check the results accordingly.
+it’s certainly not the textbook-perfect example you’ll read about in tdd books, but it’s certainly possible.
+the unit test is wrapped with a catch so that any error is correctly redirected to a unit-test fail.
+in general, the less known or more likely to change something is, the less design we do.
+this makes it so everybody is running unit tests for all code all the time, which greatly improves the build stability.
+using fixtures can cut down tremendously on the amount of test code you have to write.
+after a while, you might have written enough code that you can run the game and try to see if the feature works.
+the best thing about unit tests as documentation: they can never get out of date.
+it’s very important to not fall for the temptation of skipping tdd for a very short-term gain (aka milestone of the month).
+there was no graphics system initialization, databases, etc.
+the check_equal macro is the part that performs the actual check, and it takes as parameters the expected value and the actual value.
+for that reason i developed a small library, called bmock, which is more or less in line with jmock and nmock, but realistically takes into account c/c++ specifics.
+the programmer, like the poet, works only slightly removed from pure thought-stuff.
+pair programming can be extremely helpful, especially at the beginning while rolling out tdd and getting everybody on board.
+if tests aren’t going up, or they’re going up more slowly than other times, we know something is wrong and we’re not making much progress.
+in our particular case, not only were we doing tdd, but we were doing all the extreme programming practices (pair programming, continuous integration, collective code ownership, etc).
+so whenever any test fails, the whole build fails.
+as our target platforms increase in power and memory, our castles become larger and more intricate.
+on the positive side, because the tests are exercising the graphics api and hardware directly, we catch things that the first approach wouldn’t have caught (for example, sending incorrect parameters to a function).
+you have to format your message like so: std::cout 0 check somewhere).
+it’s very important to not fall for the temptation of skipping tdd for a very short-term gain (aka milestone of the month).
+once you’re happy with it, you check it into source control and move on to another task.
+introduction part of the appeal of programming is that, as brooks describes, it allows us to build ornate castles in the air, where our imagination is the only limit.
+in general, we prefer not to even think of classes or draw uml diagrams on whiteboards before starting, because such discussions can then lead implementation too much.
+that’s actually really important, because it allows us to run $(targetpath) in the postbuild step and have the executable return the number of failed tests.
+cpptestharness is pretty much final (bugs and all) because i’m spending my unit test framework-writing time on unittest++ these days.
+in the worst case, you can just revert your changes and start over.
+another approach is to take control over the random number generator at the beginning of the test and rig the output so we know what sequence of numbers is going to come up.
+if the engine was not developed with tdd, it can be very difficult to use your code in isolation or figure out how to break things up so they can be tested.
+you may use fakes as michael feathers suggests, but manual creation of fakes could very soon turn to be too burdensome.
+the most important reason to minimize the amount of code involved in a test is to keep things simple.
+as a general rule, we find that if any other part of the game is going to depend on the code we are writing, then it’s probably worth doing it with tdd and having a full set of unit tests for it.
+the input system deals with getting input values from gamepads and other controllers.
+we have seen first-hand the difficulty of squashing insidious many-headed bugs.
+this is quite subjective, but the constant feedback has a surprising morale-boosting effect.
+in “object interactions” you wrote: “using mocks frequently could be an indication that the code relies too much on heavy objects with complex interactions …” i do not think it’s true.
+unit tests are supposed to be simple and fast, so any loops in a test are usually very suspect.
+in fact there many system things you would like to have a control over within your test environment: random numbers, clock, file system, communication, even threads.
+it let the team become more comfortable with tdd and get to the point where they are as productive as they were before.
+overall, the complexity of the codebase is greatly reduced with tdd.
+members of that team were then moved on to other teams, where they became the resident tdd expert.
+the world object can be a very lightweight container for game entities without any other dependencies.
+also, because the code was first created by testing it in isolation from the rest of the code, you will end up with a much more modular, simpler design.
+now we compile this code and we get the following output: running unit tests... 1 tests run there were no test failures.
+once you’re happy with it, you check it into source control and move on to another task.
+even if it takes a few more minutes to make an enemy character testable in isolation, it is well worth it in the long run.
+in our groups, we have a test chart, which is updated every day and shows the total count of tests.
+while that comes, i will be posting here links to papers and presentations (only about programming) made public… good article games from within: backwards is forward: making better games with test-driven development one thing that should be clear and is important to stress is that tdd is not just writing unit tests.
+for us, after doing that for a few weeks, we realized that the benefits we were deriving from it weren’t worth the time we were spending.
+that means they shouldn’t be talking to the hardware, they shouldn’t be initializing and shutting down expensive systems, and they most definitely should not be doing any file i/o. all our unit tests are timed (another feature of unittest++), and the overall time for the test run is printed after it runs.
+we inserted a layer between the graphics renderer and the graphics api that exactly mimicked the platform api.
+the key to working with tdd is to realize that refactoring is an integral part of the development process and should happen regularly every few tests.
+object state make a function call, then check that the state of the object or some part of the system has changed correctly.
+the most important thing is to make sure your tests run automatically (remember the postbuild trick).
+we can do this either by mocking the random number generator object or by setting some global state on the random number generator, depending on how it is implemented.
+keeping that in mind helps to write true unit tests and not functional tests for the api.
+try setting something like that in your current engine and you might be surprised by how many implicit dependencies you find in different parts of the engine.
+i return false from the above function as true is the signal to try and hook into the debugger, which i don’t want when running automated tests.
+however, that severely limits the amount of large-scale refactorings we can do to keep things as testable as possible, so it’s a tough trade-off.. one unique aspect of the unreal engine is that it makes heavy use of its scripting language, unrealscript.
+the framework is intended to make the task for writing and running unit tests as simple as possible.
+you want a test to check one thing and only one thing; that way, when something breaks, it’s immediately clear what went wrong.
+in the meanwhile, you can get it from here: http://sourceforge.net/project/showfiles.php?group_id=158151 noeal, sean, a good article, i really enjoyed reading it.
+the very first thing we want to implement is that if the pl ayer walks over a health powerup, he receives some amount of health.
+setting expectations is also very simple: bmock_expect_return(12,f(35)); the bmock library is built on the top of the c++ boost library and uses its boost.
+broken builds happen much less frequently, and they’re usually caused by a missing file or a different platform not compiling correctly.
+so after another trip to san jose, i must say that the sessions were hit and miss.
+if you’re working on the 10th iteration of a well-known sports game franchise, for a known platform, and you know exactly what you’re going to do, up front design can be more beneficial.
+for this to happen, it’s important to let the tests guide the code and not the other way around.
+as per standard unix error code parsing when you hook stuff up to the postbuild step, instead it seems to flag errors as result > 0.
+mockpp, at least in my opinion, is a too straitforward port from java and c#, and is not suitable for c/c++ (similar to what happend with cppunit).
+not useing mocks would lead to more complex tests and fixtures.
+the unit test is wrapped with a catch so that any error is correctly redirected to a unit-test fail.
+functional tests are extremely useful, especially if they are fully automated, but they fill a very different role than unit tests.
+clearly, avoid having your engine as one big, intertwined module.
+any decent unit test framework should support fixtures, so use them whenever they’re needed.
+whenever you have some common code in two or more tests, you can use a fixture.
+even though this can initially sound like a scary proposition, it really isn’t a problem.
+jim tilander great article, especially like the air-castle reference one little tip for people who dedice to hook things up in visual studio, it took us a little headscratching to realize that visual studio doesn’t do result !
+extracting an interface, renaming everything and worrying about virtual function overhead can put a damper on the whole process.
+what was a pleasant surprise is that broken builds are much easier to fix.
+i’ve been lazy and haven’t updated the cpptestharness homepage yet, but unittest++ has many notable improvements already.
+the test code has been written so it’s extremely simple, so its complexity is minimal.
+that means we always have a version of our engine and tools that runs under windows, which makes running unit tests very easy and convenient.
+once the team is over the hump, and given the right tools and development environment, the impact of tdd on development speed is minimal.
+as you can see, it can’t get much easier than that.
+it is very interesting to note though, that most programmers at high moon quickly accepted tdd, and soon became very enthusiastic about it and started using it in all their code, including their home projects.
+in the worst case, you can just revert your changes and start over.
+surprisingly, none of the game console environments we develop for supports that simple operation, so we were forced to write a small set of programs using the system api to do exactly that.
+otherwise, if it’s a one-shot deal with the highest-level code, then it’s probably fine without tdd.
+our experience is that tdd, like any other new development technique, slows development down at the beginning while the team is learning it and becoming familiar with it.
+that’s why tdd’s benefits deal with better code design and structure, ease of refactoring, etc, and not with correctness.
+pair programing also has the added advantage of making programmers less likely to skip writing tests, which can be a common reaction early on.
+we don’t really care about state, just that a certain number of function calls happened.
+setting expectations is also very simple: bmock_expect_return(12,f(35)); the bmock library is built on the top of the c++ boost library and uses its boost.
+the resulting code is much easier to work with as a result, and it directly solves the problems it was intended to fix.
+it can be disconcerting to always be looking only a few minutes into the future and implementing the “simplest thing that could possibly work,” but it really works.
+it’s a matter of just a few seconds, but it was too long to run the unit tests automatically as a postbuild step after every compilation.
+the larger the team and the more complex the problem, the more tdd saves time in the long run.
+gethealth()); and that’s exactly what the test will look like, only we’ll have to surround it with a macro to take care of all the bookkeeping and to give it a descriptive name.
+working with a full game engine, you might end up writing a small module that is fully surrounded by the engine code.
+for example, there’s no reason the ai module needs to know anything about graphics or sound, but it will need to know about a world representation and have access to the messaging system.
+we want to verify that the hud elements are rendered in a specific order, so we create a mock for the rendering canvas which will keep an ordered list of the elements that get passed to it.
+having a good mocks library would help here drammatically.
+it is not ideal, but the large majority of the problems show up in the windows tests, so as long as those continue being run all the time, we catch most problems on time.
+using mock objects frequently could be an indication that the code relies too much on heavy objects with complex interactions instead of many, loosely-coupled, simpler objects.
+after a while, you might have written enough code that you can run the game and try to see if the feature works.
+if they are different, it will mark the test as failed, and output a message with as much information as possible.
+unrealscript is a surprisingly good language for unit testing.
+ash henstock another interesting read, i’m sure it will go down well at gdc.
+also, if you are able to use the code under test with a minimal amount of other code or libraries, it means you are creating very modular, self-contained code, which will help with the overall design.
+builds are rarely broken for more than a few minutes at a time, which can completely change how you organize your code in source control.
+also, code at that level is often writ ten by designers in a game-specific scripting language, so tdd might not be a viable option.
+test-driven development (tdd) turns the programming process around: as before, you break down a problem mentally into smaller problems (or at least a single smaller problem), but now you write a unit test for that small feature, see it fail (since you still haven’t implemented anything), and then write the code to make that test pass.
+i’ll have a more detailed announcement up tomorrow explaining the rational for the new unit testing framework and what i think its unique selling points are.
+right now, the idea of writing code without writing tests first feels quite alien to most of us, and we treat tdd like the scaffolding in building construction: a necessary tool that will not be shipped to the customer but that helps tremendously during development.
+ideally, tdd and refactoring can flatten out the classical cost-of-change over time curve into something like this.
+if tests aren’t going up, or they’re going up more slowly than other times, we know something is wrong and we’re not making much progress.
+extracting an interface, renaming everything and worrying about virtual function overhead can put a damper on the whole process.
+in oo we indeed have a best practices recommendation to avoid deep inheritance hierarchy since it typically leads to a very fragile and overcomplicated structure.
+keeping each unit test to just a handful of lines makes it much easier to understand at a glance.
+things change too much from project to project and team to team.
+as an added benefit, people tend to behave based on how they think they are being measured.
+if a library has 500 tests associated with it, we can say that it’s roughly half as complex as a library with 1000 tests.
+that means you can be merciless about refactoring your code, and you can still be confident that it will work if all the tests continue to run.
+if tdd doesn’t help with this, then there’s very little point to it (other than keeping programmers happy).
+we have seen first-hand the difficulty of squashing insidious many-headed bugs.
+ideally, we wanted to develop the graphics renderer library with tdd as well, and there’s no way to avoid dealing with platform-specific graphics calls.
+remember, what we really want to test is that our code behaves correctly, not that the graphics api works as documented.
+if you’re interested in applying tdd but you don’t have a commitment from your manager or lead, it is possible to start doing it on the side on your assigned tasks.
+randomness and games most games involve a fair amount of randomness: the next footstep sound you play can be any one of a set of sounds, the next particle emitted has a random speed between a minimum and a maximum, etc.
+we can do this either by mocking the random number generator object or by setting some global state on the random number generator, depending on how it is implemented.
+additionally, the tdd approach results in much simpler, decoupled code.
+if the engine was not developed with tdd, it can be very difficult to use your code in isolation or figure out how to break things up so they can be tested.
+good design will come up through those refactorings as needed by the tests we have written and the code we have implemented.
+keep tests very fast the unit tests we write are compiled and executed as a postbuild step.
+functional tests are a great complement to unit tests, so it’s important not to forget about them.
+creating an object in a test and reusing it in a different test is asking for trouble for the same reasons as we discussed earlier: when a test fails, you want to be able to zero in on the failing test and the problem that is causing it to fail.
+we have found that counting the number of unit tests is a really good measure of progress.
+for example, instead of just having aplayfootstep() function that takes care of computing a random footstep and then playing it, we can break it into intcomputenextfootstep() which is just a random function call, and aplayfootstep(int index), which we can now test very easily.
+tdd ensures that your code does whatever you wanted it to do, not that it does it correctly.
+in our system, we have an interface named gamecontroller with a sample() function.
+we have found that counting the number of unit tests is a really good measure of progress.
+specifically, in this context, each unit test deals with something almost trivially small, which can probably be done in less than a minute.
+there was no graphics system initialization, databases, etc.
+most of the time we are, and we simply hadn’t thought things through enough at the beginning (or thought through them too much and we simply didn’t need that level of flexibility).
+the extra code does not take significantly longer to write initially, and it allows us to move a lot faster once we have accumulated more code and we need to refactor or optimize the code in any way.
+automated functional tests can be extremely useful catching high-level problems, gathering performance and memory utilization data, and removing some of the mechanical testing from qa and letting them concentrate on issues such as gameplay balance and flow.
+we have seen countless hours of work go up in smoke as code is thrown away and started from scratch for the next project.
+things like character state machines, game flow, or specific game entities were done through tdd without any problems, and greatly benefited from the tdd approach.
+no problem seems too large as long as you’re taking small steps in its direction and getting feedback that you’re in the correct track.
+it is possible to simply write code faster than it is to write the tests first, but as soon as that code needs to be refactored, debugged, used by somebody else, or simply gets more complex, any time savings quickly disappear.
+using fixtures can cut down tremendously on the amount of test code you have to write.
+third-party game engines if dealing with apis was not straightforward, working with a full third-party game engine that was not developed with tdd is even more challenging.
+also, if you are able to use the code under test with a minimal amount of other code or libraries, it means you are creating very modular, self-contained code, which will help with the overall design.
+we prefer to let the tests guide us, and if at some point we’re going away from what we had in mind at the beginning, we can stop to reconsider if we’re heading in the right direction.
+even though at first glance it might seem like the whole system is about making system calls to poll the data, there is a lot of common code that is totally platform independent: button mappings, edge detection, filtering, plugging/unplugging controllers, etc.
+all of that makes tdd with unrealscript not just possible, but very effective.
+implementing tdd let’s put tdd in practice by following the normal practice and writing our first test.
+for example, a function called getnearestenemy() would be a perfect candidate to be tested this way.
+if some tests involve a large amount of the codebase, they will constantly break for unrelated reasons.
+beware of testing functions that return boolean results indicating if the function failed or succeeded.
+noel, the bmock library is not published yet.
+one thing not described here is how you should adapt your error-reporting mechanism (errors and asserts) inside an unit-test.
+in our case, since the tests are a postbuild step, there was nothing special we had to do in the build server, and a failed test would be reported just as code that didn’t compile correctly.
+pair programing also has the added advantage of making programmers less likely to skip writing tests, which can be a common reaction early on.
+milestone pressures, a fluctuating game industry, growing teams and budgets, and the breakneck pace of hardware change don’t help an already difficult situation.
+so after another trip to san jose, i must say that the sessions were hit and miss.
+the unit tests provide you with instant feedback up to several times per minute.
+the main difference was that running any program on the consoles had a noticeable startup time delay.
+if tdd doesn’t help with this, then there’s very little point to it (other than keeping programmers happy).
+having a good mocks library would help here drammatically.
+michael feathers’ book working effectively with legacy code, explains exactly that situation and gives some very good guidelines on how to go about unit testing with a codebase without existing unit tests.
+additionally, since the test executable returns a value with the number of failed tests, a failing test will return a non-zero value, which is interpreted by the build chain as a failed build.
+while that comes, i will be posting here links to papers and presentations (only about programming) made public… http://pinkpucker.net/articles/2006/04/15/good-article anonymous http://www.sinowish.com/?p=110 sinowish 发现之旅 games from within:
+once the team is over the hump, and given the right tools and development environment, the impact of tdd on development speed is minimal.
+builds are rarely broken for more than a few minutes at a time, which can completely change how you organize your code in source control.
+if they are different, it will mark the test as failed, and output a message with as much information as possible.
+of course, if you hook this up to regular make or something else that is slightly more sane, you won’t have these problems… /j nice article.
+in the meanwhile, you can get it through sourceforge.net subversion server if you want.
+similarly, changing functionality or adding new feature towards the end of the development cycle suddenly becomes a lot less risky and scary.
+by the way, just a quick announcement to say that the first release of unittest++ is out.
+the extra code does not take significantly longer to write initially, and it allows us to move a lot faster once we have accumulated more code and we need to refactor or optimize the code in any way.
+even though at high moon we develop console games, we use windows as our primary development environment because of the good development tools and the fast iteration time.
+for that reason i developed a small library, called bmock, which is more or less in line with jmock and nmock, but realistically takes into account c/c++ specifics.
+that’s actually even more complicated than what we want for our small testing steps, so let’s start with an even simpler test that requires the least amount of effort: if we have a player and a powerup, and the player isn’t anywhere near the powerup, his amount of health doesn’t change.
+cpptestharness is pretty much final (bugs and all) because i’m spending my unit test framework-writing time on unittest++ these days.
+it is not ideal, but the large majority of the problems show up in the windows tests, so as long as those continue being run all the time, we catch most problems on time.
+the rest of the input system works through the gamecontroller interface, but for all the tests we provide a mockgamecontroller() which allows us to control what input values we feed to the tests.
+that simple fact makes it so all code is created with the user of the code in mind, not the implementation details.
+each platform implements a platform-specific version of the gamecontroller (for example d3dcontroller) and does the raw sampling of all buttons and axis through platform-specific api calls.
+we have hundreds or thousands of tests per library, so that means they have to run blazingly fast or they’ll get in the way.
+most of the time we are, and we simply hadn’t thought things through enough at the beginning (or thought through them too much and we simply didn’t need that level of flexibility).
+our experience is that tdd, like any other new development technique, slows development down at the beginning while the team is learning it and becoming familiar with it.
+the framework is intended to make the task for writing and running unit tests as simple as possible.
+try setting something like that in your current engine and you might be surprised by how many implicit dependencies you find in different parts of the engine.
+besides, we don’t yet have one dev kit for every developer station, so we couldn’t count on always having a target platform available.
+we have seen countless hours of work go up in smoke as code is thrown away and started from scratch for the next project.
+besides, we don’t yet have one dev kit for every developer station, so we couldn’t count on always having a target platform available.
+tdd ensures that your code does whatever you wanted it to do, not that it does it correctly.
+third-party game engines if dealing with apis was not straightforward, working with a full third-party game engine that was not developed with tdd is even more challenging.
+in our case, it is unusual to have unit tests that are more than 15 lines long.
+whenever you have some common code in two or more tests, you can use a fixture.
+good design will come up through those refactorings as needed by the tests we have written and the code we have implemented.
+that means that making any changes to the library or tests and triggering a compile will also run all the tests.
+ideally, we wanted to develop the graphics renderer library with tdd as well, and there’s no way to avoid dealing with platform-specific graphics calls.
+in general, we prefer not to even think of classes or draw uml diagrams on whiteboards before starting, because such discussions can then lead implementation too much.
+you can confidently apply obscure performance optimizations to squeeze that last bit of performance out of the hardware and know that nothing is broken.
+of course, if you hook this up to regular make or something else that is slightly more sane, you won’t have these problems… /j http://entland.homelinux.com/blog ent nice article.
+in addition to running tests locally, the build server also runs all the unit tests at the same time it does code builds.
+it will probably come as no surprise to anybody that writing code with tdd results in more code being written.
+if you’re working on the 10th iteration of a well-known sports game franchise, for a known platform, and you know exactly what you’re going to do, up front design can be more beneficial.
+in test projects) you get failed tests, in the case of assertion errors, or you can use check_assert to verify a particular expression does assert.
+we have sat in frustration, unable to do any work for several hours while the game build is broken.
+keep tests simple this is related to the previous best practice.
+for example, it can test that a health pack doesn’t add more health past the player’s maximum, or it can test that a particular effect disables depth writes.
+lessons learned design and tdd one of the most important benefits we get from tdd is the better code design that it creates.
+one thing not described here is how you should adapt your error-reporting mechanism (errors and asserts) inside an unit-test.
+having an agile mindset fits very well with the idea of finding the design through tests.
+pair programming can be extremely helpful, especially at the beginning while rolling out tdd and getting everybody on board.
+when all else fails, this is a useful technique for dealing with calls into external apis.
+the unit tests created through tdd serve as a very effective form of documentation.
+we want to verify that the hud elements are rendered in a specific order, so we create a mock for the rendering canvas which will keep an ordered list of the elements that get passed to it.
+design and tdd one of the most important benefits we get from tdd is the better code design that it creates.
+this is a general good practice, but it is more so with tdd.
+the function that calls into the graphics api itself won’t be tested, but all it does it make some straight calls.
+as per standard unix error code parsing when you hook stuff up to the postbuild step, instead it seems to flag errors as result > 0.
+it might lead to larger interfaces than absolutely necessary, but it also sometimes shows that a class really should be split into two, and one of the classes should contain the other one.
+we have developed a full codebase doing tdd from the start, and we had no difficulty writing high-level code with tdd.
+it’s not something you’re going to deliver to your customer, but it’s an absolute necessity, it needs some time commitment to set it up, and you wouldn’t dream of doing any complex building without it.
+for example, rendering a certain mesh should set a specific vertex declaration.
+it was also discouraging us from using new api functions just because they hadn’t been wrapped before.
+run tests and see them pass.
+the resulting code is much easier to work with as a result, and it directly solves the problems it was intended to fix.
+run tests frequently being able to write tests easily is a requirement for successfully rolling out tdd.
+the most important thing to do in this situation is to separate the code we write as much as possible from the engine code.
+the very first thing we want to implement is that if the pl ayer walks over a health powerup, he receives some amount of health.
+this is a key practice for writing good unit tests.
+that means they shouldn’t be talking to the hardware, they shouldn’t be initializing and shutting down expensive systems, and they most definitely should not be doing any file i/o. all our unit tests are timed (another feature of unittest++), and the overall time for the test run is printed after it runs.
+i’ve been looking at various software development methodologies lately and i’ve found some pretty interesting blogs on one type that is very exciting.
+– ash http://www.cnicholson.net charles nicholson paulius: unittest++ actually started as a copy of cpptestharness.
+in the meanwhile, you can get it through sourceforge.net subversion server if you want.
+you also need something to deal with system api as you described in “graphics, middleware, and other aips”.
+overall, the complexity of the codebase is greatly reduced with tdd.
+we also found that limiting each unit test to a single check statement or two resulted in tests that were the easiest to understand.
+sometimes it just takes a little bit of refactoring of the existing code and it becomes a lot easier to add new tests.
+it’s certainly not the textbook-perfect example you’ll read about in tdd books, but it’s certainly possible.
+you want a test to check one thing and only one thing; that way, when something breaks, it’s immediately clear what went wrong.
+you really want to test that the function does things correctly, not just that it reports it did them.
+in fact there many system things you would like to have a control over within your test environment: random numbers, clock, file system, communication, even threads.
+for example, we could send an event of nearby noise to an ai in “idle” state and check that its state changes to “alert” in response.
+in the meanwhile, you can get it from here: http://sourceforge.net/project/showfiles.php?group_id=158151 asher sterkin noeal, sean, a good article, i really enjoyed reading it.
+each platform implements a platform-specific version of the gamecontroller (for example d3dcontroller) and does the raw sampling of all buttons and axis through platform-specific api calls.
+it let the team become more comfortable with tdd and get to the point where they are as productive as they were before.
+also, as noel mentions, if you design your code to be horizontal you need them less.

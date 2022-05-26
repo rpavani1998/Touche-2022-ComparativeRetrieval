@@ -1,0 +1,533 @@
+you will not that this uses the predictive variable x but not the variable to predict y. plot(hat(x), type='h', lwd=5)
+the algorithm is as follows.
+we get 0.9546, i.e., we are in the prediction interval in (more than) 5%  of the cases -- but the prediction interval is huge: it tells us that we cannot  predict much.
+on the contrary, if you only retain the first two variables, it is the opposite.
+those points will "touch" the thick hyperplane, they will limit its thickness -- actually, you can even forget the other points 2.
+on the contrary, if you only retain the first two variables, it is the  opposite.
+the noise is the difference between the observed values and the actual  values: it appears in the model, e.g. y = a + b x + noise residues and noise are two different things.
+n  summary(lm(freeny.y ~ freeny.x))
+error t value pr(>|t|) (intercept)
+error t  value pr(>|t|) (intercept)
+same for y. stripchart(y, method='jitter') hist(y, col='light blue', probability=t) lines(density(y), col='red',  lwd=3)
+coefficients: estimate std.
+analysis of variance table response: y df sum sq mean sq f value pr(>f) x 1 386.97 386.97 4747 f) 1 29 524.30 2 28 421.92 1 102.38 6.7943 0.01449 * --- signif.
+the main problem of stepwise regression is that we are very likely to choose a bad model.
+... coefficients: estimate std.
+we have a lagrange multiplier for each point: if the  multiplier is zero, the points does not play any role (it is in the midst of  the cloud of points, it is far away from the separating hyperplane); if the  multiplier is non-zero, we say it is a "support vector".
+0.00712 ** residual standard error: 1.287 on  14 degrees of freedom multiple r-squared: 0.8859, adjusted r-squared: 0.8451  f-statistic: 21.73 on 5 and 14 df, p-value: 3.837e-06 >  summary(lm(y~x[,k.exp])) ...
+0.205 residual standard error: 0.2844 on 99 degrees of freedom multiple  r-squared: 0.01618, adjusted r-squared: 0.006244 f-statistic: 1.628 on 1 and 99  df, p-value: 0.2049 other method: > summary(lm(y~offset(1+2*x)+0+x)) call: lm(formula =
+** residual standard error: 1.537 on 15 degrees of freedom multiple  r-squared: 0.8254, adjusted r-squared: 0.7788 f-statistic: 17.73 on 4 and 15  df, p-value: 1.486e-05
+error t value pr(>|t|) (intercept) -0.01294 0.02856 -0.453 0.651 x 1.96405 0.02851 68.898  summary(lm(i(y-1)~0+x))
+first, we remark that the error rate is optimistic (26% instead of 33% --  and the oob bootstrap is supposed to be pessimistic...).
+error t value pr(>|t|) (intercept) 0.06361 0.11368 0.560 0.5771 x1 1.47317 0.94653 1.556 0.1229 x2 1.18874 0.98481 1.207 0.2304 x3
+hud 0 0 0 0 0 0 2 2 16 2 0 0.2727273
+the residuals are the differences between the observed values and the  predicted values.
+# we select a "good" regression model, using the bic as a # criterion, by starting from a model and adding or # removing variables at random, if this improves the bic.
+analysis of variance table response: z df  sum sq mean sq f value pr(>f) x 1 0.0104 0.0104 0.1402 0.7192 y 1 7.5763  7.5763 102.1495 1.994e-05 *** residuals 7 0.5192 0.0742 > anova(lm(z~y+x))
+first, we remark that the error rate is optimistic (26% instead of 33% -- and the oob bootstrap is supposed to be pessimistic...).
+it can be a confidence interval of ax+b (confidence band) or -- this is different -- of e[y|x=x] (prediction band).
+[, k]1 1.7478 0.3330 5.249 0.000123 *** x
+combining regressions (bma,...) tests and confidence intervals after this bird's eye view of several regression techniques, let us come  back to linear regression.
+error t value pr(>|t|) (intercept) -0.005379 0.360940 -0.015 0.98831 x
+error t value pr(>|t|) (intercept) 0.1862 0.2886 0.645 0.52992 x[, c(1, 3, 4, 5, 7, 10)]1 -0.4408 0.2720 -1.620 0.12915 x[, c(1, 3, 4, 5, 7, 10)]2 -1.6742 0.4719 -3.548 0.00357 ** x[, c(1, 3, 4, 5, 7, 10)]3 1.5300 0.3953 3.870 0.00193 ** x[, c(1, 3, 4, 5, 7, 10)]4 1.7813 0.3159 5.639 8.07e-05 *** x[, c(1, 3, 4, 5, 7, 10)]5 -1.0521 0.2664 -3.949 0.00167 ** x[, c(1, 3, 4, 5, 7, 10)]6 1.4903 0.2506 5.946 4.85e-05 *** residual standard error: 1.202 on 13 degrees of freedom multiple r-squared: 0.86, adjusted r-squared: 0.7954 f-statistic: 13.31 on 6 and 13 df, p-value: 6.933e-05 >
+[1] 0.6970905 > r2   res2  mean(res2^2)
+> r  summary(r) generalized least squares  fit by reml model: y ~ .
+analysis of variance table response: z df sum sq mean sq f value pr(>f) y 1 2.42444 2.42444 46.985 0.000241 *** x 1 0.64996 0.64996 12.596 0.009355
+often, you can solve  the problem by transforming the variables (so that the outliers and influential  observations disappear, so that the residuals look normal, so that the  residuals have the same variance -- quite often, you can do all this at the  same time), by altering the model (for a simpler or more complex one) or by  using another regression (gls to account for heteroskedasticity and correlated  residuals, robust regression to account for remaining influencial observations).
+1 0 1 0 0 1 0 0 0 1 0 -3.240
+if you end with a temperature # equal to zero, you get a  single solution, as with the # steepest descent, but you are less likely to be  stuck in # a local minimum (this is called simulated annealing); if # you  decrease the temperature until 1, you get another # mcmc, with a different  burn-up period.
+bagging (bootstrap aggregation) one idea, to increase the quality on an estimator (a non-linear and  unstable one, e.g., a regression tree) is simply to compute its  "mean" on several bootstrap samples.
+multiple  r-squared: 0.9981, adjusted r-squared: 0.9978
+\in y \exists a \in a \forall i  \in
+x f) x 1 2.33719 2.33719 45.294 0.0002699 *** y 1 0.73721 0.73721 14.287  0.0068940 ** residuals 7 0.36120 0.05160 counterintuitive and frightening as it may be, you might notice that the  result depends on the order of the parameters... > anova(lm(z~y+x))
+you could try various  embeddings, such as (x,y) |---> (x,x^2,x*y,y^2), but actually, we can simply  change the "hyperplane" equation (well, it will no longer be a  hyperplane) by replacing the scalar product used to define it by a kernel, such  as k(x,y) =
+y ~ x) residuals: min 1q median 3q max  -0.84692 -0.24891 0.02781 0.20486 0.60522
+error t value pr(>|t|) x 1.96378 0.02839 69.18   x  y  a   summary(lm(y~offset(a)-1+x)) call: lm(formula =
+error t value pr(>|t|) (intercept) -0.5689 0.1169 -4.865 4.37e-06 *** x 2.1774 0.2041 10.669 0.05) n 0) pairs(x, col=as.numeric(y)+1) for (i in 1:k) { f |t|) (intercept) -0.03322 0.86408 -0.038 0.971 v1 0.76079 1.23426 0.616 0.571
+dev aic 1 na na 9 18.62116 20.57133 2 - x9 1 0.007112768 10 18.62828 18.57897 3 - x6 1 0.037505223 11 18.66578 16.61919 4 - x2 1 0.017183580 12 18.68296 14.63760 5 - x8 1 0.098808619 13 18.78177 12.74309 > k
+i(y - 1 - 2 * x) ~ 0  + x) residuals: min 1q median 3q max -0.85962 -0.26189 0.01480 0.19184 0.59227  coefficients: estimate std.
+even from a statistical point of view, they look different.
+i wanted to prove, here, on an example, that non gaussian residuals  produces confidence intervals too small and thus incorrect results.
+yi } examples: vc(linear classifier, in dimension n) =
+y ~ x) residuals: min 1q
+in the following example, we have three variables.
+,xm) \in (r^n)^m iif \forall y1,...,ym
+residuals: 1  2 3 4 5 6 7 8 9 10 -0.001813 0.016320 -0.065278 0.152316 -0.228473 0.228473  -0.152316 0.065278 -0.016320 0.001813
+> x  y   summary(lm(y~poly(x,10))) call: lm(formula =
+[1] 19 in short, to have the most incorrect prediction intervals, take large  values of x, bit not too large (close to 0, the predictions are correct, away  from 0, the prediction intervals are huge).
+here, there is an extreme point.
+error t-value p-value (intercept) 1.234593 0.15510022 7.959971  intervals(g) approximate 95% confidence intervals coefficients: lower est.
+poly(x, n - 1)6 -0.51048  poly(x, n - 1)7 -0.28479 poly(x, n - 1)8 -0.22273 poly(x, n - 1)9 0.39983  residual standard error: nan on 0 degrees of freedom multiple r-squared: 1,  adjusted r-squared: nan f-statistic: nan on 9 and 0 df, p-value: na >  summary(lm(y~poly(x,n-2)))
+y ~ x) residuals: min 1q median 3q max -0.84692 -0.24891 0.02781 0.20486 0.60522
+this is the same problem that leads to partial least squares (pls).
+n  4/n. cd 100] 100] 0] 0] x[x yp[,2] )/n
+0.2352941 hod 0 0 0 0 0 0 2 11 1 0 0  0.2142857
+error t value pr(>|t|) (intercept) 0.1471 0.3260 0.451 0.65870 x
+a  summary(lm(y~poly(x,n-1)))
+the vc dimension of the classification algorithm f is the largest number  of points shattered by f.
+we perform a linear regression  at each leaf (with cart, we assign a constant to each leaf).
+n 1e-1), xk can be  expressed from the other xi.
+get.sample  r$anova stepwise model path analysis of deviance table initial model: y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 final model: y ~ x1 + x3 + x4 + x5 + x7 + x10 step df deviance resid.
+there is a structural change when (for  instance) the linear model is correct, but its coefficients change for time to  time.
+0.01196 0.12644 0.095 0.940 poly(x, n - 2)1 -1.94091  0.39983 -4.854 0.129 poly(x, n - 2)2 -0.02303 0.39983 -0.058 0.963 poly(x, n -  2)3 -0.08663 0.39983 -0.217 0.864 poly(x, n - 2)4 -0.06938 0.39983 -0.174 0.891  poly(x, n - 2)5 -0.34501 0.39983 -0.863 0.547 poly(x, n - 2)6 -0.51048 0.39983  -1.277 0.423 poly(x, n - 2)7 -0.28479 0.39983 -0.712 0.606 poly(x, n - 2)8  -0.22273 0.39983 -0.557 0.676
+too many variables todo explain what you can do if there are more variables than  observations.
+some points might bear an abnormally high influence on the regression results.
+correlation structure: ar(1)
+*** x[, k]3 -1.5362 0.4903 -3.133
+for instancem the result of forecast by a regression tree is usually a  class (1, 2, ..., or k): we replace it by a vector (0,0,...,0,1,0,...,0) (put  "1" for the predicted class, 0 for the others) and we take the  average of those vectors -- we do not get a single class, but a probability  distribution (bayesian readers will prefer the words "posterior  distribution").
+dev aic 1 na na 9  18.62116 20.57133 2 - x9 1 0.007112768 10 18.62828 18.57897 3 - x6 1  0.037505223 11 18.66578 16.61919 4 - x2 1 0.017183580 12 18.68296 14.63760 5 -  x8 1 0.098808619 13 18.78177 12.74309 > k
+y 1  7.1666 7.1666 96.626 2.395e-05
+library(ipred) do.it  r  r call:  randomforest.formula(x =
+find a separating thick hyperplane, as thick as possible.
+[18,] 0 0 0 0 0 1 0 1 0 0 1 0 0 0 1 0
+there is no algorithm to find the structure of the tree: you have to choose it yourself.
+i(y - 1 - 2 * x) ~ 0 + x) residuals: min 1q median 3q max -0.85962 -0.26189 0.01480 0.19184 0.59227
+v2 v3 v4 v5 v6 v7 v8 v9
+the nodes depend on a linear combinaition of the predictive variables, not of a single variable.
+it can  be a confidence interval of ax+b (confidence band) or -- this is different --  of e[y|x=x] (prediction band).
+v9 0.34990 0.82277 0.425 0.693
+non-linearity or integration, you will have to  choose.
+non-linearity or integration, you will have to choose.
+in r, this method is available in the "superpc" package and can accomodate classical or survival regression.
+the algorithm used to find those functions is iterative.
+residuals: all 10 residuals are 0: no residual degrees of freedom!
+i was wrong: the confidence intervals are correct but very large, to the point that the forecasts are useless.
+freeny.xlag quarterly revenue 0.1239 0.1424 0.870 0.3904 freeny.xprice index -0.7542 0.1607 -4.693 4.28e-05 *** freeny.xincome level 0.7675 0.1339 5.730 1.93e-06 *** freeny.xmarket potential 1.3306 0.5093 2.613 0.0133 * ...
+combining regressions (bma,...)
+0.177562 0.902353 coefficients: estimate std.
+[1] 0.9862133 let us look at the most relevant ones.
+if you use  algorithms that do not use coordinates but just scalar products, this trick  (the "kernel trick") allows you to increase the dimension without  having to compute the actual coordinates.
+that  f(.,a) makes no mistakes on the training set.
+[6,] 0 1 1 0 0 0 0 1 0 0 1 0 0 0 1 0 -3.854
+boxplot(x, horizontal=t) stripchart(x, method='jitter') hist(x, col='light blue', probability=t) lines(density(x), col='red', lwd=3)
+error t value pr(>|t|) (intercept) 0.2473 0.3023 0.818 0.426930 x
+we get 0.67: where the variance is higher, the confidence intervals are too small.
+we get 0.9546, i.e., we are in the prediction interval in (more than) 5% of the cases -- but the prediction interval is huge: it tells us that we cannot predict much.
+we have a lagrange multiplier for each point: if the multiplier is zero, the points does not play any role (it is in the midst of the cloud of points, it is far away from the separating hyperplane); if the multiplier is non-zero, we say it is a "support vector".
+for instancem the result of forecast by a regression tree is usually a class (1, 2, ..., or k): we replace it by a vector (0,0,...,0,1,0,...,0) (put "1" for the predicted class, 0 for the others) and we take the average of those vectors -- we do not get a single class, but a probability distribution (bayesian readers will prefer the words "posterior distribution").
+x 0.04219  0.03114 1.355 0.179 residual standard error: 0.3317 on 99 degrees of freedom  multiple r-squared: 0.9816, adjusted r-squared: 0.9815 f-statistic: 5293 on 1  and 99 df, p-value:  library(mass) > n  x  y  r  r$coefficients (intercept) x
+error t value pr(>|t|) x -0.03622 0.02839 -1.276 0.205 residual standard error: 0.2844 on 99 degrees of freedom multiple r-squared: 0.01618, adjusted r-squared: 0.006244 f-statistic: 1.628 on 1 and 99 df, p-value: 0.2049 other method: > summary(lm(y~offset(1+2*x)+0+x)) call: lm(formula =
+0.910 v15 0.92515  1.18697 0.779 0.479 residual standard error: 1.798 on 4 degrees of freedom  multiple r-squared: 0.7795, adjusted r-squared: -0.04715 f-statistic: 0.943 on  15 and 4 df, p-value: 0.5902 the "gls" function gives you directly the aic and the bic.
+we also get the confusion matrix, that gives the "distances"  between the classes: we can use it to plot the classes in the plane, with a  distance analysis algorithm (mds (multidimensional scaling), etc. -- we have  already mentionned this).
+> lm(y~x3)$coef (intercept) x3 0.06970513 0.98313878 its coefficient was negative, but if we remove the other variables, it becomes positive.
+here are a few other examples.
+the classification algorithm f is said to shatter the observations o1,...,om if, for any training set (o1,y1),...,(om,ym) there exists a such that f(.,a) makes no mistakes on the training set.
+on the contrary, the aic and the bic have a corrective term to avoid this trap.
+take a first estimation of the fi, say, as constants, from a linear regression.
+you can also measure the effect of each observation on the regression:  remove the point, compute the regression, the predicted values and compare them  with the values predicted from the whole sample: plot(dffits(r),type='h',lwd=3) you can also compare the coefficients: plot(dfbetas(r)[,1],type='h',lwd=3) plot(dfbetas(r)[,2],type='h',lwd=3)
+you can try with moving window to find the most probable date for the structural change (you can take a window with a constant width, or one with a constrant number of observations).
+* x[, k]5 1.6863 0.4050 4.164 0.000956
+x  x  y  summary(lm(y~x))
+1 0 0 0 0 1 0 0 1 0 0 0 1 0 -4.514
+we get 0.67: where the variance is higher, the confidence intervals are  too small.
+> x  y   summary(lm(y~x)) ...
+* x[, k.exp]x9 1.541648 0.388408 3.969  0.00123
+[17,] 0 0 0 0 0 0 0 1 0 1 1 0 0 0 1 0
+* residuals  7 0.5192 0.0742 partial residual plots, added variable plots some plots to explore a regression residuals
+0.1 ` ' 1 tells us that the two models are significantly different with a risk of  error under 2%.
+n  y  x  m  cor(m) x
+error t value pr(>|t|) x 2.04219  0.03114 65.58  summary(lm(i(y-1-2*x)~0+x)) call: lm(formula =
+then, we can compute the forecasts for each of those models and combine them, giving them a weight proportionnal to the likelihood of the model.
+> lm(y~x3)$coef (intercept) x3 0.06970513 0.98313878 its coefficient was negative, but if we remove the other variables, it  becomes positive.
+[1] 0.6970905 > r2  res2  mean(res2^2)
+we can see this graphically.
+library(nlme) n  library(wle) > r  summary(r) call:  mle.cp(formula =
+current.bic  f(x,a) that tries to predict y from x; here,  "a" are the parameters of the classification algorithm, to be  deternined (e.g., the coefficients of a regression, the weights of a neural  network).
+> r  summary(r) generalized least squares fit by reml model: y ~ .
+# we select a "good" regression model, using the bic as a #  criterion, by starting from a model and adding or # removing variables at  random, if this improves the bic.
+1.29896 0.02841 45.725 f) 1 98 19.5259 2 90 6.9845 8 12.5414 20.201 f) 1 98 9.6533 2 90 8.9801 8 0.6733 0.8435 0.5671 structural changes: todo # non-linearity library(lmtest) ?
+heteroskedasticity heteroscedasticity for the least squares estimators to be optimal and for the test results to  be correct, we had to assume (among other hypotheses) that the variance of the  noise was constant.
+max { m : \exists x1,...,xm \in r^n \forall y1,...,ym \in y \exists a \in
+i was  wrong: the confidence intervals are correct but very large, to the point that  the forecasts are useless.
+i [1] 7 10 14 get.sample  d  y  x  k.exp  x  summary(lm(y~x[,c(9,4,7,8,2)])) ...
+if you prefer formulas: y \in y (y is a finite set) x \in r^n a in | f: x*a --> y f shatters  (x1,...
+error t value pr(>|t|) (intercept) -0.5689 0.1169 -4.865 4.37e-06 *** x  2.1774 0.2041 10.669 0.05) n  0) pairs(x,  col=as.numeric(y)+1) for (i in 1:k) { f |t|) (intercept) -0.03322 0.86408 -0.038  0.971 v1 0.76079 1.23426 0.616 0.571
+residuals: min 1q  median 3q max -0.727537 -0.206951 -0.002332 0.177562 0.902353
+error t value pr(>|t|) (intercept) 1.08440 0.03224 33.64  x  y  summary(lm(i(y-1)~x))
+max { m : \exists x1,...,xm \in r^n such that x1,...,xn shatters  f } =
+as there is a single one, we might be tempted to remove it -- if there were several, we would rather try to transform the data.
+2.172470e-17 3 -1.242089e-17 -4.468268e-17
+adding a subject-dependant intercept is equivalent to imposing a certain  correlation structure.
+[17,] 0 0 0 0 0 0 0 1 0 1 1 0 0 0 1 0 -3.240  [18,] 0 0 0 0 0
+the theoretical model looks better... to assess the relevance of a model, as always, we plot the data -- here, the residuals as a function of each variable included (in black, before adding it, in red, after).
+*** x 1 0.4201 0.4201 5.664 0.04889
+[11,] 0 0 0 0 1 0 0 1 0 0 1 0 1 0 1 0
+** residual standard error: 1.537 on 15 degrees of freedom multiple r-squared: 0.8254, adjusted r-squared: 0.7788 f-statistic: 17.73 on 4 and 15 df, p-value: 1.486e-05
+[14,] 0 0 0 0 1 0 0 1 0  0 1 0 0 0 1 0 -3.241 [15,] 0 0 0 0 0 0 0 1 0 0 1 1 0 0 1 0 -3.240
+overfit: choose a simpler model underfit: curvilinear regression,  non-linear regression, local regression influential points: transform the data,  robust regression, weighted least squares, remove the points influential  clusters: transform the data, mixtures non-gaussian residuals: transform the  data, robust regression, normalp heteroskedasticity: gls correlated residuals:  gls unidentifiability: shrinkage methods missing values: discard the  observations???
+multiple r-squared: 0.8182, adjusted r-squared:  0.8164 ...
+# the second version also accepts models that  are slightly # worse, with a certain probability (high if the model is # only  slightly worse, low if it is really worse).
+max { m : \exists x1,...,xm \in r^n such that x1,...,xn shatters f } =
+the raison d'etre of the vc dimension is the following theorem: out-of sample error rate 0  iif the patient is affected (if there are really many variables, there is a  wealth of such hyperplanes), we can look for a thick hyperplance, i.e., an  affine function f so that f > a iif the patient is affected and f  (x,y,x^2,y^2,x*y))
+1.29896 0.02841 45.725 f) 1 98 19.5259 2 90 6.9845 8 12.5414 20.201 f) 1 98 9.6533 2 90 8.9801 8 0.6733 0.8435 0.5671 # non-linearity library(lmtest) ?
+# for more details: # http://www.stat.washington.edu/raftery/research/pdf/volinsky1997.pdf # http://www.research.att.com/~volinsky/bma.html library(stats4) # for bic bma.fit.model ", s, "\n") r  temperature[i] * log(runif(1)) ) {
+median 3q max -1.05952 -0.38289 -0.01774 0.50598 1.05198 coefficients: estimate  std.
+tests the "summary" function gave us the results of a student t test  on the regression coefficients -- that answered the question "is this  coefficient significantly different from zero?".
+plot(fstat(...)) sctest(fstat(...))
+then, we can compute the forecasts for each of those models and combine  them, giving them a weight proportionnal to the likelihood of the model.
+but usually, you do not know where the changes occur.
+if we try to select the variables: > library(mass) > r4  res4  mean(res4^2)
+[1] 5 10 3 7 4 let us compare with the theoretical model.
+if you know where the change occurs, you just split your sample into  several chuks and perform a regression on each (to make sure that a change  occured, you can test the equality of the coefficients in the chunks).
+** x[, k.exp]x8  2.863028 0.469379 6.100 2.03e-05 **
+x  summary(g) generalized least squares fit by reml model: y ~ x data: null aic bic loglik 298.4369 308.7767 -145.2184 correlation structure: ar(1)
+n 1e-1), xk can be expressed from the other xi.
+# for more details: # http://www.stat.washington.edu/raftery/research/pdf/volinsky1997.pdf #  http://www.research.att.com/~volinsky/bma.html library(stats4) # for bic  bma.fit.model ", s, "\n") r  temperature[i] *  log(runif(1)) ) {
+the following  simulation estimates the variance of the residuals: we get 0.008893307 while  the noise variance was 0.01.
+some simulated data n  latest modification on sat jan 6 10:28:22 gmt 2007
+1 0 0 0 0 0 1 0 0 1 0 1 0 1 0 -3.216 printed the first 20 best models >
+done  -75 & yp[round(n/2),3]  -75 & yp[round(n/2),3] 0 ) } yr  yp[,2] )/n
+analysis of variance table response: z df sum sq mean sq f value pr(>f)
+learning bayesian networks with mixed variables tune.rpart(e1071) convenience  tuning functions stacking
+n  summary(lm(x1~x2+x3))$r.squared [1] 0.986512 > summary(lm(x2~x1+x3))$r.squared [1] 0.98811 > summary(lm(x3~x1+x2))$r.squared
+error t value pr(>|t|) x 0.04219 0.03114 1.355 0.179 residual standard error: 0.3317 on 99 degrees of freedom multiple r-squared: 0.9816, adjusted r-squared: 0.9815 f-statistic: 5293 on 1 and 99 df, p-value:  library(mass) > n  x  y  r  r$coefficients (intercept) x 0.9569173 -2.1296830 > confint(r) 2.5 % 97.5 % (intercept) 0.7622321 1.151603 x -2.3023449 -1.957021
+-1.897354e-18 4 -3.333244e-17 -2.024748e-17 -6.583818e-17
+upper phi 0.1477999 0.3459834 0.5174543
+there is no  algorithm to find the structure of the tree: you have to choose it yourself.
+1.000000e+00 -4.903304e-17 5 7.935005e-18 2.172470e-17 -1.897354e-18 -4.903304e-17
+residuals: min 1q median 3q max -0.727537 -0.206951 -0.002332
+for instance, their variance is not the same  (neither is the shape of their distribution, by the way).
+these quantities are important when you compare models with a different number of parameters: the log-likelihood will always increase if you add more variables, falling in the "overfit" trap.
+the nodes of the tree are probabilistic.
+regression problems -- and their solutions tests and confidence intervals partial residual plots, added  variable plots some plots to explore a regression overfit the curse of  dimension wide problems in this chapter, we list some of the problems that may occur in a  regression and explain how to spot them -- graphically.
+for the least squares estimators to be optimal and for the test results to be correct, we had to assume (among other hypotheses) that the variance of the noise was constant.
+error t value pr(>|t|) (intercept) 2.18577 1.47236 1.485 0.146
+upper (intercept) 0.926802 1.234593 1.542385
+in some cases, you can even get contradictory results: depending on the  order of the predictive variables, you can find that z sometimes depends on x,  sometimes not.
+y ~  offset(a) - 1 + x) residuals:
+0 1 0 1  0 0 0 1 0 0 1 0 0 0 1 0
+give the example of mixed models
+error t value pr(>|t|) x 2.04219 0.03114 65.58  summary(lm(i(y-1-2*x)~0+x)) call: lm(formula =
+# you can also change the "temperature",  i.e., the # probability that a worse model will be accepted, when # the  algorithm proceeds.
+if the sample is too small, you will not be able to estimate much, in such  situationm you have to restrict yourself to simple (simplistic) models, such as  linear models, becaus the overfitting risk is too high.
+[, k.exp]x9 1.541648 0.388408 3.969 0.00123
+for instance, their variance is not the same (neither is the shape of their distribution, by the way).
+let us try with a smaller sample.
+instead of looking at the determination coefficient (percentage of explained variance) r^2, you can look at the "variance inflation factors" (vif), 1 v_j =
+v14 -0.06518 0.53887 -0.121
+** x[, c(1, 3, 4, 5, 7, 10)]3 1.5300 0.3953 3.870 0.00193  *
+to sort heuristic(deal) heuristic greedy search with random restart
+poly(x, n - 1)3 -0.08663  poly(x, n - 1)4 -0.06938 poly(x, n - 1)5 -0.34501
+the first thing to do, even before starting the regression, is to look at the variables one at a time.
+we get 1: where the variance is small, the confidence intervals are too  small.
+overfit: choose a simpler model underfit: curvilinear regression, non-linear regression, local regression influential points: transform the data, robust regression, weighted least squares, remove the points influential clusters: transform the data, mixtures non-gaussian residuals: transform the data, robust regression, normalp heteroskedasticity: gls correlated residuals: gls unidentifiability: shrinkage methods missing values: discard the observations???
+0.4719 -3.548 0.00357
+this is a simple lagrange multipliers problem -- it can also be seen as a quadratic programming problem.
+title: learning bayesian networks with mixed variables tune.rpart(e1071) convenience tuning functions ???
+if you prefer formulas: vc(f) =
+x 1.0000000 0.9794765 0.9389237 0.8943823  0.8515996 0.9794765 1.0000000 0.9884061 0.9635754 0.9341101 0.9389237 0.9884061  1.0000000 0.9927622 0.9764132 0.8943823 0.9635754 0.9927622 1.0000000 0.9951765  0.8515996 0.9341101 0.9764132 0.9951765 1.0000000 > m   cor(m) 1 2 3 4 5 1 1.000000e+00 6.409668e-17 -1.242089e-17 -3.333244e-17  7.935005e-18 2 6.409668e-17 1.000000e+00 -4.468268e-17 -2.024748e-17
+the "summary" function gave us the results of a student t test on the regression coefficients -- that answered the question "is this coefficient significantly different from zero?".
+*** residual standard error: 1.27 on 14 degrees of freedom multiple r-squared: 0.8317, adjusted r-squared: 0.7716 f-statistic: 13.84 on 5 and 14 df, p-value: 5.356e-05 >
+(intercept) 1.08440 0.03224 33.64  x  y   summary(lm(i(y-1)~x))
+[13,] 0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 1 -3.261
+hud 1 0 0 0 0 0 0 1 2 15 0  0.2105263 hed 0 0 0 0 2 2 0 0 2 0 15 0.2857143
+n  4/n. cd 100] 100] 0]  0] x[x yp[,2] )/n
+in this example, there is no remarkable effect.
+hud 1 0 0 0 0 0 0 1 2 15 0 0.2105263 hed 0 0 0 0 2 2 0 0 2 0 15 0.2857143
+in other words, we select non-redundant variables, that account for the shape of the cloud of points in the x variables, instead of selecting non-redundant variables with some power to predict y.
+-1.70372 0.94366 -1.805 0.0741 .
+after this bird's eye view of several regression techniques, let us come back to linear regression.
+hid 2 11 1 0 0 0 0  0 1 0 0 0.2666667 hed 0 2 6 2 0 0 0 0 0 0 2 0.5000000
+todo heuristic(deal) heuristic greedy search with random restart
+we get 0.9932... done  mean(e)
+important variables may be missing, that can change the results of the regression and their interpretation.
+you can try with  moving window to find the most probable date for the structural change (you can  take a window with a constant width, or one with a constrant number of  observations).
+x[, c(9, 4, 7, 8, 2)]x7 1.2958 0.4149 3.123 0.00748
+na > summary(lm(y~poly(x,n-2))) call: lm(formula =
+aic(lm(y~x[,c(1,3,4,5,7,10)]))
+library(randomforest) library(mlbench) library(mva) data(vowel) r  r$importance measure 1 measure 2 measure 3 measure 4 v1 178.94737 16.674731 0.9383838 0.4960153 v2 563.15789 38.323021 0.9222222 1.0000000 v3 100.00000 13.625267 0.8343434 0.4212575 v4 200.00000 23.420278 0.8909091 0.5169644 v5 321.05263 26.491365 0.8959596 0.5819186 v6 189.47368 20.299312 0.8828283 0.5022913
+hist(y, col='light blue', probability=t) lines(density(y), col='red', lwd=3)
+[12,] 0 0 0 0 0 0 0 1 1 0 1 0 0 0  1 0
+min 1q median 3q max -0.271243 -0.065745 0.002929 0.068085 0.215251
+vowel[k, ]) type of random forest: classification number of trees: 500 no. of variables tried at each split: 3 oob estimate of error rate: 26% confusion matrix: hid hid hed had hyd had hod hod hud hud hed class.error hid 11 3 0 0 0 0 0 0 0 3 0 0.3529412 hid 2 11 1 0 0 0 0 0 1 0 0 0.2666667 hed 0 2 6 2 0 0 0 0 0 0 2 0.5000000 had 0 0 0 20 0 1 0 0 0 0 1 0.0909091 hyd 0 0 0 0 23 2 0 0 0 0 1 0.1153846 had 0 0 0 2 5 7 0 0 0 0 1 0.5333333 hod 0 0 0 0 2 0 13 1 1 0 0
+well, the actual algorithm is slightly more complicated: one does not directly us the correlation to select the variables.
+i(y - 1) ~ x) residuals: min 1q median  3q max -0.84692 -0.24891 0.02781 0.20486 0.60522
+error t value pr(>|t|) (intercept) -10.4726
+v2 0.60744 0.52034 1.167 0.308 v3 -0.18183  1.09441 -0.166 0.876 v4 0.49537 0.68360 0.725 0.509 v5 0.54538 1.72066 0.317  0.767 v6 -0.16841 0.89624 -0.188 0.860 v7 0.51331 1.25093 0.410 0.703 v8  0.25457 2.05536 0.124 0.907
+[1] 0.7982593 a naive regression with anly the "hunched" variables (bad idea@  the other variables bring som important information): > kk  kk  kk  r3  res3  mean(res3^2)
+x  x  y   summary(lm(y~x)) call: lm(formula =
+done  -75 &  yp[round(n/2),3]  -75 & yp[round(n/2),3] 0 ) } yr  yp[,2] )/n
+y ~ ., data = d) mallows cp: (intercept) v1 v2 v3 v4 v5 v6 v7  v8 v9
+[12,] 0 0 0 0 0 0 0 1 1 0 1 0 0 0 1 0
+*** residual standard error: 1.27 on 14 degrees of freedom  multiple r-squared: 0.8317, adjusted r-squared: 0.7716 f-statistic: 13.84 on 5  and 14 df, p-value: 5.356e-05 >
+reset the "strucchange" package detects structural changes (very often  with time series, e.g., in econometry).
+for more details, see: http://www-stat.stanford.edu/~tibs/ftp/spca.pdf http://www-stat.stanford.edu/~tibs/superpc/tutorial.html
+> summary(lm(y~x[,k])) ...
+error t value pr(>|t|) x 1.96378 0.02839 69.18  x  y  a  summary(lm(y~offset(a)-1+x)) call: lm(formula =
+under 0.2, it is fine.
+v12 0.64329 1.15298 0.558 0.607 v13  0.07364 0.79430 0.093 0.931
+2.05536 0.124 0.907 v9 0.34990 0.82277 0.425 0.693
+even from a statistical point  of view, they look different.
+max { m : \exists x1,...,xm \in r^n \forall y1,...,ym \in y \exists a \in a \forall i \in
+the theoretical model looks better... to assess the relevance of a model, as always, we plot the data -- here,  the residuals as a function of each variable included (in black, before adding  it, in red, after).
+[, k.exp]x8 2.863028 0.469379 6.100 2.03e-05 *** x
+[, k.exp]x3 -1.070913 0.443122 -2.417 0.02886 *
+if it does not work, increase the dimension.
+the main problem of stepwise regression is that we are very likely to  choose a bad model.
+the leverages are between 1/n and 1.
+you could try various embeddings, such as (x,y) |---> (x,x^2,x*y,y^2), but actually, we can simply change the "hyperplane" equation (well, it will no longer be a hyperplane) by replacing the scalar product used to define it by a kernel, such as k(x,y)
+but a big problem lurks behind this simplification: we completely forget potential interactions between variables.
+and only then look for a thick separating hyperplane.
+if you do not forget the constant: 1.
+graphically, this suggests that we only consider v2, or v2 and v5, or even  v2, v5 and v1.
+sometimes, they come from mistakes (they should be identified and corrected), sometimes, they are perfectly normal but extreme.
+if you end with a temperature # equal to zero, you get a single solution, as with the # steepest descent, but you are less likely to be stuck in # a local minimum (this is called simulated annealing); if # you decrease the temperature until 1, you get another # mcmc, with a different burn-up period.
+library(ipred) do.it  r  r call: randomforest.formula(x =
+vif(lm(y~x1+x2+x3)) x1 x2 x3 48.31913 41.13990 52.10746 instead of looking at the r^2, you can look at the correlation matrix between the estimated coefficients.
+0.007334 ** x[, k]4 -1.1025 0.2795 -3.944
+[, c(9, 4, 7, 8, 2)]x8 2.6270 0.4089 6.425 1.59e-05
+library(randomforest) library(mlbench) library(mva) data(vowel) r  r$importance measure 1 measure 2 measure 3 measure 4 v1 178.94737  16.674731 0.9383838 0.4960153 v2 563.15789 38.323021 0.9222222 1.0000000 v3  100.00000 13.625267 0.8343434 0.4212575 v4 200.00000 23.420278 0.8909091  0.5169644 v5 321.05263 26.491365 0.8959596 0.5819186 v6 189.47368 20.299312  0.8828283 0.5022913 v7 84.21053 10.596949 0.7777778 0.3544800 v8 110.52632  16.071039 0.8454545 0.4107499 v9 47.36842 10.219346 0.8424242 0.3301638 v10  63.15789 8.857154 0.8292929 0.3274473 todo: explain/understand.
+if you prefer formulas: y \in y (y is a finite set) x \in r^n a in | f: x*a --> y f shatters (x1,...,xm) \in (r^n)^m iif \forall y1,...,ym \in y \exists a \in a \forall i \in
+error t value pr(>|t|) (intercept) 0.01196  poly(x, n - 1)1 -1.94091 poly(x, n - 1)2 -0.02303
+coefficients:  estimate std.
+example... library(superpc) #
+i(y - 1) ~ 0 + x) residuals: min 1q median 3q max -0.85962 -0.26189 0.01480 0.19184 0.59227
+if we forget the  constant, it would be: 1.
+the nodes of the  tree are probabilistic.
+same for y. boxplot(y, horizontal=t) stripchart(y, method='jitter')
+if we forget the constant, it would be: 1.
+the nodes depend on a linear combinaition of the  predictive variables, not of a single variable.
+library(nlme) plot(y~x) abline(lm(y~x))
+we perform a linear regression at each leaf (with cart, we assign a constant to each leaf).
+if we look at the p-values, we would like to remove x1, but if we look at  the aic, we would like to keep it...
+if you are reasonable, the determination coefficient and its adjusted  version are very close.
+y ~ ., data = d) mallows cp: (intercept) v1
+min  1q median 3q max -0.271243 -0.065745 0.002929 0.068085 0.215251
+* x[, k]4 -1.1025 0.2795 -3.944
+a + f(x1,x2) + f3(x3) + ...
+v2 0.60744 0.52034 1.167 0.308 v3 -0.18183 1.09441 -0.166 0.876 v4 0.49537 0.68360 0.725 0.509 v5 0.54538 1.72066 0.317 0.767
+this is called mcmc (markov chain monte # carlo) or mcmcmc (markov chain monte  carlo model # combination).
+there are out-of-memory implementations (i.e., implementations that do not put all the data in memory): turboprim.
+the leverage  effect can yield incorrect results.
+[9,] 1 0 0 0 0 0 0 1 0 0 1 0 0 0 1 0 -3.361
+x[, c(1, 3, 4, 5, 7, 10)]6 1.4903  0.2506 5.946 4.85e-05 *** residual standard error: 1.202 on 13 degrees of  freedom multiple r-squared: 0.86, adjusted r-squared:
+v10 0.72410 1.26269  0.573 0.597 v11 0.69057 1.84400 0.374 0.727
+missing values important variables may be missing, that can change the results of the  regression and their interpretation.
+an alternative is to this is select not one but several models.
+error t value pr(>|t|)
+we end # up with a markov chain  that wanders in the space of all # models, staying longer at models that are  more # probable.
+1.000000e+00  -4.903304e-17 5 7.935005e-18 2.172470e-17 -1.897354e-18 -4.903304e-17  1.000000e+00 todo:
+[1] 0.8195915 (you can try many other methods...)
+> summary(lm(freeny.y ~ freeny.x[,1:2])) ...
+v10 0.72410 1.26269 0.573 0.597 v11 0.69057 1.84400 0.374 0.727
+you will not  that this uses the predictive variable x but not the variable to predict y. plot(hat(x), type='h', lwd=5)
+analysis of variance table response: z df sum sq mean sq f value pr(>f) x 1 0.0104 0.0104
+v10 v11 v12 v13 v14 v15 cp
+codes: 0 `***' 0.001  `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 residual standard error: 1.135 on 96 degrees  of freedom multiple r-squared: 0.4757, adjusted r-squared: 0.4593 f-statistic:  29.03 on 3 and 96 df, p-value: 1.912e-13 it is the third.
+the following simulation estimates the variance of the residuals: we get 0.008893307 while the noise variance was 0.01.
+codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.'
+freeny.x[, 1:2]lag  quarterly revenue 0.89122 0.07412 12.024 3.63e-14 *** freeny.x[, 1:2]price  index -0.25592 0.17534 -1.460 0.153 ...
+multiple r-squared: 0.9958, adjusted r-squared: 0.9956
+there is a measure of the "extremeness" of a point -- its  leverage --: the diagonal elements of the hat matrix h = x (x' x)^-1 x' it is called "hat matrix" because \hat y =
+1.000000e+00 -6.583818e-17  -1.897354e-18 4 -3.333244e-17 -2.024748e-17 -6.583818e-17
+upper (intercept) 0.926802 1.234593 1.542385 x -2.079516
+we also get the confusion matrix, that gives the "distances" between the classes: we can use it to plot the classes in the plane, with a distance analysis algorithm (mds (multidimensional scaling), etc. -- we have already mentionned this).
+1  0.5333333 hod 0 0 0 0 2 0 13 1 1 0 0
+we end # up with a markov chain that wanders in the space of all # models, staying longer at models that are more # probable.
+hme (hierarchical mixture of experts)
+you can also accept that certain points end on the "wrong"  side of the hyperplane, with a penality.
+the curse of dimension (gam,...)
+1 0 0 0 0 1 1 0 0 1 0 0 0 1 0 -3.826
+in higher dimensions, you can plot the variation of a coefficient as a function of the variation of other coefficients.
+min 1q median 3q max -1.05952 -0.38289 -0.01774 0.50598 1.05198 coefficients: estimate std.
+*** x[, c(9, 4,  7, 8, 2)]x2 -0.9715 0.3086 -3.148
+* x[, c(9, 4, 7, 8, 2)]x4  1.9826 0.3179 6.238 2.17e-05 ***
+those points  will "touch" the thick hyperplane, they will limit its thickness --  actually, you can even forget the other points 2.
+but a big  problem lurks behind this simplification: we completely forget potential  interactions between variables.
+exercice: do the same with other distributions (cauchy, uniform, etc.), either for the noise or for the variables.
+analysis of variance table response: y df sum sq  mean sq f value pr(>f) x 1 386.97 386.97 4747 f) 1 29 524.30 2 28 421.92 1  102.38 6.7943 0.01449 * --- signif.
+residual standard error: lower est.
+tests and confidence intervals partial residual plots, added variable plots some plots to explore a regression overfit underfit influential points influential clusters non gaussian residuals heteroskedasticity correlated errors unidentifiability missing values extrapolation miscellaneous the curse of dimension wide problems in this chapter, we list some of the problems that may occur in a regression and explain how to spot them -- graphically.
+for all k, define fk as the local regression of y - sum(fj(xj))
+(well, actually, if you think there is an interaction between two of your variables, you will include this interaction -- but just this one --; the model then becomes y =
+freeny.xlag quarterly revenue 0.1239 0.1424 0.870 0.3904 freeny.xprice index  -0.7542 0.1607 -4.693 4.28e-05 *** freeny.xincome level 0.7675 0.1339 5.730  1.93e-06 *** freeny.xmarket potential 1.3306 0.5093 2.613 0.0133
+1.000000e+00 todo: give the example of mixed models
+*** x[, c(9, 4, 7, 8, 2)]x2 -0.9715 0.3086 -3.148 0.00712 ** residual standard error: 1.287 on 14 degrees of freedom multiple r-squared: 0.8859, adjusted r-squared: 0.8451 f-statistic: 21.73 on 5 and 14 df, p-value: 3.837e-06 > summary(lm(y~x[,k.exp])) ...
+abline(gls(y~x, correlation =
+if you know where the change occurs, you just split your sample into several chuks and perform a regression on each (to make sure that a change occured, you can test the equality of the coefficients in the chunks).
+often, you can solve the problem by transforming the variables (so that the outliers and influential observations disappear, so that the residuals look normal, so that the residuals have the same variance -- quite often, you can do all this at the same time), by altering the model (for a simpler or more complex one) or by using another regression (gls to account for heteroskedasticity and correlated residuals, robust regression to account for remaining influencial observations).
+the vc dimension of the classification algorithm f is the largest number of points shattered by f.
+furthermore, the estimation of the coefficients anf their standard  deviation is worrying: in a multilinearity situation, you cannot be sure of the  sign of the coefficients.
+graphically, this suggests that we only consider v2, or v2 and v5, or even v2, v5 and v1.
+library(nlme) n  library(wle) > r  summary(r) call: mle.cp(formula =
+if it is not, it is said toe be heteroscedastic.
+y ~ x1 + x2 + x3) residuals: min 1q median 3q max -3.0902 -0.7658 0.0793 0.6995 2.6456
+an alternative is to this is select not one but several  models.
+1 1 0 0 1 0 0 0 1 0 -4.078
+y 1 7.1666 7.1666 96.626 2.395e-05 *** x 1 0.4201 0.4201 5.664 0.04889 * residuals 7 0.5192 0.0742
+residuals and noise
+regress y against the first principal components.
+i(y - 1) ~ x) residuals: min 1q median 3q max -0.84692 -0.24891 0.02781 0.20486 0.60522
+todo: an example fstat(...)
+these quantities are important when you compare models with a different  number of parameters: the log-likelihood will always increase if you add more  variables, falling in the "overfit" trap.
+residuals: min 1q median 3q max -0.85962 -0.26189 0.01480 0.19184 0.59227  coefficients: estimate std.
+influential points influential observations some points might bear an abnormally high influence on the regression  results.
+41.13990 52.10746 instead of looking at the r^2, you can look at the correlation matrix  between the estimated coefficients.
+reset the "strucchange" package detects structural changes (very often with time series, e.g., in econometry).
+# the second version also accepts models that are slightly # worse, with a certain probability (high if the model is # only slightly worse, low if it is really worse).
+as there is a single one, we might be  tempted to remove it -- if there were several, we would rather try to transform  the data.
+exercice: do the same with other distributions (cauchy, uniform, etc.),  either for the noise or for the variables.
+the naive approach will not work: n  summary(lm(y~poly(x,10))) ...
+error t value pr(>|t|) (intercept) 0.1471 0.3260 0.451 0.65870  x[, c(9, 4, 7, 8, 2)]x9 1.2269 0.3441 3.565 0.00311 *
+stepwise regression is bad todo stepwise regression and bayesian model averaging (bma)
+error t value pr(>|t|) (intercept) -0.01312 0.02994 -0.438  0.662 poly(x, 10)1 -6.11784 0.29943 -20.431   summary(lm(y~poly(x,1))) ...
+this is a  simple lagrange multipliers problem -- it can also be seen as a quadratic  programming problem.
+0 0 0 0 0 0 1 1 0 0 1 0 1 0 1 0 -3.335  [11,] 0 0 0 0 1 0 0 1 0 0 1 0 1 0 1 0 -3.287
+take a first estimation of the fi, say, as constants, from a linear  regression.
+residuals: min 1q median 3q max -3.0902 -0.7658 0.0793 0.6995 2.6456  coefficients: estimate std.
+the residuals are the differences between the observed values and the predicted values.
+x 1.0000000 0.9794765 0.9389237 0.8943823 0.8515996 0.9794765 1.0000000 0.9884061 0.9635754 0.9341101 0.9389237 0.9884061 1.0000000 0.9927622 0.9764132 0.8943823 0.9635754 0.9927622 1.0000000 0.9951765 0.8515996 0.9341101 0.9764132 0.9951765 1.0000000 > m  cor(m) 1 2 3 4 5 1 1.000000e+00 6.409668e-17 -1.242089e-17 -3.333244e-17
+n 4.5 } y 5 } plot(y~x) abline(1,-2,lty=2) abline(lm(y~x),col='red',lwd=3) lm(y~x)$coef
+this is called mcmc (markov chain monte # carlo) or mcmcmc (markov chain monte carlo model # combination).
+on the contrary, the aic  and the bic have a corrective term to avoid this trap.
+residual standard error: 0.3998 on 1 degrees of  freedom multiple r-squared: 0.9641, adjusted r-squared: 0.6767 f-statistic:  3.355 on 8 and 1 df, p-value: 0.4
+1.000000e+00 -6.583818e-17
+error t value pr(>|t|) (intercept) -0.01312 0.02994 -0.438 0.662 poly(x, 10)1 -6.11784 0.29943 -20.431  summary(lm(y~poly(x,1))) ...
+1 0 0 0 0 1 0 0 1 0 0 0 1  0 -4.514
+*** x[, k]3 -1.5362 0.4903 -3.133 0.007334
+* x[, k]5 1.6863 0.4050  4.164 0.000956
+[1] 0.7982593 a naive regression with anly the "hunched" variables (bad idea@ the other variables bring som important information): > kk  kk  kk  r3  res3  mean(res3^2)
+you can also accept that certain points end on the "wrong" side of the hyperplane, with a penality.
+** x[, c(9, 4, 7, 8, 2)]x8 2.6270 0.4089 6.425 1.59e-05
+we get 1: where the variance is small, the confidence intervals are too small.
+i wanted to prove, here, on an example, that non gaussian residuals produces confidence intervals too small and thus incorrect results.
+upper 0.926446 1.085987 1.273003 let us compare with a naive regression.
+remark: in some cases, the auelity of the estimator can worsen.
+x[, k.exp]x4 1.292099 0.376419 3.433 0.00370
+alpha  a. apparently, this algorithm is not implemented in r. help.search('prim') help.search('bump')
+offset(1 +  2 * x) + 0 + x) residuals: min 1q median 3q max -0.92812 -0.09901 0.09515  0.28893 0.99363
+error t value pr(>|t|) (intercept) 0.06361  0.11368 0.560 0.5771 x1 1.47317 0.94653 1.556 0.1229 x2 1.18874 0.98481 1.207  0.2304 x3
+[, k]1 1.7478 0.3330 5.249 0.000123  *** x
+analysis of variance table response: z df sum sq  mean sq f value pr(>f) y 1 2.42444 2.42444 46.985 0.000241 *** x 1 0.64996  0.64996 12.596 0.009355 ** residuals 7 0.36120 0.05160
+* x[, c(9, 4, 7, 8, 2)]x4 1.9826 0.3179 6.238 2.17e-05 ***
+there is a structural change when (for instance) the linear model is correct, but its coefficients change for time to time.
+boxplot(x, horizontal=t) hist(x, col='light blue', probability=t) lines(density(x), col='red',  lwd=3)
+you can use this to average predictions over # those models.
+[9,] 1 0 0  0 0 0 0 1 0 0 1 0 0 0 1 0 -3.361
+[7,] 0 0 0 1 0 0 0  1 0 0 1 0 0 0 1 0
+n  summary(lm(x1~x2+x3))$r.squared [1] 0.986512 >  summary(lm(x2~x1+x3))$r.squared [1] 0.98811 >  summary(lm(x3~x1+x2))$r.squared
+had 0 0 0 20 0 1 0 0 0 0
+0 0 0 0 0 0 1 1 0 0 1 0 1 0 1 0 -3.335
+1 0 0 1 0 0 1 1 0 -3.237
+formula: ~i parameter estimate(s): phi 0.3459834 coefficients: value std.
+7.935005e-18 2 6.409668e-17 1.000000e+00 -4.468268e-17 -2.024748e-17
+sometimes, they come from mistakes (they should be identified and  corrected), sometimes, they are perfectly normal but extreme.
+get.sample  r$anova stepwise model path analysis of deviance table initial  model: y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 final model: y ~ x1  + x3 + x4 + x5 + x7 + x10 step df deviance
+correlation structure: lower est.
+y  summary(lm( y~x+z ))
+error t value pr(>|t|) (intercept) -10.4726 6.0217 -1.739 0.0911 .
+[1] 0 0 -2 2 2 0 -1 0 0 2 > summary(lm(y~x[,c(1,3,4,5,7,10)])) ...
+[1] 19 in short, to have the most incorrect prediction intervals, take large values of x, bit not too large (close to 0, the predictions are correct, away from 0, the prediction intervals are huge).
+todo: an example # structural change library(strucchange) efp(...,  type="rec-cusum") efp(..., type="ols-mosum") plot(efp(...))
+error t value pr(>|t|) (intercept) 0.01876 0.02404 0.78 0.437 x -1.05823 0.07126 -14.85  summary(lm( y~x ))
+error t value pr(>|t|) (intercept) 0.01196 poly(x, n - 1)1 -1.94091 poly(x, n - 1)2 -0.02303 poly(x, n - 1)3 -0.08663 poly(x, n - 1)4 -0.06938 poly(x, n - 1)5 -0.34501 poly(x, n - 1)6 -0.51048 poly(x, n - 1)7 -0.28479 poly(x, n - 1)8 -0.22273 poly(x, n - 1)9 0.39983
+x[, c(9, 4, 7, 8, 2)]x7 1.2958 0.4149 3.123  0.00748 *
+freeny.x[, 1:2]lag quarterly revenue 0.89122 0.07412 12.024 3.63e-14 *** freeny.x[, 1:2]price index -0.25592 0.17534 -1.460 0.153 ...
+1 0 0 1 0 0 0 1 0 -5.237
+this is similar to cart, with the following differences.
+todo todo: put this somewhere else -- it should be with ridge regression, partial least squares, etc. principal component analysis is a simple and efficient means of reducing the dimensionality of a data set, or reducing the number of variables one will have to look at but, it the context of regression, it misses a point: in principal component regression, where one tries to predict or explain a variable y from many variables x1, ..., xn, one computes the pca of the predictive variables x1,...,xn, and regresses y against the first components -- but one does not take the variable to predict into account!
+the first thing to do, even before starting the regression, is to look at  the variables one at a time.
+error  t-value p-value (intercept) 1.234593 0.15510022 7.959971  intervals(g) approximate 95% confidence intervals coefficients:  lower est.
+x  summary(g) generalized least squares fit by reml model: y ~ x data:  null aic bic loglik 298.4369 308.7767 -145.2184
+[14,] 0 0 0 0 1 0 0 1 0 0 1 0 0 0 1 0 -3.241 [15,] 0 0 0 0 0 0 0 1 0 0 1 1 0 0 1 0
+instead of looking at the determination coefficient (percentage of  explained variance) r^2, you can look at the "variance inflation  factors" (vif), 1 v_j =
+multiple r-squared: 0.9981, adjusted r-squared: 0.9978
+if you are reasonable, the determination coefficient and its adjusted version are very close.
+in the following example, the forecasts are correct 99% of the time.
+(well, actually, if you think there is an interaction between two of  your variables, you will include this interaction -- but just this one --; the  model then becomes y =
+x1 f) x 1 0.85633 0.85633 20.258 0.002000 ** residuals 8 0.33817 0.04227 it still works with several predictive variables.
+6.0217 -1.739 0.0911 .
+1 0.0909091 hyd 0 0 0 0 23 2 0 0 0 0 1 0.1153846 had 0 0 0 2 5 7 0 0 0 0
+0.7954 f-statistic: 13.31  on 6 and 13 df, p-value: 6.933e-05 >
+1 0 0 1 0 0 0 1 0 -5.237  [2,] 0
+you can also measure the effect of each observation on the regression: remove the point, compute the regression, the predicted values and compare them with the values predicted from the whole sample: plot(dffits(r),type='h',lwd=3) you can also compare the coefficients: plot(dfbetas(r)[,1],type='h',lwd=3) plot(dfbetas(r)[,2],type='h',lwd=3)
+i [1] 7 10 14 example, by hand get.sample  d  y  x  k.exp  x  summary(lm(y~x[,c(9,4,7,8,2)])) ...
+** residuals 7 0.36120 0.05160
+the classification algorithm f is said to shatter the observations  o1,...,om if, for any training set (o1,y1),...,(om,ym) there exists a such
+x -2.079516 -1.892171
+> x  y  z  anova(lm(z~x+y))
+those values tells us how an error on a predictive variable prapagates to the predictions.
+codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 residual standard error: 1.135 on 96 degrees of freedom multiple r-squared: 0.4757, adjusted r-squared: 0.4593 f-statistic: 29.03 on 3 and 96 df, p-value: 1.912e-13 it is the third.
+min 1q median 3q max -0.92812 -0.09901 0.09515 0.28893 0.99363
+multiple r-squared: 0.9958, adjusted  r-squared: 0.9956
+(  + a )^b or k(x,y) = exp( -a norm(x-y)^2 ).
+those values tells us how an error on a predictive variable prapagates to  the predictions.
+in the following, the  situation is more drastic.
+in some cases, you can even get contradictory results: depending on the order of the predictive variables, you can find that z sometimes depends on x, sometimes not.
+multiple r-squared: 0.8182, adjusted r-squared: 0.8164 ...
+> x  y  summary(lm(y~x)) ...
+v6 -0.16841 0.89624 -0.188 0.860 v7 0.51331 1.25093 0.410 0.703
+error t value pr(>|t|)  (intercept) -0.005379 0.360940 -0.015 0.98831
+n  r cannot be written like that: but  we have a lot of them and most of the time this will be sufficient.
+-3.237 [20,] 0 1 0 0 0 0 0 1 0 0 1 0 1 0 1 0 -3.216 printed the first 20  best models >
+error t value  pr(>|t|) (intercept)
+there are out-of-memory implementations (i.e., implementations that do not  put all the data in memory): turboprim.
+the algorithm goes as follows: compute the principal components of those of the predictive variables that are the most correlated with the variable to predict y (using some threshold, chosen by cross-validation).
+error t value pr(>|t|) (intercept) 0.01196 0.12644 0.095 0.940 poly(x, n - 2)1 -1.94091 0.39983 -4.854 0.129 poly(x, n - 2)2 -0.02303 0.39983 -0.058 0.963 poly(x, n - 2)3 -0.08663 0.39983 -0.217 0.864 poly(x, n - 2)4 -0.06938 0.39983 -0.174 0.891 poly(x, n - 2)5 -0.34501 0.39983 -0.863 0.547 poly(x, n - 2)6 -0.51048 0.39983 -1.277 0.423 poly(x, n - 2)7 -0.28479 0.39983 -0.712 0.606 poly(x, n - 2)8 -0.22273 0.39983 -0.557 0.676 residual standard error: 0.3998 on 1 degrees of freedom multiple r-squared: 0.9641, adjusted r-squared: 0.6767 f-statistic: 3.355 on 8 and 1 df, p-value: 0.4
+error t  value pr(>|t|) (intercept) 2.18577 1.47236 1.485 0.146
+# you can also change the "temperature", i.e., the # probability that a worse model will be accepted, when # the algorithm proceeds.
+remark: this idea has no effect whatsoever with linear estimators: they  commute with the mean.
+[7,] 0 0 0 1 0 0 0 1 0 0 1 0 0 0 1 0 -3.829 [8,] 0 1 0 0 0 0 1 1 0 0 1 0 0 0 1 0 -3.826
+in the following, the situation is more drastic.
+min 1q median 3q max -0.92812 -0.09901 0.09515  0.28893 0.99363
+> summary(lm(y~x1+x2+x3))
+v7 84.21053 10.596949 0.7777778 0.3544800 v8 110.52632 16.071039 0.8454545 0.4107499 v9 47.36842 10.219346 0.8424242 0.3301638 v10 63.15789 8.857154 0.8292929 0.3274473 todo: explain/understand.
+if you use algorithms that do not use coordinates but just scalar products, this trick (the "kernel trick") allows you to increase the dimension without having to compute the actual coordinates.
+explain what you can do if there are more variables than observations.
+n  r cannot be written like that: but we have a lot of them and most of the time this will be sufficient.
+vowel[k, ]) type of random forest:  classification number of trees: 500 no. of variables tried at each split: 3 oob  estimate of error rate: 26% confusion matrix: hid hid hed had hyd had hod hod  hud hud hed class.error hid 11 3 0 0 0 0 0 0 0 3 0 0.3529412
+corar1(form= ~i)), col='red')
+the noise is the difference between the observed values and the actual values: it appears in the model, e.g. y = a + b x + noise residues and noise are two different things.
+vif(lm(y~x1+x2+x3)) x1 x2 x3 48.31913
+* x[, c(1, 3, 4, 5, 7, 10)]4 1.7813 0.3159 5.639 8.07e-05 *** x
+you can also look for confidence intervals on the predicted values.
+[, k]2 1.4787 0.2647 5.587 6.7e-05
+codes: 0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 tells us that the two models are significantly different with a risk of error under 2%.
+residual standard error: nan on 0 degrees of freedom multiple r-squared: 1, adjusted r-squared: nan f-statistic: nan on 9 and 0 df, p-value:
+error t value pr(>|t|) x -0.03622 0.02839 -1.276
+abline(gls(y~x, correlation = corar1(form= ~i)), col='red')
+iterate ultil convergence.
+x f) x 1 2.33719 2.33719 45.294 0.0002699 *** y 1 0.73721 0.73721 14.287 0.0068940 ** residuals 7 0.36120 0.05160 counterintuitive and frightening as it may be, you might notice that the result depends on the order of the parameters... > anova(lm(z~y+x))
+error t value pr(>|t|) (intercept) 0.1862 0.2886 0.645 0.52992 x[, c(1, 3,  4, 5, 7, 10)]1 -0.4408 0.2720 -1.620 0.12915 x[, c(1, 3, 4, 5, 7, 10)]2 -1.6742
+[, c(1, 3, 4,  5, 7, 10)]5 -1.0521 0.2664 -3.949 0.00167 **
+the raison d'etre of the vc dimension is the following theorem: out-of sample error rate 0 iif the patient is affected (if there are really many variables, there is a wealth of such hyperplanes), we can look for a thick hyperplance, i.e., an affine function f so that f > a iif the patient is affected and f  (x,y,x^2,y^2,x*y)) and only then look for a thick separating hyperplane.
+[, k.exp]x3 -1.070913 0.443122  -2.417 0.02886 *
+y ~ offset(1 + 2 * x) + 0 + x) residuals:
+residuals: 1 2 3 4 5 6 7 8 9 10 -0.001813 0.016320 -0.065278 0.152316 -0.228473 0.228473 -0.152316 0.065278 -0.016320 0.001813
+n 4.5 } y 5 }  plot(y~x) abline(1,-2,lty=2) abline(lm(y~x),col='red',lwd=3) lm(y~x)$coef
+[1] 0 0  -2 2 2 0 -1 0 0 2 > summary(lm(y~x[,c(1,3,4,5,7,10)])) ...
+v14 -0.06518 0.53887 -0.121 0.910 v15 0.92515 1.18697 0.779 0.479
+supervised principal components are much easier to understand, though.
+data: d aic bic loglik 86.43615 76.00316 -26.21808 ...
+if we try to select the variables: > library(mass) > r4  res4   mean(res4^2)
+y 1 7.5763 7.5763 102.1495 1.994e-05 *** residuals 7 0.5192 0.0742 > anova(lm(z~y+x)) analysis of variance table response: z df sum sq mean sq f value pr(>f)
+the leverage effect can yield incorrect results.
+0.9569173 -2.1296830 > confint(r) 2.5 % 97.5 % (intercept) 0.7622321  1.151603 x -2.3023449 -1.957021
+remark: the structure of the estimator is lost -- if it was a tree, you get a bunch of trees (a forest), whose predictions are more reliable, but which is harder to interpret.
+0 1 0 1 0 0 0 1 0 0 1 0 0 0 1 0 -3.240
+y ~ x + z) residuals:
+error t value pr(>|t|) (intercept) 0.98706 0.02856 34.56  anova(lm(y~x))
+todo: an example # structural change library(strucchange) efp(..., type="rec-cusum") efp(..., type="ols-mosum") plot(efp(...)) sctest(efp(...))
+one idea, to increase the quality on an estimator (a non-linear and unstable one, e.g., a regression tree) is simply to compute its "mean" on several bootstrap samples.
+(intercept) 0.2473 0.3023 0.818 0.426930 x
+error t value pr(>|t|) (intercept) -0.01294 0.02856 -0.453 0.651 x 1.96405  0.02851 68.898  summary(lm(i(y-1)~0+x))
+> x  y  summary(lm(y~poly(x,10))) call: lm(formula =
+[, c(9, 4, 7, 8, 2)]x9 1.2269 0.3441 3.565 0.00311 *
+in higher dimensions, you can plot the variation of a coefficient as a  function of the variation of other coefficients.
+furthermore, the estimation of the coefficients anf their standard deviation is worrying: in a multilinearity situation, you cannot be sure of the sign of the coefficients.
+adding a subject-dependant intercept is equivalent to imposing a certain correlation structure.
+remark: the structure of the estimator is lost -- if it was a tree, you  get a bunch of trees (a forest), whose predictions are more reliable, but which  is harder to interpret.
+1 0 0 0 0 0 1 0 0 1 0 0 0 1 0 -4.911
+error t value pr(>|t|) (intercept) 0.01876 0.02404 0.78 0.437  x -1.05823 0.07126 -14.85  summary(lm( y~x ))
+to see what happens, let us plot some of these points.
+if we look at the p-values, we would like to remove x1, but if we look at the aic, we would like to keep it...
+error t  value pr(>|t|) (intercept) 0.98706 0.02856 34.56  anova(lm(y~x))
+v12 0.64329 1.15298 0.558 0.607 v13 0.07364 0.79430 0.093 0.931
+residual standard error: 1.798 on 4 degrees of freedom multiple r-squared: 0.7795, adjusted r-squared: -0.04715 f-statistic: 0.943 on 15 and 4 df, p-value: 0.5902 the "gls" function gives you directly the aic and the bic.
+current.bic  f(x,a) that tries to predict y from x; here, "a" are the parameters of the classification algorithm, to be deternined (e.g., the coefficients of a regression, the weights of a neural network).
+upper phi 0.1477999 0.3459834  0.5174543
+there is a measure of the "extremeness" of a point -- its leverage --: the diagonal elements of the hat matrix h = x (x' x)^-1 x' it is called "hat matrix" because \hat y =
+0.2352941 hod 0 0 0 0 0 0 2 11 1 0 0 0.2142857
+if the sample is too small, you will not be able to estimate much, in such situationm you have to restrict yourself to simple (simplistic) models, such as linear models, becaus the overfitting risk is too high.
+y ~ offset(a) - 1 + x) residuals: min 1q median 3q max -0.92812 -0.09901 0.09515 0.28893 0.99363
+remark: this idea has no effect whatsoever with linear estimators: they commute with the mean.

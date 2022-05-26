@@ -1,0 +1,465 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Automagical Thinking</title>
+<body>
+
+<h1>Automagical Thinking</h1> 
+<h2>I forgot what I was going to say here.</h2> 
+<ul> 
+<li>RSS</li> </ul> <br>
+
+<ul> 
+<li>Blog</li> 
+<li>Archives</li> </ul> 
+<h1>One Does Not Simply Walk Into Mordor</h1> 
+<p> Oct 22nd, 2010 </p> 
+<p></p> 
+<h1>By Land and by Sea and by Reference</h1> 
+<p> Oct 6th, 2010 </p> 
+<p> Photo source</p> 
+<p>I recently attempted to fit the quicksort algorithm into under 140 
+characters of Ruby. It looks like:</p> 
+<pre> <code> def q(s);t=s.dup;t.size&lt;=1 ? t 
+:(p=t[i=t.size/2];t.delete_at(i);x,y=[],[];t.each{|e|e&lt;p ? x&lt;&lt;e : 
+y&lt;&lt;e};n=q(x);m=q(y);n+[p]+m)end</code> </pre> 
+<p></p> 
+<p>That&rsquo;s a little hard to read, so here&rsquo;s the first working 
+version I wrote before attempting to squeeze it into twitterable form:</p> 
+<pre> <code> def quicksort(sequence) tmp = sequence.clone if tmp.count &lt;= 1 
+return tmp else pivot_index = (tmp.count / 2) pivot = tmp[pivot_index] # pull 
+the pivot out of the array. tmp.delete_at(pivot_index) # create 2 
+sub-sequences, one &lt; pivot, one &gt;= pivot sub_sequence_a = [] 
+sub_sequence_b = [] tmp.each do |element| if element &lt; pivot sub_sequence_a 
+&lt;&lt; element elsif element &gt;= pivot sub_sequence_b &lt;&lt; element end 
+end # quicksort sub-sequence 1 new_sub_sequence_a = quicksort(sub_sequence_a) # 
+quicksort sub-sequence 2 new_sub_sequence_b = quicksort(sub_sequence_b) # 
+return sub1 plus pivot plus sub2 new_sub_sequence_a + [pivot] + 
+new_sub_sequence_b end end</code> </pre> 
+<p>A key step in this implementation is pulling the pivot <em>out</em> of the 
+array (see around line 9). In my first naive attempt at quicksort I just 
+deleted the pivot right from<code>sequence</code>, the array object that is 
+passed in to be sorted.</p> 
+<p>Anyone see the problem there?</p> 
+<p>At first, I sure didn&rsquo;t. After all, I put the pivot back in the 
+return value, right? (Second to last line.)</p> 
+<p>That does indeed ensure that the <em>returned</em>, <em>sorted</em> array 
+has all the same elements as the original array. But the original array that I 
+passed in would now have one less item. It would (did) lose an element every 
+time I&rsquo;d run my naive (read: incorrect) implementation of quicksort on it.
+</p> 
+<h3>WTF?</h3> 
+<p>Enter passing objects by reference. In Ruby, everything is passed by 
+reference.(1) It can be easy to forget this, though, especially if you&rsquo;re 
+used to changing objects with the assignment (&ldquo;=&rdquo;) operator.</p> 
+<blockquote> 1 Just in case that&rsquo;s not a familiar phrase, &ldquo;by 
+reference&rdquo; refers to the idea that a reference to the<strong>actual object
+</strong> (like a pointer, if you will) is being passed, not just a copy of the 
+object, or just the value of the object (which is called passing &ldquo;by 
+value&rdquo;). (And no, by &ldquo;pointer&rdquo; I&rsquo;m not talking about 
+pointers in C/C++, I&rsquo;m just trying to say that a reference<strong>refers 
+to</strong> or in a sense, <strong>points to</strong>, the actual original 
+object.)</blockquote> 
+<p>For example:</p> 
+<pre> <code> def reassign(obj) obj = &quot;Not the same!&quot; end #irb &gt; 
+greeting = &quot;Hello!&quot; =&gt; &quot;Hello!&quot; &gt; reassign(greeting) 
+=&gt; &quot;Not the same!&quot; &gt; puts greeting Hello! =&gt; nil</code> 
+</pre> 
+<p>So, assignment inside a method doesn&rsquo;t change our object. Ruby must 
+not<em>really</em> be passing a referece, right? Wrong, it sure is.</p> 
+<pre> <code> def shiftit(obj) obj.shift end #irb &gt; h = {:foo =&gt; 
+&quot;bar&quot;, :bar =&gt; &quot;baz&quot;, :baz =&gt; &quot;qux&quot;} =&gt; 
+{:foo=&gt;&quot;bar&quot;,:bar =&gt;&quot;baz&quot;,:baz=&gt;&quot;qux&quot;} 
+&gt; a = [1,2,3,4,5,6] =&gt; [1,2,3,4,5,6] &gt; shiftit(h) =&gt; {:bar 
+=&gt;&quot;baz&quot;,:baz=&gt;&quot;qux&quot;} &gt; shiftit(a) =&gt; 
+[2,3,4,5,6] &gt; # BUT WAIT &gt; h =&gt; {:bar 
+=&gt;&quot;baz&quot;,:baz=&gt;&quot;qux&quot;} &gt; a =&gt; [2,3,4,5,6]</code> 
+</pre> 
+<p>Huh. How about that. Our original objects were changed when they were 
+modified inside the method.</p> 
+<p>You&rsquo;ll find that any method of modifying an object inside another 
+method with actually change (even delete, if you go that far) the original 
+object that you passed in. Ruby quite definitely, always, passed objects by 
+reference.</p> 
+<h3>Then How come <em>assignment</em> in a method doesn&rsquo;t change an 
+object?</h3> 
+<p>That&rsquo;s a good question. I was stumped on this one myself for a bit. 
+The answer comes down to the idea of<em>bindings</em> and <em>scope</em>. When 
+I tell Ruby that<code>foo = &quot;bar&quot;</code>, Ruby binds the local 
+variable named<em>foo</em> to a String object, &ldquo;bar&rdquo;. foo is a 
+String object, and when I pass it to my<code>reassign</code> method, I am 
+passing a reference to the real object,<code>foo</code>.</p> 
+<p>However, inside the method, I&rsquo;m in a new scope. When I type <code>foo 
+= &quot;Some new value&quot;</code> inside the method scope, trying to reassign 
+<code>foo</code>, Ruby sees that I&rsquo;m binding foo to a new value; but from 
+inside method scope, Ruby is not going to let me change the binding from 
+another scope. So instead, Ruby figures that I want a local variable that is<em>
+also</em> named <code>foo</code>, inside my method scope, and it assigns my new 
+value to the local<code>foo</code>, not the original <code>foo</code>.</p> 
+<p>I could alter it, still: if I changed the <code>reassign</code> method so 
+that it did<code>obj.replace(&quot;Some new value!&quot;)</code> inside the 
+method body, the original object would be changed, just like<code>shiftit</code>
+ did to the array and the hash.</p> 
+<h3>I think I&rsquo;m a clone, now</h3> 
+<p>Back to the quicksort implementation I started with: the way to get around 
+this is to use .clone or .dup to get a<em>copy</em> of the object. That way you 
+aren&rsquo;t actually modifying the original object. Even when I realized this 
+was happening, I still made the mistake of just doing<code>tmp = sequence</code>
+ on my first try. No good; same exact problem.<code>tmp</code> is now just a 
+reference straight to<code>sequence</code>, so altering <code>tmp</code> 
+modifies<code>sequence</code> as well. Need to use <code>tmp = sequence.clone
+</code>, or something like it.</p> 
+<h3>That&rsquo;s all I have to say about that</h3> 
+<p>Say it with me now: &ldquo;Ruby passes objects by reference. <em>Ruby 
+passes objects by reference.</em> Every time. <em>All the time.</em> <strong>By 
+reference.</strong>&rdquo;</p> 
+<h1>Fun With the Major Scale</h1> 
+<p> Aug 11th, 2010 </p> 
+<p>Got to chatting with Nate (@fowlduck) about musical notation last night. He 
+was pointing out that bits of the notation seem arbitrary and probably archaic, 
+likening it to legacy code of a sort. For example, why no whole tone between B 
+and C, E and F? This post is NOT meant to be a defense of music notation, a 
+&ldquo;setting straight&rdquo; of anything, or even a definitive description of 
+musical theory (at which I&rsquo;m a rank amateur). It just got me thinking 
+about the major scale and the circle of fourths &amp; fifths, which led to some 
+playing around on the command line, which led to this. Enjoy.</p> 
+<p>The thing that makes it seem so strange is, at least in part, the major 
+scale. The octave consists of twelve semi-tones, in which the major scale is 
+set in this pattern: whole tone, whole tone, semitone, whole tone, whole tone, 
+whole tone, whole tone, semi-tone. Like so:</p> 
+<pre> 1 2 3 4 5 6 7 8 9 10 11 12 13 | C | | D | | E | F | | G | | A | | B | C 
+| ... (etc)</pre> 
+<p>The next root note (13th semi-tone, above) is only a semi-tone off from the 
+last note of the scale. And so on. The semi-tone before or after any given note 
+is a flat or a sharp respectively, giving rise to the B# == C, Cb == B, E# == 
+F, Fb == E identities. So, let&rsquo;s just accept the scale as a given; that 
+this pattern of whole tones and semi-tones sounds pleasing to the ear.</p> 
+<p>So why is it C that has all natural notes (no sharps or flats)? Good 
+question. That part, to me at least, does seem arbitrary, but effectively it 
+doesn&rsquo;t matter. Given the above system, the major scale in one key and 
+one key only will have no sharps or flats. But still, why structure the notes 
+this way? It still doesn&rsquo;t necessarily seem to make sense.</p> 
+<p>There are a few reasons. For one, we want to be able to express every scale 
+by naming off the notes, and we&rsquo;d like each note to be a different 
+letter. So we need 7 letters.</p> 
+<p>Where it gets really interesting is the circle of fourths and fifths.</p> 
+<p></p> 
+<p>So, if you go around clockwise, you&rsquo;re counting by fifths (G is the 
+fifth note of the C major scale, D is the fifth note of the G major scale, etc) 
+and if you go around counter-clockwise you&rsquo;re counting by fourths (F is 
+the fourth note of C, Bb is the fourth note of F, etc). If you go around 
+clockwise, each scale has one additional sharped note until you get to 180 
+degrees around, then it has n-1 flat notes, and loses one flat each fifth till 
+you get back to C (no sharps or flats); vis versa the other direction. This is 
+actually really cool; each scale, in addition to being unique in that, well, it 
+has a different root note, is unique in that it is the only scale to have its 
+specific number of sharps or flats. If a scale has 3 sharps, it&rsquo;s A. 
+Period. There isn&rsquo;t another choice. Neat!</p> 
+<p>So for fun, we can explore the circle of fifths in the command line. First 
+lets set it up:</p> 
+<pre> <code> &gt; circle = (0..11).map{|n| n*7%12 } =&gt; [0, 7, 2, 9, 4, 11, 
+6, 1, 8, 3, 10, 5]</code> </pre> 
+<p>Well. That doesn&rsquo;t mean a whole lot. How can we map it to notes? 
+Let&rsquo;s just construct a reference array really quick. (I&rsquo;m making it 
+an instance variable so I can use it in a method later; this was all done in 
+irb.)</p> 
+<pre> <code> &gt; @notes = [&quot;C&quot;, &quot;C#/Db&quot;, &quot;D&quot;, 
+&quot;D#/Eb&quot;, &quot;E&quot;, &quot;E#/F&quot;, &quot;F#/Gb&quot;, 
+&quot;G&quot;, &quot;G#/Ab&quot;, &quot;A&quot;, &quot;A#/Bb&quot;, 
+&quot;B/Cb&quot;] =&gt; [&quot;C&quot;, &quot;C#/Db&quot;, &quot;D&quot;, 
+&quot;D#/Eb&quot;, &quot;E&quot;, &quot;E#/F&quot;, &quot;F#/Gb&quot;, 
+&quot;G&quot;, &quot;G#/Ab&quot;, &quot;A&quot;, &quot;A#/Bb&quot;, 
+&quot;B/Cb&quot;]</code> </pre> 
+<p>So, to read our circle, we&rsquo;d do:</p> 
+<pre> <code> &gt; circle.map{|n| @notes[n]} =&gt; [&quot;C&quot;, 
+&quot;G&quot;, &quot;D&quot;, &quot;A&quot;, &quot;E&quot;, &quot;B/Cb&quot;, 
+&quot;F#/Gb&quot;, &quot;C#/Db&quot;, &quot;G#/Ab&quot;, &quot;D#/Eb&quot;, 
+&quot;A#/Bb&quot;, &quot;E#/F&quot;]</code> </pre> 
+<p>Hooray. The circle of fifths. Now, so what? Well, let&rsquo;s make a little 
+method to construct a major scale from the<code>@notes</code> variable. 
+We&rsquo;ll take a root note as an argument, so we can construct any major 
+scale we like.</p> 
+<pre> <code> &gt; def major(root=0) ?&gt; offset = (0..11).map{|n| 
+@notes[(n+root)%12]} ?&gt; [offset[0], offset[2], offset[4], offset[5], 
+offset[7], offset[9], offset[11]].join(&quot; &quot;) ?&gt; end =&gt; nil</code>
+</pre> 
+<p>So, just calling <code>major</code> with no arguments should give us the C 
+major scale; calling with, say, 5 should give us F major (5 in this case is the 
+index of F in @notes; but you were already following that, I know):</p> 
+<pre> <code> &gt; major =&gt; &quot;C D E E#/F G A B/Cb&quot; &gt; major(5) 
+=&gt; &quot;E#/F G A A#/Bb C D E&quot;</code> </pre> 
+<p>So we said that the circle of fifths added a sharp each increment, and then 
+flipped to flats and removed on each increment. Let&rsquo;s watch it happen:</p>
+<pre> <code> &gt;&gt; circle.each{|n| puts major(n) } C D E F G A B G A B C D 
+E F#/Gb D E F#/Gb G A B C#/Db A B C#/Db D E F#/Gb G#/Ab E F#/Gb G#/Ab A B C#/Db 
+D#/Eb B C#/Db D#/Eb E F#/Gb G#/Ab A#/Bb F#/Gb G#/Ab A#/Bb B C#/Db D#/Eb F C#/Db 
+D#/Eb F F#/Gb G#/Ab A#/Bb C G#/Ab A#/Bb C C#/Db D#/Eb F G D#/Eb F G G#/Ab A#/Bb 
+C D A#/Bb C D D#/Eb F G A F G A A#/Bb C D E</code> </pre> 
+<p>Not as neat as it could look since I put the #/b both in the original notes 
+array; the note you&rsquo;d read would be the one with a consecutive letter 
+after the previous note. So in G, the note following E is F#. In Eb, the note 
+following G is Ab&hellip; and so on. The same note<em>letter</em> only appears 
+once in any given scale. A sharp or flat is added or removed each increment you 
+go around the circle.</p> 
+<p>I don&rsquo;t have any startling conclusions to close this off with. Just 
+that music is pretty cool, and that a few of the things that<em>seem</em> 
+arbitrary just have to be that way &ndash; assuming we&rsquo;re going to base 
+the system around 12 equally tempered semitones (seeEqual Temperment, or even 
+Bach&rsquo;s Well-Tempered Clavier (evidently there&rsquo;s some dispute over 
+whether or not Bach&rsquo;s intended tuning was equal or, uh, 
+&ldquo;well&rdquo; tempered; I was not aware of this!)) and a 7 note major 
+scale &ndash; neither of which are absolutely necessary, of course, and there 
+are other ways to do it. SeeMathematics of musical scales and tuning systems 
+for more.</p> 
+<p>Happy musicking.</p> 
+<h1>Push It Somewhere Else</h1> 
+<p> Aug 6th, 2010 </p> 
+<p></p> 
+<p>For all the folks in #rubyonrails, and beyond.</p> 
+<h1>Graffiti on a Train</h1> 
+<p> Aug 4th, 2010 </p> 
+<p></p> 
+<p>Pic taken along the trail on the way from Minneapolis to Hopkins.</p> 
+<h1>RVM</h1> 
+<p> Jul 29th, 2010 </p> 
+<p></p> 
+<p>I gave a short presentation on RVM on Monday at RUM.</p> 
+<p>The slides can be found at rubymn-rvm.heroku.com.</p> 
+<p>Enjoy!</p> 
+<h1>Faith</h1> 
+<p> Jul 28th, 2010 </p> 
+<p></p> 
+<p>I know, I know, the faux motivational poster is an old and tired meme. 
+Sorry.</p> 
+<h1>I Write Like</h1> 
+<p> Jul 27th, 2010 </p> 
+<p>I&rsquo;ve seen the I write like links show up on facebook and twitter a 
+few times, so I decided I&rsquo;d take a look. Not content to simply feed it 
+one sample, I fed it the text from several of the posts from the archive. Here 
+were the results:</p> 
+<ul> 
+<li>I Hold Strong Opinions About The Placement Of Curly Braces</li> 
+<li>
+<p>=&gt; I write like: <strong>H.P. Lovecraft</strong>. <em>Really? 
+Wait&hellip; what?</em></p></li> 
+<li>
+<p>No, We&rsquo;re Not The Stupid Ones</p></li> 
+<li>In Which I Am No Longer A Very Good Bachelor</li> 
+<li>Oracle To Acquire Oracle</li> 
+<li>
+<p>=&gt; I write like: <strong>Cory Doctorow</strong>. <em>Huh. You think? 
+Well, okay. Thanks!</em></p></li> 
+<li>
+<p>The Emperor&rsquo;s New Web</p></li> 
+<li>=&gt; I write like: <strong>Jonathan Swift</strong>. <em>[blushing] No, 
+no&hellip; you&rsquo;re too kind.</em></li> </ul> 
+<p>Not sure how they are analyzing the text and reaching their conclusions, 
+but there&rsquo;s at least a<em>little</em> bit of smarts in there; that last 
+one, the one which was compared to Swift, is indeed a satire, though I&rsquo;m 
+not going to claim it&rsquo;s in the calibre of Swift&rsquo;s satire, but 
+still; their algorithm picked something out of it which prompted the 
+comparison. Not bad.</p> 
+<p>So, evidently, according to their analyses, I write most often like Cory 
+Doctorow. I&rsquo;ve only read<em>Down And Out In The Magic Kingdom</em>, and 
+several of his blog posts/essays, but enough to consider it a compliment, 
+though I&rsquo;m not certain it&rsquo;s deserved. Regardless, there we have it.
+</p> 
+<h1>How Not to Write Sorting Algorithms in Ruby</h1> 
+<p> Jul 18th, 2010 </p> 
+<p>The second chapter of <em>Introduction To Algorithms</em> by Cormen, 
+Leiserson, et al., describes the algorithms for Insertion Sort and Merge Sort 
+in pseudocode, and compares their relative efficiency (or lack thereof). I 
+decided to write them out in Ruby and run some simple benchmarks, just for fun.
+</p> 
+<h2>Insertion Sort</h2> 
+<p>There are a variety of ways one could write the insertion sort in Ruby; 
+this is more or less an literal translation of the<em>Intro to Algorithms</em> 
+pseudocode to ruby &ndash; it could perhaps be made a little more ruby-ish, but 
+here&rsquo;s my version:</p> 
+<pre> <code> def insertion_sort(sequence) 
+sequence[1..sequence.size].each_with_index do |j, index| i = index 
+sequence[0..i].reverse.each do |k| break unless k &gt; j sequence[i + 1] = k i 
+= i - 1 end sequence[i+1] = j end end</code> </pre> 
+<p>In a nutshell:</p> 
+<ol> 
+<li>Start with the second element (index 1).</li> 
+<li>Save the index in a local variable, because we&rsquo;re going to use it to 
+figure out which array element to swap the current element into.</li> 
+<li>Take the sub-array 0..i (where <em>i</em> is the current index being 
+looked at), and go backwards until the element in your inner loop is less than 
+the current element from the outer loop, also decrementing<em>i</em> each 
+iteration.</li> 
+<li>Copy the element in index [i] to index [i + 1]</li> 
+<li>Outside the inner loop, we&rsquo;ll put the current element at [i + 1].
+</li> </ol> 
+<p>In case this is a little unclear, it would go something like this:</p> 
+<p>Starting array: [5,2,3,1,4,0]</p> 
+<p>First pass: [<strong>2</strong>,<em>5</em>,3,1,4,0]</p> 
+<p>Second pass: [2,<strong>3</strong>,<em>5</em>,1,4,0]</p> 
+<p>Third pass: [<strong>1</strong>,<em>2</em>,<em>3</em>,<em>5</em>,4,0]</p> 
+<p>Fourth pass: [1,2,3,<strong>4</strong>,<em>5</em>,0]</p> 
+<p>Fifth pass: [<strong>0</strong>,<em>1</em>,<em>2</em>,<em>3</em>,<em>4</em>,
+<em>5</em>]</p> 
+<p>(<strong>Bold elements</strong> are the ones which were the 
+&ldquo;current&rdquo; element moved back,<em>italic elements</em> are the ones 
+that had to be shifted forward in this step.)</p> 
+<h2>Merge Sort</h2> 
+<p>The merge sort is split into two parts; a <code>merge</code> method that 
+acts as a helper, and the actual<code>merge_sort</code> which calls itself 
+recursively, also calling<code>merge</code> when needed.</p> 
+<p>Here&rsquo;s a version modeled after the pseudocode in <em>Intro to 
+Algorithms</em>:</p> 
+<pre> <code> def merge_sort(sequence, first, last) if first &lt; last mid = 
+(first + last) / 2 merge_sort(sequence, first, mid) merge_sort(sequence, mid + 
+1, last) merge(sequence, first, mid + 1, last) end end def merge(sequence, 
+first, mid, last) left = sequence[first..mid - 1] right = sequence[mid..last] 
+left.push(Float::MAX) right.push(Float::MAX) i = 0 j = 0 (first..last).each do 
+|n| if left[i] &lt;= right[j] sequence[n] = left[i] i = i + 1 else sequence[n] 
+= right[j] j = j + 1 end end end</code> </pre> 
+<p>A few notes: You&rsquo;ll notice that in the <code>merge</code> method, 
+when the sequence is split into two parts, the value Float::MAX is pushed onto 
+each as the final element.<em>Intro to Algorithms</em> uses the idea that 
+&ldquo;infinity&rdquo; is set to the last element. Hopefully I can explain why 
+in the description of the algorithm.</p> 
+<p>First, the merge method. The merge method assumes that the left half and 
+the right half of the section of the array it&rsquo;s looking at are<em>already 
+sorted</em>. Having made this assumption, it loops through the range it&rsquo;s 
+considering (<code>first..last</code>), and puts either the first element of 
+the left side, or the first element of the right side, whichever it least. It 
+increments each subarray as it goes; when it gets past the last element of 
+either array, Float::MAX will<em>always</em> be higher (or so we assume, for 
+the sake of this implementation) than whatever is in the other array. So merge 
+finishes up, basically (ahem)<em>merging</em> the two halves together in place, 
+with the whole first..last range sorted.</p> 
+<p>Now, the actual merge_sort method. It first checks to see if first &lt; 
+last; if this were<em>false</em>, then the range would be an array of size 1, 
+and an array of size 1 is already sorted. So assuming the range first..last is 
+&gt; 1, it calculates a midpoint; integer division works fine for this, using
+<code>(first + last) / 2</code>. Then it calls itself recursively on each 
+subarray; these in turn will continue splitting each subarray into two parts 
+until it gets to the point where it&rsquo;s just two subarrays of one element 
+each; which are then fed to<code>merge</code> and sorted. As the method returns 
+from each level of recursion, each &ldquo;half&rdquo; of the subarray under 
+consideration has been sorted, until it gets all the way back to the first call 
+to<code>merge_sort</code>, and executes <code>merge</code> on each (sorted) 
+half of the full array.</p> 
+<p>Phew. I&rsquo;m going to attempt to show another example, in case 
+that&rsquo;s helpful. Let&rsquo;s say we started with the same starting array 
+as the insertion_sort example. This time, to show what the recursion is 
+actually doing, I&rsquo;ll write out what each nested call to merge_sort( 
+and/or merge) would actually look like:</p> 
+<p>Starting array: [5,2,3,1,4,0]</p> 
+<pre> merge_sort([5,2,3,1,4,0], 0, 5): mid &lt;- 2 merge_sort([5,2,3], 0, 2): 
+mid &lt;- 1 merge_sort([5,2], 0, 1): mid &lt;- 0 merge_sort([5], 0, 0): 
+merge_sort([2], 1, 1): merge([5,2],0, 1, 1): left &lt;- [5,&infin;] right &lt;- 
+[2,&infin;] loop(0..1): [2,5] # just showing the result in this step; the two 
+elements are sorted. merge_sort([3], 2, 2): merge([2,5,3], 0, 2, 2): left &lt;- 
+[2,5,&infin;] right &lt;- [3,&infin;] loop(0..2): [2,3,5] merge_sort([1,4,0], 
+3, 5): mid &lt;- 4 merge_sort([1,4], 3, 4): mid &lt;- 3 merge_sort([1], 3, 3): 
+merge_sort([4], 4, 4): merge([1,4], 3, 4, 4): left &lt;- [1,&infin;] right 
+&lt;- [4,&infin;] loop(3..4): [1,4] merge_sort([0], 5, 5): merge([1,4,0], 3, 5, 
+5): left &lt;- [1,4,&infin;] right &lt;- [0,&infin;] loop(3..5): [0,1,4] 
+merge([2,3,5,0,1,4], 0, 3, 5): left &lt;- [2,3,5,&infin;] right &lt;- 
+[0,1,4,&infin;] loop(0..5): [0,1,2,3,4,5]</pre> 
+<p>Uhm, hopefully that&rsquo;s clear. If you&rsquo;re bothering to read this 
+and it still isn&rsquo;t clear, just run the sort locally and add some<code>
+print</code> or <code>puts</code> statements liberally so you can see 
+what&rsquo;s going on. Note: I did take a liberty in the above listing of 
+what&rsquo;s happening; in actuality the entire array is passed each time; I 
+made it look as though just the subarray were being passed in each case, 
+because that is the only part that is being looked at in each nested section. 
+Again, if you&rsquo;re interested enough in the topic that you&rsquo;re still 
+working out this algorithm, fire up irb and just try it out, it will make more 
+sense as you do so.</p> 
+<h2>Wait, why is this called &ldquo;how <em>not</em> to write sorting 
+algorithms&hellip;?&rdquo;</h2> 
+<p>Aha. I thought you&rsquo;d never ask. Well, the main reason is that both of 
+these methods are significantly slower than good old Array::sort, which is 
+built in to Ruby (and which, as far as I know, is implemented using thequicksort
+ algorithm).</p> 
+<p>So, just for fun, I wrote a little script to make some benchmarks of these 
+various methods on arrays of various sizes. Here were the results:</p> 
+<pre> user system total real small_array has 100 elements in it... Insertion 
+Sort (small_array): 0.000000 0.000000 0.000000 ( 0.002122) Merge sort 
+(small_array): 0.000000 0.000000 0.000000 ( 0.001499) Ruby Array::sort 
+(small_array): 0.000000 0.000000 0.000000 ( 0.000016) bigger_array has 1000 
+elements in it... Insertion sort (bigger_array): 0.240000 0.000000 0.240000 ( 
+0.238994) Merge sort (bigger array): 0.030000 0.010000 0.040000 ( 0.027746) 
+Ruby Array::sort (bigger_array): 0.000000 0.000000 0.000000 ( 0.000161) 
+medium_array has 10,000 elements in it... Insertion sort (medium_array): 
+23.960000 0.010000 23.970000 ( 24.096455) Merge sort (medium_array): 0.720000 
+0.020000 0.740000 ( 0.726312) Ruby Array::sort (medium_array): 0.000000 
+0.000000 0.000000 ( 0.001637) huge_array has 100,000 elements in it... Sorry, 
+the insertion_sort was taking too long! Skipped it. Merge sort (huge_array): 
+61.710000 11.990000 73.700000 ( 74.332743) ruby Array::sort (huge_array): 
+0.020000 0.000000 0.020000 ( 0.020800)</pre> 
+<p>The interesting column is the last one: <em>real</em>, as in &ldquo;real 
+time&rdquo; (more or less, taking into the account that we&rsquo;re just 
+benchmarking).</p> 
+<p>The small array is pretty fast for all three methods, but even still, we 
+can see that merge_sort is a<em>little</em> faster, and the built in .sort! 
+(using quicksort) is<em>way</em> faster: only 0.000016 seconds.</p> 
+<p>The next bigger, bigger_array, the differences stand out a little more. 
+Insertion takes 0.24 seconds, merge takes 0.028, and sort! (again), way faster, 
+only 0.00016 seconds.</p> 
+<p>A ten thousand element array starts to show the difference even more 
+dramatically: insertion_sort now takes 24.1 seconds, close to half a minute, 
+while the merge_sort still runs in under a second. sort!, once again, is 
+blowing them away at only 0.0016 seconds.</p> 
+<p>Finally, a hundred thousand element array; sorry for the lack of stats, but 
+I was too impatient to let insertion_sort finish. Let&rsquo;s just say it would 
+take awhile. Now even the merge_sort shows its limits, taking over a minute, 
+about 74.3 seconds. And finally, good old sort! clocking in at only 0.02 
+seconds.</p> 
+<p>So the reason this is how <em>not</em> to write sorting algorithms in ruby 
+is simply that, you really probably don&rsquo;t need to, unless you need 
+something faster than a quicksort written in C. The reason, hopefully, to be 
+playing around writing algorithms in Ruby or in<em>whatever</em> your favorite 
+language happens to be, is just to understand them better.</p> 
+<p>And it&rsquo;s fun.</p> 
+<p>See also:</p> 
+<p>Insertion Sort</p> 
+<p>Merge Sort</p> 
+<p>Ruby Algorithm library &lt;&ndash; some pretty interesting stuff in here. I 
+didn&rsquo;t look at this until after I&rsquo;d already written my versions of 
+the insertion sort and the merge sort; their version of insertion_sort is 
+nearly the same, but their merge sort is somewhat more succinct, and looks 
+worth playing around with.)</p> 
+<h1>Relative Primes, Revisited</h1> 
+<p> Jul 8th, 2010 </p> 
+<p>As I thought; there&rsquo;s always a better way to do it. @jmchilton, who 
+was a TA when I took Structure of Computer Programming I (or whatever it was 
+called; the Scheme class) at the U of M, supplied this alternative solution to 
+the relative prime problem:</p> 
+<pre> <code> def gcd(a, b); b == 0 ? a : gcd(b, a % b); end; def rp(a, b); 
+gcd(a, b) == 1; end</code> </pre> 
+<p>Or, indented:</p> 
+<pre> <code> def gcd(a, b) b == 0 ? a : gcd(b, a % b) end def rp(a, b) gcd(a, 
+b) == 1 end</code> </pre> 
+<p>In other words, it pays to know your math. <code>gcd</code> is a recursive 
+function, basically Euclid&rsquo;s algorithm for finding the greatest common 
+denominator.<code>rp</code>, then, simply returns true if the GCD of a and b is 
+1; otherwise false.</p> 
+<p>Very nice. I wish I&rsquo;d thought to do it that way, but I&rsquo;ll 
+certainly remember it.</p> &larr; Older Blog Archives Newer &rarr; <br>
+
+<h1>Recent Posts</h1> 
+<ul> 
+<li> How To Read Web Analytics </li> 
+<li> Too Clever To Debug </li> 
+<li> Current Desktop </li> 
+<li> Test First As A Productivity Hack </li> 
+<li> UJS in Rails 3 Slides </li> </ul> 
+<h1>Github Repos</h1> 
+<ul> 
+<li>Status updating&hellip;</li> </ul> @philcrissman on Github <br>
+
+<h1>Latest Tweets</h1> 
+<ul> 
+<li>Status updating&hellip;</li> </ul> Follow @philcrissman <br>
+
+<h1>My Pinboard</h1> 
+<ul> Fetching linkroll&hellip; </ul> 
+<p>My Pinboard Bookmarks &raquo;</p> 
+<h1>  Google+ </h1> 
+<p> Copyright &copy; 2012 - Phil Crissman - Powered by Octopress </p> 
+</body>

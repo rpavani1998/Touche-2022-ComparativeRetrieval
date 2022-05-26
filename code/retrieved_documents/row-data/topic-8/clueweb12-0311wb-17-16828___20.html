@@ -1,0 +1,1207 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Usability, the Soul of Python: An Introduction to Programming Python Through the Eyes of Usability</title>
+<body>
+
+<h2>Mobile site</h2> 
+<h1>Usability, the Soul of Python</h1> 
+<h2><em>An Introduction to Programming Python Through the Eyes of Usability
+</em></h2> <em> 
+<p><strong>JonathansCorner.com/python</strong></p> 
+<p>I would like to begin discussing Python with a feature that causes 
+puzzlement to good programmers first meeting Python:<em>significant whitespace
+</em>.</p> 
+<p>Few features in Python are absolutely unique, and Python did not pioneer 
+the concept of significant whitespace. The basic concept in significant 
+whitespace is that how you use spaces, tabs, line breaks, etc. necessarily 
+communicates certain basic aspects of your program, like how individual 
+statements should be grouped together (or not). Previous influential languages 
+to use significant whitespace include Cobol and Fortran, which are known by 
+reputation, a reputation that survives in sayings like, &quot;A computer 
+without Cobol and Fortran is like a slice of chocolate cake without ketchup and 
+mustard,&quot; &quot;The teaching of Cobol cripples the mind. Its teaching 
+should therefore be regarded as a criminal offence,&quot; or &quot;You can tell 
+how advanced of a society we live in when Fortran is the language of 
+supercomputers.&quot; Early exposure to Fortran left an undeniably foul taste 
+in Eric Raymond's mouth, and when he learned that Python had significant 
+whitespace, he repeatedly described Python's first impression on him as &quot;a 
+steaming pile of dinosaur dung.&quot;</p> 
+<p>Since the days of fixed formatting as in Cobol and Fortran, there was the 
+invention of what is called freeform formatting, which means that as long as 
+you follow a few basic rules, you can use whitespace to format your code 
+however you please. The list of languages that have embraced this feature 
+include C, C++, Java, C#, Perl, PHP, and SQL, and that's really just naming a 
+few of the bigger players. Freeform formatting means that the compiler will 
+accept all of the variations of the &quot;internet user's drinking song&quot; 
+below as equivalent:</p> 
+<pre> for(i = 99; i &gt; 0; ++i) { printf(&quot;%d slabs of spam in my 
+mail!\n&quot;, i); printf(&quot;%d slabs of spam,\n&quot;, i); 
+printf(&quot;Send one to abuse and Just Hit Delete,\n&quot;); printf(&quot;%d 
+slabs of spam in my mail!\n\n&quot;, i + 1); } for(i = 99; i &gt; 0; ++i) { 
+printf(&quot;%d slabs of spam in my mail!\n&quot;, i); printf(&quot;%d slabs of 
+spam,\n&quot;, i); printf(&quot;Send one to abuse and Just Hit 
+Delete,\n&quot;); printf(&quot;%d slabs of spam in my mail!\n\n&quot;, i + 1); 
+} for(i = 99; i &gt; 0; ++i) { printf(&quot;%d slabs of spam in my 
+mail!\n&quot;, i); printf(&quot;%d slabs of spam,\n&quot;, i); 
+printf(&quot;Send one to abuse and Just Hit Delete,\n&quot;); printf(&quot;%d 
+slabs of spam in my mail!\n\n&quot;, i + 1); } for(i = 99; i &gt; 0; ++i) { 
+printf(&quot;%d slabs of spam in my mail!\n&quot;, i); printf(&quot;%d slabs of 
+spam,\n&quot;, i); printf(&quot;Send one to abuse and Just Hit 
+Delete,\n&quot;); printf(&quot;%d slabs of spam in my mail!\n\n&quot;, i + 1); }
+</pre> 
+<p>Which is best? From a usability standpoint, the braces go with the lines to 
+print out the stanza rather than the for statement or the code after, so the 
+following is best:</p> 
+<pre> for(i = 99; i &gt; 0; ++i) { printf(&quot;%d slabs of spam in my 
+mail!\n&quot;, i); printf(&quot;%d slabs of spam,\n&quot;, i); 
+printf(&quot;Send one to abuse and Just Hit Delete,\n&quot;); printf(&quot;%d 
+slabs of spam in my mail!\n\n&quot;, i + 1); }</pre> 
+<p>The One True Brace Style did a good job of being thrifty with lines of 
+screen space when monitors were small, but it is confusing now: the close curly 
+brace is visually grouped with lines that follow: if I add a line:</p> 
+<pre> for(i = 99; i &gt; 0; ++i) { printf(&quot;%d slabs of spam in my 
+mail!\n&quot;, i); printf(&quot;%d slabs of spam,\n&quot;, i); 
+printf(&quot;Send one to abuse and Just Hit Delete,\n&quot;); printf(&quot;%d 
+slabs of spam in my mail!\n\n&quot;, i + 1); } printf(&quot;I suppose even 
+integer overflow has its uses...\n&quot;);</pre> 
+<p>the close curly brace is visually grouped with the subsequent exclamation, 
+and not, what would be better, visually grouped with the drinking song's stanza.
+</p> 
+<p>But the issue goes beyond the fact that the common style bold enough to 
+proclaim itself as the One True Brace Style may not be the top usability pick 
+now that we have larger monitors. The styles I mentioned are some of the styles 
+that significant numbers of programmers who care about well-formatted code 
+advocate for; freeform allows for laziness, and for that matter paved the way 
+for one of the first contests elevating bad programming to a refined art form: 
+the International Obfuscated C Code Contest, where C code submitted was code 
+that worked, but top-notch C programmers look at the code and have no idea how 
+it works. (In the Computer Bowl one year, Bill Gates as moderator asked 
+contestants, &quot;What contest, held annually via UseNet, is devoted to 
+examples of obscure, bizarre, incomprehensible, and really bad 
+programming?&quot; An ex-Apple honcho slapped the buzzer and said, 
+&quot;Windows!&quot; The look on Bill Gates's face was classic, but this answer 
+was not accepted as correct.) But deliberately lazy or inappropriately clever 
+formatting isn't the real problem here either.</p> 
+<p>The problem with the fact that people can format freeform code however they 
+want is that people do format freeform however they want. Not only do 
+programmers grow attached to a formatting style, but this is the subject of 
+holy wars; to go through another programmer's code and change all the 
+formatting to another brace style is quite rude, like a direct invasion of 
+personal space. And no matter what choice you make, it's not the only choice 
+out there, and sooner or later you will run into code that is formatted 
+differently. And worse than the flaws of any one brace style are the flaws of a 
+mix of brace styles and the fact that they seem to be tied to personal 
+investment for programmers who care about writing code well. Even if there are 
+not ego issues involved, it's distracting. Like. What. Things. Would. Be. Like. 
+If. Some. English. Text. Had. Every. Word. Capitalized. With. A. Period. 
+Afterwards.</p> 
+<p>One way of writing the same code in Python would be:</p> 
+<pre> count = 99 while count &gt; 0: print u'%d slabs of spam in my mail!' % 
+count print u'%d slabs of spam,' % count print u'Send one to abuse and Just Hit 
+Delete,' count += 1 print u'%d slabs of spam in my mail!' % count print u''
+</pre> 
+<p>The braces are gone, and with them the holy wars. Whatever brace styles 
+Python programmers may happen to use in languages with braces, all the Python 
+code looks the same, and while the major brace styles illustrated above are a 
+few of many ways the C code could be laid out, there's only one real way to do 
+it. It would not in principle be very difficult to write a program that would 
+transform freeform syntax to Python, &quot;compiling to Python&quot; so to 
+speak and allowing a freeform variant on Python, but so far as I know it's 
+never been done; people who have gotten into Python seem to find this unusual 
+feature, shared with some ridiculed predecessors, to be a decision that was 
+done right. And in fact the essay &quot;Why Python?&quot; in which Eric Raymond 
+said that Python's significant whitespace made the first impression of a 
+&quot;steaming pile of dinosaur dung&quot;, goes on to give Python some 
+singular compliments, saying of one particular good experience with Python, 
+&quot;To say I was astonished would have been positively wallowing in 
+understatement.&quot;</p> 
+<p>Another point about usability may be made by looking at &quot;natural&quot; 
+languages, meaning the kinds of languages people speak (such as English), as 
+opposed to computer languages and other languages that have been artificially 
+created. Perl is very unusual among computer languages in terms of having been 
+created by a linguist who understood natural languages well; it may be the only 
+well-known programming language where questions like &quot;How would this work 
+if it were someone's native language?&quot; are a major consideration that 
+shaped the language. But there is a point to be made here about two different 
+types of spoken languages, trade languages and languages that are native 
+languages, that have everything to do with usability.</p> 
+<p>If you were born in the U.S. and grew up speaking English, you could 
+presumably not just travel around your state but travel thousands of miles, 
+traveling from state to state coast to coast all the while being able to buy 
+food, fuel, lodging, and the like without language being an issue. For that 
+matter, you could probably strike up a meandering chat with locals you meet in 
+obtaining food, fuel, and lodging without language being an issue. Even if 
+their faraway English sounded a little different, you have pretty complete 
+coverage if you know just one language, English. For many people you meet, 
+English would be their native language, too. Spanish is widely spoken and there 
+are large groups with other native languages, but this does not really change 
+the fact that you can travel from coast to coast, buy basic travel necessities, 
+and for that matter chat if you want and only need English.</p> 
+<p>This is not something universal across the world. Nigeria in Africa is a 
+country about the size of Texas, and it doesn't have a native language; it has 
+hundreds of them. It is not at all something to be taken for granted that you 
+can travel twenty miles and order food and basic necessities in your native 
+language. (Depending on where you live, if you are a Nigerian, you may 
+regularly walk by people on the street who may be just as Nigerian as you, but 
+neither of you knows the other's native language.) And in the cultures and 
+peoples of Africa, there is a basic phenomenon of a trade language. A trade 
+language, such as Hausa in Nigeria and much of West Africa, or Swahili in much 
+of East Africa, may or may not have any native speakers at all, but it is an 
+easy-to-learn language that you can use for basic needs with people who do not 
+speak your native language. If you are from the U.S. and were to need a trade 
+language to get along with traveling, perhaps neither you nor the other party 
+would know a trade language like Swahili well enough to have a long and 
+meandering chat, but you would be able to handle basic exchanges like buying 
+things you need.<em>One of the key features of a good trade language's job 
+description is to be gentle to people who do not eat, sleep, and breathe it.
+</em></p> 
+<p>With that stated, it might be suggested that Perl is the creation of a 
+linguist, but a linguist who seemed not to be thinking about why a language 
+like English is hard for adults to learn and, in its native form, is a terrible 
+trade language. English may be a powerful language and an object of beauty, but 
+what it is not is easy for beginners the way Swahili is. English is considered 
+an almost notoriously difficult language for an adult learner, and even English 
+as a Second Language teachers may need a few sensitivity experiences to 
+understand why the English pronunciation that they find second nature is so 
+tricky and confusing for adult speakers of other languages to pin down. The 
+enormous English vocabulary with so many ways to say things, and the broad 
+collection of idioms, are tremendous tools for the skilled English 
+communicator. It is also a daunting obstacle to adults who need to learn the 
+many ways English speakers may say something to them. English has many things 
+to appreciate as a native language, but these strengths are the opposite of 
+what makes for a good trade language that adults can learn. Perl, designed by a 
+linguist, is a bit like English in this regard. If you've given it years and 
+years of hard work, Perl breathes very attractively, a native language to love. 
+But if you're starting out, it's needlessly cryptic and confusing: the reasons 
+people love the Pathologically Eclectic Rubbish Lister (as Perl as called by 
+its biggest fans) are reasons it would make a painful trade language. A 
+language like Visual Basic may be said to be the opposite on both counts, as 
+making a very gentle start to programming, but not a good place to grow to be 
+an expert programmer: the sort of place where you'll be constricted by the 
+language's ceiling. But Python pulls off the delicate balancing act of working 
+well as a trade language where a programmer can be productive very quickly 
+after starting, and having room to grow for those programmers who are able to 
+experience it more like a native language. Visual Basic is an easy trade 
+language but a limited native language. Perl is a vast native language and 
+painfully vast as a trade language. Python is both an easy trade language for 
+those beginning and a deep native language for gurus.</p> 
+<p>Perl users have an acronym, TMTOWTDI, pronounced &quot;tim-towdy,&quot; 
+standing for &quot;There's more than one way to do it.&quot; It has been 
+suggested that top-notch Perl programmers are slightly more productive than 
+top-notch Python programmers, and if you were to speak a computer language 
+natively, Perl would be an excellent choice. But it is not entirely easy to 
+learn or read Perl, and this is not just something that affects novices. A 
+classic joke reads:</p> 
+<blockquote> 
+<p><strong>EXTERIOR:</strong> DAGOBAH--DAY With Yoda strapped to his back, 
+Luke climbs up one of the many thick vines that grow in the swamp until he 
+reaches the Dagobah statistics lab. Panting heavily, he continues his 
+exercises--grepping, installing new packages, logging in as root, and writing 
+replacements for two-year-old shell scripts in Python.</p> 
+<p><strong>YODA:</strong> Code! Yes. A programmer's strength flows from code 
+maintainability. But beware of Perl. Terse syntax... more than one way to do 
+it... default variables. The dark side of code maintainability are they. Easily 
+they flow, quick to join you when code you write. If once you start down the 
+dark path, forever will it dominate your destiny, consume you it will.</p> 
+<p><strong>LUKE:</strong> Is Perl better than Python?</p> 
+<p><strong>YODA:</strong> No... no... no. Quicker, easier, more seductive.</p> 
+<p><strong>LUKE:</strong> But how will I know why Python is better than Perl?
+</p> 
+<p><strong>YODA:</strong> You will know. When your code you try to read six 
+months from now.</p> </blockquote> 
+<p>This difference boils down to usability. It is a truism that code is read 
+many more times than it is written, and write-only code is very much &quot;the 
+dark side of code maintainability.&quot; Someone said, &quot;Computer 
+scientists stand on each other's shoulders. Programmers stand on one another's 
+toes. Software engineers dig one another's graves,&quot; and write-only code is 
+code with bad programmer usability, and a way of digging your own grave.</p> 
+<p>Perl carries on a tradition of one-liners, a program that has only one 
+clever line, like:</p> 
+<pre> perl -lne '(1x$_) !~ /^1?$|^(11+?)\1+$/ &amp;&amp; print &quot;$_ is 
+prime&quot;'</pre> 
+<p>There is a tradition of writing programs like these that show off your 
+cleverness. The Python community does not favor shows of cleverness in quite 
+the same way; in fact, saying, &quot;This code is clever,&quot; is a respectful 
+and diplomatic way of saying, &quot;You blew it.&quot; There is a well-known 
+Easter egg in Python; normally one uses the import statement to let code access 
+an existing module for a specific task, but if you start the Python interpreter 
+interactively (in itself a powerful learning tool to try things out and learn 
+some things quickly) and type import this, you get:</p> 
+<pre> &gt;&gt;&gt; import this The Zen of Python, by Tim Peters Beautiful is 
+better than ugly. Explicit is better than implicit. Simple is better than 
+complex. Complex is better than complicated. Flat is better than nested. Sparse 
+is better than dense. Readability counts. Special cases aren't special enough 
+to break the rules. Although practicality beats purity. Errors should never 
+pass silently. Unless explicitly silenced. In the face of ambiguity, refuse the 
+temptation to guess. There should be one-- and preferably only one --obvious 
+way to do it. Although that way may not be obvious at first unless you're 
+Dutch. Now is better than never. Although never is often better than *right* 
+now. If the implementation is hard to explain, it's a bad idea. If the 
+implementation is easy to explain, it may be a good idea. Namespaces are one 
+honking great idea -- let's do more of those!</pre> 
+<p>This little poem speaks against trying to be as clever as you can, and this 
+is something deep in Python's veins.</p> 
+<p>While simplicity is important in Python, Python is a multiparadigm language 
+(like many others, including Ocaml and JavaScript as well as Perl) and directly 
+supports procedural, object-oriented, and (in part) functional programming, 
+letting the programmer choose what works best for a situation. On this point I 
+may point out that object oriented programming is not a better way of solving 
+problems than procedural programming; it is one that scales better for larger 
+projects. I would choose object oriented methodology over procedural for large 
+projects, and procedural over object oriented for small to intermediate sized 
+projects, with some tiny projects not even needing procedural structure. (If I 
+have enough cargo to fill the trailer on an eighteen wheel truck, then the most 
+efficient use of resources is to pay for that way of transporting the payload, 
+but if the cargo fits neatly inside an envelope, a postage stamp is enough.)</p>
+<p>Let's look at some of the core language features that are likely to come up.
+</p> 
+<p>Python is a scripting language, along with such languages as Perl, PHP, 
+Ruby, Tcl, and shell scripting like bash. As opposed to C and C++ which are 
+compiled to a standalone executable (or library, etc.), Python is interpreted 
+from a script's source file, or more precisely compiled to a bytecode. To 
+simplify slightly, &quot;the thing you run&quot; is usually not a separate 
+executable that is derived from the source code; &quot;the thing you run&quot; 
+is effectively the source code. Now Python does have compiled bytecode, and it 
+is possible to get an implementation of Python that runs on a Java VM or 
+creates a standalone executable, but distributing a Python program or library 
+usually means distributing the source code. Because in Python we are 
+effectively &quot;running the source code,&quot; this usually means a faster 
+feedback cycle than the edit-compile-test process one uses in working with a C 
+application. For some Python software such as CherryPy, if you make a change in 
+one of your source files, the application immediately reloads it without 
+needing separately quit and restart, making the feedback cycle even shorter and 
+more responsive.</p> 
+<p>The &quot;significant whitespace&quot; mentioned earlier means that a 
+statement usually ends with a line break rather than a semicolon. You are 
+allowed to add a semicolon at the end of a statement or use semicolons to 
+separate more than one statement on a single line; hence both of the following 
+are legal:</p> 
+<pre> print u'Hello, world!'; print u'Ping!'; print u'Pong!' </pre> 
+<p>However, the standard practice is to let line breaks end your statements:
+</p> 
+<pre> print u'Hello, world!' </pre> 
+<p>Note that this differs from JavaScript, where the final semicolon on a line 
+is treated as optional but it is usually considered best practice to explicitly 
+include the semicolon. In Python, it is uncommon to end a statement with a 
+semicolon.</p> 
+<p>If you want to break a statement over multiple lines, usually because it 
+would be a very long line otherwise, you can end a line with a backslash, and 
+then continue after whitespace, which I suggest you indent to two spaces more 
+than the beginning of the line:</p> 
+<pre> print \ u'Hello, world!' </pre> 
+<p>There are some cases where the backslash is optional and discouraged: in 
+particular, if you have open parentheses or square/curly braces, Python expects 
+you to complete the statement with more lines:</p> 
+<pre> stooges = [ u'Larry', u'Moe', u'Curly', ] opposites = { True: False, 
+False: True, } falsy = ( False, 0, 0.0, '', u'', {}, [], (), None, )</pre> 
+<p>The three statements above represent three basic types: the list, the 
+dictionary, also called the hash, dict, or occasionally associative array, and 
+also the tuple. The list, denoted by square braces (&quot;[]&quot;) and tuple, 
+which is often surrounded by parentheses (&quot;()&quot;) even though it is not 
+strictly denoted by them unless a tuple is empty, both contain an ordered list 
+of anything. The difference between them is that a tuple is immutable, meaning 
+that the list of elements cannot be changed, and a list is mutable, meaning 
+that it can be changed, and more specifically elements can be rearranged, 
+added, and deleted, none of which can be done to a tuple. Lists and tuples are 
+both indexed, with counting beginning at zero, so that the declaration of 
+stooges above could have been replaced by creating an empty list and assigning 
+members:</p> 
+<pre> stooges = [] stooges[0] = u'Larry' stooges[1] = u'Moe' stooges[2] = 
+u'Curly'</pre> 
+<p>I will comment briefly that zero-based indices, while they are a common 
+feature to most major languages, confuse newcomers: it takes a while for 
+beginning programmers to gain the ingrained habit of &quot;You don't start 
+counting at 1; you start counting at 0.&quot;</p> 
+<p>The dictionary is a like a list, but instead of the index automatically 
+being a whole number, the index can be anything that is immutable. Part of my 
+first introduction to Perl was the statement, &quot;You're not really thinking 
+Perl until you're thinking associative arrays,&quot; meaning what in Perl does 
+the same job as Python's dictionary, and lists and dictionaries in particular 
+are powerful structures that can do a lot of useful work.</p> 
+<p>The example of a tuple provided above are some of the few values that 
+evaluate to false. In code like:</p> 
+<pre> if condition: run_function() else: run_other_function() while condition: 
+run_function()</pre> 
+<p>The if and while statements test if condition is true, and the variable 
+condition can be anything a variable can hold. Not only boolean variables but 
+numbers, strings, lists, dictionaries, tuples, and objects can be used as a 
+condition. The rule is basically similar to Perl. A very small number of 
+objects, meaning the boolean False, numeric variables that are zero, containers 
+like lists and dictionaries that are empty, and a few objects that have a 
+method like __nonzero__(), __bool__(), or __len__() defined a certain way, are 
+treated as being falsy, meaning that an if statement will skip the if clause 
+and execute the else clause if one is provided; and a while statement will stop 
+running (or not run in the first place). Essentially everything else is treated 
+as being truthy, meaning that an if statement will run the if clause and skip 
+any else clause, and a while loop will run for one complete iteration and then 
+check its condition again to see if it should continue or stop. (Note that 
+there is a behavior that is shared with other programming languages but 
+surprising to people learning to program: if the condition becomes false after 
+some of the statements in the loop has run, the loop does not stop immediately; 
+it continues until all of the statements in that iteration have run, and then 
+the condition is checked to see if the loop should run for another iteration.) 
+Additionally, if, else, while, and the like end with a colon and do not require 
+parentheses. In C/C++/Java, one might write:</p> 
+<pre> if (remaining &gt; 0) </pre> 
+<p>In Python, the equivalent code is:</p> 
+<pre> if remaining &gt; 0: </pre> 
+<p> If-then-else chains in Python use the elif statement: </p> 
+<pre> if first_condition: first_function() elif second_condition: 
+second_function() elif third_condition: third_function() else: 
+default_function()</pre> 
+<p>Any of the example indented statements could be replaced by several 
+statements, indented to the same level; this is also the case with other 
+constructs like while. In addition to if/else/elif and while, Python has a for 
+loop. In C, the following idiom is used to do something to each element in 
+array, with C++ and Java following a similar pattern:</p> 
+<pre> sum = 0; for(i = 0; i &lt; LENGTH; ++i) { sum += numbers[i]; } </pre> 
+<p>In Python one still uses for, but manually counting through indices is not 
+such an important idiom:</p> 
+<pre> sum = 0 for number in numbers: sum += number </pre> 
+<p>The for statement can also be used when the data in question isn't 
+something you handle by an integer index. For example:</p> 
+<pre> phone_numbers = { u'Alice Jones': u'(800) 555-1212', u'Bob Smith': 
+u'(888) 555-1212', }</pre> 
+<p>In this case the dictionary is a telephone directory, mapping names to 
+telephone numbers. The key &quot;Alice Jones&quot; can be used to look up the 
+value &quot;(800) 555-1212&quot;, her formatted telephone number: if in the 
+code you write, print phone_numbers[u'Alice Jones'], Python will do a lookup 
+and print her number, &quot;(800) 555-1212&quot;. If you use for to go through 
+a dictionary, Python will loop through the keys, which you can use to find the 
+values and know which key goes with which value. To print out the phone list, 
+you could write:</p> 
+<pre> for name in phone_numbers: print name + u': ' + phone_numbers[name] 
+</pre> 
+<p>This will print out an easy-to-read directory:</p> 
+<pre> Alice Jones: (800) 555-1212 Bob Smith: (888) 555-1212 </pre> 
+<p>Now let us look at strings. In the examples above, we have looked at 
+Unicode strings, and this is for a reason. If you are in the U.S., you may have 
+seen signs saying, &quot;Se habla espa&ntilde;ol,&quot; Spanish for &quot;We 
+speak Spanish here,&quot; or &quot;Hablamos espa&ntilde;ol,&quot; Spanish for 
+&quot;We don't speak Spanish very well.&quot; The difference is something like 
+the difference in Python between:</p> 
+<pre> sum = 0 for number in numbers: sum += number </pre> 
+<p>and:</p> 
+<pre> sum = 0 index = 0 while index &lt; len(numbers): sum += numbers[index] 
+index += 1</pre> 
+<p>Now if one is sticking large block letters on a sign in front of a store, 
+it is acceptable to state, &quot;SE HABLA ESPANOL&quot;; it's appropriate to 
+use an &quot;N&quot; because you don't have any &quot;&ntilde;&quot;s, a bit 
+like how it doesn't bother people to use a &quot;1&quot; because you've run out 
+of &quot;I&quot;s or an upside-down &quot;W&quot; because you've run out of 
+&quot;M&quot;s. And to pick another language, Greeks often seem willing to 
+write in Greek using the same alphabet as English; this is the equivalent of 
+writing &quot;Hi, how are you?&quot; in English but written with Greek letters: 
+&quot;&alpha;&iota; &omicron;&upsilon; &alpha;&rho; &iota;&upsilon;:&quot; it 
+works pretty well once you get used to it, but it's really nice to have your 
+own alphabet.</p> 
+<p>There is one concern people may have: &quot;So how many translations do I 
+have to provide?&quot; I would suggest this way of looking at it. The people in 
+charge of major software projects often try to produce fully internationalized 
+and localized versions of their software that appears native for dozens of 
+languages, but even they can't cover every single language: if you support 
+several dozen languages, that may be full support for 1% of the languages that 
+exist. Even the really big players can't afford an &quot;all-or-nothing&quot; 
+victory. But the good news is that we don't need to take an 
+&quot;all-or-nothing&quot; approach. Russians, for instance, are often content 
+to use forum software that has an interface and a few other things in English, 
+and most of the discussion material in Russian. Perhaps the best thing to offer 
+is a fully translated and localized Russian version of the forum, but many 
+Russians will really do quite well if there is a good interface in English, and 
+if the forum displays Russian discussions without garbling the text or giving 
+errors.</p> 
+<p>The most basic of the best practices for internationalization and 
+localization is to choose Unicode over ASCII strings. ASCII lets you handle 
+text in a way that works for American English; Unicode lets you handle text in 
+a way that works for pretty much everybody. Working with Unicode strings is 
+similar to working with ASCII strings, but once you use Unicode, you can store 
+information people enter in other languages for free.</p> 
+<p>In Python code, an ASCII string looks like 'foo' or &quot;foo&quot;, and a 
+Unicode string has a 'u' before the opening quote, like u'foo' or 
+u&quot;foo&quot;. Strings may be marked off by either double or single quotes, 
+and a triple double quote or triple single quote can be used to mark a 
+multiline string (which can contain double or single quotes anywhere except for 
+possibly the last character):</p> 
+<pre> print u'''Content-type: text/html &lt;!DOCTYPE html&gt; &lt;html 
+xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot;&gt; '''
+</pre> 
+<p>The only gotchas are that you cannot include the same triple quotation mark 
+delimiter, and if the last character of the string is the same kind of 
+character, it needs to be escaped with a backslash, like: u'''This string ends 
+with an apostrophe: \''''.</p> 
+<p>Probably the next step to internationalization after using Unicode strings 
+is, instead of storing the interface language in your code like:</p> 
+<pre> print u'Please enter your email address below:' </pre> 
+<p>you would instead do string look-ups that would pull the appropriate 
+translation:</p> 
+<pre> print translate(messages.PLEASE_ENTER_YOUR_EMAIL_ADDRESS_BELOW) </pre> 
+<p>If you do this, the only language that needs to initially be supported is 
+your own, perhaps tested by a second language, but then you don't need to do 
+major rewrites to support a second language, or a third, fourth, or twelfth. 
+Maybe that wouldn't be a perfect localization, but it's another major step, and 
+it's not too hard.</p> 
+<p>Having looked at that, let's look at another topic: exceptions and errors. 
+Exceptions are thrown when something doesn't work ideally, and usually you want 
+to catch them. The basic idea is that plan A didn't work and you should have a 
+plan B.</p> 
+<p>For example, suppose that you have a string value that's supposed to be an 
+integer displayed as a string, like u'1'. Suppose further that you want to get 
+the integer out of the string, but default to 0 if parsing fails (for instance, 
+u'one' will not be parsed as an integer). Then you can write:</p> 
+<pre> try: result = int(input) except ValueError: result = 0 </pre> 
+<p>This code says that plan A is to get an appropriate integer value out of 
+the input, and plan B is to set a default of 0. This kind of thing is very 
+appropriate in dealing with the web, where you should assume that input is 
+inappropriate and possibly malicious until proven otherwise. If you write a web 
+script that asks people to enter their age, and someone hits two keys at once 
+and enters an age of u'22w', you need to be able to roll with it-and this is 
+nothing next to what might happen if someone is acting maliciously. In working 
+on the web, there may be ideal input that you intend, but both from a usability 
+and a security perspective you need to be able to respond appropriately to 
+input that was not what you intended. If you only type:</p> 
+<pre> result = int(input) </pre> 
+<p>your whole program will break on even an innocent typo like entering u'22w' 
+when asked for their age.</p> 
+<p>Exceptions are important in Python. In Java and some other languages, 
+recommended best practices say, &quot;Exceptions should not be used for regular 
+flow control.&quot; In other words, an exception is only appropriate for a very 
+rare case when something very unusual has happened. That is not how Python 
+works, and exceptions are a commonly used way of saying &quot;the ideal case 
+didn't happen.&quot; Perhaps you have seen the famous &quot;Mom's Brownie 
+Recipe&quot; on the web:</p> 
+<ul> 
+<li>
+<p>Remove teddy bear from oven and preheat oven to 375.</p></li> 
+<li>
+<p>Melt 1-cup margarine in saucepan.</p></li> 
+<li>
+<p>Remove teddy bear from oven and tell JR. &quot;no, no.&quot;</p></li> 
+<li>
+<p>Add margarine to 2 cups sugar.</p></li> 
+<li>
+<p>Take shortening can away from JR. and clean cupboards.</p></li> 
+<li>
+<p>Measure 1/3-cup cocoa.</p></li> 
+<li>
+<p>Take shortening can away from JR. again and bathe cat.</p></li> 
+<li>
+<p>Apply antiseptic and bandages to scratches sustained while removing 
+shortening from cat's tail.</p></li> 
+<li>
+<p>Assemble 4 eggs, 2-tsp. vanilla, and 1-1/2 cups sifted flour.</p></li> Take 
+smoldering teddy bear from oven and open all doors and windows for ventilation.
+<p></p> 
+<li>
+<p>Take telephone away from Billy and assure party on the line the call was a 
+mistake.</p></li> 
+<li>
+<p>Call operator and attempt to have direct dialed call removed from bill.</p>
+</li> 
+<li>
+<p>Measure 1-tsp. salt &amp; a cup nuts and beat all ingredients well.</p></li>
+<li>
+<p>Let cat out of refrigerator.</p></li> 
+<li>
+<p>Pour mixture into well-greased 9x13-inch pan.</p></li> 
+<li>
+<p>Bake 25 minutes.</p></li> 
+<li>
+<p>Rescue cat and take razor away from Billy.</p></li> 
+<li>
+<p>Explain to kids that you have no idea if shaved cats will sunburn.</p></li> 
+<li>
+<p>Throw cat outside while there's still time and he's still able to run away.
+</p></li> 
+<li>
+<p>Mix the following in saucepan: 1 cup sugar, 1 oz unsweetened chocolate, 1 
+cup margarine.</p></li> 
+<li>
+<p>Take the teddy bear out of the broiler and throw it away&mdash;far away.</p>
+</li> 
+<li>
+<p>Answer the door and meekly explain to nice police officer that you didn't 
+know JR. had slipped out of the house and was heading for the street.</p></li> 
+<li>
+<p>Put JR. in playpen.</p></li> 
+<li>
+<p>Add 1/3-cup milk, dash of salt, and boil, stirring constantly for 2 minutes.
+</p></li> 
+<li>
+<p>Answer the door and apologize to neighbor for Billy having stuck a garden 
+hose in man's front door mail slot. Promise to pay for ruined carpet.</p></li> 
+<li>
+<p>Tie Billy to clothesline.</p></li> 
+<li>
+<p>Remove burned brownies from oven.</p></li> 
+<li>
+<p>Start on dinner!</p></li> </ul> 
+<p>Because people are intelligent, you can write a recipe book and describe 
+only the ideal case. When you're programming, you need to be able to say, 
+&quot;This is plan A; this is plan B if plan A doesn't work; this is plan C if 
+plan B doesn't work.&quot; You can't just say, &quot;Gather these ingredients, 
+mix, and bake;&quot; you need all the except clauses like, &quot;Remove teddy 
+bear from oven...&quot;</p> 
+<p>In addition to try and except, there is a finally clause which follows the 
+try clause and any except clauses, and is to be executed whether or not an 
+exception was caught. It can appear:</p> 
+<pre> try: output_message(warning) finally: log_message(warning) </pre> 
+<p>or:</p> 
+<pre> try: result = items[0] except IndexError: result = 0 finally: return 
+result</pre> 
+<p>One note to be given: it can be appropriate to put pass in an except 
+clause, so we have:</p> 
+<pre> total = 0 for input in inputs: try: total += int(input) except 
+ValueError: pass</pre> 
+<p>If you are making a running sum, it may be appropriate to ignore a specific 
+error like this. But it is begging trouble to do:</p> 
+<pre> try: first_method() second_method() third_method() except: pass </pre> 
+<p>This use of except: is a bit like the goto statement; it offers convenience 
+at the beginning and can bring headaches down the road. What it says is, 
+&quot;Try to run these three methods; if anything goes wrong, just ignore it 
+and move on.&quot; And this is a recipe to bake JR's teddy bear at 375 and then 
+be left wondering why the house is so full of foul-smelling smoke: proper 
+exception handling removes the teddy bear from the oven, repeatedly if need be, 
+instead of just boldly ignoring problems that need to be addressed properly.</p>
+<p>This can mean that, even if we expect we will mainly just write code for 
+the ideal case, we may have to write a significant amount of code for non-ideal 
+cases.</p> 
+<p>How do you create functions, procedures, and methods in Python? The 
+function/procedure distinction that exists in C, where a function returns a 
+value and a procedure does not, is not as prominent and Python programmers do 
+not usually speak of &quot;procedures.&quot; If a function completes without 
+returning a value, or returns without specifying a value, it returns the 
+special value None, which is like an SQL NULL value. (Or a function can 
+explicitly return None). The following three functions are equivalent; they 
+take no arguments and return None:</p> 
+<pre> def first(): pass def second(): return def third(): return None </pre> 
+<p>A function's required arguments are named; their type is not specified.</p> 
+<pre> def ternary(condition, first_option, second_option): if condition: 
+return first_option else: return second_option</pre> 
+<p>I might note that in Python, the common ternary operator that appears in 
+C/C++/Java like a &gt; b ? a : b, is not a built-in structure in Python. There 
+are some somewhat hackish ways Pythonistas use to fake it, notably a &gt; b and 
+a or b, but besides reading somewhat strangely, they run into problems a bit 
+like C macros, where the C macro MAX(a, b) defined to a &gt; b ? a : b will 
+double-increment the selected argument if invoked as MAX(++c, ++d). In Python, 
+a ternary operator like a &gt; b and a or b can malfunction if its middle 
+argument is falsy; it is more robust to write (a &gt; b and [a] or [b])[0], at 
+a significant cost to Pythonic ease in reading and understanding.</p> 
+<p>Returning to functions, it is possible to specify default values, as in:</p>
+<pre> def parse(input, default = 0): try: return int(input) except ValueError: 
+return default</pre> 
+<p>This code somewhat flexibly parses string/unicode input for an integer 
+value, returning a default if it cannot be parsed. If invoked like parse(text), 
+it will default to 0 in the case of a parse failure; if invoked like 
+parse(text, 1), it will default to another value, such as 1, and if invoked 
+like parse(text, None), the result can be examined for a parse failure: it will 
+hold an integer if parsing was successful and the (non-integer) value None in 
+the case of failure.</p> 
+<p>If a function has two or more arguments with default values, unnamed 
+arguments are specified from left to right. Hence a function of:</p> 
+<pre> def name_pets(dog = None, cat = None, bunny = None): result = [] if dog: 
+result.append(u'I have a dog named ' + dog + u'.') if cat: result.append(u'I 
+have a cat named ' + cat + u'.') if bunny: result.append(u'I have a bunny named 
+' + bunny + u'.') return u'\n'.join(result)</pre> 
+<p>Now there are a couple of things going on. name_pets(u'Goldie') will 
+return, u'I have a dog named Goldie.' That is, the first argument will be 
+assigned to dog, and name_pets(u'Jazz', u'Zappy') will correspondingly name the 
+dog &quot;Jazz&quot; and the cat &quot;Zappy.&quot; But what if you want to 
+name a cat but not a dog? Then you can explicitly name the argument: 
+name_pets(cat=u'Guybrush') will specify the value of the cat argument while 
+leaving dog and bunny to have their default values.</p> 
+<p>That is one thing going on; there is something else going on with strings. 
+If you have more than one pet, this method will place a line break between each 
+sentence. It is common practice to build up a long string by creating an 
+initially empty list, and then bit by bit build up the contents of the string 
+in the list. Usually you can just stick them all together by u''.join(buffer), 
+but if you choose another string, like u'\n' here, then that other string is 
+the glue that joins the pieces, and you get a line break between each sentence 
+here.</p> 
+<p>You can specify an open-ended number of arguments, with a single asterisk 
+before the last argument name, like:</p> 
+<pre> def teach(teacher, course_name = None, *students): result = [] 
+result.append(u'This class is being taught by ' + teacher + u'.') if 
+course_name != None: result.append(u'The name of the course is &quot;' + 
+course_name + u'.&quot;') for student in students: result.append(student + u' 
+is a student in this course.') return u'\n'.join(result)</pre> 
+<p>If invoked just as teach(u'Prof. Jones'), the result will be one line: 
+u'This class is being taught by Prof. Jones.'. But if invoked as print 
+teach(u'Prof. Jones', u'Archaeology 101', u'Alice', u'Bob', u'Charlie'), the 
+output will be:</p> 
+<pre> This class is being taught by Prof. Jones. The name of the course is 
+&quot;Archaeology 101.&quot; Alice is a student in this course. Bob is a 
+student in this course. Charlie is a student in this course.</pre> 
+<p>The last way arguments can be specified is by keyword arguments, where any 
+arguments given by keyword that have not been otherwise claimed in the argument 
+list are passed into a dictionary. So if we define a function:</p> 
+<pre> def listing(**keywords): for key in keywords: print key + u': ' + 
+keywords[key]</pre> 
+<p>If we then call listing(name='Alice', phone='(800) 555-1212', 
+email='alice@example.com'), it should print out something like:</p> 
+<pre> phone: (800) 555-1212 name: Alice email: alice@example.com </pre> 
+<p>As an aside, note that the arguments appear in a different order than they 
+were given. Unlike a normal list where you should be able to get things in a 
+fixed order, elements in a dictionary should not be expected to be in any 
+particular order: nothing in the dictionary's job description says that it 
+should give back first the name, then the phone number, then the email. You are 
+welcome to sort the keys where appropriate if you want them in alphabetical 
+order:</p> 
+<pre> def alphabetical_listing(**keywords): keys = keywords.keys() keys.sort() 
+for key in keys: print key + u': ' + keywords[key]</pre> 
+<p>If you then call alphabetical_listing(name='Alice', phone='(800) 555-1212', 
+email='alice@example.com'), you should then get the keys in fixed alphabetical 
+order:</p> 
+<pre> email: alice@example.com name: Alice phone: (800) 555-1212 </pre> 
+<p>You can have any combination, or none, of these ways of accepting an 
+argument. If you use all of them, it should be like:</p> 
+<pre> def example(required, default = u'default value', *arguments, 
+**keywords):</pre> 
+<p>Before leaving the topic of functions, I would like to mention that there 
+are a couple of ways in which you can speak of a function returning more than 
+one value, both of which are useful, and both of which are supported in Python. 
+One way, which happens to be implemented by a tuple, is useful if you want to 
+return (for instance) both a status code and a text description of the status. 
+Let's return to the task of parsing integers. We can write:</p> 
+<pre> def parse(input, default = 0): try: return int(input), 1, u'Parsed 
+successfully.' except ValueError: return default, 0, u'Parsing failed.'</pre> 
+<p>There are a couple of ways these multiple results could be unpacked; one is:
+</p> 
+<pre> value, status, explanation = parse(input) </pre> 
+<p>But there is another sense in which you may want a generator that can keep 
+on returning values. There is a classic story in mathematics in which one 
+famous mathematician, as a boy, was in class and the teacher wanted some time 
+and so decided to give the students a time-consuming task to keep them busy. 
+And so the teacher told the students to add up the numbers from 1 to 100. And 
+the future mathematician tried to figure out how to do things the smart way, 
+realizing that if you add 1 and 100 you get 101; if you add 2 and 99 you also 
+get 101, if you add 3 and 98 you get the exact same thing. If you pair the 
+numbers like that, you have 50 pairs that have the same sum, 101, and so the 
+grand total has to be 50 * 101 = 5050. And this is the number he gave the 
+teacher. (The teacher, seeing that he had the correct answer so quickly, 
+assumed that the boy must have cheated and gave him a spanking as his just 
+reward.)</p> 
+<p>Based on this realization, there is a simple mathematical formula to 
+calculate the sum of the first n positive integers: the sum is equal to n * (n 
++ 1) / 2. But let us suppose we did not know that, and we wished to manually 
+check what the result was. It turns out that there is a better and a worse way 
+to calculate the sum of the numbers from 1 to 10,000,000,000. The bad way is:
+</p> 
+<pre> sum = 0 for number in range(1, 10000000001): sum += number </pre> 
+<p>And the good way is:</p> 
+<pre> sum = 0 for number in xrange(1, 10000000001): sum += number </pre> 
+<p>What's the difference? The only surface difference is the letter 'x'. But 
+there is a major difference. It's not primarily about speed; both are painfully 
+slow, especially if you compare them to calculating 10000000000 * (10000000000 
++ 1) / 2, which is lightning fast. But the first one, the one with range(), 
+creates a list with a staggering ten billion integers; a workstation with eight 
+gigs of RAM doesn't have nearly enough memory to hold the list, and if you try 
+to run it, you may well observe your computer slow to a crawl as more and more 
+memory is used just to create that one array. But the one with xrange() uses 
+very little memory because it is a generator that produces the numbers as 
+needed but never creates an enormous list. Something like xrange() can be 
+implemented for our purposes as:</p> 
+<pre> def xrange(first_number, second_number = None): if second_number == 
+None: bottom = 0 top = first_number else: bottom = first_number top = 
+second_number current = bottom while current &lt; top: yield current current += 
+1</pre> 
+<p>The yield statement is like a return statement, except that the function 
+yielding a value keeps on going. What xrange(1, 10000000001) does is keep on 
+yielding the next counting number until it reaches its limit and it has nothing 
+more to yield, but it doesn't use very much memory itself, and using it like 
+for number in xrange(1, 101) also doesn't take that much memory. Using xrange() 
+to calculate a very large sum may be very slow, but it won't make everything 
+else running on your whole computer grind to a halt by exhausting all available 
+memory, and then crash without giving you a result.</p> 
+<p>There is one point we would like to stop on: depending on some prior 
+language, some experienced programmers may be thinking, &quot;Wait, did you try 
+this? Isn't that going to overflow?&quot; And in fact it does give the correct 
+result if we do it in Python:</p> 
+<pre> &gt;&gt;&gt; print 10000000000 * (10000000000 + 1) / 2 
+50000000005000000000</pre> 
+<p>This result is correct, but C programmers, as well as C++ and Java 
+programmers, may have a conditioned reflex: in C, for instance, just as a 
+string buffer is an array of characters with a fixed length, integer types have 
+a maximum and minimum possible value, and you may be able to choose an integer 
+type with a bigger range, but there is always an arbitrary line, and if you 
+cross it you get an overflow error that causes incorrect results. If we write 
+in C:</p> 
+<pre> #include &lt;stdio.h&gt; int main() { long top; scanf(&quot;%ld&quot;, 
+&amp;top); printf(&quot;%ld\n&quot;, top * (top + 1) / 2); return 0; }</pre> 
+<p>The code correctly gives 5050 if we give it a value of 100, just like 
+Python, but if we give the original ten billion, we get, incorrectly:</p> 
+<pre> 3883139820726120960 </pre> 
+<p>Python turns out to have just as much an arbitrarily threshold as C, but 
+the difference is that if you trigger an overflow, instead of continuing on 
+with garbage results, Python quietly substitutes a type that will give correct 
+results for any number that will fit in memory. So, if you ask for the number 
+that Google is named after, ten multiplied by itself a hundred times, Python 
+will handle the request correctly:</p> 
+<pre> &lt;&lt;&lt; print 10 ** 100 
+10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+</pre> 
+<p>You can ask Python to handle integers millions of digits long, and while it 
+may run more slowly, Python will happily continue to give correct results as 
+long as it can fit your numbers in memory.</p> 
+<p>This, as with strings and lists, is an example of how Python follows the 
+zero-one-infinity rule: to quote the jargon file:</p> 
+<blockquote> 
+<p>&quot;Allow none of foo, one of foo, or any number of foo.&quot; A rule of 
+thumb for software design, which instructs one to not place random limits on 
+the number of instances of a given entity (such as: windows in a window system, 
+letters in an OS's filenames, etc.). Specifically, one should either disallow 
+the entity entirely, allow exactly one instance (an &quot;exception&quot;), or 
+allow as many as the user wants - address space and memory permitting.</p> 
+<p>The logic behind this rule is that there are often situations where it 
+makes clear sense to allow one of something instead of none. However, if one 
+decides to go further and allow N (for N &gt; 1), then why not N+1? And if N+1, 
+then why not N+2, and so on? Once above 1, there's no excuse not to allow any 
+N; hence, infinity.</p> 
+<p>Many hackers recall in this connection Isaac Asimov's SF novel <em>The Gods 
+Themselves</em> in which a character announces that the number 2 is impossible 
+- if you're going to believe in more than one universe, you might as well 
+believe in an infinite number of them.</p> </blockquote> 
+<p>Here Python observes a principle that you should observe in what you pass 
+on to your users. In terms of user interface design, for the iPhone to allow 
+exactly one application at a time and for the Droid to allow multiple 
+applications are both sensible approaches: perhaps the Droid marketing campaign 
+insists that we need to run multiple apps, but for a long time the iPhone, 
+designed to run one app at a time, was an uncontested darling. But what was not 
+a correct decision was for the iPhone web browser to be able to have up to 
+eight windows open, but not nine or more. If you are going to make a web 
+interface that allows the user to upload files, you don't want to say, &quot;I 
+don't know exactly how many the user will want, so I'm deciding five is 
+probably enough;&quot; you start with one file upload input and add a button 
+that creates another file upload input, and lets the user keep adding as many 
+files as are wanted. Or, depending on context, you may create an interface that 
+allows the user to upload at most one file as an avatar, or you may write an 
+opinion survey in which uploading files does not make sense as part of the 
+design. Zero, one, and infinity each have their places.</p> 
+<p>Python does not require you to do object-oriented programming, but in 
+Python everything is an object. Functions are first-class objects and can be 
+treated as such. Unlike Java, the humble integer is an object. dir() is a 
+function that lists all of the methods of an object: if at the interpreter you 
+call dir() on the integer 1, you get:</p> 
+<pre> &gt;&gt;&gt; dir(1) ['__abs__', '__add__', '__and__', '__class__', 
+'__cmp__', '__coerce__', '__delattr__', '__div__', '__divmod__', '__doc__', 
+'__float__', '__floordiv__', '__format__', '__getattribute__', 
+'__getnewargs__', '__hash__', '__hex__', '__index__', '__init__', '__int__', 
+'__invert__', '__long__', '__lshift__', '__mod__', '__mul__', '__neg__', 
+'__new__', '__nonzero__', '__oct__', '__or__', '__pos__', '__pow__', 
+'__radd__', '__rand__', '__rdiv__', '__rdivmod__', '__reduce__', 
+'__reduce_ex__', '__repr__', '__rfloordiv__', '__rlshift__', '__rmod__', 
+'__rmul__', '__ror__', '__rpow__', '__rrshift__', '__rshift__', '__rsub__', 
+'__rtruediv__', '__rxor__', '__setattr__', '__sizeof__', '__str__', '__sub__', 
+'__subclasshook__', '__truediv__', '__trunc__', '__xor__', 'conjugate', 
+'denominator', 'imag', 'numerator', 'real']</pre> 
+<p>Methods with names like __add__() are methods you can create or override 
+for operator overloading; without attempting to explain all of these methods, I 
+will briefly observe that not only is an integer like 1 an object, it is an 
+object that supports quite a number of methods.</p> 
+<p>Python's objects are in some ways like Java and in some ways like 
+JavaScript: Python objects come from full-fledged classes like Java, but are 
+more dynamic: fields and methods can be deleted from a Python object on the 
+fly, like JavaScript, even though inheritance is classical and not prototypal. 
+The typing is so-called &quot;duck typing&quot;: if it walks like a duck and it 
+quacks like a duck, it's a duck, and we have already seen one instance of duck 
+typing at work: if an integer computation overflows, Python deftly substitutes 
+another class that walks like the basic integer class and quacks like the basic 
+integer class, but can handle millions of digits or more as long as you have 
+enough memory and processor time. In Java, it is usually preferred practice to 
+choose object composition over multiple inheritance; in Python, it is usually 
+preferred practice to choose multiple inheritance over object composition.</p> 
+<p>The simplest example of a class is:</p> 
+<pre> class simple: pass </pre> 
+<p>An instance of this class can be created as:</p> 
+<pre> instance = simple() </pre> 
+<p>A somewhat more ornate example would be:</p> 
+<pre> class counter(object): def __init__(self): self.value = 0 def 
+increment(self): self.value += 1 def reset(self): self.value = 0</pre> 
+<p>This is a working, if not necessarily advisable, counter class. The first 
+argument to each of its methods is self (N.B. self, rather than this), and the 
+class has one instance variable, defined in the __init__() method called in 
+initialization, although it could just as well have many or none. What if we 
+wanted to make the member field private? The short answer is, we can't, and we 
+don't really want to. We could legitimately follow a convention that a member 
+with a leading underscore in its name, _like_this instead of like_this, is a 
+part of the present private implementation, does not represent in any sense the 
+public API, and is subject to change or removal at any time. Rewritten that 
+way, our class would look like this:</p> 
+<pre> class counter(object): def __init__(self): self._value = 0 def 
+get_value(self): return self._value def increment(self): self._value += 1 def 
+reset(self): self._value = 0</pre> 
+<p>But this way of solving things makes more sense in Java than Python; in 
+Java it is recommended practice to make most or all instance variables private 
+and then define corresponding getters and setters, and perhaps build a counter 
+class that let you guarantee it could only be incremented, read, and optionally 
+reset. It's not just that the solution we have built works a bit more like Java 
+than Python, but the problem we were addressing in the first place works more 
+like Java than Python. Truer to the spirit of Python would be to use an integer 
+and avoid the work of creating a class, let alone accessor methods.</p> 
+<p>A more Pythonic example might be a simple way to list tags in a webpage. 
+It's longer than our counter class, but not all that much longer:</p> 
+<pre> #!/usr/bin/python import re import urllib2 class webpage(object): def 
+__init__(self, url = None): self.initialized = False if url: self.load_url(url) 
+def __nonzero__(self): return self.initialized def list_tags(self): if 
+self.initialized: result = [] for tag in re.findall(ur'&lt;(\w+)', self.text, 
+re.DOTALL): if tag.lower() not in result: result.append(tag.lower()) 
+result.sort() return result else: raise Exception(u'No webpage is loaded.') def 
+load_url(self, url): try: text = urllib2.urlopen(url).read() self.url = url 
+self.text = text self.initialized = True return True except URLError: return 
+False if __name__ == u'__main__': page = 
+webpage(u'http://JonathansCorner.com/') if page: print page.list_tags() else: 
+print u'The page could not be loaded.'</pre> 
+<p>A few remarks about the very top: the top line, 
+&quot;#!/usr/bin/python&quot;, tells Unix, Linux, and OS X systems that this is 
+to be run as a Python program; if you intend at all to distribute your scripts, 
+you should put this at the top. (It won't do anything bad on a Windows system.)
+</p> 
+<p>At the beginning a couple of modules from the standard library are 
+imported. urllib2 can fetch web and other URL's, and re provides regular 
+expressions.</p> 
+<p>This class can be initialized or uninitialized; if you ask for an analysis 
+when it is not initialized, it raises an exception. Note that it considers 
+itself fully initialized and set up, not necessarily when its __init__() method 
+has been called, but when it has loaded a URL successfully.</p> 
+<p>There are a couple of conditions where a webpage object might not be 
+initialized once the __init__() constructor has returned. The URL is an 
+optional parameter, so it might not have passed through initialization. Or any 
+of a number of transient or permanent network errors could have prevented the 
+URL from loading successfully. The code to load a URL has:</p> 
+<pre> def load_url(self, url): try: text = urllib2.urlopen(url).read() 
+self.url = url self.text = text self.initialized = True return True except 
+URLError: return False</pre> 
+<p>Note the first real line of the method, text = urllib2.urlopen(url).read(). 
+This will do one of two things: either load the URL's contents successfully, or 
+throw a URLError. If it throws an error, none of the next three lines is 
+called. This means that an instance of this class is only fully set up with URL 
+etc. stored after a successful read, and if you have an initialized class and 
+try to load another URL and fail, previous data is not clobbered. This is 
+something that can fail, but it is transactional, like a database transaction. 
+Either all of the data is updated or none of it is updated, and in particular 
+the object won't be left in an inconsistent state.</p> 
+<p>It uses Perl-style regular expressions, which are powerful and popular but 
+can be a bit cryptic. The one regular expression used is ur'&lt;(\w+)', with an 
+'r' after the initial 'u' to specify a raw string without Python doing things 
+with backslashes that we don't want when we're doing regular expressions. What 
+the core of the regular expression says in essence is, &quot;a less than sign, 
+followed by one or more word characters, and save the one or more word 
+characters.&quot; This will find more or less the HTML tags in a webpage.</p> 
+<p>And the last thing I will say, besides saying that you can use this class 
+by giving,</p> 
+<pre> page = webpage(&quot;http://JonathansCorner.com/&quot;) print 
+page.list_tags()</pre> 
+<p>is that its present functionality is a foot in the door compared to the 
+analysis that is possible. Right now the webpage class can load a webpage and 
+do one thing with it, list the tags. From that starting point, it is not hard 
+to copy and adapt list_tags() to make another method that will count the tags:
+</p> 
+<pre> def count_tags(self): if self.initialized: result = {} for tag in 
+re.findall(ur'&lt;(\w+)', self.text, re.DOTALL): if tag.lower() in result: 
+result[tag.lower()] += 1 else: result[tag.lower()] = 1 return result else: 
+raise Exception(u'No webpage is loaded.')</pre> 
+<p>There are any number of ways this class could be extended; listing and even 
+counting the tags in a page are something like a &quot;Hello, world!&quot; 
+program: they show the very beginning of the possibilities, not where they end.
+</p> 
+<p>Lastly, the portion of the file at the end, beginning with if __name__ == 
+u'__main__':, is part of a Python pattern of writing for reusability. The basic 
+idea is that you write portions of a program you might want to reuse, such as 
+objects and classes, in the main body of a program, and then material you want 
+to run if you run the script directly, but not if you import it, beneath. If 
+the script above is run directly, it will try to create a webpage and list its 
+tags; but it can also be imported as a module, by something like:</p> 
+<pre> import webpage_inspector </pre> 
+<p>if the file is named webpage_inspector.py. If it is imported as a module, 
+any classes and functions will be available, as webpage_inspector.webpage for 
+instance, but the demo code at the bottom will be skipped.</p> 
+<p>(If you are interested in parsing webpages, I might suggest that you look 
+at existing tools for Python, such as Beautiful Soup at
+http://www.crummy.com/software/BeautifulSoup/, that put even more power at your 
+fingertips.)</p> 
+<p>Finally, this class takes advantage of one of the special methods, in this 
+case __nonzero__(). What that means is that, while works well enough to write:
+</p> 
+<pre> page = webpage(u'http://JonathansCorner.com/') if page.initialized: 
+print page.count_tags()</pre> 
+<p>you could also write:</p> page = webpage(u'http://JonathansCorner.com/') if 
+page: print page.count_tags()
+<p>That is, you can treat a webpage instance like a boolean variable; if you 
+wanted to keep trying to load a page when your network is flaky, you could try:
+</p> 
+<pre> import time page = webpage(u'http://JonathansCorner.com/') while not 
+page: time.sleep(30) page.load_url(u'http://JonathansCorner.com/') </pre> 
+<p>Or, using another feature of the method, you could more concisely write:</p>
+<pre> import time page = webpage() while not page.load_url(u'
+http://JonathansCorner.com/'): time.sleep(30) </pre> 
+<p>This will keep on trying to load the page, and if necessary keep on trying, 
+waiting 30 seconds between attempts so as not to engage in busy waiting. Busy 
+waiting on a resource (network, filesystem, etc.) is the practice of trying to 
+access a resource without interruption, which can be a way to be a very bad 
+neighbor who drains resources heavily compared to someone who delays. Note that 
+this will keep on trying forever if the error is permanent, such as a 
+nonexistent domain.)</p> 
+<p>Python partially supports functional programming; here I will attempt, not 
+to explain functional programming to the interested newcomer, but to orient the 
+functional programmer who would like to know what features of functional 
+programming Python supports. I have mentioned one feature of functional 
+programming, (lazy) generators. Python also supports list comprehensions: if 
+you have numbers, a list of integers and/or floating point numbers and want 
+only the positive values, you can do:</p> 
+<pre> positives = [x for x in numbers where x &gt; 0] </pre> 
+<p>lambdas, anonymous functions close to the lambdas of functional 
+programming, are commonly used with filter, map, and reduce:</p> 
+<pre> &gt;&gt;&gt; numbers = [1, 2, 3] &gt;&gt;&gt; filter(lambda x: x &gt; 1, 
+numbers) [2, 3] &gt;&gt;&gt; map(lambda x: x * 2, numbers) [2, 4, 6] 
+&gt;&gt;&gt; reduce(lambda x, y: x + y, numbers) 6</pre> 
+<p>Python's support of functional programming has not always been the best, 
+and functional programmers may be dismayed to learn that Guido was hoping at 
+one point to remove lambda altogether. This may be unfortunate, but to the 
+reader interested in functional programming in Python, I may suggest 
+downloading, reading, and usingthe Xoltar Toolkit. The Xoltar toolkit provides 
+a module, functional, which is written in pure Python, is largely 
+self-documenting code, and provides tools and/or reference implementations for 
+currying and other favorites.</p> 
+<p>Now I will be discussing &quot;usability for programmers.&quot; Normally 
+people who discuss usability discuss making a system usable for nontechnical 
+end users, but there is such a thing as usability for programmers; a good chunk 
+of Python's attraction is that it shows meticulous attention to detail in the 
+usability it provides to programmers.</p> 
+<p>There are a couple of ways in Python programming that we can provide good 
+usability for other programmers. One is, in choosing names (for variables, 
+methods, objects, classes, and so on), use whole_words_with_underscores, not 
+camelCase. Emacs is perfectly willing to insert spaces in displayed camelCase 
+words, but this is a compensation for camelCase's weakness, and not everyone 
+uses Emacs: or either of vim or Emacs, for that matter: GUI editors are not 
+going to go away, even if our beloved command line editors might go away. The 
+best thing of all would be to just use spaces in variable names, but so far the 
+language designers have not supported that route. For a consolation prize, 
+underscores are a little bit better than camelCase for native English speakers 
+and significantly better than camelCase for programmers struggling with 
+English's alphabet. (At a glance, aFewWordsInCamelCase look a bit more like a 
+block of undifferentiated text than a_few_words_separated_by_underscores if you 
+live and breathe English's alphabet, but if you have worked hard on English but 
+its alphabet is still not your own, aFewWordsInCamelCase looks absolutely like 
+a block of undifferentiated text next to a_few_words_separated_by_underscores. 
+Remember reading &quot;Hi, how are you?&quot; written in Greek letters as 
+&quot;&alpha;&iota; &amp;oicron;&upsilon; &alpha;&rho; &iota;&upsilon;:&quot; 
+sometimes just using another language's alphabet is a challenge.</p> 
+<p>Python has comments, but I would like to make a point. In Python, comments 
+are not there to make code understandable. Python has been called 
+&quot;executable pseudocode,&quot; and is your code's job to be understandable 
+itself. Comments have a place, but if you need to add comments to make your 
+code understandable, that's a sign you need to rewrite your code.</p> 
+<p>A Python comment, like Perl and Tcl (and one option in PHP), begins with a 
+hash mark and continues to the end of the line. Adding a comment to one of the 
+more cryptic lines of the example we have:</p> 
+<pre> for tag in re.findall(ur'&lt;(\w+)', self.text, re.DOTALL): # For each 
+HTML opening tag:</pre> 
+<p>Classes and functions have what are called &quot;docstrings,&quot; 
+basically a short summary that is programmatically accessible, written as a 
+(usually) triple quoted string immediately after the class/function definition:
+</p> 
+<pre> class empty: u'''This class does nothing.''' def __init__(self): 
+u'''This initializer does nothing.''' pass</pre> 
+<p>In terms of indentation, you should always indent by four spaces. Emacs 
+handles this gracefully; vim's autoindent by default will substitute a tab for 
+eight spaces where it can, leaving code that looks right in your editor but 
+breaks when you run it in Python. If you use vim for Python, you should edit 
+your ~/.vimrc, creating it if need be, and include the following:</p> 
+<pre> set autoindent smartindent tabstop=4 shiftwidth=4 expandtab shiftround 
+</pre> 
+<p>Now we will look at a basic issue of problem solving, the Python way. 
+Usually &quot;encryption&quot; refers to strong encryption, which refers to 
+serious attempts to protect data; when you shop at a responsible merchant and 
+your credit card information is transferred at a URI that begins with 
+&quot;https,&quot; that's strong encryption in use. There is also something 
+called weak encryption, which includes such things as codes written as puzzles 
+for children to break. If strong encryption is meant to resist prying, weak 
+encryption is at times intended to be pried open. One classic use of weak 
+encryption is rot-13, which moves each letter forward or back by thirteen 
+places and has the convenient feature that running rot-13 again on encrypted 
+text decrypts it. Historically, on UseNet, some offensive material was posted 
+in rot-13 as a matter of common courtesy, so that people were warned and did 
+not need to unintentionally read things that would offend them, and many old 
+newsreaders included a single keystroke command to decrypt rot-13 text. For an 
+example, if you rot-13 &quot;The quick brown dog jumps over the lazy red 
+fox.&quot;, you get, &quot;Gur dhvpx oebja qbt whzcf bire gur ynml erq 
+sbk.&quot;, and if you rot-13 &quot;Gur dhvpx oebja qbt whzcf bire gur ynml erq 
+sbk.&quot;, you get the original &quot;The quick brown dog jumps over the lazy 
+red fox.&quot;, restored perfectly.</p> 
+<p>Now suppose we want to be able to rot-13 encrypt text from Python. Rot-13 
+represents an extremely simple algorithm, and for the most part there is a 
+perfectly obvious way to do it:</p> 
+<pre> def rot13(text): result = [] for character in unicode(text): if 
+character == u'a': result.append(u'n') elif character == u'b': 
+result.append(u'o') elif character == u'c': result.append(u'p') elif character 
+== u'd': result.append(u'q') elif character == u'e': result.append(u'r') elif 
+character == u'f': result.append(u's') elif character == u'g': 
+result.append(u't') elif character == u'h': result.append(u'u') elif character 
+== u'i': result.append(u'v') elif character == u'j': result.append(u'w') elif 
+character == u'k': result.append(u'x') elif character == u'l': 
+result.append(u'y') elif character == u'm': result.append(u'z') elif character 
+== u'n': result.append(u'a') elif character == u'o': result.append(u'b') elif 
+character == u'p': result.append(u'c') elif character == u'q': 
+result.append(u'd') elif character == u'r': result.append(u'e') elif character 
+== u's': result.append(u'f') elif character == u't': result.append(u'g') elif 
+character == u'u': result.append(u'h') elif character == u'v': 
+result.append(u'i') elif character == u'w': result.append(u'j') elif character 
+== u'x': result.append(u'k') elif character == u'y': result.append(u'l') elif 
+character == u'z': result.append(u'm') elif character == u'A': 
+result.append(u'N') elif character == u'B': result.append(u'O') elif character 
+== u'C': result.append(u'P') elif character == u'D': result.append(u'Q') elif 
+character == u'E': result.append(u'R') elif character == u'F': 
+result.append(u'S') elif character == u'G': result.append(u'T') elif character 
+== u'H': result.append(u'U') elif character == u'I': result.append(u'V') elif 
+character == u'J': result.append(u'W') elif character == u'K': 
+result.append(u'X') elif character == u'L': result.append(u'Y') elif character 
+== u'M': result.append(u'Z') elif character == u'N': result.append(u'A') elif 
+character == u'O': result.append(u'B') elif character == u'P': 
+result.append(u'C') elif character == u'Q': result.append(u'D') elif character 
+== u'R': result.append(u'E') elif character == u'S': result.append(u'F') elif 
+character == u'T': result.append(u'G') elif character == u'U': 
+result.append(u'H') elif character == u'V': result.append(u'I') elif character 
+== u'W': result.append(u'J') elif character == u'X': result.append(u'K') elif 
+character == u'Y': result.append(u'L') elif character == u'Z': 
+result.append(u'M') return u''.join(result)</pre> 
+<p>This is a perfectly effectively way of solving the problem, but you may 
+wince at the thought of all that typing, and that is a good sign that this 
+solution is not very Pythonic. Some readers may perhaps be disappointed with me 
+(or, perhaps, not disappointed with me in the slightest) to learn that I 
+cheated: I wrote three lines of code so Python would generate for me the long 
+and tedious part of the routine so I could get out of such a chore, and then 
+pasted the output into the page. We need a better solution in this.</p> 
+<p>One of the paradoxes in the programming world is that solving a problem in 
+a more general sense may actually be less work. What we basically need is to do 
+some translations of characters, so how can we do that? Remembering that 
+Python's switch statement is the dictionary, we could try:</p> 
+<pre> def translate(text, translation): result = [] for character in 
+unicode(text): if character in translation: 
+result.append(translation[character]) else: result.append(character) return 
+u''.join(result)</pre> 
+<p>This is a big improvement: cleaner, simpler, much shorter, and much more 
+powerful. So if we are dealing with strings used to store genetic data, we can 
+also get the complement of a string. So to get the complement of u'ATTAGCGACT', 
+we can do:</p> 
+<pre> original = u'ATTAGCGACT' complement = translate(original, {u'A': u'T', 
+u'T': u'A', u'C': u'G', u'G': u'C'})</pre> 
+<p>And we've improved things, or at least it seems we've improved until we get 
+around to the chore of typing out the dictionary contents for every uppercase 
+and lowercase letter. We could write another Python snippet to autogenerate 
+that, as the chore is not only tedious but an invitation to error, but is there 
+a better way?</p> 
+<p>In fact there is. We can import the string library and take advantage of 
+something that is already there, and here is a solution that is not daunting to 
+type out, only slightly tedious, although here we must use a little ASCII:</p> 
+<pre> import string translation = 
+string.maketrans(u'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 
+u'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm') translated = 'The 
+quick brown dog jumps over the lazy red fox.'.translate(translation)</pre> 
+<p>And with that, instead of solving the problem of translation ourselves, we 
+have the problem already solved for us, for the most part. The variable 
+translated is now u'Gur dhvpx oebja qbt whzcf bire gur ynml erq sbk.'</p> 
+<p>Those versed in Python's character, though, might possibly not stop here. 
+You can make up your own forms of weak encryption, but rot-13 encoding is not 
+the world's most obscure thing to do. Is this really the easiest and most 
+Pythonic way to rot-13 a string? Let us fire up our Python interpreter:</p> 
+<pre> &gt;&gt;&gt; print u'The quick brown dog jumps over the lazy red 
+fox.'.encode(u'rot13') Gur dhvpx oebja qbt whzcf bire gur ynml erq sbk.</pre> 
+<p>The problem is already solved for us.</p> 
+<p>A famous blog post called Python Is Not Java addresses Java programmers 
+rather bluntly on why doing everything you'd do in Java is not getting the most 
+out of Python:</p> 
+<blockquote> 
+<p>Essentially, if you've been using Java for a while and are new to Python, 
+<strong>do not trust your instincts.</strong> Your instincts are tuned to Java, 
+not Python. Take a step back, and above all,<strong>stop writing so much code.
+</strong></p> 
+<p>To do this, become more demanding of Python. Pretend that Python is a magic 
+wand that will miraculously do whatever you want without you needing to lifting 
+a finger. Ask, &quot;how does Python already solve my problem?&quot; and 
+&quot;What Python language feature most resembles my problem?&quot; You will be 
+absolutely astonished at how often it happens that thing you need is already 
+there in some form. In fact, this phenomenon is so common, even among 
+experienced Python programmers, that the Python community has a name for it. We 
+call it &quot;Guido's time machine&quot;, because sometimes it seems as though 
+that's the only way he could've known what we needed, before we knew it 
+ourselves.</p> </blockquote> 
+<p>Python's core library is documented extensively, searchably, and well at 
+http://docs.python.<strong>org</strong>/library/ (be advised that python.
+<strong>com</strong>, besides being easy to type when you really mean python.
+<strong>org</strong>, is a famous porn site), and Python's core library is your 
+best friend. The code samples peppering this chapter are intended to simply 
+illustrate basic features of the language; once you get up to speed, it's not 
+so much that you'll have better ways of doing what that code does, as that 
+you'll have better ways of avoiding doing that, using Python more like a magic 
+wand. I will not be attempting to provide select highlights from the core 
+library because that would easily be a book in its own right. But we are saying 
+thatthe Python core library is among a good Python programmer's most heavily 
+used bookmarks.</p> 
+<p>I advocate, when possible, moving from unadorned, &quot;bare metal&quot; 
+Python to what might be called &quot;Python++.&quot; Let me explain what I mean 
+by this and why it is more Pythonic.</p> 
+<p>The move from C to C++ is a move made by extending the core language to 
+directly support objects, templates, and other features. There have been some 
+efforts to extend the Python core language: easy_extend is intended to make it 
+Pythonically easy to tinker with and extend the language syntax. However, I 
+have never heard of production use of these extensions Pythonically saving time 
+and effort while making programmers more productive.</p> 
+<p>What I have heard consistently is that using a good library really does 
+qualify as a move from &quot;unadorned Python&quot; to &quot;Python++&quot;. A 
+StackOverflow user asked, &quot;Have you considered using Django and found good 
+reasons not to?&quot; And people listed legitimate flaws with Django and 
+legitimate reasons they use other alternatives, but one developer got over 
+thirty upvotes with a response of, &quot;Yeah, I am an honest guy, and the 
+client wanted to charge by the hour. There was no way Django was going to allow 
+me to make enough money.&quot; For the web, frameworks like Django, TurboGears, 
+and web2py offer significantly greater power with less work in more truly 
+Pythonic fashion. Python's standard library does come with its cgi module, and 
+it is possible to write webapps with it, but using the cgi module and the 
+standard library to implement a social networking site with all the common 
+bells and whistles would take months or years. With Python + Django + Pinax the 
+time is more like hours. If you use Python, you don't have to reinvent the 
+wheel. If you want a social network and you use Django and Pinax, you don't 
+have to reinvent the internal combustion engine either, or power steering, or 
+antilock brakes, because they are all included in standard packages for a car 
+or truck. If your goal is an online store instead of a social network Pinax 
+will not likely be of much help, but Django + Satchmo will. Both of them 
+provide ready-made solution to routine tasks, whether user avatars with 
+gravatar support, or a shopping cart with that works with any of several 
+payment gateways.</p> 
+<p>This is true if you are developing for the web; if you are in another 
+domain, similar remarks could be made for NumPy or SciPy.</p> 
+<p>I do not wish to discourage anyone from using different frameworks than I 
+have mentioned, or suggest that there is something wrong with thinking things 
+out and choosing TurboGears over Django. Web2py in particular cuts out one very 
+daunting hurdle to new programmers: a command line with a steep learning curve. 
+However, I do advocate the use of a serious, noteworthy &quot;Python++&quot; 
+framework and not the standard library alone: the cgi module works entirely as 
+advertised, but the difference between Python + Django + Pinax and just Python 
+with the cgi module is comparable to the difference between Python with the cgi 
+module and programming on bare metal in C.</p> 
+<p>I may further comment that fundamental usability is the same whether the 
+implementation is Django, TurboGears, web2py, or for that matter Python with 
+the cgi module or C working with bare metal. It would not be a surprise if Ruby 
+on Rails or PHP developers were to look through this and find it speaks to how 
+they can create a better user interface.</p> 
+<h3>Summary</h3> 
+<p>What is it that is attractive about Python?</p> 
+<p>Perl has been rightly called &quot;Unix's Swiss Army Chainsaw,&quot; and 
+perhaps nothing else so well concisely describes what it is that Perl has to 
+offer. Java might be compared to the equipment owned by a construction company, 
+equipment that allows large organizations and a well-organized army to erect 
+something monumental. C would be a scientific scalpel, molecular sharp: the 
+most exacting precision you can get unless you go subatomic with assembler or 
+machine language, but treacherously slippery and easy to cut yourself with, 
+something like the scientific-use razor blades which came in a package 
+labelled: &quot;WARNING: Knife is extremely sharp. Keep out of children.&quot;
+</p> 
+<p>It is my suggestion that Python is a lightsabre, and wielding it well makes 
+a graceful foundation for usability.</p> 
+<h2>You might also like...</h2> 
+<blockquote> 
+<p>Ajax Without JavaScript or Client-Side Scripting</p> 
+<p>Hayward's Free Intranet Employee Photo Directory</p> 
+<p><strong>Usability for Hackers: Programmers, Anthropology, and Making 
+Software More Usable</strong></p> 
+<p>Within the Steel Orb</p> </blockquote> </em> 
+</body>

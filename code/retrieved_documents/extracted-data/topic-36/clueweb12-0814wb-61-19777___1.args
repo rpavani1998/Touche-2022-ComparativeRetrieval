@@ -1,0 +1,64 @@
+but, our objective with doing that is to gain experience and ensure that we have developed an efficient and usable and practical model for deploying multi‑bundled applications in order to inform our work in the osgi alliance.
+and in that model, in the managed model, the container not only manages the life cycle of the entity manager, but it also manages the relationship of the entity manager's persistence context with any transaction that the application happens to be running under.
+then within apache aries, we have a jpa container component which is part of our blueprint container.
+so that the blueprint container can understand transaction configuration for blueprint components, just like the ejb container can, in fact.
+so the blueprint container is extended with the jpa container so that the blueprint components that run inside the blueprint container can have their jpa context managed for them by the blueprint container.
+the second aspect is the application and it's definition of it's access to the database through a jpa persistence xml and the entities that it provides to interact with‑‑to actually represent the data in object form.
+in a container managed environment, the container that the application component runs it, for example, a blueprint container can work with and discover jpa providers and inject entity managers from those jpa providers into an application, in order to process it's persistence units.
+so, in that respect, apache aries is innovating because we're ahead of any standardization effort in the osgi alliance at the moment.
+ian: arie's jta integration uses the transaction manager in geronimo.
+which eases the integration in an enterprise application between components that have been derived from the java ee side of the universe.
+one of the other things that i think apache aries has a very forward‑looking approach to is the assembly and deployment of multi‑bundled applications.
+programming groovy is easy to start with.
+view full user profile dzone recently met up with ibm's ian robinson to discuss apache aries, a project which aims to deliver a set of pluggable java components enabling an enterprise osgi application programming model.
+what we have for the aries jta integration is the registration of jta services in the osgi service registry.
+it's interesting, looking at the different ways that java could evolve.
+and in that model, in the managed model, the container not only manages the life cycle of the entity manager, but it also manages the relationship of the entity manager's persistence context with any transaction that the application happens to be running under.
+i would like to see java evolve so that it recognizes the 10 years of experience, probably 11 years of experience, that we have in the osgi alliance of building modular systems and actually adopt osgi as the module system for java.
+in that model, the application is managing the use of the entity manager and it's association with any transaction context, for example.
+which eases the integration in an enterprise application between components that have been derived from the java ee side of the universe.
+how we can encourage the use of osgi more globally, across the java platform and in particular, in the enterprise java space, in the osgi enterprise expert group and latterly to help set up the apache aries project which focuses on building enterprise osgi technologies and in particular enterprise osgi technologies that affect application components.
+so that the blueprint container can understand transaction configuration for blueprint components, just like the ejb container can, in fact.
+beyond that, we've had interest expressed by members of the community to extend the work of the enterprise expert group at the moment with development of some more forward‑looking things, and indeed some things that we are interested in standardizing through the enterprise expert group.
+i would like to see java evolve so that it recognizes the 10 years of experience, probably 11 years of experience, that we have in the osgi alliance of building modular systems and actually adopt osgi as the module system for java.
+aries interacts with geronimo, gets the transaction manager, puts it into the osgi service registry, and makes it available for applications.
+there's an osgi compendium specification and generally speaking, most of the compendium services that are defined in the compendium spec are also implemented by felix and equinox.
+in this interview, recorded at ibm impact 2010, ian talks about how apache aries relates to the osgi framework, and its support for numerous java ee specs, including thejava persistence api (jpa), the java transaction api (jta), and java management extensions (jmx).
+so that talks about how java enterprise technologies are, if you like, married with osgi.
+but, our objective with doing that is to gain experience and ensure that we have developed an efficient and usable and practical model for deploying multi‑bundled applications in order to inform our work in the osgi alliance.
+so that talks about how java enterprise technologies are, if you like, married with osgi.
+beyond that, we've had interest expressed by members of the community to extend the work of the enterprise expert group at the moment with development of some more forward‑looking things, and indeed some things that we are interested in standardizing through the enterprise expert group.
+there is an application usage model where the application essentially finds a jpa provider, interacts with it to create an entity manager factory and then uses the entity manager factory.
+how we can encourage the use of osgi more globally, across the java platform and in particular, in the enterprise java space, in the osgi enterprise expert group and latterly to help set up the apache aries project which focuses on building enterprise osgi technologies and in particular enterprise osgi technologies that affect application components.
+and can run blueprint components under jta global transactions as well.
+for example, an osgi service registered in the service registry can also be made available for discovery through jndi by a jndi client.
+but i think, in terms of the work that we set out to do, to build initial implementations of the enterprise expert group specifications, once we've got our first release out there and we've demonstrated that we have a vibrant community, then i think, within the next three or four months, i hope and expect to see apache aries actually graduate from incubation.
+it's interesting, looking at the different ways that java could evolve.
+then within apache aries, we have a jpa container component which is part of our blueprint container.
+the second aspect is the application and it's definition of it's access to the database through a jpa persistence xml and the entities that it provides to interact with‑‑to actually represent the data in object form.
+then there is the container integration which can optionally manage how jpa artifacts like entity managers and entity manager factories are provided, are injected into an application.
+what we have for the aries jta integration is the registration of jta services in the osgi service registry.
+and services which are registered by osgi‑aware components on the other hand.
+so the blueprint container is extended with the jpa container so that the blueprint components that run inside the blueprint container can have their jpa context managed for them by the blueprint container.
+in this interview, recorded at ibm impact 2010, ian talks about how apache aries relates to the osgi framework, and its support for numerous java ee specs, including thejava persistence api (jpa), the java transaction api (jta), and java management extensions (jmx).
+so, in that respect, apache aries is innovating because we're ahead of any standardization effort in the osgi alliance at the moment.
+but i think, in terms of the work that we set out to do, to build initial implementations of the enterprise expert group specifications, once we've got our first release out there and we've demonstrated that we have a vibrant community, then i think, within the next three or four months, i hope and expect to see apache aries actually graduate from incubation.
+for example, an osgi service registered in the service registry can also be made available for discovery through jndi by a jndi client.
+things like provision of asynchronous services, perhaps message‑driven blueprint endpoints, for example.
+and services which are registered by osgi‑aware components on the other hand.
+and like jpa, that we were talking about earlier on, we also have an integration of transactions into the blueprint container as well.
+which doesn't know anything about the osgi, on the one hand.
+one of the other things that i think apache aries has a very forward‑looking approach to is the assembly and deployment of multi‑bundled applications.
+in that model, the application is managing the use of the entity manager and it's association with any transaction context, for example.
+ian:  arie's jta integration uses the transaction manager in geronimo.
+in a container managed environment, the container that the application component runs it, for example, a blueprint container can work with and discover jpa providers and inject entity managers from those jpa providers into an application, in order to process it's persistence units.
+then there is the container integration which can optionally manage how jpa artifacts like entity managers and entity manager factories are provided, are injected into an application.
+in the jmx implementation in apache aries, we implement mbeans services so that you can use jmx to query aspects of a running osgi framework.
+there's an osgi compendium specification and generally speaking, most of the compendium services that are defined in the compendium spec are also implemented by felix and equinox.
+there is an application usage model where the application essentially finds a jpa provider, interacts with it to create an entity manager factory and then uses the entity manager factory.
+in the jmx implementation in apache aries, we implement mbeans services so that you can use jmx to query aspects of a running osgi framework.
+and like jpa, that we were talking about earlier on, we also have an integration of transactions into the blueprint container as well.
+aries interacts with geronimo, gets the transaction manager, puts it into the osgi service registry, and makes it available for applications.
+and can run blueprint components under jta global transactions as well.
+things like provision of asynchronous services, perhaps message‑driven blueprint endpoints, for example.
+one aspect is the jpa provider.

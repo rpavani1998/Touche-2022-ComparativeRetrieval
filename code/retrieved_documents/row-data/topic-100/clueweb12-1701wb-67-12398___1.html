@@ -1,0 +1,123 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Python in Astronomy</title>
+<body>
+<strong>Next:</strong> PyFITS, a FITS Module for Python <br>
+<strong>Up:
+</strong> Software Systems and Tools <br>
+<strong>Previous:</strong> The Faint 
+Object Spectrograph Post-COSTAR Spectropolarimetry Correction <br>
+<strong> 
+Table of Contents - Subject Index - Author Index - Search - PS reprint - PDF 
+reprint </strong> <b> Pirzkal, N. &amp; Hook, R. N. 1999, in ASP Conf. Ser., 
+Vol. 172, Astronomical Data Analysis Software and Systems VIII, eds. D. M. 
+Mehringer, R. L. Plante, &amp; D. A. Roberts (San Francisco: ASP), 479</b> 
+<p> </p> 
+<p> </p> 
+<p> </p> 
+<p> </p> 
+<p> </p> 
+<p> </p> 
+<h1>Python in Astronomy</h1> <strong>Norbert Pirzkal, Richard N. Hook</strong> 
+<br> ST-ECF, Karl-Schwarschild Str.2, Garching bei Munchen D-85748, Germany 
+<p></p> 
+<p> </p> 
+<h3>Abstract:</h3>  We report on the use of Python to perform basic 
+astronomical tasks. Python is a powerful, object-oriented scripting language 
+that is easy to extend, free, and available for most computer platforms. 
+Python, together with its Numerical module, and with the pFitsio module that is 
+being developed by one of the authors, provides an attractive alternative to 
+other languages such as Perl, IDL, and the IRAF CL, which are already widely 
+used by the community. Simple examples of how Python can be used to explore and 
+manipulate real astronomical data are given. 
+<p> </p> 
+<p> </p> 
+<h3> 1. Why Python? </h3> Python is an interpreted, interactive, 
+object-oriented programming language. Invented in 1990 by Guido van Rossum, it 
+shares many of its features with other modern languages such as Tcl, Perl and 
+Java. Python has a simple, easy to learn syntax which emphasizes readability, 
+and it draws many of its features from other popular languages such as C, C++, 
+Modula-3, ABD, and others. We have found that Python satisfies the need for a 
+high level programming language which fills the gap between regular shell 
+scripting languages and compiled languages such as C. For tasks that are too 
+complicated and too large to implement with regular shell scripts, but for 
+which the extra overhead of coding everything in C is not warranted, Python 
+offers a quick and elegant option. Some of the attractive features of Python 
+include the use of transparent byte-code compilation for speed, automatic 
+memory management and garbage collection, and a very powerful object oriented 
+and modular design. Python ships with a large number of modules (See the Python 
+standard documentation), and can be easily extended in C. With modules such as 
+pFitsio or PyFits and the Numerical modules, astronomical images and tables can 
+be easily accessed and manipulated as numerical arrays. We present small Python 
+examples as illustrations of the language's power and encourage the reader to 
+learn more about Python from the book by Lutz (1996).
+<h3> 2. Examples </h3> 
+<h3> 3. Reading a List from a File and building Dictionaries </h3> In this 
+example (Fig.1), we assume that we have a file called <em> assoc.clear</em>. 
+This file contains a list of datasets from the HST STIS camera which have been 
+previously determined to be combinable into longer integration time images that 
+we wish to refer to as ``Associations''. The file is as follow:
+<pre> ID sub dataset xoff yoff ra dec r d exp O46P3X010 1 O46P3X010 0.00 0.00 
+271.37 -19.90 0 1 300.00 ... O46P3X010 1 O46P3Y010 -0.07 -0.02 271.37 -19.90 0 
+1 300.00 ... ...</pre> We would like to be able to easily query all the members 
+of a given association (``ID'' column), and to be able to access and 
+potentially modify the information of the individual datasets that make up an 
+association. We therefore build a Dictionary of datasets where each dataset's 
+name serves as a key in this dictionary. Each entry of the dataset dictionary 
+is in fact itself a dictionary which uses the original ASCII file column name 
+as keys to hold the ASCII file original data. Hence, 
+dataset['O46P47010']['xoff'] would return the value of 0.0. Another dictionary 
+is then created and uses the names of the associations (Column 1 in the ASCII 
+file) as a key. Each association key is then assigned a list of datasets from 
+the dataset dictionary. Once the dictionaries are set up, which only takes a 
+few lines (grey overlay region), one has the ability to manipulate and 
+``query'' those dictionaries in a very high level, natural, way.
+<p> </p> 
+<p></p> <strong>Figure 1:</strong> Dictionary and List creation and 
+manipulation, (see text for more description). <br>
+<br>
+
+<p></p> 
+<p> </p> 
+<h3> 4. Reading FITS data into Arrays and manipulating those Arrays </h3> 
+<p> Starting from the set of dictionaries we have built in our first example, 
+we now proceed to read in each individual FITS file (Fig.2). Notice that we now 
+load both the pFitsio and the Numerical modules and how, once an image is 
+stored in a two dimensional array, we can compute statistics on any part of 
+this array. Our second example also shows the use of the powerful Numerical 
+module's where() command which the IDL1 user will recognize. </p> 
+<p> </p> 
+<p></p> <strong>Figure 2:</strong> Array and FITS file access using Python, 
+(see text for more description). <br>
+<br>
+
+<p></p> 
+<p> </p> 
+<h3> 5. Availability and References </h3> 
+<p> Python runs on virtually all computer platforms, including the JAVA 
+virtual machine (JPython). One can download the compiled Python binaries or the 
+Python source code from thePython Homepage. Exhaustive Python documentation, 
+tutorials, JPython, and third party modules can also be found on the Python 
+homepage. Information concerning the pFitsio and PyFits modules should be 
+directed to the authors of this paper, and Paul Barrett (see Barrett &amp; 
+Bridgman 1999), respectively.</p> 
+<p> </p> 
+<h3>References</h3> 
+<p></p> 
+<p> Barrett, P. E. &amp; Bridgman, W. T. 1999, this volume, 483 </p> 
+<p> Lutz, M. 1996, Programming Python, (Sebastopol: O'Reilly) <br>
+</p> 
+<h4>Footnotes</h4> 
+<dl> 
+<dt> ... IDL 1 </dt> 
+<dd> IDL is the trademark of Research Systems, Inc. </dd> </dl> &copy; 
+Copyright 1999Astronomical Society of the Pacific, 390 Ashton Avenue, San 
+Francisco, California 94112, USA <strong>Next:</strong> PyFITS, a FITS Module 
+for Python <br>
+<strong>Up:</strong> Software Systems and Tools <br>
+<strong>
+Previous:</strong> The Faint Object Spectrograph Post-COSTAR Spectropolarimetry 
+Correction <br>
+<strong> Table of Contents - Subject Index - Author Index - 
+Search - PS reprint - PDF reprint </strong> adass@ncsa.uiuc.edu 
+</body>

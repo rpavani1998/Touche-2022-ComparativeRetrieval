@@ -1,0 +1,125 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sort &lt; Perldoc &lt; PerlCommunityWiki</title>
+<body>
+
+<ul> 
+<li>Du bist auf dieser Seite als WikiGuest</li> 
+<li>Log In or Register</li> 
+<li>Nutzerliste</li> </ul> 
+<ul> 
+<li>Home</li> 
+<li>Forum</li> 
+<li>Perldoc</li> 
+<li>Wissensbasis und FAQ</li> 
+<li>Community</li> </ul> <br>
+You are here: Perldoc Web&gt;PerlDokumentListe
+&gt;Sort (2005-04-28) <br>
+ sort Dokumentation zu Perl 5.8.0 | Download als POD 
+|<strong>Wie kann ich hier etwas &auml;ndern?</strong> <br>
+<br>
+
+<ul> 
+<li>  NAME </li> 
+<li>  SYNOPSIS </li> 
+<li>  DESCRIPTION </li> 
+<li>  CAVEATS </li> </ul> 
+<h1> NAME </h1> 
+<p></p> sort - perl pragma to control sort() behaviour 
+<p></p> 
+<h1> SYNOPSIS </h1> 
+<p></p> 
+<pre> use sort 'stable'; # guarantee stability use sort '_quicksort'; # use a 
+quicksort algorithm use sort '_mergesort'; # use a mergesort algorithm use sort 
+'_qsort'; # alias for quicksort my $current = sort::current(); # identify 
+prevailing algorithm</pre> 
+<p></p> 
+<h1> DESCRIPTION </h1> 
+<p></p> With the sort pragma you can control the behaviour of the builtin 
+sort() function.
+<p></p> In Perl versions 5.6 and earlier the quicksort algorithm was used to 
+implement sort(), but in Perl 5.8 a mergesort algorithm was also made 
+available, mainly to guarantee worst case O(N log N) behaviour: the worst case 
+of quicksort is O(N**2). In Perl 5.8 and later, quicksort defends against 
+quadratic behaviour by shuffling large arrays before sorting.
+<p></p> A stable sort means that for records that compare equal, the original 
+input ordering is preserved. Mergesort is stable, quicksort is not. Stability 
+will matter only if elements that compare equal can be distinguished in some 
+other way. That means that simple numerical and lexical sorts do not profit 
+from stability, since equal elements are indistinguishable. However, with a 
+comparison such as
+<p></p> 
+<pre> { substr($a, 0, 3) cmp substr($b, 0, 3) } </pre> 
+<p></p> stability might matter because elements that compare equal on the 
+first 3 characters may be distinguished based on subsequent characters. In Perl 
+5.8 and later, quicksort can be stabilized, but doing so will add overhead, so 
+it should only be done if it matters.
+<p></p> The best algorithm depends on many things. On average, mergesort does 
+fewer comparisons than quicksort, so it may be better when complicated 
+comparison routines are used. Mergesort also takes advantage of pre-existing 
+order, so it would be favored for using sort to merge several sorted arrays. On 
+the other hand, quicksort is often faster for small arrays, and on platforms 
+with small memory caches that are much faster than main memory. You can force 
+the choice of algorithm with this pragma, but this feels heavy-handed, so the 
+subpragmas beginning with a<code>_</code> may not persist beyond Perl 5.8. 
+<p></p> 
+<h1> CAVEATS </h1> 
+<p></p> This pragma is not lexically scoped : its effect is global to the 
+program it appears in. This may change in future versions.
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> -- HaraldBongartz - 06 Nov 2004 <br>
+Edit&nbsp;|&nbsp;Attach
+&nbsp;|&nbsp;Print version&nbsp;|&nbsp;History: r2&nbsp;&lt;&nbsp;r1
+&nbsp;|&nbsp;Backlinks&nbsp;|&nbsp;View wiki text&nbsp;|&nbsp;Edit wiki text
+&nbsp;|&nbsp;More topic actions <br>
+ Topic revision: r1 - 2005-04-28 - 
+17:32:42 -HaraldBongartz <br>
+<br>
+<br>
+Perldoc <br>
+
+<ul> 
+<li>Log In or Register</li> </ul> 
+<ul> 
+<li> <strong>Toolbox</strong> </li> 
+<li>  Create New Topic </li> 
+<li>  Index </li> 
+<li>  Search </li> 
+<li>  Changes </li> 
+<li>  Notifications </li> 
+<li>  RSS Feed </li> 
+<li>  Statistics </li> 
+<li>  Preferences </li> </ul> 
+<p></p> 
+<ul> 
+<li> <strong>Webs</strong> </li> 
+<li> &nbsp;Community </li> 
+<li> &nbsp;Main </li> 
+<li> &nbsp;Perldoc </li> 
+<li> &nbsp;Sandbox </li> 
+<li> &nbsp;System </li> 
+<li> &nbsp;Wissensbasis </li> </ul> 
+<p></p> <br>
+<br>
+ &nbsp; <br>
+<br>
+
+<ul> 
+<li>  &nbsp; &nbsp; <br>
+</li> 
+<li> Deutsch English <br>
+</li> </ul> <br>
+<br>
+<br>
+<br>
+Bitte die 
+NutzungsBedingungen beachten. <br>
+ Bei Vorschl&auml;gen, Anfragen oder 
+Problemen mit dem PerlCommunityWiki bitten wir umWebBottomBarExample
+&quot;&gt;R&uuml;ckmeldung. <br>
+<br>
+<br>
+
+</body>

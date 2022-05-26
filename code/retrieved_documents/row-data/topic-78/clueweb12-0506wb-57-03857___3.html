@@ -1,0 +1,323 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>CSC-152 99F : Class 26: More Efficient Sorting Algorithms</title>
+<body>
+
+<p> Fundamentals of Computer Science II (CSC-152 99F) </p> 
+<p> [Instructions] [Search] [Current] [Syllabus] [Links] [Handouts] [Outlines] 
+[Labs] [More Labs] [Assignments] [Quizzes] [Exams] [Examples] [Book] [Tutorial] 
+[API] </p> <br>
+
+<h1>Class 26: More Efficient Sorting Algorithms</h1> 
+<p> Back to Sorting Algorithms. On to Project Discussion. </p> 
+<p> <strong>Held</strong> Friday, October 8, 1999 </p> 
+<p> <strong>Overview</strong> </p> 
+<p> Today we continue our discussion of sorting by visiting some more 
+efficient sorting algorithms that use<em>divide and conquer</em> as their 
+underlying design strategy.</p> 
+<p> <strong>Notes</strong> </p> 
+<ul> 
+<li> Exam 2 is now ready. Please bring questions to class on Monday. </li> 
+<li> Are there any final questions on  assignment 3? 
+<ul> 
+<li> Unless I hear serious objections, I'm dropping the extra credit from the 
+assignment.</li> </ul> </li> 
+<li> We may have parents visiting today. </li> 
+<li> Please email me your classes by 9 a.m. on Monday so that I can put them 
+online in time for our discussion.</li> 
+<li> For many of the sorting algorithms we're discussing, you will see three 
+different presentations. I have intentionally presented these different 
+versions because I want you to focus on the underlying principles and I think 
+you do that better if you see multiple implementations. Here are the variations.
+<ul> 
+<li> The presentation in the book (typically, as a static method that sorts 
+its parameter)</li> 
+<li> The presentation in the outline (typically, as a method in a subclass of 
+<code>Array</code>) </li> 
+<li> The presentation in class (typically, at a higher level) </li> </ul> </li>
+<li> Yes, I am intentionally presenting the algorithms somewhat differently in 
+class from how they appear in the book.</li> </ul> 
+<p> <strong>Contents</strong> </p> 
+<ul> 
+<li>Sorting with Divide and Conquer 
+<ul> 
+<li>Merge Sort 
+<ul> 
+<li>Running Time </li> 
+<li>Running Time, Revisited </li> 
+<li>A Problem </li> 
+<li>Other Versions </li> </ul> </li> 
+<li>Quicksort 
+<ul> 
+<li>Variations </li> </ul> </li> </ul> </li> 
+<li>Better Sorting Techniques </li> </ul> 
+<p> </p> 
+<p> <strong>Handouts</strong> </p> 
+<p> <strong>Summary</strong> </p> 
+<ul> 
+<li> <em>Assigned:</em> 
+<ul> 
+<li> Exam 2 (due 10 a.m. Friday, October 15, 1999) </li> </ul> </li> </ul> <br>
+<h2>Sorting with Divide and Conquer</h2> 
+<ul> 
+<li> In the previous class, we identified a number of interesting sorting 
+algorithms which took O(n2) time. </li> 
+<li> Can we do better? Well, sometimes using divide-and-conquer helps speed up 
+algorithms (in our experience from O(n) to O(log2n)). </li> 
+<li> We'll look at two different ways of ``splitting'' the array. </li> </ul> 
+<h3>Merge Sort</h3> 
+<ul> 
+<li> We can develop a number of sorting techniques based on the <em>divide and 
+conquer</em> technique. One of the most straightforward is <strong>merge sort
+</strong>. </li> 
+<li> In merge sort, you split the list, array, collection or ... into two 
+parts, sort each part, and then merge them together.</li> 
+<li> Unlike the previous algorithms, merge sort requires extra space for the 
+sorted arrays or subarrays.</li> 
+<li> We'll write this as a non-inplace routine which returns a new, sorted 
+array, rather than sorting the existing array.</li> 
+<li> In approximate Java code, 
+<pre> import SimpleOutput; <b>/** * A collection of techniques for sorting an 
+input array. * * @author Samuel A. Rebelsky * @version 1.0 of October 1999 */
+</b> public class MergeSorter { <b>// 
++--------+--------------------------------------------------</b> <b>// | Fields 
+|</b> <b>// +--------+</b> <b>/** The current indent level. Used when logging 
+steps. */</b> String indent = &quot;<i></i>&quot;; <b>// 
++----------------+------------------------------------------</b> <b>// | Public 
+Methods |</b> <b>// +----------------+</b> <b>/** * Sort an array, creating a 
+new sorted version of the array. * If the SimpleOutput object is non-null, 
+prints a simple log * of what's happening. * Pre: The elements in the array can 
+be compared to each other. * Pre: There is sufficient memory to complete the 
+creation of the * new array (and the other steps of the algorithm). * Post: 
+Returns a sorted version of the array (where sorted is * defined carefully 
+elsewhere). * Post: Does not affect the original array. */</b> public Object[] 
+sort(Object[] stuff, Comparator compare, SimpleOutput observer)throws 
+IncomparableException {return mergeSort(stuff, 0, stuff.length-1, compare, 
+observer); } // sort(Object[])<b>// 
++----------------+------------------------------------------</b> <b>// | Helper 
+Methods |</b> <b>// +----------------+</b> <b>/** * Sort part of an array, 
+creating a new sorted version of the * part of the array. * Pre: The elements 
+in the array can be compared to each other. * Pre: There is sufficient memory 
+to complete the creation of the * new array (and the other steps of the 
+algorithm). * Post: Returns a sorted version of the array (where sorted is * 
+defined carefully elsewhere). * Post: Does not affect the original array. */</b>
+protected Object[] mergeSort(Object[] stuff, int lb, int ub, Comparator 
+compare, SimpleOutput observer)throws IncomparableException { Object[] sorted; 
+<b>// The sorted version</b> int middle; <b>// Index of middle element</b> <b>
+// Print some basic information.</b> if (observer != null) { 
+observer.print(indent + &quot;<i>Sorting: </i>&quot;); printSubArray(stuff, lb, 
+ub, observer); indent = indent + &quot;<i> </i>&quot;; } <b>// Base case: 
+vector of size 0 or 1. Make a fresh copy so that</b> <b>// it's safe to modify 
+(and is the appropriate size.</b> if (ub &lt;= lb) { sorted = 
+copySubArray(stuff, lb, ub); } // base case<b>// Recursive case: split and merge
+</b> else { <b>// Find the middle of the subarray.</b> middle = (lb + ub) / 2; 
+<b>// Sort the two halves.</b> Object[] left = mergeSort(stuff, lb, middle, 
+compare, observer); Object[] right = mergeSort(stuff, middle+1, ub, compare, 
+observer); sorted = merge(left, right, compare); } // recursive case<b>// Print 
+information, if appropriate</b> if (observer != null) { indent = 
+indent.substring(2); observer.print(indent + &quot;<i>Sorted: </i>&quot;); 
+printSubArray(sorted, 0, sorted.length-1, observer); }<b>// That's it.</b> 
+return sorted; } // mergeSort(Object[], int, int, Comparator) <b>/** * Merge 
+two sorted arrays into a new single sorted array. * Pre: Both vectors are 
+sorted. * Pre: Elements in both vectors may be compared to each other. * Pre: 
+There is sufficient memory to allocate the new array. * Post: The returned 
+array is sorted, and contains all the * elements of the two arrays (no more, no 
+less). * Post: The two arguments are not changed */</b> public Object[] 
+merge(Object[] left, Object[] right, Comparator compare)throws 
+IncomparableException {<b>// Create a new array of the appropriate size.</b> 
+Object[] result =new Object[left.length + right.length]; <b>// Create indices 
+into the three arrays.</b> int leftIndex=0; <b>// Index into left array.</b> int
+ rightIndex=0;<b>// Index into right array.</b> int index=0; <b>// Index into 
+result array.</b> <b>// As long both vectors have elements, copy the smaller 
+one.</b> while ((leftIndex &lt; left.length) &amp;&amp; (rightIndex &lt; 
+right.length)) {if(compare.lessThan(left[leftIndex],right[rightIndex])) { 
+result[index++] = left[leftIndex++]; } // first element in left subvector is 
+smallerelse { result[index++] = right[rightIndex++]; } // first element in 
+right subvector is smaller } // while both vectors have elements<b>// Copy any 
+remaining parts of each vector.</b> while(leftIndex &lt; left.length) { 
+result[index++] = left[leftIndex++]; } // while the left vector has elements
+while(rightIndex &lt; right.length) { result[index++] = right[rightIndex++]; } 
+// while the right vector has elements<b>// That's it</b> return result; } // 
+merge<b>/** * Copy a subarray (so that we can return it without affecting it). 
+* Pre: 0 &lt;= lb &lt;= ub &lt; stuff.length * Post: Does not affect stuff. * 
+Post: Returns a new array containing only stuff[lb] .. stuff[ub]. */</b> 
+protected Object[] copySubArray(Object[] stuff, int lb, int ub) { <b>// Create 
+the new array.</b> Object[] result = new Object[ub-lb+1]; for (int i = lb; i 
+&lt;= ub; i++) { result[i-lb] = stuff[i]; }return result; } // copySubArray <b>
+/** * Print a subarray. * Pre: 0 &lt;= lb &lt;= ub &lt; stuff.length * Post: 
+Does not affect stuff. */</b> protected void printSubArray(Object[] stuff, int 
+lb,int ub, SimpleOutput out) { <b>// Print all but the last element followed by 
+a comma</b> for (int i = lb; i &lt; ub; ++i) { out.print(stuff[i].toString() + 
+&quot;<i>,</i>&quot;); } <b>// Print the last element</b> 
+out.println(stuff[ub]); } // printSubArray } // MergeSorter </pre> </li> 
+<li> Here's the corresponding test class. 
+<pre> import MergeSorter; import SimpleOutput; import StringComparator; <b>/** 
+* A simple test of selection sort. * * @author Samuel A. Rebelsky * @version 
+1.0 of September 1999 */</b> public class TestMergeSorter { public static void 
+main(String[] args)throws Exception { SimpleOutput out = new SimpleOutput(); 
+MergeSorter sorter =new MergeSorter(); Object[] sorted = sorter.sort(args, new 
+StringComparator(), out);for (int i = 0; i &lt; sorted.length; ++i) { 
+out.println(i + &quot;<i>: </i>&quot; + sorted[i]); } // for } // 
+main(String[]) } // class TestMergeSorter </pre> </li> </ul> 
+<h4>Running Time</h4> 
+<ul> 
+<li> What is the running time? </li> 
+<li> We can use recurrence relations: 
+<ul> 
+<li> Let f(n) be the running time of merge sort on input of size n. </li> 
+<li> f(1) = 1 </li> 
+<li> f(n) = n + 2*f(n/2) </li> </ul> </li> 
+<li> Let's run this for a few steps 
+<ul> 
+<li> f(n) </li> 
+<li> = n + 2*f(n/2) </li> 
+<li> = n + 2*f(n/2) </li> 
+<li> = n + 2*(n/2 + 2*f(n/2/2)) </li> 
+<li> = n + n + 4*f(n/4) </li> 
+<li> = n + n + 4*(n/4 + 2*f(n/4/2)) </li> 
+<li> = n + n + n + 8*f(n/8) </li> </ul> </li> 
+<li> Generalizing 
+<ul> 
+<li> f(n) = kn + 2k*f(n/2k) </li> </ul> </li> 
+<li> When k = log2n 
+<ul> 
+<li> f(n) = nlog2n + n*1 </li> </ul> </li> 
+<li> Therefore, f(n) is in O(nlog2n). </li> </ul> 
+<h4>Running Time, Revisited</h4> 
+<ul> 
+<li> We can also use a somewhat nontraditional analysis technique. </li> 
+<li> Assume that we're dealing with n = 2x for some x. </li> 
+<li> Consider all the sorts of <code>Array</code>s of size k as the same 
+&quot;level&quot;.</li> 
+<li> There are n/k <code>Array</code>s of size k. </li> 
+<li> Because we divide in half each time, there are log_2(n) levels. </li> 
+<li> Going from level k to level k+1, we do O(n) work to merge. </li> 
+<li> So, the running time is O(n*log_2(n)). </li> </ul> 
+<h4>A Problem</h4> 
+<ul> 
+<li> Unfortunately, merge sort requires significantly more memory than do the 
+other sorting routines (you can spend some time trying to come up with an ``in 
+place'' merge sort, but you are quite likely to fail).</li> </ul> 
+<h4>Other Versions</h4> 
+<ul> 
+<li> We've written merge sort so that it does not affect the original array. 
+</li> 
+<li> How might we write it so that it creates a sorted array? 
+<ul> 
+<li> Will that save space? </li> </ul> </li> 
+<li> How might we write it like the previous sorting methods (which were for 
+subclasses of our<code>Array</code> class)? </li> </ul> 
+<h3>Quicksort</h3> 
+<ul> 
+<li> Is it possible to write an O(n*log2n) sorting algorithm that is based on 
+comparing and swapping, but doesn't require significantly extra space?</li> 
+<li> Yes, if you're willing to rely on probabilities. </li> 
+<li> In the <strong>Quicksort</strong> algorithm, you split (partition) the 
+array to be sorted into two pieces, those smaller than or equal to the pivot 
+and those greater than the pivot. You don't include the pivot in either piece 
+(so that the recursive case is ``smaller'').
+<ul> 
+<li> You can also split into three parts: those smaller than some middle 
+element, those equal to some middle element, and those larger than some middle 
+element.</li> </ul> </li> 
+<li> With a little work, you can do this partitioning in place, so that there 
+is no overhead (and so that ``glueing'' is basically a free operation).</li> 
+<li> (It is not necesarrily okay to partition the array into two parts: those 
+less than or equal to the element, and those greater than or equal to the 
+element.) 
+<pre> <b>/** * Sort an array using Quicksort. * Pre: All elements in the array 
+can be compared to each other. * Post: The vector is sorted (using the standard 
+meaning). */</b> public void quickSort(Object[] stuff) { quickSort(stuff, 0, 
+stuff.length-1); } // quickSort(Object[])<b>/** * Sort part of an array using 
+Quicksort. * Pre: All elements in the subarray can be compared to each other. * 
+Pre: 0 &lt;= lb &lt;= ub &lt; stuff.length * Post: The vector is sorted (using 
+the standard meaning). */</b> public void quickSort(Object[] stuff, int lb, int 
+ub, Comparator compare) {<b>// Variables</b> Object pivot; <b>// The pivot used 
+to split the vector</b> int mid; <b>// The position of the pivot</b> <b>// Base 
+case: size one arrays are sorted.</b> if (lb == ub) return; <b>// Pick a pivot 
+and put it at the front of the array.</b> putPivotAtFront(stuff,lb,ub); <b>// 
+Determine the position of the pivot, while rearranging the array.</b> mid = 
+partition(stuff, lb, ub);<b>// Recurse on nonempty subarrays.</b> if 
+(lb&lt;=mid-1) quickSort(stuff, lb,mid-1);if (mid+1&lt;=ub) quickSort(stuff, 
+mid+1,ub); } // quickSrt<b>/** * Split the array given by [lb .. ub] into 
+``smaller'' and * ``larger'' elements, where smaller and larger are defined by 
+* their relationship to a pivot. Return the index of the pivot * between those 
+elements. Uses the first element of the array * as the pivot. */</b> public int 
+partition(Object[] stuff,int lb, int ub) { <b>// STUB. Can you figure it out?
+</b> return 0; } // partition(Object[]) </pre> </li> 
+<li> What is the running time of Quicksort? It depends on how well we 
+partition. If we partition into two equal halves, then we can say
+<ul> 
+<li> Partitioning a vector of length n takes O(n) steps. </li> 
+<li> The time to partition those two partitions into four parts is also O(n). 
+</li> 
+<li> If each partition is perfect (splits it exactly in half), we can stop the 
+process after O(log_2(n)) levels.</li> 
+<li> This gives a running time of O(n*log_2(n)). </li> </ul> </li> 
+<li> On average, we don't quite do half, but it's close enough that it doesn't 
+make a significant difference.</li> 
+<li> However, bad choice of pivots can give significantly worse running time. 
+If we always chose the largest element as the pivot, this algorithm would be 
+equivalent to<strong>selection sort</strong>, and would take time O(n*n). </li> 
+<li> How do we partition? Typically, using something like the following 
+strategy: 
+<pre> Set pivot to the first element of the subarray Set left to the start of 
+the subarray Set right to the end of the subarray Move left and right toward 
+each other, Swap their contents when you observe that one side is 
+&quot;wrong&quot; (something on the left is larger than the pivot, something on 
+the right is larger than the pivot)</pre> </li> </ul> 
+<h4>Variations</h4> 
+<ul> 
+<li> How might you change Mergesort so that the pivot need not be an element 
+of the array?</li> 
+<li> How might you rewrite Mergesort iteratively? </li> </ul> 
+<h2>Better Sorting Techniques</h2> 
+<ul> 
+<li> Are there better sorting techniques (ones that take less than O(nlog2n))? 
+Not if you limit yourself to basic operations of comparing and swapping.</li> 
+<li> But if you're willing to use extra space and know something about the 
+original data, then you can do better.</li> 
+<li> In <strong>bucket sort</strong>, you create separate ``buckets'' for 
+kinds of elements, put each element into the appropriate bucket, sort each 
+bucket, and then take them out again.
+<ul> 
+<li> If you can arrange things so that each bucket contains only a few 
+elements (say no more than four), then the main cost is putting in to buckets 
+and taking out of buckets.</li> 
+<li> Usually we choose simple criteria for the buckets, such as the first (or 
+nth) letter in a string.</li> 
+<li> Running time can be a constant (as long as you can guarantee the number 
+of items in any bucket)!</li> </ul> </li> 
+<li> In <strong>radix sort</strong>, we sort using a binary representation of 
+the things we're sorting. We'll do an example later.</li> </ul> 
+<h2>History</h2> 
+<p> Tuesday, 10 August 1999 </p> 
+<ul> 
+<li> Created as a blank outline. </li> </ul> 
+<p> Wednesday, 6 October 1999 </p> 
+<ul> 
+<li> Filled in some details based on outline 21 of CS152 99S. </li> 
+<li> Reformatted. </li> 
+<li> Corrected and tested code for merge sort. Added reporting. </li> </ul> 
+<p> Thursday, 7 October 1999 </p> 
+<ul> 
+<li> Added an introductory note. </li> </ul> 
+<p> Friday, 8 October 1999 </p> 
+<ul> 
+<li> Updated introductory notes. </li> 
+<li> Added recurrence relation for merge sort. </li> </ul> 
+<p> Back to Sorting Algorithms. On to Project Discussion. </p> 
+<p> [Instructions] [Search] [Current] [Syllabus] [Links] [Handouts] [Outlines] 
+[Labs] [More Labs] [Assignments] [Quizzes] [Exams] [Examples] [Book] [Tutorial] 
+[API] </p> 
+<p><strong>Disclaimer</strong> Often, these pages were created &quot;on the 
+fly&quot; with little, if any, proofreading. Any or all of the information on 
+the pages may be incorrect. Please contact me if you notice errors.</p> 
+<p>This page may be found at 
+http://www.math.grin.edu/~rebelsky/Courses/CS152/99F/Outlines/outline.26.html
+</p> 
+<p>Source text last modified Fri Oct 8 08:58:26 1999.</p> 
+<p>This page generated on Fri Oct 8 08:58:52 1999 by Siteweaver. Validate this 
+page's HTML. </p> 
+<p>Contact our webmaster at rebelsky@grinnell.edu</p> 
+</body>
